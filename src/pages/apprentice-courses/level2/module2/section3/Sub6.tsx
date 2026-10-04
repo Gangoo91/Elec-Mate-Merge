@@ -35,10 +35,10 @@ const checks = [
     id: 'primary-vs-secondary-check',
     question: 'What is the key difference between a primary cell and a secondary cell?',
     options: [
-      'Both options above are partly correct.',
+      'Primary cells are larger than secondary cells',
       'Secondary cells can be recharged; primary cells cannot',
-      'A spike upward followed by the normal trace',
-      'Ratio of two power levels (logarithmic)',
+      'Primary cells produce AC, secondary cells produce DC',
+      'Secondary cells contain no electrolyte',
     ],
     correctIndex: 1,
     explanation:
@@ -49,9 +49,9 @@ const checks = [
     question: 'In electrolysis, positive ions in the electrolyte move towards the:',
     options: [
       'Cathode (negative electrode)',
-      'Yes, normal position preferred',
-      'Cross-connect termination',
-      'The construction phase plan',
+      'Anode (positive electrode)',
+      'Electrolyte surface',
+      'Both electrodes equally',
     ],
     correctIndex: 0,
     explanation:

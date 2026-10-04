@@ -160,7 +160,7 @@ export default function ElectricalArchitecturalSymbolsPage() {
       heroTitle={
         <>
           Architectural Symbols:{' '}
-          <span className="text-yellow-400">Door, window, stairs + north arrow references</span>
+          <span className="text-elec-yellow">Door, window, stairs + north arrow references</span>
         </>
       }
       heroSubtitle="The architectural symbols you find alongside electrical accessories on UK installation drawings — door swing, window, stairs, north arrow — drawn to standard convention."

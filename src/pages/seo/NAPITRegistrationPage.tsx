@@ -130,14 +130,14 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Available NAPIT Schemes</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Domestic Electrical Installer:</strong> The core scheme for electricians
                 doing domestic work. Covers all Part P notifiable work in dwellings.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Commercial Electrical Installer:</strong> For electricians working on
                 commercial and industrial installations. Covers a broader range of non-domestic
@@ -145,7 +145,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Fire Detection and Alarm (BS 5839):</strong> For design, installation,
                 commissioning, and maintenance of fire alarm systems. Requires additional
@@ -153,21 +153,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Emergency Lighting (BS 5266):</strong> For design, installation,
                 commissioning, and testing of emergency lighting systems.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>EV Charger Installation:</strong> For the installation of electric vehicle
                 charging points in domestic and commercial settings.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Ventilation, Heating, and Renewable Energy:</strong> Additional disciplines
                 covering unvented hot water, heat pumps, and other building services work.
@@ -202,7 +202,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Step-by-Step Application</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <span className="w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center shrink-0 text-sm font-bold text-yellow-400">
+              <span className="w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center shrink-0 text-sm font-bold text-elec-yellow">
                 1
               </span>
               <span className="flex-1 text-left">
@@ -212,7 +212,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center shrink-0 text-sm font-bold text-yellow-400">
+              <span className="w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center shrink-0 text-sm font-bold text-elec-yellow">
                 2
               </span>
               <span className="flex-1 text-left">
@@ -225,7 +225,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center shrink-0 text-sm font-bold text-yellow-400">
+              <span className="w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center shrink-0 text-sm font-bold text-elec-yellow">
                 3
               </span>
               <span className="flex-1 text-left">
@@ -235,7 +235,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center shrink-0 text-sm font-bold text-yellow-400">
+              <span className="w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center shrink-0 text-sm font-bold text-elec-yellow">
                 4
               </span>
               <span className="flex-1 text-left">
@@ -245,7 +245,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center shrink-0 text-sm font-bold text-yellow-400">
+              <span className="w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center shrink-0 text-sm font-bold text-elec-yellow">
                 5
               </span>
               <span className="flex-1 text-left">
@@ -254,7 +254,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center shrink-0 text-sm font-bold text-yellow-400">
+              <span className="w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center shrink-0 text-sm font-bold text-elec-yellow">
                 6
               </span>
               <span className="flex-1 text-left">
@@ -289,7 +289,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">What the Assessor Checks</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Installation quality:</strong> The assessor examines your current work for
                 compliance with BS 7671, correct cable selection, proper terminations, labelling,
@@ -297,7 +297,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Testing and inspection:</strong> You will be asked to demonstrate your
                 testing procedures — safe isolation, continuity, insulation resistance, polarity,
@@ -306,7 +306,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Certification quality:</strong> Your completed certificates (EICR, EIC,
                 Minor Works) are reviewed for accuracy, completeness, and compliance with the
@@ -314,7 +314,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Regulation knowledge:</strong> The assessor may ask questions about BS 7671
                 regulations relevant to the work being inspected — maximum Zs values, cable derating
@@ -325,7 +325,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Test equipment:</strong> Your test instruments must be in calibration
                 (within date), in good condition, and accompanied by the relevant calibration
@@ -335,16 +335,16 @@ const sections = [
           </ul>
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-6">
-          <h3 className="font-bold text-yellow-300 text-lg mb-3">
+          <h3 className="font-bold text-elec-yellow text-lg mb-3">
             A4:2026 Updates You Must Know for Your NAPIT Assessment
           </h3>
-          <p className="text-white/90 mb-3">
+          <p className="text-white mb-3">
             Assessors will probe these rules on any consumer unit replacement or new domestic
             circuit job from 2026 onwards. Make sure you can explain each one:
           </p>
-          <ul className="space-y-3 text-white/90">
+          <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Reg 421.1.7 — AFDDs on AC final circuits:</strong> BS 7671:2018+A4:2026
                 recommends the installation of arc fault detection devices (AFDDs) to mitigate the
@@ -354,7 +354,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Reg 411.3.4 — 30 mA RCD on lighting circuits in domestic premises:</strong>{' '}
                 A4:2026 introduces a mandatory requirement (the regulation uses &apos;shall&apos;)
@@ -365,7 +365,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>GN3 0.80 site correction factor for Zs:</strong> When recording earth fault
                 loop impedance results, your measured cold reading must be multiplied by 0.80 to
@@ -405,28 +405,28 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Initial registration fee:</strong> GBP 600-730 including VAT (covers your
                 first assessment and registration processing)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Annual membership (domestic electrical):</strong> GBP 540-650 per year (plus
                 VAT)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Additional disciplines:</strong> GBP 50-150 per discipline per year (fire
                 alarm, emergency lighting, EV, etc.)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Annual assessment fee:</strong> Included in membership (NAPIT conducts
                 periodic assessments to maintain standards)
@@ -466,7 +466,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Membership Benefits</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Self-certification of notifiable work:</strong> Issue building regulations
                 compliance certificates directly, saving your clients GBP 150-300 per job in
@@ -474,14 +474,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Technical helpline:</strong> Access to NAPIT's technical support team for
                 regulation queries, compliance questions, and guidance on complex installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Find a Contractor listing:</strong> Your business is listed on the NAPIT
                 Find a Contractor directory, which consumers and other trades use to find registered
@@ -489,14 +489,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Compliance documentation:</strong> Access to up-to-date certificate
                 templates, technical bulletins, and guidance documents to keep your work compliant.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Professional credibility:</strong> NAPIT registration demonstrates to
                 clients, estate agents, solicitors, and other professionals that you are a vetted,
@@ -504,7 +504,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Building control notification service:</strong> NAPIT handles the building
                 control notification process on your behalf, submitting notifications electronically
@@ -534,14 +534,14 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Ongoing Requirements</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Annual fee payment:</strong> Pay your annual membership fee on time. NAPIT
                 typically sends renewal notices 4-6 weeks before your renewal date.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Periodic assessment:</strong> NAPIT conducts periodic on-site assessments
                 (typically annually) to verify that your work continues to meet the required
@@ -549,7 +549,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Current qualifications:</strong> You must keep your 18th Edition
                 qualification current. When amendments to BS 7671 are published, you need to
@@ -557,14 +557,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Valid insurance:</strong> Maintain current public liability insurance and
                 provide updated certificates to NAPIT when your policy renews.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Calibrated test equipment:</strong> Your test instruments must remain within
                 calibration dates. Most manufacturers recommend annual calibration.
@@ -600,7 +600,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Scheme Comparison</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>
                   NAPIT vs <SEOInternalLink href="/niceic-vs-napit-comparison">NICEIC</SEOInternalLink>:
@@ -611,7 +611,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>
                   NAPIT vs{' '}
@@ -623,7 +623,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>All schemes vs no scheme:</strong> Without scheme membership, you cannot
                 self-certify notifiable work and must involve building control (GBP 150-300 per
@@ -725,7 +725,7 @@ export default function NAPITRegistrationPage() {
       heroTitle={
         <>
           NAPIT Registration:{' '}
-          <span className="text-yellow-400">How to Join and What to Expect</span>
+          <span className="text-elec-yellow">How to Join and What to Expect</span>
         </>
       }
       heroSubtitle="A complete, practical guide to joining NAPIT as a registered electrician. Everything from the application form to the on-site assessment, what it costs, and how NAPIT compares to NICEIC and ELECSA. Written and reviewed by Andrew Moore, founder of Elec-Mate and a qualified electrician."

@@ -203,11 +203,11 @@ export const TEST_LEARNING: Record<string, TestLearningEntry> = {
       "RCDs provide additional protection against electric shock. If the RCD doesn't trip fast enough at its rated current, it may not protect a person in a fault condition.",
     eicInfo: 'Column 28 — RCD disconnection time (ms)',
     practicalTip:
-      'This is a LIVE test. Connect your RCD test leads to L and E downstream of the RCD. Press TEST for a 1× IΔn test. The reading should be well under 300ms — typically 15–30ms for a modern RCD. Record the 1× result only: the old 5× IΔn / 40 ms test was deleted from BS 7671 at A4:2026.',
+      'This is a LIVE test. Connect your RCD test leads to L and E downstream of the RCD. Press TEST for a 1× IΔn test. The reading should be well under 300ms — typically 15–30ms for a modern RCD. Record the 1× result only: the old 5× IΔn / 40 ms test was deleted from BS 7671 at A2:2022.',
     regulation: 'BS 7671:2018+A4:2026 Reg. 643.8 / GN3',
     failPoints: [
       'Connecting test leads upstream of the RCD — the test current must flow through the RCD to trigger it',
-      'Recording a 5× IΔn / 40 ms result — that test was deleted at A4:2026 and an assessor will query it',
+      'Recording a 5× IΔn / 40 ms result — that test was deleted at A2:2022 and an assessor will query it',
       'Not testing on both half-cycles (0° and 180°) — your MFT should offer both; test on the worst case',
       'Recording a trip time without checking it against the limit (300 ms general type; 130–500 ms for a Type S) — an RCD tripping at 350ms is a FAIL',
     ],

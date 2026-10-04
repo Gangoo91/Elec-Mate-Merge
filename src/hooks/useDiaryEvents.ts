@@ -46,6 +46,9 @@ export function useDiaryEvents(dateFrom: string, dateTo: string, enabled = true)
      * arrive.
      */
     isLoading: events.isLoading,
+    /** The real events failed to load — what is shown may be missing bookings. */
+    isError: events.isError,
+    refetch: events.refetch,
   };
 }
 

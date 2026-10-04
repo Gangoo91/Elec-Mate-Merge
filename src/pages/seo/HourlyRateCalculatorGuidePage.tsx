@@ -222,19 +222,19 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white text-sm">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>Van finance/depreciation: £200 to £500/month (£2,400 to £6,000/year)</span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>Van insurance (business use): £50 to £125/month (£600 to £1,500/year)</span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>Fuel: £200 to £400/month (£2,400 to £4,800/year)</span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <SEOInternalLink href="/guides/electrician-insurance-uk">
                   Public liability insurance
@@ -243,45 +243,45 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>Professional indemnity insurance: £7 to £17/month (£80 to £200/year)</span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>Tools insurance: £8 to £25/month (£100 to £300/year)</span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Competent person scheme (NICEIC/NAPIT): £25 to £50/month (£300 to £600/year)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>Accountant: £25 to £50/month (£300 to £600/year)</span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>Phone and data: £30 to £60/month (£360 to £720/year)</span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>Software (Elec-Mate, accounting): £20 to £50/month (£240 to £600/year)</span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>Training and CPD: £30 to £80/month averaged (£360 to £960/year)</span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>Workwear and PPE: £10 to £20/month (£120 to £240/year)</span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>Test equipment calibration: £5 to £15/month averaged (£60 to £180/year)</span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Marketing (Checkatrade, website, etc.): £20 to £100/month (£240 to £1,200/year)
               </span>
@@ -323,7 +323,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Travel between jobs:</strong> 5 to 8 hours per week. You cannot charge the
                 customer for your drive from the last job. If you do 3 domestic jobs per day, that
@@ -331,7 +331,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Quoting and site surveys:</strong> 3 to 5 hours per week. Not every quote
                 converts. If you quote 5 jobs per week and convert 3, that is 2 wasted hours plus
@@ -340,7 +340,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Admin, invoicing, bookkeeping:</strong> 2 to 3 hours per week. Sending
                 invoices, chasing payments, filing receipts, updating records. Elec-Mate handles
@@ -348,14 +348,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Materials collection:</strong> 2 to 3 hours per week. Trips to the
                 wholesaler, waiting for deliveries, checking stock.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Quiet periods:</strong> Even busy electricians have quiet days and weeks.
                 Seasonality, customer cancellations, weather delays, and gaps between jobs all
@@ -391,7 +391,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Business growth:</strong> Profit funds better tools, a newer van, additional
                 training, marketing, or hiring an apprentice. Without profit, your business stands
@@ -399,7 +399,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency fund:</strong> A broken-down van, a stolen tool kit, a quiet
                 month, or an unexpected tax bill. Profit builds the buffer that keeps you trading
@@ -407,7 +407,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fair compensation:</strong> You carry the risk of self-employment — no sick
                 pay, no holiday pay, no employer pension contributions. Profit compensates for that
@@ -493,7 +493,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>You are fully booked 3 to 4 weeks in advance.</strong> If demand exceeds
                 your capacity, your rate is too low. Raise it until you are comfortably busy but not
@@ -501,7 +501,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Your overheads have increased.</strong> Fuel, insurance, materials, and van
                 costs all rise over time. If your overheads have gone up by 10% but your rate has
@@ -510,7 +510,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>You have gained qualifications or specialist skills.</strong> Completing the
                 2391, gaining AM2, or specialising in EV charging, solar PV, fire alarm systems, or
@@ -552,7 +552,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI Cost Engineer</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -619,7 +619,7 @@ export default function HourlyRateCalculatorGuidePage() {
       heroTitle={
         <>
           Hourly Rate Calculator for Electricians:{' '}
-          <span className="text-yellow-400">Set a Rate That Actually Works</span>
+          <span className="text-elec-yellow">Set a Rate That Actually Works</span>
         </>
       }
       heroSubtitle="Most self-employed electricians undercharge because they do not calculate their rate properly. This guide gives you the exact formula — covering overheads, billable hours, tax, and profit margin — so you can set a rate that covers every cost and delivers the income you deserve."
@@ -630,7 +630,7 @@ export default function HourlyRateCalculatorGuidePage() {
       faqHeading="Frequently Asked Questions About Electrician Hourly Rates"
       relatedPages={relatedPages}
       ctaHeading="Price Every Job for Profit"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to generate accurate quotes, track job profitability, and manage cash flow. AI cost engineer, expense tracking, and business analytics — all from your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to generate accurate quotes, track job profitability, and manage cash flow. AI cost engineer, expense tracking, and business analytics — all from your phone. 7-day free trial, cancel anytime."
     />
   );
 }

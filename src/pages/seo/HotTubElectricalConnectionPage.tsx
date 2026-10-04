@@ -227,7 +227,7 @@ const sections = [
             <div className="bg-green-900/20 p-3">50A device or split supply</div>
             <div className="bg-green-900/20 p-3">16.0mm²+ / per design</div>
           </div>
-          <p className="text-white/60 text-xs p-3 border-t border-white/10">
+          <p className="text-white text-xs p-3 border-t border-white/10">
             Indicative only — always size the device and cable from the manufacturer data plate
             current and the installation method, not from the kW figure alone.
           </p>
@@ -315,7 +315,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SWA cable (Steel Wire Armoured)</strong> — the standard choice for the
                 outdoor section. 3-core SWA (line, neutral, earth) in 6.0mm² (32A circuit) or
@@ -327,7 +327,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Indoor section</strong> — from the consumer unit to the point of exit from
                 the building, 6242Y (twin-and-earth) or singles in conduit/trunking are acceptable.
@@ -336,7 +336,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Voltage drop</strong> — check the voltage drop for the total cable run. BS
                 7671 allows 5% total; aim for 3% on the final circuit. For a 40A load on 10.0mm²
@@ -381,7 +381,7 @@ const sections = [
             <div className="bg-blue-900/30 p-3">IPX4 (IPX5 where water jets used for cleaning)</div>
             <div className="bg-blue-900/30 p-3">A further 1.5m beyond zone 1</div>
           </div>
-          <p className="text-white/60 text-xs p-3 border-t border-white/10">
+          <p className="text-white text-xs p-3 border-t border-white/10">
             The second digit (water) is what 702.512.2 fixes by zone; specify the first digit (dust /
             solid ingress) to suit the location — full IP ratings such as IP56 or IP66 comfortably
             satisfy these minimums.
@@ -476,14 +476,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Continuity of protective conductors — CPC from consumer unit to isolator and from
                 isolator to hot tub earth terminal
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Test in the order set out in BS 7671 Reg 643.1 — the dead tests (continuity,
                 insulation resistance, polarity) before energising, then the live tests (Zs, RCD
@@ -492,20 +492,20 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Insulation resistance — 500V DC between live conductors and earth, minimum 1 megohm
                 (disconnect the hot tub before testing)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Polarity — verify correct line, neutral, and earth connections at all points
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Earth fault loop impedance (Zs) — must be within the maximum permitted Zs for the
                 protective device. When comparing the measured Zs against the tabulated maximum,
@@ -516,7 +516,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 RCD operation — 30mA device must trip within 300ms at rated current, and within 40ms
                 at 5x rated current
@@ -588,7 +588,7 @@ const sections = [
             <div className="bg-white/[0.03] p-3">−£100–£200</div>
             <div className="bg-white/[0.03] p-3">Deduct from the figures above</div>
           </div>
-          <p className="text-white/60 text-xs p-3 border-t border-white/10">
+          <p className="text-white text-xs p-3 border-t border-white/10">
             Indicative UK market guidance for 2026, not a quote — actual pricing depends on the
             cable route, local labour rates and site access.
           </p>
@@ -613,7 +613,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Always Get the Data Plate First</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -655,7 +655,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify hot tub connections"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
           icon={Droplets}
         />
       </>
@@ -688,7 +688,7 @@ export default function HotTubElectricalConnectionPage() {
       heroTitle={
         <>
           Hot Tub Electrical Connection:{' '}
-          <span className="text-yellow-400">Dedicated Circuit Guide for UK Electricians</span>
+          <span className="text-elec-yellow">Dedicated Circuit Guide for UK Electricians</span>
         </>
       }
       heroSubtitle="Hot tubs need a dedicated 32A or 40A circuit with RCD protection, SWA cable, and a lockable outdoor isolator. This guide covers everything from supply assessment to testing and certification."
@@ -699,7 +699,7 @@ export default function HotTubElectricalConnectionPage() {
       faqHeading="Frequently Asked Questions About Hot Tub Electrical Connections"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Certify Hot Tub Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

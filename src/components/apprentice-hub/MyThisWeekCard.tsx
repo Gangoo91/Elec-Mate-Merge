@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { useLoggingReminders } from '@/hooks/useLoggingReminders';
 import { motion } from 'framer-motion';
 import { ChevronRight, RefreshCw, Sparkles } from 'lucide-react';
 import { useApprenticeThisWeek, type ThisWeekBullet } from '@/hooks/useApprenticeThisWeek';
@@ -12,6 +13,8 @@ import { CARD_SURFACE } from '@/components/ui/card-recipe';
    ========================================================================== */
 
 export function MyThisWeekCard() {
+  // Settings → Reminders drops the AI's "log your hours" suggestion (ELE-1804).
+  const { hidden: hideReminders } = useLoggingReminders();
   const { brief, loading, generating, error, regenerate } = useApprenticeThisWeek();
 
   // Hide entirely if no learner context (apprentice not enrolled yet) — no
@@ -83,9 +86,11 @@ export function MyThisWeekCard() {
         </div>
 
         <ul className="mt-4 -mx-4 divide-y divide-white/[0.10] border-t border-white/[0.10] sm:-mx-5">
-          {brief.bullets.map((b, i) => (
-            <ThisWeekBulletRow key={`${b.action_kind}-${i}`} bullet={b} index={i} />
-          ))}
+          {brief.bullets
+            .filter((b) => !hideReminders || b.action_kind !== 'submit_otj')
+            .map((b, i) => (
+              <ThisWeekBulletRow key={`${b.action_kind}-${i}`} bullet={b} index={i} />
+            ))}
         </ul>
 
         {brief.encouragement && (

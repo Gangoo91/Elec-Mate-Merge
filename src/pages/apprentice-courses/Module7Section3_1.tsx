@@ -48,7 +48,7 @@ const quickCheckQuestions = [
     ],
     correctIndex: 3,
     explanation:
-      'A4:2026 deleted Appendix 3 Table 3A and the ×5 IΔn test. RCD effectiveness is now verified by a single test at the rated residual operating current (1×IΔn); a general (non-delay) RCD must disconnect within 300 ms (Reg 643.8 NOTE). In practice many devices operate far faster (often around 25–40 ms), but 300 ms is the regulatory limit.',
+      'A2:2022 deleted Appendix 3 Table 3A and the ×5 IΔn test. RCD effectiveness is now verified by a single test at the rated residual operating current (1×IΔn); a general (non-delay) RCD must disconnect within 300 ms (Reg 643.8 NOTE). In practice many devices operate far faster (often around 25–40 ms), but 300 ms is the regulatory limit.',
   },
 ];
 

@@ -58,7 +58,7 @@ const inlineChecks = [
     ],
     correctIndex: 1,
     explanation:
-      "Reg 514.12.2 (A4:2026) requires a permanent notice at the consumer unit reminding the user to operate the RCD test button six-monthly. The notice itself is the installer's responsibility; the test action is the user's. Missing notice on a periodic = code C3 minimum.",
+      "Reg 514.12.2 (as modified in A2:2022) requires a permanent notice at the consumer unit reminding the user to operate the RCD test button six-monthly. The notice itself is the installer's responsibility; the test action is the user's. Missing notice on a periodic = code C3 minimum.",
   },
   {
     id: 'mod6-s4-recording',

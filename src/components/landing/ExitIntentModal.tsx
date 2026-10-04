@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { X, Zap } from 'lucide-react';
 import { Capacitor } from '@capacitor/core';
 import { EmailCaptureForm } from './EmailCaptureForm';
 import { storageGetSync, storageSetSync } from '@/utils/storage';
@@ -80,28 +79,28 @@ export function ExitIntentModal() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 10 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="relative w-full max-w-md rounded-3xl border border-white/10 bg-[#111111] p-6 sm:p-8"
+            className="relative w-full max-w-md overflow-hidden rounded-3xl border border-white/[0.12] bg-[hsl(0_0%_9%)] p-6 sm:p-8"
             onClick={(e) => e.stopPropagation()}
           >
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0"
+            />
             <button
               type="button"
               onClick={() => setOpen(false)}
-              aria-label="Close"
-              className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full text-white/50 transition-colors hover:bg-white/5 hover:text-white"
+              className="absolute right-3 top-3 inline-flex h-11 items-center px-3 text-[13px] font-semibold text-white touch-manipulation hover:text-elec-yellow"
             >
-              <X className="h-4 w-4" />
+              Not now
             </button>
-
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-yellow-400/30 bg-yellow-400/[0.08] px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-yellow-300">
-              <Zap className="h-3 w-3" />
+            <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
               Before you go
-            </div>
-            <h2 className="mb-2 text-2xl font-bold leading-tight text-white">
-              Grab the <span className="text-yellow-400">BS 7671 A4:2026</span> cheat sheet
+            </p>
+            <h2 className="mt-2 text-[26px] font-bold leading-tight tracking-[-0.02em] text-white">
+              The <span className="text-elec-yellow">BS 7671 A4:2026</span> cheat sheet, free
             </h2>
-            <p className="mb-5 text-sm leading-relaxed text-white">
+            <p className="mb-6 mt-2 text-[15px] leading-relaxed text-white">
               Every amendment change on one page — AFDDs, TN-C-S, new schedule columns, model forms.
-              Free. No signup.
             </p>
 
             <EmailCaptureForm

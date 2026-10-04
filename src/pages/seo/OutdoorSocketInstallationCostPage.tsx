@@ -183,7 +183,7 @@ const sections = [
                   Cable through external wall, surface-mount socket, spur or new RCBO
                 </p>
               </div>
-              <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£150 – £200</p>
+              <p className="font-bold text-elec-yellow whitespace-nowrap ml-4">£150 – £200</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
@@ -192,7 +192,7 @@ const sections = [
                   SWA cable clipped to external wall or fence, IP66 socket
                 </p>
               </div>
-              <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£200 – £300</p>
+              <p className="font-bold text-elec-yellow whitespace-nowrap ml-4">£200 – £300</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
@@ -201,7 +201,7 @@ const sections = [
                   Trench, sand bed, SWA cable, marker tape, backfill
                 </p>
               </div>
-              <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£300 – £400</p>
+              <p className="font-bold text-elec-yellow whitespace-nowrap ml-4">£300 – £400</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
@@ -210,14 +210,14 @@ const sections = [
                   Longer trench, possible 4.0mm² SWA, additional making good
                 </p>
               </div>
-              <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£400 – £600+</p>
+              <p className="font-bold text-elec-yellow whitespace-nowrap ml-4">£400 – £600+</p>
             </div>
             <div className="flex justify-between items-start">
               <div>
                 <p className="font-bold text-white">IP66 weatherproof socket (materials only)</p>
                 <p className="text-white text-sm">Double socket with hinged cover, trade price</p>
               </div>
-              <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£10 – £25</p>
+              <p className="font-bold text-elec-yellow whitespace-nowrap ml-4">£10 – £25</p>
             </div>
           </div>
         </div>
@@ -328,7 +328,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Through-wall</strong> — the simplest and cheapest route. A core drill
                 through the external wall directly behind the consumer unit, with the cable running
@@ -337,7 +337,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Surface-mounted SWA</strong> — SWA cable clipped to the external wall, along
                 a fence, or along a garden structure. No trenching required, but the cable is
@@ -346,7 +346,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Underground SWA</strong> — the preferred route for sockets positioned away
                 from the house. The trench must be at least 500mm deep (600mm under driveways).
@@ -385,7 +385,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person scheme</strong> — if the electrician is registered with
                 NICEIC, NAPIT, ELECSA, or another approved scheme, they can self-certify the work
@@ -395,7 +395,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Building Control notification</strong> — if the electrician is not
                 registered with a competent person scheme, the homeowner must apply to the local
@@ -474,7 +474,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -521,7 +521,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify outdoor socket installations"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={Plug}
         />
       </>
@@ -547,7 +547,7 @@ export default function OutdoorSocketInstallationCostPage() {
       heroTitle={
         <>
           Outdoor Socket Installation Cost:{' '}
-          <span className="text-yellow-400">UK Price Guide 2026</span>
+          <span className="text-elec-yellow">UK Price Guide 2026</span>
         </>
       }
       heroSubtitle="How much does it cost to install an outdoor socket in the UK? This guide covers typical prices from £150 to £400, IP66 rated sockets, SWA cable routes, RCD protection requirements, Part P notification, and trenching costs."
@@ -558,7 +558,7 @@ export default function OutdoorSocketInstallationCostPage() {
       faqHeading="Frequently Asked Questions About Outdoor Socket Installation Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Outdoor Socket Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. 7-day free trial, cancel anytime."
     />
   );
 }

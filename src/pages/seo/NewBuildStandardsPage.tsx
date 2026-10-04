@@ -196,7 +196,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>One charge point per dwelling.</strong> Every new home with associated
                 parking must have at least one EV charge point installed, rated at a minimum of 7
@@ -204,7 +204,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable routes for additional spaces.</strong> If the dwelling has more than
                 one parking space, cable routes (ducting or trunking) must be installed from the
@@ -213,7 +213,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Supply capacity.</strong> The electrical supply to the property must have
                 sufficient capacity to support the EV charge point without exceeding the maximum
@@ -222,7 +222,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Compliance with BS 7671.</strong> The EV charge point circuit must comply
                 with BS 7671 Section 722 (Electric Vehicle Charging Installations), including
@@ -263,7 +263,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Grade D1:</strong> Mains-powered detectors with integral standby battery and
                 interconnection (hardwired or wireless). All detectors must sound when any one
@@ -271,7 +271,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Category LD2:</strong> Detectors in all circulation spaces (hallways,
                 landings, staircases), the principal habitable room (living room), and rooms where
@@ -279,14 +279,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Category LD1:</strong> Detectors in all rooms except bathrooms, shower
                 rooms, and WCs. Required for three-storey dwellings and above.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Carbon monoxide alarms:</strong> Required in any room containing a
                 combustion appliance (gas boiler, wood burner, oil-fired appliance) under Part J.
@@ -375,7 +375,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lighting efficacy.</strong> SAP 10.2 (the current version) requires the
                 lighting specification to be assessed for energy efficiency. LED fittings are the
@@ -386,7 +386,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>100% low-energy lighting.</strong> To maximise the SAP score, specify 100%
                 LED or other low-energy lighting. This is now standard practice on new build sites.
@@ -396,7 +396,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Solar PV integration.</strong> Where the developer installs solar PV panels,
                 the electrician must connect the PV system to the consumer unit via an appropriate
@@ -434,7 +434,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical Installation Certificate (EIC).</strong> The EIC must be signed
                 by the designer, the installer, and the person who carried out the inspection and
@@ -443,7 +443,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Schedule of test results.</strong> Every circuit must be tested for
                 continuity of protective conductors (R1+R2), insulation resistance, polarity, earth
@@ -452,7 +452,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part P notification.</strong> If the electrician is registered with a
                 competent person scheme, the Part P notification is submitted through the scheme's
@@ -461,7 +461,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional certificates.</strong> Separate certificates may be required for
                 the EV charge point installation (Section 722 compliance), solar PV system (if
@@ -557,7 +557,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Brain className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI Board Scanner</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -615,7 +615,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Complete new build EICs on site"
-          description="Join 1,600+ UK electricians creating professional certificates on their phones. AI board scanner, voice entry, and instant PDF delivery. 7-day free trial."
+          description="Join 2,100+ UK electricians creating professional certificates on their phones. AI board scanner, voice entry, and instant PDF delivery. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -641,7 +641,7 @@ export default function NewBuildStandardsPage() {
       heroTitle={
         <>
           New Build Electrical Standards:{' '}
-          <span className="text-yellow-400">The Complete Building Regulations Guide</span>
+          <span className="text-elec-yellow">The Complete Building Regulations Guide</span>
         </>
       }
       heroSubtitle="Every new build dwelling in England and Wales must comply with Approved Document P, Part S (EV charging), Part B (fire detection), and BS 7671. This guide covers the electrical requirements, testing standards, and certification you need to get right on every plot."
@@ -652,7 +652,7 @@ export default function NewBuildStandardsPage() {
       faqHeading="Frequently Asked Questions About New Build Electrical Standards"
       relatedPages={relatedPages}
       ctaHeading="Complete New Build EICs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians creating professional Electrical Installation Certificates with AI board scanning, voice test entry, and instant delivery to developers. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians creating professional Electrical Installation Certificates with AI board scanning, voice test entry, and instant delivery to developers. 7-day free trial, cancel anytime."
     />
   );
 }

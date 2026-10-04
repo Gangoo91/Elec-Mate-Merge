@@ -202,7 +202,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Single-phase 7.4kW</strong>: the standard domestic charger. 32A dedicated
                 circuit, Type A or Type B RCD (depending on charger specification), earth electrode
@@ -210,14 +210,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Single-phase 3.6kW</strong>: used where the supply is limited or load
                 management reduces the charge rate. 16A circuit, same RCD and earthing requirements.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-phase 11kW or 22kW</strong>: commercial and some domestic
                 installations. Requires a three-phase supply and 16A or 32A three-phase circuit.
@@ -347,7 +347,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Installation earth electrode — method (b)</strong>: connect the main
                 earthing terminal of the installation to an installation earth electrode by a
@@ -362,7 +362,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Protective earth connection to structural earth</strong>: where the building
                 has a suitable structural earth (foundation earth electrode, steel-framed building),
@@ -370,7 +370,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth mat</strong>: a conductive mat installed beneath the standing area
                 where the user connects the vehicle, bonded to the charger earth. This ensures the
@@ -378,7 +378,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Charger with PEN fault detection</strong>: some modern chargers include
                 integral PEN fault detection that disconnects the supply if a PEN conductor failure
@@ -425,7 +425,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Info className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maximum demand assessment</strong>: before installing an EV charger, assess
                 the maximum demand of the existing installation (using diversity per the IET On-Site
@@ -433,7 +433,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Info className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smart charging</strong>: the Electric Vehicles (Smart Charge Points)
                 Regulations 2021 require that domestic EV chargers must be "smart" — capable of
@@ -442,7 +442,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Info className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dynamic load management</strong>: a CT clamp on the meter tails monitors the
                 total installation demand in real time. The charger reduces its charge rate when
@@ -471,7 +471,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SWA cable</strong>: steel wire armoured cable is the standard choice for
                 outdoor runs (driveway, garage, car port). 4mm² 3-core SWA is typically suitable for
@@ -480,7 +480,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Twin and earth</strong>: 6mm² twin and earth (6242Y) is suitable for
                 internal runs (Reference Method C) up to approximately 26m. For longer runs or
@@ -488,7 +488,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Voltage drop</strong>: Table 4Ab of Appendix 4 gives 3% for lighting and 5%
                 for other uses, measured from the origin of the installation, for a low voltage
@@ -523,7 +523,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP rating</strong>: outdoor EV chargers must be rated at least IP54
                 (protection against dust ingress and water splashing from any direction). Most
@@ -531,14 +531,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mechanical protection</strong>: chargers on driveways or car parks must be
                 protected against vehicle impact. Bollards or a raised plinth are common solutions.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable burial depth</strong>: underground SWA cable must be buried at a
                 minimum depth of 500mm (600mm under roads) and protected by cable tiles or ducting.
@@ -562,41 +562,41 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Continuity of protective conductors (including SWA armour if applicable)</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Insulation resistance (500V DC, minimum 1 megohm)</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Polarity verification</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Earth electrode resistance (where a local earth electrode is installed for TT
                 arrangement)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Earth fault loop impedance (Zs) — note the maximum Zs for TT with 30mA RCD
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 RCD operation — a single alternating current test at the rated residual operating
-                current (IΔn). A4:2026 deleted Table 3A from Appendix 3, so the old ½x / 1x / 5x
+                current (IΔn). A2:2022 deleted Table 3A from Appendix 3, so the old ½x / 1x / 5x
                 sequence no longer applies. Regulation 643.8 deems the RCD verified where it
                 disconnects within 300 ms for a general non-delay type
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Functional test — verify the charger communicates with the vehicle and charges
               </span>
@@ -636,7 +636,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Cable Sizing for EV Circuits</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -691,7 +691,7 @@ export default function Section722EVChargingGuidePage() {
       heroTitle={
         <>
           Section 722 EV Charging:{' '}
-          <span className="text-yellow-400">Complete BS 7671 Electric Vehicle Guide</span>
+          <span className="text-elec-yellow">Complete BS 7671 Electric Vehicle Guide</span>
         </>
       }
       heroSubtitle="Everything you need to know about EV charger installations under BS 7671 Section 722. Dedicated circuits, RCD selection, PME earthing restrictions under Regulation 722.411.4.1, earth electrodes, load management, and cable sizing."
@@ -707,7 +707,7 @@ export default function Section722EVChargingGuidePage() {
       faqHeading="Frequently Asked Questions About Section 722 EV Charging"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Certify EV Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EV charger cable sizing, quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for EV charger cable sizing, quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

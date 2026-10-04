@@ -17,6 +17,7 @@ import { retrieveRegulations } from '../_shared/rag-retrieval.ts';
 import { DESIGNER_RESPONSE_SCHEMA } from '../_shared/response-schemas.ts';
 import { validateCitations, correctCommonErrors } from '../_shared/citation-validator.ts';
 import { enrichResponse } from '../_shared/response-enricher.ts';
+import { fetchChatCompletions } from '../_shared/llm-direct.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -109,10 +110,10 @@ serve(async (req) => {
       throw new Error('OPENAI_API_KEY not configured');
     }
 
-    // Get Lovable API key for completion
-    const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
-    if (!LOVABLE_API_KEY) {
-      throw new Error('LOVABLE_API_KEY not configured');
+    // AI key (OpenAI / Gemini direct — ELE-1812)
+    const AI_API_KEY = Deno.env.get('OPENAI_API_KEY');
+    if (!AI_API_KEY) {
+      throw new Error('OPENAI_API_KEY not configured');
     }
 
     // ⚡ PHASE 1: DETERMINISTIC DESIGN with GPT-5 synthesis
@@ -250,7 +251,7 @@ serve(async (req) => {
       const { callAIWithFallback } = await import('../_shared/ai-wrapper.ts');
       
       const aiResult = await callAIWithFallback(
-        LOVABLE_API_KEY!,
+        AI_API_KEY!,
         {
           model: 'google/gemini-2.5-flash',
           systemPrompt: `You are a MASTER ELECTRICIAN with 20+ years BS 7671:2018+A3:2024 experience.
@@ -471,10 +472,10 @@ Provide a comprehensive electrical design response that addresses the query comp
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 10000);
 
-        const gptResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+        const gptResponse = await fetchChatCompletions({
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${LOVABLE_API_KEY}`,
+            'Authorization': `Bearer ${AI_API_KEY}`,
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
@@ -577,7 +578,7 @@ Respond conversationally like an experienced electrician guiding a client. Be fr
         if (!aiResponse.ok) {
           const errorText = await aiResponse.text();
           logger.error('GPT-5 API error', { status: aiResponse.status, error: errorText });
-          throw new Error(`Lovable AI error: ${aiResponse.status}`);
+          throw new Error(`AI error: ${aiResponse.status}`);
         }
 
         const aiData = await aiResponse.json();
@@ -687,13 +688,13 @@ You NEVER:
       });
 
       if (!aiResponse.ok) {
-        throw new Error(`Lovable AI error: ${aiResponse.status}`);
+        throw new Error(`AI error: ${aiResponse.status}`);
       }
 
       const aiData = await aiResponse.json();
       
       if (!aiData.choices || aiData.choices.length === 0 || !aiData.choices[0]?.message?.content) {
-        throw new Error('Lovable AI returned empty response');
+        throw new Error('AI returned empty response');
       }
 
       const narrative = aiData.choices[0].message.content;
@@ -708,12 +709,12 @@ You NEVER:
           content: r.content.substring(0, 200),
           relevance: r.similarity || 0.7
         })),
-        source: 'rag_with_lovable_ai'
+        source: 'rag_with_ai'
       }), { status: 200, headers: corsHeaders });
 
     } catch (error) {
       // Fallback to raw RAG if AI fails
-      logger.warn('Lovable AI failed, using RAG fallback', { error: error.message });
+      logger.warn('AI failed, using RAG fallback', { error: error.message });
       
       return new Response(JSON.stringify({
         success: true,

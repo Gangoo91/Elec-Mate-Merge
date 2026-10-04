@@ -186,7 +186,7 @@ const sections = [
           </h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Simple installation (modern semi/detached, short cable run)</strong> — £800
                 to £1,100. Suburban Edinburgh: Corstorphine, Liberton, Morningside newer-build
@@ -194,7 +194,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard installation (inter-war semi, 8–15m cable run)</strong> — £1,050 to
                 £1,300. Common across south Edinburgh suburbs: Marchmont, Bruntsfield, Morningside
@@ -202,7 +202,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Complex installation (tenement, long run, stone walls, earth rod)</strong> —
                 £1,300 to £1,800+. Georgian and Victorian properties in the New Town, Old Town,
@@ -243,7 +243,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Off-peak tariff scheduling</strong> — Edinburgh households on Octopus Go,
                 EDF GoElectric, or similar tariffs can cut overnight charging costs by 50 to 70%
@@ -251,7 +251,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Solar integration</strong> — for Edinburgh homes with solar PV (less common
                 than in southern England, but growing), smart chargers like Zappi can divert surplus
@@ -259,7 +259,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Remote monitoring</strong> — app control allows Edinburgh commuters to
                 schedule charging to complete before their morning departure, ensuring a full charge
@@ -285,7 +285,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Building Standards, not Part P</strong> — Scotland does not use the Part P
                 competent person scheme. Electrical work is notifiable under the Building (Scotland)
@@ -294,7 +294,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>City of Edinburgh Council Building Standards</strong> — the relevant
                 authority for building standards notifications in Edinburgh. Confirm your
@@ -303,7 +303,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PME earthing (Regulation 722.411.4.1)</strong> — most Edinburgh properties
                 are on PME supplies. Outdoor EV charging on a PME supply requires an earth rod or
@@ -329,7 +329,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Listed Building Consent</strong> — installing a charger on the external wall
                 of a listed building, or routing cables through the fabric of a listed building, may
@@ -338,7 +338,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Conservation area restrictions</strong> — even in conservation areas where
                 the building is not individually listed, permitted development rights may be
@@ -347,7 +347,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Internal routing</strong> — where external mounting is restricted, internal
                 cable routing from the consumer unit to a garage or rear parking area may be the
@@ -355,7 +355,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Stone walls</strong> — traditional Edinburgh stone construction makes wall
                 chasing for concealed cable runs extremely difficult and time-consuming. Surface
@@ -379,21 +379,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98 (standard domestic 7kW)</strong> — notification via SPEN online portal.
                 No prior approval needed. Can proceed after submitting notification.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G99 (three-phase/commercial)</strong> — prior approval required, 4 to 10
                 weeks. For 22kW three-phase chargers and multi-unit installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Installer responsibility</strong> — the installing electrician submits the
                 notification. Confirm it is included in your quote. Failure to notify SPEN before
@@ -414,7 +414,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>OZEV EV chargepoint grant</strong> — up to £350 for flat owners and tenants.
                 Available to Edinburgh tenement flat owners. The OZEV-approved installer applies on
@@ -422,7 +422,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ChargePlace Scotland</strong> — Transport Scotland's public charging network
                 provides an alternative for Edinburgh residents who cannot install a home charger.
@@ -431,7 +431,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Workplace Charging Scheme</strong> — Edinburgh businesses can claim up to
                 £350 per socket (up to 40 sockets) for workplace EV charger installations via the
@@ -457,7 +457,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Pricing Edinburgh Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -489,7 +489,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify Edinburgh EV installations"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification."
           icon={Car}
         />
       </>
@@ -515,7 +515,7 @@ export default function EVChargerInstallationEdinburghPage() {
       heroTitle={
         <>
           EV Charger Installation Edinburgh:{' '}
-          <span className="text-yellow-400">Costs, DNO, and Scottish Regulations 2026</span>
+          <span className="text-elec-yellow">Costs, DNO, and Scottish Regulations 2026</span>
         </>
       }
       heroSubtitle="Local costs for EV charger installation in Edinburgh, SPEN DNO notification, OZEV grant, Scottish Building Standards vs Part P, conservation area and listed building guidance, and Section 722 compliance."
@@ -526,7 +526,7 @@ export default function EVChargerInstallationEdinburghPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in Edinburgh"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify EV Charger Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

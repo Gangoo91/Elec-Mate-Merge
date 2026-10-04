@@ -129,7 +129,7 @@ const sections = [
         <div className="space-y-4 mt-6">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-center gap-2 mb-3">
-              <Scale className="w-5 h-5 text-yellow-400" />
+              <Scale className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">
                 Health and Safety at Work etc. Act 1974
               </h3>
@@ -146,7 +146,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <Scale className="w-5 h-5 text-yellow-400" />
+              <Scale className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Electricity at Work Regulations 1989</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -161,7 +161,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <Scale className="w-5 h-5 text-yellow-400" />
+              <Scale className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">
                 Regulatory Reform (Fire Safety) Order 2005
               </h3>
@@ -177,7 +177,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <Shield className="w-5 h-5 text-yellow-400" />
+              <Shield className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Insurance Requirements</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -216,17 +216,17 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Planning Considerations</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Access to distribution boards</strong> — Are all
+                <strong className="text-elec-yellow">Access to distribution boards</strong> — Are all
                 boards accessible during normal working hours? Are keys required? Are any boards in
                 restricted areas (server rooms, plant rooms, roof areas)?
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Disruption to operations</strong> — Testing
+                <strong className="text-elec-yellow">Disruption to operations</strong> — Testing
                 requires circuits to be disconnected. Which circuits can be tested during normal
                 working hours and which require out-of-hours access? IT server circuits,
                 refrigeration circuits, and security circuits often cannot be disconnected during
@@ -234,26 +234,26 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Previous reports</strong> — Obtain the previous
+                <strong className="text-elec-yellow">Previous reports</strong> — Obtain the previous
                 EICR if available. It provides baseline data, highlights known issues, and allows
                 comparison of test results over time to identify deterioration trends.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Schematic drawings</strong> — Request any
+                <strong className="text-elec-yellow">Schematic drawings</strong> — Request any
                 available drawings of the installation, including single-line diagrams, distribution
                 board schedules, and cable route drawings. These significantly speed up the
                 inspection process.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">
+                <strong className="text-elec-yellow">
                   <SEOInternalLink href="/guides/safe-isolation-procedure">
                     Safe isolation arrangements
                   </SEOInternalLink>
@@ -284,7 +284,7 @@ const sections = [
         <div className="space-y-4 mt-6">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-center gap-2 mb-3">
-              <Zap className="w-5 h-5 text-yellow-400" />
+              <Zap className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Phase Rotation</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -298,7 +298,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <Zap className="w-5 h-5 text-yellow-400" />
+              <Zap className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Prospective Fault Current (PFC)</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -316,7 +316,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <Zap className="w-5 h-5 text-yellow-400" />
+              <Zap className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Earth Fault Loop Impedance (Zs)</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -331,7 +331,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <Zap className="w-5 h-5 text-yellow-400" />
+              <Zap className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Insulation Resistance</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -408,41 +408,41 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">EICR Documentation Package</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">EICR form</strong> — Completed per BS 7671
+                <strong className="text-elec-yellow">EICR form</strong> — Completed per BS 7671
                 including all sections: details of the installation, extent and limitations, supply
                 characteristics, earthing and bonding arrangements, general characteristics,
                 observations, and overall assessment.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Schedule of test results</strong> — For every
+                <strong className="text-elec-yellow">Schedule of test results</strong> — For every
                 distribution board inspected, recording continuity, insulation resistance, polarity,
                 earth fault loop impedance, PFC, and RCD test results for each circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Schedule of items inspected</strong> — A
+                <strong className="text-elec-yellow">Schedule of items inspected</strong> — A
                 detailed checklist of all items visually inspected, confirming their condition.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Observations and recommendations</strong> — Each
+                <strong className="text-elec-yellow">Observations and recommendations</strong> — Each
                 observation coded (C1, C2, C3, FI) with a clear description of the defect, its
                 location, and the recommended remedial action.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Accompanying photographs</strong> — For
+                <strong className="text-elec-yellow">Accompanying photographs</strong> — For
                 commercial EICRs, photographs of significant defects, distribution boards, earthing
                 arrangements, and general installation condition are expected.
               </span>
@@ -479,31 +479,31 @@ const sections = [
           <div className="space-y-3">
             <div className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <span className="text-white font-medium">Offices, shops, hotels</span>
-              <span className="text-yellow-400 font-bold">Every 5 years</span>
+              <span className="text-elec-yellow font-bold">Every 5 years</span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
               <span className="text-white font-medium">Industrial, manufacturing</span>
-              <span className="text-yellow-400 font-bold">Every 3 years</span>
+              <span className="text-elec-yellow font-bold">Every 3 years</span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
               <span className="text-white font-medium">Cinemas, restaurants, pubs</span>
-              <span className="text-yellow-400 font-bold">Every 3 years</span>
+              <span className="text-elec-yellow font-bold">Every 3 years</span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
               <span className="text-white font-medium">Agricultural, horticultural</span>
-              <span className="text-yellow-400 font-bold">Every 3 years</span>
+              <span className="text-elec-yellow font-bold">Every 3 years</span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
               <span className="text-white font-medium">Construction sites</span>
-              <span className="text-yellow-400 font-bold">Every 3 months</span>
+              <span className="text-elec-yellow font-bold">Every 3 months</span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
               <span className="text-white font-medium">Petrol stations, launderettes</span>
-              <span className="text-yellow-400 font-bold">Every 1 year</span>
+              <span className="text-elec-yellow font-bold">Every 1 year</span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
               <span className="text-white font-medium">Swimming pools, marinas</span>
-              <span className="text-yellow-400 font-bold">Every 1 year</span>
+              <span className="text-elec-yellow font-bold">Every 1 year</span>
             </div>
           </div>
         </div>
@@ -531,7 +531,7 @@ const sections = [
         <div className="space-y-4 mt-6">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Lack of Main Bonding</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -545,7 +545,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Inadequate RCD Protection</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -559,7 +559,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Poor Labelling</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -576,7 +576,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Overcrowded Distribution Boards</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -662,7 +662,7 @@ export default function CommercialEICRGuidePage() {
       heroTitle={
         <>
           Commercial EICR Guide:{' '}
-          <span className="text-yellow-400">Industrial Inspection & Testing</span>
+          <span className="text-elec-yellow">Industrial Inspection & Testing</span>
         </>
       }
       heroSubtitle="The complete guide to commercial and industrial EICRs in the UK. Legal requirements, three-phase testing, larger installations, documentation standards, costs, inspection frequency, and common findings — everything you need to deliver professional commercial inspections."
@@ -672,7 +672,7 @@ export default function CommercialEICRGuidePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Professional commercial EICR tools"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for BS 7671-compliant EICR documentation, multi-board test result schedules, and professional PDF export. Impress building managers with documentation that stands up to scrutiny. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for BS 7671-compliant EICR documentation, multi-board test result schedules, and professional PDF export. Impress building managers with documentation that stands up to scrutiny. 7-day free trial, cancel anytime."
     />
   );
 }

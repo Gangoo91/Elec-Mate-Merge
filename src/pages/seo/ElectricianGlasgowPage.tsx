@@ -181,7 +181,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Building (Scotland) Act 2003</strong> — this is the primary legislation
                 governing building work in Scotland, including electrical installation work. The
@@ -190,7 +190,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Building warrants</strong> — in Scotland, a building warrant (equivalent to
                 building regulations approval in England) is required for certain types of
@@ -200,7 +200,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Completion certificates</strong> — after work is complete, a completion
                 certificate is submitted to the local authority. The authority may inspect the work
@@ -210,7 +210,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No competent person scheme equivalent</strong> — Scotland does not have a
                 direct equivalent of the England/Wales competent person self-certification scheme.
@@ -242,7 +242,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SELECT membership</strong> — check the SELECT website (select.org.uk) to
                 verify membership. SELECT members are assessed regularly, must carry appropriate
@@ -251,7 +251,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC or NAPIT registration</strong> — these England-based schemes also
                 operate in Scotland. If your Glasgow electrician is NICEIC or NAPIT registered
@@ -260,7 +260,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SJIB (Scottish Joint Industry Board) card</strong> — the Scottish equivalent
                 of the ECS card. A SJIB Electrician card (blue) or Installation Electrician card
@@ -269,7 +269,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Public liability insurance</strong> — minimum £1 million cover, ideally £2
                 million. Tenement properties (where damage to one flat can affect neighbouring
@@ -294,7 +294,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full rewire (2-bed tenement flat)</strong> — £3,500 to £6,000 including new
                 consumer unit, all circuits, sockets, switches, lighting, testing, and
@@ -304,7 +304,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full rewire (3-bed semi-detached)</strong> — £4,000 to £6,500 including all
                 circuits, consumer unit, testing, and certification. Post-war semis in areas like
@@ -312,21 +312,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacement</strong> — £400 to £650 including isolation, new
                 compliant unit, testing, and certification.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR</strong> — £140 to £250 depending on property size and age. Older
                 tenement flats with original or partially updated wiring take longer to inspect.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger installation</strong> — £600 to £1,100 for a 7kW home charger.
                 Properties with driveways (typically suburban Glasgow) are straightforward. Tenement
@@ -334,7 +334,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency call-out</strong> — £90 to £160 for the first hour including
                 travel, plus £35 to £55 per additional hour.
@@ -429,7 +429,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Your DNO is SPEN</strong> — SP Energy Networks (part of ScottishPower) is
                 the DNO for Glasgow. Contact SPEN for new connections, supply upgrades, and fault
@@ -438,7 +438,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New connections</strong> — apply through your DNO's website. Glasgow lead
                 times are typically 4 to 8 weeks for standard domestic connections. Three-phase
@@ -446,14 +446,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98/G99 notifications</strong> — required for solar PV, battery storage, and
                 generation equipment. Submit to SPEN. G98 covers systems up to 16A per phase.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tenement shared supplies</strong> — in older Glasgow tenements, the
                 electricity supply arrangement can be complex. The main supply enters through the
@@ -480,7 +480,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What SELECT membership means</strong> — SELECT members must demonstrate
                 technical competence, carry appropriate insurance, use qualified electricians (SJIB
@@ -490,7 +490,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Finding a SELECT member</strong> — use the online search tool at
                 select.org.uk to find registered electrical contractors in the Glasgow area. You can
@@ -498,7 +498,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SELECT vs NICEIC/NAPIT in Scotland</strong> — all three bodies operate in
                 Scotland and all provide valid quality assurance. However, SELECT has the strongest
@@ -532,7 +532,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Users className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Key Opportunities</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -579,7 +579,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Glasgow electrical business"
-          description="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Complete EICRs and EICs on site…"
+          description="Join 2,100+ UK electricians using Elec-Mate for quoting, certification, and job management. Complete EICRs and EICs on site…"
           icon={MapPin}
         />
       </>
@@ -606,7 +606,7 @@ export default function ElectricianGlasgowPage() {
       heroTitle={
         <>
           Electrician in Glasgow:{' '}
-          <span className="text-yellow-400">Qualified Electricians in 2026</span>
+          <span className="text-elec-yellow">Qualified Electricians in 2026</span>
         </>
       }
       heroSubtitle="How to find a registered electrician in Glasgow, with critical information about Scottish building regulations (Part P does NOT apply in Scotland), SELECT membership, SPEN connections, tenement rewiring challenges, and realistic local pricing."
@@ -617,7 +617,7 @@ export default function ElectricianGlasgowPage() {
       faqHeading="Frequently Asked Questions About Electricians in Glasgow"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site and send instant PDFs to Glasgow factors and letting agents. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site and send instant PDFs to Glasgow factors and letting agents. 7-day free trial."
     />
   );
 }

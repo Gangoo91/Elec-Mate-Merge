@@ -179,27 +179,27 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Conductor Functions</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">Line (Brown):</strong> The conductor that
+                <strong className="text-elec-yellow">Line (Brown):</strong> The conductor that
                 carries current from the supply to the load. This conductor is at mains potential
                 (230V AC) relative to earth. All single-pole switching devices must be connected in
                 this conductor.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">Neutral (Blue):</strong> The return path for
+                <strong className="text-elec-yellow">Neutral (Blue):</strong> The return path for
                 current from the load back to the supply transformer. Under normal conditions, the
                 neutral is at or near earth potential. It must not be switched by single-pole
                 devices.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">Earth (Green/Yellow):</strong> The protective
+                <strong className="text-elec-yellow">Earth (Green/Yellow):</strong> The protective
                 conductor that provides a path for fault current to flow back to the source,
                 enabling the protective device to operate and disconnect the supply. It must be
                 connected to the earthing terminal of every accessory.
@@ -233,7 +233,7 @@ const sections = [
         </p>
         <div className="grid sm:grid-cols-3 gap-4 my-6">
           <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-            <Eye className="w-6 h-6 text-yellow-400 mb-3" />
+            <Eye className="w-6 h-6 text-elec-yellow mb-3" />
             <h3 className="font-bold text-white text-lg mb-2">Visual Inspection</h3>
             <p className="text-white text-sm leading-relaxed">
               Check conductor colours at every accessible termination point. Confirm that brown
@@ -242,7 +242,7 @@ const sections = [
             </p>
           </div>
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <Gauge className="w-6 h-6 text-yellow-400 mb-3" />
+            <Gauge className="w-6 h-6 text-elec-yellow mb-3" />
             <h3 className="font-bold text-white text-lg mb-2">Continuity Method</h3>
             <p className="text-white text-sm leading-relaxed">
               Use a low-resistance ohmmeter to confirm continuity between the line terminal at the
@@ -251,7 +251,7 @@ const sections = [
             </p>
           </div>
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <Activity className="w-6 h-6 text-yellow-400 mb-3" />
+            <Activity className="w-6 h-6 text-elec-yellow mb-3" />
             <h3 className="font-bold text-white text-lg mb-2">Instrument Testing</h3>
             <p className="text-white text-sm leading-relaxed">
               Use a voltage indicator or approved test lamp (GS38 compliant) to confirm live
@@ -294,9 +294,9 @@ const sections = [
             <table className="w-full text-sm border-collapse">
               <thead>
                 <tr className="border-b border-white/15 text-left">
-                  <th className="py-2 pr-4 font-semibold text-yellow-400">Conductor</th>
-                  <th className="py-2 pr-4 font-semibold text-yellow-400">Colour</th>
-                  <th className="py-2 font-semibold text-yellow-400">Lands on</th>
+                  <th className="py-2 pr-4 font-semibold text-elec-yellow">Conductor</th>
+                  <th className="py-2 pr-4 font-semibold text-elec-yellow">Colour</th>
+                  <th className="py-2 font-semibold text-elec-yellow">Lands on</th>
                 </tr>
               </thead>
               <tbody className="text-white">
@@ -393,7 +393,7 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
-            <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-2">
                 OSG Method: Temporary Shorting Link (Lighting Circuits)
@@ -439,9 +439,9 @@ const sections = [
         <p>The most common methods of live polarity verification are:</p>
         <ul className="space-y-3 my-4">
           <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
-              <strong className="text-yellow-400">Approved voltage indicator</strong> — a{' '}
+              <strong className="text-elec-yellow">Approved voltage indicator</strong> — a{' '}
               <SEOInternalLink href="/guides/safe-isolation-procedure">
                 GS38-compliant
               </SEOInternalLink>{' '}
@@ -451,18 +451,18 @@ const sections = [
             </span>
           </li>
           <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
-              <strong className="text-yellow-400">Plug-in socket tester</strong> — a quick-check
+              <strong className="text-elec-yellow">Plug-in socket tester</strong> — a quick-check
               device that plugs into a 13A socket outlet and uses indicator LEDs to show whether
               polarity is correct, reversed, or if the earth is missing. Useful for rapid screening
               during periodic inspection but has limitations.
             </span>
           </li>
           <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
-              <strong className="text-yellow-400">Multifunction tester voltage function</strong> —
+              <strong className="text-elec-yellow">Multifunction tester voltage function</strong> —
               most MFTs include a voltage measurement function that can be used to confirm polarity
               by measuring between conductors at accessible points.
             </span>
@@ -503,9 +503,9 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">Initial verification</strong> — every circuit in
+                <strong className="text-elec-yellow">Initial verification</strong> — every circuit in
                 a new installation must have polarity verified before the{' '}
                 <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> is issued. This
                 includes every socket outlet, every switch, every light fitting, and every fixed
@@ -513,9 +513,9 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">Additions and alterations</strong> — any new
+                <strong className="text-elec-yellow">Additions and alterations</strong> — any new
                 circuit or modification to an existing circuit must have polarity verified. This
                 applies to{' '}
                 <SEOInternalLink href="/minor-works-certificate">minor works</SEOInternalLink> as
@@ -523,18 +523,18 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">Periodic inspection (EICR)</strong> — polarity
+                <strong className="text-elec-yellow">Periodic inspection (EICR)</strong> — polarity
                 is checked as part of the inspection and testing regime. The extent of polarity
                 testing on an EICR depends on the agreed scope and extent, but it should cover a
                 representative sample of every circuit type.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">After any modification</strong> — if any
+                <strong className="text-elec-yellow">After any modification</strong> — if any
                 conductors have been disconnected and reconnected (for example, during a consumer
                 unit change), polarity must be reverified on every affected circuit.
               </span>
@@ -635,9 +635,9 @@ const sections = [
             <table className="w-full text-sm border-collapse">
               <thead>
                 <tr className="border-b border-white/15 text-left">
-                  <th className="py-2 pr-4 font-semibold text-yellow-400">Polarity fault</th>
-                  <th className="py-2 pr-4 font-semibold text-yellow-400">Why it is dangerous</th>
-                  <th className="py-2 font-semibold text-yellow-400">Typical EICR code</th>
+                  <th className="py-2 pr-4 font-semibold text-elec-yellow">Polarity fault</th>
+                  <th className="py-2 pr-4 font-semibold text-elec-yellow">Why it is dangerous</th>
+                  <th className="py-2 font-semibold text-elec-yellow">Typical EICR code</th>
                 </tr>
               </thead>
               <tbody className="text-white">
@@ -674,7 +674,7 @@ const sections = [
               </tbody>
             </table>
           </div>
-          <p className="text-white/70 text-xs mt-4 leading-relaxed">
+          <p className="text-white text-xs mt-4 leading-relaxed">
             Codes shown are typical classifications. The final code is always a matter of the
             inspecting electrician&rsquo;s judgement for the specific circumstances on site.
           </p>
@@ -735,7 +735,7 @@ export default function PolarityTestingGuidePage() {
         <>
           Polarity Testing Procedure
           <br />
-          <span className="text-yellow-400">Complete Guide for UK Electricians</span>
+          <span className="text-elec-yellow">Complete Guide for UK Electricians</span>
         </>
       }
       heroSubtitle="Polarity verification confirms that line, neutral, and earth conductors are correctly connected at every point in an installation. This guide covers why polarity matters, the three verification methods, common faults, and how to record results correctly on EIC and EICR certificates."
@@ -752,7 +752,7 @@ export default function PolarityTestingGuidePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Never Miss a Polarity Check Again"
-      ctaSubheading="Elec-Mate captures polarity verification on every circuit, auto-validates test results against BS 7671, and flags incomplete testing. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate captures polarity verification on every circuit, auto-validates test results against BS 7671, and flags incomplete testing. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

@@ -188,28 +188,28 @@ const sections = [
           <h4 className="font-bold text-white mb-3">Key Ring Circuit Characteristics</h4>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Current flows in both directions from the consumer unit to the load, taking the path
                 of least resistance (which is proportional to cable length).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 The maximum fault loop impedance (R1+R2) occurs at the midpoint of the ring — this
                 is the point furthest from the consumer unit by both paths.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Each socket can supply up to 13A (limited by the plug fuse). The 32A MCB protects
                 the cable, not the individual socket load.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 If the ring is broken (one leg disconnected), the circuit becomes a radial — all
                 current flows through one path. The 2.5mm2 cable may be overloaded if the total load
@@ -302,14 +302,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BarChart3 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart3 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Living room ring</strong> — TV, lamp, phone charger, laptop. Typical actual
                 load: 3-5A. Well within the 32A ring capacity.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BarChart3 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart3 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>
                   <SEOInternalLink href="/guides/kitchen-wiring-guide">Kitchen</SEOInternalLink>{' '}
@@ -321,7 +321,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BarChart3 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart3 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bedroom ring</strong> — chargers, bedside lamps, TV, hair dryer (13A
                 briefly). Typical actual load: 2-4A.
@@ -472,7 +472,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Unfused spurs</strong> — can feed one single socket outlet or one double
                 socket outlet (one accessory). The spur cable must be 2.5mm2 (same size as the
@@ -481,7 +481,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fused spurs</strong> — a fused connection unit (FCU) with a 13A or lower
                 fuse can feed multiple sockets, a fixed appliance, or other loads. The fuse protects
@@ -491,7 +491,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maximum number</strong> — the total number of unfused spurs should not
                 exceed the total number of sockets (or junction boxes) on the ring itself. This is a
@@ -525,7 +525,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large floor areas</strong> — rooms or open-plan spaces exceeding 75m2
                 require a ring (100m2 limit) or multiple radials. A single ring is simpler than two
@@ -533,7 +533,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Long cable runs with voltage drop concerns</strong> — the ring topology
                 reduces voltage drop because current flows in both directions. For long runs with
@@ -546,7 +546,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Existing ring installations</strong> — when adding sockets or making
                 alterations to an existing ring, it is often simpler to extend the ring rather than
@@ -555,7 +555,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Budget constraints</strong> — 2.5mm2 cable is less expensive than 4.0mm2
                 cable. On a large installation with many circuits, the material cost saving from
@@ -602,7 +602,7 @@ export default function RingMainExplainedPage() {
       heroTitle={
         <>
           Ring Main Explained:{' '}
-          <span className="text-yellow-400">The Complete Ring Final Circuit Guide</span>
+          <span className="text-elec-yellow">The Complete Ring Final Circuit Guide</span>
         </>
       }
       heroSubtitle="The ring final circuit is unique to the UK. This guide explains how ring circuits work, how to test them properly using the figure-of-eight method, common ring faults, the rules for spurs, and the ongoing ring vs radial debate."
@@ -613,7 +613,7 @@ export default function RingMainExplainedPage() {
       faqHeading="Frequently Asked Questions About Ring Final Circuits"
       relatedPages={relatedPages}
       ctaHeading="Test and Certify With Confidence"
-      ctaSubheading="Elec-Mate's EICR and EIC apps include complete ring circuit test schedules with voice entry and automatic validation. Join 1,600+ UK electricians. 7-day free trial, cancel anytime."
+      ctaSubheading="Elec-Mate's EICR and EIC apps include complete ring circuit test schedules with voice entry and automatic validation. Join 2,100+ UK electricians. 7-day free trial, cancel anytime."
     />
   );
 }

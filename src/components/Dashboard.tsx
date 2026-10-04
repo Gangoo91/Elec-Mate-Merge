@@ -39,6 +39,8 @@ import { useDesignedCircuits } from '@/hooks/useDesignedCircuits';
 import { useQsTeamContext } from '@/hooks/useQsReview';
 import { useQsPendingCount } from '@/hooks/useQsReviewQueue';
 import { useHaptic } from '@/hooks/useHaptic';
+import { useUiPreferences } from '@/hooks/useUiPreferences';
+import { CertificatePrefillStrip } from '@/components/inspection/CertificatePrefillStrip';
 import { CARD_BASE, CARD_PRIMARY, CARD_NEUTRAL } from '@/components/ui/card-recipe';
 
 // ─────────────────────────────────────────────────────────────────────────
@@ -394,6 +396,8 @@ const Dashboard = ({
   const navigate = useNavigate();
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
+  // Settings → App "Default certificate type" — read here, used by Start a cert.
+  const { preferences: uiPrefs } = useUiPreferences();
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => setUser(user));
@@ -488,8 +492,7 @@ const Dashboard = ({
       title: 'Certificates',
       description: 'EICR, EIC and Minor Works.',
       onClick: () => onNavigate('certificates'),
-      meta:
-        inProgressCount > 0 ? `${inProgressCount} in progress` : '4 core types',
+      meta: inProgressCount > 0 ? `${inProgressCount} in progress` : '4 core types',
     },
     {
       /*
@@ -616,7 +619,9 @@ const Dashboard = ({
   // First entry in a session: hold the page until the two queries that shape
   // it (certificates, Building Control alert) are in, then show it whole.
   // Cached data renders immediately; the skeleton keeps the masthead in place.
-  const settling = (reportsLoading && !reportsData) || (notificationsLoading && notifications.length === 0 && !reportsData);
+  const settling =
+    (reportsLoading && !reportsData) ||
+    (notificationsLoading && notifications.length === 0 && !reportsData);
   if (settling) {
     return (
       <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-elec-dark min-h-screen pb-24">
@@ -627,7 +632,10 @@ const Dashboard = ({
             <div className="h-[18px] w-24 rounded bg-white/[0.06]" />
             <div className="grid grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-4">
               {[0, 1, 2, 3].map((i) => (
-                <div key={i} className="h-[74px] rounded-2xl border border-white/[0.08] bg-white/[0.03]" />
+                <div
+                  key={i}
+                  className="h-[74px] rounded-2xl border border-white/[0.08] bg-white/[0.03]"
+                />
               ))}
             </div>
           </div>
@@ -639,6 +647,64 @@ const Dashboard = ({
       </div>
     );
   }
+
+  // "Default certificate type" (Settings → App) leads the row as the volt card.
+  // It used to only reorder the old type picker, retired 4 Oct 2026 — this is
+  // where people start a cert now, so this is where the setting has to show.
+  const startCertItems: QuickLaunch[] = (() => {
+    const core: (QuickLaunch & { id: string })[] = [
+      {
+        id: 'eicr',
+        title: 'EICR',
+        description: 'Periodic inspection of an existing installation.',
+        onClick: () => onNavigate('eicr'),
+      },
+      {
+        id: 'eic',
+        title: 'EIC',
+        description: 'Initial verification of a new install.',
+        onClick: () => onNavigate('eic'),
+      },
+      {
+        id: 'minor-works',
+        title: 'Minor Works',
+        description: 'Additions and alterations to a circuit.',
+        onClick: () => onNavigate('minor-works'),
+      },
+    ];
+    const specialist: Record<string, { title: string; description: string }> = {
+      'fire-alarm': { title: 'Fire Alarm', description: 'BS 5839 detection and warning systems.' },
+      'emergency-lighting': {
+        title: 'Emergency Lighting',
+        description: 'BS 5266 safety illumination.',
+      },
+      'ev-charging': { title: 'EV Charging', description: 'Charge point installation.' },
+      'solar-pv': { title: 'Solar PV', description: 'Photovoltaic system certificate.' },
+      'pat-testing': { title: 'PAT Testing', description: 'Portable appliance testing.' },
+    };
+    const def = uiPrefs.default_cert_type;
+    const allTypes = {
+      title: 'All cert types',
+      description: 'Fire, EV, solar, BESS, lightning, PAT and more.',
+      onClick: () => onNavigate('specialist'),
+    };
+    const coreIdx = core.findIndex((c) => c.id === def);
+    if (coreIdx >= 0) {
+      const ordered = [core[coreIdx], ...core.filter((_, i) => i !== coreIdx)];
+      return [...ordered.map((c, i) => ({ ...c, primary: i === 0 })), allTypes];
+    }
+    if (specialist[def]) {
+      // A specialist default replaces Minor Works in the row of four — the
+      // least-used core type — and leads it; Minor Works stays one tap away.
+      return [
+        { ...specialist[def], onClick: () => onNavigate(def), primary: true },
+        core[0],
+        core[1],
+        allTypes,
+      ];
+    }
+    return [{ ...core[0], primary: true }, core[1], core[2], allTypes];
+  })();
 
   return (
     <>
@@ -662,32 +728,10 @@ const Dashboard = ({
               start work. Only a genuine problem earns space above the certs. */}
           {alert && <AlertLine text={alert.text} onClick={alert.onClick} />}
 
-          <QuickStartStrip
-            label="Start a cert"
-            items={[
-              {
-                title: 'EICR',
-                description: 'Periodic inspection of an existing installation.',
-                onClick: () => onNavigate('eicr'),
-                primary: true,
-              },
-              {
-                title: 'EIC',
-                description: 'Initial verification of a new install.',
-                onClick: () => onNavigate('eic'),
-              },
-              {
-                title: 'Minor Works',
-                description: 'Additions and alterations to a circuit.',
-                onClick: () => onNavigate('minor-works'),
-              },
-              {
-                title: 'All cert types',
-                description: 'Fire, EV, solar, BESS, lightning, PAT and more.',
-                onClick: () => onNavigate('specialist'),
-              },
-            ]}
-          />
+          {/* Started from a booking or project — say who the cert is for. */}
+          <CertificatePrefillStrip />
+
+          <QuickStartStrip label="Start a cert" items={startCertItems} />
 
           {recentDraft && (
             <ContinueRow
@@ -700,11 +744,7 @@ const Dashboard = ({
 
           <RecoverUnsavedWork onNavigate={onNavigate} />
 
-          <EditorialToolGrid
-            label="Core"
-            cards={coreTools}
-            columns="three"
-          />
+          <EditorialToolGrid label="Core" cards={coreTools} columns="three" />
 
           <EditorialToolGrid label="Compliance" cards={complianceTools} columns="three" />
         </div>

@@ -182,7 +182,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test speed</strong> — on a 12-way board EICR, each second saved per test
                 adds up. A tester that completes a loop impedance measurement in 3 seconds versus 8
@@ -190,7 +190,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Accuracy and resolution</strong> — for loop impedance, 0.01 ohm resolution
                 is important when comparing measured values to BS 7671 maximum Zs values. A reading
@@ -199,7 +199,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wifi className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bluetooth and app connectivity</strong> — transferring results wirelessly to
                 a phone or tablet certificate app eliminates transcription errors and saves
@@ -207,7 +207,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Battery life</strong> — rechargeable is convenient until the battery
                 degrades after 2 years or you forget the charger. AA-powered instruments are heavier
@@ -215,7 +215,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Build quality and IP rating</strong> — your MFT lives in a van, gets dropped
                 on concrete, and is used in damp conditions. IP54 or better is essential. A rubber
@@ -223,7 +223,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Total cost of ownership</strong> — purchase price plus annual calibration
                 (50 to 120 pounds), replacement leads (30 to 80 pounds), and battery replacements. A
@@ -710,7 +710,7 @@ export default function BestMultifunctionTester2026Page() {
       heroTitle={
         <>
           Best Multifunction Tester 2026:{' '}
-          <span className="text-yellow-400">Top MFTs Compared for UK Electricians</span>
+          <span className="text-elec-yellow">Top MFTs Compared for UK Electricians</span>
         </>
       }
       heroSubtitle="An honest, no-nonsense comparison of the five leading multifunction testers on the UK market. Which MFT is actually worth your money — and which one is just expensive?"
@@ -721,7 +721,7 @@ export default function BestMultifunctionTester2026Page() {
       faqHeading="Frequently Asked Questions About Multifunction Testers"
       relatedPages={relatedPages}
       ctaHeading="Enter Test Results and Generate Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EICR and EIC certificates with on-site test result entry and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for EICR and EIC certificates with on-site test result entry and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

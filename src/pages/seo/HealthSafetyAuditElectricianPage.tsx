@@ -204,7 +204,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardList className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Risk Assessment</strong> — identifies each hazard associated with the
                 activity, assesses the likelihood and severity of harm, identifies who is at risk,
@@ -214,7 +214,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardList className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Method Statement</strong> — describes the sequence and method of work, step
                 by step. It translates the risk assessment controls into a practical procedure.
@@ -222,7 +222,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardList className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Activity-specific RAMS</strong> — common activities requiring separate RAMS
                 include: cable installation and termination; working at height (on ladders, MEWPs,
@@ -232,7 +232,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardList className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Review and sign-off</strong> — RAMS must be reviewed by workers before
                 starting the activity, not simply filed. Many sites require workers to sign a RAMS
@@ -364,7 +364,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Assessment process</strong> — similar to CHAS, Safe Contractor assesses your
                 H&amp;S policy, risk assessment procedures, insurance evidence, training records,
@@ -373,7 +373,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Verify database</strong> — Safe Contractor is part of the Alcumus Verify
                 platform, used by many FM contractors and housing associations to check
@@ -382,7 +382,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Which scheme to choose</strong> — if you are targeting national main
                 contractors and public sector work, CHAS combined with Constructionline Gold is the
@@ -409,7 +409,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What ISO 45001 requires</strong> — a documented OH&amp;S management system
                 covering: leadership commitment; worker participation; hazard identification and
@@ -419,7 +419,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Who needs it</strong> — ISO 45001 is required for some public sector
                 procurement frameworks, NHS supply chains above certain value thresholds, and large
@@ -429,7 +429,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Integrated management systems</strong> — many electrical contractors
                 pursuing ISO 45001 also obtain ISO 9001 (quality management) and ISO 14001
@@ -462,7 +462,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Policy statement</strong> — a signed statement from the most senior person
                 in the business (sole trader, director, or partner) committing the organisation to:
@@ -472,7 +472,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Organisation</strong> — who in your business is responsible for what:
                 H&amp;S management responsibilities by role; the name of your competent person for
@@ -481,7 +481,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Arrangements</strong> — your specific procedures for: risk assessment and
                 method statements; accident reporting under RIDDOR; fire safety; first aid
@@ -556,7 +556,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ClipboardList className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardList className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI-Generated RAMS</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -589,7 +589,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Build professional H&S documentation with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for AI-generated RAMS, H&S policy templates, and business management tools."
+          description="Join 2,100+ UK electricians using Elec-Mate for AI-generated RAMS, H&S policy templates, and business management tools."
           icon={ShieldCheck}
         />
       </>
@@ -615,7 +615,7 @@ export default function HealthSafetyAuditElectricianPage() {
       heroTitle={
         <>
           Health and Safety for Electrical Contractors:{' '}
-          <span className="text-yellow-400">CDM 2015, RAMS, and CHAS</span>
+          <span className="text-elec-yellow">CDM 2015, RAMS, and CHAS</span>
         </>
       }
       heroSubtitle="CDM 2015 duties for electricians, how to write RAMS for commercial electrical work, Permit to Work systems, CHAS and Safe Contractor accreditation, ISO 45001 overview, and RIDDOR accident reporting — everything UK electrical contractors need for commercial H&S compliance."
@@ -626,7 +626,7 @@ export default function HealthSafetyAuditElectricianPage() {
       faqHeading="Frequently Asked Questions About H&S for Electrical Contractors"
       relatedPages={relatedPages}
       ctaHeading="Build Professional H&S Documentation with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI-generated RAMS, H&S templates, and business tools. Win more commercial work with better documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for AI-generated RAMS, H&S templates, and business tools. Win more commercial work with better documentation. 7-day free trial, cancel anytime."
     />
   );
 }

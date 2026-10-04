@@ -31,7 +31,7 @@ const subsections = [
     number: '3.4',
     title: 'Installing wiring systems and supports (3.4)',
     description:
-      'PVC and steel conduit, trunking, basket and ladder. OSG support intervals, A4:2026 fire-support requirement (Reg 521.10.202 — applies throughout), bend radii.',
+      'PVC and steel conduit, trunking, basket and ladder. OSG support intervals, fire-support requirement (Reg 521.10.202 — applies throughout), bend radii.',
     icon: Cable,
     href: '3-4',
   },
@@ -39,7 +39,7 @@ const subsections = [
     number: '3.5',
     title: 'Terminating wiring systems (3.5)',
     description:
-      'Conductor prep, strip length, ferrules for stranded, torque settings, crimp lugs. BS 7671 526.1 / 526.5 / 526.9 (A4:2026 update) termination regulations.',
+      'Conductor prep, strip length, ferrules for stranded, torque settings, crimp lugs. BS 7671 526.1 / 526.5 / 526.9 termination regulations.',
     icon: Plug,
     href: '3-5',
   },

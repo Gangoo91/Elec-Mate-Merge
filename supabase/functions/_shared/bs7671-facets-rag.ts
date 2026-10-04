@@ -14,7 +14,12 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { buildingRegsCitation, isBuildingRegsDocType } from './building-regs-citation.ts';
+import {
+  buildingRegsCitation,
+  buildingRegsJurisdiction,
+  isBuildingRegsDocType,
+  isOutOfJurisdiction,
+} from './building-regs-citation.ts';
 import { generateLargeEmbedding } from './ai-providers.ts';
 import { understandBS7671Query } from './bs7671-query-understanding.ts';
 
@@ -121,8 +126,9 @@ export async function searchFacets(supabase: any, args: SearchArgs): Promise<BS7
   }
 
   const rows = (data ?? []) as any[];
+  const j = buildingRegsJurisdiction(query);
   const kept = wantsBuildingRegs
-    ? rows
+    ? rows.filter((row) => !isOutOfJurisdiction(j, row.document_type, row.edition_code, row.reg_number))
     : rows.filter((row) => !isBuildingRegsDocType(row.document_type));
   return kept.slice(0, matchCount).map(rowToFacet);
 }

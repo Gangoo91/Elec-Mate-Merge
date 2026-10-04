@@ -266,7 +266,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Oval steel conduit</strong> — thin oval steel conduit, available in black
                 finish, is often used in exposed timber-framed buildings and early vernacular
@@ -275,7 +275,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Brass and nickel conduit</strong> — decorative brass or nickel surface
                 conduit and fittings are appropriate in Georgian and Victorian principal rooms. When
@@ -284,7 +284,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mini-trunking</strong> — white PVC mini-trunking is less sympathetic in
                 historic rooms but is widely used in service areas, kitchens, bathrooms, and
@@ -293,7 +293,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Running in existing voids</strong> — where floor voids and ceiling voids
                 exist and can be accessed without disturbing historic fabric, cables can be run
@@ -303,7 +303,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Skirting board routes</strong> — many listed buildings have deep original
                 skirting boards (75mm to 150mm) that can accommodate cables run behind them without
@@ -331,7 +331,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Period-style accessories</strong> — brass, antique bronze, nickel, and black
                 nickel finishes on sockets and switches are available from specialist suppliers
@@ -341,7 +341,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ceiling roses and pendant lighting</strong> — original ceiling roses should
                 be preserved. New lighting cables can often be routed from above through the
@@ -351,7 +351,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lighting design</strong> — in listed buildings, the lighting design should
                 complement the architecture. Wall sconces, picture lights, and carefully positioned
@@ -361,7 +361,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit location</strong> — the consumer unit in a listed building
                 should be located in a service area (utility room, cellar, or purpose-built
@@ -389,7 +389,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC and NAPIT registers</strong> — search the NICEIC and NAPIT online
                 registers for electricians in your area. When contacting them, ask specifically
@@ -398,7 +398,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Conservation officer recommendation</strong> — your local planning
                 authority's conservation officer may be able to suggest electricians they have
@@ -407,7 +407,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SPAB and Georgian Group</strong> — the Society for the Protection of Ancient
                 Buildings (SPAB) and the Georgian Group maintain networks of contractors experienced
@@ -416,7 +416,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Get multiple quotes</strong> — listed building electrical work is specialist
                 and the cost varies significantly between contractors. Obtain at least three written
@@ -444,7 +444,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Limited access</strong> — in a listed building, the inspector cannot lift
                 floorboards, remove panel linings, or open wall chases to inspect concealed wiring
@@ -454,7 +454,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Original accessories</strong> — listed buildings sometimes have original
                 switchgear, sockets, or light fittings that cannot be opened without risk of damage.
@@ -464,7 +464,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Photographic record</strong> — thorough photographic documentation during an
                 EICR in a listed building is especially important, both to support the EICR findings
@@ -473,7 +473,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Recommended re-inspection intervals</strong> — listed buildings with
                 original or partially-original wiring should have EICRs more frequently than modern
@@ -500,7 +500,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR — listed building</strong> — £250 to £600, depending on the size and
                 complexity of the property. Limited access inspections at the lower end; full
@@ -508,7 +508,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacement</strong> — £600 to £1,200. Higher than standard
                 due to the need to locate the consumer unit sympathetically and ensure all
@@ -516,7 +516,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full rewire — Grade II listed cottage or terrace</strong> — £6,000 to
                 £15,000. Surface mounting throughout, period-style accessories, liaison with
@@ -525,7 +525,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full rewire — Grade I or Grade II* listed house</strong> — £12,000 to
                 £30,000+. The most complex and historic properties require the most careful approach
@@ -535,7 +535,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Listed building consent application</strong> — £200 to £1,000 in
                 professional fees for preparing and submitting the application, in addition to the
@@ -568,7 +568,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Document the Historic Installation Thoroughly
@@ -626,7 +626,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete listed building EICRs professionally with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with thorough photographic documentation, AI board scanning…"
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion with thorough photographic documentation, AI board scanning…"
           icon={FileCheck2}
         />
       </>
@@ -652,7 +652,7 @@ export default function ListedBuildingElectricalPage() {
       heroTitle={
         <>
           Listed Building Electrical Guide:{' '}
-          <span className="text-yellow-400">Rewiring Grade I &amp; II Properties</span>
+          <span className="text-elec-yellow">Rewiring Grade I &amp; II Properties</span>
         </>
       }
       heroSubtitle="Electrical work in a listed building requires listed building consent, careful liaison with conservation officers, and sympathetic installation methods that protect historic fabric. This guide covers consent requirements, surface wiring, period-appropriate installation techniques, finding specialist electricians, and the real costs — from £250 for an EICR to £30,000+ for a full rewire of a Grade I property."
@@ -663,7 +663,7 @@ export default function ListedBuildingElectricalPage() {
       faqHeading="Frequently Asked Questions About Listed Building Electrical Work"
       relatedPages={relatedPages}
       ctaHeading="Complete Listed Building EICRs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with thorough photographic documentation, AI board scanning, and professional quoting. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion with thorough photographic documentation, AI board scanning, and professional quoting. 7-day free trial, cancel anytime."
     />
   );
 }

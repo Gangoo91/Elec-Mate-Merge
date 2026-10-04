@@ -269,7 +269,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICRs for landlords and HMOs</strong> — Preston's large rental market and
                 significant HMO stock drive consistent EICR demand. Building relationships with
@@ -277,7 +277,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacements</strong> — Preston's older housing stock has a
                 high proportion of inadequate consumer units. Consumer unit upgrades are one of the
@@ -285,7 +285,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger installations</strong> — demand is growing across Preston's
                 modern estates and commercial sector. ENW G98 notification is required for home EV
@@ -294,7 +294,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rewires and partial rewires</strong> — Preston's Victorian terraces and
                 post-war estates generate consistent rewiring work. Partial rewires following EICR
@@ -422,7 +422,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EIC and EICR Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -454,7 +454,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Preston electricians"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -481,7 +481,7 @@ export default function ElectricianPrestonPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Preston: <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Preston: <span className="text-elec-yellow">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Preston's large student population, Victorian terrace stock, and growing EV charger demand creates consistent work for qualified electricians with expertise in Part P compliance, HMO electrical standards, and EICR documentation."
@@ -492,7 +492,7 @@ export default function ElectricianPrestonPage() {
       faqHeading="Frequently Asked Questions About Electricians in Preston"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Preston Electricians"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the rental, HMO, and residential market in Preston. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the rental, HMO, and residential market in Preston. 7-day free trial."
     />
   );
 }

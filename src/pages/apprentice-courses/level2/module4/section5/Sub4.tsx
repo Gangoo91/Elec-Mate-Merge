@@ -38,14 +38,14 @@ const checks = [
     question:
       'A supervisor inspects a new domestic CU and notices the kitchen socket ring is on a Type AC RCBO. The kitchen has an induction hob, modern LED lighting drivers, and a number of appliances with switch-mode power supplies. The supervisor flags this as a non-conformance because:',
     options: [
-      'BS 7671 Reg 531.3.3 (A4:2026) requires Type A as the minimum where load currents may contain DC components — Type AC is no longer suitable for general fixed wiring with modern equipment.',
+      'BS 7671 Reg 531.3.3 (A2:2022) requires Type A as the minimum where load currents may contain DC components — Type AC is no longer suitable for general fixed wiring with modern equipment.',
       'BS 7671 Reg 411.3.3 requires every kitchen socket ring to be protected by a Type B RCD specifically, because kitchens are classed as a special location under Part 7.',
       'BS 7671 Reg 314.1 requires kitchen circuits to be divided so that no single RCD protects more than one appliance, and a single Type AC RCBO on the whole ring breaches that division rule.',
       'BS 7671 Reg 643.8 requires the RCD on a kitchen ring to be tested at 5×I∆n rather than 1×I∆n, and a Type AC device cannot meet that faster trip time with modern loads present.',
     ],
     correctIndex: 0,
     explanation:
-      'A4:2026 changed Reg 531.3.3 — Type AC RCDs may now only serve fixed equipment where it is known the load current contains no DC components. Modern domestic loads (induction hobs, LED drivers, switch-mode supplies, EV chargers, heat pumps) routinely produce DC components. The Type AC will saturate magnetically under DC fault current and fail to trip. Type A is now the minimum for general wiring; Type B for specific applications like EV.',
+      'A2:2022 changed Reg 531.3.3 — Type AC RCDs may now only serve fixed equipment where it is known the load current contains no DC components. Modern domestic loads (induction hobs, LED drivers, switch-mode supplies, EV chargers, heat pumps) routinely produce DC components. The Type AC will saturate magnetically under DC fault current and fail to trip. Type A is now the minimum for general wiring; Type B for specific applications like EV.',
   },
   {
     id: 'cpc-class-i-spot',
@@ -108,16 +108,16 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question: 'Reg 421.1.7 (A4:2026) treats AFDDs as:',
+    question: 'Reg 421.1.7 treats AFDDs as:',
     options: [
       'Mandatory on every final circuit in every dwelling without exception, so the absence of an AFDD on any circuit is an automatic C2 on a domestic install.',
       'Prohibited in dwellings, because AFDDs are prone to nuisance tripping on domestic loads and are only permitted on industrial installations.',
       'A direct replacement for the 30 mA RCD, so a circuit fitted with an AFDD no longer needs RCD additional protection under Reg 411.3.3.',
-      'Recommended for AC final circuits supplying socket-outlets up to 32 A in dwellings, with the recommendation strengthening to a requirement in Higher-Risk Residential Buildings (HRRBs) under the Building Safety Act 2022 framework.',
+      'Required on single-phase socket-outlet circuits up to 32 A in HRRBs, HMOs, purpose-built student accommodation and care homes, and recommended on those circuits in all other premises.',
     ],
     correctAnswer: 3,
     explanation:
-      'AFDDs are recommended for AC final circuits supplying socket-outlets ≤ 32 A in dwellings (per BS 7671 Reg 421.1.7). The recommendation strengthens to a requirement in Higher-Risk Residential Buildings (HRRBs) under the Building Safety Act 2022 framework. In HMOs, sleeping accommodation and care homes, supporting fire-safety guidance treats AFDDs as effectively required practice — but the BS 7671 wording is "recommending", not a hard requirement on the regulation itself.',
+      'Reg 421.1.7 requires AFDDs to BS EN 62606 on single-phase AC final circuits supplying socket-outlets up to 32 A in high rise residential buildings, HMOs, purpose-built student accommodation and care homes. In all other premises it recommends them. An AFDD does not replace RCD additional protection.',
   },
   {
     id: 4,
@@ -136,7 +136,7 @@ const quizQuestions = [
   {
     id: 5,
     question:
-      'A T&E cable runs through a wood-framed escape stairwell void without any additional fire-resistant supports — just standard plastic clips. Per BS 7671 A4:2026 update to Reg 522.8.5 / 522.8.X (cables in escape routes), this is a non-conformance because:',
+      'A T&E cable runs through a wood-framed escape stairwell void on standard plastic clips only. Under Reg 521.10.202 this is a non-conformance because:',
     options: [
       'Plastic clips do not provide enough mechanical protection against impact in a stairwell, so the cable must be run in steel conduit wherever it crosses a walkway.',
       'Cables on escape routes need supports that will not fail prematurely in a fire — plastic clips melt and the cable falls, becoming a trip hazard for evacuating occupants.',
@@ -154,12 +154,12 @@ const quizQuestions = [
     options: [
       'Reg 411.3.3 — the requirement for 30 mA RCD additional protection on socket circuits.',
       'Reg 314.1 — the requirement to divide an installation into separate circuits.',
-      'Reg 537.2.2 / 514.16 — single-pole devices for protection or switching shall be in line conductors only.',
+      'Reg 132.14.1 — a single-pole fuse, switch or circuit-breaker shall be inserted in the line conductor only.',
       'Reg 643.6 — the verification of polarity at every accessory during testing.',
     ],
     correctAnswer: 2,
     explanation:
-      'Single-pole devices in line conductors only is fixed by Reg 537.2.2 (and verified at inspection by the matching Schedule of Inspections item, mapped to Reg 514.16). An MCB in the neutral provides no overcurrent protection on the line conductor and leaves the circuit live when the neutral MCB trips. Flat fail, must be re-wired before energising.',
+      'Single-pole devices in line conductors only is fixed by Reg 132.14.1 (and verified at testing under Reg 643.6(a)). An MCB in the neutral provides no overcurrent protection on the line conductor and leaves the circuit live when the neutral MCB trips. Flat fail, must be re-wired before energising.',
   },
   {
     id: 7,
@@ -210,9 +210,9 @@ const faqs = [
   },
   {
     question:
-      'Are the new A4:2026 changes (Type A minimum, AFDDs in HRRBs, fire-resistant supports) actually being inspected on real jobs yet?',
+      'Are the recent changes (Type A minimum, AFDDs in HRRBs and HMOs, protected escape routes) actually being inspected on real jobs yet?',
     answer:
-      'Yes. A4:2026 is the current edition of BS 7671. As soon as an amendment is published and adopted, inspections are made against it. Older installs do not have to be retro-fitted to the new regs (they were compliant when installed), but new work and additions/alterations must comply with the current amendment. So on a new install or a CU swap done after the A4:2026 effective date, Type AC RCDs are a non-conformance per Reg 531.3.3, AFDDs are recommended for AC final circuits supplying socket-outlets ≤ 32 A in dwellings per Reg 421.1.7 (with the recommendation strengthening to a requirement in HRRBs via the Building Safety Act 2022 framework, and effectively required practice in HMOs / sleeping accommodation / care homes per supporting fire-safety guidance), plastic clips on cables in escape routes are a fail. Stay current with the regs.',
+      'Yes. A4:2026 is the current edition of BS 7671. As soon as an amendment is published and adopted, inspections are made against it. Older installs do not have to be retro-fitted to the new regs (they were compliant when installed), but new work and additions/alterations must comply with the current amendment. So on a new install or a CU swap done under the current edition, Type AC RCDs are a non-conformance per Reg 531.3.3, AFDDs are required on socket-outlet circuits ≤ 32 A in HRRBs, HMOs, purpose-built student accommodation and care homes and recommended elsewhere (Reg 421.1.7), plastic clips on cables in escape routes are a fail. Stay current with the regs.',
   },
   {
     question:
@@ -292,21 +292,21 @@ const nonConformances = [
     n: 7,
     title: 'RCBO Type AC where Type A required',
     spotted:
-      'Inspection of CU — RCBOs are Type AC. Install includes modern equipment with DC components (LED drivers, induction hob, EV charger, switch-mode supplies). Reg 531.3.3 (A4:2026) requires Type A as minimum.',
+      'Inspection of CU — RCBOs are Type AC. Install includes modern equipment with DC components (LED drivers, induction hob, EV charger, switch-mode supplies). Reg 531.3.3 (A2:2022) requires Type A as minimum.',
     fix: 'Replace Type AC RCBOs with Type A (or Type B for EV charging circuits and similar). Order the right type from day one on a new install — Type A is now the default.',
     avoid:
       'Default-spec Type A on every quote. Type AC is now a special case (only for fixed equipment with no DC components — vanishingly rare in modern installs). Type B for EV per Section 722.',
-    reg: 'Reg 531.3.3 (A4:2026 update)',
+    reg: 'Reg 531.3.3 (A2:2022 update)',
   },
   {
     n: 8,
     title: 'Missing AFDD on HRRB / HMO socket circuit',
     spotted:
-      'Inspection of CU in a Higher-Risk Residential Building, HMO, sleeping accommodation or care home — final circuits supplying socket-outlets do not have AFDD protection. AFDDs are recommended by BS 7671 Reg 421.1.7; the recommendation strengthens to a requirement in HRRBs under the Building Safety Act 2022 framework, and supporting fire-safety guidance for HMOs / sleeping accommodation / care homes treats them as effectively required practice.',
-    fix: 'Replace standard RCBOs with AFDD-RCBOs on the relevant AC final circuits supplying socket-outlets ≤ 32 A. Cost difference is real but small relative to the safety benefit and the building-safety expectation.',
+      'Inspection of CU in a Higher-Risk Residential Building, HMO, sleeping accommodation or care home — final circuits supplying socket-outlets do not have AFDD protection. BS 7671 Reg 421.1.7 requires AFDDs on these circuits in HRRBs, HMOs, purpose-built student accommodation and care homes.',
+    fix: 'Replace standard RCBOs with AFDD-RCBOs on the relevant AC final circuits supplying socket-outlets ≤ 32 A. Cost difference is real but small relative to the safety benefit, and in these building types it is a BS 7671 requirement.',
     avoid:
-      'Identify the building type at the design stage. HRRB → AFDDs required by Building Safety Act framework. HMO / sleeping accommodation / care home → AFDDs are effectively required practice under supporting fire-safety guidance. General dwelling → AFDDs recommended by Reg 421.1.7 (and a sensible spec on key circuits) but not mandated by BS 7671 itself.',
-    reg: 'Reg 421.1.7 (A4:2026 update) + Building Safety Act 2022 framework for HRRBs',
+      'Identify the building type at the design stage. HRRB, HMO, purpose-built student accommodation or care home → AFDDs required by Reg 421.1.7. Any other premises → AFDDs recommended (and a sensible spec on key circuits).',
+    reg: 'Reg 421.1.7',
   },
   {
     n: 9,
@@ -326,7 +326,7 @@ const nonConformances = [
     fix: 'Re-test the affected circuit(s). Record values from the instrument download directly. Re-issue the Schedule of Test Results with verified values.',
     avoid:
       'Use the MFT’s memory function during testing — record each value as you take it, with the circuit identifier. At the end, download to PDF or transcribe directly from the instrument. Never write up a test pack from memory after the day is over.',
-    reg: 'Reg 642.4 + Section 643 (recording)',
+    reg: 'Reg 644.3 (schedules with the certificate)',
   },
 ];
 
@@ -492,21 +492,17 @@ export default function Sub4() {
 
         <RegsCallout
           source="BS 7671:2018+A4:2026 — Regulation 421.1.7 (Arc fault detection devices)"
-          clause="Regulation 421.1.7 recommends the installation of arc fault detection devices (AFDDs) to mitigate the risk of fire in AC final circuits supplying socket-outlets, with a rated current not exceeding 32 A, in dwellings — to mitigate the effects of arc fault currents."
+          clause="Arc fault detection devices (AFDD) conforming to BS EN 62606 shall be provided for single-phase AC final circuits supplying socket-outlets with a rated current not exceeding 32 A in: (a) high rise residential buildings (HRRBs); (b) houses in multiple occupation (HMOs); (c) purpose-built student accommodation; (d) care homes. For all other premises, the use of AFDDs conforming to BS EN 62606 is recommended for single-phase AC final circuits supplying socket-outlets not exceeding 32 A."
           meaning={
             <>
-              Reg 421.1.7 catches non-conformance #8. AFDDs are <strong>recommended</strong> for AC
-              final circuits supplying socket-outlets up to 32 A in dwellings (per BS 7671 Reg
-              421.1.7). The recommendation strengthens to a <strong>requirement</strong> in
-              Higher-Risk Residential Buildings (HRRBs) under the Building Safety Act 2022 framework
-              — not via BS 7671 itself. In HMOs, sleeping accommodation and care homes, supporting
-              fire-safety guidance treats AFDDs as effectively required practice. Cite Reg 421.1.7
-              as &lsquo;recommending&rsquo;, not as imposing a strict BS 7671 requirement, when
-              discussing the BS 7671 position; cite the Building Safety Act framework when
-              discussing the HRRB requirement.
+              Reg 421.1.7 catches non-conformance #8. In high rise residential buildings, HMOs,
+              purpose-built student accommodation and care homes, AFDDs on socket-outlet circuits up
+              to 32 A are a <strong>requirement</strong> of BS 7671 itself. In every other building,
+              including an ordinary house, they are <strong>recommended</strong>. So a missing AFDD
+              is a non-conformance in the four listed building types, and an improvement elsewhere.
             </>
           }
-          cite="Source: BS 7671:2018+A4:2026 Part 4, Chapter 42, Regulation 421.1.7; Building Safety Act 2022 and supporting building-safety guidance for HRRBs."
+          cite="Source: BS 7671:2018+A4:2026, Regulation 421.1.7."
         />
 
         <RegsCallout
@@ -525,11 +521,11 @@ export default function Sub4() {
         />
 
         <RegsCallout
-          source="BS 7671:2018+A4:2026 — Regulation 531.3.3 (RCD types — A4:2026 update)"
+          source="BS 7671:2018+A4:2026 — Regulation 531.3.3 (RCD types — A2:2022 update)"
           clause="531.3.3 now states that RCD Type AC shall only be used to serve fixed equipment, where it is known that the load current contains no DC components."
           meaning={
             <>
-              Reg 531.3.3 (as updated by A4:2026) catches non-conformance #7 — Type AC RCBOs on
+              Reg 531.3.3 (as updated by A2:2022) catches non-conformance #7 — Type AC RCBOs on
               circuits with modern loads. Type AC is now restricted to fixed equipment where load
               current contains no DC components — a vanishingly small set of cases in modern
               installs. Default to Type A as the minimum for general wiring; Type B for EV per
@@ -874,7 +870,7 @@ export default function Sub4() {
           points={[
             'Ten non-conformances catch most apprentices on first inspection — termination defects, R1+R2 high, polarity reversed, missing CPC, open bonding, wrong cable supports, Type AC RCBOs, missing AFDDs, missing notices, sloppy test recording.',
             'Each non-conformance maps to a BS 7671 regulation. Reg 526.1 (terminations), Reg 643.6 (polarity), Reg 411.3.1.1 (CPC), Reg 421.1.7 (AFDD), Reg 514.13 (BS 951 label), Reg 531.3.3 (Type A minimum), Reg 522.8.5 (cable support).',
-            'A4:2026 brought new fail modes — Type AC restricted to no-DC-component loads (Reg 531.3.3), AFDDs recommended for AC final circuits supplying socket-outlets ≤ 32 A in dwellings (Reg 421.1.7) with the recommendation strengthening to a requirement in HRRBs under the Building Safety Act 2022 framework, tighter rules on cable supports in escape routes.',
+            'Recent amendments brought new fail modes — Type AC restricted to fixed equipment with no DC components (Reg 531.3.3, A2:2022), AFDDs required on socket-outlet circuits ≤ 32 A in HRRBs, HMOs, purpose-built student accommodation and care homes (Reg 421.1.7, A2:2022), and the protected escape route rules (Reg 422.2).',
             'The supervisor catches defects by pattern recognition built from experience. Every caught defect is a learning opportunity — understand the reg, fix correctly, build the habit that prevents it next time.',
             'The meta-mistake is rushing the inspection under customer pressure. A defect caught at inspection costs minutes; caught after energisation, it costs a callback or worse.',
             'Every termination tug-tested at build time. Every CPC verified continuous. Every label fitted as you go. Every Schedule of Test Results value recorded directly from the instrument. Habits matter more than memorising the regs.',

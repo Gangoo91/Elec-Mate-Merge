@@ -24,7 +24,7 @@ const quickCheckQuestions = [
     id: 2,
     question: 'When is surface wiring most appropriate?',
     options: [
-      'Underground',
+      'Behind plasterboard in new builds',
       'New builds',
       'Temporary installations',
       'High-risk environments',
@@ -37,9 +37,9 @@ const quickCheckQuestions = [
     id: 3,
     question: "What's the key advantage of trunking systems?",
     options: [
-      'Best protection',
-      'Lowest cost',
-      'Smallest size',
+      'Best mechanical protection',
+      'Higher current rating for the cables',
+      'No cable supports are needed',
       'Easy cable changes',
     ],
     correctAnswer: 3,
@@ -121,7 +121,7 @@ const quizQuestions = [
     id: 6,
     question: 'What earthing consideration is critical with steel conduit?',
     options: [
-      'No earthing needed',
+      'Earth it through its fixings to the building steel',
       'Earth at one end only',
       'Continuous earth path',
       'Plastic bushes required',
@@ -134,7 +134,7 @@ const quizQuestions = [
     id: 7,
     question: 'Which factor is most important when selecting between PVC and steel conduit?',
     options: [
-      'Cost only',
+      'Number of circuits',
       'Voltage level',
       'Cable size',
       'Environmental conditions',

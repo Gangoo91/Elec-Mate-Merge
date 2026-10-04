@@ -167,7 +167,7 @@ const sections = [
       <>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-4 flex items-center gap-2">
-            <ClipboardCheck className="w-4 h-4 text-yellow-400" /> Domestic Handover Checklist
+            <ClipboardCheck className="w-4 h-4 text-elec-yellow" /> Domestic Handover Checklist
           </h4>
           <ul className="space-y-3 text-white text-sm">
             <li className="flex items-center gap-3">
@@ -390,28 +390,28 @@ const sections = [
       <>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-4 flex items-center gap-2">
-            <Shield className="w-4 h-4 text-yellow-400" /> Standard Warranty Coverage
+            <Shield className="w-4 h-4 text-elec-yellow" /> Standard Warranty Coverage
           </h4>
           <div className="space-y-3 text-white text-sm">
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Workmanship (your installation)</span>
-              <strong className="text-yellow-400">1 to 2 years</strong>
+              <strong className="text-elec-yellow">1 to 2 years</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Consumer units (manufacturer)</span>
-              <strong className="text-yellow-400">5 to 10 years</strong>
+              <strong className="text-elec-yellow">5 to 10 years</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Wiring accessories (manufacturer)</span>
-              <strong className="text-yellow-400">1 to 5 years</strong>
+              <strong className="text-elec-yellow">1 to 5 years</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Smoke detectors (manufacturer)</span>
-              <strong className="text-yellow-400">5 to 10 years</strong>
+              <strong className="text-elec-yellow">5 to 10 years</strong>
             </div>
             <div className="flex justify-between pb-2">
               <span>Cable (manufacturer)</span>
-              <strong className="text-yellow-400">20 to 25+ years</strong>
+              <strong className="text-elec-yellow">20 to 25+ years</strong>
             </div>
           </div>
         </div>
@@ -520,7 +520,7 @@ export default function ElectricalProjectHandoverPage() {
       heroTitle={
         <>
           Electrical Project Handover Guide:{' '}
-          <span className="text-yellow-400">Documentation, Walkthrough, and Warranty</span>
+          <span className="text-elec-yellow">Documentation, Walkthrough, and Warranty</span>
         </>
       }
       heroSubtitle="What to hand over, how to conduct a client walkthrough, and what warranty to provide. The complete handover guide for domestic and commercial electrical projects."
@@ -531,7 +531,7 @@ export default function ElectricalProjectHandoverPage() {
       faqHeading="Frequently Asked Questions About Electrical Project Handover"
       relatedPages={relatedPages}
       ctaHeading="Create Professional Handover Packs On Site"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for certificates, test schedules, and handover documentation. Complete everything on site, share instantly. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for certificates, test schedules, and handover documentation. Complete everything on site, share instantly. 7-day free trial, cancel anytime."
     />
   );
 }

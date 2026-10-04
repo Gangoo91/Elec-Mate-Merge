@@ -478,7 +478,7 @@ export default function PlugInSolarUKPage() {
       heroTitle={
         <>
           Plug-in Solar UK:{' '}
-          <span className="text-yellow-400">
+          <span className="text-elec-yellow">
             The {F.maxApparentPowerVA} W Rules That Took Effect on 27 August 2026
           </span>
         </>
@@ -509,7 +509,7 @@ export default function PlugInSolarUKPage() {
       faqHeading="Plug-in Solar UK — Frequently Asked Questions"
       relatedPages={relatedPages}
       ctaHeading="Assessing a Property for Plug-in Solar?"
-      ctaSubheading="Elec-Mate includes a Plug-in Solar Suitability & Commissioning Certificate: it walks the assessment, marks every finding as a requirement or as advice with the source against each, builds the remedial list you quote from, verifies commissioning and runs the G98 clock. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate includes a Plug-in Solar Suitability & Commissioning Certificate: it walks the assessment, marks every finding as a requirement or as advice with the source against each, builds the remedial list you quote from, verifies commissioning and runs the G98 clock. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

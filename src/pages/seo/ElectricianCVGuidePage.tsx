@@ -279,35 +279,35 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C&G 2382-22</strong> — 18th Edition IET Wiring Regulations (BS
                 7671:2018+A2:2022). Include the amendment number to show you are up to date.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C&G 2391-52</strong> — Inspection and Testing of Electrical Installations.
                 If you hold the older 2394/2395 split qualifications, list those instead.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>AM2</strong> — Assessment of Competence. This is essential for JIB grading
                 as an Approved Electrician.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NVQ Level 3</strong> — Electrotechnical Services (Installing). This confirms
                 your practical competence through workplace assessment.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional qualifications</strong> — EV Charging (C&G 2919), Part P, PAT
                 Testing, Fire Alarm (BS 5839), Emergency Lighting (BS 5266), Solar PV, or any
@@ -341,7 +341,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Quantify your work:</strong> "Completed 200+ domestic EICRs across London
                 and the Home Counties" is far more impressive than "Carried out periodic inspection
@@ -349,7 +349,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Show variety:</strong> "Installed and commissioned 50+ EV charge points (7kW
                 and 22kW) for domestic and commercial clients" demonstrates a specific, in-demand
@@ -357,7 +357,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Include responsibility:</strong> "Supervised a team of 3 apprentices on a
                 new-build housing development of 120 units" shows leadership and site management
@@ -365,7 +365,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mention compliance:</strong> "Produced all certification (EIC, MEIWC, EICR)
                 to BS 7671 standard and registered all notifiable work through NAPIT" shows you
@@ -523,21 +523,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>A complete LinkedIn profile</strong> — with your qualifications, experience,
                 and a professional photo. Many recruitment agencies search LinkedIn for candidates.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Google reviews and testimonials</strong> — if you are self-employed, client
                 reviews build trust and credibility.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>A portfolio of completed work</strong> — photos of consumer unit
                 installations, rewire projects, and commercial fit-outs demonstrate quality
@@ -588,7 +588,7 @@ export default function ElectricianCVGuidePage() {
       heroTitle={
         <>
           Electrician CV Guide:{' '}
-          <span className="text-yellow-400">Write a CV That Gets You Hired</span>
+          <span className="text-elec-yellow">Write a CV That Gets You Hired</span>
         </>
       }
       heroSubtitle="Your qualifications get you qualified. Your CV gets you the interview. This guide covers exactly how to structure your electrician CV, what to include, what to leave out, and the common mistakes that send your application straight to the reject pile."
@@ -599,7 +599,7 @@ export default function ElectricianCVGuidePage() {
       faqHeading="Frequently Asked Questions About Electrician CVs"
       relatedPages={relatedPages}
       ctaHeading="Build Your Professional Electrician Profile"
-      ctaSubheading="Create your ElecID digital profile, track your CPD, and access 46+ training courses — all on Elec-Mate. Join 1,600+ UK electricians building their careers the smart way. 7-day free trial."
+      ctaSubheading="Create your ElecID digital profile, track your CPD, and access 46+ training courses — all on Elec-Mate. Join 2,100+ UK electricians building their careers the smart way. 7-day free trial."
     />
   );
 }

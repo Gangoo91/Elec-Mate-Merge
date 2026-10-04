@@ -42,6 +42,7 @@ import {
   inputClass,
   type Tone,
 } from '@/components/employer/editorial';
+import { autoCompleteOff } from '@/lib/textEntry';
 
 type RowKind = 'quote' | 'invoice';
 
@@ -540,7 +541,7 @@ export function QuotesInvoicesSection() {
                   value={chaseEmail}
                   onChange={(e) => setChaseEmail(e.target.value)}
                   className={inputClass}
-                  autoComplete="off"
+                  autoComplete={autoCompleteOff}
                 />
               </Field>
               <p className="text-sm text-white">

@@ -839,7 +839,7 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
                           Leakage current{appliance.applianceClass !== 'I' ? ' *' : ''}
                         </span>
                         <ResultButtonGroup
-                          result={appliance.electricalTests.leakageCurrent.result || ''}
+                          result={appliance.electricalTests.leakageCurrent?.result || ''}
                           onChange={(v) => updateElectricalNested('leakageCurrent', 'result', v)}
                         />
                       </div>
@@ -847,7 +847,7 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
                         <div className="flex-1">
                           <Input
                             placeholder="Reading"
-                            value={appliance.electricalTests.leakageCurrent.reading || ''}
+                            value={appliance.electricalTests.leakageCurrent?.reading || ''}
                             onChange={(e) =>
                               updateElectricalNested('leakageCurrent', 'reading', e.target.value)
                             }

@@ -143,7 +143,7 @@ const sections = [
           it does not.
         </p>
         <p>
-          <strong className="text-yellow-400">The failure modes are predictable:</strong> an
+          <strong className="text-elec-yellow">The failure modes are predictable:</strong> an
           operative turns up at a commercial site with an expired ECS card and is refused entry. A
           job is scheduled for a day when the only qualified tester is on holiday. Timesheets are
           submitted late, inaccurately, or not at all, leading to payroll disputes. Travel time is
@@ -194,7 +194,7 @@ const sections = [
           and by type (on-site labour, travel, testing, certification admin).
         </p>
         <p>
-          <strong className="text-yellow-400">For job costing,</strong> this data is invaluable. If
+          <strong className="text-elec-yellow">For job costing,</strong> this data is invaluable. If
           you quoted a consumer unit upgrade at 6 hours of labour but the time tracker shows 9 hours
           (including travel and certification), you know your quoting needs adjustment. Over time,
           you build a dataset of actual labour times for different job types, which feeds into the{' '}
@@ -202,7 +202,7 @@ const sections = [
           improve future estimates.
         </p>
         <p>
-          <strong className="text-yellow-400">For payroll,</strong> the weekly time report can be
+          <strong className="text-elec-yellow">For payroll,</strong> the weekly time report can be
           exported directly to your payroll software or sent to your accountant. No more deciphering
           handwritten timesheets or arguing about hours worked. For{' '}
           <SEOInternalLink href="/guides/going-self-employed-electrician">
@@ -235,7 +235,7 @@ const sections = [
           availability in the required time window.
         </p>
         <p>
-          <strong className="text-yellow-400">Qualification filtering</strong> is a key feature. If
+          <strong className="text-elec-yellow">Qualification filtering</strong> is a key feature. If
           a job requires inspection and testing, you can filter to show only operatives who hold the
           C&G 2391 or 2394/95. If a job is on a commercial site that requires PASMA or IPAF
           certification, you can filter for that. This prevents the expensive mistake of sending
@@ -277,35 +277,35 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">What the Skills Matrix Tracks</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>ECS/CSCS cards:</strong> Card type (Apprentice, Installation Electrician,
                 Approved Electrician, Technician), expiry date, and JIB grading.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Core qualifications:</strong> 18th Edition (BS 7671), C&G 2391/2394/2395,
                 AM2, Level 3 NVQ, and any additional endorsements.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Health and safety:</strong> First aid at work, asbestos awareness, manual
                 handling, working at height, PASMA, IPAF.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Manufacturer training:</strong> EV charger installation (specific
                 manufacturers), fire alarm systems, access control, data cabling.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Test equipment calibration:</strong> Calibration dates and due dates for
                 each operative's instruments.
@@ -342,7 +342,7 @@ const sections = [
           calendar, making it impossible to schedule work for that person during their absence.
         </p>
         <p>
-          <strong className="text-yellow-400">Holiday entitlement tracking</strong> ensures you know
+          <strong className="text-elec-yellow">Holiday entitlement tracking</strong> ensures you know
           how many days each person has remaining. The statutory minimum is 28 days per year for
           full-time employees (including bank holidays), pro-rated for part-time staff. Some
           employers offer more. The system tracks the entitlement, the days taken, the days booked
@@ -368,7 +368,7 @@ const sections = [
           credentials.
         </p>
         <p>
-          <strong className="text-yellow-400">The cost of non-compliance is high.</strong> An
+          <strong className="text-elec-yellow">The cost of non-compliance is high.</strong> An
           operative arriving at a commercial site with an expired ECS card means a wasted trip
           (travel time, fuel, and the opportunity cost of the job not being done). A health and
           safety inspection finding expired first aid certificates can result in enforcement action.
@@ -460,7 +460,7 @@ export default function StaffManagementToolPage() {
       badgeIcon={Users}
       heroTitle={
         <>
-          Staff Management <span className="text-yellow-400">for Electrical Contractors</span>
+          Staff Management <span className="text-elec-yellow">for Electrical Contractors</span>
         </>
       }
       heroSubtitle="Time tracking, job allocation, skills matrix, holiday management, and compliance tracking -- all in one platform built for electrical teams. Stop managing your staff with spreadsheets and WhatsApp."
@@ -475,7 +475,7 @@ export default function StaffManagementToolPage() {
       faqHeading="Frequently Asked Questions About Staff Management"
       relatedPages={relatedPages}
       ctaHeading="Manage Your Team Professionally"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to manage staff, track compliance, and allocate jobs. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to manage staff, track compliance, and allocate jobs. 7-day free trial, cancel anytime."
       pagePath="/tools/staff-management-electrician"
     />
   );

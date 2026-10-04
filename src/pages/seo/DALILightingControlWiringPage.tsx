@@ -62,7 +62,7 @@ function SpecRow({ label, value }: { label: string; value: React.ReactNode }) {
   return (
     <div className="flex items-center justify-between gap-4 p-4 rounded-xl bg-white/[0.04] border border-white/10">
       <span className="text-white font-medium text-sm">{label}</span>
-      <span className="text-yellow-400 font-bold text-sm text-right">{value}</span>
+      <span className="text-elec-yellow font-bold text-sm text-right">{value}</span>
     </div>
   );
 }
@@ -112,15 +112,15 @@ const sections = [
         <div className="grid sm:grid-cols-3 gap-4 my-6">
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <h3 className="font-bold text-white text-lg mb-1">DALI-1</h3>
-            <p className="text-yellow-400 text-xs font-semibold mb-3">Original — mid-2000s</p>
+            <p className="text-elec-yellow text-xs font-semibold mb-3">Original — mid-2000s</p>
             <p className="text-white text-sm leading-relaxed">
               Defined the bus, the 16V DC physical layer and the 64-address command set. Vendor
               interoperability was uneven, so commissioning typically required vendor-specific tools.
             </p>
           </div>
           <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-            <h3 className="font-bold text-yellow-400 text-lg mb-1">DALI-2</h3>
-            <p className="text-yellow-400 text-xs font-semibold mb-3">
+            <h3 className="font-bold text-elec-yellow text-lg mb-1">DALI-2</h3>
+            <p className="text-elec-yellow text-xs font-semibold mb-3">
               Certified interoperability — administered by DiiA
             </p>
             <p className="text-white text-sm leading-relaxed">
@@ -131,7 +131,7 @@ const sections = [
           </div>
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <h3 className="font-bold text-white text-lg mb-1">D4i</h3>
-            <p className="text-yellow-400 text-xs font-semibold mb-3">
+            <p className="text-elec-yellow text-xs font-semibold mb-3">
               DALI-2 extension — IoT-ready
             </p>
             <p className="text-white text-sm leading-relaxed">
@@ -176,7 +176,7 @@ const sections = [
             <SpecRow label="Max bus voltage drop" value="2V at full load" />
             <SpecRow label="Topology / termination" value="Free / none" />
           </div>
-          <p className="text-white/60 text-xs mt-4 leading-relaxed">
+          <p className="text-white text-xs mt-4 leading-relaxed">
             A multi-channel driver (e.g. 4-channel RGBW) consumes one address per channel. Typical
             control gear draws around 2mA from the bus, so a fully populated line of 64 devices sits
             well under the 250mA budget — but sensors and control panels also draw bus current, so
@@ -215,7 +215,7 @@ const sections = [
             <SpecRow label="PSUs per line" value="Exactly one (DALI-2)" />
             <SpecRow label="D4i in-luminaire PSU" value="Driver-sourced" />
           </div>
-          <p className="text-white/60 text-xs mt-4 leading-relaxed">
+          <p className="text-white text-xs mt-4 leading-relaxed">
             DALI-2 mandates exactly one bus PSU per line. Legacy DALI-1 installations with parallel
             PSUs should be corrected during refurbishment. D4i drivers can supply bus power on the
             same pair within the luminaire boundary, useful for modular ceiling tiles where the
@@ -251,18 +251,18 @@ const sections = [
           <div className="space-y-3">
             <div className="flex items-center justify-between p-4 rounded-xl bg-green-900/30 border border-green-700/40">
               <span className="text-white font-bold">1.5mm²</span>
-              <span className="text-yellow-400 font-bold">~300 m</span>
+              <span className="text-elec-yellow font-bold">~300 m</span>
             </div>
-            <div className="flex items-center justify-between p-4 rounded-xl bg-amber-900/30 border border-amber-700/40">
+            <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.06] border border-amber-700/40">
               <span className="text-white font-bold">0.75mm²</span>
-              <span className="text-yellow-400 font-bold">~150 m</span>
+              <span className="text-elec-yellow font-bold">~150 m</span>
             </div>
-            <div className="flex items-center justify-between p-4 rounded-xl bg-amber-900/30 border border-amber-700/40">
+            <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.06] border border-amber-700/40">
               <span className="text-white font-bold">0.5mm²</span>
-              <span className="text-yellow-400 font-bold">~100 m</span>
+              <span className="text-elec-yellow font-bold">~100 m</span>
             </div>
           </div>
-          <p className="text-white/60 text-xs mt-4 leading-relaxed">
+          <p className="text-white text-xs mt-4 leading-relaxed">
             The limiting factor is voltage drop on the bus (2V at full load), not current rating.
             Smaller conductors de-rate the maximum length roughly linearly.
           </p>
@@ -272,21 +272,21 @@ const sections = [
             <h3 className="font-bold text-white text-base mb-3">What the bus needs</h3>
             <ul className="space-y-2 text-white text-sm">
               <li>
-                <span className="text-yellow-400 font-semibold">Cable:</span> standard mains cable,
+                <span className="text-elec-yellow font-semibold">Cable:</span> standard mains cable,
                 commonly 1.5mm² twin LSZH or two cores of a 5-core mains cable.
               </li>
               <li>
-                <span className="text-yellow-400 font-semibold">Polarity:</span> insensitive — the
+                <span className="text-elec-yellow font-semibold">Polarity:</span> insensitive — the
                 two cores terminate either way at every device.
               </li>
               <li>
-                <span className="text-yellow-400 font-semibold">Shielding:</span> not required;
+                <span className="text-elec-yellow font-semibold">Shielding:</span> not required;
                 useful only on noisy industrial sites near motors or VSDs.
               </li>
             </ul>
           </div>
           <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-            <h3 className="font-bold text-yellow-400 text-base mb-3">Combined mains + DALI cable</h3>
+            <h3 className="font-bold text-elec-yellow text-base mb-3">Combined mains + DALI cable</h3>
             <p className="text-white text-sm leading-relaxed">
               Using 5-core mains cable for L, N, CPC and the DALI pair together is permitted under{' '}
               <SEOInternalLink href="/guides/section-715-elv-lighting-a4-2026">
@@ -325,33 +325,33 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-1">
             Reg 528.1 — permitted methods to combine Band I and Band II
           </h3>
-          <p className="text-white/60 text-xs mb-4">
+          <p className="text-white text-xs mb-4">
             A Band I circuit shall not share a wiring system with a Band II circuit unless one of
             these methods is used:
           </p>
           <div className="space-y-3">
             <div className="p-4 rounded-xl bg-blue-900/30 border border-blue-700/40">
-              <span className="text-yellow-400 font-bold text-sm">528.1 (a)/(b)</span>
+              <span className="text-elec-yellow font-bold text-sm">528.1 (a)/(b)</span>
               <p className="text-white text-sm mt-1">
                 Every cable (or every core of a multicore cable) is insulated for the highest voltage
                 present. This is the basis for the 5-core mains-rated cable approach.
               </p>
             </div>
             <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10">
-              <span className="text-yellow-400 font-bold text-sm">528.1 (c)</span>
+              <span className="text-elec-yellow font-bold text-sm">528.1 (c)</span>
               <p className="text-white text-sm mt-1">
                 Cables are installed in a separate compartment of a cable ducting or trunking system.
               </p>
             </div>
             <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10">
-              <span className="text-yellow-400 font-bold text-sm">528.1 (d)/(e)</span>
+              <span className="text-elec-yellow font-bold text-sm">528.1 (d)/(e)</span>
               <p className="text-white text-sm mt-1">
                 A cable tray with a physical partition, or a separate conduit, trunking or ducting
                 system for the DALI bus.
               </p>
             </div>
             <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10">
-              <span className="text-yellow-400 font-bold text-sm">528.1 (f)</span>
+              <span className="text-elec-yellow font-bold text-sm">528.1 (f)</span>
               <p className="text-white text-sm mt-1">
                 For a multicore cable, the Band I cores are separated from the Band II cores by an
                 earthed metal screen of equivalent current-carrying capacity to the largest Band II
@@ -504,24 +504,24 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <ul className="space-y-3 text-white text-sm">
             <li>
-              <span className="text-yellow-400 font-semibold">Addressing:</span> each emergency
+              <span className="text-elec-yellow font-semibold">Addressing:</span> each emergency
               converter takes a DALI short address on the bus, consuming one of the 64 addresses.
             </li>
             <li>
-              <span className="text-yellow-400 font-semibold">Functional test:</span> triggered on
+              <span className="text-elec-yellow font-semibold">Functional test:</span> triggered on
               any addressed converter at any time, individually or in groups.
             </li>
             <li>
-              <span className="text-yellow-400 font-semibold">Discharge test:</span> scheduled
+              <span className="text-elec-yellow font-semibold">Discharge test:</span> scheduled
               outside occupation hours, with results (pass / fail / battery duration) logged
               automatically.
             </li>
             <li>
-              <span className="text-yellow-400 font-semibold">Audit trail:</span> test logs pushed to
+              <span className="text-elec-yellow font-semibold">Audit trail:</span> test logs pushed to
               the BMS over a BACnet or Modbus gateway, aligned to the BS 5266 logbook requirement.
             </li>
             <li>
-              <span className="text-yellow-400 font-semibold">Self-reporting:</span> failed
+              <span className="text-elec-yellow font-semibold">Self-reporting:</span> failed
               converters or batteries report over the bus — facilities get an automatic alert rather
               than waiting for the next walk-test.
             </li>
@@ -576,7 +576,7 @@ const sections = [
             </p>
           </div>
           <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-            <h3 className="font-bold text-yellow-400 text-base mb-2">Managed (controller-based)</h3>
+            <h3 className="font-bold text-elec-yellow text-base mb-2">Managed (controller-based)</h3>
             <p className="text-white text-sm leading-relaxed">
               A central application controller or routing gateway orchestrates groups, scenes,
               schedules and sensor logic — often a node on a higher-level BACnet / Modbus / KNX
@@ -655,10 +655,10 @@ const sections = [
           <table className="w-full text-sm border-collapse min-w-[560px]">
             <thead>
               <tr className="border-b border-white/15 text-left">
-                <th className="p-3 text-yellow-400 font-bold">Protocol</th>
-                <th className="p-3 text-yellow-400 font-bold">Addressing</th>
-                <th className="p-3 text-yellow-400 font-bold">Status feedback</th>
-                <th className="p-3 text-yellow-400 font-bold">Typical use</th>
+                <th className="p-3 text-elec-yellow font-bold">Protocol</th>
+                <th className="p-3 text-elec-yellow font-bold">Addressing</th>
+                <th className="p-3 text-elec-yellow font-bold">Status feedback</th>
+                <th className="p-3 text-elec-yellow font-bold">Typical use</th>
               </tr>
             </thead>
             <tbody className="text-white">
@@ -697,7 +697,7 @@ const sections = [
         </div>
         <ul className="space-y-3 text-white text-sm my-4">
           <li>
-            <span className="text-yellow-400 font-semibold">DALI vs KNX</span> — many projects use
+            <span className="text-elec-yellow font-semibold">DALI vs KNX</span> — many projects use
             DALI for lighting and KNX as the building backbone, bridged by DALI/KNX gateways. See the{' '}
             <SEOInternalLink href="/guides/knx-wiring-installation-guide-uk">
               KNX wiring installation guide
@@ -705,15 +705,15 @@ const sections = [
             .
           </li>
           <li>
-            <span className="text-yellow-400 font-semibold">DALI vs 0-10V</span> — DALI replaces
+            <span className="text-elec-yellow font-semibold">DALI vs 0-10V</span> — DALI replaces
             0-10V where individual control, energy reporting, or future reconfigurability matters.
           </li>
           <li>
-            <span className="text-yellow-400 font-semibold">DALI vs DMX</span> — DMX is faster and
+            <span className="text-elec-yellow font-semibold">DALI vs DMX</span> — DMX is faster and
             broadcast-only; it dominates entertainment, DALI dominates general commercial.
           </li>
           <li>
-            <span className="text-yellow-400 font-semibold">DALI vs PoE</span> — PoE delivers power
+            <span className="text-elec-yellow font-semibold">DALI vs PoE</span> — PoE delivers power
             and Ethernet data on Cat6 to each luminaire as an IP device. See the{' '}
             <SEOInternalLink href="/guides/poe-lighting-vs-traditional-led-wiring">
               PoE lighting vs traditional LED wiring guide
@@ -721,7 +721,7 @@ const sections = [
             .
           </li>
           <li>
-            <span className="text-yellow-400 font-semibold">DALI vs wireless</span> — for
+            <span className="text-elec-yellow font-semibold">DALI vs wireless</span> — for
             residential use, Zigbee and Matter often replace DALI. See the{' '}
             <SEOInternalLink href="/guides/smart-home-lighting-installation">
               smart home lighting installation guide
@@ -923,7 +923,7 @@ export default function DALILightingControlWiringPage() {
       heroTitle={
         <>
           DALI Lighting Control Wiring Guide{' '}
-          <span className="text-yellow-400">(BS EN 62386)</span> for UK Electricians
+          <span className="text-elec-yellow">(BS EN 62386)</span> for UK Electricians
         </>
       }
       heroSubtitle="DALI (Digital Addressable Lighting Interface) is the open international standard for lighting control on UK commercial projects. This guide explains BS EN 62386, the differences between DALI-1, DALI-2 and D4i, how to wire the bus correctly under BS 7671:2018+A4:2026 (including Section 528 segregation), the commissioning workflow, and how DALI compares with KNX, 0-10V and DMX."

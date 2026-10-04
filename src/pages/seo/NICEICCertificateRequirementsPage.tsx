@@ -237,7 +237,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
           <div className="grid grid-cols-[auto_1fr]">
-            <div className="contents text-xs font-semibold uppercase tracking-wide text-white/60">
+            <div className="contents text-xs font-semibold uppercase tracking-wide text-white">
               <div className="px-4 py-3 border-b border-white/10">Reg</div>
               <div className="px-4 py-3 border-b border-white/10">Test</div>
             </div>
@@ -267,7 +267,7 @@ const sections = [
             ))}
           </div>
         </div>
-        <p className="text-sm text-white/70">
+        <p className="text-sm text-white">
           Reg 643.11 (verification of voltage drop) and Reg 643.9 (phase sequence, on polyphase
           circuits) also apply where relevant. Every applicable test must produce a recorded result
           — a blank where a value is expected is the single most common assessment finding.
@@ -287,7 +287,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Accuracy.</strong> Do the test results make sense? Are the Zs values
                 consistent with the cable sizes and circuit lengths recorded? Are the maximum
@@ -306,7 +306,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Completeness.</strong> Is every field filled in? Is the{' '}
                 <SEOInternalLink href="/guides/eicr-schedule-of-inspections">
@@ -318,7 +318,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consistency.</strong> Are all your certificates completed to the same
                 standard? The assessor reviews multiple certificates — if one is excellent and
@@ -428,7 +428,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Legibility.</strong> Handwritten certificates must be legible. If your
                 handwriting is difficult to read, digital certificates eliminate this issue
@@ -437,7 +437,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Correct form version.</strong> Use the current version of the model forms.
                 Certificates produced on outdated forms (pre-18th Edition) will be flagged. Digital
@@ -461,7 +461,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Company branding.</strong> While not strictly required, including your
                 company logo, NICEIC registration number, and professional contact details on the
@@ -497,7 +497,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
           <div className="grid grid-cols-[auto_1fr] sm:grid-cols-[auto_1fr_auto]">
-            <div className="contents text-xs font-semibold uppercase tracking-wide text-white/60">
+            <div className="contents text-xs font-semibold uppercase tracking-wide text-white">
               <div className="px-4 py-3 border-b border-white/10">Code</div>
               <div className="px-4 py-3 border-b border-white/10">Meaning (model-form wording)</div>
               <div className="hidden sm:block px-4 py-3 border-b border-white/10">
@@ -528,12 +528,12 @@ const sections = [
             </div>
             <div className="contents">
               <div className="px-4 py-4 border-b border-white/10 bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
-                <span className="font-bold text-yellow-400">C3</span>
+                <span className="font-bold text-elec-yellow">C3</span>
               </div>
               <div className="px-4 py-4 border-b border-white/10 text-white text-sm">
                 Improvement recommended.
               </div>
-              <div className="hidden sm:flex px-4 py-4 border-b border-white/10 text-sm text-white/60 items-center">
+              <div className="hidden sm:flex px-4 py-4 border-b border-white/10 text-sm text-white items-center">
                 Advisory only
               </div>
             </div>
@@ -544,13 +544,13 @@ const sections = [
               <div className="px-4 py-4 text-white text-sm">
                 Further investigation advised without delay.
               </div>
-              <div className="hidden sm:flex px-4 py-4 text-sm text-white/60 items-center">
+              <div className="hidden sm:flex px-4 py-4 text-sm text-white items-center">
                 Advisory only
               </div>
             </div>
           </div>
         </div>
-        <p className="text-sm text-white/70">
+        <p className="text-sm text-white">
           Only C1 and C2 observations make the overall assessment Unsatisfactory. C3 and FI are
           advisory and do not, on their own, change the outcome. See our full{' '}
           <SEOInternalLink href="/guides/eicr-observation-codes-explained">
@@ -561,7 +561,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Schedule of inspections must be fully completed.</strong> Every item in the
                 schedule must be ticked (satisfactory), crossed (unsatisfactory), marked LIM
@@ -570,7 +570,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Every observation must have a description and a code.</strong> The
                 observation must describe the defect clearly (not just the code number), state the
@@ -578,7 +578,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Overall assessment must match the observations.</strong> If any C1 or C2
                 observation is recorded, the overall assessment must be Unsatisfactory. An EICR with
@@ -587,7 +587,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Next inspection date must be justified.</strong> The recommended date for
                 the next periodic inspection should reflect the age and condition of the
@@ -596,7 +596,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>FI (Further Investigation) must be used sparingly.</strong> Industry
                 guidance (IET Guidance Note 3) treats the FI code as one to use only{' '}
@@ -638,7 +638,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
           <div className="grid grid-cols-1 sm:grid-cols-[1fr_1.4fr]">
-            <div className="contents text-xs font-semibold uppercase tracking-wide text-white/60">
+            <div className="contents text-xs font-semibold uppercase tracking-wide text-white">
               <div className="px-4 py-3 border-b border-white/10">Scope of work</div>
               <div className="px-4 py-3 border-b border-white/10">Certificate to issue</div>
             </div>
@@ -647,8 +647,8 @@ const sections = [
                 New installation, or an alteration that adds a new circuit
               </div>
               <div className="px-4 py-4 border-b border-white/10 text-sm">
-                <span className="font-semibold text-yellow-400">EIC</span>
-                <span className="text-white/70"> — Electrical Installation Certificate</span>
+                <span className="font-semibold text-elec-yellow">EIC</span>
+                <span className="text-white"> — Electrical Installation Certificate</span>
               </div>
             </div>
             <div className="contents">
@@ -656,8 +656,8 @@ const sections = [
                 Addition or alteration to an existing circuit with no new circuit
               </div>
               <div className="px-4 py-4 border-b border-white/10 text-sm">
-                <span className="font-semibold text-yellow-400">Minor Works Certificate</span>
-                <span className="text-white/70"> (or a single EIC covering several minor works)</span>
+                <span className="font-semibold text-elec-yellow">Minor Works Certificate</span>
+                <span className="text-white"> (or a single EIC covering several minor works)</span>
               </div>
             </div>
             <div className="contents">
@@ -665,8 +665,8 @@ const sections = [
                 Periodic inspection of an existing installation
               </div>
               <div className="px-4 py-4 text-sm">
-                <span className="font-semibold text-yellow-400">EICR</span>
-                <span className="text-white/70">
+                <span className="font-semibold text-elec-yellow">EICR</span>
+                <span className="text-white">
                   {' '}
                   — Electrical Installation Condition Report
                 </span>
@@ -677,7 +677,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EIC: Missing or incomplete declaration.</strong> The EIC has separate
                 sections for the designer and the installer. Where responsibilities are split, each
@@ -689,7 +689,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EIC: Incomplete schedule of test results.</strong> Every new or altered
                 circuit must have a complete set of test results. If you installed three new
@@ -697,7 +697,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minor Works: Using it for work that requires an EIC.</strong> A Minor Works
                 Certificate is only appropriate for additions or alterations to existing circuits
@@ -711,7 +711,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minor Works: Missing Part P notification.</strong> If the Minor Works
                 involves notifiable work under Part P (such as work in a bathroom or kitchen, or a
@@ -762,7 +762,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Camera className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI Board Scanner</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -829,7 +829,7 @@ export default function NICEICCertificateRequirementsPage() {
       heroTitle={
         <>
           NICEIC Certificate Requirements:{' '}
-          <span className="text-yellow-400">Pass Every Assessment</span>
+          <span className="text-elec-yellow">Pass Every Assessment</span>
         </>
       }
       heroSubtitle="NICEIC assessors check your certificates for accuracy, completeness, and consistency. Incomplete test results, wrong observation codes, and missing declarations are the most common issues. This guide covers exactly what NICEIC requires and how to get it right every time."
@@ -840,7 +840,7 @@ export default function NICEICCertificateRequirementsPage() {
       faqHeading="Frequently Asked Questions About NICEIC Certificate Requirements"
       relatedPages={relatedPages}
       ctaHeading="Produce Assessment-Ready Certificates"
-      ctaSubheading="Join 1,600+ UK electricians creating NICEIC-compliant certificates with AI board scanning, voice test entry, and automatic validation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians creating NICEIC-compliant certificates with AI board scanning, voice test entry, and automatic validation. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -192,13 +192,13 @@ export default function EVChargerCertificatePage() {
       <section className="py-16 sm:py-24 px-5">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-6">
-            <Car className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium text-yellow-400">
+            <Car className="w-4 h-4 text-elec-yellow" />
+            <span className="text-sm font-medium text-elec-yellow">
               BS 7671 Section 722 Compliant
             </span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
-            Create <span className="text-yellow-400">EV Charger Certificates</span> on Your Phone
+            Create <span className="text-elec-yellow">EV Charger Certificates</span> on Your Phone
           </h1>
           <p className="text-lg text-white max-w-2xl mx-auto leading-relaxed mb-8">
             The complete EV charger installation certificate app for UK electricians. BS 7671
@@ -214,7 +214,7 @@ export default function EVChargerCertificatePage() {
             </a>
             <a
               href="#how-it-works"
-              className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-yellow-500/40 text-white font-semibold rounded-xl touch-manipulation transition-colors"
+              className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-white/[0.1] text-white font-semibold rounded-xl touch-manipulation transition-colors"
             >
               See How It Works
             </a>
@@ -226,7 +226,7 @@ export default function EVChargerCertificatePage() {
       <section className="py-4 px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 text-sm text-white">
-            <FileCheck2 className="w-4 h-4 text-yellow-400 shrink-0" />
+            <FileCheck2 className="w-4 h-4 text-elec-yellow shrink-0" />
             <span>
               Technical content reviewed by Andrew Moore, founder of Elec-Mate and a qualified electrician. Regulations cited from
               BS&nbsp;7671:2018+A4:2026 (IET Wiring Regulations).
@@ -274,7 +274,7 @@ export default function EVChargerCertificatePage() {
                   <td className="px-4 py-3 align-top">Additional protection?</td>
                   <td className="px-4 py-3 align-top">
                     RCD with a rated residual operating current not exceeding{' '}
-                    <span className="font-semibold text-yellow-400">30mA</span>.
+                    <span className="font-semibold text-elec-yellow">30mA</span>.
                   </td>
                   <td className="px-4 py-3 align-top whitespace-nowrap">415.1.1</td>
                 </tr>
@@ -306,7 +306,7 @@ export default function EVChargerCertificatePage() {
                 <tr>
                   <td className="px-4 py-3 align-top">Voltage drop limit?</td>
                   <td className="px-4 py-3 align-top">
-                    <span className="font-semibold text-yellow-400">5%</span> origin to load point
+                    <span className="font-semibold text-elec-yellow">5%</span> origin to load point
                     for circuits other than lighting, on a supply taken directly from the public LV
                     network — 11.5V at 230V.
                   </td>
@@ -487,13 +487,13 @@ export default function EVChargerCertificatePage() {
               </thead>
               <tbody className="divide-y divide-white/10 text-white">
                 <tr>
-                  <td className="px-4 py-3 align-top font-semibold text-yellow-400">(a)</td>
+                  <td className="px-4 py-3 align-top font-semibold text-elec-yellow">(a)</td>
                   <td className="px-4 py-3 align-top">
                     Deleted by BS 7671:2018+A2:2022.
                   </td>
                 </tr>
                 <tr>
-                  <td className="px-4 py-3 align-top font-semibold text-yellow-400">(b)</td>
+                  <td className="px-4 py-3 align-top font-semibold text-elec-yellow">(b)</td>
                   <td className="px-4 py-3 align-top">
                     The main earthing terminal of the installation is connected to an installation
                     earth electrode by a protective conductor complying with Regulation 544.1.1. The
@@ -504,7 +504,7 @@ export default function EVChargerCertificatePage() {
                   </td>
                 </tr>
                 <tr>
-                  <td className="px-4 py-3 align-top font-semibold text-yellow-400">(c)</td>
+                  <td className="px-4 py-3 align-top font-semibold text-elec-yellow">(c)</td>
                   <td className="px-4 py-3 align-top">
                     A device that disconnects the vehicle from the live conductors and from
                     protective earth, in accordance with Regulation 543.3.3.101(b), within 5s where
@@ -515,7 +515,7 @@ export default function EVChargerCertificatePage() {
                   </td>
                 </tr>
                 <tr>
-                  <td className="px-4 py-3 align-top font-semibold text-yellow-400">(d)</td>
+                  <td className="px-4 py-3 align-top font-semibold text-elec-yellow">(d)</td>
                   <td className="px-4 py-3 align-top">
                     The same 5s disconnection, triggered instead by the utilisation voltage at the
                     charging point between line and neutral going above{' '}
@@ -526,7 +526,7 @@ export default function EVChargerCertificatePage() {
                   </td>
                 </tr>
                 <tr>
-                  <td className="px-4 py-3 align-top font-semibold text-yellow-400">(e)</td>
+                  <td className="px-4 py-3 align-top font-semibold text-elec-yellow">(e)</td>
                   <td className="px-4 py-3 align-top">
                     An alternative device to (c) or (d) that does not result in a lesser degree of
                     safety, operating by the same disconnection from live conductors and protective
@@ -713,7 +713,7 @@ export default function EVChargerCertificatePage() {
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
               <div className="flex items-center gap-3 mb-3">
-                <span className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400">
+                <span className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow">
                   M2
                 </span>
                 <h3 className="font-bold text-white text-lg">Mode 2</h3>
@@ -792,35 +792,35 @@ export default function EVChargerCertificatePage() {
             </h3>
             <ul className="space-y-3 text-white">
               <li className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <span>
                   <strong>Protective device:</strong> 32A Type A RCBO, 30mA rated residual operating
                   current
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <span>
                   <strong>Cable:</strong> 6mm² minimum (PVC/PVC twin-and-earth clipped direct),
                   10mm² for longer runs, or 4mm² SWA depending on installation method and length
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <span>
                   <strong>Voltage drop:</strong> 5% from the origin of the installation to the
                   charging point &mdash; 11.5V on a 230V nominal supply (Table 4Ab)
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <span>
                   <strong>Earthing on PME:</strong> one of methods (b) to (e) of Regulation
                   722.411.4.1, recorded on the certificate
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <span>
                   <strong>Conductor arrangement:</strong> no PEN conductor in the circuit supplying
                   the charging equipment (Regulation 722.312.2.1)
@@ -903,17 +903,17 @@ export default function EVChargerCertificatePage() {
                 <tbody className="divide-y divide-white/10 text-white">
                   <tr>
                     <td className="px-4 py-3 align-top">Short run, clipped direct (PVC twin &amp; earth)</td>
-                    <td className="px-4 py-3 align-top font-medium text-yellow-400">6mm&sup2;</td>
+                    <td className="px-4 py-3 align-top font-medium text-elec-yellow">6mm&sup2;</td>
                     <td className="px-4 py-3 align-top">Assumes favourable conditions and a short length</td>
                   </tr>
                   <tr>
                     <td className="px-4 py-3 align-top">Longer run or warmer/grouped conditions</td>
-                    <td className="px-4 py-3 align-top font-medium text-yellow-400">10mm&sup2;</td>
+                    <td className="px-4 py-3 align-top font-medium text-elec-yellow">10mm&sup2;</td>
                     <td className="px-4 py-3 align-top">Often needed to stay within the voltage-drop limit</td>
                   </tr>
                   <tr>
                     <td className="px-4 py-3 align-top">External / underground run to garage or outbuilding</td>
-                    <td className="px-4 py-3 align-top font-medium text-yellow-400">SWA (e.g. 4&ndash;10mm&sup2;)</td>
+                    <td className="px-4 py-3 align-top font-medium text-elec-yellow">SWA (e.g. 4&ndash;10mm&sup2;)</td>
                     <td className="px-4 py-3 align-top">Buried at correct depth; armour may serve as the CPC if correctly terminated</td>
                   </tr>
                 </tbody>
@@ -1007,7 +1007,7 @@ export default function EVChargerCertificatePage() {
                 key={step.name}
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                   {index + 1}
                 </div>
                 <div>
@@ -1046,7 +1046,7 @@ export default function EVChargerCertificatePage() {
               >
                 <summary className="flex items-center justify-between p-4 min-h-[44px] touch-manipulation cursor-pointer text-white font-medium">
                   <span>{faq.question}</span>
-                  <ChevronDown className="w-5 h-5 text-yellow-400 group-open:rotate-180 transition-transform" />
+                  <ChevronDown className="w-5 h-5 text-elec-yellow group-open:rotate-180 transition-transform" />
                 </summary>
                 <div className="px-4 pb-4 text-white text-sm leading-relaxed">{faq.answer}</div>
               </details>
@@ -1086,7 +1086,7 @@ export default function EVChargerCertificatePage() {
 
       <SEOCTASection
         heading="Stop struggling with EV charger paperwork"
-        subheading="Join 1,600+ UK electricians creating professional Section 722 compliant certificates. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians creating professional Section 722 compliant certificates. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

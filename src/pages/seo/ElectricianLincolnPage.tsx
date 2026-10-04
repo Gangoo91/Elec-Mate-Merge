@@ -229,7 +229,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New connections and upgrades</strong> — apply through Northern Powergrid's
                 connections portal. Essential for EV charger installations requiring capacity
@@ -237,7 +237,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98/G99</strong> — solar PV and battery storage. G98 online notification for
                 systems up to 16A per phase. G99 pre-approval for larger systems (common in the
@@ -245,7 +245,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency number</strong> — 105 for power cuts and emergencies across the
                 Northern Powergrid network.
@@ -309,7 +309,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacements</strong> — consistent demand across Lincoln's
                 large pre-1990s housing stock. Victorian terraces in Sincil Bank and West End
@@ -317,7 +317,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Student and rental property EICRs</strong> — the University of Lincoln
                 student population drives consistent five-yearly EICR demand. HMO properties also
@@ -325,14 +325,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full rewires</strong> — Victorian terraces in the city centre and older
                 estates. Asbestos surveys recommended for pre-1985 properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Agricultural solar PV</strong> — Lincolnshire's large farm buildings are
                 well-suited to solar PV arrays. G99 applications to Northern Powergrid for systems
@@ -413,7 +413,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EIC and EICR Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -459,7 +459,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Lincoln electricians"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -486,7 +486,7 @@ export default function ElectricianLincolnPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Lincoln: <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Lincoln: <span className="text-elec-yellow">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Lincoln's unique Uphill and Downhill geography, large student rental market, and surrounding agricultural county create a distinctive and varied electrical market. Find NICEIC and NAPIT registered electricians in Lincoln and Lincolnshire."
@@ -497,7 +497,7 @@ export default function ElectricianLincolnPage() {
       faqHeading="Frequently Asked Questions About Electricians in Lincoln"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Lincoln Electricians"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for electricians working across Lincolnshire and the East Midlands. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for electricians working across Lincolnshire and the East Midlands. 7-day free trial."
     />
   );
 }

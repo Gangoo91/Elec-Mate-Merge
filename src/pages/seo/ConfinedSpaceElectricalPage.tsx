@@ -207,7 +207,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 4 — Work in confined spaces (avoid entry)</strong> — entry must
                 be avoided wherever it is reasonably practicable to do the work without it. This
@@ -216,7 +216,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 4 — Safe system of work</strong> — where entry cannot be avoided,
                 Regulation 4 also requires that a safe system of work be established before any
@@ -225,7 +225,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 5 — Emergency (rescue) arrangements</strong> — adequate rescue arrangements
                 must be in place before entry. These must not rely on emergency services for
@@ -254,7 +254,7 @@ const sections = [
           toxic gases are invisible and odourless at dangerous concentrations.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
-          <div className="grid grid-cols-12 gap-px bg-white/10 text-[11px] sm:text-xs font-semibold uppercase tracking-wide text-white/60">
+          <div className="grid grid-cols-12 gap-px bg-white/10 text-[11px] sm:text-xs font-semibold uppercase tracking-wide text-white">
             <div className="col-span-4 bg-[#0c0c0e] px-3 py-2.5">Measurement</div>
             <div className="col-span-4 bg-[#0c0c0e] px-3 py-2.5">Safe range / limit</div>
             <div className="col-span-4 bg-[#0c0c0e] px-3 py-2.5">Why it matters</div>
@@ -262,30 +262,30 @@ const sections = [
           <div className="grid grid-cols-12 gap-px bg-white/10 text-xs sm:text-sm text-white">
             <div className="col-span-4 bg-green-900/30 px-3 py-3 font-semibold">Oxygen (O₂)</div>
             <div className="col-span-4 bg-green-900/20 px-3 py-3">19.5% – 23.5% (normal 20.9%)</div>
-            <div className="col-span-4 bg-[#0e0e10] px-3 py-3 text-white/80">
+            <div className="col-span-4 bg-[#0e0e10] px-3 py-3 text-white">
               Below 16% causes rapid loss of consciousness; above 23.5% sharply raises fire risk.
             </div>
 
             <div className="col-span-4 bg-red-900/30 px-3 py-3 font-semibold">Flammable gas (%LEL)</div>
             <div className="col-span-4 bg-red-900/20 px-3 py-3">Below 10% LEL to enter</div>
-            <div className="col-span-4 bg-[#0e0e10] px-3 py-3 text-white/80">
+            <div className="col-span-4 bg-[#0e0e10] px-3 py-3 text-white">
               Methane, hydrogen and solvent vapours can reach explosive concentration; ventilate and re-test.
             </div>
 
             <div className="col-span-4 bg-orange-900/30 px-3 py-3 font-semibold">Hydrogen sulphide (H₂S)</div>
             <div className="col-span-4 bg-orange-900/20 px-3 py-3">WEL 5 ppm (15-min STEL)</div>
-            <div className="col-span-4 bg-[#0e0e10] px-3 py-3 text-white/80">
+            <div className="col-span-4 bg-[#0e0e10] px-3 py-3 text-white">
               Common in sewers and drainage; deadens the sense of smell, so detection must be by instrument.
             </div>
 
             <div className="col-span-4 bg-orange-900/30 px-3 py-3 font-semibold">Carbon monoxide (CO)</div>
             <div className="col-span-4 bg-orange-900/20 px-3 py-3">WEL 20 ppm (8-hr TWA)</div>
-            <div className="col-span-4 bg-[#0e0e10] px-3 py-3 text-white/80">
+            <div className="col-span-4 bg-[#0e0e10] px-3 py-3 text-white">
               Odourless and colourless; risk wherever petrol or diesel plant has run or exhaust can enter.
             </div>
           </div>
         </div>
-        <p className="text-white/60 text-xs">
+        <p className="text-white text-xs">
           Workplace Exposure Limits (WELs) are published in HSE document EH40. Test from outside the
           space using a calibrated multi-gas detector with an integral pump before entry, then
           monitor continuously throughout.
@@ -408,7 +408,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reduced voltage requirements</strong> — use 110V CTE (centre-tapped earth)
                 supply from a transformer for all portable power tools. In wet or damp confined
@@ -417,7 +417,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection</strong> — where 230V is unavoidable, a 30mA RCD must be
                 used. In wet conditions, a 10mA RCD should be considered. RCDs must be tested before
@@ -425,7 +425,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Increased shock risk from earth contact</strong> — in a confined space, the
                 body may be in contact with a conductive surface (metal tank, damp concrete, damp
@@ -434,7 +434,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Safe isolation before entry</strong> — all electrical services in or
                 adjacent to the confined space must be identified and considered for isolation
@@ -450,7 +450,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
           <div className="px-5 pt-4 pb-2">
             <h4 className="font-bold text-white">Supply options, lowest risk first</h4>
-            <p className="text-white/70 text-sm">
+            <p className="text-white text-sm">
               Reduced low voltage is defined in BS 7671{' '}
               <SEOInternalLink href="/guides/reduced-low-voltage-110v-cte-site-supplies">
                 Regulation 411.8.1.2
@@ -458,7 +458,7 @@ const sections = [
               — nominal voltage not exceeding 110V.
             </p>
           </div>
-          <div className="grid grid-cols-12 gap-px bg-white/10 text-[11px] sm:text-xs font-semibold uppercase tracking-wide text-white/60">
+          <div className="grid grid-cols-12 gap-px bg-white/10 text-[11px] sm:text-xs font-semibold uppercase tracking-wide text-white">
             <div className="col-span-4 bg-[#0c0c0e] px-3 py-2.5">Supply</div>
             <div className="col-span-3 bg-[#0c0c0e] px-3 py-2.5">Voltage</div>
             <div className="col-span-5 bg-[#0c0c0e] px-3 py-2.5">Use in confined spaces</div>
@@ -466,19 +466,19 @@ const sections = [
           <div className="grid grid-cols-12 gap-px bg-white/10 text-xs sm:text-sm text-white">
             <div className="col-span-4 bg-green-900/30 px-3 py-3 font-semibold">Battery / SELV</div>
             <div className="col-span-3 bg-green-900/20 px-3 py-3">≤ 50V AC</div>
-            <div className="col-span-5 bg-[#0e0e10] px-3 py-3 text-white/80">
+            <div className="col-span-5 bg-[#0e0e10] px-3 py-3 text-white">
               Preferred for lighting and hand tools; no shock risk at extra-low voltage.
             </div>
 
             <div className="col-span-4 bg-blue-900/30 px-3 py-3 font-semibold">110V CTE (RLV)</div>
             <div className="col-span-3 bg-blue-900/20 px-3 py-3">55V to earthed midpoint</div>
-            <div className="col-span-5 bg-[#0e0e10] px-3 py-3 text-white/80">
+            <div className="col-span-5 bg-[#0e0e10] px-3 py-3 text-white">
               Centre-tapped earth via transformer; preferred for mains-powered portable tools.
             </div>
 
             <div className="col-span-4 bg-orange-900/30 px-3 py-3 font-semibold">230V (last resort)</div>
             <div className="col-span-3 bg-orange-900/20 px-3 py-3">230V AC + 30mA RCD</div>
-            <div className="col-span-5 bg-[#0e0e10] px-3 py-3 text-white/80">
+            <div className="col-span-5 bg-[#0e0e10] px-3 py-3 text-white">
               Only where reduced voltage is impracticable; additional protection by 30mA RCD required.
             </div>
           </div>
@@ -513,21 +513,21 @@ const sections = [
         <div className="grid gap-3 sm:grid-cols-3 my-4">
           <div className="rounded-2xl bg-red-900/30 border border-red-700/40 p-5">
             <div className="text-2xl font-bold text-red-300 mb-1">Zone 0</div>
-            <p className="text-white/85 text-sm">
+            <p className="text-white text-sm">
               Flammable atmosphere present continuously, for long periods, or frequently. Requires
               the highest equipment protection (typically Category 1 / Ex ia).
             </p>
           </div>
           <div className="rounded-2xl bg-orange-900/30 border border-orange-700/40 p-5">
             <div className="text-2xl font-bold text-orange-300 mb-1">Zone 1</div>
-            <p className="text-white/85 text-sm">
+            <p className="text-white text-sm">
               Flammable atmosphere likely to occur occasionally in normal operation. Category 2
               equipment (e.g. Ex ib, Ex d, Ex e).
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-900/30 border border-yellow-700/40 p-5">
-            <div className="text-2xl font-bold text-yellow-300 mb-1">Zone 2</div>
-            <p className="text-white/85 text-sm">
+          <div className="rounded-2xl bg-white/[0.06] border border-yellow-700/40 p-5">
+            <div className="text-2xl font-bold text-elec-yellow mb-1">Zone 2</div>
+            <p className="text-white text-sm">
               Flammable atmosphere not likely in normal operation and, if it occurs, only briefly.
               Category 3 equipment as a minimum.
             </p>
@@ -565,11 +565,11 @@ const sections = [
           <h4 className="font-bold text-white mb-3">
             Statutory References for Electricians — Potentially Explosive Atmospheres
           </h4>
-          <p className="text-white/80 text-sm mb-3">
+          <p className="text-white text-sm mb-3">
             BS 7671 requires that for installations in potentially explosive atmospheres, reference
             be made to all four of the following instruments:
           </p>
-          <ul className="space-y-2 text-white/80 text-sm">
+          <ul className="space-y-2 text-white text-sm">
             <li className="flex items-start gap-2">
               <ShieldCheck className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" />
               <span>
@@ -623,7 +623,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Confined space permit contents</strong> — space identification, hazard
                 assessment and specified risks, atmospheric test results (pre-entry), isolation
@@ -633,7 +633,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Integration with electrical isolation permit</strong> — where a permit to
                 work is also issued for electrical isolation (see{' '}
@@ -643,7 +643,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Permit suspension and cancellation</strong> — if atmospheric conditions
                 change, work must stop and all personnel must exit. The permit is suspended and a
@@ -674,11 +674,11 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-3">Pre-Entry Equipment Checklist</h4>
-          <p className="text-white/80 text-sm mb-3">
+          <p className="text-white text-sm mb-3">
             The following items are required before any person enters a confined space for
             electrical work, in accordance with Confined Spaces Regulations 1997 safe systems:
           </p>
-          <ul className="space-y-2 text-white/80 text-sm">
+          <ul className="space-y-2 text-white text-sm">
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
               <span>
@@ -728,7 +728,7 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-4">
-            <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+            <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-1">Generate Confined Space RAMS Instantly</h4>
               <p className="text-white text-sm leading-relaxed">
@@ -765,7 +765,7 @@ export default function ConfinedSpaceElectricalPage() {
       heroTitle={
         <>
           Confined Space Electrical Work UK:{' '}
-          <span className="text-yellow-400">Safety Requirements</span>
+          <span className="text-elec-yellow">Safety Requirements</span>
         </>
       }
       heroSubtitle="Everything UK electricians need to know about working safely in confined spaces. Confined Spaces Regulations 1997, what qualifies as a confined space, gas testing requirements, entry and standby team roles, ATEX equipment, and permit to work systems."

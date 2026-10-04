@@ -186,7 +186,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Assess the main house consumer unit</strong> — check for spare ways, main
                 fuse rating, and RCD protection. If the consumer unit is old or lacks RCD
@@ -195,7 +195,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable sizing for the garage feed</strong> — if the garage is to be fed from
                 the house consumer unit, the feed cable must be sized for the total load of all
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DNO involvement</strong> — if the main house supply cannot support the
                 additional load of the converted garage (particularly with electric heating), the
@@ -314,7 +314,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Extending gas central heating</strong> — technically possible but requires a
                 Gas Safe registered engineer to extend the pipework, a new radiator installation,
@@ -340,7 +340,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Non-combustible enclosure</strong> — under Regulation 421.1.201 of BS 7671,
                 consumer units in domestic premises must have a non-combustible enclosure. Metal
@@ -349,7 +349,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection</strong> — all socket-outlet circuits must be protected by a
                 30mA RCD. For a sub-board serving a converted garage, a dual-RCD or RCBO consumer
@@ -358,7 +358,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sub-board for detached garages</strong> — a detached garage conversion
                 requires a consumer unit or sub-distribution board at the garage end of the SWA
@@ -385,7 +385,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person scheme</strong> — use a NICEIC, NAPIT, or ELECSA registered
                 electrician to self-certify the electrical work under Part P. This avoids the need
@@ -393,7 +393,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EIC on completion</strong> — the electrician must issue an Electrical
                 Installation Certificate (EIC) on completion. This document must be provided to the
@@ -431,7 +431,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Issue the EIC Same Day</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -466,7 +466,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your garage conversion jobs with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for EIC certificates, quoting, and job management. Complete more jobs with less paperwork. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for EIC certificates, quoting, and job management. Complete more jobs with less paperwork. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -492,7 +492,7 @@ export default function GarageConversionElectricalPage() {
       heroTitle={
         <>
           Garage Conversion Electrical Work:{' '}
-          <span className="text-yellow-400">Wiring Guide for UK Homeowners</span>
+          <span className="text-elec-yellow">Wiring Guide for UK Homeowners</span>
         </>
       }
       heroSubtitle="Everything you need to know about electrical work in a garage conversion — upgrading from basic garage supply to full habitable room standard, heating options, consumer unit considerations, Part P notification, and the mandatory Electrical Installation Certificate."
@@ -503,7 +503,7 @@ export default function GarageConversionElectricalPage() {
       faqHeading="Frequently Asked Questions About Garage Conversion Electrical Work"
       relatedPages={relatedPages}
       ctaHeading="Complete Garage Conversion EICs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, quoting, and Part P compliance. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion, quoting, and Part P compliance. 7-day free trial, cancel anytime."
     />
   );
 }

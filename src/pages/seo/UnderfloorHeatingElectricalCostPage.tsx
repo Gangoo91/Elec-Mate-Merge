@@ -174,7 +174,7 @@ const sections = [
           </h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard heating mat (150W/m²)</strong> — £30 to £45 per square metre trade.
                 Pre-spaced cable on fibreglass mesh for quick installation in regularly shaped
@@ -183,7 +183,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>High-output heating mat (200W/m²)</strong> — £40 to £55 per square metre
                 trade. Higher wattage for rooms with greater heat loss, such as conservatories,
@@ -192,7 +192,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Loose heating cable</strong> — £25 to £40 per square metre trade (cable
                 only, plus £10 to £15 for fixing strips). More versatile for irregular room shapes
@@ -201,7 +201,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ultra-thin foil mat</strong> — £40 to £60 per square metre trade. Only 1.8mm
                 thick, designed for installation under laminate and engineered wood without raising
@@ -232,7 +232,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Thermostat Options</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Basic manual thermostat</strong> — £50 to £80. Simple dial or digital
                 thermostat with floor sensor. Maintains a set temperature but no scheduling
@@ -240,7 +240,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Programmable thermostat</strong> — £80 to £150. 7-day programming with
                 multiple time/temperature zones per day. Floor and air temperature sensors. The
@@ -249,7 +249,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smart WiFi thermostat</strong> — £150 to £200. App-controlled with
                 geofencing, learning algorithms, and integration with smart home systems (Alexa,
@@ -280,7 +280,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit sizing</strong> — size the circuit for the total heating load. A
                 bathroom mat (4 m² at 150W/m² = 600W, 2.6A) needs a 6A or 10A circuit. A kitchen (12
@@ -289,7 +289,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection</strong> — under BS 7671 Regulation 411.3.3, RCD protection
                 with a rated residual operating current not exceeding 30 mA is required. An RCBO at
@@ -298,7 +298,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable and containment</strong> — 2.5mm² twin and earth for circuits up to
                 20A (typical). The cable runs from the consumer unit to a fused connection unit or
@@ -307,7 +307,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New circuit cost</strong> — £150 to £300 for the dedicated circuit including
                 the RCBO (£35 to £55), cable, containment, and connection. If the consumer unit has
@@ -341,7 +341,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <SquareStack className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <SquareStack className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insulation boards</strong> — £8 to £15 per square metre. Typically 6mm to
                 10mm thick XPS (extruded polystyrene) or similar rigid insulation. Tile backer
@@ -350,7 +350,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <SquareStack className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <SquareStack className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Screed vs direct-to-tile</strong> — heating mats can be installed directly
                 in tile adhesive (direct-to-tile method) for minimal floor build-up (3 to 5mm
@@ -360,7 +360,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <SquareStack className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <SquareStack className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Total floor build-up</strong> — direct-to-tile with insulation: 10 to 15mm.
                 With screed and insulation: 25 to 45mm. Consider the impact on door clearances, step
@@ -389,7 +389,7 @@ const sections = [
           </h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bathroom (4 m² heated area, 150W/m²)</strong> — 600W load. Cost per hour at
                 full output: approximately £0.17. With thermostat cycling (typically 30% to 50% duty
@@ -398,7 +398,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Kitchen (10 m² heated area, 150W/m²)</strong> — 1,500W load. Cost per hour
                 at full output: approximately £0.42. With thermostat cycling: £0.13 to £0.21 per
@@ -406,7 +406,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Living room (18 m² heated area, 200W/m²)</strong> — 3,600W load. Cost per
                 hour at full output: approximately £1.01. With thermostat cycling: £0.30 to £0.50
@@ -483,7 +483,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bathroom (4 m² heated area)</strong> — £500 to £900 total. Heating mat: £120
                 to £180. Insulation: £35 to £60. Thermostat: £80 to £150. Dedicated circuit: £150 to
@@ -491,7 +491,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Kitchen (10 m² heated area)</strong> — £1,100 to £1,800 total. Heating mat:
                 £300 to £450. Insulation: £80 to £150. Thermostat: £80 to £150. Dedicated circuit:
@@ -500,7 +500,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Living room (18 m² heated area)</strong> — £1,800 to £3,000 total. Heating
                 element (cable or mat): £540 to £1,080. Insulation: £145 to £270. Thermostat: £100
@@ -509,7 +509,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Conservatory or extension (15 m² heated area)</strong> — £1,500 to £2,500
                 total. High-output mat (200W/m²): £600 to £825. Insulation: £120 to £225.
@@ -538,7 +538,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Supply and Install Packages</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -584,7 +584,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify UFH installations faster"
-          description="Join 1,600+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site EIC certification. Everything you need for underfloor heating work."
+          description="Join 2,100+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site EIC certification. Everything you need for underfloor heating work."
           icon={Wrench}
         />
       </>
@@ -610,7 +610,7 @@ export default function UnderfloorHeatingElectricalCostPage() {
       heroTitle={
         <>
           Underfloor Heating Electrical Cost:{' '}
-          <span className="text-yellow-400">UK Price Guide 2026</span>
+          <span className="text-elec-yellow">UK Price Guide 2026</span>
         </>
       }
       heroSubtitle="How much does electric underfloor heating cost to install? This guide covers heating mat and cable costs, thermostats, dedicated circuit requirements, insulation, running costs, and the wet vs electric debate — practical pricing for electricians and homeowners alike."
@@ -621,7 +621,7 @@ export default function UnderfloorHeatingElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Underfloor Heating Electrical Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Underfloor Heating with Real Trade Pricing"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI-powered cost engineering. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI-powered cost engineering. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -203,7 +203,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Site rules and PPE requirements</strong> — what PPE is mandatory at all
                 times and what additional PPE is required for specific tasks. Some sites require
@@ -211,7 +211,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Permit to work system</strong> — which tasks require permits, how to apply
                 for a permit, and who authorises permits on site. Electrical work frequently
@@ -223,7 +223,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reporting procedures</strong> — how to report near misses, unsafe
                 conditions, and accidents. Most sites have a formal near-miss reporting system, and
@@ -231,7 +231,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Environmental requirements</strong> — waste segregation, spill procedures,
                 and any restrictions on noise or dust. Electrical waste (cable offcuts, packaging,
@@ -274,7 +274,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Plan, manage, and monitor your work</strong> — ensure all electrical work
                 under your control is carried out without risk to health and safety. This includes
@@ -282,7 +282,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Provide information and training</strong> — ensure your workers have the
                 competence, knowledge, and training to carry out their tasks safely. For electrical
@@ -294,7 +294,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Comply with directions from the principal contractor</strong> — follow the
                 site rules, attend coordination meetings, and provide information about your work
@@ -302,7 +302,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Provide welfare facilities</strong> — if your workers are not using the
                 principal contractor's facilities, you must provide your own.
@@ -343,14 +343,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BadgeCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BadgeCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>A relevant NVQ Level 3</strong> — or equivalent qualification such as the
                 City & Guilds 2357 (now 8202) or a completed apprenticeship with AM2 assessment.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BadgeCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BadgeCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>A pass in the CITB Health, Safety and Environment test</strong> — the
                 specialist trade test for electrical occupations. This is a computer-based multiple
@@ -359,7 +359,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BadgeCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BadgeCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Current JIB or ECS registration</strong> — the card is issued through the
                 Electrotechnical Certification Scheme (ECS), which is administered by the JIB. Your
@@ -404,7 +404,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <HardHat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <HardHat className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hard hat (EN 397)</strong> — must be worn at all times in areas where there
                 is a risk of falling objects or head injury. Replace after any significant impact
@@ -412,7 +412,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>High-visibility clothing (EN ISO 20471)</strong> — Class 2 minimum is the
                 standard requirement. Many sites require Class 3 (which has more reflective
@@ -420,7 +420,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Safety footwear (EN ISO 20345 S3)</strong> — steel or composite toe cap,
                 midsole puncture protection, water resistant, and ankle support. S3 rated boots are
@@ -428,7 +428,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Eye protection (EN 166)</strong> — required when drilling, chasing walls,
                 cutting cable tray, or using power tools. Safety glasses with side shields are the
@@ -436,7 +436,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hearing protection (EN 352)</strong> — required in designated hearing
                 protection zones or when using noisy power tools such as SDS drills, angle grinders,
@@ -479,7 +479,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical isolation permit</strong> — required before isolating any supply
                 on site. Specifies the circuit or system to be isolated, the method of isolation,
@@ -491,7 +491,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hot work permit</strong> — required when using equipment that generates
                 heat, sparks, or flame near combustible materials. This can include soldering,
@@ -499,7 +499,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Working at height permit</strong> — required when using scaffolding, mobile
                 towers, or MEWPs (mobile elevating work platforms) to install cables at height,
@@ -507,7 +507,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Confined space permit</strong> — required when working in risers, ducts,
                 ceiling voids, or underground chambers that meet the definition of a confined space
@@ -548,7 +548,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sanitary conveniences</strong> — flushing toilets wherever reasonably
                 practicable, kept clean and adequately ventilated. Chemical toilets are acceptable
@@ -556,7 +556,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Washing facilities</strong> — hot and cold (or warm) running water, soap,
                 and towels or other drying facilities. Showers must be provided where the work is
@@ -564,7 +564,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Drinking water</strong> — a supply of wholesome drinking water, clearly
                 marked, with cups or a drinking fountain. Water from welfare unit taps is acceptable
@@ -572,7 +572,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rest facilities</strong> — a rest room or rest area with seating and tables,
                 a means of heating food and water (microwave and kettle as a minimum), and
@@ -581,7 +581,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Changing and drying facilities</strong> — a place to change and store
                 personal clothing separately from work clothing, and facilities for drying wet
@@ -690,7 +690,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Megaphone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Megaphone className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Safe isolation</strong> — the procedure for safely isolating electrical
                 supplies before work begins. Cover the prove-test-prove sequence, lock-off devices,
@@ -698,7 +698,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Megaphone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Megaphone className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable avoidance</strong> — how to avoid striking buried cables when
                 drilling, fixing, or excavating. Use of cable plans, CAT scanners, and safe digging
@@ -706,7 +706,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Megaphone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Megaphone className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Portable appliance safety</strong> — visual inspection of 110V tools and
                 leads before use, reporting damaged equipment, and PAT testing requirements for site
@@ -714,7 +714,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Megaphone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Megaphone className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Working at height</strong> — safe use of step ladders, mobile scaffold
                 towers, and MEWPs for electrical installation work. Three points of contact, correct
@@ -722,7 +722,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Megaphone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Megaphone className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Manual handling</strong> — safe lifting of heavy items such as cable drums,
                 distribution boards, and cable tray bundles. Techniques for two-person lifts and
@@ -768,7 +768,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Near misses</strong> — events that could have caused injury but did not. For
                 example, a cable falling from height, an unguarded excavation near a walkway, or a
@@ -777,7 +777,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Unsafe conditions</strong> — anything on site that poses a risk: damaged
                 scaffolding, missing barriers around excavations, exposed live conductors, defective
@@ -821,7 +821,7 @@ export default function ConstructionSiteSafetyPage() {
       heroTitle={
         <>
           Construction Site Safety:{' '}
-          <span className="text-yellow-400">The Complete Guide for Electricians</span>
+          <span className="text-elec-yellow">The Complete Guide for Electricians</span>
         </>
       }
       heroSubtitle="Every electrician working on a construction site needs to understand site inductions, CDM 2015 duties, CSCS card requirements, PPE standards, and permit to work systems. This guide covers everything you need to stay safe, stay compliant, and stay on site."

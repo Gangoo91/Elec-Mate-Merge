@@ -185,7 +185,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>St Albans</strong> — historic city with Roman heritage and large Victorian
                 and Edwardian housing stock. High EICR and rewire demand. Conservation area and
@@ -193,7 +193,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Watford</strong> — large urban centre with mixed housing, commercial
                 premises, and retail. Strong demand for commercial electrical work and landlord
@@ -201,7 +201,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Stevenage</strong> — first UK new town, now a major employment centre.
                 Substantial post-war housing plus the UK biotech cluster around GSK and Roche,
@@ -209,14 +209,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hemel Hempstead</strong> — new town with large industrial areas and
                 residential estates from the 1950s and 1960s requiring electrical upgrades.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Welwyn Garden City</strong> — second garden city, built 1920s onwards. Mix
                 of inter-war and post-war housing with a large industrial and commercial estate.
@@ -224,7 +224,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hatfield</strong> — home to the University of Hertfordshire and large
                 defence and aerospace heritage. Modern business park electrical work plus student
@@ -251,7 +251,7 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-3">Verification Checklist</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Check the electrician is registered with NICEIC, NAPIT, ELECSA, or another
                 UKAS-accredited competent person scheme. Verify the registration number on the
@@ -259,21 +259,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Ask to see their ECS (Electrotechnical Certification Scheme) card — the card
                 confirms the holder's qualifications and is renewed every five years.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Confirm they hold public liability insurance — minimum £2 million, and £5 million
                 for larger or more complex projects.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 For commercial or specialist work (laboratories, cleanrooms, data centres), ask for
                 specific experience and references from similar projects.
@@ -299,37 +299,37 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-3">Typical Job Costs (2025)</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR (3-bed house):</strong> £180 to £300
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit upgrade:</strong> £520 to £800
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full rewire (3-bed semi):</strong> £4,500 to £7,200
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger installation:</strong> £850 to £1,350
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smart home electrical fit-out:</strong> £1,500 to £6,000+
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Solar PV electrical connection (4kWp system):</strong> £600 to £1,000
               </span>
@@ -355,7 +355,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Victorian and Edwardian stock (St Albans, Harpenden, Hertford):</strong>{' '}
                 Properties from 1860 to 1918 typically have lath-and-plaster walls, suspended timber
@@ -365,7 +365,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>
                   New town stock (Stevenage, Hemel Hempstead, Welwyn Garden City, Hatfield):
@@ -377,7 +377,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Modern estates and executive homes:</strong> Properties from the 1990s and
                 2000s typically have adequate wiring but are increasingly in demand for upgrades to
@@ -390,7 +390,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR frequency for Hertfordshire landlords:</strong> The Electrical Safety
                 Standards in the Private Rented Sector (England) Regulations 2020 require EICRs
@@ -419,7 +419,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New connections:</strong> Apply via ukpowernetworks.co.uk for new electrical
                 connections or supply capacity increases. New town commercial sites and housing
@@ -427,7 +427,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98/G99 notifications:</strong> Solar PV and battery storage systems up to
                 3.68kW per phase can be notified to UKPN under G98 after installation. Systems above
@@ -435,7 +435,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing arrangements:</strong> Most urban Hertfordshire properties are
                 connected to the UKPN TN-C-S (PME) network. Rural properties and some older
@@ -444,7 +444,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Power cuts:</strong> Report power cuts and emergencies in Hertfordshire by
                 calling 105 — the national power cut number for all UK DNOs.
@@ -469,7 +469,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charging installation:</strong> Hertfordshire has one of the highest
                 rates of EV ownership in the UK. OZEV-approved installer status (previously OLEV) is
@@ -478,7 +478,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCS certification for solar PV:</strong> The Stevenage and wider
                 Hertfordshire market has strong solar PV demand. MCS accreditation allows customers
@@ -487,7 +487,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Use <SEOAppBridge href="/tools/eicr-certificate" label="Elec-Mate EICR software" />{' '}
                 to produce inspection reports on site and email them directly to landlords and
@@ -520,7 +520,7 @@ export default function ElectricianHertfordshirePage() {
       heroTitle={
         <>
           Electrician Hertfordshire{' '}
-          <span className="text-yellow-400">— Qualified & Registered</span>
+          <span className="text-elec-yellow">— Qualified & Registered</span>
         </>
       }
       heroSubtitle="Find NICEIC and NAPIT registered electricians across St Albans, Watford, Stevenage, Hemel Hempstead, Welwyn Garden City, and Hatfield. EICR inspections, full rewires, EV charging, solar PV, and smart home installations throughout Hertfordshire."

@@ -190,7 +190,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ambient lighting.</strong> General illumination across the sales floor,
                 typically 300 to 500 lux. Recessed LED downlights or linear LED systems are the
@@ -200,7 +200,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Accent and display lighting.</strong> Spotlights, track lighting, and
                 feature luminaires that highlight key products, displays, and focal points. Accent
@@ -209,7 +209,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Window display lighting.</strong> High-intensity lighting for window
                 displays, competing with daylight. Typically requires higher lux levels (1000 to
@@ -218,7 +218,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Colour rendering.</strong> High CRI (Colour Rendering Index) is essential
                 for retail — products must appear in their true colours. CRI 90+ is recommended for
@@ -226,7 +226,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lighting control.</strong> DALI (Digital Addressable Lighting Interface) or
                 similar control systems allow zones to be dimmed, switched, and programmed
@@ -259,7 +259,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Siren className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Siren className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Escape route lighting.</strong> A minimum of 1 lux across the full width of
                 escape routes, increasing to 2 lux at intersections, changes of direction, and
@@ -267,7 +267,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Siren className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Siren className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Open area (anti-panic) lighting.</strong> For open-plan retail areas
                 exceeding 60 m², a minimum of 0.5 lux at floor level across the entire area. This
@@ -275,7 +275,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Siren className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Siren className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>High-risk task area lighting.</strong> Any area where a dangerous process
                 must be shut down safely (for example, food preparation areas with sharp equipment)
@@ -283,7 +283,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Siren className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Siren className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Duration.</strong> 3 hours for most retail premises. 1 hour is only
                 acceptable if the premises are evacuated immediately and not reoccupied until the
@@ -291,7 +291,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Siren className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Siren className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Exit signs.</strong> Illuminated exit signs conforming to BS 5499 must be
                 provided at every final exit and at points where the exit route is not obvious.
@@ -376,7 +376,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lighting load.</strong> Retail lighting loads can be substantial — 20 to 50
                 W/m² for high-end fashion retail, 10 to 20 W/m² for general retail. For a 500 m²
@@ -388,7 +388,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Small power.</strong> Socket-outlets for tills, card machines, computers,
                 barcode scanners, and customer-facing displays. Typically 10 to 25 W/m² with a
@@ -396,7 +396,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Refrigeration (food retail).</strong> Commercial fridges, freezers, and cold
                 rooms can add 5 to 20 kW per unit. Refrigeration loads are typically on dedicated
@@ -405,7 +405,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HVAC.</strong> Air conditioning, ventilation fans, and heating. In shopping
                 centres, the landlord often provides heating and cooling — the tenant may only need
@@ -414,7 +414,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>External signage.</strong> Illuminated shop signs (both internal and
                 external), window graphics lighting, and fascia lighting. Dedicated circuits with
@@ -431,7 +431,7 @@ const sections = [
           be correctly sized for the assessed maximum demand, with voltage drop calculated for the
           cable length.
         </p>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-amber-500/30 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.1] p-5 my-4">
           <h3 className="font-bold text-white text-base mb-2">
             AFDDs for Retail Socket-Outlet Circuits — BS 7671:2018+A4:2026 Reg 421.1.7
           </h3>
@@ -465,7 +465,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part P does not apply to standalone commercial premises.</strong> However,
                 it may apply to mixed-use buildings (shop with flat above) and to the dwelling
@@ -473,7 +473,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671 applies to all electrical installations.</strong> The IET Wiring
                 Regulations apply regardless of whether the premises are domestic or commercial. An
@@ -481,7 +481,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electricity at Work Regulations 1989.</strong> The employer must ensure the
                 electrical installation is safe. This includes regular inspection and testing, and
@@ -489,7 +489,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part B (Fire Safety).</strong> Fire detection, alarm, and emergency lighting
                 must comply with the relevant British Standards. The fire risk assessment drives the
@@ -497,7 +497,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part L (Conservation of Fuel and Power).</strong> Lighting efficacy and
                 energy efficiency requirements apply to new-build and major refurbishment retail
@@ -505,7 +505,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reg 133.1.3 — A4:2026 certification requirement.</strong> Where AFDDs or
                 surge protection devices (SPDs) are installed in a retail fit-out, their use must be
@@ -609,7 +609,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Brain className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI Board Scanner</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -662,7 +662,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Professional retail certificates on your phone"
-          description="Join 1,600+ UK electricians creating professional EIC, EICR, and specialist certificates with AI board scanning, voice entry, and instant PDF delivery."
+          description="Join 2,100+ UK electricians creating professional EIC, EICR, and specialist certificates with AI board scanning, voice entry, and instant PDF delivery."
           icon={FileCheck2}
         />
       </>
@@ -688,7 +688,7 @@ export default function RetailInstallationGuidePage() {
       heroTitle={
         <>
           Retail Electrical Installation:{' '}
-          <span className="text-yellow-400">The Complete Shop Fit-Out Guide</span>
+          <span className="text-elec-yellow">The Complete Shop Fit-Out Guide</span>
         </>
       }
       heroSubtitle="Retail fit-outs demand lighting design that sells, emergency systems that save lives, and certification that satisfies landlords and fire authorities. This guide covers every electrical requirement for retail premises — from initial design to final certificate."
@@ -699,7 +699,7 @@ export default function RetailInstallationGuidePage() {
       faqHeading="Frequently Asked Questions About Retail Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Complete Retail Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians creating professional EIC and EICR certificates with AI board scanning, voice test entry, and instant PDF delivery. Built for commercial and retail fit-outs. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians creating professional EIC and EICR certificates with AI board scanning, voice test entry, and instant PDF delivery. Built for commercial and retail fit-outs. 7-day free trial, cancel anytime."
     />
   );
 }

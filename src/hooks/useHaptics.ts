@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { Capacitor } from '@capacitor/core';
 import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics';
+import { hapticsEnabled } from '@/lib/haptics';
 
 const isNative = Capacitor.isNativePlatform();
 
@@ -14,7 +15,7 @@ export const useHaptics = () => {
 
   /** Light tap — button presses, selections */
   const tap = useCallback(() => {
-    if (!isSupported) return;
+    if (!isSupported || !hapticsEnabled()) return;
     if (isNative) {
       Haptics.impact({ style: ImpactStyle.Light }).catch(() => {});
     } else {
@@ -24,7 +25,7 @@ export const useHaptics = () => {
 
   /** Success — task completed, validation passed */
   const success = useCallback(() => {
-    if (!isSupported) return;
+    if (!isSupported || !hapticsEnabled()) return;
     if (isNative) {
       Haptics.notification({ type: NotificationType.Success }).catch(() => {});
     } else {
@@ -34,7 +35,7 @@ export const useHaptics = () => {
 
   /** Warning — marginal values, attention needed */
   const warning = useCallback(() => {
-    if (!isSupported) return;
+    if (!isSupported || !hapticsEnabled()) return;
     if (isNative) {
       Haptics.notification({ type: NotificationType.Warning }).catch(() => {});
     } else {
@@ -44,7 +45,7 @@ export const useHaptics = () => {
 
   /** Error — validation failed, critical issue */
   const error = useCallback(() => {
-    if (!isSupported) return;
+    if (!isSupported || !hapticsEnabled()) return;
     if (isNative) {
       Haptics.notification({ type: NotificationType.Error }).catch(() => {});
     } else {
@@ -54,7 +55,7 @@ export const useHaptics = () => {
 
   /** Heavy impact — delete action, major change */
   const impact = useCallback(() => {
-    if (!isSupported) return;
+    if (!isSupported || !hapticsEnabled()) return;
     if (isNative) {
       Haptics.impact({ style: ImpactStyle.Heavy }).catch(() => {});
     } else {
@@ -64,7 +65,7 @@ export const useHaptics = () => {
 
   /** Notification — new item, attention */
   const notification = useCallback(() => {
-    if (!isSupported) return;
+    if (!isSupported || !hapticsEnabled()) return;
     if (isNative) {
       Haptics.impact({ style: ImpactStyle.Medium }).catch(() => {});
     } else {

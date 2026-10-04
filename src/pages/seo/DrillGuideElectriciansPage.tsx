@@ -169,7 +169,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4 space-y-5">
           <div>
             <h3 className="font-bold text-white mb-2 flex items-center gap-2">
-              <Wrench className="w-4 h-4 text-yellow-400" />
+              <Wrench className="w-4 h-4 text-elec-yellow" />
               Standard Keyless Chuck (Combi Drill)
             </h3>
             <p className="text-white text-sm leading-relaxed">
@@ -312,7 +312,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Back box apertures in plasterboard:</strong> 68mm for single gang, variable
                 for double gang (check back box manufacturer dimensions). Bi-metal hole saws cut
@@ -321,7 +321,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Conduit entries (20mm and 25mm):</strong> Standard electrical conduit
                 diameters. 25mm hole saw cuts through timber, plasterboard, and light sheet metal
@@ -330,7 +330,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable gland entries through metal enclosures:</strong> 20mm, 25mm, 32mm, and
                 40mm for standard metric cable glands. Bi-metal or carbide hole saws cut steel
@@ -338,7 +338,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SWA external wall entries:</strong> 32mm to 68mm depending on cable size.
                 Diamond or carbide TCT core drill bits for masonry wall penetrations at these
@@ -370,7 +370,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Brick and block walls (un-reinforced):</strong> Tungsten carbide tipped
                 (TCT) core bits in an SDS Plus drill handle brick and block from 50mm to 100mm.
@@ -379,7 +379,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Concrete and reinforced floors:</strong> Diamond core bits with water
                 cooling on a rotary-only core drilling machine (no hammer). The diamond segments cut
@@ -389,7 +389,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Timber floors and joists:</strong> Standard bi-metal hole saws on a combi
                 drill. Note structural rules — notches and holes in joists must comply with Approved
@@ -503,7 +503,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Detect before drilling:</strong> Always use a cable detector before drilling
                 into walls, floors, or ceilings. Use safe isolation before any work that could
@@ -511,7 +511,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection for power tools:</strong> All portable power tools used on
                 site must be protected by a 30mA RCD at the supply point, or fed from a 110V CTE
@@ -520,7 +520,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PPE for drilling and chasing:</strong> Safety glasses or goggles (masonry
                 chips and drill break fragments), dust mask (FFP2 minimum for concrete and silica-
@@ -530,7 +530,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire stopping:</strong> Any penetration of a fire compartment boundary
                 (fire- rated wall, floor, or ceiling) must be sealed with appropriate intumescent
@@ -568,7 +568,7 @@ export default function DrillGuideElectriciansPage() {
       heroTitle={
         <>
           Drill Guide for Electricians:{' '}
-          <span className="text-yellow-400">
+          <span className="text-elec-yellow">
             SDS, Cordless, and Hole Saws for UK Electrical Work 2026
           </span>
         </>
@@ -581,7 +581,7 @@ export default function DrillGuideElectriciansPage() {
       faqHeading="Frequently Asked Questions About Drills for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Quote, Install, and Certify Electrical Work on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for professional quoting, EIC and EICR certification, and AI site support. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for professional quoting, EIC and EICR certification, and AI site support. 7-day free trial, cancel anytime."
     />
   );
 }

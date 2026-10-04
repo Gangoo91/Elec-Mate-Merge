@@ -144,7 +144,7 @@ const sections = [
           calculating them.
         </p>
         <p>
-          <strong className="text-yellow-400">The most common pricing mistake</strong> in the
+          <strong className="text-elec-yellow">The most common pricing mistake</strong> in the
           electrical trade is quoting based on "what the market will bear" or "what the last person
           charged" without knowing whether that price actually covers your costs. Two electricians
           quoting the same job at the same price can have entirely different outcomes: one makes a
@@ -177,7 +177,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Base salary or drawings</strong> -- for employed electricians, this is the
                 gross annual salary. For a sole trader, this is your target annual drawings (what
@@ -186,7 +186,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Employer NI</strong> -- 13.8 percent of earnings above the secondary
                 threshold. For an employee earning 40,000 pounds, this is approximately 4,200 pounds
@@ -194,7 +194,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pension contributions</strong> -- minimum 3 percent of qualifying earnings
                 under auto-enrolment. Many employers contribute more. Budget 1,200 to 2,000 pounds
@@ -202,7 +202,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Holiday pay and sick pay provision</strong> -- 28 days statutory holiday
                 entitlement (including bank holidays) plus an allowance for sickness. Budget 12 to
@@ -210,7 +210,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Chargeable hours</strong> -- the number of hours per year that you can
                 actually bill to clients. Start with 52 weeks, subtract holidays (5.6 weeks), bank
@@ -248,14 +248,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ordering and administration time</strong> -- researching products, comparing
                 prices, placing orders, chasing deliveries. This is time you cannot bill to a job.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Collection and delivery costs</strong> -- trips to the wholesaler, delivery
                 charges, fuel costs. Every trip to the branch is at least 30 minutes of
@@ -263,14 +263,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Waste and breakage</strong> -- cable off-cuts, damaged items, incorrect
                 orders. Industry standard waste allowance for cable is 5 to 10 percent.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Price fluctuation risk</strong> -- copper prices, component shortages, and
                 supplier price changes between quotation and installation. The markup provides a
@@ -278,7 +278,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Stock holding and van stock</strong> -- the capital tied up in materials you
                 carry in your van (consumables, common accessories, cable). This has an opportunity
@@ -315,7 +315,7 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Receipt className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Receipt className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Vehicle:</strong> lease or finance (3,000 to 6,000 pounds), fuel (2,500 to
                 4,000 pounds), insurance (1,000 to 2,000 pounds), maintenance and tyres (500 to
@@ -323,7 +323,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Receipt className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Receipt className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insurance:</strong> public liability (400 to 800 pounds), professional
                 indemnity (200 to 500 pounds), employers liability if applicable (500 to 1,000
@@ -331,7 +331,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Receipt className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Receipt className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tools and equipment:</strong> test instrument calibration (200 to 400 pounds
                 per year), replacement tools and accessories (500 to 1,000 pounds), PPE (100 to 200
@@ -339,7 +339,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Receipt className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Receipt className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Professional:</strong> competent person scheme registration (500 to 800
                 pounds), IET membership (100 to 200 pounds), 18th Edition updates and CPD (200 to
@@ -347,7 +347,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Receipt className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Receipt className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Administration:</strong> accountancy (500 to 1,500 pounds), software
                 subscriptions (300 to 600 pounds), phone and broadband (600 to 900 pounds),
@@ -383,7 +383,7 @@ const sections = [
           estimated.
         </p>
         <p>
-          <strong className="text-yellow-400">
+          <strong className="text-elec-yellow">
             The right contingency percentage depends on the risk profile of the job:
           </strong>
         </p>
@@ -398,7 +398,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Medium risk (10 to 15 percent)</strong> -- refurbishment work in modern
                 properties, consumer unit upgrades where the existing installation is in reasonable
@@ -438,7 +438,7 @@ const sections = [
           for future investment, and the buffer that keeps you solvent during quiet periods.
         </p>
         <p>
-          <strong className="text-yellow-400">
+          <strong className="text-elec-yellow">
             Understand the difference between markup and margin.
           </strong>{' '}
           If you add 20 percent markup to costs of 1,000 pounds, you charge 1,200 pounds and make
@@ -621,7 +621,7 @@ export default function ElectricalProjectCostEstimatorPage() {
       heroTitle={
         <>
           Electrical Project Cost Estimator:{' '}
-          <span className="text-yellow-400">Quoting Tool for UK Electricians</span>
+          <span className="text-elec-yellow">Quoting Tool for UK Electricians</span>
         </>
       }
       heroSubtitle="Accurate cost estimating is the foundation of a profitable electrical business. This tool covers labour rates, materials markup, overhead recovery, contingency, and profit margin calculation -- everything you need to price jobs properly and generate professional quotes."
@@ -636,7 +636,7 @@ export default function ElectricalProjectCostEstimatorPage() {
       faqHeading="Frequently Asked Questions About Electrical Cost Estimating"
       relatedPages={relatedPages}
       ctaHeading="Price Every Job for Profit"
-      ctaSubheading="AI-powered cost estimating, professional PDF quotes, and job profitability tracking. Join 1,600+ UK electricians using Elec-Mate to run a profitable business. 7-day free trial, cancel anytime."
+      ctaSubheading="AI-powered cost estimating, professional PDF quotes, and job profitability tracking. Join 2,100+ UK electricians using Elec-Mate to run a profitable business. 7-day free trial, cancel anytime."
       pagePath="/tools/electrical-project-cost-estimator"
     />
   );

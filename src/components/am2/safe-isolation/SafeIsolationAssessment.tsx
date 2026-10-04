@@ -32,6 +32,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
+import { hapticsEnabled } from '@/lib/haptics';
 import { useAM2Readiness } from '@/hooks/am2/useAM2Readiness';
 import { useAuth } from '@/contexts/AuthContext';
 import { saveAM2Session } from '@/hooks/am2/saveAM2Session';
@@ -134,6 +135,7 @@ export function SafeIsolationAssessment({ onSessionComplete }: SafeIsolationAsse
   const { user } = useAuth();
 
   const triggerHaptic = useCallback(async (style: ImpactStyle = ImpactStyle.Light) => {
+    if (!hapticsEnabled()) return;
     try {
       await Haptics.impact({ style });
     } catch {

@@ -123,7 +123,7 @@ const sections = [
         <div className="space-y-4">
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-2">
-              <SplitSquareVertical className="w-5 h-5 text-yellow-400" />
+              <SplitSquareVertical className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">
                 1. Cumulative Earth Leakage from Multiple Circuits
               </h3>
@@ -141,7 +141,7 @@ const sections = [
 
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-2">
-              <Zap className="w-5 h-5 text-yellow-400" />
+              <Zap className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">
                 2. Type AC RCD on Circuits with DC Components
               </h3>
@@ -161,7 +161,7 @@ const sections = [
 
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-2">
-              <Radio className="w-5 h-5 text-yellow-400" />
+              <Radio className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">
                 3. EMC Interference from VFDs and LED Drivers
               </h3>
@@ -181,7 +181,7 @@ const sections = [
 
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-2">
-              <AlertTriangle className="w-5 h-5 text-yellow-400" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">4. Moisture</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -198,7 +198,7 @@ const sections = [
 
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-2">
-              <Cable className="w-5 h-5 text-yellow-400" />
+              <Cable className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">
                 5. Shared Neutral (Borrowed Neutral) Faults
               </h3>
@@ -234,7 +234,7 @@ const sections = [
         <div className="space-y-4 mt-4">
           <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <div className="flex items-center gap-2 mb-2">
-              <ShieldCheck className="w-5 h-5 text-yellow-400" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">
                 Upgrade to Individual RCBOs (Best Solution)
               </h3>
@@ -254,7 +254,7 @@ const sections = [
 
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-2">
-              <SplitSquareVertical className="w-5 h-5 text-yellow-400" />
+              <SplitSquareVertical className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">
                 Split Load Board — Redistribute Circuits
               </h3>
@@ -272,7 +272,7 @@ const sections = [
 
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-2">
-              <Zap className="w-5 h-5 text-yellow-400" />
+              <Zap className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Upgrade to Type A or Type F RCD</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -288,7 +288,7 @@ const sections = [
 
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-2">
-              <Search className="w-5 h-5 text-yellow-400" />
+              <Search className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Identify High-Leakage Appliances</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -317,7 +317,7 @@ const sections = [
         </p>
         <div className="space-y-3 my-4">
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <p className="text-white text-sm leading-relaxed">
               <strong className="text-white">Intermittent earth faults.</strong> A cable with
               partially damaged insulation may only leak when it is under load (thermal expansion),
@@ -331,7 +331,7 @@ const sections = [
             </p>
           </div>
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <p className="text-white text-sm leading-relaxed">
               <strong className="text-white">Moisture ingress.</strong> As described above, moisture
               in outdoor fittings, bathroom connections, or loft-mounted junction boxes causes
@@ -340,7 +340,7 @@ const sections = [
             </p>
           </div>
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <p className="text-white text-sm leading-relaxed">
               <strong className="text-white">Shared neutral (borrowed neutral).</strong> A{' '}
               <SEOInternalLink href="/guides/borrowed-neutral-explained">
@@ -353,7 +353,7 @@ const sections = [
             </p>
           </div>
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <p className="text-white text-sm leading-relaxed">
               <strong className="text-white">Faulty RCD.</strong> The RCD itself can become
               oversensitive due to internal component degradation, tripping at currents well below
@@ -467,7 +467,7 @@ export default function NuisanceTrippingPage() {
         <>
           Nuisance Tripping?
           <br />
-          <span className="text-yellow-400">Why Your RCD Keeps Tripping for No Reason</span>
+          <span className="text-elec-yellow">Why Your RCD Keeps Tripping for No Reason</span>
         </>
       }
       heroSubtitle="Your RCD trips repeatedly but there is no apparent fault — no faulty appliance, no damaged wiring, no moisture. This is nuisance tripping, and it is one of the most common complaints electricians encounter. This guide explains every cause and the solutions that actually work."
@@ -477,7 +477,7 @@ export default function NuisanceTrippingPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Diagnose RCD Issues Faster with Elec-Mate"
-      ctaSubheading="Board scanner, AI fault diagnosis, RCD testing capture, and digital EICR forms. Join 1,600+ UK electricians. 7-day free trial, cancel anytime."
+      ctaSubheading="Board scanner, AI fault diagnosis, RCD testing capture, and digital EICR forms. Join 2,100+ UK electricians. 7-day free trial, cancel anytime."
     />
   );
 }

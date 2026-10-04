@@ -424,7 +424,7 @@ export default function CSCSCardCoursePage() {
       badgeIcon={HardHat}
       heroTitle={
         <>
-          CSCS Card Course: <span className="text-yellow-400">Construction Skills Test Guide</span>
+          CSCS Card Course: <span className="text-elec-yellow">Construction Skills Test Guide</span>
         </>
       }
       heroSubtitle="Complete CSCS card preparation with comprehensive HS&E test revision covering all eight topic areas. Card types explained, application process guide, and unlimited timed mock tests. 6 modules with interactive quizzes and AI-powered study tools."
@@ -442,7 +442,7 @@ export default function CSCSCardCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Ready to pass your CSCS test first time?"
-      ctaSubheading="Join 1,600+ UK electricians studying smarter with Elec-Mate. 6 structured modules, unlimited mock tests, flashcards, and an AI tutor for any HS&E question. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians studying smarter with Elec-Mate. 6 structured modules, unlimited mock tests, flashcards, and an AI tutor for any HS&E question. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/cscs-card"
     />

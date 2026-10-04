@@ -6,6 +6,7 @@ import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import { Resend } from '../_shared/mailer.ts';
 import { captureException } from '../_shared/sentry.ts';
+import { accountEmailHtml, escapeHtml } from '../_shared/account-email.ts';
 
 const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
 
@@ -66,28 +67,39 @@ serve(async (req: Request): Promise<Response> => {
       year: 'numeric',
     });
 
-    // --- Cancel active Stripe subscriptions via customer ID (non-blocking) ---
+    // --- Cancel every live Stripe subscription ---
+    // Was `status=active` only and fire-and-forget: a trialist who deleted
+    // their account kept a `trialing` subscription and was charged on day 8
+    // for an account that no longer existed (found 4 Oct 2026). Now lists all
+    // statuses, cancels anything still billable, and waits for the result.
     if (profile?.stripe_customer_id) {
       const stripeKey = Deno.env.get('STRIPE_SECRET_KEY');
       if (stripeKey) {
-        fetch(
-          `https://api.stripe.com/v1/subscriptions?customer=${profile.stripe_customer_id}&status=active&limit=5`,
-          { headers: { Authorization: `Bearer ${stripeKey}` } }
-        )
-          .then((r) => r.json())
-          .then((data: { data?: { id: string }[] }) => {
-            const subs = data?.data ?? [];
-            return Promise.all(
-              subs.map((sub) =>
-                fetch(`https://api.stripe.com/v1/subscriptions/${sub.id}/cancel`, {
-                  method: 'DELETE',
-                  headers: { Authorization: `Bearer ${stripeKey}` },
-                })
-              )
-            );
-          })
-          .then(() => console.log('Stripe subscriptions cancelled'))
-          .catch((err: unknown) => console.warn('Stripe cancel failed (non-critical):', err));
+        try {
+          const r = await fetch(
+            `https://api.stripe.com/v1/subscriptions?customer=${profile.stripe_customer_id}&status=all&limit=20`,
+            { headers: { Authorization: `Bearer ${stripeKey}` } }
+          );
+          const data = (await r.json()) as { data?: { id: string; status: string }[] };
+          const billable = (data?.data ?? []).filter((s) =>
+            ['active', 'trialing', 'past_due', 'unpaid', 'incomplete'].includes(s.status)
+          );
+          const results = await Promise.all(
+            billable.map((sub) =>
+              fetch(`https://api.stripe.com/v1/subscriptions/${sub.id}`, {
+                method: 'DELETE',
+                headers: { Authorization: `Bearer ${stripeKey}` },
+              })
+            )
+          );
+          const failed = results.filter((res) => !res.ok).length;
+          if (failed) console.error(`Stripe cancel: ${failed} of ${billable.length} failed`);
+          else console.log(`Stripe subscriptions cancelled: ${billable.length}`);
+        } catch (err: unknown) {
+          // Don't block the deletion itself — but this is now logged as an
+          // error, not a "non-critical" warning, so it shows up in monitoring.
+          console.error('Stripe cancel failed:', err);
+        }
       }
     }
 
@@ -100,6 +112,18 @@ serve(async (req: Request): Promise<Response> => {
     if (profileUpdateError) {
       console.error('Failed to set deletion_requested_at:', profileUpdateError);
       throw new Error('Failed to initiate account deletion');
+    }
+
+    // --- Remove any data-export ZIP now: its emailed link would otherwise
+    // keep working for up to 7 days after they asked us to delete them ---
+    try {
+      const exportsBucket = supabaseAdmin.storage.from('data-exports');
+      const { data: zips } = await exportsBucket.list(userId);
+      if (zips?.length) {
+        await exportsBucket.remove(zips.map((o: { name: string }) => `${userId}/${o.name}`));
+      }
+    } catch (err: unknown) {
+      console.error('Export ZIP removal failed:', err);
     }
 
     // --- Anonymise auth email so the user cannot log back in ---
@@ -134,56 +158,58 @@ serve(async (req: Request): Promise<Response> => {
     if (userEmail) {
       resend.emails
         .send({
-          from: 'Elec-Mate <noreply@elec-mate.com>',
+          from: 'Elec-Mate <founder@elec-mate.com>',
           to: [userEmail],
-          subject: 'Your Elec-Mate account deletion has been requested',
-          html: `
-            <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; background: #111; color: #fff; padding: 32px; border-radius: 12px;">
-              <div style="margin-bottom: 24px;">
-                <span style="background: #FACC15; color: #000; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 14px;">⚡ Elec-Mate</span>
-              </div>
-              <h2 style="color: #fff; margin-bottom: 8px;">Account deletion requested</h2>
-              <p style="color: #aaa; margin-bottom: 24px;">Hi ${fullName},</p>
-              <p style="color: #aaa;">
-                Your account deletion was requested on 
-                <strong style="color: #fff;">${new Date(deletionRequestedAt).toLocaleString('en-GB', { timeZone: 'Europe/London', dateStyle: 'long', timeStyle: 'short' })}</strong>.
-              </p>
-              <p style="color: #aaa;">
-                Your account has been deactivated and all your data will be <strong style="color: #fff;">permanently and irreversibly deleted on ${purgeDateStr}</strong>.
-              </p>
-              <div style="background: #1a1a1a; border: 1px solid #333; border-radius: 8px; padding: 16px; margin: 24px 0;">
-                <p style="color: #FACC15; margin: 0 0 8px; font-weight: bold;">Changed your mind?</p>
-                <p style="color: #aaa; margin: 0; font-size: 14px;">
-                  If this was a mistake, contact us within 30 days at 
-                  <a href="mailto:privacy@elec-mate.com" style="color: #FACC15;">privacy@elec-mate.com</a> 
-                  and we can restore your account.
-                </p>
-              </div>
-              <div style="background: #1a0000; border: 1px solid #ff333333; border-radius: 8px; padding: 16px; margin: 24px 0;">
-                <p style="color: #ff6666; margin: 0 0 8px; font-weight: bold;">⚠️ Security notice</p>
-                <p style="color: #aaa; margin: 0; font-size: 14px;">
-                  If you did not request this deletion, contact us immediately at 
-                  <a href="mailto:privacy@elec-mate.com" style="color: #FACC15;">privacy@elec-mate.com</a>.
-                </p>
-              </div>
-              <p style="color: #666; font-size: 12px; margin-top: 32px;">
-                Elec-Mate Ltd · ICO Registration: ZB935897 · privacy@elec-mate.com<br>
-                This deletion request is processed in accordance with UK GDPR Article 17 (Right to Erasure).
-              </p>
-            </div>
-          `,
+          subject: 'Your Elec-Mate account is being deleted',
+          html: accountEmailHtml({
+            title: 'Your Elec-Mate account is being deleted',
+            eyebrow: 'Account deletion',
+            heading: 'We’ve started deleting<br>your account',
+            firstName:
+              fullName && fullName !== 'there' ? String(fullName).split(/\s+/)[0] : undefined,
+            paragraphs: [
+              'You asked us to delete your Elec-Mate account, so you’ve been signed out and can’t sign back in.',
+              'Any subscription or free trial you started on our website has been cancelled — you won’t be charged again.',
+            ],
+            panel: {
+              label: 'Changed your mind?',
+              title: `You can still undo this until ${escapeHtml(purgeDateStr)}`,
+              body: 'Reply to this email before then and we’ll restore your account with all your certificates, quotes and records. You’d need to restart your subscription. After that date everything is erased for good and can’t be recovered.',
+            },
+            facts: [
+              {
+                k: 'Requested',
+                v: escapeHtml(
+                  new Date(deletionRequestedAt).toLocaleDateString('en-GB', {
+                    timeZone: 'Europe/London',
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                  })
+                ),
+              },
+              { k: 'Permanently erased', v: escapeHtml(purgeDateStr) },
+            ],
+            note: {
+              title: 'Paid in the iPhone or Android app?',
+              body: 'Cancel it in your Apple ID or Google Play subscription settings — deleting your account can’t cancel those for you. Didn’t ask to delete your account? Reply straight away.',
+            },
+          }),
         })
         .catch((err: unknown) =>
           console.warn('Deletion confirmation email failed (non-critical):', err)
         );
     }
 
-    console.log(`✅ Account deletion initiated for user ${userId} — purge scheduled ${purgeDateStr}`);
+    console.log(
+      `✅ Account deletion initiated for user ${userId} — purge scheduled ${purgeDateStr}`
+    );
 
     return new Response(
       JSON.stringify({
         success: true,
-        message: 'Account deletion initiated. Your data will be permanently removed within 30 days.',
+        message:
+          'Account deletion initiated. Your data will be permanently removed within 30 days.',
         scheduledPurgeDate: purgeDate.toISOString(),
       }),
       {
@@ -192,7 +218,11 @@ serve(async (req: Request): Promise<Response> => {
       }
     );
   } catch (error) {
-    await captureException(error, { functionName: 'delete-own-account', requestUrl: req.url, requestMethod: req.method });
+    await captureException(error, {
+      functionName: 'delete-own-account',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
     console.error('Account deletion error:', error);
     return new Response(
       JSON.stringify({ error: error instanceof Error ? error.message : 'Deletion failed' }),

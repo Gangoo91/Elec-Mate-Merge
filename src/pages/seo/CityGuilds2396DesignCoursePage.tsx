@@ -183,7 +183,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electricians tendering for commercial work</strong> — clients and main
                 contractors increasingly expect the electrician to produce the design, not just
@@ -191,7 +191,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electricians moving into supervisory roles</strong> — if you are managing
                 other electricians or overseeing projects, you need to understand the design as well
@@ -199,7 +199,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Self-employed electricians growing their business</strong> — offering design
                 and installation as a package commands higher rates and attracts larger projects
@@ -207,7 +207,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electricians pursuing the Gold Card</strong> — the{' '}
                 <SEOInternalLink href="/guides/gold-card-requirements-electrician">
@@ -274,7 +274,7 @@ const sections = [
                   <p className="text-white text-xs font-semibold mb-2 uppercase tracking-wide">
                     Key design threshold: maximum Zs
                   </p>
-                  <p className="text-white/80 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     BS 7671 Table 41.3 gives maximum earth fault loop impedance (Zs) values at
                     operating temperature. Example: a 32 A Type B MCB has a tabulated max Zs of 1.37
                     &Omega; (Reg 411.4.204(a)). On-site cold-measured Zs must not exceed 80% of this
@@ -328,7 +328,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Zap className="w-6 h-6 text-amber-400 mt-0.5 shrink-0" />
+              <Zap className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Arc Fault Detection Devices — Reg 421.1.7
@@ -347,7 +347,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <CheckCircle2 className="w-6 h-6 text-amber-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   30 mA RCD Protection for Domestic Lighting — Reg 411.3.4
@@ -365,7 +365,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Building2 className="w-6 h-6 text-amber-400 mt-0.5 shrink-0" />
+              <Building2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Surge Protective Devices — Section 534
@@ -383,7 +383,7 @@ const sections = [
             </div>
           </div>
         </div>
-        <p className="text-sm text-white/70 mt-2">
+        <p className="text-sm text-white mt-2">
           Last reviewed for BS 7671:2018+A4:2026 (effective January 2026).
         </p>
       </>
@@ -401,7 +401,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Design project</strong> — you receive a scenario describing a building and
                 its electrical requirements. You must produce a complete electrical design including
@@ -410,14 +410,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Open book</strong> — you can bring BS 7671, the IET On-Site Guide, and a
                 basic calculator. The same rules apply as the 2382 regarding tabs and highlighting.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Show your working</strong> — marks are awarded for the calculation method as
                 well as the correct answer. Even if your final cable size is wrong, you can still
@@ -425,7 +425,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Time: approximately 3 hours</strong> — this varies by assessment centre, but
                 you will need the full time. Work methodically through the design rather than
@@ -446,21 +446,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C&G 2382</strong> (18th Edition Wiring Regulations) — this is mandatory. You
                 must understand BS 7671 before you can design to it.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C&G 2391</strong> (Inspection and Testing) — strongly recommended. The 2396
                 references testing and verification concepts covered in the 2391.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Practical experience</strong> — the course is much easier to follow if you
                 have real-world installation experience. Most providers recommend at least 2 years
@@ -468,7 +468,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Good maths</strong> — the 2396 is calculation-heavy. You need to be
                 comfortable with algebra, fractions, and using formulas. If maths is not your
@@ -586,7 +586,7 @@ export default function CityGuilds2396DesignCoursePage() {
       heroTitle={
         <>
           City & Guilds 2396:{' '}
-          <span className="text-yellow-400">Electrical Installation Design Course</span>
+          <span className="text-elec-yellow">Electrical Installation Design Course</span>
         </>
       }
       heroSubtitle="The design qualification that sets you apart. Learn what the 2396 covers, who needs it, the exam format, prerequisites, career benefits, and how to choose the right training provider."
@@ -597,7 +597,7 @@ export default function CityGuilds2396DesignCoursePage() {
       faqHeading="Frequently Asked Questions About the C&G 2396"
       relatedPages={relatedPages}
       ctaHeading="Design Electrical Installations With Confidence"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, voltage drop calculations, and AI-powered circuit design. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, voltage drop calculations, and AI-powered circuit design. 7-day free trial, cancel anytime."
     />
   );
 }

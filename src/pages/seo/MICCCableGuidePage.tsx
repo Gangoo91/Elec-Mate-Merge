@@ -44,7 +44,7 @@ export default function MICCCableGuidePage() {
         <>
           MICC Cable Guide
           <br />
-          <span className="text-yellow-400">Mineral Insulated Copper Clad</span>
+          <span className="text-elec-yellow">Mineral Insulated Copper Clad</span>
         </>
       }
       heroSubtitle="Mineral Insulated Copper Clad (MICC) cable is the ultimate fire-performance cable for UK electrical installations. This guide covers its unique properties, fire survival capability, correct termination and sealing, testing procedures, and the BS EN 60702 standard — essential knowledge for fire alarm, emergency lighting, and critical circuit installations."
@@ -111,9 +111,9 @@ export default function MICCCableGuidePage() {
                 <h3 className="font-bold text-white text-lg mb-4">Key Properties of MICC Cable</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Fire survival</strong> — The magnesium
+                      <strong className="text-elec-yellow">Fire survival</strong> — The magnesium
                       oxide insulation melts at 2,852 degrees Celsius and the copper sheath melts at
                       1,083 degrees Celsius. In a standard building fire (typically 800 to 1,000
                       degrees Celsius), the cable continues to function. No organic materials exist
@@ -121,9 +121,9 @@ export default function MICCCableGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Moisture sensitivity</strong> — Magnesium
+                      <strong className="text-elec-yellow">Moisture sensitivity</strong> — Magnesium
                       oxide is hygroscopic — it readily absorbs moisture from the atmosphere. If the
                       cable ends are left unsealed, moisture penetrates the MgO insulation and
                       insulation resistance drops dramatically, often to below 1 megaohm. This is
@@ -132,9 +132,9 @@ export default function MICCCableGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Small external diameter</strong> — For a
+                      <strong className="text-elec-yellow">Small external diameter</strong> — For a
                       given current rating, MICC cable has a much smaller diameter than conventional
                       PVC or XLPE cable. A 2.5 mm squared 2-core MICC cable is only about 7.6 mm in
                       diameter, compared to approximately 10 mm for 2.5 mm squared T&E. This makes
@@ -142,9 +142,9 @@ export default function MICCCableGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">High current rating</strong> — The MgO
+                      <strong className="text-elec-yellow">High current rating</strong> — The MgO
                       insulation can operate continuously at much higher temperatures than PVC (250
                       degrees Celsius vs 70 degrees Celsius), giving MICC cable significantly higher
                       current-carrying capacity for the same conductor size. This is especially
@@ -152,9 +152,9 @@ export default function MICCCableGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Mechanical strength</strong> — The solid
+                      <strong className="text-elec-yellow">Mechanical strength</strong> — The solid
                       copper sheath provides excellent mechanical protection. MICC cable can
                       withstand crushing, impact, and vibration that would damage conventional
                       cables. It does not require additional mechanical protection in most
@@ -162,9 +162,9 @@ export default function MICCCableGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Long life</strong> — With no organic
+                      <strong className="text-elec-yellow">Long life</strong> — With no organic
                       materials to deteriorate, MICC cable has an indefinite operational life.
                       Installations from the 1950s remain fully functional today. The cable does not
                       suffer from the thermal ageing that affects PVC and XLPE cables.
@@ -187,7 +187,7 @@ export default function MICCCableGuidePage() {
               </p>
               <div className="space-y-4 my-6">
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-2">
+                  <h3 className="font-bold text-elec-yellow text-lg mb-2">
                     Fire Detection and Alarm Systems
                   </h3>
                   <p className="text-white text-sm leading-relaxed">
@@ -204,7 +204,7 @@ export default function MICCCableGuidePage() {
                   </p>
                 </div>
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-2">Emergency Lighting</h3>
+                  <h3 className="font-bold text-elec-yellow text-lg mb-2">Emergency Lighting</h3>
                   <p className="text-white text-sm leading-relaxed">
                     <SEOInternalLink href="/guides/bs-5266-emergency-lighting-standard">
                       BS 5266
@@ -259,7 +259,7 @@ export default function MICCCableGuidePage() {
               <p>There are two main termination methods for MICC cable:</p>
               <div className="grid sm:grid-cols-2 gap-4 my-6">
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-3">Pot Seal (Traditional)</h3>
+                  <h3 className="font-bold text-elec-yellow text-lg mb-3">Pot Seal (Traditional)</h3>
                   <p className="text-white text-sm leading-relaxed mb-3">
                     The traditional pot seal consists of a brass pot (disc) that is soldered or
                     crimped onto the stripped copper sheath. The pot is filled with a sealing
@@ -292,12 +292,12 @@ export default function MICCCableGuidePage() {
                 </div>
               </div>
               <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-6">
-                <h3 className="font-bold text-yellow-400 text-lg mb-3">
+                <h3 className="font-bold text-elec-yellow text-lg mb-3">
                   Critical Sealing Precautions
                 </h3>
                 <ul className="space-y-3 text-white text-sm leading-relaxed">
                   <li className="flex items-start gap-3">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
                       Never leave MICC cable ends exposed, even temporarily. Cap cut ends
                       immediately with heat-shrink or self-amalgamating tape until ready for
@@ -305,7 +305,7 @@ export default function MICCCableGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
                       If MICC cable has absorbed moisture, it can often be dried out by passing
                       current through the conductors to heat the MgO insulation. This drives
@@ -314,7 +314,7 @@ export default function MICCCableGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
                       Always test insulation resistance immediately after sealing, before connecting
                       to the circuit. A properly sealed MICC cable should read above 100 megaohms.
@@ -345,7 +345,7 @@ export default function MICCCableGuidePage() {
               <p>The key fire performance characteristics of MICC cable are:</p>
               <ul className="space-y-3 my-4">
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Circuit integrity under fire</strong> — MICC
                     cable maintains circuit integrity (continues to carry current) during a fire. In
@@ -355,7 +355,7 @@ export default function MICCCableGuidePage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Zero flame propagation</strong> — MICC cable
                     cannot propagate flame. There are no organic materials to burn, so the cable
@@ -365,7 +365,7 @@ export default function MICCCableGuidePage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Zero smoke and toxic gas emission</strong> —
                     Because there are no organic materials, MICC cable produces no smoke and no
@@ -375,7 +375,7 @@ export default function MICCCableGuidePage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Water resistance during fire</strong> — MICC
                     cable can withstand water spray (from sprinklers or fire hoses) while energised
@@ -413,9 +413,9 @@ export default function MICCCableGuidePage() {
                 <h3 className="font-bold text-white text-lg mb-4">MICC Cable Test Procedures</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Insulation resistance</strong> — Test
+                      <strong className="text-elec-yellow">Insulation resistance</strong> — Test
                       between each conductor and the copper sheath, and between conductors, at 500V
                       DC. New, properly sealed MICC cable should give readings well above 100
                       megaohms, often exceeding 500 megaohms. Readings below 2 megaohms indicate
@@ -425,9 +425,9 @@ export default function MICCCableGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Continuity of the copper sheath</strong> —
+                      <strong className="text-elec-yellow">Continuity of the copper sheath</strong> —
                       Measure the resistance of the copper sheath between the termination points
                       using a low-resistance ohmmeter. This verifies the sheath is continuous and
                       the termination glands are making good contact. Record the R2 value for Zs
@@ -435,18 +435,18 @@ export default function MICCCableGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Earth fault loop impedance</strong> —
+                      <strong className="text-elec-yellow">Earth fault loop impedance</strong> —
                       Measure Zs at the far end of the MICC cable circuit. The copper sheath serves
                       as the CPC, and its resistance contributes to the total Zs. Verify against the
                       maximum permitted Zs for the protective device.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Polarity and functional tests</strong> —
+                      <strong className="text-elec-yellow">Polarity and functional tests</strong> —
                       Standard polarity verification and functional testing of the connected
                       equipment (fire alarm panel, emergency lighting luminaires, etc.).
                     </span>
@@ -484,18 +484,18 @@ export default function MICCCableGuidePage() {
               </p>
               <div className="grid sm:grid-cols-2 gap-4 my-6">
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-3">MICC Cable</h3>
+                  <h3 className="font-bold text-elec-yellow text-lg mb-3">MICC Cable</h3>
                   <ul className="space-y-2 text-white text-sm leading-relaxed">
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>Inorganic insulation — will not burn</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>Survives temperatures over 1,000 degrees Celsius</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>Zero smoke and toxic gas emission</span>
                     </li>
                     <li className="flex items-start gap-2">
@@ -518,19 +518,19 @@ export default function MICCCableGuidePage() {
                   <h3 className="font-bold text-white text-lg mb-3">FP200 Cable</h3>
                   <ul className="space-y-2 text-white text-sm leading-relaxed">
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>Fire-resistant insulation (silicone rubber under LSZH sheath)</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>Easy to terminate — standard stripping and connection methods</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>Not moisture-sensitive — no sealing concerns</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>Lower cost and faster installation</span>
                     </li>
                     <li className="flex items-start gap-2">
@@ -647,7 +647,7 @@ export default function MICCCableGuidePage() {
         },
       ]}
       ctaHeading="Certify Fire-Critical Installations"
-      ctaSubheading="Elec-Mate's fire alarm and emergency lighting certificates support MICC cable documentation with full test result validation. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's fire alarm and emergency lighting certificates support MICC cable documentation with full test result validation. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

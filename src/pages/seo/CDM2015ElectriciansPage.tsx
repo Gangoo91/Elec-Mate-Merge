@@ -218,7 +218,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New installations</strong> — wiring a new building, fitting out a commercial
                 unit, installing electrical systems in a new-build house. This is clearly
@@ -226,7 +226,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Alterations and additions</strong> — adding circuits, extending wiring,
                 installing new distribution boards, upgrading consumer units, adding socket outlets.
@@ -235,7 +235,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Repairs and maintenance</strong> — replacing damaged wiring, repairing
                 faults, replacing accessories and fittings, remedial work following an EICR. Repair
@@ -243,7 +243,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Demolition and dismantling</strong> — removing electrical installations from
                 buildings being demolished or refurbished. Disconnection and removal of fixed wiring
@@ -280,7 +280,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Client</strong> — the person or organisation for whom the construction work
                 is carried out. The client must make suitable arrangements for managing the project,
@@ -290,7 +290,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Principal designer</strong> — appointed by the client on projects with more
                 than one contractor. The principal designer plans, manages, and monitors the
@@ -300,7 +300,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Principal contractor</strong> — appointed by the client on projects with
                 more than one contractor. The principal contractor plans, manages, and monitors the
@@ -310,7 +310,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Designer</strong> — anyone who prepares or modifies a design for
                 construction work. This includes the electrician designing the electrical
@@ -320,7 +320,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Contractor</strong> — anyone who carries out construction work. This
                 includes every electrical contractor and subcontractor on the project. Contractors
@@ -352,7 +352,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <HardHat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <HardHat className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Plan, manage, and monitor</strong> — you must plan your work before
                 starting, manage it during execution, and monitor it to ensure it remains safe. This
@@ -365,7 +365,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <HardHat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <HardHat className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ensure competence</strong> — you must not employ or appoint any person to
                 carry out construction work unless they have the necessary skills, knowledge,
@@ -374,7 +374,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <HardHat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <HardHat className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cooperate with others</strong> — on projects with multiple contractors, you
                 must cooperate with the principal contractor and other contractors to coordinate
@@ -384,7 +384,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <HardHat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <HardHat className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Provide information and instruction</strong> — you must ensure your workers
                 have the information they need to carry out the work safely. This includes method
@@ -393,7 +393,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <HardHat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <HardHat className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Report to the principal contractor</strong> — you must comply with
                 directions given by the principal contractor, report any work that cannot be carried
@@ -434,14 +434,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>The project description</strong> — what is being built, altered, or
                 demolished. The scope of the electrical work. The programme and key milestones.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Existing information about the site</strong> — previous surveys, structural
                 drawings, existing services information (gas, water, electricity), asbestos surveys,
@@ -450,7 +450,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Significant hazards</strong> — any hazards identified by the client or
                 principal designer that are specific to the site. For electrical work, this might
@@ -460,7 +460,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Client requirements</strong> — any specific health and safety requirements
                 set by the client, such as working hours restrictions, access restrictions, or
@@ -498,7 +498,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Project description and management structure</strong> — who is the principal
                 contractor, who are the contractors, and who is responsible for what. Contact
@@ -506,7 +506,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Arrangements for managing significant risks</strong> — how specific risks
                 will be controlled. For electrical work, this includes{' '}
@@ -519,7 +519,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency procedures</strong> — first aid arrangements, fire procedures,
                 emergency contact numbers, and the location of fire extinguishers, first aid kits,
@@ -527,14 +527,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Welfare arrangements</strong> — toilets, washing facilities, changing rooms,
                 rest areas, and drinking water. These must be in place before work begins.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Site rules</strong> — PPE requirements, working hours, access restrictions,
                 permit-to-work procedures, and any other site-specific rules.
@@ -570,7 +570,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>As-built drawings</strong> — circuit diagrams showing the final layout of
                 all circuits, cable routes, distribution board schedules, and the location of
@@ -578,7 +578,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical Installation Certificate</strong> — the{' '}
                 <SEOInternalLink href="/guides/electrical-certificate-types-uk">
@@ -589,7 +589,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hazard information</strong> — any residual hazards that cannot be
                 eliminated. For example, the location of buried cables that may be affected by
@@ -598,7 +598,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Manufacturer information</strong> — operation and maintenance manuals for
                 any specialist electrical equipment installed, such as fire alarm panels, emergency
@@ -629,7 +629,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Brain className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI Health and Safety Agent</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -710,7 +710,7 @@ export default function CDM2015ElectriciansPage() {
       heroTitle={
         <>
           CDM 2015 for Electricians:{' '}
-          <span className="text-yellow-400">Your Duties and Responsibilities</span>
+          <span className="text-elec-yellow">Your Duties and Responsibilities</span>
         </>
       }
       heroSubtitle="The Construction (Design and Management) Regulations 2015 apply to all electrical installation work. As an electrical contractor, you have legal duties to plan, manage, and monitor your work; ensure worker competence; and cooperate with other duty holders. This guide explains everything you need to know."

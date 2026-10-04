@@ -7,6 +7,7 @@
  */
 
 import { useState, useMemo, useCallback } from 'react';
+import { useLoggingReminders } from '@/hooks/useLoggingReminders';
 import { useNavigate } from 'react-router-dom';
 import { useApprenticeOtj } from '@/hooks/useApprenticeOtj';
 import { useAuth } from '@/contexts/AuthContext';
@@ -128,6 +129,8 @@ export default function SiteDiary() {
   );
 
   const [coachExpanded, setCoachExpanded] = useState(true);
+  // Settings → Reminders: hides the streak chip and portfolio nudges (ELE-1804).
+  const { hidden: hideReminders } = useLoggingReminders();
   const [viewMode, setViewMode] = useState<ViewMode>('feed');
   const [sheetOpen, setSheetOpen] = useState(false);
   const [sheetInitialDate, setSheetInitialDate] = useState<string | null>(null);
@@ -300,7 +303,7 @@ export default function SiteDiary() {
 
         {/* Stats ribbon */}
         <div className="flex items-center gap-2.5 px-3 sm:px-4 pb-2.5 overflow-x-auto scrollbar-hide sm:flex-wrap">
-          {currentStreak > 0 ? (
+          {hideReminders ? null : currentStreak > 0 ? (
             <div
               className="flex items-center gap-1.5 flex-shrink-0 px-2 h-7 rounded-md border border-elec-yellow/25 bg-white/[0.06]"
               title="Working days in a row with an entry. Weekends off do not break it."
@@ -464,7 +467,7 @@ export default function SiteDiary() {
           {/* Portfolio + AI Coach */}
           <div className="space-y-3">
             {/* Portfolio Opportunities card */}
-            {portfolioOpportunities.length > 0 && (
+            {!hideReminders && portfolioOpportunities.length > 0 && (
               <button
                 onClick={() => {
                   const nudge = portfolioOpportunities[0];
@@ -679,7 +682,7 @@ export default function SiteDiary() {
                     )}
 
                     {/* Portfolio evidence suggestion */}
-                    {coachInsight.suggestedEvidence && (
+                    {!hideReminders && coachInsight.suggestedEvidence && (
                       <button
                         onClick={() => {
                           const nudge = coachInsight.portfolioNudges?.[0];

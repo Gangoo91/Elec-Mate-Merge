@@ -187,11 +187,11 @@ export default function CityGuilds2391Page() {
       <section className="py-16 sm:py-24 px-5">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-6">
-            <GraduationCap className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium text-yellow-400">C&G 2391-52 Preparation</span>
+            <GraduationCap className="w-4 h-4 text-elec-yellow" />
+            <span className="text-sm font-medium text-elec-yellow">C&G 2391-52 Preparation</span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
-            Study for the <span className="text-yellow-400">C&G 2391-52</span> Online
+            Study for the <span className="text-elec-yellow">C&G 2391-52</span> Online
           </h1>
           <p className="text-lg text-white max-w-2xl mx-auto leading-relaxed mb-8">
             AI-powered quiz prep, GN3 testing sequence walkthroughs, scenario simulations, and
@@ -207,7 +207,7 @@ export default function CityGuilds2391Page() {
             </a>
             <a
               href="#what-is-2391"
-              className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-yellow-500/40 text-white font-semibold rounded-xl touch-manipulation transition-colors"
+              className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-white/[0.1] text-white font-semibold rounded-xl touch-manipulation transition-colors"
             >
               Learn About the 2391-52
             </a>
@@ -282,7 +282,7 @@ export default function CityGuilds2391Page() {
           <div className="mt-6 rounded-2xl bg-white/[0.04] border border-white/10 p-6">
             <ul className="space-y-4 text-white">
               <li className="flex items-start gap-3">
-                <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <span>
                   <strong>Electricians seeking scheme registration:</strong> All major competent
                   person schemes (NICEIC, NAPIT, ELECSA, STROMA) require the 2391-52 or equivalent
@@ -291,7 +291,7 @@ export default function CityGuilds2391Page() {
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <span>
                   <strong>Electricians wanting to carry out EICRs:</strong> The landlord EICR market
                   is substantial and growing. To carry out periodic inspections professionally and
@@ -301,7 +301,7 @@ export default function CityGuilds2391Page() {
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <span>
                   <strong>Apprentices completing their training:</strong> Many apprentices take the
                   2391-52 shortly after completing their Level 3 qualification and AM2 assessment.
@@ -310,7 +310,7 @@ export default function CityGuilds2391Page() {
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <span>
                   <strong>Electricians pursuing the JIB Approved Electrician card:</strong> The JIB
                   Approved Electrician grading (often called the Grade Card) requires the 2391-52 in
@@ -483,7 +483,7 @@ export default function CityGuilds2391Page() {
                 key={item.step}
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                   {item.step}
                 </div>
                 <div>
@@ -587,17 +587,17 @@ export default function CityGuilds2391Page() {
         <div className="max-w-4xl mx-auto">
           <div className="grid sm:grid-cols-3 gap-6 text-center">
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <Award className="w-8 h-8 text-yellow-400 mx-auto mb-3" />
+              <Award className="w-8 h-8 text-elec-yellow mx-auto mb-3" />
               <p className="text-2xl font-bold text-white mb-1">70+</p>
               <p className="text-sm text-white">Electrical Calculators</p>
             </div>
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <Target className="w-8 h-8 text-yellow-400 mx-auto mb-3" />
+              <Target className="w-8 h-8 text-elec-yellow mx-auto mb-3" />
               <p className="text-2xl font-bold text-white mb-1">8 AI Agents</p>
               <p className="text-sm text-white">Plus 12 AI Tools</p>
             </div>
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <Zap className="w-8 h-8 text-yellow-400 mx-auto mb-3" />
+              <Zap className="w-8 h-8 text-elec-yellow mx-auto mb-3" />
               <p className="text-2xl font-bold text-white mb-1">36+</p>
               <p className="text-sm text-white">Training Courses</p>
             </div>
@@ -645,7 +645,7 @@ export default function CityGuilds2391Page() {
               >
                 <summary className="flex items-center justify-between p-4 min-h-[44px] touch-manipulation cursor-pointer text-white font-medium">
                   <span>{faq.question}</span>
-                  <ChevronDown className="w-5 h-5 text-yellow-400 group-open:rotate-180 transition-transform shrink-0 ml-4" />
+                  <ChevronDown className="w-5 h-5 text-elec-yellow group-open:rotate-180 transition-transform shrink-0 ml-4" />
                 </summary>
                 <div className="px-4 pb-4 text-white text-sm leading-relaxed">{faq.answer}</div>
               </details>
@@ -686,7 +686,7 @@ export default function CityGuilds2391Page() {
 
       <SEOCTASection
         heading="Pass the 2391-52 with confidence"
-        subheading="Join 1,600+ UK electricians studying for qualifications and growing their careers. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians studying for qualifications and growing their careers. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

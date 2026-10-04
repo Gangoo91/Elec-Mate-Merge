@@ -44,7 +44,7 @@ export default function VATSchemeComparisonPage() {
       heroTitle={
         <>
           VAT Scheme Comparison
-          <span className="block text-yellow-400 mt-1">For UK Electricians</span>
+          <span className="block text-elec-yellow mt-1">For UK Electricians</span>
         </>
       }
       heroSubtitle="Choosing the wrong VAT scheme can cost your electrical business thousands of pounds per year. This guide compares standard rate, flat rate, limited cost trader rules, cash accounting, and the domestic reverse charge — with real examples showing which scheme saves the most for different types of electrical work."
@@ -76,14 +76,14 @@ export default function VATSchemeComparisonPage() {
                 essentially all your income from electrical work.
               </p>
               <p>
-                <strong className="text-yellow-400">Mandatory registration:</strong> HMRC requires
+                <strong className="text-elec-yellow">Mandatory registration:</strong> HMRC requires
                 you to register within 30 days of the end of any month in which your rolling
                 12-month turnover exceeds £90,000. You must also register if you expect your
                 turnover to exceed £90,000 in the next 30 days alone (for example, if you sign a
                 large commercial contract).
               </p>
               <p>
-                <strong className="text-yellow-400">Voluntary registration:</strong> You can
+                <strong className="text-elec-yellow">Voluntary registration:</strong> You can
                 register voluntarily at any turnover level. The advantage is that you can reclaim
                 VAT on your business purchases (tools, van, fuel, materials) — the disadvantage is
                 that you must charge VAT on your invoices, which increases your prices by 20% for
@@ -119,20 +119,20 @@ export default function VATSchemeComparisonPage() {
                 large material purchases), HMRC refunds the difference.
               </p>
               <p>
-                <strong className="text-yellow-400">Example:</strong> In a quarter, you invoice
+                <strong className="text-elec-yellow">Example:</strong> In a quarter, you invoice
                 £30,000 plus £6,000 VAT (£36,000 total). You buy £8,000 of materials (£1,600 VAT),
                 £1,200 of fuel (£200 VAT), and £300 of tools (£60 VAT). Your VAT calculation is:
                 Output tax £6,000 minus input tax £1,860 = £4,140 owed to HMRC.
               </p>
               <p>
-                <strong className="text-yellow-400">When standard rate is best:</strong> Standard
+                <strong className="text-elec-yellow">When standard rate is best:</strong> Standard
                 rate is generally best for electricians with high material costs relative to
                 turnover — rewires, new-build installations, commercial fit-outs, and any work where
                 materials represent 30% or more of the invoice value. The more VAT you pay on
                 purchases, the more you reclaim, reducing your net VAT liability.
               </p>
               <p>
-                <strong className="text-yellow-400">The downside:</strong> Standard rate requires
+                <strong className="text-elec-yellow">The downside:</strong> Standard rate requires
                 more detailed record-keeping because you must track the VAT on every purchase. You
                 need valid VAT invoices for every claim. Elec-Mate's expense tracker captures and
                 categorises VAT automatically, making standard rate compliance straightforward.
@@ -156,19 +156,19 @@ export default function VATSchemeComparisonPage() {
                 of your gross (VAT-inclusive) turnover, instead of tracking VAT on every individual
                 purchase. There is no electrician sector — HMRC classes you by how much material
                 you supply. Most electricians who supply materials use{' '}
-                <strong className="text-yellow-400">9.5%</strong> (general building or construction
+                <strong className="text-elec-yellow">9.5%</strong> (general building or construction
                 services); labour-only electricians, with materials under 10% of turnover, use{' '}
-                <strong className="text-yellow-400">14.5%</strong>. Take 1 percentage point off in
+                <strong className="text-elec-yellow">14.5%</strong>. Take 1 percentage point off in
                 your first year of VAT registration.
               </p>
               <p>
                 If your goods cost less than 2% of turnover, or less than £1,000 a year, you are a{' '}
-                <strong className="text-yellow-400">limited cost business</strong> and must use
+                <strong className="text-elec-yellow">limited cost business</strong> and must use
                 16.5% instead — HMRC gives you no choice, and it is high enough that the scheme
                 rarely pays at that point.
               </p>
               <p>
-                <strong className="text-yellow-400">Example:</strong> You invoice £30,000 plus
+                <strong className="text-elec-yellow">Example:</strong> You invoice £30,000 plus
                 £6,000 VAT (£36,000 gross) in a quarter, having bought £9,300 of materials. Those
                 materials are 31% of turnover, so you are in the 9.5% band. You pay HMRC 9.5% of
                 £36,000 = £3,420. Under standard accounting you would pay £6,000 output VAT less
@@ -177,7 +177,7 @@ export default function VATSchemeComparisonPage() {
                 you cannot reclaim any of that input VAT.
               </p>
               <p>
-                <strong className="text-yellow-400">When flat rate can save money:</strong> The flat
+                <strong className="text-elec-yellow">When flat rate can save money:</strong> The flat
                 rate scheme saves money when your reclaimable purchases are low — specifically, when
                 the VAT you would reclaim under standard rate is less than the difference between the
                 20% you charge and your flat rate — 10.5% of gross turnover at 9.5%, or 5.5% at
@@ -186,7 +186,7 @@ export default function VATSchemeComparisonPage() {
                 finding, consulting, and subcontract labour.
               </p>
               <p>
-                <strong className="text-yellow-400">Important limitation:</strong> Under the flat
+                <strong className="text-elec-yellow">Important limitation:</strong> Under the flat
                 rate scheme, you cannot reclaim VAT on purchases except for capital assets costing
                 more than £2,000 (including VAT). This means you lose the VAT on fuel, tools,
                 materials, software subscriptions, and most other business expenses.
@@ -201,12 +201,12 @@ export default function VATSchemeComparisonPage() {
             <>
               <p>
                 In April 2017, HMRC introduced the{' '}
-                <strong className="text-yellow-400">limited cost trader</strong> rules to prevent
+                <strong className="text-elec-yellow">limited cost trader</strong> rules to prevent
                 businesses with very low costs from benefiting excessively from the flat rate
                 scheme. If your VAT-inclusive expenditure on goods (not services) is less than 2% of
                 your VAT-inclusive turnover, or less than £1,000 per year, you are classified as a
                 limited cost trader and must use a flat rate of{' '}
-                <strong className="text-yellow-400">16.5%</strong> regardless of your trade
+                <strong className="text-elec-yellow">16.5%</strong> regardless of your trade
                 category.
               </p>
               <p>
@@ -217,7 +217,7 @@ export default function VATSchemeComparisonPage() {
                 quarter to quarter as your material mix changes.
               </p>
               <p>
-                <strong className="text-yellow-400">What counts as "goods":</strong> For the limited
+                <strong className="text-elec-yellow">What counts as "goods":</strong> For the limited
                 cost trader test, goods include materials, tools, stationery, and fuel — but not
                 services like phone contracts, software subscriptions, or accountancy fees. Capital
                 goods over £2,000 are also excluded from the test. Track your goods expenditure
@@ -243,7 +243,7 @@ export default function VATSchemeComparisonPage() {
           content: (
             <>
               <p>
-                <strong className="text-yellow-400">Cash accounting</strong> is not a separate VAT
+                <strong className="text-elec-yellow">Cash accounting</strong> is not a separate VAT
                 scheme — it is an option you can use alongside either standard rate or flat rate. It
                 changes the timing of when you account for VAT. Under normal (accrual) accounting,
                 you account for VAT when you issue an invoice, regardless of whether the client has
@@ -251,7 +251,7 @@ export default function VATSchemeComparisonPage() {
                 payment.
               </p>
               <p>
-                <strong className="text-yellow-400">Why this matters for electricians:</strong> If
+                <strong className="text-elec-yellow">Why this matters for electricians:</strong> If
                 you invoice £6,000 plus VAT on 1 March and the client pays on 15 April, under
                 accrual accounting you owe HMRC the VAT in the quarter ending 31 March — before you
                 have been paid. Under cash accounting, you do not owe the VAT until the quarter
@@ -259,7 +259,7 @@ export default function VATSchemeComparisonPage() {
                 your cash flow, especially if you have slow-paying clients.
               </p>
               <p>
-                <strong className="text-yellow-400">Eligibility:</strong> You can use cash
+                <strong className="text-elec-yellow">Eligibility:</strong> You can use cash
                 accounting if your estimated taxable turnover for the next 12 months is £1.35
                 million or less. You must stop using it if your turnover exceeds £1.6 million. Most
                 sole trader and small company electricians are well within these limits.
@@ -279,28 +279,28 @@ export default function VATSchemeComparisonPage() {
           content: (
             <>
               <p>
-                The <strong className="text-yellow-400">domestic reverse charge</strong> (DRC) for
+                The <strong className="text-elec-yellow">domestic reverse charge</strong> (DRC) for
                 building and construction services has applied since 1 March 2021. It affects
                 electricians who supply CIS-registered businesses (main contractors, developers,
                 other trades). Under the DRC, you do not charge VAT on your invoice — instead, your
                 CIS-registered customer accounts for the VAT through their own VAT return.
               </p>
               <p>
-                <strong className="text-yellow-400">When DRC applies:</strong> The DRC applies when
+                <strong className="text-elec-yellow">When DRC applies:</strong> The DRC applies when
                 (a) the supply is of construction services listed in the Construction Industry
                 Scheme, (b) both you and your customer are VAT-registered, (c) your customer is
                 CIS-registered and not an end user, and (d) the supply is reported under CIS.
                 Electrical installation, maintenance, and repair work all fall within the scope.
               </p>
               <p>
-                <strong className="text-yellow-400">Impact on your business:</strong> When the DRC
+                <strong className="text-elec-yellow">Impact on your business:</strong> When the DRC
                 applies, you invoice without VAT but still reclaim VAT on your purchases normally.
                 This means you will often be in a VAT repayment position (HMRC owes you money)
                 rather than owing HMRC. This improves cash flow but requires careful accounting to
                 ensure your VAT returns are correct.
               </p>
               <p>
-                <strong className="text-yellow-400">Invoice requirements:</strong> DRC invoices must
+                <strong className="text-elec-yellow">Invoice requirements:</strong> DRC invoices must
                 include the notation "reverse charge: customer to account for VAT to HMRC" and must
                 show the VAT amount that would have been charged. Elec-Mate's invoice system handles
                 DRC invoicing automatically — select "CIS reverse charge" and the invoice format
@@ -444,7 +444,7 @@ export default function VATSchemeComparisonPage() {
         },
       ]}
       ctaHeading="Choose the Right VAT Scheme for Your Business"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to track VAT, compare schemes, and keep more of what you earn. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to track VAT, compare schemes, and keep more of what you earn. 7-day free trial, cancel anytime."
       extraSchemas={[
         {
           '@type': 'SoftwareApplication',

@@ -164,7 +164,7 @@ const sections = [
         <div className="grid gap-4 sm:grid-cols-3 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h4 className="font-bold text-white mb-1">C&G Level 4 Award</h4>
-            <p className="text-xs text-yellow-400 font-medium mb-2">Design & Verification</p>
+            <p className="text-xs text-elec-yellow font-medium mb-2">Design & Verification</p>
             <p className="text-white text-sm leading-relaxed">
               The smallest route — essentially the{' '}
               <SEOInternalLink href="/guides/city-guilds-2396-design-course">2396</SEOInternalLink>.
@@ -174,7 +174,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h4 className="font-bold text-white mb-1">EAL Level 4 Diploma</h4>
-            <p className="text-xs text-yellow-400 font-medium mb-2">Electrical Installation</p>
+            <p className="text-xs text-elec-yellow font-medium mb-2">Electrical Installation</p>
             <p className="text-white text-sm leading-relaxed">
               A broader diploma from EAL covering design and advanced installation knowledge. A
               standalone EAL qualification — not interchangeable with the C&G route even where topics
@@ -183,7 +183,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h4 className="font-bold text-white mb-1">Pearson BTEC Level 4 HNC</h4>
-            <p className="text-xs text-yellow-400 font-medium mb-2">Construction (Electrical)</p>
+            <p className="text-xs text-elec-yellow font-medium mb-2">Construction (Electrical)</p>
             <p className="text-white text-sm leading-relaxed">
               The widest route. A full Higher National Certificate covering engineering principles,
               project management and building services — and the clearest pathway on to an HND and
@@ -191,7 +191,7 @@ const sections = [
             </p>
           </div>
         </div>
-        <p className="text-sm text-white/70">
+        <p className="text-sm text-white">
           Note: EAL and City &amp; Guilds qualifications are separate awarding-body routes. Holding
           one does not automatically count towards the other, even when the learning outcomes look
           similar — always confirm what your employer or scheme requires.
@@ -277,13 +277,13 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NVQ Level 3</strong> in Electrotechnical Services (or equivalent).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>
                   <SEOInternalLink href="/guides/city-guilds-2382-exam-guide">
@@ -294,21 +294,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C&G 2396 or 2391</strong> — recommended or required by most providers. The
                 2396 is particularly relevant as the Level 4 builds on design skills.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maths competence</strong> — at least GCSE grade C / Level 2 Functional
                 Skills. The Level 4 involves significant calculations.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Work experience</strong> — at least 2 to 3 years of practical experience is
                 strongly recommended. The course content assumes real-world knowledge.
@@ -418,25 +418,25 @@ const sections = [
 
             <div className="bg-blue-900/30 p-3 text-white font-medium">Part-time day release</div>
             <div className="bg-blue-900/30 p-3 text-white">1–2 years</div>
-            <div className="bg-blue-900/30 p-3 text-white/90">
+            <div className="bg-blue-900/30 p-3 text-white">
               The most popular option — one day a week at college, working the other four.
             </div>
 
             <div className="bg-white/[0.02] p-3 text-white font-medium">Evening classes</div>
             <div className="bg-white/[0.02] p-3 text-white">~2 years</div>
-            <div className="bg-white/[0.02] p-3 text-white/90">
+            <div className="bg-white/[0.02] p-3 text-white">
               Typically two evenings a week — if your employer cannot release you during the day.
             </div>
 
             <div className="bg-white/[0.02] p-3 text-white font-medium">Block release</div>
             <div className="bg-white/[0.02] p-3 text-white">1–2 years</div>
-            <div className="bg-white/[0.02] p-3 text-white/90">
+            <div className="bg-white/[0.02] p-3 text-white">
               Intensive 1–2 week blocks, several times a year — if you work away from the college.
             </div>
 
             <div className="bg-white/[0.02] p-3 text-white font-medium">Distance / blended</div>
             <div className="bg-white/[0.02] p-3 text-white">1–3 years</div>
-            <div className="bg-white/[0.02] p-3 text-white/90">
+            <div className="bg-white/[0.02] p-3 text-white">
               Flexible online study — needs self-discipline; practical elements may need attendance.
             </div>
           </div>
@@ -461,19 +461,19 @@ const sections = [
 
             <div className="bg-white/[0.02] p-3 text-white font-medium">C&amp;G Level 4 Award (2396)</div>
             <div className="bg-white/[0.02] p-3 text-white">£500–£1,000</div>
-            <div className="bg-white/[0.02] p-3 text-white/90">
+            <div className="bg-white/[0.02] p-3 text-white">
               Often employer-funded or CPD self-investment.
             </div>
 
             <div className="bg-white/[0.02] p-3 text-white font-medium">EAL Level 4 Diploma</div>
             <div className="bg-white/[0.02] p-3 text-white">£1,500–£3,000</div>
-            <div className="bg-white/[0.02] p-3 text-white/90">
+            <div className="bg-white/[0.02] p-3 text-white">
               May be eligible for college funding depending on provider.
             </div>
 
             <div className="bg-blue-900/30 p-3 text-white font-medium">BTEC Level 4 HNC</div>
             <div className="bg-blue-900/30 p-3 text-white">£2,000–£5,000+</div>
-            <div className="bg-blue-900/30 p-3 text-white/90">
+            <div className="bg-blue-900/30 p-3 text-white">
               Often eligible for an Advanced Learner Loan.
             </div>
           </div>
@@ -529,7 +529,7 @@ export default function Level4ElectricalQualificationPage() {
       heroTitle={
         <>
           Level 4 Electrical Qualification:{' '}
-          <span className="text-yellow-400">Design, Manage, and Progress</span>
+          <span className="text-elec-yellow">Design, Manage, and Progress</span>
         </>
       }
       heroSubtitle="The Level 4 is the HNC equivalent for electricians — covering advanced design, project management, and building services engineering. Your pathway from installer to designer and manager."
@@ -540,7 +540,7 @@ export default function Level4ElectricalQualificationPage() {
       faqHeading="Frequently Asked Questions About Level 4 Electrical Qualifications"
       relatedPages={relatedPages}
       ctaHeading="Advanced Design Tools for Qualified Electricians"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, circuit design, and professional certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, circuit design, and professional certification. 7-day free trial, cancel anytime."
     />
   );
 }

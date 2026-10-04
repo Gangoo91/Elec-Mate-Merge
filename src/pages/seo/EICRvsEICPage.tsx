@@ -274,8 +274,8 @@ const sections = [
             <thead>
               <tr className="border-b border-white/10">
                 <th className="p-4 text-sm font-semibold text-white">Aspect</th>
-                <th className="p-4 text-sm font-semibold text-yellow-400">EIC</th>
-                <th className="p-4 text-sm font-semibold text-yellow-400">EICR</th>
+                <th className="p-4 text-sm font-semibold text-elec-yellow">EIC</th>
+                <th className="p-4 text-sm font-semibold text-elec-yellow">EICR</th>
               </tr>
             </thead>
             <tbody>
@@ -351,7 +351,7 @@ const sections = [
         <div className="space-y-4 my-6">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Consumer unit replacement</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -370,7 +370,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">New circuits plus periodic inspection</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -384,7 +384,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Rewire of an entire property</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -399,7 +399,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">
                   Landlord asks for "an electrical certificate"
@@ -427,7 +427,7 @@ const sections = [
         <div className="space-y-3 my-6">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Are you installing new circuits?</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -441,7 +441,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">
                   Are you altering an existing circuit without adding a new one?
@@ -459,7 +459,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">
                   Are you inspecting an existing installation you did not install?
@@ -528,7 +528,7 @@ export default function EICRvsEICPage() {
       badgeIcon={BookOpen}
       heroTitle={
         <>
-          EICR vs EIC — <span className="text-yellow-400">What Is the Difference?</span>
+          EICR vs EIC — <span className="text-elec-yellow">What Is the Difference?</span>
         </>
       }
       heroSubtitle="One certifies new work. The other reports on existing installations. They look similar on paper, but they serve completely different purposes. This guide explains when to use each, who signs them, what sections are different, and the most common mistakes electricians make when choosing between the two."
@@ -539,7 +539,7 @@ export default function EICRvsEICPage() {
       faqHeading="Frequently Asked Questions About EICR vs EIC"
       relatedPages={relatedPages}
       ctaHeading="Both certificates in one app"
-      ctaSubheading="Join 1,600+ UK electricians creating professional EIC and EICR certificates on their phones. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians creating professional EIC and EICR certificates on their phones. 7-day free trial, cancel anytime."
     />
   );
 }

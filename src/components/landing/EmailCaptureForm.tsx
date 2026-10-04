@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import { Loader2, ArrowRight, CheckCircle2, Mail } from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import { Loader2 } from 'lucide-react';
+import { inputCn, labelCn, buttonPrimaryCn } from '@/components/forms/fieldStyles';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
-import { trackLead } from '@/lib/marketing-pixels';
+import { trackLead, hasMarketingConsent } from '@/lib/marketing-pixels';
 import { getStoredAttribution, fireServerCapi } from '@/lib/attribution';
 import { trackEmailCaptured } from '@/lib/analytics-events';
 import { storageSetSync } from '@/utils/storage';
@@ -65,7 +64,14 @@ export function EmailCaptureForm({
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!isValid || status === 'loading') return;
+    if (status === 'loading') return;
+    // Validate on submit, not by greying the button out — a dead button
+    // gives no reason; a message does.
+    if (!isValid) {
+      setStatus('error');
+      setErrorMsg('Enter a valid email address.');
+      return;
+    }
     setStatus('loading');
     setErrorMsg(null);
 
@@ -80,6 +86,7 @@ export function EmailCaptureForm({
           first_name: firstName || undefined,
           source,
           event_id: eventId,
+          ad_tracking_consent: hasMarketingConsent(),
           page_url: window.location.pathname,
           utm: {
             utm_source: attribution.utm_source,
@@ -125,63 +132,101 @@ export function EmailCaptureForm({
     }
   };
 
+  // Volt (4 Oct 2026): the cert form's underline field and solid volt
+  // button, no icons; success is a ruled note, not a green wash.
   if (status === 'success') {
     return (
       <div
+        role="status"
         className={cn(
-          'flex items-center gap-3 rounded-2xl border border-green-500/30 bg-green-500/[0.08] p-4 text-green-300',
+          'rounded-2xl border border-elec-yellow/50 bg-[hsl(0_0%_11%)] px-4 py-3.5',
           className
         )}
       >
-        <CheckCircle2 className="h-5 w-5 flex-shrink-0" />
-        <p className="text-sm sm:text-base">{successMessage}</p>
+        <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-elec-yellow">
+          Sent
+        </p>
+        <p className="mt-1 text-[15px] font-medium leading-snug text-white">{successMessage}</p>
       </div>
     );
   }
 
   return (
-    <form onSubmit={submit} className={cn('space-y-3', className)}>
+    <form onSubmit={submit} noValidate className={cn('space-y-4', className)}>
       {includeName && (
-        <Input
-          type="text"
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-          placeholder="First name"
-          className="h-12 text-base text-white touch-manipulation border-white/30 bg-white/[0.04] placeholder:text-white/50 focus:border-yellow-500 focus:ring-yellow-500"
-          autoComplete="given-name"
-        />
-      )}
-      <div className={cn('flex gap-2', compact ? 'flex-row' : 'flex-col sm:flex-row')}>
-        <div className="relative flex-1">
-          <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/40" />
-          <Input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder={placeholder}
-            required
-            className="h-12 w-full pl-10 text-base text-white touch-manipulation border-white/30 bg-white/[0.04] placeholder:text-white/50 focus:border-yellow-500 focus:ring-yellow-500"
-            autoComplete="email"
-            inputMode="email"
+        <div>
+          <label htmlFor={`${source}-name`} className={labelCn}>
+            First name
+          </label>
+          <input
+            id={`${source}-name`}
+            type="text"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            placeholder="First name"
+            autoComplete="given-name"
+            className={inputCn}
           />
         </div>
-        <Button
+      )}
+      <div
+        className={cn(
+          'flex flex-col gap-3',
+          // Side by side only when asked: the default sits in narrow columns
+          // (the PDF card's 320px) where a row squeezed the field.
+          compact && 'sm:flex-row sm:items-end'
+        )}
+      >
+        <div className="min-w-0 flex-1">
+          <label htmlFor={`${source}-email`} className={labelCn}>
+            Your email
+          </label>
+          <input
+            id={`${source}-email`}
+            type="email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              if (status === 'error') {
+                setStatus('idle');
+                setErrorMsg(null);
+              }
+            }}
+            placeholder={placeholder}
+            required
+            autoComplete="email"
+            autoCapitalize="none"
+            autoCorrect="off"
+            spellCheck={false}
+            inputMode="email"
+            enterKeyHint="send"
+            className={inputCn}
+          />
+        </div>
+        <button
           type="submit"
-          disabled={!isValid || status === 'loading'}
-          className="h-12 touch-manipulation rounded-xl bg-yellow-400 px-6 text-base font-semibold text-black hover:bg-yellow-500 disabled:opacity-50"
+          disabled={status === 'loading'}
+          className={cn(
+            buttonPrimaryCn,
+            'flex items-center justify-center px-6 font-bold',
+            compact ? 'w-full sm:w-auto' : 'w-full'
+          )}
         >
           {status === 'loading' ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
-          ) : (
             <>
-              {buttonLabel}
-              <ArrowRight className="ml-1.5 h-4 w-4" />
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Sending
             </>
+          ) : (
+            buttonLabel
           )}
-        </Button>
+        </button>
       </div>
-      {errorMsg && <p className="text-sm text-red-400">{errorMsg}</p>}
-      <p className="text-xs text-white">
+      {errorMsg && (
+        <p role="alert" className="text-[13.5px] font-medium text-red-300">
+          {errorMsg}
+        </p>
+      )}
+      <p className="text-[12.5px] leading-relaxed text-white">
         {footnote ?? "We'll email it once. No spam — unsubscribe any time."}
       </p>
     </form>

@@ -129,13 +129,13 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 sm:p-6 my-6 overflow-hidden">
           <h3 className="font-bold text-white text-lg mb-4 flex items-center gap-2">
-            <Home className="w-5 h-5 text-yellow-400 shrink-0" />
+            <Home className="w-5 h-5 text-elec-yellow shrink-0" />
             Manchester Rewire Costs by Property Type (2026)
           </h3>
           <div className="overflow-x-auto -mx-4 sm:mx-0">
             <table className="w-full min-w-[460px] text-left text-sm">
               <thead>
-                <tr className="border-b border-white/15 text-white/60">
+                <tr className="border-b border-white/15 text-white">
                   <th className="py-2 px-3 font-medium">Property type</th>
                   <th className="py-2 px-3 font-medium">Indicative cost</th>
                   <th className="py-2 px-3 font-medium">Typical duration</th>
@@ -144,41 +144,41 @@ const sections = [
               <tbody className="text-white">
                 <tr className="border-b border-white/5">
                   <td className="py-2.5 px-3 font-semibold">1-bed flat</td>
-                  <td className="py-2.5 px-3 text-yellow-400 font-semibold">£2,500–£4,000</td>
-                  <td className="py-2.5 px-3 text-white/80">3–5 days</td>
+                  <td className="py-2.5 px-3 text-elec-yellow font-semibold">£2,500–£4,000</td>
+                  <td className="py-2.5 px-3 text-white">3–5 days</td>
                 </tr>
                 <tr className="border-b border-white/5">
                   <td className="py-2.5 px-3 font-semibold">2-bed terraced house</td>
-                  <td className="py-2.5 px-3 text-yellow-400 font-semibold">£3,500–£5,500</td>
-                  <td className="py-2.5 px-3 text-white/80">5–7 days</td>
+                  <td className="py-2.5 px-3 text-elec-yellow font-semibold">£3,500–£5,500</td>
+                  <td className="py-2.5 px-3 text-white">5–7 days</td>
                 </tr>
                 <tr className="border-b border-white/5">
                   <td className="py-2.5 px-3 font-semibold">3-bed semi-detached</td>
-                  <td className="py-2.5 px-3 text-yellow-400 font-semibold">£5,000–£7,500</td>
-                  <td className="py-2.5 px-3 text-white/80">6–9 days</td>
+                  <td className="py-2.5 px-3 text-elec-yellow font-semibold">£5,000–£7,500</td>
+                  <td className="py-2.5 px-3 text-white">6–9 days</td>
                 </tr>
                 <tr>
                   <td className="py-2.5 px-3 font-semibold">4-bed detached</td>
-                  <td className="py-2.5 px-3 text-yellow-400 font-semibold">£7,500–£10,000+</td>
-                  <td className="py-2.5 px-3 text-white/80">8–12 days</td>
+                  <td className="py-2.5 px-3 text-elec-yellow font-semibold">£7,500–£10,000+</td>
+                  <td className="py-2.5 px-3 text-white">8–12 days</td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <p className="text-white/50 text-xs mt-4">
+          <p className="text-white text-xs mt-4">
             Indicative market guidance for 2026, not a quote. Actual prices depend on circuit count,
             access, making good and supply upgrades.
           </p>
         </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 sm:p-6 my-6 overflow-hidden">
           <h3 className="font-bold text-white text-lg mb-4 flex items-center gap-2">
-            <MapPin className="w-5 h-5 text-yellow-400 shrink-0" />
+            <MapPin className="w-5 h-5 text-elec-yellow shrink-0" />
             Manchester vs UK Average vs London (3-bed semi)
           </h3>
           <div className="overflow-x-auto -mx-4 sm:mx-0">
             <table className="w-full min-w-[460px] text-left text-sm">
               <thead>
-                <tr className="border-b border-white/15 text-white/60">
+                <tr className="border-b border-white/15 text-white">
                   <th className="py-2 px-3 font-medium">Region</th>
                   <th className="py-2 px-3 font-medium">3-bed rewire</th>
                   <th className="py-2 px-3 font-medium">Day rate</th>
@@ -188,22 +188,22 @@ const sections = [
                 <tr className="bg-blue-900/30 border-b border-blue-700/40">
                   <td className="py-2.5 px-3 font-semibold">Manchester</td>
                   <td className="py-2.5 px-3 font-semibold">£5,000–£7,500</td>
-                  <td className="py-2.5 px-3 text-white/80">£250–£370</td>
+                  <td className="py-2.5 px-3 text-white">£250–£370</td>
                 </tr>
                 <tr className="border-b border-white/5">
                   <td className="py-2.5 px-3 font-semibold">UK average</td>
-                  <td className="py-2.5 px-3 text-white/80">£5,000–£8,000</td>
-                  <td className="py-2.5 px-3 text-white/80">£250–£400</td>
+                  <td className="py-2.5 px-3 text-white">£5,000–£8,000</td>
+                  <td className="py-2.5 px-3 text-white">£250–£400</td>
                 </tr>
                 <tr>
                   <td className="py-2.5 px-3 font-semibold">London</td>
-                  <td className="py-2.5 px-3 text-white/80">£7,000–£10,000</td>
-                  <td className="py-2.5 px-3 text-white/80">£350–£500</td>
+                  <td className="py-2.5 px-3 text-white">£7,000–£10,000</td>
+                  <td className="py-2.5 px-3 text-white">£350–£500</td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <p className="text-white/50 text-xs mt-4">
+          <p className="text-white text-xs mt-4">
             Manchester typically runs 20–30% below London on the same job. See the{' '}
             <SEOInternalLink href="/guides/rewire-cost-uk">national rewire cost guide</SEOInternalLink>{' '}
             for the full UK picture.
@@ -233,7 +233,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Victorian terraces (1860s–1900s):</strong> Dominant across Levenshulme,
                 Longsight, Rusholme, Chorlton, Whalley Range, and parts of Salford. Many were built
@@ -243,7 +243,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Edwardian semis (1900s–1930s):</strong> Found in Didsbury, Chorlton,
                 Withington, Prestwich, and Sale. Larger than Victorian terraces, with bay windows
@@ -252,7 +252,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1930s–1950s council and private estates:</strong> Extensive across
                 Wythenshawe, Gorton, Moston, and parts of Stockport and Tameside. Many still have
@@ -260,7 +260,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>City centre apartments:</strong> Converted warehouses and mills in the
                 Northern Quarter, Ancoats, and Castlefield. Some early conversions (1990s–2000s)
@@ -387,36 +387,36 @@ const sections = [
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-6">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <div className="text-xs font-mono text-yellow-400 mb-1">Reg 411.3.3</div>
+            <div className="text-xs font-mono text-elec-yellow mb-1">Reg 411.3.3</div>
             <h4 className="font-bold text-white mb-2">RCD on socket-outlets ≤ 32&nbsp;A</h4>
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Socket-outlets with a rated current not exceeding 32&nbsp;A require RCD additional
               protection. The risk-assessment exception is not permitted in a dwelling, so every
               domestic socket circuit must be RCD-protected.
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <div className="text-xs font-mono text-yellow-400 mb-1">Reg 411.3.4</div>
+            <div className="text-xs font-mono text-elec-yellow mb-1">Reg 411.3.4</div>
             <h4 className="font-bold text-white mb-2">RCD on lighting circuits</h4>
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               New in A4:2026 — within domestic premises, AC final circuits supplying luminaires must
               have additional protection by a 30&nbsp;mA RCD. Lighting circuits now need RCD
               protection too, not just socket circuits.
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <div className="text-xs font-mono text-yellow-400 mb-1">Reg 415.1</div>
+            <div className="text-xs font-mono text-elec-yellow mb-1">Reg 415.1</div>
             <h4 className="font-bold text-white mb-2">30&nbsp;mA additional protection</h4>
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Additional protection is provided by an RCD with a rated residual operating current not
               exceeding 30&nbsp;mA. An RCBO board giving per-circuit protection is the standard way to
               meet this across a whole rewire.
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <div className="text-xs font-mono text-yellow-400 mb-1">Reg 421.1.7</div>
+            <div className="text-xs font-mono text-elec-yellow mb-1">Reg 421.1.7</div>
             <h4 className="font-bold text-white mb-2">AFDDs recommended</h4>
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               A4:2026 recommends arc fault detection devices (AFDDs) on AC final circuits to mitigate
               fire risk from arc fault currents. The wording is recommendatory, but AFDDs add a
               further cost per circuit where fitted.
@@ -454,35 +454,35 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New consumer unit</strong> — metal enclosure with RCBOs or dual-RCD
                 arrangement, SPD, and main switch.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>All circuit cables</strong> — T&E cable for ring finals, radials, lighting,
                 and dedicated appliance circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Accessories</strong> — sockets, switches, ceiling roses, connection units.
                 Standard white plastic included; upgraded finishes are extra.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing and bonding</strong> — main earth conductor, bonding to gas, water,
                 and oil pipework.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing, EIC, and Part P</strong> — initial verification testing of every
                 circuit, the Electrical Installation Certificate with its Schedule of Circuit Details
@@ -559,7 +559,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check competent person registration</strong> — search NICEIC, NAPIT, or
                 ELECSA registers by your Manchester postcode. This is essential for Part P
@@ -567,14 +567,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Get three itemised quotes</strong> — compare consumer unit type, number of
                 circuits, whether RCBOs are specified, and whether making good is included.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ask about local experience</strong> — an electrician who regularly rewires
                 Manchester Victorian terraces will work faster and more efficiently than one
@@ -582,7 +582,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Verify insurance</strong> — minimum £2 million public liability. Ask for
                 proof before work starts.
@@ -613,7 +613,7 @@ export default function RewireCostManchesterPage() {
       badgeIcon={PoundSterling}
       heroTitle={
         <>
-          Rewire Cost Manchester: <span className="text-yellow-400">2026 Price Guide</span>
+          Rewire Cost Manchester: <span className="text-elec-yellow">2026 Price Guide</span>
         </>
       }
       heroSubtitle="Manchester rewire costs are broadly in line with the national average — significantly lower than London. This guide covers realistic pricing for Manchester's Victorian terraces, Edwardian semis, city centre apartments, and suburban estates."
@@ -631,7 +631,7 @@ export default function RewireCostManchesterPage() {
       faqHeading="Frequently Asked Questions About Rewire Costs in Manchester"
       relatedPages={relatedPages}
       ctaHeading="Quote Manchester Rewires with Real Trade Pricing"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI-powered rewire quoting, on-site EIC certificates, and project management. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for AI-powered rewire quoting, on-site EIC certificates, and project management. 7-day free trial."
     />
   );
 }

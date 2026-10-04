@@ -276,7 +276,7 @@ const sections = [
             No half-times and five-times columns
           </p>
           <p className="text-white">
-            A4:2026 deleted Appendix 3 Table 3A, which covered the tripping times of RCDs. BS 7671
+            A2:2022 deleted Appendix 3 Table 3A, which covered the tripping times of RCDs. BS 7671
             sets no ½&times;IΔn or 5&times;IΔn installation test. Those are product-standard tests
             for the device manufacturer. Record the disconnection time at IΔn, note the test current
             you applied, and do not leave a bare &ldquo;trip time&rdquo; with nothing to interpret it
@@ -448,7 +448,7 @@ const sections = [
             </li>
             <li>
               Recording an RCD trip time without stating the test current applied, or still using an
-              old form with ½&times; and 5&times; columns that A4:2026 removed from BS 7671.
+              old form with ½&times; and 5&times; columns that A2:2022 removed from BS 7671.
             </li>
             <li>
               Still issuing a combined single-page generic schedule after A4:2026 split it into a
@@ -530,7 +530,7 @@ const faqs = [
   {
     question: 'What RCD disconnection time should I record on the schedule?',
     answer:
-      'Regulation 643.8 requires verification with an alternating current test at the rated residual operating current, IΔn. Regardless of RCD Type, effectiveness is deemed to have been verified where a general non-delay type disconnects within 300 ms maximum, or a delay "S" type disconnects between 130 ms minimum and 500 ms maximum. Appendix 3 Table 3A, which covered RCD tripping times, was deleted at A4:2026.',
+      'Regulation 643.8 requires verification with an alternating current test at the rated residual operating current, IΔn. Regardless of RCD Type, effectiveness is deemed to have been verified where a general non-delay type disconnects within 300 ms maximum, or a delay "S" type disconnects between 130 ms minimum and 500 ms maximum. Appendix 3 Table 3A, which covered RCD tripping times, was deleted at A2:2022.',
   },
   {
     question: 'In what order should the tests be carried out?',

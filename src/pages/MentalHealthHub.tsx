@@ -4,6 +4,7 @@ import { Lock, Phone, Send } from 'lucide-react';
 
 import { useAuth } from '@/contexts/AuthContext';
 import { MentalHealthProvider } from '@/contexts/MentalHealthContext';
+import { WellbeingConsentGate } from '@/components/mental-health/WellbeingConsentGate';
 import { useMoodData } from '@/hooks/useMentalHealthSync';
 import { useAvailableSupporters } from '@/hooks/usePeerChat';
 import { useWellbeingScore } from '@/hooks/useWellbeingScore';
@@ -532,7 +533,7 @@ const quickActions: QuickAction[] = [
 
 /* ── Main page ─────────────────────────────────────────────────────── */
 
-export default function MentalHealthHub() {
+function MentalHealthHubInner() {
   const { profile } = useAuth();
   const location = useLocation();
   // Shared between the apprentice and electrician hubs — Back goes to
@@ -966,5 +967,14 @@ export default function MentalHealthHub() {
         )}
       </HubPage>
     </MentalHealthProvider>
+  );
+}
+
+/** Explicit (Art 9) consent first — see WellbeingConsentGate. ELE-1812. */
+export default function MentalHealthHub() {
+  return (
+    <WellbeingConsentGate>
+      <MentalHealthHubInner />
+    </WellbeingConsentGate>
   );
 }

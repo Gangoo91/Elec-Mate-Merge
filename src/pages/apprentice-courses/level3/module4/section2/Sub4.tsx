@@ -162,7 +162,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'RCD trip-time is the diagnostic for responsiveness. A general 30 mA RCD must disconnect within 300 ms at rated I∆n; a time-delayed Type S device is allowed 130–500 ms to give selectivity with downstream RCDs. Modern RCDs trip in 10–40 ms, so slow tripping near the limit signals a failing device — periodic testing catches them before they cause harm. The MFT tests at 0° and 180° and records the slower result. A4:2026 simplified verification to a single AC trip at I∆n.',
+      'RCD trip-time is the diagnostic for responsiveness. A general 30 mA RCD must disconnect within 300 ms at rated I∆n; a time-delayed Type S device is allowed 130–500 ms to give selectivity with downstream RCDs. Modern RCDs trip in 10–40 ms, so slow tripping near the limit signals a failing device — periodic testing catches them before they cause harm. The MFT tests at 0° and 180° and records the slower result. A2:2022 simplified verification to a single AC trip at I∆n.',
   },
   {
     id: 7,
@@ -457,7 +457,7 @@ export default function Sub4() {
           }
           meaning={
             <>
-              A4:2026 simplified the RCD test to a single AC trip at rated I&Delta;n. The
+              A2:2022 simplified the RCD test to a single AC trip at rated I&Delta;n. The
               5&times;I&Delta;n test is gone and Table 3A is gone. The pass criterion is now stated
               in Reg 643.8 itself: a general non-delay RCD must disconnect within 300 ms, and a
               delay &apos;S&apos; type within 130&ndash;500 ms. Update your firm&apos;s test pro
@@ -480,7 +480,7 @@ export default function Sub4() {
             <li>At I∆n (rated residual current, 30 mA): ≤ 300 ms (general non-delay type).</li>
             <li>A delay 'S' type RCD: between 130 ms and 500 ms at I∆n, to give selectivity.</li>
             <li>
-              A4:2026 deleted Table 3A and the 5×IΔn test — there is no longer a 40 ms / 5×IΔn pass
+              A2:2022 deleted Table 3A and the 5×IΔn test — there is no longer a 40 ms / 5×IΔn pass
               criterion. Modern RCDs typically operate in ~25–40 ms in practice, but that is
               real-world behaviour, not the regulatory limit.
             </li>

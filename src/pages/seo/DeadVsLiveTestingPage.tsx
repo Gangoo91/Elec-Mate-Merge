@@ -257,7 +257,7 @@ const sections = [
           <h4 className="font-bold text-white mb-3">Key contrasts</h4>
           <div className="space-y-3 text-white text-sm">
             <div className="grid sm:grid-cols-3 gap-2 border-b border-white/10 pb-3">
-              <span className="text-white/60">Supply state</span>
+              <span className="text-white">Supply state</span>
               <span>
                 <span className="text-blue-300 font-semibold">Dead:</span> isolated, locked off,
                 proven dead
@@ -268,7 +268,7 @@ const sections = [
               </span>
             </div>
             <div className="grid sm:grid-cols-3 gap-2 border-b border-white/10 pb-3">
-              <span className="text-white/60">Purpose</span>
+              <span className="text-white">Purpose</span>
               <span>
                 <span className="text-blue-300 font-semibold">Dead:</span> confirm the circuit is
                 safe to energise
@@ -279,7 +279,7 @@ const sections = [
               </span>
             </div>
             <div className="grid sm:grid-cols-3 gap-2">
-              <span className="text-white/60">Order</span>
+              <span className="text-white">Order</span>
               <span>
                 <span className="text-blue-300 font-semibold">Dead:</span> first — 643.2 to 643.6 in
                 sequence
@@ -419,7 +419,7 @@ const sections = [
                   leakage current, nuisance RCD tripping, or a short circuit.
                 </p>
                 <div className="mt-3 rounded-xl bg-black/20 border border-white/10 overflow-hidden text-sm">
-                  <div className="grid grid-cols-3 gap-2 px-3 py-2 bg-white/5 font-semibold text-white/70 text-xs">
+                  <div className="grid grid-cols-3 gap-2 px-3 py-2 bg-white/5 font-semibold text-white text-xs">
                     <span>Circuit nominal voltage</span>
                     <span className="text-center">Test voltage (DC)</span>
                     <span className="text-right">Min. resistance</span>
@@ -440,7 +440,7 @@ const sections = [
                     <span className="text-right font-mono">1.0 MΩ</span>
                   </div>
                 </div>
-                <p className="text-white/60 text-xs mt-2">
+                <p className="text-white text-xs mt-2">
                   Source: BS 7671 Table 64. Where connected equipment may be damaged or affect the
                   result, test before connection; a follow-up test at 250 V DC then applies, with a
                   minimum of 1.0 MΩ (Regulation 643.3.3).
@@ -457,7 +457,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ZapOff className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ZapOff className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Polarity</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -723,21 +723,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dead test results:</strong> R1+R2 (ohms), r1+rn (ohms for ring circuits),
                 insulation resistance (megohms), polarity (tick/cross).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Live test results:</strong> Zs (ohms), PSCC/PEFC (kA), RCD trip time (ms at
                 x1 and x5), functional test (tick/cross).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maximum permitted values:</strong> Record the maximum permitted Zs for each
                 circuit (from BS 7671 tables) alongside the measured value so the reader can see at
@@ -783,7 +783,7 @@ export default function DeadVsLiveTestingPage() {
       heroTitle={
         <>
           Dead Testing vs Live Testing:{' '}
-          <span className="text-yellow-400">What Every Electrician Must Know</span>
+          <span className="text-elec-yellow">What Every Electrician Must Know</span>
         </>
       }
       heroSubtitle="Dead tests first, live tests second. That sequence is not optional — it is a BS 7671 requirement. Dead tests confirm the circuit is safe to energise. Live tests confirm the protective devices will operate correctly under fault conditions. This guide explains every test, the correct order, and common mistakes."

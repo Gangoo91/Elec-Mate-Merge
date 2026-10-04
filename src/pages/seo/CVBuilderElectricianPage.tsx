@@ -433,7 +433,7 @@ export default function CVBuilderElectricianPage() {
       heroTitle={
         <>
           CV Builder for Electricians:{' '}
-          <span className="text-yellow-400">Stand Out to Employers</span>
+          <span className="text-elec-yellow">Stand Out to Employers</span>
         </>
       }
       heroSubtitle="Professional CV templates designed for the electrical trade. Highlight your qualifications, ECS card, specialist skills, and project experience. ATS-friendly PDF export that passes automated screening."

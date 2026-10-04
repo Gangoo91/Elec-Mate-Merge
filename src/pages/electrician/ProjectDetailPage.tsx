@@ -1209,7 +1209,7 @@ const ProjectDetailPage = () => {
       fetch: fetchUnlinkedCertificates,
       link: linkCertificate,
       createLabel: 'Create new certificate',
-      createUrl: `/electrician/inspection-testing/new?projectId=${project?.id}&clientName=${encodeURIComponent(project?.customer_name || '')}&address=${encodeURIComponent(project?.location || '')}`,
+      createUrl: `/electrician/inspection-testing?projectId=${project?.id}&clientName=${encodeURIComponent(project?.customer_name || '')}&address=${encodeURIComponent(project?.location || '')}`,
     },
     rams: {
       title: 'Link RAMS',

@@ -184,15 +184,15 @@ export default function TrunkingFillCalculatorPage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
-        <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-elec-yellow text-sm font-medium mb-6">
             <Zap className="w-4 h-4" />
             Part of 70 Electrical Calculators
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             Trunking Fill Calculator
-            <span className="block text-yellow-400 mt-1">45% Fill Rule to BS 7671</span>
+            <span className="block text-elec-yellow mt-1">45% Fill Rule to BS 7671</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             Calculate trunking fill using the 45% maximum fill rule. Check any combination of cables
@@ -208,7 +208,7 @@ export default function TrunkingFillCalculatorPage() {
             </Link>
             <a
               href="#how-it-works"
-              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-yellow-500/40 touch-manipulation transition-colors"
+              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-white/[0.1] touch-manipulation transition-colors"
             >
               See How It Works
               <ArrowDown className="w-4 h-4 ml-1" />
@@ -231,7 +231,7 @@ export default function TrunkingFillCalculatorPage() {
       <section className="px-5 pb-2">
         <div className="max-w-4xl mx-auto">
           <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center">
-            <p className="text-xl sm:text-2xl font-mono font-bold text-yellow-400">
+            <p className="text-xl sm:text-2xl font-mono font-bold text-elec-yellow">
               Total cable CSA ≤ 45% of trunking internal CSA
             </p>
             <p className="mt-3 text-sm text-white">
@@ -259,7 +259,7 @@ export default function TrunkingFillCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Layers className="w-5 h-5 text-yellow-400" />
+              <Layers className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               What Is Trunking Fill and the 45% Rule?
@@ -275,7 +275,7 @@ export default function TrunkingFillCalculatorPage() {
               stainless steel, aluminium, dado, skirting, and mini-trunking.
             </p>
             <p>
-              <strong className="text-yellow-400">Why 45% and not more?</strong> The 45% limit
+              <strong className="text-elec-yellow">Why 45% and not more?</strong> The 45% limit
               exists for three reasons. First, heat dissipation: when current flows through cables,
               the conductors generate heat. The air space inside the trunking acts as a cooling
               medium, allowing heat to transfer from the cable surface to the trunking walls and
@@ -307,7 +307,7 @@ export default function TrunkingFillCalculatorPage() {
               to verify the circuit meets BS 7671 limits.
             </p>
             <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center my-6">
-              <p className="text-xl sm:text-2xl font-mono font-bold text-yellow-400">
+              <p className="text-xl sm:text-2xl font-mono font-bold text-elec-yellow">
                 Total cable CSA ≤ 45% of trunking internal CSA
               </p>
               <p className="mt-3 text-sm text-white">
@@ -323,7 +323,7 @@ export default function TrunkingFillCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Calculator className="w-5 h-5 text-yellow-400" />
+              <Calculator className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Calculating Cable Cross-Sectional Area
@@ -339,14 +339,14 @@ export default function TrunkingFillCalculatorPage() {
               cables — the shape of the overall profile.
             </p>
             <p>
-              <strong className="text-yellow-400">For round cables</strong> (such as single-core PVC
+              <strong className="text-elec-yellow">For round cables</strong> (such as single-core PVC
               insulated cables drawn into trunking), the cable cross-sectional area for fill
               purposes is calculated from the overall diameter: CSA = pi x (d/2)². A 2.5 mm² single
               has an overall diameter of approximately 4.6 mm, giving a CSA of pi x 2.3² = 16.6 mm².
               This is over six times the conductor cross-section.
             </p>
             <p>
-              <strong className="text-yellow-400">For flat cables</strong> (such as twin and earth),
+              <strong className="text-elec-yellow">For flat cables</strong> (such as twin and earth),
               the cable CSA for fill purposes is the overall width multiplied by the overall height.
               A 2.5 mm² twin and earth cable is approximately 11.5 mm wide by 6.9 mm high, giving a
               CSA of 79.4 mm² — over 30 times the conductor cross-section. This is why trunking fill
@@ -356,16 +356,16 @@ export default function TrunkingFillCalculatorPage() {
 
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-6">
             <div className="grid grid-cols-4 gap-px bg-white/10">
-              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                 Cable Type
               </div>
-              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                 Overall Size (mm)
               </div>
-              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                 Cable CSA (mm²)
               </div>
-              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                 Typical Use
               </div>
             </div>
@@ -400,7 +400,7 @@ export default function TrunkingFillCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Ruler className="w-5 h-5 text-yellow-400" />
+              <Ruler className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Standard Trunking Sizes and Capacity
@@ -409,13 +409,13 @@ export default function TrunkingFillCalculatorPage() {
 
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-6">
             <div className="grid grid-cols-3 gap-px bg-white/10">
-              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                 Trunking Size (mm)
               </div>
-              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                 Internal CSA (mm²)
               </div>
-              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                 45% Usable (mm²)
               </div>
             </div>
@@ -455,7 +455,7 @@ export default function TrunkingFillCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Box className="w-5 h-5 text-yellow-400" />
+              <Box className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Compartmentalised Trunking and Segregation
@@ -465,9 +465,9 @@ export default function TrunkingFillCalculatorPage() {
             <p>
               BS 7671 Regulation 528.1 requires that cables of different voltage bands are
               segregated from each other. BS 7671 classifies circuits into two bands:{' '}
-              <strong className="text-yellow-400">Band I</strong> covers extra-low voltage (ELV)
+              <strong className="text-elec-yellow">Band I</strong> covers extra-low voltage (ELV)
               circuits such as data, telecommunications, fire alarm, and emergency lighting control
-              wiring; <strong className="text-yellow-400">Band II</strong> covers mains voltage
+              wiring; <strong className="text-elec-yellow">Band II</strong> covers mains voltage
               circuits operating at 230 V / 400 V. Regulation 528.1 (confirmed in GN3 Section 4.8.5
               and OSG Section 7.4.1) prohibits Band I and Band II circuits from sharing the same
               wiring enclosure unless at least one of three conditions is met:
@@ -490,7 +490,7 @@ export default function TrunkingFillCalculatorPage() {
               </li>
             </ul>
             <p>
-              <strong className="text-yellow-400">Compartmentalised trunking</strong> provides this
+              <strong className="text-elec-yellow">Compartmentalised trunking</strong> provides this
               segregation by including fixed internal dividers that create separate channels. A
               two-compartment trunking has one divider creating two channels; a three-compartment
               version has two dividers. Each compartment must be treated independently for fill
@@ -515,7 +515,7 @@ export default function TrunkingFillCalculatorPage() {
           {/* Reg 622.85 EICR connection */}
           <div className="mt-6 p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <p className="text-sm text-white leading-relaxed">
-              <strong className="text-yellow-400">At EICR inspection stage:</strong> the 45% fill
+              <strong className="text-elec-yellow">At EICR inspection stage:</strong> the 45% fill
               rule must be verified per compartment individually. BS 7671 Regulation 622.85 requires
               the inspector to confirm that cables are adequate for current-carrying capacity in
               accordance with Section 523 — which includes grouping, ambient temperature, and
@@ -531,13 +531,13 @@ export default function TrunkingFillCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <BarChart3 className="w-5 h-5 text-yellow-400" />
+              <BarChart3 className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">Worked Examples</h2>
           </div>
           <div className="space-y-6">
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <h3 className="font-bold text-yellow-400 text-lg mb-3">
+              <h3 className="font-bold text-elec-yellow text-lg mb-3">
                 Example 1: Socket Circuits in 50 x 50 mm Trunking
               </h3>
               <div className="space-y-2 text-white leading-relaxed text-sm">
@@ -548,15 +548,15 @@ export default function TrunkingFillCalculatorPage() {
                 </p>
                 <p className="font-mono text-white">
                   Cable CSA per cable = 11.5 x 6.9 ={' '}
-                  <strong className="text-yellow-400">79.4 mm²</strong>
+                  <strong className="text-elec-yellow">79.4 mm²</strong>
                 </p>
                 <p className="font-mono text-white">
                   Total cable CSA = 8 x 79.4 ={' '}
-                  <strong className="text-yellow-400">635.2 mm²</strong>
+                  <strong className="text-elec-yellow">635.2 mm²</strong>
                 </p>
                 <p className="font-mono text-white">
                   Trunking 45% capacity = 2,500 x 0.45 ={' '}
-                  <strong className="text-yellow-400">1,125 mm²</strong>
+                  <strong className="text-elec-yellow">1,125 mm²</strong>
                 </p>
                 <p>
                   Result: <strong className="text-green-400">635.2 ≤ 1,125 — PASS</strong>. Fill
@@ -566,7 +566,7 @@ export default function TrunkingFillCalculatorPage() {
             </div>
 
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <h3 className="font-bold text-yellow-400 text-lg mb-3">
+              <h3 className="font-bold text-elec-yellow text-lg mb-3">
                 Example 2: Mixed Cables in Mini-Trunking
               </h3>
               <div className="space-y-2 text-white leading-relaxed text-sm">
@@ -578,11 +578,11 @@ export default function TrunkingFillCalculatorPage() {
                 <p className="font-mono text-white">1.5 mm² T&E CSA = 61.0 mm²</p>
                 <p className="font-mono text-white">
                   Total cable CSA = 79.4 + 61.0 ={' '}
-                  <strong className="text-yellow-400">140.4 mm²</strong>
+                  <strong className="text-elec-yellow">140.4 mm²</strong>
                 </p>
                 <p className="font-mono text-white">
                   Trunking 45% capacity = 400 x 0.45 ={' '}
-                  <strong className="text-yellow-400">180 mm²</strong>
+                  <strong className="text-elec-yellow">180 mm²</strong>
                 </p>
                 <p>
                   Result: <strong className="text-green-400">140.4 ≤ 180 — PASS</strong>. However,
@@ -594,7 +594,7 @@ export default function TrunkingFillCalculatorPage() {
             </div>
 
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <h3 className="font-bold text-yellow-400 text-lg mb-3">
+              <h3 className="font-bold text-elec-yellow text-lg mb-3">
                 Example 3: Over-Filled Trunking
               </h3>
               <div className="space-y-2 text-white leading-relaxed text-sm">
@@ -606,11 +606,11 @@ export default function TrunkingFillCalculatorPage() {
                 <p className="font-mono text-white">2.5 mm² T&E CSA: 4 x 79.4 = 317.6 mm²</p>
                 <p className="font-mono text-white">
                   Total cable CSA = 570.0 + 317.6 ={' '}
-                  <strong className="text-yellow-400">887.6 mm²</strong>
+                  <strong className="text-elec-yellow">887.6 mm²</strong>
                 </p>
                 <p className="font-mono text-white">
                   Trunking 45% capacity = 1,250 x 0.45 ={' '}
-                  <strong className="text-yellow-400">562.5 mm²</strong>
+                  <strong className="text-elec-yellow">562.5 mm²</strong>
                 </p>
                 <p>
                   Result: <strong className="text-red-400">887.6 &gt; 562.5 — FAIL</strong>. The 50
@@ -628,7 +628,7 @@ export default function TrunkingFillCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               How to Calculate Trunking Fill — Step by Step
@@ -641,7 +641,7 @@ export default function TrunkingFillCalculatorPage() {
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex-shrink-0">
-                  <span className="font-bold text-yellow-400">{index + 1}</span>
+                  <span className="font-bold text-elec-yellow">{index + 1}</span>
                 </div>
                 <div>
                   <h3 className="font-bold text-white text-lg mb-1">{step.name}</h3>
@@ -684,7 +684,7 @@ export default function TrunkingFillCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <HelpCircle className="w-5 h-5 text-yellow-400" />
+              <HelpCircle className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Frequently Asked Questions
@@ -698,7 +698,7 @@ export default function TrunkingFillCalculatorPage() {
               >
                 <summary className="flex items-center justify-between p-4 min-h-[44px] touch-manipulation cursor-pointer text-white font-medium">
                   <span>{faq.question}</span>
-                  <ChevronDown className="w-5 h-5 text-yellow-400 group-open:rotate-180 transition-transform" />
+                  <ChevronDown className="w-5 h-5 text-elec-yellow group-open:rotate-180 transition-transform" />
                 </summary>
                 <div className="px-4 pb-4 text-white text-sm leading-relaxed">{faq.answer}</div>
               </details>
@@ -742,7 +742,7 @@ export default function TrunkingFillCalculatorPage() {
 
       <SEOCTASection
         heading="Size Trunking Correctly Every Time"
-        subheading="Join 1,600+ UK electricians using Elec-Mate for on-site calculations. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians using Elec-Mate for on-site calculations. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

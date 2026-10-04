@@ -387,7 +387,7 @@ export default function PlugInSolarLandlordsPage() {
       heroTitle={
         <>
           Plug-in Solar in Rented and Leasehold Property:{' '}
-          <span className="text-yellow-400">What Landlords and Agents Must Check</span>
+          <span className="text-elec-yellow">What Landlords and Agents Must Check</span>
         </>
       }
       heroSubtitle="Plug-in solar became legal for a tenant to self-install on 27 August 2026. Whether your building can take one is a separate question — and it is decided by the external wall construction, not by the flat. This page sets out what to establish, what to put in writing, and where the real work sits."
@@ -418,7 +418,7 @@ export default function PlugInSolarLandlordsPage() {
       faqHeading="Plug-in Solar for Landlords — Frequently Asked Questions"
       relatedPages={relatedPages}
       ctaHeading="Give the Answer in Writing, Once"
-      ctaSubheading="Elec-Mate's Plug-in Solar Suitability & Commissioning Certificate assesses the installation and produces a separate one-page decision sheet for a landlord or managing agent — plain English, no regulation numbers, drawn from the same assessment so the two cannot disagree. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's Plug-in Solar Suitability & Commissioning Certificate assesses the installation and produces a separate one-page decision sheet for a landlord or managing agent — plain English, no regulation numbers, drawn from the same assessment so the two cannot disagree. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

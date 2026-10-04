@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils';
+import { useLoggingReminders } from '@/hooks/useLoggingReminders';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
@@ -49,6 +50,8 @@ function fmtDate(iso: string | null): string {
 }
 
 export function MyReflectionCard() {
+  // Settings → Reminders: keep the facts, drop the nudging (ELE-1804).
+  const { hidden: hideReminders } = useLoggingReminders();
   const [rows, setRows] = useState<ReflectionRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [captureOpen, setCaptureOpen] = useState(false);
@@ -110,15 +113,17 @@ export function MyReflectionCard() {
             <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
               Reflection
             </div>
-            {!loading && streak > 0 && (
+            {!hideReminders && !loading && streak > 0 && (
               <span className="text-[10.5px] tabular-nums text-white">{streak}-day streak</span>
             )}
           </div>
 
           <p className="mt-3 text-[12.5px] sm:text-[13px] text-white leading-snug">
             {reflectedToday
-              ? 'Captured today. Keep the streak alive tomorrow.'
-              : streak > 0
+              ? hideReminders
+                ? 'Captured today.'
+                : 'Captured today. Keep the streak alive tomorrow.'
+              : !hideReminders && streak > 0
                 ? `${streak} ${streak === 1 ? 'day' : 'days'} in a row. Don't break the chain — capture today's reflection.`
                 : 'Two minutes today. Goes into your portfolio and — if you tick — counts toward your verified hours.'}
           </p>

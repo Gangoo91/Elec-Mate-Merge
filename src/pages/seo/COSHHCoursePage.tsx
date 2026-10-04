@@ -463,7 +463,7 @@ export default function COSHHCoursePage() {
       badgeIcon={Skull}
       heroTitle={
         <>
-          COSHH Course: <span className="text-yellow-400">Control of Substances Training</span>
+          COSHH Course: <span className="text-elec-yellow">Control of Substances Training</span>
         </>
       }
       heroSubtitle="Essential COSHH training for UK electricians. Learn to identify hazardous substances, carry out COSHH assessments, select appropriate PPE, and respond to chemical emergencies. 5 modules with video content, interactive quizzes, and AI-powered study tools."
@@ -481,7 +481,7 @@ export default function COSHHCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Know your substances — protect your health"
-      ctaSubheading="Join 1,600+ UK electricians training smarter with Elec-Mate. 5 focused modules, interactive quizzes, AI study assistant, and CPD certificate. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians training smarter with Elec-Mate. 5 focused modules, interactive quizzes, AI study assistant, and CPD certificate. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/coshh"
     />

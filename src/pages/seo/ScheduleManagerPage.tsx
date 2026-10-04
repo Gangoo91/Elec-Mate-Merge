@@ -143,7 +143,7 @@ const sections = [
           when they arrive.
         </p>
         <p>
-          <strong className="text-yellow-400">The financial impact is significant.</strong> If
+          <strong className="text-elec-yellow">The financial impact is significant.</strong> If
           better scheduling gives you just one additional billable hour per day, that is 5 hours per
           week, approximately 230 hours per year. At a modest charge rate of GBP 45 per hour, that
           is GBP 10,350 per year of additional revenue -- from the same number of working days,
@@ -187,14 +187,14 @@ const sections = [
           or certificates.
         </p>
         <p>
-          <strong className="text-yellow-400">Colour coding</strong> makes the calendar scannable.
+          <strong className="text-elec-yellow">Colour coding</strong> makes the calendar scannable.
           Installations might be blue, testing jobs amber, maintenance green, and emergencies red.
           You can customise the colours to match your own categorisation. Jobs change colour as they
           progress through their lifecycle -- provisional bookings are lighter, confirmed jobs are
           solid, and completed jobs are greyed out.
         </p>
         <p>
-          <strong className="text-yellow-400">Drag-and-drop rescheduling</strong> makes it easy to
+          <strong className="text-elec-yellow">Drag-and-drop rescheduling</strong> makes it easy to
           move jobs when plans change. Drag a job from Tuesday to Thursday, and Elec-Mate
           automatically sends the client an updated notification with the new date and time. If you
           are managing a team, you can drag a job from one operative's calendar to another's to
@@ -224,7 +224,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Notification Timeline</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Bell className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Bell className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Booking confirmation:</strong> Sent immediately when you schedule a job.
                 Includes the date, time, your business name, and what the client should expect or
@@ -232,21 +232,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Bell className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Bell className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Day-before reminder:</strong> Sent automatically at a time you choose (e.g.
                 6pm the evening before). This single message reduces no-shows by up to 90%.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Bell className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Bell className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>On-the-way notification:</strong> Tap a button when you leave for the job,
                 and the client receives a message with your estimated arrival time.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Bell className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Bell className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Job completed follow-up:</strong> Sent after you mark the job as complete.
                 Can include the certificate, the invoice, and a link to leave a review.
@@ -287,7 +287,7 @@ const sections = [
           map with turn-by-turn directions available through Google Maps or Apple Maps.
         </p>
         <p>
-          <strong className="text-yellow-400">The savings are measurable.</strong> If route planning
+          <strong className="text-elec-yellow">The savings are measurable.</strong> If route planning
           saves you 30 minutes of driving per day, that is 2.5 hours per week -- time you can spend
           on an additional job. It also reduces fuel consumption (typically GBP 15-GBP 25 per week
           in savings) and vehicle wear. For electricians who{' '}
@@ -321,7 +321,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Common Recurring Electrical Jobs</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <RotateCcw className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <RotateCcw className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Emergency lighting tests:</strong> Monthly functional tests (BS 5266-1) and
                 annual 3-hour duration tests. Typically for commercial clients, schools, care homes,
@@ -329,7 +329,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <RotateCcw className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <RotateCcw className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Fire alarm servicing:</strong> Quarterly inspections and annual servicing
                 (BS 5839-1). Includes testing all call points, detectors, sounders, and the control
@@ -337,7 +337,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <RotateCcw className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <RotateCcw className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>EICR inspections:</strong> Every 5 years for rental properties (legal
                 requirement), every 5 years for domestic owner-occupied, every 3-5 years for
@@ -345,7 +345,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <RotateCcw className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <RotateCcw className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>PAT testing:</strong> Annual or more frequent depending on the environment
                 and equipment type. Offices, workshops, construction sites, and public venues.
@@ -384,7 +384,7 @@ const sections = [
           the job site).
         </p>
         <p>
-          <strong className="text-yellow-400">Real-time updates</strong> ensure everyone sees the
+          <strong className="text-elec-yellow">Real-time updates</strong> ensure everyone sees the
           current schedule. If a job overruns and you need to push back subsequent appointments,
           update the schedule and all affected operatives and clients are notified automatically. If
           an emergency call comes in, you can see who has a gap in their afternoon and allocate the
@@ -463,7 +463,7 @@ export default function ScheduleManagerPage() {
       badgeIcon={Calendar}
       heroTitle={
         <>
-          Schedule Manager <span className="text-yellow-400">for UK Electricians</span>
+          Schedule Manager <span className="text-elec-yellow">for UK Electricians</span>
         </>
       }
       heroSubtitle="Calendar view, job booking, customer notifications, route planning, and recurring job scheduling. Manage your diary professionally and never miss, double-book, or waste time on travel again."
@@ -478,7 +478,7 @@ export default function ScheduleManagerPage() {
       faqHeading="Frequently Asked Questions About Job Scheduling"
       relatedPages={relatedPages}
       ctaHeading="Take Control of Your Schedule"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to schedule jobs, optimise routes, and communicate professionally with clients. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to schedule jobs, optimise routes, and communicate professionally with clients. 7-day free trial, cancel anytime."
       pagePath="/tools/schedule-manager-electrician"
     />
   );

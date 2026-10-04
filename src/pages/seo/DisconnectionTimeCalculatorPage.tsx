@@ -40,7 +40,7 @@ export default function DisconnectionTimeCalculatorPage() {
       badgeIcon={Shield}
       heroTitle={
         <>
-          <span className="text-yellow-400">Disconnection Time Calculator</span> — Verify 0.4s and
+          <span className="text-elec-yellow">Disconnection Time Calculator</span> — Verify 0.4s and
           5s Rules to BS 7671
         </>
       }
@@ -272,30 +272,30 @@ export default function DisconnectionTimeCalculatorPage() {
                 <ul className="space-y-2 text-white">
                   <li className="flex items-start gap-3">
                     <span>
-                      <strong className="text-yellow-400">Type B MCB 6A:</strong> Zs max = 7.28 ohms
+                      <strong className="text-elec-yellow">Type B MCB 6A:</strong> Zs max = 7.28 ohms
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
                     <span>
-                      <strong className="text-yellow-400">Type B MCB 16A:</strong> Zs max = 2.73
+                      <strong className="text-elec-yellow">Type B MCB 16A:</strong> Zs max = 2.73
                       ohms
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
                     <span>
-                      <strong className="text-yellow-400">Type B MCB 32A:</strong> Zs max = 1.37
+                      <strong className="text-elec-yellow">Type B MCB 32A:</strong> Zs max = 1.37
                       ohms
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
                     <span>
-                      <strong className="text-yellow-400">Type C MCB 32A:</strong> Zs max = 0.68
+                      <strong className="text-elec-yellow">Type C MCB 32A:</strong> Zs max = 0.68
                       ohms
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
                     <span>
-                      <strong className="text-yellow-400">BS 88-2 gG fuse 32A:</strong> Zs max =
+                      <strong className="text-elec-yellow">BS 88-2 gG fuse 32A:</strong> Zs max =
                       0.99 ohms (BS 88-3 system C 32A: 0.91 ohms)
                     </span>
                   </li>
@@ -307,7 +307,7 @@ export default function DisconnectionTimeCalculatorPage() {
                     <p className="font-semibold text-white">
                       GN3 Site Factor — apply 0.8 to your measured Zs
                     </p>
-                    <p className="text-white/80 text-sm mt-1">
+                    <p className="text-white text-sm mt-1">
                       BS 7671 table values are based on conductors at their maximum operating
                       temperature. When you measure Zs on site with cold cables, the reading is
                       lower than it would be under load. GN3 guidance requires you to multiply your
@@ -502,7 +502,7 @@ export default function DisconnectionTimeCalculatorPage() {
         },
       ]}
       ctaHeading="Verify disconnection times in seconds"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for BS 7671 compliance checks. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for BS 7671 compliance checks. 7-day free trial, cancel anytime."
       toolPath="/tools/disconnection-time-calculator"
     />
   );

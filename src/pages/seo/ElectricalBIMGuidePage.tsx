@@ -45,7 +45,7 @@ export default function ElectricalBIMGuidePage() {
         <>
           Electrical BIM Guide
           <br />
-          <span className="text-yellow-400">Building Information Modelling</span>
+          <span className="text-elec-yellow">Building Information Modelling</span>
         </>
       }
       heroSubtitle="Building Information Modelling is transforming how electrical installations are designed, coordinated, and handed over. Whether you are an electrical designer working in Revit MEP, a project manager dealing with BIM requirements, or an electrician on a BIM-mandated project, this guide explains what BIM means for the electrical trade."
@@ -80,7 +80,7 @@ export default function ElectricalBIMGuidePage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Layers className="w-5 h-5 text-yellow-400" />
+                    <Layers className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">BIM Dimensions</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -97,7 +97,7 @@ export default function ElectricalBIMGuidePage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Users className="w-5 h-5 text-yellow-400" />
+                    <Users className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Federated Model</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -209,43 +209,43 @@ export default function ElectricalBIMGuidePage() {
                 <h3 className="font-bold text-white text-lg mb-4">Revit Electrical Capabilities</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Electrical circuits</strong> — Create
+                      <strong className="text-elec-yellow">Electrical circuits</strong> — Create
                       circuits connecting devices to panels with automatic load calculations.
                       Circuit schedules are generated directly from the model and update when
                       devices are added or removed.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Panel schedules</strong> — Automatically
+                      <strong className="text-elec-yellow">Panel schedules</strong> — Automatically
                       generated from the circuit model. Show circuit numbers, loads, protective
                       device ratings, and cable sizes. Can be placed on drawing sheets and exported.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Cable tray and conduit</strong> — Route
+                      <strong className="text-elec-yellow">Cable tray and conduit</strong> — Route
                       cable trays and conduit in 3D with automatic fittings (bends, tees, crosses).
                       Support height and routing preferences can be set to follow project standards.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Lighting analysis</strong> — Basic
+                      <strong className="text-elec-yellow">Lighting analysis</strong> — Basic
                       lighting calculations using IES photometric data. While not as detailed as
                       specialist lighting software (Dialux, Relux), it provides a first-pass check
                       of illuminance levels directly within the BIM model.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Families and parameters</strong> —
+                      <strong className="text-elec-yellow">Families and parameters</strong> —
                       Electrical equipment is modelled using "families" (Revit's term for parametric
                       component templates). Manufacturer-specific families can include accurate
                       geometry and data parameters matching the actual product being installed.
@@ -290,7 +290,7 @@ export default function ElectricalBIMGuidePage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Target className="w-5 h-5 text-yellow-400" />
+                    <Target className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Hard Clashes</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -303,7 +303,7 @@ export default function ElectricalBIMGuidePage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Target className="w-5 h-5 text-yellow-400" />
+                    <Target className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">
                       Soft Clashes (Clearance Violations)
                     </h3>
@@ -318,7 +318,7 @@ export default function ElectricalBIMGuidePage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Target className="w-5 h-5 text-yellow-400" />
+                    <Target className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Workflow Clashes</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -360,38 +360,38 @@ export default function ElectricalBIMGuidePage() {
                 </h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Component identity</strong> — Unique asset
+                      <strong className="text-elec-yellow">Component identity</strong> — Unique asset
                       tag, type, description, serial number, barcode, model number.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Location</strong> — Building, floor,
+                      <strong className="text-elec-yellow">Location</strong> — Building, floor,
                       room/space, exact position within the space.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Manufacturer data</strong> — Manufacturer
+                      <strong className="text-elec-yellow">Manufacturer data</strong> — Manufacturer
                       name, model, product URL, warranty start and expiry dates.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Technical data</strong> — Voltage rating,
+                      <strong className="text-elec-yellow">Technical data</strong> — Voltage rating,
                       current rating, IP rating, number of ways, circuit designation, protective
                       device type and rating.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Maintenance requirements</strong> —
+                      <strong className="text-elec-yellow">Maintenance requirements</strong> —
                       Inspection frequency, test requirements, replacement intervals, spare parts
                       references.
                     </span>
@@ -422,7 +422,7 @@ export default function ElectricalBIMGuidePage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Database className="w-5 h-5 text-yellow-400" />
+                    <Database className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">ISO 19650 Parts 1 & 2</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -436,7 +436,7 @@ export default function ElectricalBIMGuidePage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Database className="w-5 h-5 text-yellow-400" />
+                    <Database className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">BIM Execution Plan (BEP)</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -450,7 +450,7 @@ export default function ElectricalBIMGuidePage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Database className="w-5 h-5 text-yellow-400" />
+                    <Database className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Common Data Environment (CDE)</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -484,9 +484,9 @@ export default function ElectricalBIMGuidePage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Installation from models</strong> —
+                      <strong className="text-elec-yellow">Installation from models</strong> —
                       Instead of working from 2D drawings, site teams increasingly use tablets with
                       the 3D BIM model to view the installation layout. Cable tray routes, equipment
                       positions, and containment runs can be viewed in 3D on site, reducing
@@ -494,9 +494,9 @@ export default function ElectricalBIMGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Pre-agreed coordination</strong> — On BIM
+                      <strong className="text-elec-yellow">Pre-agreed coordination</strong> — On BIM
                       projects, the positions of cable trays, containment, and equipment are agreed
                       in advance through clash detection. There should be fewer surprises on site —
                       you should not be trying to fit containment into spaces already occupied by
@@ -504,18 +504,18 @@ export default function ElectricalBIMGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Data capture</strong> — Electricians may
+                      <strong className="text-elec-yellow">Data capture</strong> — Electricians may
                       be required to record serial numbers, photograph installations, and populate
                       asset data sheets for every significant item installed. This data feeds into
                       the as-built BIM model and the COBie handover data.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Digital O&M manuals</strong> — Traditional
+                      <strong className="text-elec-yellow">Digital O&M manuals</strong> — Traditional
                       paper O&M (operation and maintenance) manuals are being replaced by digital
                       O&M data linked to the BIM model. Test{' '}
                       <SEOInternalLink href="/eic-certificate">certificates</SEOInternalLink>,
@@ -524,9 +524,9 @@ export default function ElectricalBIMGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Offsite fabrication</strong> — BIM enables
+                      <strong className="text-elec-yellow">Offsite fabrication</strong> — BIM enables
                       offsite prefabrication of containment, wiring looms, and distribution
                       assemblies. The model provides exact dimensions for manufacturing, reducing
                       on-site labour and waste.
@@ -554,7 +554,7 @@ export default function ElectricalBIMGuidePage() {
               </p>
               <div className="space-y-3 mt-4">
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     1
                   </span>
                   <div>
@@ -569,7 +569,7 @@ export default function ElectricalBIMGuidePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     2
                   </span>
                   <div>
@@ -585,7 +585,7 @@ export default function ElectricalBIMGuidePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     3
                   </span>
                   <div>

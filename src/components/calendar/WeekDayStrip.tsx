@@ -17,7 +17,7 @@ import { addDays, format, isSameDay, isToday, startOfWeek } from 'date-fns';
 import { cn } from '@/lib/utils';
 import type { CalendarEvent } from '@/types/calendar';
 import { eyebrowCn } from './calendarStyles';
-import { displayColour, eventsOnDay, isSyntheticEvent, occupiesTime, totalHours } from './eventUtils';
+import { displayColour, eventsOnDay, hoursOnDay, isSyntheticEvent, occupiesTime } from './eventUtils';
 
 interface WeekDayStripProps {
   /** Any day in the week to show. */
@@ -27,6 +27,8 @@ interface WeekDayStripProps {
   workingHoursEnd: number;
   /** Days worked (0 = Sunday). A day off dims as a whole chip. */
   workingDays?: number[];
+  /** The highlighted day, when it is not `currentDate` (the week list). */
+  selectedDate?: Date;
   onSelect: (date: Date) => void;
 }
 
@@ -36,6 +38,7 @@ const WeekDayStrip = ({
   workingHoursStart,
   workingHoursEnd,
   workingDays,
+  selectedDate,
   onSelect,
 }: WeekDayStripProps) => {
   const weekStart = startOfWeek(currentDate, { weekStartsOn: 1 });
@@ -48,7 +51,7 @@ const WeekDayStrip = ({
         const onDay = eventsOnDay(events, day).filter(
           (e) => !isSyntheticEvent(e) && occupiesTime(e)
         );
-        const hours = totalHours(onDay, dayHours);
+        const hours = hoursOnDay(onDay, day, workingHoursStart, workingHoursEnd);
         return {
           day,
           count: onDay.length,
@@ -56,14 +59,14 @@ const WeekDayStrip = ({
           colours: onDay.slice(0, 3).map((e) => displayColour(e)),
         };
       }),
-    [weekStart, events, dayHours]
+    [weekStart, events, dayHours, workingHoursStart, workingHoursEnd]
   );
 
   return (
     <div className="flex gap-1">
       {days.map(({ day, count, load, colours }) => {
         const today = isToday(day);
-        const selected = isSameDay(day, currentDate);
+        const selected = isSameDay(day, selectedDate ?? currentDate);
         const dayOff = workingDays ? !workingDays.includes(day.getDay()) : false;
         return (
           <button

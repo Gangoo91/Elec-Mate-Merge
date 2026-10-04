@@ -121,7 +121,7 @@ const faqs = [
   {
     question: 'What are the RCD trip time limits?',
     answer:
-      'Two different things get muddled here, so it is worth separating them. What BS 7671 requires you to verify: Amendment 4 deleted Table 3A of Appendix 3, and the notes to Regulations 643.7.1 and 643.8 now say that regardless of RCD type, effectiveness is deemed verified where the device disconnects within the stated time under an alternating current test at the rated residual operating current (IΔn). For a general non-delay type that is 300 ms maximum. For a delay Type S device, Regulation 643.7.1 gives a window of between 130 ms minimum and 500 ms maximum. That is the test, and that is the figure recorded on the certificate. What the product standards say about the device: BS EN 61008 (RCCBs) and BS EN 61009 (RCBOs) include a 40 ms limit at five times rated current for a general device. That is a device characteristic verified by the manufacturer, not an installation verification — the ½x and 5x tests are no longer part of the required sequence, though 5x remains useful when fault-finding a nuisance-tripping device.',
+      'Two different things get muddled here, so it is worth separating them. What BS 7671 requires you to verify: Amendment 2 (2022) deleted Table 3A of Appendix 3, and the notes to Regulations 643.7.1 and 643.8 now say that regardless of RCD type, effectiveness is deemed verified where the device disconnects within the stated time under an alternating current test at the rated residual operating current (IΔn). For a general non-delay type that is 300 ms maximum. For a delay Type S device, Regulation 643.7.1 gives a window of between 130 ms minimum and 500 ms maximum. That is the test, and that is the figure recorded on the certificate. What the product standards say about the device: BS EN 61008 (RCCBs) and BS EN 61009 (RCBOs) include a 40 ms limit at five times rated current for a general device. That is a device characteristic verified by the manufacturer, not an installation verification — the ½x and 5x tests are no longer part of the required sequence, though 5x remains useful when fault-finding a nuisance-tripping device.',
   },
 ];
 
@@ -160,7 +160,7 @@ const howToSteps = [
   },
   {
     name: 'Test 8: Functional testing, including RCD operation (Reg 643.10)',
-    text: 'Test all RCDs: integral test button first, then the instrument test. Under BS 7671:2018+A4:2026 that is a single alternating current test at IΔn, whatever the RCD type — a general non-delay device must operate within 300 ms; Regulation 643.7.1 gives 130 to 500 ms for a delay Type S. Amendment 4 deleted Table 3A of Appendix 3, so the ½x and 5x IΔn tests are no longer part of the required sequence. Then functionally test switchgear and controlgear assemblies, drives, controls and interlocks, emergency switching off and emergency stopping systems, and insulation monitoring. Where an AFDD is installed, verify its manual test facility per the manufacturers’ recommendations.',
+    text: 'Test all RCDs: integral test button first, then the instrument test. Under BS 7671:2018+A4:2026 that is a single alternating current test at IΔn, whatever the RCD type — a general non-delay device must operate within 300 ms; Regulation 643.7.1 gives 130 to 500 ms for a delay Type S. Amendment 2 (2022) deleted Table 3A of Appendix 3, so the ½x and 5x IΔn tests are no longer part of the required sequence. Then functionally test switchgear and controlgear assemblies, drives, controls and interlocks, emergency switching off and emergency stopping systems, and insulation monitoring. Where an AFDD is installed, verify its manual test facility per the manufacturers’ recommendations.',
   },
 ];
 
@@ -740,7 +740,7 @@ const sections = [
             </h3>
             <p className="mt-2 text-white text-sm leading-relaxed">
               The ½x, 1x and 5x routine is deeply ingrained, and plenty of instruments still default
-              to it. Amendment 4 deleted Table 3A of Appendix 3, and the notes to Regulations 643.7.1
+              to it. Amendment 2 (2022) deleted Table 3A of Appendix 3, and the notes to Regulations 643.7.1
               and 643.8 now verify an RCD with a single alternating current test at IΔn, whatever the
               device type. Running the old sequence is not dangerous — but recording a 5x result as
               the certified figure, or failing a device against a criterion BS 7671 no longer
@@ -887,7 +887,7 @@ export default function TestingSequenceGuidePage_v2() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Record test results digitally, validated automatically"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site testing and certification. Voice test entry, auto BS 7671 validation, board scanner, 70+ calculators. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site testing and certification. Voice test entry, auto BS 7671 validation, board scanner, 70+ calculators. 7-day free trial, cancel anytime."
     />
   );
 }

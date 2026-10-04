@@ -49,7 +49,7 @@ export default function MotorStartingCurrentCalculatorPage() {
       badgeIcon={Gauge}
       heroTitle={
         <>
-          <span className="text-yellow-400">Motor Starting Current Calculator</span> — DOL,
+          <span className="text-elec-yellow">Motor Starting Current Calculator</span> — DOL,
           Star-Delta, Soft Starter & VFD
         </>
       }
@@ -130,7 +130,7 @@ export default function MotorStartingCurrentCalculatorPage() {
                 <h3 className="font-bold text-white text-lg mb-3">DOL Starting Characteristics</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Starting current:</strong> 4.2–9 In for 2-pole squirrel-cage motors;
                       4.2–7 In (mean 6 In) for motors with more than 2 poles. A 4-pole motor with
@@ -138,21 +138,21 @@ export default function MotorStartingCurrentCalculatorPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Starting torque:</strong> 100-200% of full load torque. DOL produces
                       the highest starting torque of any starting method.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Starting duration:</strong> typically 2-10 seconds for most commercial
                       motors. Larger motors or high-inertia loads take longer.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>MCB type:</strong> Type C (5-10x trip) or Type D (10-20x trip) MCBs
                       are required to avoid nuisance tripping during DOL starting.
@@ -187,7 +187,7 @@ export default function MotorStartingCurrentCalculatorPage() {
                 </h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Starting current:</strong> approximately 2 to 2.7 times FLC (one-third
                       of DOL starting current). A motor with 50A FLC draws approximately 100-135A in
@@ -195,7 +195,7 @@ export default function MotorStartingCurrentCalculatorPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Starting torque:</strong> approximately 33% of full load torque
                       (one-third of DOL starting torque). This limits star-delta to low-torque
@@ -203,7 +203,7 @@ export default function MotorStartingCurrentCalculatorPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Transition current spike:</strong> when switching from star to delta,
                       there is a transient current spike that can be 10-14 times FLC for a fraction
@@ -211,7 +211,7 @@ export default function MotorStartingCurrentCalculatorPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Wiring requirement:</strong> the motor must have all six winding
                       terminals accessible (U1, V1, W1, U2, V2, W2). Six cables are needed between
@@ -244,14 +244,14 @@ export default function MotorStartingCurrentCalculatorPage() {
                 <h3 className="font-bold text-white text-lg mb-4">Soft Starter Characteristics</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Starting current:</strong> typically 2 to 4 times FLC, adjustable by
                       setting the initial voltage and ramp time. Much lower than DOL.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Starting torque:</strong> proportional to the square of the applied
                       voltage. At 50% voltage, torque is 25% of DOL torque. Adjustable via initial
@@ -259,7 +259,7 @@ export default function MotorStartingCurrentCalculatorPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Ramp time:</strong> adjustable from 1 to 60 seconds typically. Longer
                       ramp times give gentler starts but may cause the motor to overheat during
@@ -267,7 +267,7 @@ export default function MotorStartingCurrentCalculatorPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Soft stop:</strong> many soft starters also provide a soft stop
                       function, gradually reducing voltage to decelerate the motor — useful for
@@ -300,7 +300,7 @@ export default function MotorStartingCurrentCalculatorPage() {
                 <h3 className="font-bold text-white text-lg mb-3">VFD Starting Characteristics</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Starting current:</strong> typically 100-150% of FLC — essentially no
                       inrush current. The VFD ramps the frequency and voltage together, maintaining
@@ -308,14 +308,14 @@ export default function MotorStartingCurrentCalculatorPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Starting torque:</strong> up to 150% of full load torque available
                       from zero speed, making VFDs suitable for high-torque starting applications.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Speed control:</strong> provides continuous variable speed control
                       from 0 to 100% (and often above 100% in constant power mode), enabling energy
@@ -323,7 +323,7 @@ export default function MotorStartingCurrentCalculatorPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Harmonic distortion:</strong> VFDs draw non-sinusoidal current from
                       the supply, creating harmonic distortion. This must be considered for{' '}
@@ -371,7 +371,7 @@ export default function MotorStartingCurrentCalculatorPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Lighting flicker</strong> — visible flicker in lighting circuits,
                       especially noticeable with incandescent and halogen lamps. LED lamps may also
@@ -379,7 +379,7 @@ export default function MotorStartingCurrentCalculatorPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Equipment malfunction</strong> — sensitive electronic equipment
                       (computers, PLCs, control systems) may reset or malfunction if the voltage dip
@@ -387,14 +387,14 @@ export default function MotorStartingCurrentCalculatorPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Other motor stalling</strong> — motors already running on the same
                       supply may stall if the voltage drops below approximately 80% of nominal.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Contactor dropout</strong> — contactors may release if the voltage dip
                       causes the coil voltage to fall below the hold-in threshold.
@@ -423,7 +423,7 @@ export default function MotorStartingCurrentCalculatorPage() {
                   <AlertTriangle className="w-5 h-5 text-orange-400 shrink-0" />
                   Undervoltage Protection — Section 445 &amp; Reg 131.6.3
                 </h3>
-                <p className="text-white/90 text-sm">
+                <p className="text-white text-sm">
                   Motor circuits must incorporate undervoltage protection to prevent automatic
                   restart after a supply interruption. A motor that stops due to a supply dip or
                   momentary loss of voltage may restart unexpectedly when voltage recovers, creating
@@ -437,16 +437,16 @@ export default function MotorStartingCurrentCalculatorPage() {
               </div>
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
                 <h3 className="font-bold text-white text-lg mb-3 flex items-center gap-2">
-                  <Building2 className="w-5 h-5 text-yellow-400 shrink-0" />
+                  <Building2 className="w-5 h-5 text-elec-yellow shrink-0" />
                   Chapter 33 Compatibility — Design Obligation
                 </h3>
-                <p className="text-white/90 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   BS 7671 Chapter 33 requires the designer to ensure that equipment installed will
                   not have a detrimental effect on other equipment connected to the same
                   installation. Motor starting currents are a primary Chapter 33 concern. Key design
                   checks include:
                 </p>
-                <ul className="space-y-2 text-white/90 text-sm list-disc list-inside">
+                <ul className="space-y-2 text-white text-sm list-disc list-inside">
                   <li>
                     Voltage dip at the point of common coupling — assess whether the starting
                     current causes the supply voltage to dip below acceptable limits for sensitive
@@ -465,7 +465,7 @@ export default function MotorStartingCurrentCalculatorPage() {
                     assessed Chapter 33 design
                   </li>
                 </ul>
-                <p className="text-white/90 text-sm mt-3">
+                <p className="text-white text-sm mt-3">
                   Failing to assess starting current impact at design stage is one of the most
                   common motor installation mistakes. Specifying a soft starter or VFD to limit
                   starting current is the standard mitigation where Chapter 33 analysis shows DOL
@@ -623,7 +623,7 @@ export default function MotorStartingCurrentCalculatorPage() {
         },
       ]}
       ctaHeading="Motor Calculations in Seconds on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site calculations. DOL, star-delta, soft starter, and VFD starting current calculations plus 50+ other calculators. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site calculations. DOL, star-delta, soft starter, and VFD starting current calculations plus 50+ other calculators. 7-day free trial."
     />
   );
 }

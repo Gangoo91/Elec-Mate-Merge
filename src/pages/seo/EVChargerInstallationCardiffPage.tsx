@@ -189,7 +189,7 @@ const sections = [
           </h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Simple installation (modern detached/semi, garage)</strong> — £800 to
                 £1,000. Short cable run of 3 to 8 metres, spare consumer unit way, no earth upgrade
@@ -198,7 +198,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard installation (Victorian terrace, front parking)</strong> — £900 to
                 £1,100. Cable run of 8 to 15 metres, PME earth rod required, possible MCB addition.
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Complex installation (long cable run, board upgrade)</strong> — £1,100 to
                 £1,400. Consumer unit at the rear, parking at the front, cable run over 15 metres,
@@ -214,7 +214,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>22kW three-phase charger</strong> — £1,200 to £2,000 installed. Requires an
                 existing three-phase supply and G99 approval from SP Manweb. Suitable for properties
@@ -243,7 +243,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Welsh Government Electric Vehicle Charging Strategy</strong> — Wales has
                 published a national EV charging strategy targeting a comprehensive charging network
@@ -253,7 +253,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cardiff Council EV infrastructure</strong> — Cardiff Council has installed
                 on-street charging points across multiple residential areas through Transport for
@@ -262,7 +262,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Social housing and affordable homes</strong> — Welsh Government and
                 Registered Social Landlords (RSLs) are progressively installing EV charging
@@ -291,7 +291,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Who is eligible</strong> — flat owners and tenants across the whole UK
                 including Wales. You must own or have a confirmed order for an eligible plug-in
@@ -299,7 +299,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>How much</strong> — up to £350 per chargepoint (75% of installation cost,
                 capped at £350). For Cardiff flat tenants, where installation costs are typically
@@ -307,7 +307,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>How to claim</strong> — your OZEV-approved installer applies on your behalf.
                 They deduct the grant from the invoice you pay. Search for OZEV-approved installers
@@ -316,7 +316,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Workplace Charging Scheme</strong> — Cardiff businesses can claim up to £350
                 per socket (maximum 40 sockets) for workplace EV charger installation. Available to
@@ -344,7 +344,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated final circuit (Regulation 722.533.101)</strong> — a dedicated 32A
                 circuit from the consumer unit. Older Cardiff consumer units may need a spare way or
@@ -352,7 +352,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection (Regulation 722.531.3.101)</strong> — appropriate RCD
                 protection. Modern smart chargers typically include integrated DC fault detection,
@@ -360,7 +360,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smart charger compliance</strong> — the Electric Vehicles (Smart Charge
                 Points) Regulations 2021 applies in Wales as well as England. All new home EV
@@ -368,7 +368,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable sizing</strong> — use{' '}
                 <SEOInternalLink href="/tools/cable-sizing-calculator">
@@ -437,7 +437,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98 notification (7kW single-phase)</strong> — submit online via the SP
                 Manweb portal. This is a notification, not an application — the installer proceeds
@@ -446,7 +446,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G99 application (22kW three-phase)</strong> — prior approval required from
                 SP Manweb before installation. Allow 4 to 10 weeks for assessment. Required for
@@ -454,7 +454,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Installer responsibility</strong> — the electrician submits the DNO
                 notification on behalf of the homeowner. Confirm this is included in the quoted
@@ -482,7 +482,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Pricing Cardiff EV Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -515,7 +515,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify Cardiff EV charger installations"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification."
           icon={Car}
         />
       </>
@@ -541,7 +541,7 @@ export default function EVChargerInstallationCardiffPage() {
       heroTitle={
         <>
           EV Charger Installation Cardiff:{' '}
-          <span className="text-yellow-400">Costs, Welsh Grants, and Compliance 2026</span>
+          <span className="text-elec-yellow">Costs, Welsh Grants, and Compliance 2026</span>
         </>
       }
       heroSubtitle="Home EV charger installation in Cardiff costs £800 to £1,200 for a 7kW wallbox. Covers Welsh Government EV grants, OZEV grant up to £350, SP Manweb (SP Energy Networks) DNO notification, PME earthing requirements, and Welsh Building Regulations compliance."
@@ -552,7 +552,7 @@ export default function EVChargerInstallationCardiffPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in Cardiff"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify EV Charger Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

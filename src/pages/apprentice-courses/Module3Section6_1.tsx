@@ -14,7 +14,7 @@ const DESCRIPTION =
 const quizQuestions = [
   {
     id: 1,
-    question: "What's the maximum horizontal support distance for standard PVC sheathed cable?",
+    question: 'What is the maximum horizontal support spacing for a PVC-sheathed cable 9–15 mm across?',
     options: [
       '250 mm',
       '300 mm',
@@ -23,7 +23,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'Non-armoured PVC insulated and sheathed cables have a maximum horizontal support distance of 300mm to prevent excessive sagging.',
+      'On-Site Guide Table D1 gives 300 mm horizontal and 400 mm vertical for non-armoured sheathed cable 9–15 mm across. 250 mm applies under 9 mm; 400 mm is the vertical figure.',
   },
   {
     id: 2,
@@ -80,7 +80,7 @@ const quizQuestions = [
   },
   {
     id: 6,
-    question: 'What is the maximum vertical support distance for SWA cable?',
+    question: 'What is the maximum vertical support spacing for an armoured cable 20–40 mm across?',
     options: [
       '400 mm',
       '500 mm',
@@ -89,15 +89,15 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'SWA cables can be supported at 600mm intervals vertically, taking advantage of gravity to reduce sagging compared to horizontal runs.',
+      'On-Site Guide Table D1 gives 450 mm horizontal and 600 mm vertical for armoured cable 20–40 mm across. Smaller armoured cables are closer: 450 mm vertical for 9–15 mm, 550 mm for 15–20 mm.',
   },
   {
     id: 7,
     question: 'Give one hazard caused by inadequate cable supports.',
     options: [
-      'Improved cable flexibility',
-      'Lower material costs',
-      'Reduced installation time',
+      'Higher voltage drop',
+      'Lower insulation resistance',
+      'A reduced current rating',
       'Sagging cables creating trip hazards',
     ],
     correctAnswer: 3,
@@ -109,9 +109,9 @@ const quizQuestions = [
     question: 'Why is manufacturer guidance important for support spacing?',
     options: [
       'To ensure cable properties are properly accommodated',
-      'To increase installation costs',
-      "It's legally required in all cases",
-      'To make installation more complex',
+      'Because BS 7671 gives no spacing guidance',
+      'Because it always allows wider spacing than the tables',
+      "To keep the manufacturer's warranty only",
     ],
     correctAnswer: 0,
     explanation:
@@ -138,9 +138,9 @@ const quickCheckQuestions = [
     id: 'escape-routes',
     question: 'Why are non-combustible supports mandatory in escape routes?',
     options: [
-      'They look more professional',
-      "They're cheaper to install",
-      "They're easier to remove",
+      'So the cables keep their current rating',
+      'So the circuits stay energised in a fire',
+      'So the supports can be removed for maintenance',
       'They prevent cable collapse during fires',
     ],
     correctIndex: 3,

@@ -47,8 +47,8 @@ const quickCheckQuestions = [
     question: 'Why should PPE be inspected before each use?',
     options: [
       'To check for damage that could compromise protection',
-      'To make it look clean',
-      'To count inventory',
+      'To check it is the correct colour for the site',
+      'To record its serial number',
     ],
     correctIndex: 0,
     explanation:
@@ -58,7 +58,7 @@ const quickCheckQuestions = [
     id: 'multi-hazard',
     question: 'Why might multiple types of PPE be needed for one task?',
     options: [
-      'To look more professional',
+      'Because site rules require at least three items',
       'Tasks often present multiple hazards simultaneously',
       'To meet minimum requirements',
     ],

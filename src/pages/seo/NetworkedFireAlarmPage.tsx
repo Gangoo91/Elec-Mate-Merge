@@ -45,7 +45,7 @@ export default function NetworkedFireAlarmPage() {
         <>
           Networked Fire Alarm Systems
           <br />
-          <span className="text-yellow-400">Addressable vs Conventional Explained</span>
+          <span className="text-elec-yellow">Addressable vs Conventional Explained</span>
         </>
       }
       heroSubtitle="Fire alarm systems range from simple conventional zone panels to sophisticated analogue addressable networks. Understanding the differences — and when to specify each type — is essential for electricians working on commercial installations, HMOs, and larger residential developments. This guide covers every system type, BS 5839 categories, and practical wiring requirements."
@@ -72,7 +72,7 @@ export default function NetworkedFireAlarmPage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Category M — Manual System</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -85,7 +85,7 @@ export default function NetworkedFireAlarmPage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <ShieldCheck className="w-5 h-5 text-yellow-400" />
+                    <ShieldCheck className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Category L — Life Protection</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -104,7 +104,7 @@ export default function NetworkedFireAlarmPage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Building className="w-5 h-5 text-yellow-400" />
+                    <Building className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">
                       Category P — Property Protection
                     </h3>
@@ -143,36 +143,36 @@ export default function NetworkedFireAlarmPage() {
                 <h3 className="font-bold text-white text-lg mb-4">How Conventional Zones Work</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Two-wire circuit per zone</strong> — Each
+                      <strong className="text-elec-yellow">Two-wire circuit per zone</strong> — Each
                       zone uses a pair of conductors running from the panel to the first device,
                       then device to device in a radial or T-spur arrangement. An end-of-line
                       resistor terminates the circuit.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Zone indicator on panel</strong> — The
+                      <strong className="text-elec-yellow">Zone indicator on panel</strong> — The
                       panel has individual zone LEDs. When a detector operates, the corresponding
                       zone LED illuminates and the sounders activate. The panel cannot tell which
                       detector in the zone has operated.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Zone planning</strong> — BS 5839-1
+                      <strong className="text-elec-yellow">Zone planning</strong> — BS 5839-1
                       requires each zone to cover no more than 2,000m² of floor area and be confined
                       to a single floor. Zones should be planned so that the location of a fire can
                       be quickly identified by the responding person.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Maximum devices per zone</strong> —
+                      <strong className="text-elec-yellow">Maximum devices per zone</strong> —
                       Typically 20 to 30 devices per zone, depending on the panel manufacturer. Each
                       device draws a small current from the zone circuit.
                     </span>
@@ -205,7 +205,7 @@ export default function NetworkedFireAlarmPage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Radio className="w-5 h-5 text-yellow-400" />
+                    <Radio className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Loop Wiring</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -220,7 +220,7 @@ export default function NetworkedFireAlarmPage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Cpu className="w-5 h-5 text-yellow-400" />
+                    <Cpu className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Device Identification</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -235,7 +235,7 @@ export default function NetworkedFireAlarmPage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Cable className="w-5 h-5 text-yellow-400" />
+                    <Cable className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Reduced Cabling</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -273,18 +273,18 @@ export default function NetworkedFireAlarmPage() {
                 </h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Pre-alarm warnings</strong> — The panel
+                      <strong className="text-elec-yellow">Pre-alarm warnings</strong> — The panel
                       can issue pre-alarm warnings when readings approach the alarm threshold,
                       giving staff time to investigate before a full alarm activates. This reduces
                       false alarms and unnecessary evacuations.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Drift compensation</strong> — As detectors
+                      <strong className="text-elec-yellow">Drift compensation</strong> — As detectors
                       age or accumulate contamination, their baseline readings change. Analogue
                       addressable panels automatically adjust for this drift, maintaining consistent
                       sensitivity over the detector's life. This significantly reduces false alarms
@@ -292,9 +292,9 @@ export default function NetworkedFireAlarmPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Individual sensitivity settings</strong> —
+                      <strong className="text-elec-yellow">Individual sensitivity settings</strong> —
                       Each detector can have its sensitivity adjusted independently. A detector near
                       a kitchen can be set to a higher alarm threshold to avoid cooking-related
                       false alarms, while one in a server room can be set to maximum sensitivity for
@@ -302,9 +302,9 @@ export default function NetworkedFireAlarmPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Predictive maintenance</strong> — The
+                      <strong className="text-elec-yellow">Predictive maintenance</strong> — The
                       panel monitors each detector's readings over time and can flag devices that
                       need cleaning or replacement before they fail or cause false alarms. This
                       makes maintenance planning much more efficient.
@@ -334,7 +334,7 @@ export default function NetworkedFireAlarmPage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Wrench className="w-5 h-5 text-yellow-400" />
+                    <Wrench className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Phased Upgrades</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -349,7 +349,7 @@ export default function NetworkedFireAlarmPage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Building className="w-5 h-5 text-yellow-400" />
+                    <Building className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Mixed-Use Buildings</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -362,7 +362,7 @@ export default function NetworkedFireAlarmPage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Zap className="w-5 h-5 text-yellow-400" />
+                    <Zap className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Budget Constraints</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -395,7 +395,7 @@ export default function NetworkedFireAlarmPage() {
                         Up to 4-6 zones, single floor or small multi-storey
                       </p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-sm text-right">
+                    <span className="font-bold text-elec-yellow text-sm text-right">
                       Conventional
                     </span>
                   </div>
@@ -408,7 +408,7 @@ export default function NetworkedFireAlarmPage() {
                         10-50 devices, multi-storey, multiple occupancy
                       </p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-sm text-right">
+                    <span className="font-bold text-elec-yellow text-sm text-right">
                       Addressable
                     </span>
                   </div>
@@ -419,7 +419,7 @@ export default function NetworkedFireAlarmPage() {
                         50+ devices, complex layout, false alarm critical
                       </p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-sm text-right">
+                    <span className="font-bold text-elec-yellow text-sm text-right">
                       Analogue Addressable
                     </span>
                   </div>
@@ -430,7 +430,7 @@ export default function NetworkedFireAlarmPage() {
                         Budget for partial upgrade, mixed old/new areas
                       </p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-sm text-right">Hybrid</span>
+                    <span className="font-bold text-elec-yellow text-sm text-right">Hybrid</span>
                   </div>
                 </div>
               </div>
@@ -459,7 +459,7 @@ export default function NetworkedFireAlarmPage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Cable className="w-5 h-5 text-yellow-400" />
+                    <Cable className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Fire Resistant Cable</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -474,7 +474,7 @@ export default function NetworkedFireAlarmPage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <ShieldCheck className="w-5 h-5 text-yellow-400" />
+                    <ShieldCheck className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Cable Segregation</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -488,7 +488,7 @@ export default function NetworkedFireAlarmPage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Radio className="w-5 h-5 text-yellow-400" />
+                    <Radio className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">
                       Loop Wiring for Addressable Systems
                     </h3>

@@ -188,7 +188,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Camera className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Photographic Evidence</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -268,7 +268,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Camera className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Take before, during, and after photos</strong> — the "before" shows the
                 existing condition or the starting point. The "during" shows your work in progress —
@@ -277,7 +277,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Camera className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Include context</strong> — a close-up of a termination is useful, but also
                 take a wider shot showing where it is in the installation. Context helps your
@@ -285,7 +285,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Camera className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Write a detailed description</strong> — for each photo, write 100 to 200
                 words explaining: what the photo shows, what work you carried out, what tools and
@@ -295,7 +295,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Camera className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Respect client privacy</strong> — do not include photos that identify the
                 client's property address, personal belongings, or family members. Focus on the
@@ -332,7 +332,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What was observed</strong> — a specific description of the work the
                 apprentice carried out. "Installed a new consumer unit" is too vague. "Installed a
@@ -342,7 +342,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Level of competence demonstrated</strong> — did the apprentice work
                 independently with minimal guidance, or did they require significant direction? Both
@@ -351,7 +351,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Health and safety awareness</strong> — did the apprentice follow safe
                 working practices? Did they carry out a safe isolation procedure? Did they use
@@ -359,7 +359,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Signature, date, and witness details</strong> — the witness must sign the
                 testimony, date it, and provide their name, qualifications, and relationship to the
@@ -392,28 +392,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Safe isolation</strong> — proving and locking off supplies, using a voltage
                 indicator proved before and after isolation.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable installation</strong> — clipping, trunking, conduit bending, and
                 containment systems. Surface and concealed installation methods.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Terminations</strong> — stripping, terminating, and connecting cables at
                 consumer units, distribution boards, accessories, and equipment.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing</strong> —{' '}
                 <SEOInternalLink href="/guides/testing-sequence-guide">
@@ -424,7 +424,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inspection</strong> — visual inspection of installations, identifying
                 defects, and applying{' '}
@@ -435,7 +435,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fault finding</strong> — systematic approach to diagnosing and rectifying
                 faults using test instruments and logical reasoning.
@@ -465,7 +465,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Daily habit</strong> — photograph your work at the end of every job or at
                 the end of each day. It takes 30 seconds. If you do not do it now, you will never
@@ -473,7 +473,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Weekly review</strong> — spend 15-20 minutes at the end of each week writing
                 descriptions for your photos, drafting a reflective account of the most interesting
@@ -481,7 +481,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Monthly testimony</strong> — ask your supervisor for a witness testimony
                 covering the key work you carried out that month. Provide them with a list of jobs
@@ -489,7 +489,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Quarterly gap analysis</strong> — map your existing evidence against the KSB
                 framework and identify any gaps. Discuss these gaps with your supervisor and
@@ -576,7 +576,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Provide varied work experience</strong> — ensure your apprentice gets
                 exposure to all areas of the apprenticeship standard: installation, testing,
@@ -585,7 +585,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Write regular witness testimonies</strong> — commit to writing at least one
                 testimony per month. Be specific about what you observed and the level of competence
@@ -593,14 +593,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sign off skills</strong> — when the apprentice demonstrates competence in a
                 skill area, sign it off promptly. Do not wait for end-of-year reviews.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Allow time for evidence recording</strong> — give the apprentice 15-20
                 minutes at the end of each week to update their portfolio. This is not wasted time —
@@ -646,7 +646,7 @@ export default function OJTEvidenceGuidePage() {
       heroTitle={
         <>
           OJT Evidence Guide:{' '}
-          <span className="text-yellow-400">Building Your Apprentice Portfolio</span>
+          <span className="text-elec-yellow">Building Your Apprentice Portfolio</span>
         </>
       }
       heroSubtitle="On-the-job training evidence is a mandatory requirement for every electrical apprenticeship. This guide covers exactly what evidence you need, how to document it properly, and how to build a portfolio that gets you through the EPA gateway — with practical tips from day one to end-point assessment."

@@ -43,7 +43,7 @@ export default function EmergencyElectricalRepairsPage() {
       heroTitle={
         <>
           Emergency Electrical Repairs:{' '}
-          <span className="text-yellow-400">What Counts and What It Costs</span>
+          <span className="text-elec-yellow">What Counts and What It Costs</span>
         </>
       }
       heroSubtitle="Not every electrical problem is an emergency, but the ones that are need immediate attention. This guide explains what qualifies as an electrical emergency in the UK, typical call-out charges for emergency electricians, the most common emergencies and how they are resolved, and the difference between a temporary make-safe and a permanent repair."
@@ -110,30 +110,30 @@ export default function EmergencyElectricalRepairsPage() {
                 </div>
                 <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
                   <div className="flex items-center gap-2 mb-3">
-                    <Clock className="w-5 h-5 text-yellow-400" />
+                    <Clock className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Urgent but Not Emergency</h3>
                   </div>
                   <ul className="space-y-2 text-white text-sm leading-relaxed">
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>
                         RCD tripping intermittently (can often be managed by isolating the circuit)
                       </span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>
                         Single circuit not working (lights or sockets on one circuit only)
                       </span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>
                         Flickering lights (annoying but rarely dangerous in the short term)
                       </span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Broken socket or switch (can wait if the circuit is isolated)</span>
                     </li>
                   </ul>
@@ -160,7 +160,7 @@ export default function EmergencyElectricalRepairsPage() {
               <div className="space-y-4 mt-6">
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-center gap-2 mb-3">
-                    <Zap className="w-5 h-5 text-yellow-400" />
+                    <Zap className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Total Loss of Power</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -174,7 +174,7 @@ export default function EmergencyElectricalRepairsPage() {
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-center gap-2 mb-3">
-                    <Flame className="w-5 h-5 text-yellow-400" />
+                    <Flame className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">
                       Burning Smell from Consumer Unit
                     </h3>
@@ -193,7 +193,7 @@ export default function EmergencyElectricalRepairsPage() {
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-center gap-2 mb-3">
-                    <ShieldCheck className="w-5 h-5 text-yellow-400" />
+                    <ShieldCheck className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">RCD Keeps Tripping</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -210,7 +210,7 @@ export default function EmergencyElectricalRepairsPage() {
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-center gap-2 mb-3">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Water and Electricity</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -308,23 +308,23 @@ export default function EmergencyElectricalRepairsPage() {
                   <h3 className="font-bold text-white text-lg mb-3">Temporary Make-Safe</h3>
                   <ul className="space-y-2 text-white text-sm leading-relaxed">
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Isolate the faulty circuit at the consumer unit</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Restore power to unaffected circuits</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Disconnect and make safe damaged equipment</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Label isolated circuits with clear warnings</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Advise the customer on limitations and next steps</span>
                     </li>
                   </ul>
@@ -333,23 +333,23 @@ export default function EmergencyElectricalRepairsPage() {
                   <h3 className="font-bold text-white text-lg mb-3">Permanent Repair</h3>
                   <ul className="space-y-2 text-white text-sm leading-relaxed">
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Full diagnosis and fault finding</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Replace damaged components with correct specification parts</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Full testing to BS 7671 requirements</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Issue appropriate certificate (EIC or minor works)</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Building control notification if notifiable work</span>
                     </li>
                   </ul>
@@ -378,18 +378,18 @@ export default function EmergencyElectricalRepairsPage() {
                 <h3 className="font-bold text-white text-lg mb-4">Who to Call</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <Phone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Phone className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Call 105 (DNO)</strong> — for power cuts
+                      <strong className="text-elec-yellow">Call 105 (DNO)</strong> — for power cuts
                       affecting multiple properties, damaged overhead lines, problems with the
                       service cable, meter, or service head (cut-out), and supply voltage issues.
                       The DNO attends free of charge for faults on their equipment.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Call an Electrician</strong> — for faults
+                      <strong className="text-elec-yellow">Call an Electrician</strong> — for faults
                       downstream of the meter (consumer unit, circuits, accessories, fixed
                       equipment), tripping RCDs or MCBs, burning smells from internal wiring, faulty
                       sockets or switches, and any work on your own installation.
@@ -398,7 +398,7 @@ export default function EmergencyElectricalRepairsPage() {
                   <li className="flex items-start gap-3">
                     <Phone className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Call 999</strong> — if there is a fire,
+                      <strong className="text-elec-yellow">Call 999</strong> — if there is a fire,
                       someone has received a serious electric shock and is unconscious or injured,
                       or a power line has come down and is in contact with the ground or a
                       structure. Do not approach fallen power lines under any circumstances.

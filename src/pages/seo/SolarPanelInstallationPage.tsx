@@ -48,7 +48,7 @@ export default function SolarPanelInstallationPage() {
         <>
           Solar Panel Installation UK
           <br />
-          <span className="text-yellow-400">Guide, Requirements & Costs 2026</span>
+          <span className="text-elec-yellow">Guide, Requirements & Costs 2026</span>
         </>
       }
       heroSubtitle="Solar PV is one of the fastest-growing areas of domestic electrical work in the UK. This guide covers everything an electrician needs to know — system sizing, MCS certification, DNO notification, earthing considerations, inverter selection, battery storage, costs, and the certificates required to commission a compliant installation."
@@ -117,33 +117,33 @@ export default function SolarPanelInstallationPage() {
                 <h3 className="font-bold text-white text-lg mb-4">MCS Certification Checklist</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Product certification</strong> — All
+                      <strong className="text-elec-yellow">Product certification</strong> — All
                       panels and inverters must be MCS-listed products. Check the MCS product
                       directory before specifying equipment.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Installer certification</strong> — The
+                      <strong className="text-elec-yellow">Installer certification</strong> — The
                       installing company must hold a current MCS certificate for PV installations.
                       Individual operatives must be qualified and competent.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Performance estimate</strong> — An
+                      <strong className="text-elec-yellow">Performance estimate</strong> — An
                       MCS-compliant performance estimate (predicted annual generation in kWh) must
                       be provided to the customer before installation.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Commissioning documentation</strong> —
+                      <strong className="text-elec-yellow">Commissioning documentation</strong> —
                       Full commissioning records including test results, system specification,
                       photographs, and the MCS installation certificate.
                     </span>
@@ -175,7 +175,7 @@ export default function SolarPanelInstallationPage() {
               </p>
               <div className="grid sm:grid-cols-2 gap-4 my-6">
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-3">
+                  <h3 className="font-bold text-elec-yellow text-lg mb-3">
                     G98 (Up to 3.68 kW Single Phase)
                   </h3>
                   <p className="text-white text-sm leading-relaxed mb-3">
@@ -336,7 +336,7 @@ export default function SolarPanelInstallationPage() {
                   </p>
                 </div>
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-3">Microinverters</h3>
+                  <h3 className="font-bold text-elec-yellow text-lg mb-3">Microinverters</h3>
                   <p className="text-white text-sm leading-relaxed mb-3">
                     Microinverters are small inverters mounted on the back of each individual panel.
                     Each panel operates independently, converting DC to AC at the panel level. The
@@ -455,9 +455,9 @@ export default function SolarPanelInstallationPage() {
                 <h3 className="font-bold text-white text-lg mb-4">Roof Assessment Checklist</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Structural suitability</strong> — The roof
+                      <strong className="text-elec-yellow">Structural suitability</strong> — The roof
                       must be able to support the additional weight of the panels and mounting
                       system (typically 12-15 kg per panel). Most modern roofs can handle this, but
                       older properties or lightweight roof structures may need a structural
@@ -465,35 +465,35 @@ export default function SolarPanelInstallationPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Orientation and pitch</strong> —
+                      <strong className="text-elec-yellow">Orientation and pitch</strong> —
                       South-facing at 30-40 degrees is optimal, but east-west splits and pitches
                       from 15-50 degrees are all viable. North-facing roofs are generally not
                       suitable.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Shading</strong> — Trees, chimneys,
+                      <strong className="text-elec-yellow">Shading</strong> — Trees, chimneys,
                       neighbouring buildings, and dormer windows can all cause shading. Even partial
                       shading on one panel can significantly reduce string output (unless
                       microinverters or optimisers are used).
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Available area</strong> — Each panel
+                      <strong className="text-elec-yellow">Available area</strong> — Each panel
                       occupies approximately 1.7-2.0 m². A 4 kW system (10 panels) requires
                       approximately 17-20 m² of unobstructed roof area.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Cable route</strong> — Plan the route for
+                      <strong className="text-elec-yellow">Cable route</strong> — Plan the route for
                       DC cables from the roof to the inverter location. Cables must be UV-resistant
                       where exposed, protected from mechanical damage, and routed to minimise length
                       and voltage drop.
@@ -522,7 +522,7 @@ export default function SolarPanelInstallationPage() {
               </p>
               <div className="grid sm:grid-cols-2 gap-4 my-6">
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-3">MCS Certificate</h3>
+                  <h3 className="font-bold text-elec-yellow text-lg mb-3">MCS Certificate</h3>
                   <p className="text-white text-sm leading-relaxed">
                     Issued by the MCS-certified installer upon completion. Documents the system
                     specification, performance estimate, and confirms compliance with MCS standards.
@@ -531,7 +531,7 @@ export default function SolarPanelInstallationPage() {
                   </p>
                 </div>
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-3">
+                  <h3 className="font-bold text-elec-yellow text-lg mb-3">
                     Electrical Installation Certificate (EIC)
                   </h3>
                   <p className="text-white text-sm leading-relaxed">
@@ -588,28 +588,28 @@ export default function SolarPanelInstallationPage() {
                         Suitable for smaller properties or lower consumption
                       </p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-lg">£4,000 - £6,000</span>
+                    <span className="font-bold text-elec-yellow text-lg">£4,000 - £6,000</span>
                   </div>
                   <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                     <div>
                       <h4 className="font-bold text-white">4 kW system (10 panels)</h4>
                       <p className="text-white text-sm">Most common domestic size</p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-lg">£5,000 - £8,000</span>
+                    <span className="font-bold text-elec-yellow text-lg">£5,000 - £8,000</span>
                   </div>
                   <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
                     <div>
                       <h4 className="font-bold text-white">6 kW system (15 panels)</h4>
                       <p className="text-white text-sm">Larger properties or higher consumption</p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-lg">£7,000 - £10,000</span>
+                    <span className="font-bold text-elec-yellow text-lg">£7,000 - £10,000</span>
                   </div>
                   <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
                     <div>
                       <h4 className="font-bold text-white">Battery storage (add-on)</h4>
                       <p className="text-white text-sm">5-13 kWh capacity</p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-lg">£2,500 - £6,000</span>
+                    <span className="font-bold text-elec-yellow text-lg">£2,500 - £6,000</span>
                   </div>
                 </div>
               </div>

@@ -212,21 +212,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New connections</strong> — apply through NGED's connections portal for new
                 supplies, service upgrades, and temporary construction supplies.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98/G99</strong> — solar PV and battery storage notifications. G98 for
                 systems up to 16A per phase online. G99 pre-approval for larger systems.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing</strong> — most Gloucester properties are supplied on TN-C-S (PME)
                 systems. Older city centre properties may have TN-S from original lead service
@@ -290,28 +290,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacements</strong> — high demand on Gloucester's older
                 housing stock. Upgrading to modern RCD or RCBO consumer units.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full rewires</strong> — Victorian terraces in Kingsholm and Barton. Allow
                 extra time for asbestos assessment in pre-1985 properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rental property EICRs</strong> — large and growing demand from Gloucester's
                 rental sector. Five-yearly obligation under the 2020 Regulations.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Docks specialist work</strong> — high-specification electrical fit-out in
                 converted apartments and commercial premises in the regenerated docks area.
@@ -390,7 +390,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EIC and EICR Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -420,7 +420,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Gloucester electricians"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -448,7 +448,7 @@ export default function ElectricianGloucesterPage() {
       heroTitle={
         <>
           Electrician in Gloucester:{' '}
-          <span className="text-yellow-400">Local Electricians 2026</span>
+          <span className="text-elec-yellow">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Gloucester's Victorian terraces, docks regeneration, and large rental sector create diverse demand for rewires, EICRs, and specialist electrical work. Find NICEIC and NAPIT registered electricians in Gloucester and Gloucestershire."
@@ -459,7 +459,7 @@ export default function ElectricianGloucesterPage() {
       faqHeading="Frequently Asked Questions About Electricians in Gloucester"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Gloucester Electricians"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for electricians working across Gloucestershire and the South West. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for electricians working across Gloucestershire and the South West. 7-day free trial."
     />
   );
 }

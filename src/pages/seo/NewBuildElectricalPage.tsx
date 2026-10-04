@@ -179,7 +179,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part P (Electrical Safety)</strong> — all electrical work in dwellings must
                 comply with{' '}
@@ -189,7 +189,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part L (Energy Efficiency)</strong> — requires minimum energy efficiency for
                 lighting (at least 75% efficacious lamps), affects SAP calculations, and influences
@@ -197,7 +197,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part B (Fire Safety)</strong> — specifies smoke and heat detection
                 requirements, fire alarm systems, emergency lighting in some dwellings, and
@@ -205,7 +205,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part M (Accessibility)</strong> — sets minimum socket heights (450mm),
                 maximum switch heights (1200mm), and requires accessible provisions for disabled
@@ -213,7 +213,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part S (EV Charging)</strong> — from June 2022, requires at least one
                 functional EV charge point in every new build with associated parking.
@@ -275,28 +275,28 @@ const sections = [
           <h4 className="font-bold text-white mb-3">Lighting Requirements for SAP Compliance</h4>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 At least 75% of fixed lighting outlets must use efficacious lamps (LED or CFL with
                 efficacy of 45 lumens per watt or better).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 In practice, most new builds now specify 100% LED lighting to maximise the SAP score
                 and meet customer expectations.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 External lighting (porch, security, garden) should also be LED and ideally
                 controlled by daylight sensors or PIR detectors to minimise energy waste.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Low-energy lighting reduces heat gain, which affects the SAP heating calculation —
                 another reason to use LED throughout.
@@ -327,7 +327,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minimum specification</strong> — the charge point must be at least 7kW (Mode
                 3, Type 2 connector), untethered (socket type), and smart (capable of receiving and
@@ -335,7 +335,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable sizing</strong> — a 7kW single phase charge point draws approximately
                 32A. The circuit typically requires a 6.0mm2 or 10.0mm2 cable (depending on cable
@@ -347,7 +347,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection</strong> — the EV charger circuit requires 30mA RCD
                 protection. For some chargers with DC fault detection built in, a Type A RCD is
@@ -355,7 +355,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Location</strong> — the charge point must be accessible to the parking
                 space, weatherproof (IP rated for outdoor use), and positioned so that the charging
@@ -507,7 +507,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CircuitBoard className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Future-proofing</strong> — allow at least 20% spare ways in the consumer
                 unit for future circuits. Consider running data cabling (Cat6) even if not
@@ -516,7 +516,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CircuitBoard className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>
                   <SEOInternalLink href="/tools/max-demand-calculator">
@@ -532,7 +532,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CircuitBoard className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Kitchen circuits</strong> — dedicate separate circuits for the cooker, hob,
                 dishwasher, washing machine, and worktop sockets. See our{' '}
@@ -543,7 +543,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CircuitBoard className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Outdoor provision</strong> — external sockets, external lighting, garden
                 lighting circuits, and security lighting. All outdoor circuits require 30mA RCD
@@ -580,7 +580,7 @@ export default function NewBuildElectricalPage() {
       heroTitle={
         <>
           New Build Electrical Installation:{' '}
-          <span className="text-yellow-400">Every Requirement You Must Meet</span>
+          <span className="text-elec-yellow">Every Requirement You Must Meet</span>
         </>
       }
       heroSubtitle="New build electrical installations must comply with BS 7671, Building Regulations Parts P, L, B, M, and S, EV charging regulations, smoke detector requirements, and SAP calculations. This guide covers every requirement in one place."
@@ -591,7 +591,7 @@ export default function NewBuildElectricalPage() {
       faqHeading="Frequently Asked Questions About New Build Electrical"
       relatedPages={relatedPages}
       ctaHeading="Design New Build Installations Faster"
-      ctaSubheading="Elec-Mate's AI circuit designer, cable sizing calculator, and EIC certificate app help you design, install, and certify new builds efficiently. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's AI circuit designer, cable sizing calculator, and EIC certificate app help you design, install, and certify new builds efficiently. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

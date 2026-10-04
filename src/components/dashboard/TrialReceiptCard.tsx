@@ -169,7 +169,7 @@ const TrialReceiptCard = () => {
             to={
               profile?.role === 'apprentice'
                 ? '/study-centre/apprentice'
-                : '/electrician/inspection-testing/new'
+                : '/electrician/inspection-testing'
             }
             className="inline-flex h-11 flex-shrink-0 touch-manipulation items-center justify-center gap-2 rounded-2xl bg-yellow-500 px-5 text-[14px] font-semibold text-black transition-colors hover:bg-yellow-400"
           >

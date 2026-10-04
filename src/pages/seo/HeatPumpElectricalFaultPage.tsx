@@ -190,7 +190,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inverter-driven vs. fixed-speed compressors</strong> — most modern heat
                 pumps use variable-speed (inverter-driven) compressors that have a soft-start
@@ -201,7 +201,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Equalisation period</strong> — after shutdown, the refrigerant pressure
                 difference across the compressor needs time to equalise before a restart is
@@ -212,7 +212,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Failed inverter drive</strong> — in inverter-driven heat pumps, the inverter
                 PCB converts the AC supply to DC and then synthesises variable-frequency AC for the
@@ -240,7 +240,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>High supply impedance</strong> — older rural properties with long service
                 cable runs from the DNO transformer can have high supply impedance. Under the heat
@@ -250,7 +250,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Corroded or undersized consumer unit connections</strong> — the meter tail
                 connections, main switch, and circuit breakers in an older consumer unit may have
@@ -261,7 +261,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Neutral fault</strong> — a high-resistance or broken neutral connection
                 anywhere in the supply chain causes voltage asymmetry across the installation and
@@ -342,7 +342,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reversed live and neutral</strong> — reversing L and N at the heat pump
                 connection terminals can damage the control electronics and inverter drive. Some
@@ -351,7 +351,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Undersized cable for the route length</strong> — cable routes that pass
                 through insulation or are buried in thermal insulation dramatically reduce the
@@ -361,7 +361,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Poor earth connection</strong> — the heat pump enclosure must be connected
                 to the protective earthing conductor. A missing or high-resistance earth connection
@@ -433,7 +433,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Thermometer className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Minor Works and Installation Certificates
@@ -468,7 +468,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certificate heat pump installations with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate to certificate heat pump supply circuits, complete EICRs…"
+          description="Join 2,100+ UK electricians using Elec-Mate to certificate heat pump supply circuits, complete EICRs…"
           icon={Thermometer}
         />
       </>
@@ -494,7 +494,7 @@ export default function HeatPumpElectricalFaultPage() {
       heroTitle={
         <>
           Heat Pump Electrical Fault:{' '}
-          <span className="text-yellow-400">Wiring Problems and Fault Finding</span>
+          <span className="text-elec-yellow">Wiring Problems and Fault Finding</span>
         </>
       }
       heroSubtitle="Your heat pump has stopped working or is showing an electrical fault. This guide covers control board issues, compressor starting problems, power supply faults, dedicated circuit requirements, and when you need a qualified engineer."
@@ -505,7 +505,7 @@ export default function HeatPumpElectricalFaultPage() {
       faqHeading="Frequently Asked Questions About Heat Pump Electrical Faults"
       relatedPages={relatedPages}
       ctaHeading="Certificate Heat Pump Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for heat pump installation certificates, EICRs, and BS 7671-compliant documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for heat pump installation certificates, EICRs, and BS 7671-compliant documentation. 7-day free trial, cancel anytime."
     />
   );
 }

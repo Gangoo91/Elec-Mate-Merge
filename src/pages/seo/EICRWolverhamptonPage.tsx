@@ -181,7 +181,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Who must comply</strong> — all private landlords letting properties in
                 Wolverhampton under assured shorthold tenancies, assured tenancies, or regulated
@@ -190,7 +190,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inspection frequency</strong> — a valid EICR must be obtained before a new
                 tenancy begins and at least every five years thereafter. Some HMO licence conditions
@@ -199,7 +199,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tenant and authority copies</strong> — a copy of the EICR must be provided
                 to existing tenants within 28 days and to new tenants before they move in. The
@@ -208,7 +208,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Penalties</strong> — City of Wolverhampton Council can issue civil penalties
                 of up to £30,000 per breach. Each failure to comply (no EICR, failure to provide to
@@ -232,14 +232,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commission an EICR</strong> from a qualified and competent person before a
                 new tenancy begins and at least every five years. Keep copies of all previous EICRs.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Distribute copies</strong> — provide the EICR to existing tenants within 28
                 days, to new tenants before occupancy, and to City of Wolverhampton Council within
@@ -247,7 +247,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Complete remedial work</strong> — if the EICR is Unsatisfactory, arrange all
                 remedial work by a competent electrician within 28 days (or the shorter period
@@ -255,7 +255,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Confirm completion in writing</strong> — obtain written confirmation from
                 the electrician that remedial work is complete and distribute this to tenants and
@@ -356,7 +356,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C3 — Improvement Recommended</strong>: The installation does not meet the
                 current edition of BS 7671 but does not present an immediate or potential danger.
@@ -400,21 +400,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>One-bedroom flat</strong> — £120 to £200. Typically 3 to 5 circuits with a
                 single consumer unit. Allow 2 to 3 hours inspection time.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Two-bedroom property</strong> — £150 to £250. The most common property type
                 in the Wolverhampton private rented sector.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom house</strong> — £200 to £350. Victorian terraced houses in
                 Bilston and Willenhall may take longer due to the age and complexity of the
@@ -422,7 +422,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HMO / large house</strong> — £300 to £500 or more. Multiple consumer units,
                 fire alarm circuits, and emergency lighting increase inspection time and cost.
@@ -452,7 +452,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check scheme registration</strong> — use the NICEIC, NAPIT, or ELECSA online
                 registers to find Wolverhampton-based electricians. Registration confirms
@@ -460,7 +460,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Required qualifications</strong> — City and Guilds 2391 (Inspection and
                 Testing) or equivalent, plus a current BS 7671 (C&G 2382 18th Edition)
@@ -468,7 +468,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Professional indemnity insurance</strong> — always confirm the electrician
                 holds professional indemnity insurance. This is a condition of competent person
@@ -476,7 +476,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Calibrated test equipment</strong> — a valid EICR requires calibrated
                 instruments. Ask the electrician when their equipment was last calibrated. Reputable
@@ -503,7 +503,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete EICRs On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -538,7 +538,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more EICR work in Wolverhampton with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -564,7 +564,7 @@ export default function EICRWolverhamptonPage() {
       heroTitle={
         <>
           EICR Wolverhampton:{' '}
-          <span className="text-yellow-400">Electrical Inspection & Landlord Compliance</span>
+          <span className="text-elec-yellow">Electrical Inspection & Landlord Compliance</span>
         </>
       }
       heroSubtitle="Everything you need to know about Electrical Installation Condition Reports in Wolverhampton — legal requirements under the 2020 Regulations, costs, common findings in older West Midlands properties, and how to find a qualified inspector."
@@ -575,7 +575,7 @@ export default function EICRWolverhamptonPage() {
       faqHeading="Frequently Asked Questions About EICRs in Wolverhampton"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs On Your Phone — Any Location in Wolverhampton"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

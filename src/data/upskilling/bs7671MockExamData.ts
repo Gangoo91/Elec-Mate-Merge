@@ -1470,7 +1470,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
     options: ['150ms', '500ms', '40ms', '300ms'],
     correctAnswer: 2,
     explanation:
-      'At five times the rated residual current a general non-delay RCD operates within 40 ms. 40 ms at 5xIdn is the BS EN 61008/61009 PRODUCT-STANDARD figure — it describes the device, not the BS 7671 verification. Amendment 4 deleted Table 3A of Appendix 3, and effectiveness is now verified by an AC test at the rated residual operating current: 300 ms maximum for a general non-delay type, or between 130 ms and 500 ms for a delay Type S (Reg 643.7.3).',
+      'At five times the rated residual current a general non-delay RCD operates within 40 ms. 40 ms at 5xIdn is the BS EN 61008/61009 PRODUCT-STANDARD figure — it describes the device, not the BS 7671 verification. Amendment 2 (2022) deleted Table 3A of Appendix 3, and effectiveness is now verified by an AC test at the rated residual operating current: 300 ms maximum for a general non-delay type, or between 130 ms and 500 ms for a delay Type S (Reg 643.7.3).',
     section: 'Testing',
     difficulty: 'intermediate',
     topic: 'RCD Testing',
@@ -2311,7 +2311,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   {
     id: 158,
     question:
-      'Appendix 3 Table 3A was deleted by A4:2026. How is the effectiveness of an RCD now verified, whatever its type?',
+      'Appendix 3 Table 3A was deleted by A2:2022. How is the effectiveness of an RCD now verified, whatever its type?',
     options: [
       'By a direct current test at five times the rated residual current value',
       'By an alternating current test at half the rated residual value',

@@ -39,7 +39,7 @@ const quickCheckQuestions = [
     id: 'safe-zones',
     question: 'Why must concealed wiring be installed in safe zones?',
     options: [
-      'To improve appearance',
+      'To keep it away from thermal insulation',
       'To prevent accidental damage during future work',
       'To reduce installation cost',
     ],
@@ -51,9 +51,9 @@ const quickCheckQuestions = [
     id: 'surface-disadvantage',
     question: 'Name one disadvantage of surface wiring in a domestic living room.',
     options: [
-      'Higher electrical resistance',
+      'It cannot be RCD protected',
       'Less visually appealing appearance',
-      'Requires more power',
+      'It must be tested more often',
     ],
     correctIndex: 1,
     explanation:
@@ -63,9 +63,9 @@ const quickCheckQuestions = [
     id: 'installation-choice',
     question: 'What factors influence the choice between surface and concealed wiring?',
     options: [
-      'Cable colour only',
+      'The number of circuits only',
       'Environment, aesthetics, budget, and future access needs',
-      'Weather conditions',
+      'The supply earthing arrangement',
     ],
     correctIndex: 1,
     explanation:

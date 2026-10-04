@@ -265,7 +265,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mains-powered stair and landing lighting</strong> — the minimum requirement
                 in most domestic loft conversions is mains-powered lighting on the loft staircase,
@@ -274,7 +274,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency lighting — when required</strong> — dedicated emergency lighting
                 (self-contained battery-backed luminaires that illuminate automatically on mains
@@ -285,7 +285,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Switch positions</strong> — staircase lighting must be controllable from the
                 top and bottom of each flight. Two-way and intermediate switching is required where
@@ -317,7 +317,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use a competent person scheme electrician</strong> — this is the simplest
                 route. NICEIC, NAPIT, and ELECSA registered electricians can self-certify their work
@@ -455,7 +455,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Issue the EIC Before You Leave</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -490,7 +490,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage loft conversion jobs with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for EIC certificates, quoting, job management, and compliance. 7-day free trial, cancel anytime."
+          description="Join 2,100+ UK electricians using Elec-Mate for EIC certificates, quoting, job management, and compliance. 7-day free trial, cancel anytime."
           icon={FileCheck2}
         />
       </>
@@ -516,7 +516,7 @@ export default function LoftConversionElectricalGuidePage() {
       heroTitle={
         <>
           Loft Conversion Electrical Guide:{' '}
-          <span className="text-yellow-400">Wiring Your Loft Right</span>
+          <span className="text-elec-yellow">Wiring Your Loft Right</span>
         </>
       }
       heroSubtitle="Everything you need to know about electrical work in a loft conversion — circuit planning for bedroom, home office, and en-suite use cases, interlinked smoke detection under BS 5839-6, escape route lighting, Part P notification, and the mandatory EIC certificate."
@@ -527,7 +527,7 @@ export default function LoftConversionElectricalGuidePage() {
       faqHeading="Frequently Asked Questions About Loft Conversion Electrical Work"
       relatedPages={relatedPages}
       ctaHeading="Complete Loft Conversion EICs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, quoting, and job management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion, quoting, and job management. 7-day free trial, cancel anytime."
     />
   );
 }

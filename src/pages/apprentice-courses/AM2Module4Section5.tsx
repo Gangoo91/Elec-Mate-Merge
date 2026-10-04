@@ -138,7 +138,7 @@ const AM2Module4Section5 = () => {
       options: ['40 ms', '300 ms', 'No limit', '1000 ms'],
       correctAnswer: 1,
       explanation:
-        'At 1×IΔn (30mA), a general-purpose RCD must trip within 300ms. A4:2026 deleted the 5×IΔn test from the verification routine.',
+        'At 1×IΔn (30mA), a general-purpose RCD must trip within 300ms. A2:2022 deleted the 5×IΔn test from the verification routine.',
     },
     {
       id: 6,
@@ -146,7 +146,7 @@ const AM2Module4Section5 = () => {
       options: ['1×IΔn', '½×IΔn', '5×IΔn', 'Manual test button'],
       correctAnswer: 2,
       explanation:
-        'A4:2026 deleted the 5×IΔn AC test. RCDs are now verified by a single AC test at 1×IΔn plus the manual test button.',
+        'A2:2022 deleted the 5×IΔn AC test. RCDs are now verified by a single AC test at 1×IΔn plus the manual test button.',
     },
     {
       id: 7,

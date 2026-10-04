@@ -205,7 +205,7 @@ const sections = [
               <tr className="bg-white/[0.02] hover:bg-white/[0.04] transition-colors">
                 <td className="px-4 py-3 font-medium">Installation Electrician</td>
                 <td className="px-4 py-3">
-                  <span className="inline-block px-2 py-0.5 rounded bg-yellow-500/20 text-yellow-300 text-xs font-semibold">
+                  <span className="inline-block px-2 py-0.5 rounded bg-elec-yellow text-black text-xs font-semibold">
                     Gold
                   </span>
                 </td>
@@ -612,7 +612,7 @@ export default function ECSCardTypesPage() {
       badgeIcon={Award}
       heroTitle={
         <>
-          ECS Card Types: <span className="text-yellow-400">Which Card Do You Need?</span>
+          ECS Card Types: <span className="text-elec-yellow">Which Card Do You Need?</span>
         </>
       }
       heroSubtitle="The ECS card is your proof of qualifications and your passport to UK construction sites. There are different cards for different career stages — Apprentice, Provisional, Installation Electrician (gold), and Technician. This guide explains each type, what qualifications you need, how to apply, and how to renew."

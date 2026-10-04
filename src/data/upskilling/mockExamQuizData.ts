@@ -97,7 +97,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     ],
     correctAnswer: 0,
     explanation:
-      'Amendment 4 deleted Table 3A (time/current performance criteria for RCDs) from Appendix 3. Regulation 643.8 now calls for a single alternating current test at the rated residual operating current, IΔn, regardless of RCD type — AC, A, F or B. A general non-delay device must operate within 300ms. The 5x IΔn test still has a place in fault-finding, but it is no longer part of the required verification.',
+      'Amendment 2 (2022) deleted Table 3A (time/current performance criteria for RCDs) from Appendix 3. Regulation 643.8 now calls for a single alternating current test at the rated residual operating current, IΔn, regardless of RCD type — AC, A, F or B. A general non-delay device must operate within 300ms. The 5x IΔn test still has a place in fault-finding, but it is no longer part of the required verification.',
     category: 'Protection & Devices',
     difficulty: 'advanced'
   },
@@ -2119,7 +2119,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     ],
     correctAnswer: 0,
     explanation:
-      'Amendment 4 deleted Table 3A of Appendix 3. Verification is now an alternating current test at the rated residual operating current, IΔn, regardless of type — a general non-delay device must operate within 300 ms. The 5x test remains useful for fault-finding but is no longer part of the required sequence.',
+      'Amendment 2 (2022) deleted Table 3A of Appendix 3. Verification is now an alternating current test at the rated residual operating current, IΔn, regardless of type — a general non-delay device must operate within 300 ms. The 5x test remains useful for fault-finding but is no longer part of the required sequence.',
     category: 'Inspection & Testing',
   },
   {
@@ -4232,7 +4232,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   },
   {
     id: 304,
-    question: 'Under Amendment 4, what happened to Table 3A of Appendix 3?',
+    question: 'Under Amendment 2 (2022), what happened to Table 3A of Appendix 3?',
     options: [
       'It now covers Type F devices',
       'It was moved into Appendix 14',

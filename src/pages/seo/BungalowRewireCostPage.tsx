@@ -161,7 +161,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Two-bedroom bungalow</strong> — £3,000 to £4,200 total. Typically 8 to 10
                 circuits. Materials: £800 to £1,200. Labour: £1,800 to £2,600 (4 to 6 days).
@@ -169,7 +169,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom bungalow</strong> — £3,800 to £5,200 total. Typically 10 to 14
                 circuits. Materials: £1,000 to £1,500. Labour: £2,400 to £3,200 (5 to 8 days).
@@ -177,7 +177,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Four-bedroom bungalow</strong> — £4,500 to £6,000 total. Typically 12 to 16
                 circuits. Materials: £1,200 to £1,800. Labour: £2,800 to £3,700 (7 to 10 days).
@@ -202,49 +202,49 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New consumer unit</strong> — metal enclosure with RCBOs, SPD, and main
                 switch. Typically 10 to 14-way for a bungalow.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Power circuits</strong> — ring final circuits to downstairs socket outlets.
                 Dedicated radials for kitchen appliances if needed.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lighting circuits</strong> — new circuits throughout with modern cable.
                 Opportunity to add additional light points or downlights.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated circuits</strong> — cooker, shower, immersion heater, and any
                 high-power appliances on individual circuits with appropriate protection.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>External lighting and garage supply</strong> — outside lights, garden
                 supply, and garage or workshop circuits as required.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smoke and heat detection</strong> — hardwired interlinked detectors in
                 hallways, bedrooms, and kitchen as required by Building Regulations.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing, certification, and Part P notification</strong> — full EIC and
                 Building Regulations compliance.
@@ -268,21 +268,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>First fix (cable installation)</strong> — 3 to 6 days depending on bungalow
                 size. Most cable runs via the loft void, with minimal wall chasing.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Second fix (termination and testing)</strong> — 1 to 3 days. Installing
                 accessories, connecting the consumer unit, and testing every circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrician day rate</strong> — £250 to £400 depending on region. Most
                 bungalow rewires are quoted as a fixed price.
@@ -347,7 +347,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Loft insulation</strong> — thick loft insulation can slow cable runs and
                 requires careful routing to maintain fire safety. Cables must not be buried in
@@ -355,7 +355,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing arrangement</strong> — many older bungalows have TT earthing with
                 an earth rod. If the earth electrode resistance is too high, a new earth rod or
@@ -363,21 +363,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Outbuildings</strong> — a detached garage, workshop, or garden office
                 requiring a new SWA supply adds £300 to £800 per outbuilding.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional circuits</strong> — EV charger, solar PV, underfloor heating, or
                 electric cooking appliances each require dedicated circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Location</strong> — regional labour rate variation of 15% to 30% between
                 London/South East and northern England.
@@ -427,7 +427,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Loft Survey Is Key</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -483,7 +483,7 @@ export default function BungalowRewireCostPage() {
       badgeIcon={PoundSterling}
       heroTitle={
         <>
-          Bungalow Rewire Cost: <span className="text-yellow-400">UK Price Guide 2026</span>
+          Bungalow Rewire Cost: <span className="text-elec-yellow">UK Price Guide 2026</span>
         </>
       }
       heroSubtitle="How much does it cost to rewire a bungalow? Bungalows are typically easier and cheaper to rewire than two-storey houses thanks to full loft access. This guide covers realistic 2026 pricing, what is included, and the factors that affect your quote."
@@ -494,7 +494,7 @@ export default function BungalowRewireCostPage() {
       faqHeading="Frequently Asked Questions About Bungalow Rewire Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Bungalow Rewires with Real Trade Pricing"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for itemised quoting, on-site EIC certificates, and AI cost engineering. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for itemised quoting, on-site EIC certificates, and AI cost engineering. 7-day free trial, cancel anytime."
     />
   );
 }

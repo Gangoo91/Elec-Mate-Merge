@@ -179,7 +179,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reading</strong> — major commercial centre, home to Oracle UK HQ and
                 large-scale retail and office developments. Strong commercial and domestic
@@ -187,7 +187,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Slough</strong> — one of the largest trading estates in Europe. High-density
                 commercial and industrial electrical work. Significant EICR compliance demand in the
@@ -195,7 +195,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Windsor and Maidenhead</strong> — premium residential market with listed
                 buildings, conservation areas, and strong demand for smart home and EV charging
@@ -203,14 +203,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bracknell</strong> — established technology business park town. Large Cisco
                 and HP offices drive commercial electrical and data infrastructure demand.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Newbury and West Berkshire</strong> — rural market town with growing
                 affluent residential market. Vodafone UK HQ in Newbury. Rural TT earthing
@@ -218,7 +218,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wokingham</strong> — consistently ranked among England's most prosperous
                 boroughs. High-value residential work and strong EV and solar PV demand.
@@ -243,25 +243,25 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-3">Verification Checklist</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 NICEIC, NAPIT, ELECSA, or STROMA registration — verify online before booking
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Current ECS gold or blue card confirming NVQ Level 3 or 18th Edition update
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Public liability insurance — minimum £2 million (£5 million for commercial sites)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 For Windsor listed buildings: ask for specific heritage electrical experience and
                 references
@@ -287,31 +287,31 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-3">Typical Job Costs (2025)</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR (3-bed house):</strong> £190 to £320
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit upgrade:</strong> £540 to £820
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full rewire (4-bed detached):</strong> £5,500 to £9,000
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger installation:</strong> £900 to £1,400
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smart home electrical fit-out:</strong> £2,000 to £15,000+
               </span>
@@ -335,7 +335,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Office fit-out and CAT A/CAT B:</strong> Technology campuses undergo
                 frequent refurbishment and fit-out. Commercial electrical contractors with
@@ -344,7 +344,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Slough Trading Estate:</strong> One of Europe's largest trading estates with
                 over 400 companies. Industrial electrical work here ranges from standard three-phase
@@ -352,7 +352,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV fleet charging (commercial):</strong> Technology companies with large
                 vehicle fleets are installing high-power depot charging infrastructure. OZEV LEVI
@@ -378,7 +378,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Listed Building Consent:</strong> Required from the Royal Borough for any
                 electrical work affecting the character of a listed building — including new cable
@@ -387,7 +387,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Surface-mounted wiring:</strong> In Grade I and Grade II* listed buildings,
                 chasing into original plasterwork or masonry is rarely acceptable to the Royal
@@ -397,7 +397,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Crown Estate and Royal Household properties:</strong> Some properties within
                 the Windsor Castle precincts and Crown Estate are not subject to the normal listed
@@ -425,7 +425,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New connections and upgrades:</strong> Apply via ssen.co.uk. SSEN processes
                 new domestic connections within the statutory timescales under the Distribution
@@ -433,7 +433,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98/G99 notifications:</strong> Submit via SSEN's online portal. G98 (up to
                 3.68kW single-phase) notified after installation within 28 days. G99 requires prior
@@ -441,7 +441,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Power cuts:</strong> Report power cuts to SSEN by calling 105 — the national
                 power cut number. Do not call UKPN for Berkshire power cuts.
@@ -476,7 +476,7 @@ export default function ElectricianBerkshirePage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician Berkshire <span className="text-yellow-400">— Qualified & Registered</span>
+          Electrician Berkshire <span className="text-elec-yellow">— Qualified & Registered</span>
         </>
       }
       heroSubtitle="Find NICEIC and NAPIT registered electricians across Reading, Slough, Windsor, Bracknell, Newbury, Maidenhead, and Wokingham. EICRs, rewires, EV charging, smart home, and Thames Valley commercial electrical work. DNO: SSEN."

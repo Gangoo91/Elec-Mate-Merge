@@ -105,7 +105,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Core Hand Tools</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Screwdrivers (VDE):</strong> Flat blade (2.5mm, 4mm, 5.5mm), Phillips (PH1,
                 PH2), Pozi (PZ1, PZ2), and terminal screwdrivers. Wera, Wiha, and C.K. are the
@@ -113,7 +113,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Pliers (VDE):</strong> Combination pliers (180mm or 200mm), long-nose pliers
                 (160mm or 200mm), and water pump pliers (250mm). Knipex are the industry standard --
@@ -121,14 +121,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Side cutters (VDE):</strong> 160mm or 180mm diagonal cutters for cutting
                 cable. Knipex high-leverage cutters are the most popular. Cost: GBP 20-GBP 40.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Cable strippers:</strong> A dedicated cable stripping tool (C.K. Jokari,
                 Knipex ErgoStrip, or similar) speeds up cable preparation significantly. Cost: GBP
@@ -136,28 +136,28 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Adjustable spanners:</strong> 6-inch and 10-inch adjustable spanners for
                 conduit fittings, gland nuts, and accessories. Bahco are a reliable choice.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Tape measure:</strong> 5m or 8m tape measure. Stanley FatMax is the industry
                 standard for durability and standout length.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Spirit level:</strong> Small torpedo level (225mm) for switch and socket
                 alignment. A laser level is useful for longer runs.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Crimp tool:</strong> For crimping bootlace ferrules and ring terminals.
                 Essential for terminating flexible cables.
@@ -187,7 +187,7 @@ const sections = [
           your tools are VDE rated during inspections.
         </p>
         <p>
-          <strong className="text-yellow-400">What makes a VDE tool different?</strong> VDE tools
+          <strong className="text-elec-yellow">What makes a VDE tool different?</strong> VDE tools
           are manufactured with a multi-layer insulation process and individually tested to 10,000V
           AC. They are rated for continuous use at up to 1,000V AC / 1,500V DC. Each tool carries
           the VDE diamond symbol and the 1000V rating marking. The insulation is a hard-wearing
@@ -198,28 +198,28 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Essential VDE Tool Set</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>VDE screwdrivers:</strong> Flat blade and Phillips/Pozi in common sizes.
                 Most electricians carry 8-12 VDE screwdrivers.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>VDE pliers:</strong> Combination, long-nose, and water pump pliers with
                 VDE-rated handles.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>VDE side cutters:</strong> Diagonal cutting pliers with VDE-rated handles.
                 Essential for cutting cable near live parts.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>VDE cable knife:</strong> A hooked or straight-blade cable knife with
                 insulated handle for stripping outer sheath from T&E and SWA cable.
@@ -234,10 +234,10 @@ const sections = [
           sooner if the insulation shows signs of wear.
         </p>
         <p>
-          The leading VDE tool brands are <strong className="text-yellow-400">Knipex</strong>{' '}
-          (pliers and cutters), <strong className="text-yellow-400">Wera</strong> and{' '}
-          <strong className="text-yellow-400">Wiha</strong> (screwdrivers), and{' '}
-          <strong className="text-yellow-400">C.K.</strong> (complete ranges including cable tools).
+          The leading VDE tool brands are <strong className="text-elec-yellow">Knipex</strong>{' '}
+          (pliers and cutters), <strong className="text-elec-yellow">Wera</strong> and{' '}
+          <strong className="text-elec-yellow">Wiha</strong> (screwdrivers), and{' '}
+          <strong className="text-elec-yellow">C.K.</strong> (complete ranges including cable tools).
           All offer excellent quality and are widely available from UK electrical wholesalers.
         </p>
       </>
@@ -263,7 +263,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Essential Test Instruments</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Multifunction tester (GBP 600-GBP 1,200):</strong> Performs insulation
                 resistance, continuity (low resistance), earth loop impedance (Zs and Ze), RCD
@@ -273,7 +273,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Two-pole voltage indicator (GBP 60-GBP 150):</strong> Used to confirm the
                 presence or absence of voltage as part of the safe isolation procedure. Must be a
@@ -282,7 +282,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Proving unit (GBP 30-GBP 60):</strong> A device that generates a known
                 voltage to prove your voltage indicator is working correctly before and after
@@ -291,7 +291,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Socket tester (GBP 15-GBP 40):</strong> A plug-in device that checks for
                 correct wiring (live, neutral, earth), polarity, and earth presence in 13A socket
@@ -299,7 +299,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Non-contact voltage detector (GBP 15-GBP 50):</strong> A pen-style detector
                 that indicates the presence of AC voltage without making contact. Useful for initial
@@ -317,9 +317,9 @@ const sections = [
             <table className="w-full text-sm text-white border-collapse">
               <thead>
                 <tr className="border-b border-white/15 text-left">
-                  <th className="py-2 pr-3 font-semibold text-white/70">Model</th>
-                  <th className="py-2 pr-3 font-semibold text-white/70">Indicative price</th>
-                  <th className="py-2 font-semibold text-white/70">Best known for</th>
+                  <th className="py-2 pr-3 font-semibold text-white">Model</th>
+                  <th className="py-2 pr-3 font-semibold text-white">Indicative price</th>
+                  <th className="py-2 font-semibold text-white">Best known for</th>
                 </tr>
               </thead>
               <tbody>
@@ -341,7 +341,7 @@ const sections = [
               </tbody>
             </table>
           </div>
-          <p className="text-white/70 text-xs mt-3">
+          <p className="text-white text-xs mt-3">
             All three perform the same core tests: insulation resistance, continuity (R1+R2),
             earth fault loop impedance (Zs and Ze), RCD trip time and current, prospective fault
             current (PFC/PSCC) and polarity. Prices are indicative market guidance, not a quote.
@@ -354,11 +354,11 @@ const sections = [
           fault finding and energy audits), and a power quality analyser (for commercial and
           industrial work).
         </p>
-        <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/30 p-5 my-6">
-          <h3 className="font-bold text-yellow-400 text-base mb-2">
+        <div className="rounded-2xl bg-white/[0.06] border border-yellow-400/30 p-5 my-6">
+          <h3 className="font-bold text-elec-yellow text-base mb-2">
             Zs Temperature Correction — GN3 Reg 1.16.9
           </h3>
-          <p className="text-white/90 text-sm">
+          <p className="text-white text-sm">
             When verifying earth fault loop impedance, your measured Zs must satisfy{' '}
             <strong>Zs(measured) &le; 0.8 &times; (Uo / Ia)</strong> per GN3 Reg 1.16.9 and BS 7671
             Appendix 3 — the 0.8 factor accounts for conductor resistance rising as conductors reach
@@ -371,7 +371,7 @@ const sections = [
           <h3 className="font-bold text-white text-base mb-2">
             AFDD Testing Capability — BS 7671:2018+A4:2026 Reg 421.1.7
           </h3>
-          <p className="text-white/90 text-sm">
+          <p className="text-white text-sm">
             Under BS 7671:2018+A4:2026, Reg 421.1.7 has been redrafted. It is now a{' '}
             <strong>requirement</strong> to protect final circuits supplying socket-outlets with a
             rated current not exceeding 32 A using Arc Fault Detection Devices (AFDDs) in high
@@ -407,7 +407,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Essential Power Tools</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>SDS rotary hammer drill (GBP 150-GBP 350):</strong> For drilling into
                 masonry, concrete, and brick. Used for fixing back boxes, running cable routes
@@ -416,7 +416,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Combi drill/driver (GBP 80-GBP 200):</strong> For drilling into wood, metal,
                 and light masonry, and for driving screws. The most versatile power tool in your
@@ -424,7 +424,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Impact driver (GBP 80-GBP 180):</strong> For driving screws and bolts with
                 high torque. Faster and more powerful than a combi drill for fixings. Essential for
@@ -432,7 +432,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Jigsaw (GBP 60-GBP 150):</strong> For cutting holes in plasterboard, MDF,
                 and wood. Useful for cutting holes for back boxes, consumer unit openings, and cable
@@ -440,7 +440,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Reciprocating saw (GBP 80-GBP 180):</strong> For cutting through walls,
                 floors, and existing materials during alterations. Also useful for cutting metal
@@ -450,7 +450,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          <strong className="text-yellow-400">Choose one battery platform</strong> and stick with
+          <strong className="text-elec-yellow">Choose one battery platform</strong> and stick with
           it. If you start with DeWalt 18V XR, buy all your cordless tools in that range so the
           batteries are interchangeable. Having four different battery types from four different
           manufacturers is inefficient and expensive. The four major professional platforms are
@@ -481,7 +481,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Essential PPE for Electricians</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <HardHat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <HardHat className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Safety boots (GBP 40-GBP 120):</strong> Steel or composite toe cap, ankle
                 support, slip-resistant sole. EN ISO 20345 rated. Replace annually or when damaged.
@@ -489,7 +489,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <HardHat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <HardHat className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Safety glasses (GBP 5-GBP 25):</strong> EN 166 rated impact-resistant
                 lenses. Worn when drilling, chasing, cutting, and any work generating debris. Clear
@@ -497,7 +497,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <HardHat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <HardHat className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Hard hat (GBP 10-GBP 30):</strong> EN 397 rated. Required on construction
                 sites and any area with overhead hazards. Replace every 3-5 years or after any
@@ -505,7 +505,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <HardHat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <HardHat className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Ear defenders (GBP 10-GBP 30):</strong> EN 352 rated. Required when using
                 SDS drills, chasing tools, and in noisy environments exceeding 85 dB. Foam plugs or
@@ -513,7 +513,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <HardHat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <HardHat className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Dust masks (GBP 5-GBP 20):</strong> FFP2 minimum for general masonry dust.
                 FFP3 for any work that may disturb asbestos-containing materials (common in pre-2000
@@ -521,7 +521,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <HardHat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <HardHat className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Work gloves (GBP 5-GBP 15):</strong> General-purpose gloves for handling
                 sharp materials, hot surfaces, and rough cables. Consider cut-resistant gloves for
@@ -529,7 +529,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <HardHat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <HardHat className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Hi-vis clothing (GBP 5-GBP 20):</strong> Hi-vis vest or jacket. Required on
                 construction sites and when working near roads or moving vehicles.
@@ -559,7 +559,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Tool Kit Budget Tiers</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Essential starter kit (GBP 1,500-GBP 2,000):</strong> Multifunction tester
                 (mid-range), voltage indicator and proving unit, VDE hand tool set, combi drill and
@@ -568,7 +568,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Professional kit (GBP 2,500-GBP 3,500):</strong> Everything above plus a
                 premium multifunction tester, SDS drill, jigsaw, reciprocating saw, additional test
@@ -577,7 +577,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Full professional kit (GBP 3,500-GBP 5,000+):</strong> Everything above plus
                 specialist instruments (thermal camera, power quality analyser, 3-phase rotation
@@ -593,8 +593,8 @@ const sections = [
             <table className="w-full text-sm text-white border-collapse">
               <thead>
                 <tr className="border-b border-white/15 text-left">
-                  <th className="py-2 pr-3 font-semibold text-white/70">Category</th>
-                  <th className="py-2 font-semibold text-white/70">Indicative cost</th>
+                  <th className="py-2 pr-3 font-semibold text-white">Category</th>
+                  <th className="py-2 font-semibold text-white">Indicative cost</th>
                 </tr>
               </thead>
               <tbody>
@@ -625,7 +625,7 @@ const sections = [
               </tbody>
             </table>
           </div>
-          <p className="text-white/70 text-xs mt-3">
+          <p className="text-white text-xs mt-3">
             Indicative market guidance for new equipment, not a quote. Buying second-hand power
             tools and tool sets rather than individual items reduces these figures.
           </p>
@@ -662,54 +662,54 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Recommended Brands by Category</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Pliers and cutters:</strong> Knipex (industry-leading quality and
                 ergonomics)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Screwdrivers:</strong> Wera or Wiha (VDE ranges, comfortable handles,
                 excellent durability)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Cable tools:</strong> C.K. (strippers, cutters, and cable knives
                 purpose-designed for electricians)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Multifunction testers:</strong> Megger (industry standard), Fluke (premium
                 with Bluetooth), Metrel (strong value)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Voltage indicators:</strong> Fluke T150 or Megger TPT420
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Power tools:</strong> DeWalt XR, Makita LXT, or Milwaukee M18 (choose one
                 platform for battery compatibility)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Safety boots:</strong> Scruffs, DeWalt, or Timberland Pro
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Tool bags and pouches:</strong> C.K. Magma, Veto Pro Pac, or Milwaukee
                 PACKOUT
@@ -799,7 +799,7 @@ export default function ElectricianToolListPage() {
       heroTitle={
         <>
           Electrician Tool List UK 2026:{' '}
-          <span className="text-yellow-400">The Complete Essential Tools Guide</span>
+          <span className="text-elec-yellow">The Complete Essential Tools Guide</span>
         </>
       }
       heroSubtitle="Every hand tool, VDE insulated tool, test instrument, power tool, and PPE item you need as a UK electrician. Includes budget tiers from GBP 1,500 starter kits to GBP 5,000+ full professional setups, with brand recommendations from working electricians."

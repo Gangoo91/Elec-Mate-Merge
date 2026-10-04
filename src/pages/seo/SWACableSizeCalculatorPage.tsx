@@ -42,7 +42,7 @@ export default function SWACableSizeCalculatorPage() {
       badgeIcon={Shield}
       heroTitle={
         <>
-          <span className="text-yellow-400">SWA Cable Size Calculator</span> — Steel Wire Armoured
+          <span className="text-elec-yellow">SWA Cable Size Calculator</span> — Steel Wire Armoured
           Sizing for Submains and Outbuildings
         </>
       }
@@ -99,9 +99,9 @@ export default function SWACableSizeCalculatorPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
                 <ul className="space-y-3 text-white text-sm">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Outbuilding submains</strong> — garages,
+                      <strong className="text-elec-yellow">Outbuilding submains</strong> — garages,
                       garden offices, workshops, summer houses. Usually buried across the garden.
                       See the{' '}
                       <SEOInternalLink href="/tools/garage-supply-calculator">
@@ -111,9 +111,9 @@ export default function SWACableSizeCalculatorPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">EV charger runs</strong> — external or
+                      <strong className="text-elec-yellow">EV charger runs</strong> — external or
                       buried sections to driveway charging points. The{' '}
                       <SEOInternalLink href="/tools/ev-charger-cable-size-calculator">
                         EV charger cable size calculator
@@ -122,9 +122,9 @@ export default function SWACableSizeCalculatorPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Hot tubs and outdoor equipment</strong> —
+                      <strong className="text-elec-yellow">Hot tubs and outdoor equipment</strong> —
                       hardwired outdoor supplies where the cable needs mechanical protection. See
                       the{' '}
                       <SEOInternalLink href="/tools/hot-tub-electrical-calculator">
@@ -134,9 +134,9 @@ export default function SWACableSizeCalculatorPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Commercial and industrial distribution
                       </strong>{' '}
                       — submains on tray or ladder, external plant, and anywhere the cable is
@@ -213,22 +213,22 @@ export default function SWACableSizeCalculatorPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
                 <ol className="space-y-3 text-white text-sm list-decimal pl-5">
                   <li>
-                    <strong className="text-yellow-400">Design current:</strong> I = P / V = 10000 /
+                    <strong className="text-elec-yellow">Design current:</strong> I = P / V = 10000 /
                     230 = <strong>43.5A</strong> → a 45A or 50A protective device at the origin
                   </li>
                   <li>
-                    <strong className="text-yellow-400">First-pass size:</strong> on current alone,
+                    <strong className="text-elec-yellow">First-pass size:</strong> on current alone,
                     a 6mm² or 10mm² SWA might carry it depending on method — but check voltage drop
                     before settling
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Voltage drop at 10mm²:</strong> using the
+                    <strong className="text-elec-yellow">Voltage drop at 10mm²:</strong> using the
                     published figure of approximately 4.4 mV/A/m for 10mm² copper: 43.5A x 40m x 4.4
                     mV/A/m = 7,656mV = <strong>7.66V</strong>. As a percentage: 7.66 / 230 ={' '}
                     <strong>3.3%</strong>
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Judgement:</strong> 3.3% passes the 5%
+                    <strong className="text-elec-yellow">Judgement:</strong> 3.3% passes the 5%
                     limit, but leaves only 1.7% for the final circuits inside the workshop. For a
                     workshop with a heavily loaded socket circuit, stepping up to 16mm²
                     (approximately 2.8 mV/A/m, giving 4.87V = 2.1%) buys comfortable headroom for
@@ -263,21 +263,21 @@ export default function SWACableSizeCalculatorPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
                 <ul className="space-y-2 text-white text-sm">
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Around 450mm</strong> under lawns and flower beds — below spade and
                       rotavator depth
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Around 600mm</strong> under driveways, vehicle routes, and cultivated
                       ground
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Sand bed and marker tape</strong> — lay the cable on a bed free of
                       sharp stones, cover, then marker tape part-way up the backfill
@@ -480,7 +480,7 @@ export default function SWACableSizeCalculatorPage() {
         },
       ]}
       ctaHeading="Size SWA submains with confidence"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for armoured cable sizing, voltage drop, and certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for armoured cable sizing, voltage drop, and certification. 7-day free trial, cancel anytime."
       toolPath="/tools/swa-cable-size-calculator"
     />
   );

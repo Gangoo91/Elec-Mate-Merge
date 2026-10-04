@@ -232,63 +232,63 @@ const sections = [
             <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-white font-semibold">
               Studio / 1-bed flat
             </div>
-            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-yellow-400 font-bold">
+            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-elec-yellow font-bold">
               £120–£200
             </div>
-            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-white/80">3–5</div>
+            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-white">3–5</div>
 
             <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-white font-semibold">
               Two-bedroom flat
             </div>
-            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-yellow-400 font-bold">
+            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-elec-yellow font-bold">
               £150–£250
             </div>
-            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-white/80">5–8</div>
+            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-white">5–8</div>
 
             <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-white font-semibold">
               Three-bedroom house
             </div>
-            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-yellow-400 font-bold">
+            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-elec-yellow font-bold">
               £200–£350
             </div>
-            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-white/80">8–15</div>
+            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-white">8–15</div>
 
             <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-white font-semibold">
               Four-bedroom+ house
             </div>
-            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-yellow-400 font-bold">
+            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-elec-yellow font-bold">
               £300–£450+
             </div>
-            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-white/80">15+</div>
+            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-white">15+</div>
 
             <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-white font-semibold">
               HMO (multiple units)
             </div>
-            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-yellow-400 font-bold">
+            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-elec-yellow font-bold">
               £350–£700+
             </div>
-            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-white/80">Varies</div>
+            <div className="bg-[#0b0f17] px-3 sm:px-4 py-3 text-white">Varies</div>
           </div>
         </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="font-bold text-white mb-3">How Bristol's areas affect the price</h3>
           <ul className="space-y-3 text-white text-sm">
             <li className="flex items-start gap-3">
-              <Building2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Converted Georgian houses (Clifton)</strong> — studios and flats split out
                 of period townhouses often share meters and communal boards, adding access time.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Purpose-built flats (Harbourside, Temple Quay)</strong> — modern wiring and
                 a single accessible consumer unit make these the quickest and cheapest to inspect.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Victorian terraces (Bedminster, Southville, Totterdown)</strong> — aged
                 wiring and cellar installations push the inspection towards the upper end of the
@@ -296,7 +296,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Student HMOs (Redland, Cotham, Stokes Croft, Fishponds)</strong> — multiple
                 consumer units, fire alarm systems, and emergency lighting all fall within the
@@ -395,7 +395,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HMO licensing</strong> — Bristol operates mandatory HMO licensing for larger
                 HMOs (five or more occupants forming two or more households) and additional
@@ -405,7 +405,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Student housing enforcement</strong> — with two major universities
                 (University of Bristol and UWE Bristol), the city has a high concentration of
@@ -415,7 +415,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Civil penalties</strong> — Bristol City Council has the power to issue civil
                 penalties of up to £30,000 per breach for non-compliance with the Electrical Safety
@@ -589,7 +589,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="font-bold text-white mb-3 flex items-center gap-2">
-            <Search className="w-5 h-5 text-yellow-400 shrink-0" />
+            <Search className="w-5 h-5 text-elec-yellow shrink-0" />
             Visual inspection
           </h3>
           <p className="text-white text-sm leading-relaxed">
@@ -613,46 +613,46 @@ const sections = [
             <div className="bg-blue-900/30 px-3 sm:px-4 py-3 text-white">
               Continuity of protective conductors and ring final circuit conductors
             </div>
-            <div className="bg-blue-900/30 px-3 sm:px-4 py-3 text-white/80">Reg 643.2</div>
+            <div className="bg-blue-900/30 px-3 sm:px-4 py-3 text-white">Reg 643.2</div>
 
             <div className="bg-blue-900/30 px-3 sm:px-4 py-3 text-blue-300 font-semibold">Dead</div>
             <div className="bg-blue-900/30 px-3 sm:px-4 py-3 text-white">
               Insulation resistance — 500&nbsp;V DC test, minimum 1.0&nbsp;M&Omega; (Table 64)
             </div>
-            <div className="bg-blue-900/30 px-3 sm:px-4 py-3 text-white/80">Reg 643.3</div>
+            <div className="bg-blue-900/30 px-3 sm:px-4 py-3 text-white">Reg 643.3</div>
 
             <div className="bg-blue-900/30 px-3 sm:px-4 py-3 text-blue-300 font-semibold">Dead</div>
             <div className="bg-blue-900/30 px-3 sm:px-4 py-3 text-white">Polarity</div>
-            <div className="bg-blue-900/30 px-3 sm:px-4 py-3 text-white/80">Reg 643.6</div>
+            <div className="bg-blue-900/30 px-3 sm:px-4 py-3 text-white">Reg 643.6</div>
 
-            <div className="bg-amber-900/30 px-3 sm:px-4 py-3 text-amber-300 font-semibold">
+            <div className="bg-white/[0.06] px-3 sm:px-4 py-3 text-elec-yellow font-semibold">
               Live
             </div>
-            <div className="bg-amber-900/30 px-3 sm:px-4 py-3 text-white">
+            <div className="bg-white/[0.06] px-3 sm:px-4 py-3 text-white">
               Earth fault loop impedance (Ze and Zs) — protection by automatic disconnection
             </div>
-            <div className="bg-amber-900/30 px-3 sm:px-4 py-3 text-white/80">Reg 643.7</div>
+            <div className="bg-white/[0.06] px-3 sm:px-4 py-3 text-white">Reg 643.7</div>
 
-            <div className="bg-amber-900/30 px-3 sm:px-4 py-3 text-amber-300 font-semibold">
+            <div className="bg-white/[0.06] px-3 sm:px-4 py-3 text-elec-yellow font-semibold">
               Live
             </div>
-            <div className="bg-amber-900/30 px-3 sm:px-4 py-3 text-white">
+            <div className="bg-white/[0.06] px-3 sm:px-4 py-3 text-white">
               RCD operation as additional protection
             </div>
-            <div className="bg-amber-900/30 px-3 sm:px-4 py-3 text-white/80">Reg 643.8</div>
+            <div className="bg-white/[0.06] px-3 sm:px-4 py-3 text-white">Reg 643.8</div>
 
-            <div className="bg-amber-900/30 px-3 sm:px-4 py-3 text-amber-300 font-semibold">
+            <div className="bg-white/[0.06] px-3 sm:px-4 py-3 text-elec-yellow font-semibold">
               Live
             </div>
-            <div className="bg-amber-900/30 px-3 sm:px-4 py-3 text-white">
+            <div className="bg-white/[0.06] px-3 sm:px-4 py-3 text-white">
               Functional testing of switchgear, controlgear and protective devices
             </div>
-            <div className="bg-amber-900/30 px-3 sm:px-4 py-3 text-white/80">Reg 643.10</div>
+            <div className="bg-white/[0.06] px-3 sm:px-4 py-3 text-white">Reg 643.10</div>
           </div>
         </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="font-bold text-white mb-2 flex items-center gap-2">
-            <ClipboardCheck className="w-5 h-5 text-yellow-400 shrink-0" />
+            <ClipboardCheck className="w-5 h-5 text-elec-yellow shrink-0" />
             Report completion
           </h3>
           <p className="text-white text-sm leading-relaxed">
@@ -687,14 +687,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Private rented property (England)</strong> — at least every 5 years (legal
                 requirement under the 2020 Regulations).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Owner-occupied domestic</strong> — every 10 years is the recommended
                 interval as best practice. Properties over 25 years old or with known wiring issues
@@ -702,7 +702,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial premises</strong> — every 5 years (or 3 years for higher-risk
                 environments). Bristol commercial landlords should factor this into lease
@@ -710,7 +710,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Change of occupancy</strong> — a new EICR is recommended (and required for
                 rented properties) whenever a property changes occupant, even if the previous EICR
@@ -741,7 +741,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person schemes</strong> — NICEIC, NAPIT, ELECSA, STROMA, and other
                 approved bodies maintain registers of qualified electricians. Searching these
@@ -750,7 +750,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Qualifications</strong> — the inspector should hold City & Guilds 2391
                 (Inspection and Testing) or City & Guilds 2395 (Initial Verification and
@@ -759,7 +759,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insurance</strong> — check that the inspector carries professional indemnity
                 insurance. This protects both the inspector and the landlord if an error is made on
@@ -795,7 +795,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete EICRs on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -829,7 +829,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs faster with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -855,7 +855,7 @@ export default function EICRBristolPage() {
       heroTitle={
         <>
           EICR Bristol:{' '}
-          <span className="text-yellow-400">Electrical Safety Certificate Cost 2026</span>
+          <span className="text-elec-yellow">Electrical Safety Certificate Cost 2026</span>
         </>
       }
       heroSubtitle="Everything you need to know about EICRs in Bristol — costs by property type, landlord legal requirements, HMO licensing, Georgian and Victorian property challenges, observation codes, and how to find a qualified inspector."
@@ -873,7 +873,7 @@ export default function EICRBristolPage() {
       faqHeading="Frequently Asked Questions About EICRs in Bristol"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs on Your Phone — Faster Than Paper"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

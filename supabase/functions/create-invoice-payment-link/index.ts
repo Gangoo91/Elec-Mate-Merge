@@ -201,6 +201,15 @@ serve(async (req) => {
     // Create Stripe Checkout Session
     // HARDCODED: Always use www.elec-mate.com (non-www has no SSL certificate)
     const appUrl = 'https://www.elec-mate.com';
+    /*
+     * ELE-1705 — the link the CLIENT is given is this page, never the
+     * Checkout session. Stripe expires a session after 24 hours (verified on
+     * a live one: expires_at − created = 86,399s), so the session URL that
+     * used to go into every email, PDF and reminder was dead from day two;
+     * every card payment on record landed inside 17 hours. `/pay/<id>` asks
+     * `invoice-pay` for a fresh session each time it is opened.
+     */
+    const payPageUrl = `${appUrl}/pay/${invoiceId}`;
 
     /*
      * ⚠️ The status check above is a cache, not a guarantee.
@@ -257,7 +266,9 @@ serve(async (req) => {
           invoice.deposit_for_quote && invoice.parent_quote_id && invoice.user_id
             ? `${appUrl}/book/${invoice.user_id}?quote=${invoice.parent_quote_id}`
             : `${appUrl}/invoice-payment-success?invoice=${invoiceId}&session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${appUrl}/invoice/${invoiceId}?cancelled=true`,
+        // Back to the pay page — `/invoice/:id` was never a route, so a client
+        // who pressed back on Stripe landed on nothing.
+        cancel_url: `${payPageUrl}?cancelled=1`,
         metadata: {
           invoice_id: invoiceId,
           invoice_number: invoice.invoice_number,
@@ -305,7 +316,7 @@ serve(async (req) => {
       .from('invoices')
       .update(
         {
-          stripe_payment_link_url: session.url,
+          stripe_payment_link_url: payPageUrl,
           stripe_checkout_session_id: session.id,
         },
         { count: 'exact' }
@@ -317,7 +328,7 @@ serve(async (req) => {
       await supabaseAdmin
         .from('quotes')
         .update({
-          stripe_payment_link_url: session.url,
+          stripe_payment_link_url: payPageUrl,
           stripe_checkout_session_id: session.id,
         })
         .eq('id', invoiceId);
@@ -325,7 +336,10 @@ serve(async (req) => {
 
     return new Response(
       JSON.stringify({
-        url: session.url,
+        // What every caller puts in front of the client: the permanent page.
+        url: payPageUrl,
+        // The live session, for `invoice-pay` to redirect to. Expires in 24h.
+        checkoutUrl: session.url,
         sessionId: session.id,
         invoiceNumber: invoice.invoice_number,
         amount: chargeableTotal,

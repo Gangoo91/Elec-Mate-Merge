@@ -204,7 +204,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>City and Guilds 2391 (Inspection and Testing)</strong> — the traditional
                 single-unit qualification for electricians carrying out inspection and testing work.
@@ -214,7 +214,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>City and Guilds 2394 (Design and Verification)</strong> — covers the design
                 and verification of new electrical installations, including producing Electrical
@@ -223,7 +223,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>City and Guilds 2395 (Inspection, Testing and Certification)</strong> —
                 covers the periodic inspection, testing, and certification of existing electrical
@@ -233,7 +233,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>City and Guilds 2382 (18th Edition BS 7671)</strong> — confirms knowledge of
                 the current edition of the IET Wiring Regulations. Must be kept current — the 18th
@@ -267,7 +267,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Multi-Function Tester (MFT)</strong> — the core instrument for EICR work.
                 Must be capable of: low-resistance continuity testing (earth continuity and circuit
@@ -277,7 +277,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Proving unit</strong> — use a proving unit to verify the MFT is functioning
                 correctly before beginning each inspection. Do not rely on the instrument's
@@ -285,7 +285,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Two-wire or three-wire earth loop tester</strong> — for Zs testing in
                 high-impedance circuits or where the standard MFT Zs function may not be
@@ -293,7 +293,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Calibration certificates</strong> — keep calibration certificates for all
                 instruments and be prepared to produce them if requested. Local authority
@@ -327,7 +327,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Schedule of Inspections</strong> — a tick-list based on Part 6 and Part 7 of
                 BS 7671. Each item is marked as compliant (tick), not applicable (N/A), or defective
@@ -338,7 +338,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Schedule of Test Results</strong> — records the actual measurements for each
                 circuit: circuit description and reference, type and rating of overcurrent
@@ -349,7 +349,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Observations list</strong> — each defect or departure from BS 7671 must be
                 listed with: a description of the observation, its location, the relevant regulation
@@ -493,7 +493,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI Board Scanning</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -553,7 +553,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs correctly and efficiently with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion. AI board scanning, voice test entry, correct C1/C2/C3/FI classification…"
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion. AI board scanning, voice test entry, correct C1/C2/C3/FI classification…"
           icon={FileCheck2}
         />
       </>
@@ -579,7 +579,7 @@ export default function EICRContractorGuidePage() {
       heroTitle={
         <>
           EICR Contractor Guide:{' '}
-          <span className="text-yellow-400">How to Carry Out EICRs Correctly</span>
+          <span className="text-elec-yellow">How to Carry Out EICRs Correctly</span>
         </>
       }
       heroSubtitle="A complete guide for qualified electricians carrying out EICRs. Covers who is legally qualified to inspect, the 2391/2394/2395 qualification framework, test instruments and calibration, completing the schedule of inspections and test results, observation classification, common mistakes, and how to use Elec-Mate to complete EICRs efficiently on site."
@@ -590,7 +590,7 @@ export default function EICRContractorGuidePage() {
       faqHeading="Frequently Asked Questions: EICR for Electrical Contractors"
       relatedPages={relatedPages}
       ctaHeading="Complete More EICRs Per Day with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion. AI board scanning, voice test entry, instant PDF export, and remediation quoting — all on your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion. AI board scanning, voice test entry, instant PDF export, and remediation quoting — all on your phone. 7-day free trial, cancel anytime."
     />
   );
 }

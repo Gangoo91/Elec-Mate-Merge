@@ -176,7 +176,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Initial verification of a new TT installation.</strong> Before the
                 installation is energised, the earth electrode resistance must be measured and
@@ -187,7 +187,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Periodic inspection of an existing TT system.</strong> Every{' '}
                 <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> for a
@@ -196,7 +196,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>After installing or replacing an earth electrode.</strong> Any new or
                 replacement electrode must be tested before the earthing conductor is connected and
@@ -204,7 +204,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Investigating a fault or high Zs reading.</strong> If earth fault loop
                 impedance readings on a TT system are unexpectedly high, testing the earth electrode
@@ -213,7 +213,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Seasonal verification.</strong> Where a borderline earth electrode
                 resistance was recorded, a follow-up test during dry conditions confirms the
@@ -311,7 +311,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <p className="text-white">
               <strong>Site access tip:</strong> On confined sites where you cannot achieve 30 metres
               between E and C, try to get the maximum distance possible and use the 52%/62%/72%
@@ -362,7 +362,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-1">
             Maximum Earth Fault Loop Impedance (Z<sub>s</sub>) by RCD Rating
           </h3>
-          <p className="text-white/60 text-xs mb-4">
+          <p className="text-white text-xs mb-4">
             BS 7671 Table 41.5 — non-delayed and time-delayed &lsquo;S&rsquo; type RCDs to BS EN
             61008-1 / 61009-1, U<sub>0</sub> = 230 V. Disconnection within the times of Table 41.1.
           </p>
@@ -381,7 +381,7 @@ const sections = [
               30 mA
             </div>
             <div className="bg-green-900/30 border-b border-white/10 px-3 py-2 text-white">1667*</div>
-            <div className="bg-green-900/30 border-b border-white/10 px-3 py-2 text-white/70">
+            <div className="bg-green-900/30 border-b border-white/10 px-3 py-2 text-white">
               1667 &Omega;
             </div>
 
@@ -389,23 +389,23 @@ const sections = [
               100 mA
             </div>
             <div className="bg-blue-900/30 border-b border-white/10 px-3 py-2 text-white">500*</div>
-            <div className="bg-blue-900/30 border-b border-white/10 px-3 py-2 text-white/70">
+            <div className="bg-blue-900/30 border-b border-white/10 px-3 py-2 text-white">
               500 &Omega;
             </div>
 
-            <div className="bg-amber-900/30 border-b border-white/10 px-3 py-2 text-white font-medium">
+            <div className="bg-white/[0.06] border-b border-white/10 px-3 py-2 text-white font-medium">
               300 mA
             </div>
-            <div className="bg-amber-900/30 border-b border-white/10 px-3 py-2 text-white">167</div>
-            <div className="bg-amber-900/30 border-b border-white/10 px-3 py-2 text-white/70">
+            <div className="bg-white/[0.06] border-b border-white/10 px-3 py-2 text-white">167</div>
+            <div className="bg-white/[0.06] border-b border-white/10 px-3 py-2 text-white">
               167 &Omega;
             </div>
 
             <div className="bg-red-900/30 px-3 py-2 text-white font-medium">500 mA</div>
             <div className="bg-red-900/30 px-3 py-2 text-white">100</div>
-            <div className="bg-red-900/30 px-3 py-2 text-white/70">100 &Omega;</div>
+            <div className="bg-red-900/30 px-3 py-2 text-white">100 &Omega;</div>
           </div>
-          <p className="text-white/70 text-xs mt-4">
+          <p className="text-white text-xs mt-4">
             * Note 2 to Table 41.5: the resistance of the installation earth electrode should be as
             low as practicable — a value exceeding 200 &Omega; may not be stable (see Regulation
             542.2.4). So although the arithmetic limit for a 30 mA RCD is 1667 &Omega;, the practical
@@ -612,13 +612,13 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Record the value in ohms</strong> — for example, "RA = 47 ohms."
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Record the electrode type and location.</strong> Good practice (and IET
                 Guidance Note 3) is to record the type (e.g. copper-clad rod, plate), location (e.g.
@@ -627,21 +627,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Note the test method used</strong> — "fall of potential (3-pin)" or
                 "stakeless clamp" if applicable.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Note weather and soil conditions</strong> — "tested in dry conditions" or
                 "tested after prolonged rain." This provides context for the reading.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Note any limitations</strong> — if test spike distances were restricted,
                 record the actual distances used and any uncertainty.
@@ -689,7 +689,7 @@ export default function EarthElectrodeTestPage() {
       heroTitle={
         <>
           Earth Electrode Testing:{' '}
-          <span className="text-yellow-400">TT System Guide for UK Electricians</span>
+          <span className="text-elec-yellow">TT System Guide for UK Electricians</span>
         </>
       }
       heroSubtitle="Every TT installation depends on its earth electrode. If the resistance is too high, the RCD cannot disconnect the supply fast enough to prevent injury. This guide covers the fall of potential method, acceptable values, instrument setup, and how to record results on your EICR or EIC."
@@ -700,7 +700,7 @@ export default function EarthElectrodeTestPage() {
       faqHeading="Frequently Asked Questions About Earth Electrode Testing"
       relatedPages={relatedPages}
       ctaHeading="Record Earth Electrode Results by Voice"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to complete EICR and EIC certificates on site. Voice test entry, AI defect coding, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to complete EICR and EIC certificates on site. Voice test entry, AI defect coding, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

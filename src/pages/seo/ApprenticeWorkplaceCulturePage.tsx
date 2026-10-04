@@ -556,7 +556,7 @@ export default function ApprenticeWorkplaceCulturePage() {
       badgeIcon={Users}
       heroTitle={
         <>
-          Workplace Culture for <span className="text-yellow-400">Electrical Apprentices</span>
+          Workplace Culture for <span className="text-elec-yellow">Electrical Apprentices</span>
         </>
       }
       heroSubtitle="Fitting in on a construction site, professional behaviour, communication, mentoring, and dealing with bullying. The unwritten rules of site culture that nobody teaches you at college — but everyone expects you to know."

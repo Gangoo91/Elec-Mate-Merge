@@ -41,7 +41,7 @@ export default function AIInstallationVerificationPage() {
       badgeIcon={ShieldCheck}
       heroTitle={
         <>
-          <span className="text-yellow-400">AI Installation Verification</span> — Automated Quality
+          <span className="text-elec-yellow">AI Installation Verification</span> — Automated Quality
           Checks to BS 7671
         </>
       }
@@ -469,7 +469,7 @@ export default function AIInstallationVerificationPage() {
         },
       ]}
       ctaHeading="Verify installations with confidence"
-      ctaSubheading="Join 1,600+ UK electricians using AI-powered verification to catch non-compliances before they reach the certificate. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using AI-powered verification to catch non-compliances before they reach the certificate. 7-day free trial, cancel anytime."
     />
   );
 }

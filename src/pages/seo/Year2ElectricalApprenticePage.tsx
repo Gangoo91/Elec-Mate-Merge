@@ -229,7 +229,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test voltage</strong> — for 230V circuits (the vast majority of domestic
                 work), you apply 500V DC from your MFT. This is higher than the working voltage to
@@ -237,14 +237,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minimum value</strong> — BS 7671 Table 64 requires a minimum of 1.0 megohms
                 for circuits up to 500V. In practice, a healthy circuit reads 200 megohms or more.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What to test</strong> — test between phase and earth (L-E), neutral and
                 earth (N-E), and phase and neutral (L-N). All three readings must exceed the minimum
@@ -338,7 +338,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Zs = Ze + (R1+R2)</strong> — the earth fault loop impedance at a point
                 equals the external earth fault loop impedance (Ze, from the supply) plus the
@@ -347,7 +347,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maximum Zs values</strong> — BS 7671 Table 41.3 lists the maximum Zs values
                 for different protective devices and ratings. For a 32A Type B MCB (common for ring
@@ -356,7 +356,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Temperature correction</strong> — Zs is measured at ambient temperature, but
                 conductor resistance increases when the circuit is carrying load. Apply a correction
@@ -566,7 +566,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Brain className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">46+ Courses with Testing Modules</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -645,7 +645,7 @@ export default function Year2ElectricalApprenticePage() {
       heroTitle={
         <>
           Year 2 Apprentice Testing:{' '}
-          <span className="text-yellow-400">Every Core Test, Every Step, Plain English</span>
+          <span className="text-elec-yellow">Every Core Test, Every Step, Plain English</span>
         </>
       }
       heroSubtitle="Testing is the skill that separates a competent electrician from someone who just wires things up. This guide explains every core test — continuity, insulation resistance, polarity, earth loop impedance, and RCD — in apprentice-friendly language with no jargon left unexplained."

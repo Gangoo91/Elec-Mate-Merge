@@ -474,11 +474,11 @@ const AM2Module5Section5 = () => {
                 effectiveness is verified by a <strong>single test at ×1 IΔn</strong> (i.e. at the
                 rated 30 mA test current): a general non-delay RCD must disconnect within{' '}
                 <strong>300 ms</strong> maximum (a delay 'S' type, between 130 ms and 500 ms). The
-                old Table 3A and the ×5 IΔn / 40 ms test were deleted in A4:2026, so the single ×1
+                old Table 3A and the ×5 IΔn / 40 ms test were deleted in A2:2022, so the single ×1
                 IΔn test is now the requirement after any earth fault repair.
               </>
             }
-            cite="Reference: BS 7671 Part 6 — Reg 643.8 (Table 3A deleted in A4:2026)"
+            cite="Reference: BS 7671 Part 6 — Reg 643.8 (Table 3A deleted in A2:2022)"
           />
 
           {/* What Assessors Look For */}

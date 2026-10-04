@@ -242,7 +242,7 @@ const sections = [
         </p>
         <div className="space-y-3 my-4">
           <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
               L1
             </div>
             <div>
@@ -256,7 +256,7 @@ const sections = [
             </div>
           </div>
           <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
               L2
             </div>
             <div>
@@ -269,7 +269,7 @@ const sections = [
             </div>
           </div>
           <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
               L3
             </div>
             <div>
@@ -284,7 +284,7 @@ const sections = [
             </div>
           </div>
           <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
               L4
             </div>
             <div>
@@ -298,7 +298,7 @@ const sections = [
             </div>
           </div>
           <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
               L5
             </div>
             <div>
@@ -561,7 +561,7 @@ export default function FireAlarmSystemsCoursePage() {
       badgeIcon={Flame}
       heroTitle={
         <>
-          Fire Alarm Systems Course: <span className="text-yellow-400">BS 5839 Training</span>
+          Fire Alarm Systems Course: <span className="text-elec-yellow">BS 5839 Training</span>
         </>
       }
       heroSubtitle="Master fire detection and alarm systems with comprehensive BS 5839 training. System categories L1-L5, grades A-F, detector types, zoning, commissioning, and maintenance. 8 modules with video content, interactive quizzes, and AI-powered study tools."
@@ -579,7 +579,7 @@ export default function FireAlarmSystemsCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Ready to specialise in fire alarm systems?"
-      ctaSubheading="Join 1,600+ UK electricians studying smarter with Elec-Mate. 8 structured modules, interactive quizzes, video content, and an AI tutor for any BS 5839 question. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians studying smarter with Elec-Mate. 8 structured modules, interactive quizzes, video content, and an AI tutor for any BS 5839 question. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/fire-alarm-systems"
     />

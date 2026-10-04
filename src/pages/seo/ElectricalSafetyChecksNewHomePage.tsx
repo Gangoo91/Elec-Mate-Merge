@@ -178,7 +178,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Calendar className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calendar className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong>When to commission</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
@@ -195,7 +195,7 @@ const sections = [
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <Calendar className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calendar className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong>What the EICR covers</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
@@ -208,7 +208,7 @@ const sections = [
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <Calendar className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calendar className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong>Satisfactory vs Unsatisfactory</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
@@ -351,7 +351,7 @@ const sections = [
               unprotected. A nuisance trip on the single RCD disconnects multiple circuits.
             </p>
             <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-yellow-400 shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-elec-yellow shrink-0" />
               <span className="text-white text-sm font-semibold">
                 Acceptable but improvement possible
               </span>
@@ -521,7 +521,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EICR on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -600,7 +600,7 @@ export default function ElectricalSafetyChecksNewHomePage() {
       heroTitle={
         <>
           Electrical Safety Checks:{' '}
-          <span className="text-yellow-400">Buying a New Home in the UK</span>
+          <span className="text-elec-yellow">Buying a New Home in the UK</span>
         </>
       }
       heroSubtitle="The electrical installation is rarely covered in a standard homebuyer survey. This guide explains how to assess the electrical safety of a property you are buying — wiring age indicators, consumer unit types, red flags, and when to commission an EICR."

@@ -142,7 +142,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Heavy gauge steel conduit (Class 3)</strong> — the standard for commercial
                 and industrial fixed wiring. Manufactured to BS EN 61386-21. Threaded at joints and
@@ -152,7 +152,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Light gauge steel conduit (BESA)</strong> — thinner wall, lighter weight.
                 Used for flexible conduit drops to luminaires and equipment rather than fixed wiring
@@ -160,7 +160,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PVC conduit (round and oval)</strong> — lightweight, non-conductive,
                 corrosion-resistant. Easier to cut and join than steel. Cannot serve as a CPC. Used
@@ -169,7 +169,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Flexible conduit</strong> — steel wire armoured flexible tube used for final
                 connections to motors, luminaires, and equipment where vibration or movement is
@@ -203,7 +203,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mechanical protection</strong> — steel conduit provides the highest level of
                 mechanical protection for cables, suitable for areas subject to impact, vandalism,
@@ -212,7 +212,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing function</strong> — a correctly installed and continuously threaded
                 steel conduit system can serve as the circuit protective conductor (CPC/earth) for
@@ -221,7 +221,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Finishes</strong> — bright (uncoated, for internal dry use), black enamel
                 (additional corrosion protection), and hot-dip galvanised (for outdoor, damp, or
@@ -247,7 +247,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Round PVC conduit</strong> — standard surface-mounted conduit for domestic
                 and commercial skirting wiring, garage wiring, and utility rooms. Solvent-welded
@@ -255,7 +255,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Oval PVC conduit</strong> — used for chasing into plaster in domestic first
                 fix wiring. The oval profile is lower profile in a plaster chase than round conduit
@@ -264,7 +264,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Expansion couplings required</strong> — in PVC conduit runs exceeding
                 approximately 6m, expansion (slip) couplings must be fitted to accommodate thermal
@@ -290,7 +290,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minimum bend radius</strong> — for heavy gauge steel conduit, the minimum
                 internal radius is 2.5× the conduit internal diameter (approximately 4× the external
@@ -299,7 +299,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Conduit bender types</strong> — hand-operated benders (hickey benders) for
                 16mm and 20mm conduit; hydraulic or ratchet benders for 25mm and above. Always use a
@@ -307,7 +307,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Right-angle bends</strong> — a 90° bend with a smooth radius. Mark the
                 starting point of the bend on the conduit, insert into the bender at the mark, and
@@ -316,7 +316,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sets and offsets</strong> — used to move the conduit run out of plane to
                 clear obstacles. A set is two bends in opposite directions. An offset is a set where
@@ -325,7 +325,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PVC conduit bending</strong> — PVC conduit can be bent using a spring bender
                 (inserted inside the conduit) or a hot-air gun. Spring benders prevent the PVC from
@@ -351,7 +351,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Leave a draw wire</strong> — always leave a draw wire in the conduit during
                 installation, even if cables are being installed immediately. The draw wire allows
@@ -359,7 +359,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Draw wire materials</strong> — galvanised steel draw wire (traditional),
                 nylon draw tape (lighter and less likely to kink), and glass-fibre draw rods (for
@@ -368,7 +368,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable lubricant</strong> — apply cable pulling lubricant (pulling compound)
                 to cables before drawing through long runs. This reduces friction significantly and
@@ -393,7 +393,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inspection boxes</strong> — steel conduit boxes with removable covers allow
                 access to the conduit run for cable drawing. BS 7671 requires that all joints and
@@ -402,7 +402,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maximum run between draw boxes</strong> — in practice, the maximum run
                 between access points should not exceed approximately 10m on straight runs, reducing
@@ -411,7 +411,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Steel vs plastic boxes</strong> — steel (BESA) back boxes for steel conduit
                 runs; plastic back boxes for PVC conduit. The box depth must accommodate the
@@ -436,7 +436,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Die stock and dies</strong> — steel conduit threads are cut with a die stock
                 holding the correct size die (16mm, 20mm, 25mm, 32mm). The die is run onto the
@@ -445,7 +445,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Thread length</strong> — cut a minimum of 5 full thread turns for engagement
                 in a standard coupler or box entry. Cut more for junction boxes with locknuts — the
@@ -453,7 +453,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth continuity at threads</strong> — for steel conduit to serve as the
                 CPC, threaded connections must be mechanically tight and electrically continuous.
@@ -478,7 +478,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PVC conduit</strong> — expansion (slip) couplings required at approximately
                 every 6m on straight runs and wherever the conduit crosses a temperature change
@@ -487,7 +487,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Steel conduit</strong> — expansion couplings are required wherever conduit
                 crosses a structural expansion joint in a building, or in long exposed runs subject
@@ -498,7 +498,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth bond across expansion coupling</strong> — where an expansion coupling
                 is fitted in a steel conduit run used as a CPC, a separate earth bond conductor must
@@ -523,7 +523,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>System earth connection</strong> — the conduit system must be connected to
                 the main earthing terminal at the origin of the installation. The connection point
@@ -531,7 +531,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth continuity testing</strong> — after completion, measure earth
                 continuity from the furthest conduit box back to the MET using a low-resistance
@@ -610,7 +610,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Certify Conduit Installations on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -654,7 +654,7 @@ export default function ConduitInstallationGuidePage() {
       heroTitle={
         <>
           Conduit Installation Guide UK:{' '}
-          <span className="text-yellow-400">Steel and Plastic Conduit Wiring</span>
+          <span className="text-elec-yellow">Steel and Plastic Conduit Wiring</span>
         </>
       }
       heroSubtitle="The complete guide to conduit installation — heavy gauge steel, light gauge, and PVC conduit; bending; draw wires; thread cutting; expansion couplings; earthing steel conduit as a CPC; and fire stopping at penetrations."
@@ -665,7 +665,7 @@ export default function ConduitInstallationGuidePage() {
       faqHeading="Frequently Asked Questions About Conduit Installation"
       relatedPages={relatedPages}
       ctaHeading="Complete Conduit Installation Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to certify wiring installations on site. Record earth continuity, loop impedance, and test results — instant PDF export. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to certify wiring installations on site. Record earth continuity, loop impedance, and test results — instant PDF export. 7-day free trial."
     />
   );
 }

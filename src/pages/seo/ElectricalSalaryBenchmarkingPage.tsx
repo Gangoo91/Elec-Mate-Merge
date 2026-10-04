@@ -194,7 +194,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Stage 1 — £8.16/hour</strong> (£9.14 in the JIB London Zone). The legal
                 minimum (NMW apprentice rate from 1 April 2026) is £8.00/hour; JIB employers
@@ -202,7 +202,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Stage 2 — £10.60/hour</strong> (£11.88 London Zone). From Stage 2, if the
                 apprentice is 19 or older, the NMW for their age band applies instead if higher.
@@ -210,7 +210,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Stage 3 — £13.05/hour</strong> (£14.62 London Zone). The apprentice is
                 now capable of undertaking most standard installation tasks under supervision.
@@ -218,7 +218,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Stage 4 — £14.03/hour</strong> (£15.72 London Zone). Final apprenticeship
                 stage — the apprentice is preparing for their end-point assessment
@@ -249,7 +249,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>London Zone rates (Transport Provided)</strong> — from 5 January 2026: Site
                 or Installation Technician £25.47/hour, Approved Electrician £22.48/hour,
@@ -258,7 +258,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Difference against the national rate</strong> — the London Approved
                 Electrician rate of £22.48 is £2.40/hour above the £20.08 national rate; for an
@@ -267,7 +267,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Market premium above JIB</strong> — in reality, the London market often pays
                 significantly above JIB minimums, particularly on major commercial, infrastructure,
@@ -276,7 +276,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ULEZ and congestion charge</strong> — electricians working in central London
                 incur additional costs (ULEZ charge of £12.50/day, congestion charge of £15/day).
@@ -302,7 +302,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>South East (excluding London)</strong> — typically 5 to 10% above national
                 JIB rates. Areas such as Surrey, Hertfordshire, and Berkshire have high labour
@@ -310,7 +310,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Midlands and North of England</strong> — typically at or close to the JIB
                 national rate, with some premium in major city centres (Manchester, Birmingham,
@@ -318,7 +318,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Scotland</strong> — SELECT (the trade association for electrical contractors
                 in Scotland, formerly known as SELECT — Promoting Electrical Safety) sets rates for
@@ -329,7 +329,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Specialist sectors</strong> — data centres, offshore, nuclear, and rail
                 electrification projects pay significant premiums above JIB rates due to specialist
@@ -355,7 +355,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Overtime rates</strong> — the JIB WRA sets overtime premiums: typically
                 time-and-a-quarter (1.25x) for Monday to Friday overtime, time-and-a-half (1.5x) for
@@ -365,7 +365,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Shift work allowances</strong> — electricians working early morning, late
                 evening, or night shifts are entitled to shift premiums under the WRA. Night shifts
@@ -374,7 +374,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hazard money</strong> — the WRA specifies categories of hazardous work
                 attracting additional payments: work at height (above specified levels), confined
@@ -383,7 +383,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Travel time and mileage</strong> — under the JIB WRA, travel time to and
                 from site is paid at applicable rates. Mileage reimbursement applies when using your
@@ -392,7 +392,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lodging and responsibility money</strong> — from 5 January 2026 the lodging
                 allowance is £53.09 per night, with holiday retention up to £17.46 per night
@@ -419,7 +419,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1 — Establish your JIB grade</strong> — if you are employed by a JIB
                 employer, confirm your current JIB grade. Your ECS Card shows your grade. If your
@@ -428,7 +428,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2 — Check current market rates</strong> — search live job listings on
                 Indeed, Reed, and the ECA Jobs Board for comparable roles in your area. Note both
@@ -437,7 +437,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 3 — Calculate total compensation</strong> — add up base pay, typical
                 overtime earnings, shift premium, mileage reimbursement, and the value of employer
@@ -445,7 +445,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 4 — Consider non-pay benefits</strong> — employer pension contributions
                 above the auto-enrolment minimum, private medical insurance, income protection, and
@@ -471,7 +471,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Request a formal meeting</strong> — do not raise pay in passing. Ask for a
                 dedicated meeting with your manager. This signals that you are serious and gives
@@ -479,7 +479,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lead with market data</strong> — present the JIB rate for your grade and
                 comparable market rates. If your employer is paying below the JIB minimum for your
@@ -488,7 +488,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Quantify your contribution</strong> — list certificates issued in your name,
                 projects you have led, apprentices you have mentored, and any additional
@@ -497,7 +497,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Have an alternative if needed</strong> — knowing your market value gives you
                 confidence. If your employer refuses a reasonable rise despite clear market
@@ -524,13 +524,13 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-3">True Cost of an Electrician to an Employer</h4>
-          <p className="text-white/80 text-sm leading-relaxed mb-3">
+          <p className="text-white text-sm leading-relaxed mb-3">
             JIB grade rates are the starting point, not the total cost. When budgeting for an
             employed electrician, employers should account for the full overhead-inclusive labour
             rate. A JIB Approved Electrician at £20.08/hour carries significantly higher total
             employment cost once the following are factored in:
           </p>
-          <ul className="space-y-2 text-white/80 text-sm">
+          <ul className="space-y-2 text-white text-sm">
             <li>
               <strong className="text-white">Employer's National Insurance</strong> — 13.8% on
               earnings above the secondary threshold (£9,100/year for 2025/26), adding approximately
@@ -552,7 +552,7 @@ const sections = [
               overheads can add 30 to 50% above the base hourly rate.
             </li>
           </ul>
-          <p className="text-white/70 text-sm mt-3">
+          <p className="text-white text-sm mt-3">
             For self-employed contractors, these same costs fall on the individual — which is why a
             comparable self-employed day rate must be set well above the implied employed hourly
             equivalent to be commercially viable.
@@ -561,7 +561,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <PoundSterling className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Quote Your True Hourly Rate</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -617,7 +617,7 @@ export default function ElectricalSalaryBenchmarkingPage() {
       heroTitle={
         <>
           Electrician Salary Benchmarking UK 2026:{' '}
-          <span className="text-yellow-400">JIB Pay Rates Guide</span>
+          <span className="text-elec-yellow">JIB Pay Rates Guide</span>
         </>
       }
       heroSubtitle="JIB national grade rates effective 5 January 2026, apprentice pay by stage, London Zone rates, regional variations, shift allowances, hazard money, and a step-by-step guide to benchmarking your pay and negotiating a rise."
@@ -633,7 +633,7 @@ export default function ElectricalSalaryBenchmarkingPage() {
       faqHeading="Frequently Asked Questions About Electrician Pay Rates"
       relatedPages={relatedPages}
       ctaHeading="Run a more profitable electrical business with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, invoicing, electrical certificates, and job scheduling. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for quoting, invoicing, electrical certificates, and job scheduling. 7-day free trial, cancel anytime."
     />
   );
 }

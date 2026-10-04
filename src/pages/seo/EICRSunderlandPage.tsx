@@ -152,7 +152,7 @@ const sections = [
               </span>
               <div>
                 <p className="font-bold text-white mb-1">Danger present — risk of injury</p>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   An immediate danger exists. The inspector may recommend isolating the affected
                   circuit there and then. Makes the report Unsatisfactory; the landlord must act
                   urgently.
@@ -167,7 +167,7 @@ const sections = [
               </span>
               <div>
                 <p className="font-bold text-white mb-1">Potentially dangerous</p>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Not immediately dangerous, but urgent remedial action is required. Makes the report
                   Unsatisfactory; landlords must complete rectification within 28 days under the 2020
                   Regulations.
@@ -182,7 +182,7 @@ const sections = [
               </span>
               <div>
                 <p className="font-bold text-white mb-1">Improvement recommended</p>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Does not meet current standards but is not dangerous. The report can still be
                   Satisfactory. No mandatory action under the regulations, but advisable to address
                   over time.
@@ -190,14 +190,14 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-900/30 border border-yellow-700/40 p-5">
+          <div className="rounded-2xl bg-white/[0.06] border border-yellow-700/40 p-5">
             <div className="flex items-start gap-3">
-              <span className="inline-flex items-center justify-center w-12 h-8 rounded-lg bg-yellow-500/20 text-yellow-300 font-bold text-sm shrink-0">
+              <span className="inline-flex items-center justify-center w-12 h-8 rounded-lg bg-elec-yellow text-black font-bold text-sm shrink-0">
                 FI
               </span>
               <div>
                 <p className="font-bold text-white mb-1">Further investigation required</p>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   An issue exists that cannot be fully assessed without additional investigation. An
                   FI on its own also makes the report Unsatisfactory and should be arranged promptly.
                 </p>
@@ -226,7 +226,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Five-year maximum:</strong> The electrical installation must be inspected
                 and tested at intervals of no more than five years. If the current EICR is older
@@ -234,7 +234,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New tenancies:</strong> A valid EICR must be provided to new tenants before
                 they take occupation of the property. If no valid EICR exists, one must be obtained
@@ -242,14 +242,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Existing tenants:</strong> A copy of the EICR must be supplied to all
                 existing tenants within 28 days of the inspection.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Council requests:</strong> If Sunderland City Council requests the EICR, the
                 landlord must provide it within seven days.
@@ -281,7 +281,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Civil penalties up to £30,000:</strong> Each breach of the regulations
                 attracts a separate civil penalty. Failing to obtain an EICR, failing to share it
@@ -289,7 +289,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Remedial notices:</strong> The council can serve a remedial notice on a
                 non-compliant landlord. If the landlord fails to carry out the work, the council can
@@ -297,7 +297,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Section 21 restriction:</strong> A landlord who has not provided the tenant
                 with a valid EICR cannot serve a valid Section 21 notice for possession. This is a
@@ -305,7 +305,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HHSRS assessments:</strong> The council also enforces the Housing Health and
                 Safety Rating System (HHSRS), under which electrical hazards can trigger improvement
@@ -349,44 +349,44 @@ const sections = [
             <tbody>
               <tr className="border-b border-white/5">
                 <td className="px-4 py-3 font-medium">One-bedroom flat</td>
-                <td className="px-4 py-3 text-right text-yellow-300 font-semibold whitespace-nowrap">
+                <td className="px-4 py-3 text-right text-elec-yellow font-semibold whitespace-nowrap">
                   £150–£180
                 </td>
-                <td className="px-4 py-3 text-white/70 hidden sm:table-cell">
+                <td className="px-4 py-3 text-white hidden sm:table-cell">
                   Purpose-built flats in the city centre or Roker
                 </td>
               </tr>
               <tr className="border-b border-white/5">
                 <td className="px-4 py-3 font-medium">Two-bedroom property</td>
-                <td className="px-4 py-3 text-right text-yellow-300 font-semibold whitespace-nowrap">
+                <td className="px-4 py-3 text-right text-elec-yellow font-semibold whitespace-nowrap">
                   £180–£260
                 </td>
-                <td className="px-4 py-3 text-white/70 hidden sm:table-cell">
+                <td className="px-4 py-3 text-white hidden sm:table-cell">
                   Most common rental type; older terraces in Pallion or Ford sit higher
                 </td>
               </tr>
               <tr className="border-b border-white/5">
                 <td className="px-4 py-3 font-medium">Three-bedroom house</td>
-                <td className="px-4 py-3 text-right text-yellow-300 font-semibold whitespace-nowrap">
+                <td className="px-4 py-3 text-right text-elec-yellow font-semibold whitespace-nowrap">
                   £220–£300
                 </td>
-                <td className="px-4 py-3 text-white/70 hidden sm:table-cell">
+                <td className="px-4 py-3 text-white hidden sm:table-cell">
                   Semi-detached or terraced in Washington or Houghton-le-Spring
                 </td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-medium">HMO or four-bedroom plus</td>
-                <td className="px-4 py-3 text-right text-yellow-300 font-semibold whitespace-nowrap">
+                <td className="px-4 py-3 text-right text-elec-yellow font-semibold whitespace-nowrap">
                   £300–£500+
                 </td>
-                <td className="px-4 py-3 text-white/70 hidden sm:table-cell">
+                <td className="px-4 py-3 text-white hidden sm:table-cell">
                   Multiple consumer units and extra circuits add inspection time
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
-        <p className="text-white/60 text-sm">
+        <p className="text-white text-sm">
           Prices are indicative market guidance for 2026, not a quote. The inspection and report are
           covered by these figures; remedial work is quoted and charged separately.
         </p>
@@ -459,7 +459,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Old consumer units without RCD protection:</strong> Properties with
                 rewirable fuse boards or early MCB boards without RCDs are very common in
@@ -468,7 +468,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Deteriorated wiring:</strong> Pre-1970 rubber-insulated wiring and
                 fabric-sheathed cables are frequently found in older Sunderland terraces and
@@ -477,7 +477,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inadequate bonding:</strong> Missing or undersized main protective bonding
                 conductors to gas and water services are common in ex-local authority and older
@@ -485,7 +485,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Overloaded circuits:</strong> In student HMOs and converted properties,
                 circuits are sometimes extended beyond their original design capacity. Evidence of
@@ -493,7 +493,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lighting circuits without RCD protection (A4:2026):</strong> Reg 411.3.4 of
                 BS 7671:2018+A4:2026 requires that AC final circuits supplying luminaires in
@@ -509,7 +509,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Absence of arc fault detection devices (AFDD) — Reg 421.1.7:</strong> Reg
                 421.1.7 of BS 7671:2018+A4:2026 recommends the installation of arc fault detection
@@ -538,7 +538,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mandatory HMO licensing:</strong> Properties with five or more occupants in
                 two or more households require a mandatory HMO licence from Sunderland City Council.
@@ -546,7 +546,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire alarm systems:</strong> HMOs require interlinked fire detection and
                 alarm systems. The fire alarm system is part of the fixed electrical installation
@@ -554,7 +554,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency lighting:</strong> Where required under licence conditions,
                 emergency lighting is also included in the EICR inspection. Landlords should confirm
@@ -562,7 +562,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Unlicensed HMOs:</strong> Operating an unlicensed HMO in Sunderland is a
                 criminal offence that can result in prosecution, an unlimited fine, and a banning
@@ -588,7 +588,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete EICRs On Site in Sunderland</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -648,7 +648,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your EICR business in Sunderland with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate to complete EICRs on site, scan boards with AI, and export instant PDFs. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate to complete EICRs on site, scan boards with AI, and export instant PDFs. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -674,7 +674,7 @@ export default function EICRSunderlandPage() {
       heroTitle={
         <>
           EICR Sunderland:{' '}
-          <span className="text-yellow-400">Electrical Inspection Requirements</span>
+          <span className="text-elec-yellow">Electrical Inspection Requirements</span>
         </>
       }
       heroSubtitle="Everything Sunderland landlords and homeowners need to know about EICR — legal requirements under the 2020 Regulations, Sunderland City Council enforcement, inspection costs, common findings in Sunderland's housing stock, and HMO obligations."
@@ -690,7 +690,7 @@ export default function EICRSunderlandPage() {
       faqHeading="Frequently Asked Questions About EICR in Sunderland"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs On Site — Anywhere in the North East"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -222,7 +222,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Phone className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Phone className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Construction Industry Helpline — 0345 605 1956
@@ -296,7 +296,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <Heart className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Heart className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lighthouse Construction Industry Charity</strong> — the primary mental
                 health and welfare charity for the UK construction industry. Operates the
@@ -307,7 +307,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Heart className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Heart className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mates in Mind</strong> — a charitable programme improving and promoting
                 positive mental health within the UK construction industry. Provides mental health
@@ -317,7 +317,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Heart className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Heart className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Band of Builders</strong> — a charity that mobilises construction industry
                 volunteers to carry out home adaptations for tradespeople and their families who
@@ -326,7 +326,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Heart className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Heart className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NAPIT Foundation</strong> — provides welfare support for NAPIT registered
                 members and their families, including signposting to mental health services and
@@ -334,7 +334,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Heart className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Heart className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ECA (Electrical Contractors Association)</strong> — the ECA has an employee
                 assistance programme available to member companies and their staff, providing
@@ -359,7 +359,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Isolation mitigation</strong> — deliberately maintain social contact.
                 Joining local trade associations, attending industry events, and building
@@ -369,7 +369,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Financial stress management</strong> — maintain 3 months of operating costs
                 as a cash buffer in a business account. This single measure removes the anxiety
@@ -379,7 +379,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Work boundaries</strong> — self-employed workers are often "always on". Set
                 defined working hours and defend them. Do not take client calls in the evening or at
@@ -389,7 +389,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Access to your GP</strong> — do not delay seeking help from your GP for
                 mental health symptoms. As a self-employed worker you have the same right to NHS
@@ -419,7 +419,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Users className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Make it normal to talk</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -461,7 +461,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Health and Safety at Work Act 1974</strong> — the general duty to ensure, so
                 far as reasonably practicable, the health, safety, and welfare of employees
@@ -469,7 +469,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Management of Health and Safety at Work Regulations 1999</strong> — require
                 employers to assess risks to mental health (including stress) and to take preventive
@@ -478,7 +478,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Equality Act 2010</strong> — mental health conditions that have a
                 substantial and long-term adverse effect on normal day-to-day activities are likely
@@ -487,7 +487,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Practical minimum steps for electrical contractors with staff</strong> —
                 display the Construction Industry Helpline number in the office and van; include
@@ -522,7 +522,7 @@ export default function ElectricianMentalHealthSupportPage() {
       heroTitle={
         <>
           Electrician Mental Health Support:{' '}
-          <span className="text-yellow-400">Resources, Helplines, and Culture</span>
+          <span className="text-elec-yellow">Resources, Helplines, and Culture</span>
         </>
       }
       heroSubtitle="Construction workers are 3.7 times more likely to die by suicide than the UK male average. This guide covers the dedicated support resources for electricians and trades workers, the specific pressures of self-employment, and how to change the culture on site."

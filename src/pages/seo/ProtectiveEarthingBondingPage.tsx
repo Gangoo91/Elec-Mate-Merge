@@ -207,7 +207,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Shield className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   TN-C-S — Combined Neutral and Earth (PME)
@@ -266,7 +266,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Location.</strong> The MET is normally located at or near the consumer unit,
                 close to the incoming supply position. It must be accessible for inspection,
@@ -275,7 +275,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Connections.</strong> The MET receives the earthing conductor from the
                 supply (or earth electrode), the main bonding conductors (water, gas, oil,
@@ -285,7 +285,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Disconnecting means.</strong> Regulation 542.4.2 requires that the earthing
                 conductor (the connection between the MET and the supply earth or earth electrode)
@@ -296,7 +296,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Labelling.</strong> Regulation 514.13.1 requires a permanent warning notice
                 marked "Safety Electrical Connection — Do Not Remove" at the connection of every
@@ -336,7 +336,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Link2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Link2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Water service pipe.</strong> Bond as close as practicable to the point of
                 entry into the building, on the consumer side of the stopcock and meter. Use a BS
@@ -344,7 +344,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Link2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Link2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Gas service pipe.</strong> Regulation 544.1.2 requires the connection to be
                 made as near as practicable to the point of entry into the premises, to the
@@ -354,14 +354,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Link2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Link2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Oil supply pipe.</strong> Where a property has an oil-fired heating system
                 with a metallic oil supply pipe, this pipe must be bonded.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Link2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Link2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Structural steelwork.</strong> If the building has exposed structural
                 steelwork that is accessible and could introduce an earth potential, it must be
@@ -369,7 +369,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Link2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Link2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Central heating system.</strong> Where the central heating system has
                 metallic pipework that is accessible and could introduce a potential from outside
@@ -409,7 +409,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>10 mm copper</strong> — the standard requirement for TN-C-S (PME)
                 installations, which is the most common UK supply type. Under Table 54.8, where the
@@ -419,7 +419,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>6 mm copper minimum (non-PME)</strong> — where PME does not apply,
                 Regulation 544.1.1 requires the bonding conductor to be not less than half the
@@ -531,7 +531,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sizing CPCs.</strong> The CPC must be sized according to BS 7671 Table 54.7
                 or by calculation using the adiabatic equation. For cables with an integral CPC
@@ -545,7 +545,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Continuity.</strong> The CPC must be continuous from the earthing terminal
                 in the consumer unit to every exposed-conductive-part on the circuit. Continuity is
@@ -555,7 +555,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Identification.</strong> CPCs must be identified with green/yellow colouring
                 throughout their length. Where a bare CPC is used (as in the uninsulated earth
@@ -587,7 +587,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Continuity of protective conductors (R1+R2).</strong> This dead test
                 verifies that the CPC on each circuit provides a continuous path from the earthing
@@ -596,7 +596,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Continuity of main bonding conductors.</strong> Verify that each main
                 bonding conductor provides a continuous, low-resistance path from the MET to the
@@ -608,7 +608,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>External earth fault loop impedance (Ze).</strong> Measured at the origin
                 with the installation earthing conductor disconnected at the MET. This gives the
@@ -617,7 +617,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth fault loop impedance at each point (Zs).</strong> Measured at each
                 socket outlet and fixed equipment point. Zs must be low enough to ensure the
@@ -665,7 +665,7 @@ export default function ProtectiveEarthingBondingPage() {
       heroTitle={
         <>
           Protective Earthing and Bonding:{' '}
-          <span className="text-yellow-400">The Complete BS 7671 Guide</span>
+          <span className="text-elec-yellow">The Complete BS 7671 Guide</span>
         </>
       }
       heroSubtitle="Earthing and bonding are the foundation of electrical safety. This guide covers the main earthing terminal, bonding conductor sizes (10 mm and 6 mm), extraneous-conductive-part identification, UK earthing arrangements, and every test you need to carry out."

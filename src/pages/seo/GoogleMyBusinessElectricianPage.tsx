@@ -183,7 +183,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1. Go to business.google.com</strong> and sign in with your Google account.
                 Use a dedicated business Google account if you have one — this keeps your business
@@ -191,7 +191,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>2. Enter your business name</strong> exactly as you want it to appear in
                 search results. Use your registered trading name — do not keyword-stuff (for
@@ -200,14 +200,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3. Choose your primary category:</strong> "Electrician." You can add
                 secondary categories later.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>4. Set your location type.</strong> If customers visit your premises (you
                 have a shop or office), add your address. If you visit customers (most
@@ -216,7 +216,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>5. Add your contact details:</strong> phone number (the one you answer for
                 business calls) and website URL. If you do not have a website, leave it blank for
@@ -224,7 +224,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>6. Set your business hours.</strong> Be accurate — if you do not answer
                 calls at 7am on Sunday, do not list Sunday as open. Customers who call outside your
@@ -232,7 +232,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>7. Write your business description.</strong> Up to 750 characters. Focus on
                 what you do, where you work, and your qualifications. Include your competent person
@@ -240,7 +240,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>8. Add your services.</strong> List every service you offer: consumer unit
                 upgrades, rewires, fault-finding, EICR testing, EV charger installation, new builds,
@@ -273,7 +273,7 @@ const sections = [
                 <li>Show branded van, uniform, or signage</li>
                 <li>Show surrounding area/street</li>
                 <li>
-                  Review: <strong className="text-yellow-400">24–48 hours</strong>
+                  Review: <strong className="text-elec-yellow">24–48 hours</strong>
                 </li>
               </ul>
             </div>
@@ -286,7 +286,7 @@ const sections = [
                 <li>Google calls or texts a PIN</li>
                 <li>Enter PIN in your profile</li>
                 <li>
-                  Review: <strong className="text-yellow-400">Instant</strong>
+                  Review: <strong className="text-elec-yellow">Instant</strong>
                 </li>
                 <li className="text-xs">Not always offered as an option</li>
               </ul>
@@ -299,7 +299,7 @@ const sections = [
                 <li>Google posts a PIN to your address</li>
                 <li>Enter PIN in your profile</li>
                 <li>
-                  Delivery: <strong className="text-yellow-400">5–14 days</strong>
+                  Delivery: <strong className="text-elec-yellow">5–14 days</strong>
                 </li>
                 <li className="text-xs">Less common now but still used</li>
               </ul>
@@ -328,7 +328,7 @@ const sections = [
           <div className="grid gap-4 sm:grid-cols-2 text-white text-sm">
             <div className="rounded-xl bg-blue-500/10 border border-blue-500/20 p-4">
               <h4 className="font-bold text-white mb-3">Primary Category</h4>
-              <p className="text-yellow-400 font-bold text-lg mb-2">Electrician</p>
+              <p className="text-elec-yellow font-bold text-lg mb-2">Electrician</p>
               <p>
                 This is the highest-volume search term and should always be your primary category.
               </p>
@@ -422,7 +422,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Camera className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Certifications and Accreditations</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -454,7 +454,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Create a review link.</strong> In your Google Business Profile dashboard, go
                 to "Ask for reviews" or "Share review form." Copy the short link. Save it in your
@@ -462,7 +462,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ask immediately after the job.</strong> Send the link by text or WhatsApp
                 within an hour of completing the job. The customer is most likely to leave a review
@@ -470,7 +470,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use a template message.</strong> "Thanks for choosing [business name]. If
                 you were happy with the work, a quick Google review would really help us. Here is
@@ -478,7 +478,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Respond to every review.</strong> Thank customers who leave positive
                 reviews. Respond professionally to negative reviews. Google sees response activity
@@ -486,7 +486,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Aim for consistency.</strong> 2-4 reviews per month is better than 20
                 reviews in one week then nothing for 3 months. A steady stream of recent reviews
@@ -497,7 +497,7 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h4 className="font-bold text-white mb-3 flex items-center gap-2">
-            <AlertTriangle className="w-5 h-5 text-yellow-400" /> What NOT to Do
+            <AlertTriangle className="w-5 h-5 text-elec-yellow" /> What NOT to Do
           </h4>
           <ul className="space-y-2 text-white text-sm">
             <li className="flex items-start gap-2">
@@ -607,7 +607,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Service area businesses (no shopfront):</strong> Set your coverage by
                 entering the towns, cities, or postcode districts you serve. You can add up to 20
@@ -615,7 +615,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Be realistic.</strong> Only include areas you actually travel to for work.
                 If you are based in Bristol and rarely work in Bath, do not add Bath — it dilutes
@@ -623,7 +623,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Do NOT display a home address.</strong> If customers do not visit your home,
                 do not show your home address. Use "Service area" only. Displaying an address that
@@ -631,7 +631,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Update seasonally.</strong> If you take on work further afield in quieter
                 months, you can adjust your service area. Google allows you to change it at any
@@ -734,7 +734,7 @@ export default function GoogleMyBusinessElectricianPage() {
       heroTitle={
         <>
           Google Business Profile for Electricians:{' '}
-          <span className="text-yellow-400">Get Found, Get Hired, Grow Your Business</span>
+          <span className="text-elec-yellow">Get Found, Get Hired, Grow Your Business</span>
         </>
       }
       heroSubtitle="When someone searches 'electrician near me,' Google shows 3 local businesses on the map. If you are not one of them, you are invisible. This guide walks you through setting up, verifying, and optimising your Google Business Profile to dominate local search in your area."
@@ -745,7 +745,7 @@ export default function GoogleMyBusinessElectricianPage() {
       faqHeading="Frequently Asked Questions About Google Business Profile"
       relatedPages={relatedPages}
       ctaHeading="Convert Google Searches Into Booked Jobs"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Send professional quotes in minutes and win more of the jobs that find you on Google. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for quoting, certification, and job management. Send professional quotes in minutes and win more of the jobs that find you on Google. 7-day free trial, cancel anytime."
     />
   );
 }

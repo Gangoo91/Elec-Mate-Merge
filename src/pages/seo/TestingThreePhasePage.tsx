@@ -144,24 +144,24 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Phase Rotation Key Points</h3>
           <ul className="space-y-3 text-white leading-relaxed">
             <li className="flex items-start gap-3">
-              <RotateCcw className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <RotateCcw className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Standard rotation:</strong> L1-L2-L3 (clockwise)
+                <strong className="text-elec-yellow">Standard rotation:</strong> L1-L2-L3 (clockwise)
                 is the UK standard. This is the direction three-phase motors are designed to run.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <RotateCcw className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <RotateCcw className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">When to test:</strong> Always test phase
+                <strong className="text-elec-yellow">When to test:</strong> Always test phase
                 rotation before connecting any three-phase motor, pump, compressor, or equipment
                 with a directional requirement.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <RotateCcw className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <RotateCcw className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Correcting reversed rotation:</strong> Swap any
+                <strong className="text-elec-yellow">Correcting reversed rotation:</strong> Swap any
                 two phases at the supply point. For example, swap L1 and L2. Do not swap at the
                 motor terminals unless you intend to reverse the motor direction.
               </span>
@@ -190,47 +190,47 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Voltage Measurements</h3>
           <ul className="space-y-3 text-white leading-relaxed">
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">L1 to L2:</strong> Should be approximately 400V
+                <strong className="text-elec-yellow">L1 to L2:</strong> Should be approximately 400V
                 (360-440V acceptable per BS EN 50160)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">L1 to L3:</strong> Should be approximately 400V
+                <strong className="text-elec-yellow">L1 to L3:</strong> Should be approximately 400V
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">L2 to L3:</strong> Should be approximately 400V
+                <strong className="text-elec-yellow">L2 to L3:</strong> Should be approximately 400V
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">L1 to N:</strong> Should be approximately 230V
+                <strong className="text-elec-yellow">L1 to N:</strong> Should be approximately 230V
                 (207-253V acceptable)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">L2 to N:</strong> Should be approximately 230V
+                <strong className="text-elec-yellow">L2 to N:</strong> Should be approximately 230V
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">L3 to N:</strong> Should be approximately 230V
+                <strong className="text-elec-yellow">L3 to N:</strong> Should be approximately 230V
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">N to E:</strong> Should be less than
+                <strong className="text-elec-yellow">N to E:</strong> Should be less than
                 approximately 5V under normal balanced loading
               </span>
             </li>
@@ -356,7 +356,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-4 my-4">
           <p className="text-white text-sm leading-relaxed">
-            <strong className="text-yellow-400">Temperature correction (GN3 Appendix A):</strong> You
+            <strong className="text-elec-yellow">Temperature correction (GN3 Appendix A):</strong> You
             measure Zs on a cold installation, but the maximum Zs values in BS 7671 Tables 41.2–41.4
             are design figures based on the line conductor at its maximum permitted operating
             temperature. The two are not directly comparable. GN3 publishes maximum{' '}
@@ -426,7 +426,7 @@ const sections = [
         <div className="space-y-4 mt-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Four-pole RCD</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -440,7 +440,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Individual RCBOs per phase</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -452,7 +452,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Type B RCDs for VSD/inverter circuits</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -492,31 +492,31 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
           <ul className="space-y-3 text-white leading-relaxed">
             <li className="flex items-start gap-3">
-              <ArrowRightLeft className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <ArrowRightLeft className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">0 to 5V:</strong> Normal. Minor load imbalance
+                <strong className="text-elec-yellow">0 to 5V:</strong> Normal. Minor load imbalance
                 is expected.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ArrowRightLeft className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <ArrowRightLeft className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">5 to 10V:</strong> Moderate imbalance.
+                <strong className="text-elec-yellow">5 to 10V:</strong> Moderate imbalance.
                 Investigate load distribution. Check neutral connections.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ArrowRightLeft className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <ArrowRightLeft className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">10 to 50V:</strong> Significant issue. Possible
+                <strong className="text-elec-yellow">10 to 50V:</strong> Significant issue. Possible
                 high-resistance neutral connection, severe load imbalance, or harmonic currents.
                 Investigate urgently.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Above 50V:</strong> Potentially dangerous. May
+                <strong className="text-elec-yellow">Above 50V:</strong> Potentially dangerous. May
                 indicate a broken or disconnected neutral. Phase voltages will be unbalanced and
                 equipment on lightly loaded phases will receive dangerously high voltage. Treat as
                 an emergency.
@@ -629,7 +629,7 @@ export default function TestingThreePhasePage() {
       heroTitle={
         <>
           Testing a Three-Phase Installation:{' '}
-          <span className="text-yellow-400">Procedure Guide</span>
+          <span className="text-elec-yellow">Procedure Guide</span>
         </>
       }
       heroSubtitle="The complete guide to testing three-phase electrical installations for UK electricians. Phase rotation, voltage measurement, per-phase loop impedance and PFC, RCD testing on three-phase systems, and neutral-earth voltage checks."
@@ -644,7 +644,7 @@ export default function TestingThreePhasePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Three-phase certificates with per-phase validation"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site testing and certification. Full three-phase support with per-phase auto-validation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site testing and certification. Full three-phase support with per-phase auto-validation. 7-day free trial, cancel anytime."
     />
   );
 }

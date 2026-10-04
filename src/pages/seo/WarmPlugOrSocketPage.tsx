@@ -237,7 +237,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Loose plug terminal screws</strong> — inside the plug, the live, neutral,
                 and earth wires are secured by terminal screws. If these are loose, the reduced
@@ -246,7 +246,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Loose socket terminal screws</strong> — behind the socket faceplate, the
                 circuit cables are secured by terminal screws. Loose terminals here create the same
@@ -255,7 +255,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Worn socket contacts</strong> — the spring contacts inside the socket that
                 grip the plug pins wear over thousands of insertion cycles. Worn contacts have a
@@ -263,7 +263,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Overloaded socket</strong> — plugging too many appliances into a single
                 socket via extension leads or adaptors draws more current than the socket was
@@ -272,7 +272,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Damaged cable</strong> — if the cable inside the wall is damaged (nicked by
                 a screw, crushed, or degraded by heat), the conductor cross-section is reduced at
@@ -379,31 +379,31 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Kettle: 13A (3kW) — uses the entire socket capacity on its own</span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Fan heater: 13A (3kW) — another full-capacity appliance</span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Toaster: 9A (2kW)</span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Iron: 11A (2.5kW)</span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Microwave: 6A (1.4kW)</span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Television: 0.5A (120W)</span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Phone charger: 0.1A (25W)</span>
             </li>
           </ul>
@@ -452,7 +452,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Metal consumer units</strong> — since Amendment 3 to BS 7671:2008 (effective January 2016),
                 new consumer units in domestic premises must be enclosed in a non-combustible
@@ -465,7 +465,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>AFDDs (Arc Fault Detection Devices)</strong> — these devices detect
                 dangerous arcing on a circuit (which is what happens at a loose connection under
@@ -478,7 +478,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regular inspection</strong> — an EICR includes tightness checks on all
                 accessible connections and visual inspection for signs of overheating. Regular
@@ -513,7 +513,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Non-invasive</strong> — you can scan a socket faceplate, consumer unit
                 cover, or distribution board without removing covers or isolating circuits. Hot
@@ -521,7 +521,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Under-load detection</strong> — thermal imaging works best when the
                 installation is under normal load. This is precisely when loose connections and
@@ -530,7 +530,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hidden faults</strong> — a loose connection inside a wall-mounted back box
                 may not be visible during a standard visual inspection but will show as a hot spot
@@ -539,7 +539,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Documentation</strong> — thermal images provide objective, visual evidence
                 of a fault and its severity. They are excellent for including in{' '}
@@ -583,7 +583,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Routine (within a week)</strong> — the plug is slightly warm after prolonged
                 use with a high-power appliance, but cools quickly after unplugging. Arrange an
@@ -614,7 +614,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Thermometer className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">1. Thermal Assessment Under Load</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -628,7 +628,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">2. Isolate and Inspect</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -644,7 +644,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">3. Test and Measure</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -659,7 +659,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">4. Remediate and Document</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -703,7 +703,7 @@ export default function WarmPlugOrSocketPage() {
       badgeIcon={Flame}
       heroTitle={
         <>
-          Warm Plug or Socket: <span className="text-yellow-400">Causes and What to Do</span>
+          Warm Plug or Socket: <span className="text-elec-yellow">Causes and What to Do</span>
         </>
       }
       heroSubtitle="A warm plug or socket is a warning sign. This guide explains the causes — from loose connections to overloaded sockets — covers the real fire risk, tells you what to do right now, and explains when to call an electrician."
@@ -714,7 +714,7 @@ export default function WarmPlugOrSocketPage() {
       faqHeading="Frequently Asked Questions About Warm Plugs and Sockets"
       relatedPages={relatedPages}
       ctaHeading="Identify and Document Overheating Faults on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI fault diagnosis, thermal imaging documentation, and professional EICR certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for AI fault diagnosis, thermal imaging documentation, and professional EICR certificates. 7-day free trial, cancel anytime."
     />
   );
 }

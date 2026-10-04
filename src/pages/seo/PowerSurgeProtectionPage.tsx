@@ -153,7 +153,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lightning strikes</strong> — a direct or nearby lightning strike can inject
                 enormous energy into the distribution network. Even a strike some distance away can
@@ -163,7 +163,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Utility switching surges</strong> — the electricity distribution network is
                 constantly being switched — substations, capacitor banks, and power factor
@@ -172,7 +172,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Internal switching surges</strong> — within a building, large motor loads —
                 fridges, air conditioning units, washing machines, tumble dryers, and lifts — create
@@ -181,7 +181,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Supply restoration after an outage</strong> — when power is restored after a
                 power cut, the restoration event can introduce a transient into the supply.
@@ -262,7 +262,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 443.4 — risk assessment required</strong> — a risk assessment for
                 overvoltage protection must be carried out for all new installations and significant
@@ -271,7 +271,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Most domestic installations require SPDs</strong> — where the risk
                 assessment cannot clearly demonstrate that SPD protection is unnecessary, BS 7671
@@ -281,7 +281,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New consumer unit installations</strong> — any new consumer unit
                 installation should now include a Type 2 SPD as standard unless a valid risk
@@ -370,7 +370,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type 2 SPD in consumer unit</strong> — £150 to £400 including the device and
                 installation labour. Some consumer units have space for a DIN-rail SPD module;
@@ -380,7 +380,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type 1 SPD at origin</strong> — £300 to £600 or more, including
                 installation. Requires work at the meter position which may need DNO (Distribution
@@ -389,7 +389,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type 3 surge-protected extension lead</strong> — £20 to £80 from retailers.
                 No installation required. Provides limited protection as a standalone measure but is
@@ -461,7 +461,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Document the Risk Assessment</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -494,7 +494,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICs and EICRs on site with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site certificate completion, AI board scanning, and instant PDF export."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site certificate completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -519,7 +519,7 @@ export default function PowerSurgeProtectionPage() {
       badgeIcon={Zap}
       heroTitle={
         <>
-          Power Surge Protection UK: <span className="text-yellow-400">SPDs Explained</span>
+          Power Surge Protection UK: <span className="text-elec-yellow">SPDs Explained</span>
         </>
       }
       heroSubtitle="Everything you need to know about protecting your home and equipment from electrical surges — what causes them, the three types of Surge Protection Device (SPD), the BS 7671 Amendment 2 requirement, and what installation costs."
@@ -530,7 +530,7 @@ export default function PowerSurgeProtectionPage() {
       faqHeading="Frequently Asked Questions About Power Surge Protection"
       relatedPages={relatedPages}
       ctaHeading="Are You an Electrician? Try Elec-Mate Free"
-      ctaSubheading="Complete EICs and EICRs on your phone, including SPD documentation. Join 1,600+ UK electricians. 7-day free trial, cancel anytime."
+      ctaSubheading="Complete EICs and EICRs on your phone, including SPD documentation. Join 2,100+ UK electricians. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -145,7 +145,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCBs (Miniature Circuit Breakers)</strong> — trip automatically when a
                 circuit is overloaded or when a short circuit occurs. They can be reset without
@@ -154,7 +154,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCDs (Residual Current Devices)</strong> — detect current leaking to earth
                 (which can indicate a person receiving an electric shock) and disconnect the supply
@@ -167,7 +167,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCBOs (RCD/MCB combined)</strong> — provide both overcurrent and RCD
                 protection in a single device. An RCBO consumer unit gives each circuit its own
@@ -197,7 +197,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No RCD protection</strong> — older MCB-only boards do not provide RCD
                 protection on socket-outlet circuits. This is recorded as a C2 (potentially
@@ -207,7 +207,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rewireable fuses</strong> — ceramic fuse carriers with fuse wire offer no
                 protection against electric shock and can be incorrectly re-fused with wire of the
@@ -216,7 +216,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Plastic enclosure</strong> — all consumer unit replacements since January
                 2016 require a metal enclosure. A plastic consumer unit installed after this date is
@@ -224,7 +224,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insufficient capacity</strong> — older boards may not have enough ways
                 (circuit positions) for modern electrical loads including electric vehicle chargers,
@@ -232,7 +232,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Frequent tripping</strong> — an overloaded or aging consumer unit that trips
                 frequently is a sign that the installation needs review. A qualified electrician can
@@ -309,7 +309,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard 1–2 bedroom property</strong> — £400 to £500. A straightforward
                 replacement of an older MCB board or split-load RCD board with a modern metal
@@ -317,7 +317,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3–4 bedroom house</strong> — £500 to £700. Most common domestic scenario in
                 Wolverhampton. Includes 12 to 18 circuits, often an RCBO board or larger dual-RCD
@@ -325,7 +325,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large house or additional remedial work</strong> — £700 to £900+. Properties
                 requiring earthing upgrades, main bonding replacement, or with a high circuit count.
@@ -334,7 +334,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What is included</strong> — supply and installation of the metal consumer
                 unit, connection of all existing circuits, main bonding check, testing of the
@@ -428,7 +428,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check registration</strong> — use the NICEIC, NAPIT, or ELECSA online
                 contractor search tools to find registered electricians in Wolverhampton. These
@@ -437,7 +437,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ask for evidence of qualifications</strong> — a consumer unit replacement
                 requires a qualified electrician holding at minimum Level 3 NVQ/SVQ in Electrical
@@ -446,7 +446,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Get written quotes</strong> — obtain at least two written quotes that
                 specify the make and model of the consumer unit, number of ways, MCB/RCBO
@@ -455,7 +455,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Avoid unusually cheap quotes</strong> — a consumer unit replacement quoted
                 below £350 in Wolverhampton should prompt questions. A thorough job including proper
@@ -487,7 +487,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Issue EICs On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -522,7 +522,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Wolverhampton electrical business with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and certificate management. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and certificate management. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -548,7 +548,7 @@ export default function ConsumerUnitReplacementWolverhamptonPage() {
       heroTitle={
         <>
           Consumer Unit Replacement Wolverhampton:{' '}
-          <span className="text-yellow-400">Costs, Rules &amp; Process 2026</span>
+          <span className="text-elec-yellow">Costs, Rules &amp; Process 2026</span>
         </>
       }
       heroSubtitle="Everything you need to know about consumer unit replacement in Wolverhampton — 2026 costs of £400 to £800, the metal enclosure requirement in force since 2016, Part P Building Regulations, and how to find a NICEIC or NAPIT registered electrician in the WV postcode area."
@@ -559,7 +559,7 @@ export default function ConsumerUnitReplacementWolverhamptonPage() {
       faqHeading="Frequently Asked Questions — Consumer Unit Replacement Wolverhampton"
       relatedPages={relatedPages}
       ctaHeading="Complete Consumer Unit Certificates On Site"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

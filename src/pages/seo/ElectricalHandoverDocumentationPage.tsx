@@ -191,7 +191,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EIC (Electrical Installation Certificate)</strong> -- required for new
                 installations, alterations that include new circuits, and significant work such as
@@ -202,7 +202,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MEIWC (Minor Electrical Installation Works Certificate)</strong> -- suitable
                 for additions and alterations to existing circuits that do not include a new
@@ -269,14 +269,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Continuity of protective conductors</strong> -- R1+R2 values for every
                 circuit, measured at the furthest point from the distribution board.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insulation resistance</strong> -- measured between live conductors and
                 earth, and between live conductors, for every circuit. Minimum values from BS 7671
@@ -285,7 +285,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth fault loop impedance (Zs)</strong> -- measured or calculated for every
                 circuit to verify that the protective device will operate within the required
@@ -293,7 +293,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD operation</strong> -- trip time measured at rated residual operating
                 current (IΔn, typically 30 mA) for every RCD and RCBO. Under BS 7671:2018+A4:2026
@@ -305,7 +305,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Prospective fault current</strong> -- Reg 643.7.3.201 requires the
                 prospective short-circuit current and the prospective earth fault current to be
@@ -367,7 +367,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>System description</strong> -- a plain-language overview of the electrical
                 installation: what systems are installed, where the main components are located, and
@@ -375,7 +375,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Operating instructions</strong> -- how to operate each system safely. This
                 includes consumer unit operation, lighting controls, emergency lighting test
@@ -384,7 +384,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maintenance requirements</strong> -- what routine maintenance the client is
                 responsible for (monthly{' '}
@@ -397,7 +397,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency procedures</strong> -- what to do in a power failure, how to
                 isolate individual circuits or the entire installation, when to call an electrician
@@ -405,7 +405,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Contact details</strong> -- the installing contractor's contact information
                 for maintenance, callouts, and warranty queries.
@@ -437,7 +437,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable route drawings</strong> -- showing where cables are routed through the
                 building, particularly within walls, floors, and ceilings. This information is
@@ -446,7 +446,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Distribution board schedule</strong> -- a circuit chart showing every way in
                 the distribution board, the circuit designation, the protective device type and
@@ -455,7 +455,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable schedule</strong> -- a table listing every cable in the installation
                 with its reference, type, size, route, length, and the circuit it serves. Essential
@@ -463,7 +463,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Schematic diagrams</strong> -- single-line diagrams showing the distribution
                 architecture from the incoming supply through the main switch to individual
@@ -495,7 +495,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer units and distribution boards</strong> -- manufacturer, model, type
                 test certification, and warranty terms. Most quality consumer units carry a 5 to 10
@@ -503,7 +503,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Protective devices</strong> -- MCBs, RCBOs, AFDDs, SPDs. Record the
                 manufacturer, model, rating, and type. This information is essential for future
@@ -511,7 +511,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Specialist equipment</strong> -- EV chargers, solar PV inverters, battery
                 storage systems, smart home controllers. These items typically have specific
@@ -520,7 +520,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Light fittings and controls</strong> -- particularly LED drivers (which have
                 a finite lifespan), dimming systems, and emergency lighting units. Record the
@@ -551,7 +551,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person scheme route</strong> -- the most common route. The
                 electrician is registered with NICEIC, NAPIT, ELECSA, or another approved scheme.
@@ -562,7 +562,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Building control route</strong> -- if the electrician is not registered with
                 a competent person scheme, the work must be notified to local authority building
@@ -602,7 +602,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No certificate issued</strong> -- the most basic failure. The work is
                 completed but no EIC or MEIWC is provided. This is a breach of BS 7671 and, for
@@ -610,7 +610,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Incomplete test results</strong> -- missing values, blank fields, or test
                 results that do not cover all circuits. Every circuit must have a complete set of
@@ -618,7 +618,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Late documentation</strong> -- promising to "send the certificate later" and
                 then forgetting. Documentation should be completed on site or within 24 hours. Late
@@ -626,7 +626,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No Building Regulations notification</strong> -- completing notifiable work
                 without notifying through the scheme or building control. This creates a compliance
@@ -634,7 +634,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No user instructions</strong> -- leaving the client with no guidance on how
                 to operate the new installation, when to test RCDs, or what to do in an emergency. A
@@ -643,7 +643,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Missing instrument details</strong> -- the schedule of test results must
                 record the serial number and calibration certificate details for every instrument
@@ -675,7 +675,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EIC and MEIWC on Your Phone</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -688,7 +688,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Automatic Schedule of Test Results</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -701,7 +701,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Send className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Send className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Send to Client from Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -746,7 +746,7 @@ export default function ElectricalHandoverDocumentationPage() {
       heroTitle={
         <>
           Electrical Handover Documentation:{' '}
-          <span className="text-yellow-400">What to Provide</span>
+          <span className="text-elec-yellow">What to Provide</span>
         </>
       }
       heroSubtitle="Complete handover documentation is the hallmark of a professional electrician. This guide covers every document you should provide at handover: EIC, test results, O&M manual, as-built drawings, cable schedules, warranty information, and Building Regulations compliance certificates."

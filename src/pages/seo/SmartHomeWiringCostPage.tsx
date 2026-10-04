@@ -206,7 +206,7 @@ const sections = [
                   3–4 smart switches/dimmers, possibly neutral wire retrofit
                 </p>
               </div>
-              <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£300 – £600</p>
+              <p className="font-bold text-elec-yellow whitespace-nowrap ml-4">£300 – £600</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
@@ -215,7 +215,7 @@ const sections = [
                   10–15 smart switches, possible neutral retrofits, hub
                 </p>
               </div>
-              <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£1,000 – £2,500</p>
+              <p className="font-bold text-elec-yellow whitespace-nowrap ml-4">£1,000 – £2,500</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
@@ -224,7 +224,7 @@ const sections = [
                   Double Cat6 outlet, cable to patch panel, termination
                 </p>
               </div>
-              <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£120 – £200</p>
+              <p className="font-bold text-elec-yellow whitespace-nowrap ml-4">£120 – £200</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
@@ -233,7 +233,7 @@ const sections = [
                   Cat6 to every room, patch panel, 3–4 ceiling WiFi access points
                 </p>
               </div>
-              <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£1,500 – £3,000</p>
+              <p className="font-bold text-elec-yellow whitespace-nowrap ml-4">£1,500 – £3,000</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
@@ -242,7 +242,7 @@ const sections = [
                   Cat6, WiFi APs, smart switches, smart sockets, hub, commissioning
                 </p>
               </div>
-              <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£3,000 – £5,000+</p>
+              <p className="font-bold text-elec-yellow whitespace-nowrap ml-4">£3,000 – £5,000+</p>
             </div>
             <div className="flex justify-between items-start">
               <div>
@@ -251,7 +251,7 @@ const sections = [
                   Ceiling-mounted PoE access point (e.g. Ubiquiti, TP-Link)
                 </p>
               </div>
-              <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£80 – £150</p>
+              <p className="font-bold text-elec-yellow whitespace-nowrap ml-4">£80 – £150</p>
             </div>
           </div>
         </div>
@@ -319,7 +319,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Smartphone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Smartphone className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Plug-in smart sockets</strong> — these plug into an existing socket and
                 provide app control for the connected device. No electrical work required. Cost: £10
@@ -328,7 +328,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Smartphone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Smartphone className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>In-wall smart sockets</strong> — these replace the existing socket with a
                 smart version that sits flush in the standard UK back box. Brands such as Lightwave
@@ -338,7 +338,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Smartphone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Smartphone className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smart module behind existing socket</strong> — products such as Shelly 1PM
                 fit behind the existing socket faceplate in the back box, adding smart control
@@ -366,7 +366,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Network className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Network className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cat6 cable</strong> — supports up to 1Gbps over 100 metres (or 10Gbps over
                 shorter runs). Cat6 RJ45 data module inserts cost approximately £10.50 each at trade
@@ -375,7 +375,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Network className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Network className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Patch panel</strong> — a central termination point (typically in a utility
                 cupboard or under-stairs location) where all Cat6 runs terminate. A 24-port patch
@@ -384,7 +384,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wifi className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>WiFi access points</strong> — ceiling-mounted access points (such as
                 Ubiquiti UniFi or TP-Link Omada) provide whole-house WiFi coverage. They are powered
@@ -481,7 +481,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part P notification</strong> — adding new circuits (such as a dedicated
                 circuit for a structured cabling rack, or new lighting circuits for smart zones) is
@@ -492,7 +492,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671 compliance</strong> — all electrical work must comply with the
                 current edition of{' '}
@@ -503,7 +503,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Certification</strong> — an Electrical Installation Certificate (EIC) or
                 Minor Works Certificate must be issued for notifiable work. The certificate confirms
@@ -512,7 +512,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>30 mA RCD on all lighting circuits (A4:2026 Reg 411.3.4)</strong> — under BS
                 7671:2018+A4:2026, every AC final circuit supplying luminaires in domestic premises{' '}
@@ -524,7 +524,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical safety tests — not just functional tests</strong> — replacing a
                 smart switch is not complete until BS 7671 testing is carried out: CPC continuity,
@@ -553,7 +553,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -622,7 +622,7 @@ export default function SmartHomeWiringCostPage() {
       heroTitle={
         <>
           Smart Home Wiring & Installation Cost UK:{' '}
-          <span className="text-yellow-400">Retrofit & Rewire Pricing 2026</span>
+          <span className="text-elec-yellow">Retrofit & Rewire Pricing 2026</span>
         </>
       }
       heroSubtitle="Planning a smart home renovation? This guide covers retrofit costs by room and whole-house rewire pricing — smart lighting, Cat6 structured cabling, WiFi access points, smart sockets, switches and dimmers. From £500 for a single room to £5,000+ for a full retrofit, with real 2026 UK pricing from working electricians."
@@ -640,7 +640,7 @@ export default function SmartHomeWiringCostPage() {
       faqHeading="Frequently Asked Questions About Smart Home Wiring Renovation Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Smart Home Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. 7-day free trial, cancel anytime."
     />
   );
 }

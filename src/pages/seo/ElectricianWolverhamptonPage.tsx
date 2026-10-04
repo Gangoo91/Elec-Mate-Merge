@@ -176,7 +176,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person scheme registration</strong> — ask for their NICEIC, NAPIT,
                 ELECSA, or other scheme registration number. Search it online to confirm it is
@@ -184,7 +184,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ECS card</strong> — the Electrotechnical Certification Scheme card confirms
                 qualifications and competence level. A gold ECS card indicates a qualified
@@ -192,14 +192,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Public liability insurance</strong> — ensure your electrician carries at
                 least £2 million public liability cover. Ask for a copy of the certificate.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Recent references and reviews</strong> — ask for contact details of 2 to 3
                 recent local customers, or check verified reviews on Checkatrade, Trustpilot, or
@@ -223,7 +223,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full rewire (3-bed terraced house)</strong> — £4,200 to £6,500 including new
                 consumer unit, all circuits, sockets, switches, lighting, testing, and Part P
@@ -231,7 +231,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacement</strong> — £420 to £700 including supply
                 isolation, new 18th Edition compliant unit with RCBOs, testing, and Part P
@@ -239,28 +239,28 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR</strong> — £150 to £250 for a flat, £200 to £350 for a house. Required
                 every 5 years for rented properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional socket</strong> — £80 to £150 per single socket from an existing
                 circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger installation</strong> — £650 to £1,200 for a 7kW home charger
                 including supply, installation, earthing, and Part P certification.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency call-out</strong> — £100 to £170 for the first hour including
                 travel, plus £40 to £60 per additional hour.
@@ -340,7 +340,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New connections and supply upgrades</strong> — apply to NGED for new
                 supplies or upgrades from single-phase to three-phase. Wolverhampton lead times are
@@ -348,14 +348,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Meter relocations</strong> — NGED handles the disconnection and
                 reconnection. Your electrician installs the new meter tails and the consumer unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98/G99 notification</strong> — required for solar PV, battery storage, or
                 generator installations. The electrician must notify NGED under the appropriate
@@ -386,7 +386,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial fit-outs</strong> — new office, retail, and hospitality spaces in
                 the city centre require full electrical installations to current standards. This
@@ -394,7 +394,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Residential conversions</strong> — former industrial and commercial
                 buildings being converted to residential use require complete new electrical
@@ -403,7 +403,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV infrastructure</strong> — the city's push toward electric vehicle
                 adoption means growing demand for both domestic and commercial EV charging
@@ -429,7 +429,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <PoundSterling className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Wolverhampton Operating Costs</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -460,7 +460,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Wolverhampton electrical business from your phone"
-          description="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs…"
+          description="Join 2,100+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs…"
           icon={MapPin}
         />
       </>
@@ -487,7 +487,7 @@ export default function ElectricianWolverhamptonPage() {
       heroTitle={
         <>
           Electrician in Wolverhampton:{' '}
-          <span className="text-yellow-400">Find Qualified Electricians in 2026</span>
+          <span className="text-elec-yellow">Find Qualified Electricians in 2026</span>
         </>
       }
       heroSubtitle="How to find a registered electrician in Wolverhampton, what to expect on pricing, and the specific challenges of electrical work in Wolverhampton properties. Covers NGED connections, Part P compliance, Black Country property types, and regeneration projects."
@@ -498,7 +498,7 @@ export default function ElectricianWolverhamptonPage() {
       faqHeading="Frequently Asked Questions About Electricians in Wolverhampton"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Wolverhampton and send instant PDFs to your customers. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Wolverhampton and send instant PDFs to your customers. 7-day free trial."
     />
   );
 }

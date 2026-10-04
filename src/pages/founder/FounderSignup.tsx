@@ -25,6 +25,7 @@ import {
   Copy,
   Globe,
 } from 'lucide-react';
+import { isAndroidNative } from '@/lib/textEntry';
 
 const PASSWORD_REQUIREMENTS = [
   { id: 'length', label: '8+', test: (p: string) => p.length >= 8 },
@@ -81,7 +82,7 @@ const InputField = ({
         <Icon className="h-5 w-5" />
       </div>
       <input
-        type={type === 'password' ? 'text' : type}
+        type={type === 'password' ? (isAndroidNative && !isVisible ? 'password' : 'text') : type}
         value={value}
         onChange={onChange}
         onFocus={() => setFocusedField(field)}
@@ -94,7 +95,7 @@ const InputField = ({
           'w-full h-14 pl-14 pr-12 rounded-2xl',
           'bg-white/[0.06] border-2 text-white placeholder:text-white',
           'text-[16px] outline-none transition-all duration-200',
-          type === 'password' && !isVisible && 'pw-masked',
+          type === 'password' && !isVisible && !isAndroidNative && 'pw-masked',
           disabled || readOnly
             ? 'opacity-70 cursor-not-allowed border-white/5 bg-white/[0.03]'
             : focusedField === field

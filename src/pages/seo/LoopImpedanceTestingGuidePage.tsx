@@ -160,7 +160,7 @@ const sections = [
         <p>
           <a
             href="#calculator"
-            className="inline-flex h-11 items-center font-semibold text-yellow-400 underline underline-offset-4 touch-manipulation"
+            className="inline-flex h-11 items-center font-semibold text-elec-yellow underline underline-offset-4 touch-manipulation"
           >
             Jump to the Zs calculator
           </a>{' '}
@@ -681,7 +681,7 @@ export default function LoopImpedanceTestingGuidePage() {
       heroTitle={
         <>
           Loop Impedance Testing Guide:{' '}
-          <span className="text-yellow-400">Zs & Ze Testing to BS 7671</span>
+          <span className="text-elec-yellow">Zs & Ze Testing to BS 7671</span>
         </>
       }
       heroSubtitle="The complete UK electrician's guide to earth fault loop impedance testing — measuring Ze and Zs, calculating prospective fault current, maximum Zs values for Type B and Type C MCBs, live vs calculated methods, temperature correction, and recording results."

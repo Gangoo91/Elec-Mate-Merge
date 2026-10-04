@@ -46,7 +46,7 @@ export default function CustomerManagementElectricianPage() {
       heroTitle={
         <>
           Customer Management
-          <span className="block text-yellow-400 mt-1">CRM for UK Electricians</span>
+          <span className="block text-elec-yellow mt-1">CRM for UK Electricians</span>
         </>
       }
       heroSubtitle="Your clients are your business. Elec-Mate's customer management system stores every contact, job, certificate, and communication in one searchable database — so you never lose a client's details, forget a follow-up, or miss a repeat work opportunity."
@@ -79,7 +79,7 @@ export default function CustomerManagementElectricianPage() {
                 there are outstanding recommendations?
               </p>
               <p>
-                <strong className="text-yellow-400">A CRM solves three problems:</strong> First, it
+                <strong className="text-elec-yellow">A CRM solves three problems:</strong> First, it
                 centralises everything — one place to find any client's details, history, and
                 documents. Second, it automates tasks you would otherwise forget — follow-ups,
                 review requests, renewal reminders. Third, it reveals patterns — which clients are
@@ -121,21 +121,21 @@ export default function CustomerManagementElectricianPage() {
                 their properties.
               </p>
               <p>
-                <strong className="text-yellow-400">Client details:</strong> Name, phone, email,
+                <strong className="text-elec-yellow">Client details:</strong> Name, phone, email,
                 address, how they found you (referral, Google, directory, word of mouth), client
                 type (domestic homeowner, landlord, letting agent, commercial, main contractor), and
                 any preferences or notes (access instructions, pet at property, preferred contact
                 method).
               </p>
               <p>
-                <strong className="text-yellow-400">Property records:</strong> Many clients,
+                <strong className="text-elec-yellow">Property records:</strong> Many clients,
                 especially landlords and letting agents, have multiple properties. Elec-Mate links
                 properties to clients so you can see all the properties a landlord manages, all the
                 work done at each property, and when each property's certificates are due for
                 renewal.
               </p>
               <p>
-                <strong className="text-yellow-400">Referral tracking:</strong> When a new client
+                <strong className="text-elec-yellow">Referral tracking:</strong> When a new client
                 says "John recommended you", record John as the referral source. Over time, you
                 build a picture of which clients generate the most referrals — and those are the
                 relationships worth nurturing. The{' '}
@@ -145,7 +145,7 @@ export default function CustomerManagementElectricianPage() {
                 shows the total revenue generated from each referral source.
               </p>
               <p>
-                <strong className="text-yellow-400">GDPR compliance:</strong> Under UK GDPR, you
+                <strong className="text-elec-yellow">GDPR compliance:</strong> Under UK GDPR, you
                 have a legitimate interest in storing client data for the purpose of fulfilling
                 contracts and maintaining safety records (certificates). However, you should still
                 inform clients that you store their data and provide a way for them to request
@@ -166,14 +166,14 @@ export default function CustomerManagementElectricianPage() {
                 installations affect current decisions.
               </p>
               <p>
-                <strong className="text-yellow-400">What to record per job:</strong> Date, job type,
+                <strong className="text-elec-yellow">What to record per job:</strong> Date, job type,
                 description of work, materials used, labour hours, quoted price, actual cost, any
                 issues encountered, photos taken, certificates issued, and any outstanding
                 recommendations or observations. Elec-Mate captures most of this automatically from
                 your quotes, invoices, and certificates.
               </p>
               <p>
-                <strong className="text-yellow-400">Why history matters:</strong> If you installed a
+                <strong className="text-elec-yellow">Why history matters:</strong> If you installed a
                 consumer unit 2 years ago and the client now reports nuisance tripping, your job
                 history tells you exactly what was installed, which MCBs and RCBOs were used, what
                 the test results were, and whether there were any observations at the time. This
@@ -181,7 +181,7 @@ export default function CustomerManagementElectricianPage() {
                 warranty issue.
               </p>
               <p>
-                <strong className="text-yellow-400">Financial history:</strong> Track total spend
+                <strong className="text-elec-yellow">Financial history:</strong> Track total spend
                 per client over time. A domestic client who has spent £15,000 with you over 5 years
                 across multiple jobs is clearly a high-value relationship worth protecting. The{' '}
                 <SEOInternalLink href="/tools/pricing-strategy-electrician">
@@ -205,21 +205,21 @@ export default function CustomerManagementElectricianPage() {
                 the environment and equipment type.
               </p>
               <p>
-                <strong className="text-yellow-400">Certificate storage:</strong> Every certificate
+                <strong className="text-elec-yellow">Certificate storage:</strong> Every certificate
                 you issue through Elec-Mate is automatically linked to the client and property. This
                 creates a permanent, searchable archive of all your certification work. When a
                 landlord asks for a copy of last year's EICR, you can find and share it in seconds
                 rather than digging through paper files or email attachments.
               </p>
               <p>
-                <strong className="text-yellow-400">Renewal reminders:</strong> Elec-Mate tracks
+                <strong className="text-elec-yellow">Renewal reminders:</strong> Elec-Mate tracks
                 certificate expiry dates and can send automatic reminders to clients when renewal is
                 approaching — typically 3 months before expiry for EICRs and 1 month before for
                 other certificates. This creates a reliable stream of repeat work without any manual
                 effort from you.
               </p>
               <p>
-                <strong className="text-yellow-400">Landlord portfolio management:</strong> For
+                <strong className="text-elec-yellow">Landlord portfolio management:</strong> For
                 landlords with multiple properties, Elec-Mate shows all properties and their
                 certificate status in a single view. A traffic-light system (green = valid, amber =
                 expiring soon, red = expired) gives landlords instant visibility and makes it easy
@@ -242,13 +242,13 @@ export default function CustomerManagementElectricianPage() {
                 any action from you.
               </p>
               <p>
-                <strong className="text-yellow-400">Post-job feedback request:</strong> One to two
+                <strong className="text-elec-yellow">Post-job feedback request:</strong> One to two
                 days after completing a job, Elec-Mate sends the client a brief, professional
                 message asking if they are happy with the work. This gives them a chance to raise
                 any issues before they become complaints, and shows that you care about quality.
               </p>
               <p>
-                <strong className="text-yellow-400">Review invitation:</strong> If the client
+                <strong className="text-elec-yellow">Review invitation:</strong> If the client
                 responds positively (or after 5 days with no issues raised), Elec-Mate sends a
                 follow-up with a direct link to your Google Business profile, inviting a review.
                 Consistent 5-star reviews are the most powerful marketing tool for any local
@@ -259,14 +259,14 @@ export default function CustomerManagementElectricianPage() {
                 tracks your review generation rate.
               </p>
               <p>
-                <strong className="text-yellow-400">Seasonal reminders:</strong> Set up annual or
+                <strong className="text-elec-yellow">Seasonal reminders:</strong> Set up annual or
                 seasonal reminders for clients who might benefit from repeat services — pre-winter
                 electrical checks, spring garden lighting installations, annual PAT testing for
                 commercial clients. These reminders generate bookings from your existing client base
                 with zero marketing spend.
               </p>
               <p>
-                <strong className="text-yellow-400">Quote follow-ups:</strong> If a client has not
+                <strong className="text-elec-yellow">Quote follow-ups:</strong> If a client has not
                 responded to a quote within 7 days, Elec-Mate can send a polite follow-up. Many jobs
                 are won simply because you followed up when competitors did not. The{' '}
                 <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> tracks
@@ -293,20 +293,20 @@ export default function CustomerManagementElectricianPage() {
                 are less likely to haggle on price or take 3 quotes.
               </p>
               <p>
-                <strong className="text-yellow-400">Repeat work rate:</strong> Track what percentage
+                <strong className="text-elec-yellow">Repeat work rate:</strong> Track what percentage
                 of your revenue comes from repeat clients versus new clients. A healthy target is
                 40% to 60% from repeat work. If your repeat rate is below 30%, you are spending too
                 much on new client acquisition and not enough on client retention.
               </p>
               <p>
-                <strong className="text-yellow-400">Client lifetime value:</strong> Calculate the
+                <strong className="text-elec-yellow">Client lifetime value:</strong> Calculate the
                 total revenue and profit generated by each client over their entire relationship
                 with you. This changes how you think about client service — a small job that makes a
                 thin margin is worth doing if the client is worth £5,000 per year in repeat and
                 referral work.
               </p>
               <p>
-                <strong className="text-yellow-400">Retention strategies:</strong> Priority
+                <strong className="text-elec-yellow">Retention strategies:</strong> Priority
                 scheduling for regular clients, small loyalty gestures (fitting an extra smoke alarm
                 at cost, providing a minor fix while on site for free), and proactive certificate
                 renewal reminders all build loyalty. Elec-Mate tracks client interaction frequency
@@ -449,7 +449,7 @@ export default function CustomerManagementElectricianPage() {
         },
       ]}
       ctaHeading="Build Lasting Client Relationships"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to manage client records, automate follow-ups, and generate repeat work. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to manage client records, automate follow-ups, and generate repeat work. 7-day free trial, cancel anytime."
       extraSchemas={[
         {
           '@type': 'SoftwareApplication',

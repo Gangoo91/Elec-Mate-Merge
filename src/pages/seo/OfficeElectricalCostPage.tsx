@@ -176,7 +176,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Distribution board and mains installation</strong> — £800 to £3,000.
                 Commercial distribution board, main switch, sub-circuit MCBs or RCBOs, and
@@ -184,14 +184,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Power circuits and socket outlets</strong> — £80 to £200 per outlet. Desktop
                 power modules, under-desk power, and floor boxes in open plan areas.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Data cabling</strong> — £80 to £150 per data point. Cat6 or Cat6A structured
                 cabling to every desk, conference room, and Wi-Fi access point. Patch panel and
@@ -199,7 +199,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Office lighting</strong> — £100 to £350 per luminaire fitted. Recessed LED
                 panels with DALI or 0-10V dimming, occupancy sensors, and daylight sensors for Part
@@ -207,7 +207,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency lighting</strong> — £150 to £400 per fitting. Maintained or
                 non-maintained units throughout escape routes and open plan areas. Commissioning
@@ -215,7 +215,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire alarm system</strong> — £1,500 to £6,000 for a complete small office
                 system. Includes panel, smoke detectors, heat detectors, manual call points,
@@ -243,7 +243,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Basic specification (4 power outlets, 2 data points per desk)</strong> —
                 £400 to £600 per desk. Standard 13A socket outlets at desk height or in a desktop
@@ -251,7 +251,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mid-range specification (6 power, 4 data per desk)</strong> — £700 to £1,000
                 per desk. Includes USB-A and USB-C charging outlets, four Cat6 data points, and a
@@ -259,7 +259,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>High specification (hot-desk or multi-monitor)</strong> — £1,000 to £1,500
                 per desk. Floor boxes with 8 power outlets, 4 Cat6 data, and integrated HDMI and USB
@@ -288,7 +288,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>General power circuits</strong> — 20A radial or 32A ring final circuits
                 serving desktop outlets. Size the number of circuits to avoid exceeding 50% of the
@@ -296,7 +296,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated IT circuits</strong> — server racks, network switches, and UPS
                 units need a dedicated circuit sized for their full load, ideally with a UPS on the
@@ -304,7 +304,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wifi className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Structured data cabling</strong> — Cat6 or Cat6A to TIA-568 or ISO 11801
                 standards. Every desk, conference room, and Wi-Fi access point requires at least two
@@ -313,7 +313,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wifi className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>AV and conferencing power</strong> — dedicated circuits for projectors,
                 displays, and video conferencing equipment. HDMI, USB, and power in conference room
@@ -338,7 +338,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>General open-plan office</strong> — 300 to 500 lux average, UGR ≤ 19.
                 Recessed LED panels with DALI dimming. Occupancy sensors in low-traffic areas.
@@ -346,7 +346,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Meeting rooms</strong> — dimmable LED panels, scene control for
                 presentations and video calls. Motorised blinds integration for daylight control.
@@ -354,7 +354,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reception and common areas</strong> — feature lighting, indirect coves, and
                 decorative pendants. Higher specification materials. Budget £300 to £700 per feature
@@ -478,7 +478,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Quote Data Cabling Accurately</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -511,7 +511,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify commercial office electrical fit-outs"
-          description="Create professional itemised electrical fit-out quotes, issue EICs on site, and manage multi-phase commercial projects. Join 1,600+ UK electricians."
+          description="Create professional itemised electrical fit-out quotes, issue EICs on site, and manage multi-phase commercial projects. Join 2,100+ UK electricians."
           icon={FileCheck2}
         />
       </>
@@ -537,7 +537,7 @@ export default function OfficeElectricalCostPage() {
       heroTitle={
         <>
           Office Electrical Fit-Out Cost UK 2025:{' '}
-          <span className="text-yellow-400">Commercial Office Wiring Prices</span>
+          <span className="text-elec-yellow">Commercial Office Wiring Prices</span>
         </>
       }
       heroSubtitle="Detailed breakdown of commercial office electrical fit-out costs in the UK for 2025 — small office from £2,000, per-desk estimates, power circuits and data points, office lighting, emergency lighting to BS 5266, fire alarm systems to BS 5839, and compliance requirements."
@@ -548,7 +548,7 @@ export default function OfficeElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Office Electrical Fit-Out Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Your Office Electrical Fit-Out in Minutes"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to create professional commercial electrical fit-out quotes with itemised power, data, emergency lighting, and fire alarm costs. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to create professional commercial electrical fit-out quotes with itemised power, data, emergency lighting, and fire alarm costs. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -174,19 +174,19 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BadgeCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BadgeCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Training duration:</strong> Typically 1 day for initial PTS. Renewal every 2 years via a shorter refresher assessment.</span>
             </li>
             <li className="flex items-start gap-3">
-              <BadgeCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BadgeCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>What it covers:</strong> Track environment hazards, walking near trains, Lookout systems, warning signals, emergency procedures, and the personal duty to challenge unsafe acts.</span>
             </li>
             <li className="flex items-start gap-3">
-              <BadgeCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BadgeCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Medical requirement:</strong> PTS requires a railway medical (D&A test and fitness check). This is a condition of Sentinel registration and must be renewed regularly.</span>
             </li>
             <li className="flex items-start gap-3">
-              <BadgeCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BadgeCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Cost:</strong> £200–£400 for initial PTS training and assessment at an approved centre. Employers often fund this for new rail hires.</span>
             </li>
           </ul>
@@ -247,19 +247,19 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Smartcard</strong> — the Sentinel smartcard records all your railway competencies including PTS status, OLEC level, equipment authorisations, and medical fitness. It is scanned at site access points.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Online portal</strong> — workers and employers can view and manage Sentinel records online. Employers add and remove competency records as training is completed and renewed.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Annual renewal fee</strong> — there is a small annual fee for maintaining a Sentinel registration. Your employer typically covers this cost.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Not applicable outside Network Rail</strong> — London Underground, DLR, TfL Rail, and other metro systems operate their own separate competency management systems. Experience on one does not automatically transfer.</span>
             </li>
           </ul>
@@ -310,19 +310,19 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Station fit-outs:</strong> LV distribution, platform lighting, emergency lighting, fire alarm systems, HVAC controls, lifts and escalator power, communications infrastructure. Entry-level rail work — PTS card sufficient.</span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Depot electrical:</strong> Train maintenance depots with complex LV distribution, overhead crane power, traction testing supplies, workshop lighting. Often includes 750V DC or 25kV AC supplies for train testing.</span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Signalling power:</strong> Highly reliable, dual-feed, battery-backed power supplies for safety-critical signalling equipment. Requires understanding of criticality requirements and change control processes.</span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Traction power infrastructure:</strong> 25kV AC overhead line systems, traction substations (often at 132kV or 33kV supply), and associated LV auxiliary supplies. Requires OLEC 2 or 3 and HV knowledge.</span>
             </li>
           </ul>
@@ -342,19 +342,19 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>LV electrician, PTS card, station fit-out:</strong> £35–£45/hr days, £50–£65/hr nights.</span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Experienced rail electrician, active Sentinel:</strong> £40–£55/hr.</span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Traction power electrician, OLEC 2:</strong> £55–£75/hr.</span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Senior electrical engineer, OLEC 3, DRE authority:</strong> £65–£90+/hr.</span>
             </li>
           </ul>
@@ -388,7 +388,7 @@ export default function RailElectricalWorkPage() {
       heroTitle={
         <>
           Rail Electrical Work in the UK:{' '}
-          <span className="text-yellow-400">PTS, Sentinel, OLEC, and Career Guide</span>
+          <span className="text-elec-yellow">PTS, Sentinel, OLEC, and Career Guide</span>
         </>
       }
       heroSubtitle="Rail electrical work offers steady contracts, pay rates of £35–£90+/hr, and a clear career progression from station fit-outs to traction power. This guide covers PTS, Sentinel, OLEC, BS EN 50110, and how to get started."

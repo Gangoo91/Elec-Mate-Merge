@@ -225,7 +225,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New connections and upgrades</strong> — new supplies, capacity upgrades (for
                 EV chargers, heat pumps), and service cable replacements are requested through the
@@ -234,7 +234,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98/G99 notifications</strong> — solar PV, battery storage, and other
                 generation equipment must be notified to WPD/NGED. G98 notifications (up to 16A per
@@ -243,7 +243,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing arrangements</strong> — Bristol properties are predominantly TN-C-S
                 (PME) in newer areas and TN-S in older areas. Some Victorian and Edwardian
@@ -253,7 +253,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Low carbon technology connections</strong> — WPD/NGED have a specific
                 process for notifying EV charger and heat pump installations. While not all
@@ -404,7 +404,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mandatory HMO licensing</strong> — Bristol City Council requires HMO
                 licences for properties with 5 or more occupants from 2 or more separate households.
@@ -412,7 +412,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR requirements</strong> — a satisfactory{' '}
                 <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> with no C1 or
@@ -422,7 +422,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire detection</strong> — HMOs must have fire detection to BS 5839-6. Most
                 Bristol HMOs require Grade D LD2 (mains-powered smoke alarms in escape routes and
@@ -432,7 +432,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency lighting</strong> — emergency lighting on escape routes is
                 required in all licensed HMOs. Self-contained maintained or non-maintained
@@ -531,7 +531,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EIC and EICR Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -580,7 +580,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Bristol electricians"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -606,7 +606,7 @@ export default function ElectricianBristolPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Bristol: <span className="text-yellow-400">Find Electricians 2026</span>
+          Electrician in Bristol: <span className="text-elec-yellow">Find Electricians 2026</span>
         </>
       }
       heroSubtitle="Bristol's mix of Georgian elegance, Victorian terraces, harbour-side new builds, and the UK's strongest eco-retrofit market makes it one of the most rewarding cities for electricians. From Clifton rewires to Southville solar PV."
@@ -617,7 +617,7 @@ export default function ElectricianBristolPage() {
       faqHeading="Frequently Asked Questions About Electricians in Bristol"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Bristol Electricians"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Bristol's Victorian terraces, HMO market, and green energy demand. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Bristol's Victorian terraces, HMO market, and green energy demand. 7-day free trial."
     />
   );
 }

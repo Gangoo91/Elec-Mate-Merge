@@ -17,8 +17,7 @@ import { Capacitor } from '@capacitor/core';
 import { sharePdfBytesFromUrlToWhatsAppWeb } from '@/utils/share-pdf-to-whatsapp-web';
 import { sharePdfFileNative, canShareFilesToWhatsApp } from '@/utils/share-pdf-file-native';
 import { isPermanentPdfUrl } from '@/utils/pdfUrl';
-import { trackUserEvent } from '@/hooks/useActivityTracking';
-import { trackQuoteSent } from '@/lib/analytics-events';
+import { sendQuoteEmail } from '@/utils/sendQuoteEmail';
 
 interface QuoteSendDropdownProps {
   quote: Quote;
@@ -206,96 +205,18 @@ export const QuoteSendDropdown = ({
   const handleSendEmail = async () => {
     try {
       setIsSendingEmail(true);
-
-      // Validate client email
-      const cleanTo = quote.client?.email?.trim();
-      if (!cleanTo || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanTo)) {
-        toast({
-          title: 'Invalid Client Email',
-          description:
-            'Client email address is invalid. Please correct it in the quote and try again.',
-          variant: 'destructive',
-        });
-        setIsSendingEmail(false);
-        return;
-      }
-
-      // Get current session
-      let {
-        data: { session },
-        error: sessionError,
-      } = await supabase.auth.getSession();
-
-      if (sessionError || !session) {
-        const { data: refreshData, error: refreshError } = await supabase.auth.refreshSession();
-        if (refreshError || !refreshData.session) {
-          throw new Error('Please log in again to send quotes.');
-        }
-        session = refreshData.session;
-      }
-
-      // Send via Resend (generates PDF automatically)
-      const { data, error } = await supabase.functions.invoke('send-quote-resend', {
-        body: { quoteId: quote.id },
-        headers: {
-          Authorization: `Bearer ${session.access_token}`,
-        },
-      });
-
-      // Handle errors - extract message from various possible locations
-      if (error) {
-        let errorMessage = 'Failed to send quote';
-
-        if (typeof error === 'string') {
-          errorMessage = error;
-        } else if (error.message) {
-          errorMessage = error.message;
-        } else if (error.context?.body) {
-          try {
-            const bodyError = JSON.parse(error.context.body);
-            errorMessage = bodyError.error || bodyError.message || errorMessage;
-          } catch {
-            errorMessage = error.context.body;
-          }
-        }
-
-        throw new Error(errorMessage);
-      }
-
-      // Check if the response data indicates an error
-      if (data?.error) {
-        throw new Error(data.error + (data.hint ? ` (${data.hint})` : ''));
-      }
-
-      if (!data?.success) {
-        throw new Error(data?.message || 'Unknown error sending quote');
-      }
+      // ELE-1794 — the one send path, shared with the quote page and "Save &
+      // send" in the builder. It marks the quote sent server-side.
+      const to = await sendQuoteEmail(quote);
 
       toast({
         title: 'Quote sent',
-        description: `Quote ${quote.quoteNumber} sent to ${cleanTo}`,
+        description: `Quote ${quote.quoteNumber} sent to ${to}`,
         variant: 'success',
         duration: 4000,
       });
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
-
-      // Update status to sent
-      await supabase.from('quotes').update({ status: 'sent' }).eq('id', quote.id);
-
-      // Sending a quote is the revenue-bearing action in the whole builder.
-      if (quote.user_id) {
-        void trackUserEvent(quote.user_id, 'feature_use', {
-          eventName: 'quote_sent',
-          eventData: { quote_number: quote.quoteNumber ?? null, channel: 'email' },
-        });
-      }
-      trackQuoteSent({
-        quote_id: quote.id,
-        amount_pence: Math.round((quote.total || 0) * 100),
-        channel: 'email',
-      });
-
       onSuccess?.();
     } catch (error: any) {
       toast({

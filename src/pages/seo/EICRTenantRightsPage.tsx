@@ -194,7 +194,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1 — put your request in writing</strong> — send a written request
                 (email is fine) to your landlord or letting agent asking for a copy of the current
@@ -204,7 +204,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2 — wait 28 days</strong> — the landlord has 28 days from your written
                 request to provide the EICR. If they provide it and it is satisfactory, the matter
@@ -213,7 +213,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 3 — report to the local authority</strong> — contact your local
                 council's environmental health or private rented sector team. Provide the property
@@ -223,7 +223,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 4 — seek independent advice if needed</strong> — if you are concerned
                 about your safety or about your landlord's response, contact Citizens Advice,
@@ -250,7 +250,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Where to report</strong> — contact the environmental health team or private
                 rented sector team at your local council. Most councils have an online form for
@@ -260,7 +260,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What to provide</strong> — the property address, your contact details, a
                 description of the complaint (no EICR provided, EICR is out of date, remedial work
@@ -270,7 +270,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What happens next</strong> — the council will review your complaint and
                 decide whether to investigate. If they find a breach, they can issue a remedial
@@ -302,7 +302,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Remedial notices</strong> — the council can serve a remedial notice on the
                 landlord requiring them to take specific action (commission an EICR, complete
@@ -311,7 +311,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Civil penalties up to £30,000</strong> — each breach of the regulations
                 (failure to obtain an EICR, failure to provide it, failure to complete remedial
@@ -321,7 +321,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Work in default</strong> — if the landlord fails to carry out required
                 remedial work after a remedial notice, the council can arrange for the work to be
@@ -330,7 +330,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HHSRS powers</strong> — separately from the Electrical Safety Standards
                 Regulations, councils can use Housing Health and Safety Rating System (HHSRS) powers
@@ -461,7 +461,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Produce Compliant EICRs with Elec-Mate
@@ -482,7 +482,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Produce compliant EICRs that protect landlords and tenants"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion. Clear C1/C2/C3/FI classification, instant PDF export, and landlord portal upload."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion. Clear C1/C2/C3/FI classification, instant PDF export, and landlord portal upload."
           icon={FileCheck2}
         />
       </>
@@ -508,7 +508,7 @@ export default function EICRTenantRightsPage() {
       heroTitle={
         <>
           Tenant Rights for EICR:{' '}
-          <span className="text-yellow-400">Your Electrical Safety Rights</span>
+          <span className="text-elec-yellow">Your Electrical Safety Rights</span>
         </>
       }
       heroSubtitle="As a private tenant in England, you have legal rights to electrical safety records for your home. This guide explains your right to receive the EICR, what to do if your landlord refuses, how to report non-compliance to the council, council enforcement powers, and the eviction protections available to tenants who raise electrical safety concerns."
@@ -519,7 +519,7 @@ export default function EICRTenantRightsPage() {
       faqHeading="Frequently Asked Questions: Tenant EICR Rights"
       relatedPages={relatedPages}
       ctaHeading="For Electricians: Complete Compliant EICRs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to produce clearly documented, fully compliant EICRs on site. Help landlords meet their obligations and protect their tenants. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to produce clearly documented, fully compliant EICRs on site. Help landlords meet their obligations and protect their tenants. 7-day free trial."
     />
   );
 }

@@ -194,7 +194,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Technical Handbook</strong> — in Scotland, the Technical Handbooks (Domestic
                 and Non-Domestic) set out the functional standards for building work. Section 4 of
@@ -203,7 +203,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Notifiable work in Scotland</strong> — in Scotland, most electrical work in
                 dwellings is notifiable work under Building Standards. This is broader than the Part
@@ -212,7 +212,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Approved Certifier of Construction</strong> — Scotland's self- certification
                 mechanism. Approved Certifiers can certify that their own electrical work complies
@@ -222,7 +222,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671 still applies</strong> — despite the different regulatory framework,
                 BS 7671 (IET Wiring Regulations) remains the technical standard for electrical
@@ -248,7 +248,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Application</strong> — submit an application to SELECT with evidence of
                 qualifications, insurance, and business details. SELECT will assess whether you meet
@@ -256,7 +256,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Initial assessment</strong> — a SELECT assessor visits to inspect sample
                 installations. They verify workmanship quality, BS 7671 compliance, documentation
@@ -265,7 +265,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Certification process</strong> — once registered, you notify SELECT of
                 completed notifiable work. SELECT issues an Approved Certifier completion
@@ -275,7 +275,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Annual renewal</strong> — SELECT registration is renewed annually. Renewal
                 includes a desk-based check of insurance and qualifications, and periodic site
@@ -300,7 +300,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Qualifications check</strong> — the assessor verifies that the responsible
                 person holds the required qualifications: Level 3 SVQ/NVQ Electrotechnical
@@ -309,7 +309,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Work quality assessment</strong> — the assessor inspects a sample of
                 recently completed installations for compliance with BS 7671 and workmanship
@@ -318,7 +318,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test equipment calibration</strong> — all test instruments used for
                 electrical inspection and testing must have current calibration certificates. SELECT
@@ -327,7 +327,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Business systems</strong> — SELECT also checks that the business has
                 appropriate management systems in place, including health and safety policies,
@@ -406,7 +406,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sole trader / small business</strong> — approximately £400–£700/year
                 including annual assessment. This covers the full SELECT membership and Approved
@@ -414,14 +414,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Medium business</strong> — fees scale with company size and number of
                 registered operatives. Medium contractors typically pay £800–£1,500/year.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Initial assessment fee</strong> — there is typically an initial assessment
                 fee separate from the annual membership fee. This covers the cost of the assessor's
@@ -429,7 +429,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Per-certificate notification fees</strong> — SELECT charges a small fee for
                 each Approved Certifier completion certificate issued. This is typically built into
@@ -454,7 +454,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Local recognition</strong> — SELECT is the most recognised electrical scheme
                 in Scotland. Scottish homeowners, housing associations, and public sector clients
@@ -463,7 +463,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Trade body function</strong> — SELECT provides Scottish Parliament
                 engagement and Scottish-specific technical and legal support that NICEIC (as a
@@ -472,7 +472,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cross-border contractors</strong> — electricians who work regularly in both
                 Scotland and England may find it pragmatic to hold both SELECT (for Scotland) and{' '}
@@ -501,7 +501,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Certificate management for SELECT-registered electricians"
-          description="Join 1,600+ UK electricians using Elec-Mate to complete EICRs, Minor Works Certificates, and Electrical Installation Certificates on site."
+          description="Join 2,100+ UK electricians using Elec-Mate to complete EICRs, Minor Works Certificates, and Electrical Installation Certificates on site."
           icon={FileCheck2}
         />
       </>
@@ -527,7 +527,7 @@ export default function SelectElectricalRegistrationPage() {
       heroTitle={
         <>
           SELECT Electrical Registration Scotland:{' '}
-          <span className="text-yellow-400">Approved Contractor Guide</span>
+          <span className="text-elec-yellow">Approved Contractor Guide</span>
         </>
       }
       heroSubtitle="Everything Scottish electricians need to know about SELECT registration — Building Standards Scotland, the Approved Certifier of Construction scheme, assessment process, costs, and why SELECT matters for working in Scotland."

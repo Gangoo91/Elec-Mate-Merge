@@ -305,7 +305,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Black marks or scorch marks</strong> around the pin openings — these
                 indicate that arcing has occurred. The black marks are carbon deposits from the arc
@@ -313,7 +313,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Melted or deformed plastic</strong> — the faceplate or the area around the
                 pin openings may appear warped, shiny, or discoloured from heat. This means the
@@ -321,7 +321,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cracks in the faceplate</strong> — cracked plastic exposes the internal
                 components and reduces the mechanical protection. A cracked socket should be
@@ -329,7 +329,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Loose faceplate</strong> — if the faceplate rocks or moves when you insert a
                 plug, the fixing screws may be loose or the back box may be damaged. This can allow
@@ -337,7 +337,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Warm or hot to the touch</strong> — a socket that feels warm when an
                 appliance is plugged in (particularly around the plug pins) indicates high
@@ -403,14 +403,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Any visible damage</strong> — cracks, scorch marks, melted plastic, or
                 discolouration. Do not continue using a damaged socket.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Loose plug fit</strong> — if plugs no longer sit firmly in the socket, the
                 internal contacts are worn. Loose contact means higher resistance, more heat, and
@@ -418,14 +418,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Warmth during use</strong> — a socket that gets warm when loaded indicates
                 high-resistance connections. Replace the socket and check the wiring behind it.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Shutters not working</strong> — the shutters on a BS 1363 socket prevent
                 children from inserting objects into the live terminal. If the shutters are stuck or
@@ -433,7 +433,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Persistent sparking</strong> — if the socket sparks visibly every time you
                 plug something in, even when the appliance is switched off, the socket contacts or
@@ -529,7 +529,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Eye className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">1. Visual Inspection</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -544,7 +544,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">2. Insulation Resistance Test</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -558,7 +558,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ShieldCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">3. Circuit Integrity Checks</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -603,7 +603,7 @@ export default function SocketSparkingWhenPluggingInPage() {
       heroTitle={
         <>
           Socket Sparking When Plugging In:{' '}
-          <span className="text-yellow-400">Safe or Dangerous?</span>
+          <span className="text-elec-yellow">Safe or Dangerous?</span>
         </>
       }
       heroSubtitle="A flash of light when you plug something in — is it normal? This guide explains the difference between a harmless inductive spark and dangerous arcing, covers worn contacts, loose wiring, AFDD protection, and when to call an electrician."
@@ -614,7 +614,7 @@ export default function SocketSparkingWhenPluggingInPage() {
       faqHeading="Frequently Asked Questions About Socket Sparking"
       relatedPages={relatedPages}
       ctaHeading="Diagnose and Document Socket Faults on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI fault diagnosis, insulation resistance testing guidance, and professional EICR certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for AI fault diagnosis, insulation resistance testing guidance, and professional EICR certificates. 7-day free trial, cancel anytime."
     />
   );
 }

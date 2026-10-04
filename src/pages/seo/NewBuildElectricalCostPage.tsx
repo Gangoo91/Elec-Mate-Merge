@@ -167,7 +167,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">First Fix Cost Breakdown</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable and wiring</strong> — £800 to £2,000 per plot depending on size and
                 specification. Twin and earth, 3-core and earth, data cable, coaxial, and fire alarm
@@ -175,7 +175,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Back boxes and accessories</strong> — £150 to £350 per plot. Galvanised
                 metal back boxes (35mm and 47mm depth), ceiling plates, junction boxes, and cable
@@ -183,7 +183,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Labour (first fix)</strong> — £1,200 to £2,500 per plot. 2 to 3 days at day
                 rates of £250 to £350 per electrician, typically with a mate at £150 to £200 per
@@ -213,14 +213,14 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Second Fix Cost Breakdown</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit with RCBOs and SPD</strong> — £350 to £600 per plot. A 10 to
                 12-way board is standard for a 3-bedroom house.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Accessories</strong> — £200 to £600 per plot depending on specification.
                 Basic white plastic accessories: £200 to £300. Brushed steel or chrome: £400 to
@@ -228,7 +228,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Light fittings</strong> — £200 to £1,500 per plot depending on
                 specification. Builder-standard pendants and battens: £200 to £400. LED downlights
@@ -236,7 +236,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Labour (second fix, testing, certification)</strong> — £1,000 to £2,000 per
                 plot. 2 to 3 days including testing and EIC completion.
@@ -259,7 +259,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Basic specification: £35 to £45/m²</strong> — Builder standard. Minimum
                 socket outlets per NHBC guidelines, pendant lighting, standard white accessories,
@@ -268,7 +268,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mid-range specification: £50 to £65/m²</strong> — Additional socket outlets
                 (6+ doubles in living areas), LED downlights in kitchen and bathroom, USB charging
@@ -278,7 +278,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Premium specification: £70 to £85/m²</strong> — High-density socket
                 provision, LED downlights throughout, structured Cat6A data wiring, underfloor
@@ -347,7 +347,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minimum outlet provision</strong> — NHBC requires adequate socket outlets in
                 all habitable rooms. Whilst BS 7671 does not specify minimum numbers, NHBC Standards
@@ -355,7 +355,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Energy efficiency</strong> — At least 75% of fixed lighting outlets must
                 have energy-efficient light fittings (LED or equivalent). This is an NHBC and
@@ -363,14 +363,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smoke and heat detection</strong> — Interlinked smoke and heat detection to
                 BS 5839-6. NHBC requires mains-powered detectors with battery backup.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charging</strong> — Approved Document S requires an EV charge point for
                 each new dwelling with associated parking. NHBC inspectors verify compliance.
@@ -455,7 +455,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Price Per Plot, Quote Per Phase</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -522,7 +522,7 @@ export default function NewBuildElectricalCostPage() {
       badgeIcon={PoundSterling}
       heroTitle={
         <>
-          New Build Electrical Cost: <span className="text-yellow-400">UK Per m² Guide 2026</span>
+          New Build Electrical Cost: <span className="text-elec-yellow">UK Per m² Guide 2026</span>
         </>
       }
       heroSubtitle="What does new build electrical installation cost per square metre? This guide covers first fix, second fix, specification levels from basic to premium, NHBC standards, and realistic pricing — for developers comparing tenders and electricians quoting new build contracts."
@@ -538,7 +538,7 @@ export default function NewBuildElectricalCostPage() {
       faqHeading="Frequently Asked Questions About New Build Electrical Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote New Build Electrical Packages with Per-Plot Pricing"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for new build quoting with outlet schedules, specification levels, and EIC templates. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for new build quoting with outlet schedules, specification levels, and EIC templates. 7-day free trial."
     />
   );
 }

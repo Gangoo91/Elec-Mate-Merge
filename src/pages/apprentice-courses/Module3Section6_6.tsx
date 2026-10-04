@@ -66,7 +66,7 @@ const quizQuestions = [
       'Site specification',
       'BS 7671',
       'Manufacturer manual',
-      'NICEIC logbook',
+      'Electrical Installation Certificate',
     ],
     correctAnswer: 0,
     explanation:
@@ -78,7 +78,7 @@ const quizQuestions = [
     options: [
       'It removes the need for a final inspection',
       'For accountability, inspection approval, and warranty protection',
-      'It increases the equipment current rating',
+      'It transfers liability to the manufacturer',
       'It allows the warranty period to be extended',
     ],
     correctAnswer: 1,
@@ -116,9 +116,9 @@ const quizQuestions = [
     question: 'What is one consequence of failing to follow site specs on a commercial job?',
     options: [
       'Project delay, failed inspection, or contract breach',
-      'A permanent increase in the cable current rating',
-      'A reduction in the required insulation resistance',
-      'A shorter disconnection time on every circuit',
+      'Building control must be notified of the change',
+      'The certificate must be issued as a condition report',
+      'The design must be redone to BS 7671 minimums only',
     ],
     correctAnswer: 0,
     explanation:
@@ -132,9 +132,9 @@ const quickCheckQuestions = [
     id: 'torque-settings',
     question: 'Why do manufacturers provide specific torque settings for terminations?',
     options: [
-      'To increase the current rating of the terminal',
+      'To suit the screwdriver supplied with the product',
       'To allow thinner conductors to be used',
-      'To remove the need for cable identification',
+      'To let the terminal take two conductors',
       'To ensure connection integrity and prevent overheating',
     ],
     correctIndex: 3,
@@ -158,10 +158,10 @@ const quickCheckQuestions = [
     id: 'ignoring-instructions',
     question: 'Give one potential consequence of ignoring manufacturer instructions.',
     options: [
-      'A longer warranty period on the equipment',
-      'A higher current rating for the circuit',
+      'The equipment can then be used outdoors',
+      'The circuit needs a higher-rated protective device',
       'Voided warranty, unsafe operation, or compliance failure',
-      'A reduced disconnection time for the circuit',
+      'The installation needs testing only once',
     ],
     correctIndex: 2,
     explanation:

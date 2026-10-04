@@ -198,7 +198,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Zone 1 — immediately around the water</strong> — extends 2 m horizontally
                 from the edge of the basin and 2.5 m vertically above the floor level (for fountains
@@ -242,7 +242,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP68 — Zone 0 (continuously submerged)</strong> — the highest standard for
                 continuous submersion. Equipment rated IP68 is tested to remain watertight when
@@ -251,7 +251,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP55 — Zone 1 (splashing and spray)</strong> — protection against dust
                 ingress and water jets from any direction. Required for equipment in Zone 1 that is
@@ -260,7 +260,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP44 — Zone 2 (splash risk)</strong> — protection against solid objects
                 greater than 1 mm and water splashing from any direction. This is the minimum for
@@ -333,7 +333,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS EN 60598-2-18</strong> — underwater luminaires must comply with BS EN
                 60598-2-18 (luminaires — particular requirements — luminaires for swimming pools and
@@ -343,7 +343,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>LED technology</strong> — modern underwater luminaires are predominantly
                 LED-based, which offers advantages of lower heat generation (reducing thermal stress
@@ -353,7 +353,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maintenance access</strong> — underwater luminaires must be accessible for
                 inspection and relamping (where applicable) without draining the entire basin. Many
@@ -428,7 +428,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Submersible pumps</strong> — the pump is typically the most hazardous
                 component in a garden water feature. Only pumps specifically designed and approved
@@ -439,7 +439,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pond lighting</strong> — submersible pond lights must be specifically
                 designed for underwater use. Low-voltage (12 V AC or 30 V DC) pond lighting systems
@@ -449,7 +449,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Outdoor socket outlets</strong> — socket outlets used to supply garden water
                 features must be weatherproof, RCD-protected, and installed in accordance with the{' '}
@@ -485,7 +485,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Certify Water Feature Installations</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -521,7 +521,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Water feature electrical certification made simple with"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC and EICR completion, test result recording, and instant PDF export."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EIC and EICR completion, test result recording, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -547,7 +547,7 @@ export default function FountainPoolElectricalPage() {
       heroTitle={
         <>
           Decorative Fountain & Feature Pool Electrical:{' '}
-          <span className="text-yellow-400">BS 7671 Section 702</span>
+          <span className="text-elec-yellow">BS 7671 Section 702</span>
         </>
       }
       heroSubtitle="Everything electricians need to know about electrical installations for decorative fountains, feature pools, and garden water features — BS 7671 Section 702 zone requirements, IP ratings, SELV in Zone 0, underwater luminaires, and supplementary bonding requirements."
@@ -558,7 +558,7 @@ export default function FountainPoolElectricalPage() {
       faqHeading="Frequently Asked Questions About Fountain and Water Feature Electrical Installations"
       relatedPages={relatedPages}
       ctaHeading="Complete Water Feature Electrical Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC and EICR completion, test result recording, and instant PDF export. Perfect for fountain and water feature installations. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC and EICR completion, test result recording, and instant PDF export. Perfect for fountain and water feature installations. 7-day free trial."
     />
   );
 }

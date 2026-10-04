@@ -134,10 +134,10 @@ const quizQuestions = [
     id: 5,
     question: 'Under the Working at Height Regs 2005, what should you do FIRST?',
     options: [
-      'To prevent condensation forming on the beam surfaces',
+      'Choose the right ladder or stepladder for the height of the job',
       'Avoid working at height where you can — do it from the ground if possible',
-      'No notification required if installer is registered with competent person scheme',
-      'Immediately evacuate all personnel from the confined space',
+      'Issue everyone a harness and lanyard before work starts',
+      'Put up barriers and signs around the base of the access',
     ],
     correctAnswer: 1,
     explanation:

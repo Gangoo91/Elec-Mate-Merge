@@ -133,8 +133,8 @@ export default function ComparisonTemplate({
       {/* Hero */}
       <section className="pb-8">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-5">
-          <BadgeIcon className="w-4 h-4 text-yellow-400" />
-          <span className="text-sm font-medium text-yellow-400">{badge}</span>
+          <BadgeIcon className="w-4 h-4 text-elec-yellow" />
+          <span className="text-sm font-medium text-elec-yellow">{badge}</span>
         </div>
 
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
@@ -152,7 +152,7 @@ export default function ComparisonTemplate({
           </a>
           <a
             href="#comparison"
-            className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-yellow-500/40 text-white font-semibold rounded-xl touch-manipulation transition-colors"
+            className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-white/[0.1] text-white font-semibold rounded-xl touch-manipulation transition-colors"
           >
             See the Comparison
           </a>
@@ -217,10 +217,10 @@ export default function ComparisonTemplate({
       {/* Verdict */}
       {verdictContent && (
         <section id="verdict" className="pb-10 scroll-mt-24">
-          <div className="rounded-2xl bg-gradient-to-br from-yellow-500/10 via-yellow-600/5 to-transparent border border-white/[0.14] p-6 sm:p-8">
+          <div className="rounded-2xl bg-gradient-to-br from-white/[0.02] via-yellow-600/5 to-transparent border border-white/[0.14] p-6 sm:p-8">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-5">
-              <Check className="w-3.5 h-3.5 text-yellow-400" />
-              <span className="text-xs font-semibold text-yellow-400 uppercase tracking-wider">
+              <Check className="w-3.5 h-3.5 text-elec-yellow" />
+              <span className="text-xs font-semibold text-elec-yellow uppercase tracking-wider">
                 Verdict
               </span>
             </div>

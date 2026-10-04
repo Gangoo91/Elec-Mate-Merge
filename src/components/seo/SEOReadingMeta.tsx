@@ -14,15 +14,15 @@ export function SEOReadingMeta({
   return (
     <div className="flex flex-wrap items-center gap-4 text-sm text-white">
       <span className="inline-flex items-center gap-1.5">
-        <Clock className="w-3.5 h-3.5 text-yellow-400" />
+        <Clock className="w-3.5 h-3.5 text-elec-yellow" />
         {readingTime} min read
       </span>
       <span className="inline-flex items-center gap-1.5">
-        <Calendar className="w-3.5 h-3.5 text-yellow-400" />
+        <Calendar className="w-3.5 h-3.5 text-elec-yellow" />
         Updated {dateUpdated}
       </span>
       <span className="inline-flex items-center gap-1.5">
-        <User className="w-3.5 h-3.5 text-yellow-400" />
+        <User className="w-3.5 h-3.5 text-elec-yellow" />
         {author}
       </span>
     </div>

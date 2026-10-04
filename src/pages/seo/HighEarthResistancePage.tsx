@@ -137,8 +137,8 @@ const sections = [
     content: (
       <>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 mb-5 flex items-start gap-3">
-          <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-          <p className="text-white/80 text-sm leading-relaxed">
+          <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+          <p className="text-white text-sm leading-relaxed">
             This guide is written and maintained by qualified electricians holding City &amp; Guilds
             2391 (Inspection, Testing and Certification) and AM2 assessments, and reviewed against
             BS 7671:2018+A4:2026 using Elec-Mate&apos;s verified BS 7671 content. Regulation
@@ -209,7 +209,7 @@ const sections = [
           50V:
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
-          <h3 className="font-bold text-yellow-400 text-xl mb-2">RA x IΔn ≤ 50V</h3>
+          <h3 className="font-bold text-elec-yellow text-xl mb-2">RA x IΔn ≤ 50V</h3>
           <p className="text-white leading-relaxed">
             Where RA is the earth electrode resistance (ohms) and IΔn is the rated residual
             operating current of the RCD (amps). For a 30mA RCD: RA must not exceed 50 / 0.03 = 1667
@@ -253,22 +253,22 @@ const sections = [
           <div className="space-y-2 text-sm">
             <div className="flex justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
               <span className="text-white">Maximum Ra up to 50&nbsp;&Omega;</span>
-              <span className="text-yellow-400 font-bold">Max I&Delta;n 1&nbsp;A</span>
+              <span className="text-elec-yellow font-bold">Max I&Delta;n 1&nbsp;A</span>
             </div>
             <div className="flex justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
               <span className="text-white">Maximum Ra up to 167&nbsp;&Omega;</span>
-              <span className="text-yellow-400 font-bold">Max I&Delta;n 300&nbsp;mA</span>
+              <span className="text-elec-yellow font-bold">Max I&Delta;n 300&nbsp;mA</span>
             </div>
             <div className="flex justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
               <span className="text-white">Maximum Ra up to 500&nbsp;&Omega;</span>
-              <span className="text-yellow-400 font-bold">Max I&Delta;n 100&nbsp;mA</span>
+              <span className="text-elec-yellow font-bold">Max I&Delta;n 100&nbsp;mA</span>
             </div>
             <div className="flex justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
               <span className="text-white">Maximum Ra up to 1667&nbsp;&Omega;</span>
-              <span className="text-yellow-400 font-bold">Max I&Delta;n 30&nbsp;mA</span>
+              <span className="text-elec-yellow font-bold">Max I&Delta;n 30&nbsp;mA</span>
             </div>
           </div>
-          <p className="text-white/70 text-xs mt-3">
+          <p className="text-white text-xs mt-3">
             Source: BS 7671:2018+A4:2026, Reg 531.3.5.3.2, Table 53.1
           </p>
         </div>
@@ -287,9 +287,9 @@ const sections = [
         </p>
         <ul className="space-y-3 my-4">
           <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
-              <strong className="text-yellow-400">Dry soil</strong> — soil moisture is the single
+              <strong className="text-elec-yellow">Dry soil</strong> — soil moisture is the single
               most significant factor affecting earth resistance. Dry soil has high resistivity
               because water provides the conductive ionic path between the electrode and the general
               mass of earth. During drought or extended dry periods, earth resistance can increase
@@ -297,44 +297,44 @@ const sections = [
             </span>
           </li>
           <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
-              <strong className="text-yellow-400">Sandy or gravelly soil</strong> — sand and gravel
+              <strong className="text-elec-yellow">Sandy or gravelly soil</strong> — sand and gravel
               have poor moisture retention and high resistivity compared to clay or loam.
               Installations in coastal areas, heathland, or sandy subsoil regions often have
               challenging earth resistance conditions.
             </span>
           </li>
           <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
-              <strong className="text-yellow-400">Rocky ground</strong> — rock has extremely high
+              <strong className="text-elec-yellow">Rocky ground</strong> — rock has extremely high
               resistivity. In areas with shallow soil over rock (common in parts of Wales, Scotland,
               and the West Country), driving rods deep enough to reach low-resistivity layers may be
               impossible.
             </span>
           </li>
           <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
-              <strong className="text-yellow-400">Insufficient rod depth</strong> — a rod that has
+              <strong className="text-elec-yellow">Insufficient rod depth</strong> — a rod that has
               not been driven deep enough will be in the zone of seasonal moisture variation. Deeper
               rods reach permanently moist soil and give more stable, lower readings.
             </span>
           </li>
           <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
-              <strong className="text-yellow-400">Corroded electrodes</strong> — over time, earth
+              <strong className="text-elec-yellow">Corroded electrodes</strong> — over time, earth
               rods can corrode, particularly in acidic or chemically aggressive soils. Corrosion
               reduces the effective surface area and increases contact resistance. Copper-clad steel
               rods resist corrosion better than bare steel.
             </span>
           </li>
           <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
-              <strong className="text-yellow-400">Poor connections</strong> — loose, corroded, or
+              <strong className="text-elec-yellow">Poor connections</strong> — loose, corroded, or
               inadequate connections between the earth electrode and the earthing conductor increase
               the total resistance. All connections must be tight, clean, and protected from
               corrosion. Clamp connections should be inspected during every periodic inspection.
@@ -359,23 +359,23 @@ const sections = [
           <div className="space-y-3">
             <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
               <span className="text-white font-bold">Wet clay or marshy ground</span>
-              <span className="text-yellow-400 font-bold">5 to 40 ohm-metres</span>
+              <span className="text-elec-yellow font-bold">5 to 40 ohm-metres</span>
             </div>
             <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
               <span className="text-white font-bold">Garden soil / loam</span>
-              <span className="text-yellow-400 font-bold">10 to 150 ohm-metres</span>
+              <span className="text-elec-yellow font-bold">10 to 150 ohm-metres</span>
             </div>
             <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
               <span className="text-white font-bold">Chalk</span>
-              <span className="text-yellow-400 font-bold">60 to 400 ohm-metres</span>
+              <span className="text-elec-yellow font-bold">60 to 400 ohm-metres</span>
             </div>
             <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
               <span className="text-white font-bold">Dry sand / gravel</span>
-              <span className="text-yellow-400 font-bold">200 to 3000 ohm-metres</span>
+              <span className="text-elec-yellow font-bold">200 to 3000 ohm-metres</span>
             </div>
             <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
               <span className="text-white font-bold">Rock (granite, sandstone)</span>
-              <span className="text-yellow-400 font-bold">1000 to 100,000+ ohm-metres</span>
+              <span className="text-elec-yellow font-bold">1000 to 100,000+ ohm-metres</span>
             </div>
           </div>
         </div>
@@ -403,7 +403,7 @@ const sections = [
         </p>
         <div className="grid sm:grid-cols-3 gap-4 my-6">
           <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-            <Wrench className="w-6 h-6 text-yellow-400 mb-3" />
+            <Wrench className="w-6 h-6 text-elec-yellow mb-3" />
             <h3 className="font-bold text-white text-lg mb-2">Driven Rods</h3>
             <p className="text-white text-sm leading-relaxed">
               The most common electrode type for UK domestic installations. Copper-clad steel rods
@@ -413,7 +413,7 @@ const sections = [
             </p>
           </div>
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <Mountain className="w-6 h-6 text-yellow-400 mb-3" />
+            <Mountain className="w-6 h-6 text-elec-yellow mb-3" />
             <h3 className="font-bold text-white text-lg mb-2">Earth Plates</h3>
             <p className="text-white text-sm leading-relaxed">
               Copper or galvanised steel plates buried horizontally in the ground. Used where rods
@@ -423,7 +423,7 @@ const sections = [
             </p>
           </div>
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <Cable className="w-6 h-6 text-yellow-400 mb-3" />
+            <Cable className="w-6 h-6 text-elec-yellow mb-3" />
             <h3 className="font-bold text-white text-lg mb-2">Earth Tapes / Mats</h3>
             <p className="text-white text-sm leading-relaxed">
               Bare copper tape or strip buried horizontally in a trench. Suitable for areas with
@@ -460,45 +460,45 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Methods to Reduce Earth Resistance</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">Drive the rod deeper</strong> — the most
+                <strong className="text-elec-yellow">Drive the rod deeper</strong> — the most
                 effective single action. Each additional 1.2m section coupled onto the rod reduces
                 resistance by approximately 30 to 40 percent as the rod reaches moister, more
                 compacted soil layers.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">Use multiple rods in parallel</strong> — connect
+                <strong className="text-elec-yellow">Use multiple rods in parallel</strong> — connect
                 two or more rods together with a bare copper bonding conductor. Space the rods at
                 least 2.5 times their driven depth apart. Two rods will reduce resistance to
                 approximately 60% of a single rod value.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">Use earth enhancement compound</strong> —
+                <strong className="text-elec-yellow">Use earth enhancement compound</strong> —
                 proprietary low-resistivity compounds (such as bentonite or Marconite) can be packed
                 around the earth rod to reduce contact resistance. The compound absorbs and retains
                 moisture, providing a consistent low-resistivity zone around the rod.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">Relocate the electrode</strong> — if the soil at
+                <strong className="text-elec-yellow">Relocate the electrode</strong> — if the soil at
                 the current location is unsuitable (rock, gravel, building rubble), moving the
                 electrode to an area with better soil conditions (garden soil, clay, near a water
                 course) can significantly reduce resistance.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">Switch electrode type</strong> — if rods cannot
+                <strong className="text-elec-yellow">Switch electrode type</strong> — if rods cannot
                 be driven deep enough, switch to an earth plate or earth tape configuration that
                 provides a larger surface area in the available soil depth.
               </span>
@@ -602,7 +602,7 @@ const sections = [
           characteristics and earthing arrangements.
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
-          <h4 className="font-bold text-yellow-400 mb-2">Legal Mandate to Measure and Record RA</h4>
+          <h4 className="font-bold text-elec-yellow mb-2">Legal Mandate to Measure and Record RA</h4>
           <p className="text-white text-sm leading-relaxed">
             BS 7671 Regulation 643.7.3 (Part 6 — Inspection and Testing) requires that where the
             earthing system incorporates an earth electrode, the electrode resistance to Earth (RA)
@@ -616,23 +616,23 @@ const sections = [
         <p>For TT installations, the following information should be recorded:</p>
         <ul className="space-y-2 my-4">
           <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">Earth electrode type (rod, plate, tape, etc.)</span>
           </li>
           <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">Earth electrode location</span>
           </li>
           <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">Measured earth electrode resistance (RA) in ohms</span>
           </li>
           <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">RCD rating (IΔn) in mA</span>
           </li>
           <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">Confirmation that RA x IΔn does not exceed 50V</span>
           </li>
         </ul>
@@ -671,7 +671,7 @@ export default function HighEarthResistancePage() {
         <>
           High Earth Resistance
           <br />
-          <span className="text-yellow-400">Causes and Solutions</span>
+          <span className="text-elec-yellow">Causes and Solutions</span>
         </>
       }
       heroSubtitle="High earth electrode resistance compromises protective device operation and increases touch voltages. This guide covers why high readings occur, how soil conditions affect resistance, electrode types, practical methods to reduce RA values, and how to record results on certificates."
@@ -681,7 +681,7 @@ export default function HighEarthResistancePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Calculate and Validate Earth Resistance On Site"
-      ctaSubheading="Elec-Mate includes an earth rod calculator, validates RA x IΔn against BS 7671, and captures earth resistance on every certificate. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate includes an earth rod calculator, validates RA x IΔn against BS 7671, and captures earth resistance on every certificate. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

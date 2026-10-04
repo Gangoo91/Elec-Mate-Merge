@@ -182,7 +182,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Add socket to existing ring circuit:</strong> £80 to £150 per socket. This
                 is a spur off an existing ring, using a fused connection unit or direct spur. A
@@ -190,7 +190,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New socket on a new radial circuit:</strong> £150 to £250 per socket. A new
                 circuit from the consumer unit, requiring a spare MCB way, full cable run, testing,
@@ -198,7 +198,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Outdoor waterproof socket:</strong> £150 to £250. Requires an IP66-rated
                 socket, RCD protection, and weather-resistant cabling. Building Control notification
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Replace existing socket faceplate:</strong> £40 to £80 per socket. A
                 straightforward swap of the faceplate (single to double, standard to USB) with no
@@ -240,7 +240,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Split-load consumer unit (dual RCD):</strong> £500 to £700. A metal consumer
                 unit with two RCDs protecting separate banks of MCBs. Cost-effective but a single
@@ -248,7 +248,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fully RCBO-populated consumer unit:</strong> £700 to £900. Each circuit has
                 its own RCBO, providing both overcurrent and earth leakage protection independently.
@@ -256,7 +256,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit with AFDD protection:</strong> £900 to £1,300. Includes Arc
                 Fault Detection Devices as recommended by{' '}
@@ -291,28 +291,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1-bedroom flat:</strong> £2,500 to £4,000. Typically 4 to 6 circuits.
                 Usually completed in 2 to 3 days.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>2-bedroom house:</strong> £3,500 to £5,500. Typically 6 to 10 circuits.
                 Usually completed in 3 to 4 days.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3-bedroom semi-detached:</strong> £5,000 to £7,500. Typically 8 to 14
                 circuits. Usually completed in 4 to 6 days.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>4-5 bedroom detached:</strong> £7,000 to £10,000+. Typically 12 to 20+
                 circuits. Usually completed in 5 to 8 days.
@@ -346,7 +346,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>7kW home charger (supply and install):</strong> £800 to £1,500. Includes the
                 charger unit, dedicated 32A circuit, cable run to the charge point, earthing to{' '}
@@ -357,7 +357,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>22kW three-phase charger:</strong> £1,500 to £3,000. Requires a three-phase
                 supply (not available in most domestic properties). Common for commercial
@@ -365,7 +365,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit upgrade (if needed):</strong> Add £500 to £900. If the
                 existing consumer unit does not have a spare way or is too old to accept a new
@@ -394,7 +394,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Replace light fitting (like-for-like):</strong> £40 to £80 per fitting.
                 Swapping an existing ceiling rose or light fitting for a new one with no wiring
@@ -402,7 +402,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Install downlights (per room):</strong> £200 to £500 per room. Includes 4 to
                 8 LED downlights, cabling, and a compatible dimmer switch. Fire-rated downlights are
@@ -410,7 +410,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Outdoor security lighting:</strong> £100 to £250 per light. Includes a
                 PIR-activated LED floodlight or wall light, cabling, and a suitable connection
@@ -418,7 +418,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>LED strip lighting (kitchen or bathroom):</strong> £150 to £400.
                 Under-cabinet LED strips, driver, dimmer, and cabling. Bathroom lighting must comply
@@ -444,7 +444,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <TreePine className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TreePine className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Garden lighting circuit:</strong> £300 to £700. Includes SWA cable, posts or
                 spike lights, a transformer for low-voltage systems, and connection to the consumer
@@ -452,7 +452,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TreePine className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TreePine className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Outdoor socket (waterproof):</strong> £150 to £250. IP66-rated socket on a
                 dedicated RCD-protected circuit. Essential for garden tools, pressure washers, and
@@ -460,7 +460,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TreePine className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TreePine className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Garage or shed supply:</strong> £400 to £800. Includes an SWA cable run from
                 the house, a small consumer unit in the outbuilding, lighting, and socket circuits.
@@ -469,7 +469,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TreePine className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TreePine className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hot tub supply:</strong> £300 to £600. Requires a dedicated circuit (usually
                 32A or 40A depending on the tub), an RCD, and an isolator switch within sight of the
@@ -498,7 +498,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR (Electrical Installation Condition Report):</strong> £120 to £350
                 depending on property size.{' '}
@@ -509,7 +509,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smoke and heat alarm installation:</strong> £50 to £100 per alarm for
                 mains-wired, interlinked alarms. Required in all rented properties under the Smoke
@@ -517,7 +517,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cooker circuit installation:</strong> £200 to £400. A dedicated 32A or 40A
                 circuit with appropriate cable size, a cooker switch (with or without socket), and
@@ -525,7 +525,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Shower circuit installation:</strong> £250 to £500. Electric showers
                 typically require a dedicated 40A or 45A circuit depending on the kW rating. Cable
@@ -533,7 +533,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fault finding (diagnostic callout):</strong> £80 to £150 per hour. Tracing
                 and diagnosing electrical faults — tripping circuits, intermittent problems, power
@@ -554,7 +554,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Location.</strong> London and the South East are 20 to 30 percent more
                 expensive than the national average. This reflects higher overheads, travel costs,
@@ -562,7 +562,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Property type and access.</strong> Solid-walled Victorian and Edwardian
                 properties are harder to cable than modern stud-wall construction. Limited floor
@@ -570,7 +570,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Materials quality.</strong> Branded consumer units (Hager, Schneider) cost
                 more than budget boards but offer better reliability and warranty. Cable prices
@@ -578,7 +578,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Certification requirements.</strong> Work that requires Building Control
                 notification (new circuits in kitchens, bathrooms, outdoors) adds certification
@@ -586,7 +586,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Making good.</strong> Whether the price includes plastering, filling, and
                 decorating after cable installation varies between electricians. Always confirm.
@@ -610,7 +610,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Materials Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -664,7 +664,7 @@ export default function ElectricalWorkPricingPage() {
       heroTitle={
         <>
           Electrical Work Pricing:{' '}
-          <span className="text-yellow-400">What Every Job Costs in 2026</span>
+          <span className="text-elec-yellow">What Every Job Costs in 2026</span>
         </>
       }
       heroSubtitle="From a single socket to a full house rewire, this guide covers what every common electrical job costs in the UK in 2026. Realistic price ranges based on current market rates, with a breakdown of what is included and what affects the price."

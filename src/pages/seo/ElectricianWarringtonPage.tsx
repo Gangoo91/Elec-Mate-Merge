@@ -326,7 +326,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICRs for landlords</strong> — Warrington's active rental market generates
                 consistent EICR demand. Landlords must have a valid EICR every five years under the
@@ -334,7 +334,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacements</strong> — New Town properties from the 1970s
                 frequently need consumer unit upgrades. This is one of the most common jobs across
@@ -342,7 +342,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger installations</strong> — strong demand in Warrington's
                 residential areas, particularly in Appleton, Stockton Heath, and newer estates where
@@ -350,7 +350,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rewires</strong> — New Town estates and Victorian properties generate
                 rewiring work. New Town houses built in the 1970s are increasingly reaching the
@@ -440,7 +440,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EIC and EICR Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -473,7 +473,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Warrington electricians"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -501,7 +501,7 @@ export default function ElectricianWarringtonPage() {
       heroTitle={
         <>
           Electrician in Warrington:{' '}
-          <span className="text-yellow-400">Local Electricians 2026</span>
+          <span className="text-elec-yellow">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Warrington's strong economy — from New Town estates and Victorian terraces to logistics parks and commercial development — creates a varied and well-paid market for qualified electricians with Part P compliance expertise."
@@ -512,7 +512,7 @@ export default function ElectricianWarringtonPage() {
       faqHeading="Frequently Asked Questions About Electricians in Warrington"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Warrington Electricians"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the residential and commercial electrical market in Warrington. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the residential and commercial electrical market in Warrington. 7-day free trial."
     />
   );
 }

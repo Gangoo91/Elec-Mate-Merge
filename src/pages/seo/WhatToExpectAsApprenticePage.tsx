@@ -173,7 +173,7 @@ const sections = [
         </p>
         <div className="space-y-3 my-6">
           <div className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <Sunrise className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
+            <Sunrise className="w-5 h-5 text-elec-yellow shrink-0 mt-0.5" />
             <div>
               <h3 className="font-bold text-white text-base mb-1">
                 6:30am — Wake Up and Get Ready
@@ -292,7 +292,7 @@ const sections = [
         </p>
         <div className="space-y-3 my-6">
           <div className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <Users className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
+            <Users className="w-5 h-5 text-elec-yellow shrink-0 mt-0.5" />
             <div>
               <h3 className="font-bold text-white text-base mb-1">The Banter</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -353,7 +353,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Low pay in the early years.</strong> The{' '}
                 <SEOInternalLink href="/guides/apprentice-rights-pay-uk">
@@ -365,7 +365,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Brain className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Feeling out of your depth.</strong> The first few months are overwhelming.
                 New terminology, new tools, new environment, new expectations. This is completely
@@ -373,7 +373,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Balancing work and study.</strong> After a physically demanding day on site,
                 the last thing you want to do is study. But the theory is important, and falling
@@ -382,7 +382,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sunrise className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sunrise className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Winter mornings.</strong> Dark, cold, wet. Getting up at 6am in January to
                 work outside is genuinely hard. Invest in good quality workwear — thermal layers, a
@@ -390,7 +390,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Difficult personalities.</strong> Not every electrician you work with will
                 be patient or supportive. Some are grumpy, some are poor communicators, and some
@@ -420,7 +420,7 @@ const sections = [
         </p>
         <div className="space-y-3 my-6">
           <div className="flex items-start gap-3 p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-            <PoundSterling className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
+            <PoundSterling className="w-5 h-5 text-elec-yellow shrink-0 mt-0.5" />
             <div>
               <h3 className="font-bold text-white text-base mb-1">Earning Potential</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -496,7 +496,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Years 1-2:</strong> Learning the foundations. Basic hand skills,
                 containment, first-fix work, Level 2 theory, building confidence. See our{' '}
@@ -511,14 +511,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Years 3-4:</strong> Increasing independence. Complex installations, testing,
                 fault finding, Level 3 theory. Preparing for and sitting the AM2 and EPA.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Newly qualified:</strong> Working as a qualified electrician, building
                 experience and confidence. Many electricians continue with their employer for the
@@ -526,7 +526,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Specialisation:</strong> EV charger installation, solar PV, fire alarm
                 systems, data cabling, building management systems, inspection and testing (C&G
@@ -534,7 +534,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Self-employment or business:</strong> Many electricians go self-employed or
                 start their own contracting business. Elec-Mate supports this transition with
@@ -564,7 +564,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <GraduationCap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">46+ Training Courses</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -649,7 +649,7 @@ export default function WhatToExpectAsApprenticePage() {
       heroTitle={
         <>
           What to Expect as an Electrical Apprentice:{' '}
-          <span className="text-yellow-400">The Honest Guide</span>
+          <span className="text-elec-yellow">The Honest Guide</span>
         </>
       }
       heroSubtitle="An electrical apprenticeship is one of the best career paths available in the UK — but it is not easy. This guide gives you the honest reality: what your days look like, the challenges you will face, the rewards that make it worthwhile, and how to make the most of every year."

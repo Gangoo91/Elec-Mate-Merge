@@ -224,7 +224,7 @@ const sections = [
               className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 sm:p-6"
             >
               <div className="flex items-center justify-between gap-3 flex-wrap mb-3">
-                <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/55">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white">
                   #{q.rank} · {q.topic}
                 </span>
                 <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-red-500/15 border border-white/[0.14] text-[12px] font-bold text-red-300 tabular-nums">
@@ -235,8 +235,8 @@ const sections = [
               <p className="mt-3 text-[14px] text-emerald-300">
                 <span className="font-semibold">Answer:</span> {q.answer}
               </p>
-              <p className="mt-2 text-[13.5px] text-white/70 leading-relaxed">
-                <span className="font-semibold text-white/85">Why people miss it:</span> {q.why}
+              <p className="mt-2 text-[13.5px] text-white leading-relaxed">
+                <span className="font-semibold text-white">Why people miss it:</span> {q.why}
               </p>
             </div>
           ))}
@@ -336,7 +336,7 @@ export default function Hardest2391QuestionsPage() {
       heroTitle={
         <>
           The 10 Hardest 2391 Questions —{' '}
-          <span className="text-yellow-400">According to Real Data</span>
+          <span className="text-elec-yellow">According to Real Data</span>
         </>
       }
       heroSubtitle="Aggregated results from hundreds of timed attempts at our free 2391 mock exam reveal exactly which questions candidates fail — from an 86%-fail insulation resistance question down. Each one below comes with the answer and, more usefully, why people miss it."

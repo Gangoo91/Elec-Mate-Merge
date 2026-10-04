@@ -170,7 +170,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Individual Job Costs</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Extractor fan installation</strong> — £150 to £350. Includes fan unit (£40
                 to £120), ducting, wiring from the lighting circuit or a dedicated spur, and
@@ -178,7 +178,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bathroom downlights (4 to 6 fittings)</strong> — £250 to £500. Includes
                 IP65-rated LED downlights (£15 to £35 each), wiring, fire-rated housings, and
@@ -186,7 +186,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Shaver socket installation</strong> — £80 to £180. A shaver supply unit
                 conforming to BS EN 61558-2-5 costs £25 to £60. Labour to install and wire: 1 to 2
@@ -194,7 +194,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Heated towel rail connection</strong> — £80 to £200. A fused connection unit
                 (FCU) and wiring from a nearby circuit. The towel rail itself is a separate plumbing
@@ -202,14 +202,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electric underfloor heating connection</strong> — £300 to £600. Heating mat,
                 thermostat, dedicated circuit from the consumer unit, and RCD protection.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electric shower installation</strong> — £300 to £600. Requires a dedicated
                 circuit from the consumer unit with appropriately rated cable (typically 10mm² for a
@@ -217,7 +217,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full bathroom rewire</strong> — £800 to £1,500. All circuits replaced or
                 newly installed: lighting, fan, shaver socket, towel rail, underfloor heating, and
@@ -291,28 +291,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrician day rate (2026)</strong> — £250 to £400 depending on region.
                 London and the South East sit at the higher end.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Simple bathroom job (fan or light swap)</strong> — 1 to 3 hours labour. Most
                 electricians will quote a fixed price of £100 to £200 plus materials.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full bathroom first fix and second fix</strong> — 1 to 2 days across two
                 visits (first fix before tiling, second fix after). Labour: £400 to £700.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part P notification</strong> — £35 to £80 through the electrician's
                 competent person scheme. This is included in most quotes.
@@ -332,7 +332,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Access</strong> — bathrooms with loft access above make cable runs
                 straightforward. Bathrooms on ground floors below a first floor with no accessible
@@ -340,7 +340,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Existing wiring condition</strong> — if the existing bathroom circuits are
                 in good condition and have RCD protection, adding a fitting is simpler. If the
@@ -348,7 +348,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit capacity</strong> — if a new dedicated circuit is needed
                 (electric shower, underfloor heating) and the consumer unit has no spare ways, a
@@ -356,7 +356,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fitting specification</strong> — basic IP65 downlights cost £15 each;
                 designer IP65 downlights can cost £50 or more. The specification of fittings
@@ -364,7 +364,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Coordination with other trades</strong> — bathroom renovations usually
                 involve plumbers, tilers, and carpenters. If the electrician needs to make multiple
@@ -393,7 +393,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection (Regulation 411.3.2)</strong> — all circuits serving the
                 bathroom must be protected by a 30mA RCD. This provides additional protection
@@ -401,7 +401,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Zone compliance (Section 701)</strong> — all equipment must be suitable for
                 the zone in which it is installed, with appropriate IP ratings and SELV where
@@ -409,7 +409,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Supplementary bonding (Regulation 701.415.2)</strong> — supplementary
                 equipotential bonding may be required connecting all simultaneously accessible
@@ -418,7 +418,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Certification</strong> — an Electrical Installation Certificate (EIC) must
                 be issued for new circuits. A Minor Electrical Installation Works Certificate
@@ -442,28 +442,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person scheme registration</strong> — NICEIC, NAPIT, or ELECSA
                 registration is essential for Part P self-certification.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Experience with bathroom installations</strong> — ask whether they regularly
                 carry out bathroom work and understand the zone requirements.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Itemised quote</strong> — the quote should list each item (fan, lights,
                 shaver socket, circuits) with materials and labour separated.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Coordination willingness</strong> — a good electrician will coordinate with
                 your bathroom fitter on first fix and second fix timing.
@@ -486,7 +486,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Itemise Everything</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -543,7 +543,7 @@ export default function BathroomElectricalCostPage() {
       badgeIcon={PoundSterling}
       heroTitle={
         <>
-          Bathroom Electrical Cost: <span className="text-yellow-400">UK Price Guide 2026</span>
+          Bathroom Electrical Cost: <span className="text-elec-yellow">UK Price Guide 2026</span>
         </>
       }
       heroSubtitle="How much does bathroom electrical work really cost? From extractor fans and downlights to electric showers and underfloor heating — this guide covers every common bathroom electrical job with realistic 2026 pricing, zone requirements, and regulation compliance."
@@ -554,7 +554,7 @@ export default function BathroomElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Bathroom Electrical Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Bathroom Electrical Work with Confidence"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for itemised quoting, on-site certification, and AI cost engineering. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for itemised quoting, on-site certification, and AI cost engineering. 7-day free trial, cancel anytime."
     />
   );
 }

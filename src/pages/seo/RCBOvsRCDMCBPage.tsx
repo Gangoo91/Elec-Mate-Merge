@@ -199,14 +199,14 @@ const sections = [
           <h4 className="font-bold text-white mb-4">Typical Split-Load Arrangement</h4>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD 1 (63A 30mA):</strong> Upstairs lighting, downstairs sockets, cooker,
                 immersion heater.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD 2 (63A 30mA):</strong> Downstairs lighting, upstairs sockets, shower,
                 outdoor circuit.
@@ -245,7 +245,7 @@ const sections = [
           <h4 className="font-bold text-white mb-4">Benefits of Full RCBO Board</h4>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Complete discrimination.</strong> A fault on any circuit trips only that
                 circuit's RCBO. The kitchen socket faults — the lights stay on, the freezer keeps
@@ -253,7 +253,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No cumulative leakage issues.</strong> Each RCBO monitors only its own
                 circuit. There is no risk of combined standing leakage from multiple circuits
@@ -262,14 +262,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Instant fault identification.</strong> When an RCBO trips, you know
                 immediately which circuit has the fault. No isolation-and-reset sequence needed.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Flexibility in RCD types.</strong> Each RCBO can be a different type —{' '}
                 <SEOInternalLink href="/guides/rcd-types-explained">
@@ -303,7 +303,7 @@ const sections = [
             Cost Breakdown — 10-Way Domestic Installation
           </h4>
           <div className="space-y-3 text-white">
-            <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/10 font-bold text-yellow-400 text-sm">
+            <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/10 font-bold text-elec-yellow text-sm">
               <span>Component</span>
               <span>Split-Load</span>
               <span>RCBO Board</span>
@@ -328,7 +328,7 @@ const sections = [
               <span>£50 - £100</span>
               <span>£250 - £500</span>
             </div>
-            <div className="grid grid-cols-3 gap-2 py-2 font-bold text-yellow-400 text-sm">
+            <div className="grid grid-cols-3 gap-2 py-2 font-bold text-elec-yellow text-sm">
               <span>Total devices</span>
               <span>£155 - £290</span>
               <span>£315 - £630</span>
@@ -368,7 +368,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cumulative leakage:</strong> 6 circuits at 4mA each = 24mA standing leakage.
                 One appliance switching on adds a 10mA transient. Total: 34mA. The 30mA RCD trips.
@@ -467,7 +467,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Manufacturer focus:</strong> Hager, Schneider, MK, and Wylex have all
                 expanded their RCBO product ranges and marketing. Several manufacturers now offer
@@ -476,7 +476,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wholesaler trends:</strong> Electrical wholesalers report that RCBO board
                 sales now match or exceed split-load board sales in many regions, with the gap
@@ -484,7 +484,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger influence:</strong> The growth of EV charger installations has
                 pushed electricians towards RCBO boards because the EV circuit often requires a
@@ -497,7 +497,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Customer expectations:</strong> Homeowners are increasingly aware of the
                 nuisance tripping issue and specifically request RCBO boards. Landlords appreciate
@@ -535,7 +535,7 @@ const sections = [
           </h4>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Per-circuit AFDD+RCBO combination devices</strong> are available from major
                 manufacturers. These combine arc fault detection, residual current protection, and
@@ -544,7 +544,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>On a split-load board</strong>, fitting per-circuit AFDDs requires
                 individual AFDD+MCB devices on circuits behind a shared RCD. You lose the
@@ -587,7 +587,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use an RCBO board when:</strong> The installation has an EV charger
                 requiring a specific RCD type. The installation has known nuisance tripping issues.
@@ -597,7 +597,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>A split-load board may be acceptable when:</strong> Budget is the absolute
                 priority. The installation is small (4 to 6 circuits) with minimal cumulative
@@ -645,7 +645,7 @@ export default function RCBOvsRCDMCBPage() {
       badgeIcon={Shield}
       heroTitle={
         <>
-          RCBO vs RCD + MCB: <span className="text-yellow-400">Which Is the Better Choice?</span>
+          RCBO vs RCD + MCB: <span className="text-elec-yellow">Which Is the Better Choice?</span>
         </>
       }
       heroSubtitle="An RCBO board costs more upfront but eliminates nuisance tripping, simplifies fault diagnosis, and keeps every other circuit running when one faults. A split-load board saves money but trips half the house when one circuit fails. This guide compares both arrangements in detail."
@@ -656,7 +656,7 @@ export default function RCBOvsRCDMCBPage() {
       faqHeading="Frequently Asked Questions About RCBO vs RCD + MCB"
       relatedPages={relatedPages}
       ctaHeading="Scan Any Consumer Unit With AI"
-      ctaSubheading="Whether it is an RCBO board or a split-load, Elec-Mate's AI board scanner reads every device from a photo. Voice test entry records results hands-free. 70+ calculators check every reading. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Whether it is an RCBO board or a split-load, Elec-Mate's AI board scanner reads every device from a photo. Voice test entry records results hands-free. 70+ calculators check every reading. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

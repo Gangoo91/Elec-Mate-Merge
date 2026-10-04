@@ -235,7 +235,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New connections and upgrades</strong> — new supplies and supply upgrades
                 (for EV chargers, heat pumps, or increased demand) are requested through SSEN's
@@ -244,7 +244,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98/G99 notifications</strong> — solar PV and battery storage systems must
                 be notified to SSEN. G98 (up to 16A per phase) is a simple notification. G99
@@ -253,7 +253,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Overhead line network</strong> — the Highland network uses a high proportion
                 of overhead lines, which are vulnerable to weather events. Rural properties are more
@@ -262,7 +262,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>TT earthing prevalence</strong> — SSEN supplies many rural Highland
                 properties via TT earthing (no earth connection in the supply cable, requiring a
@@ -334,7 +334,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICRs</strong> — Scottish landlords are required to have EICRs carried out
                 every five years. Highland Council actively enforces this under the Housing
@@ -343,7 +343,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Renewable energy installations</strong> — solar PV, battery storage, and
                 heat pump electrical connections are growing rapidly in the Highlands. SSEN G98/G99
@@ -352,7 +352,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rewires and consumer unit upgrades</strong> — older Highland properties
                 frequently have wiring that needs full replacement. Consumer unit upgrades from old
@@ -361,7 +361,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Landmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tourism and hospitality electrical work</strong> — Inverness and the
                 Highlands have a significant hospitality and tourism economy. Hotels, B&Bs, and
@@ -457,7 +457,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EIC and EICR Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -506,7 +506,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Inverness and Highland"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -533,7 +533,7 @@ export default function ElectricianInvernessPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Inverness: <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Inverness: <span className="text-elec-yellow">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Inverness is in Scotland — Part P does not apply. Electrical work is governed by Scottish Building Standards and SSEN manages one of the UK's most geographically challenging distribution networks across the Highlands."
@@ -544,7 +544,7 @@ export default function ElectricianInvernessPage() {
       faqHeading="Frequently Asked Questions About Electricians in Inverness"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Inverness and Highland Electricians"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Scottish Building Standards, TT earthing, and the scale of Highland electrical work. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Scottish Building Standards, TT earthing, and the scale of Highland electrical work. 7-day free trial."
     />
   );
 }

@@ -1347,13 +1347,13 @@ export const module5Questions: Question[] = [
     question: 'When verifying a residual current device, the tests are carried out in which order?',
     options: [
       'Tests at both 1×IΔn and 5×IΔn, with the half-rated no-trip test newly added in A4:2026',
-      'A single AC test at 1×IΔn, the 5×IΔn test having been deleted in A4:2026 as redundant',
-      'A single test at 5×IΔn only, the 1×IΔn trip-time test having been deleted in A4:2026',
+      'A single AC test at 1×IΔn, the 5×IΔn test having been deleted in A2:2022 as redundant',
+      'A single test at 5×IΔn only, the 1×IΔn trip-time test having been deleted in A2:2022',
       'A test at 0.5×IΔn confirming the RCD does NOT trip, with no trip-time test required at all',
     ],
     correctAnswer: 1,
     explanation:
-      'A4:2026 simplified the RCD test to a single AC test at 1×IΔn (must trip within the published time, generally <300ms for general purpose, <40ms for Type S delay) plus the test-button functional check. The 5×IΔn test was deleted as redundant.',
+      'A2:2022 simplified the RCD test to a single AC test at 1×IΔn (must trip within the published time, generally <300ms for general purpose, <40ms for Type S delay) plus the test-button functional check. The 5×IΔn test was deleted as redundant.',
     section: '4.5',
     difficulty: 'intermediate',
   },
@@ -1678,7 +1678,7 @@ export const module5Questions: Question[] = [
     options: ['0.2 seconds', '0.4 seconds', '5 seconds', '1 second'],
     correctAnswer: 3,
     explanation:
-      'TT distribution: 1s (vs 0.4s on final), reflecting the same logic as TN but with stricter values for the higher loop impedance.',
+      'Regulation 411.3.2.4 permits 1 s for a TT distribution circuit, against 0.2 s for a 230 V TT final circuit in Table 41.1. The TN equivalents are 5 s (Regulation 411.3.2.3) and 0.4 s: the same logic, with stricter TT values because of the higher loop impedance.',
     section: '4.4',
     difficulty: 'intermediate',
   },
@@ -2379,12 +2379,12 @@ export const module5Questions: Question[] = [
     options: [
       'A single AC test at 1×IΔn, within the published maximum; the 5×IΔn test was deleted',
       'Tests at 1×IΔn, 5×IΔn and 0.5×IΔn together; all three remain required by A4:2026',
-      'A single test at 5×IΔn only; the 1×IΔn trip-time test, at 0° and 180°, was deleted at A4:2026',
+      'A single test at 5×IΔn only; the 1×IΔn trip-time test, at 0° and 180°, was deleted at A2:2022',
       'A test at 0.5×IΔn only; confirming the device does NOT trip, at or below half its rated residual current',
     ],
     correctAnswer: 0,
     explanation:
-      'A4:2026 reform: only the 1×IΔn AC test (at 0° and 180°) is required for verification, with the trip time within the published maximum (BS EN 61008/61009: 300ms general purpose). The 5×IΔn test was removed from Reg 643.7.3.',
+      'A2:2022 reform: only the 1×IΔn AC test (at 0° and 180°) is required for verification, with the trip time within the published maximum (BS EN 61008/61009: 300ms general purpose). The 5×IΔn test was removed from Reg 643.7.3.',
     section: '6.8',
     difficulty: 'intermediate',
   },
@@ -2943,13 +2943,13 @@ export const module5Questions: Question[] = [
       'Verification of the operating time of a 30 mA residual current device requires the test current to be:',
     options: [
       'Both 1×IΔn and 5×IΔn — unchanged at Amendment 4:2026',
-      '1×IΔn only — the 5×IΔn AC test was deleted in Amendment 4:2026',
+      '1×IΔn only — the 5×IΔn AC test was deleted in A2:2022:2026',
       '5×IΔn only — the 1×IΔn test was the one deleted',
       '½×IΔn (no-trip) and 1×IΔn — the 5×IΔn test is retained too',
     ],
     correctAnswer: 1,
     explanation:
-      'Amendment 4:2026 simplified RCD verification. The 5×IΔn AC test has been removed; a single 1×IΔn AC trip-time test is now sufficient (with the half-rated no-trip test retained for Type B/F where required).',
+      'Amendment 2:2022 simplified RCD verification. The 5×IΔn AC test has been removed; a single 1×IΔn AC trip-time test is now sufficient (with the half-rated no-trip test retained for Type B/F where required).',
     section: '3.5',
     difficulty: 'intermediate',
   },

@@ -190,16 +190,16 @@ export default function ApprenticeTrainingPage() {
 
       {/* Hero Section */}
       <section className="relative py-16 sm:py-24 px-5 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-6">
-            <GraduationCap className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium text-yellow-400">Level 2, Level 3 & AM2</span>
+            <GraduationCap className="w-4 h-4 text-elec-yellow" />
+            <span className="text-sm font-medium text-elec-yellow">Level 2, Level 3 & AM2</span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-6">
             Electrical Apprentice
             <br />
-            <span className="text-yellow-400">Training Online</span>
+            <span className="text-elec-yellow">Training Online</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             The complete training platform for electrical apprentices. Level 2 and Level 3 courses,
@@ -281,7 +281,7 @@ export default function ApprenticeTrainingPage() {
                 className="flex items-start gap-4 p-5 rounded-xl bg-white/[0.04] border border-white/10"
               >
                 <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] shrink-0">
-                  <span className="text-yellow-400 font-bold">{item.step}</span>
+                  <span className="text-elec-yellow font-bold">{item.step}</span>
                 </div>
                 <div>
                   <h3 className="font-semibold text-white mb-1">{item.title}</h3>
@@ -500,7 +500,7 @@ export default function ApprenticeTrainingPage() {
                 >
                   <span className="font-semibold text-white pr-4">{faq.question}</span>
                   <ChevronDown
-                    className={`w-5 h-5 text-yellow-400 shrink-0 transition-transform ${
+                    className={`w-5 h-5 text-elec-yellow shrink-0 transition-transform ${
                       openFaq === index ? 'rotate-180' : ''
                     }`}
                   />
@@ -521,17 +521,17 @@ export default function ApprenticeTrainingPage() {
         <div className="max-w-4xl mx-auto">
           <div className="grid sm:grid-cols-3 gap-6 text-center">
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <Award className="w-8 h-8 text-yellow-400 mx-auto mb-3" />
+              <Award className="w-8 h-8 text-elec-yellow mx-auto mb-3" />
               <p className="text-2xl font-bold text-white mb-1">Level 2 & 3</p>
               <p className="text-sm text-white">Full Diploma Coverage</p>
             </div>
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <FileCheck className="w-8 h-8 text-yellow-400 mx-auto mb-3" />
+              <FileCheck className="w-8 h-8 text-elec-yellow mx-auto mb-3" />
               <p className="text-2xl font-bold text-white mb-1">AM2 + EPA</p>
               <p className="text-sm text-white">Assessment Preparation</p>
             </div>
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <Users className="w-8 h-8 text-yellow-400 mx-auto mb-3" />
+              <Users className="w-8 h-8 text-elec-yellow mx-auto mb-3" />
               <p className="text-2xl font-bold text-white mb-1">430+</p>
               <p className="text-sm text-white">UK Electricians</p>
             </div>
@@ -579,7 +579,7 @@ export default function ApprenticeTrainingPage() {
 
       <SEOCTASection
         heading="Start your apprenticeship journey"
-        subheading="Join 1,600+ UK electricians and apprentices learning smarter. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians and apprentices learning smarter. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

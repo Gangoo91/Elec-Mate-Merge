@@ -5,6 +5,7 @@ import { chunkArray, RequestDeduplicator, generateRequestKey } from './parallel-
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { loadCoreRegulationsCache } from './core-regulations-cache.ts';
 import { validateDesign, calculateCircuitConfidence, calculateOverallConfidence } from './validation-pipeline.ts';
+import { fetchChatCompletions } from '../_shared/llm-direct.ts';
 
 const INSTALLATION_CONTEXT = {
   domestic: `Design compliant with Part P Building Regulations and BS 7671:2018+A3:2024.
@@ -63,8 +64,8 @@ export async function handleBatchDesign(body: any, logger: any) {
   const query = buildDesignQuery(projectInfo, incomingSupply, allCircuits, specialRequirements, installationConstraints);
   
   // Call main designer with RAG + AI (like RAMS does)
-  const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
-  if (!lovableApiKey) throw new Error('LOVABLE_API_KEY not configured');
+  const aiApiKey = Deno.env.get('OPENAI_API_KEY');
+  if (!aiApiKey) throw new Error('OPENAI_API_KEY not configured');
   
   const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
   const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -576,10 +577,10 @@ Return your design using the provided tool schema.`
     };
     
     try {
-      const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+      const response = await fetchChatCompletions({
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${lovableApiKey}`,
+          'Authorization': `Bearer ${aiApiKey}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(batchRequestBody)
@@ -612,7 +613,7 @@ Return your design using the provided tool schema.`
           throw new Error("Rate limit exceeded. Please try again in a moment.");
         }
         if (response.status === 402) {
-          throw new Error("AI credits exhausted. Please add credits to your Lovable workspace.");
+          throw new Error("AI usage limit reached. Please try again shortly.");
         }
         
         throw new Error(`AI API error: ${response.status} - ${errorText.substring(0, 200)}`);
@@ -695,10 +696,10 @@ Return your design using the provided tool schema.`
   if (!toolCall && allToolCalls.length === 0) {
     logger.warn('⚠️ No tool calls in any batch, retrying first batch');
     
-    const retryResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+    const retryResponse = await fetchChatCompletions({
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${lovableApiKey}`,
+        'Authorization': `Bearer ${aiApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -927,7 +928,7 @@ Return your design using the provided tool schema.`
         throw new Error("Rate limit exceeded. Please try again in a moment.");
       }
       if (retryResponse.status === 402) {
-        throw new Error("AI credits exhausted. Please add credits to your Lovable workspace.");
+        throw new Error("AI usage limit reached. Please try again shortly.");
       }
       logger.error('🚨 Retry request failed', { status: retryResponse.status, errorPreview: errorText.substring(0, 200) });
     } else {
@@ -961,10 +962,10 @@ Return your design using the provided tool schema.`
         `${r.regulation_number}: ${r.content.substring(0, 200)}...`
       ).join('\n\n');
       
-      const jsonResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+      const jsonResponse = await fetchChatCompletions({
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${lovableApiKey}`,
+          'Authorization': `Bearer ${aiApiKey}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -1025,7 +1026,7 @@ Always cite regulation numbers and show working for calculations.`
           throw new Error("Rate limit exceeded. Please try again in a moment.");
         }
         if (jsonResponse.status === 402) {
-          throw new Error("AI credits exhausted. Please add credits to your Lovable workspace.");
+          throw new Error("AI usage limit reached. Please try again shortly.");
         }
         throw new Error(`AI JSON fallback error: ${jsonResponse.status} - ${errorText.substring(0, 200)}`);
       }

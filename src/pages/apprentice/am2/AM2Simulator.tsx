@@ -6,7 +6,7 @@
  *   safe-isolation — 8-step procedure simulator
  *   testing        — testing-sequence simulator
  *   faults         — fault-finding simulator
- *   knowledge      — 400-question MCQ knowledge test
+ *   knowledge      — MCQ knowledge test (fixed bank + generated calculation questions)
  *   history        — past session list
  *
  * The page used to expose every mode as a sticky icon-row of tabs at the

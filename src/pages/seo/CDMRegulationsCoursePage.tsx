@@ -204,7 +204,7 @@ const sections = [
         </p>
         <div className="space-y-3 my-4">
           <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <Users className="w-8 h-8 text-yellow-400 shrink-0 mt-1" />
+            <Users className="w-8 h-8 text-elec-yellow shrink-0 mt-1" />
             <div>
               <h3 className="font-bold text-white text-lg mb-1">Client</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -326,36 +326,36 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">What the Plan Must Cover</h3>
           <ul className="space-y-3 text-white text-sm">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Project description, scope, duration, and key contacts</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Management structure and responsibilities for health and safety</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Arrangements for controlling significant risks — including electrical safety,
                 working at height, fire, asbestos, and manual handling
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Site rules, emergency procedures, and first aid arrangements</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Welfare facilities — toilets, washing facilities, rest areas, and drinking water
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Site induction, training, and supervision arrangements</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Monitoring, audit, and review procedures</span>
             </li>
           </ul>
@@ -417,7 +417,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Plan, manage, and monitor your work</strong> so that it is carried out
                 safely and without risk to health. This includes identifying the hazards of your
@@ -425,7 +425,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ensure your workers are competent.</strong> Anyone you employ or
                 sub-contract must have the necessary skills, knowledge, training, and experience for
@@ -433,21 +433,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Provide information, instruction, and training</strong> to your workers,
                 including site-specific inductions and task-specific briefings.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cooperate with the principal contractor</strong> and comply with the
                 construction phase plan, site rules, and any reasonable directions.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Report hazards, near misses, and incidents</strong> to the principal
                 contractor. Do not wait for someone else to report — if you see something unsafe,
@@ -567,7 +567,7 @@ export default function CDMRegulationsCoursePage() {
       heroTitle={
         <>
           CDM Regulations:{' '}
-          <span className="text-yellow-400">CDM 2015 Training for Electricians</span>
+          <span className="text-elec-yellow">CDM 2015 Training for Electricians</span>
         </>
       }
       heroSubtitle="Understand your legal duties under the Construction (Design and Management) Regulations 2015. Duty holder roles, construction phase plans, documentation requirements, and practical application for electrical contractors. 6 modules with quizzes and AI tutor."
@@ -585,7 +585,7 @@ export default function CDMRegulationsCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Understand your CDM duties and work with confidence"
-      ctaSubheading="Join 1,600+ UK electricians studying smarter with Elec-Mate. CDM modules, AI RAMS generator, and an AI tutor for any health and safety question. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians studying smarter with Elec-Mate. CDM modules, AI RAMS generator, and an AI tutor for any health and safety question. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/cdm-regulations-course"
     />

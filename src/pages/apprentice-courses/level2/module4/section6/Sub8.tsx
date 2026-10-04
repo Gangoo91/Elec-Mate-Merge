@@ -38,12 +38,12 @@ const checks = [
     options: [
       'The measured Zs at the far end of the circuit — you copy the live loop reading straight into the Max Zs column.',
       'A fixed 1.10 Ω for every Type B device — the cold-cable site limit is the same regardless of the device rating.',
-      'BS 7671 A4:2026 Table 41.3 — Type B 32 A at U₀ = 230 V → 1.37 Ω. (NOT the older A2 value of 1.44 Ω.)',
+      'BS 7671 A4:2026 Table 41.3 — Type B 32 A at U₀ = 230 V → 1.37 Ω. (NOT the 17th Edition value of 1.44 Ω.)',
       "The DNO's declared Ze of 0.35 Ω for TN-C-S — the supply impedance is recorded as the maximum Zs for the circuit.",
     ],
     correctIndex: 2,
     explanation:
-      'Max Zs in the STR comes from BS 7671 A4:2026 Table 41.3 for the OCPD type and rating in question. For Type B 32 A: 1.37 Ω. Always quote the A4:2026 value on a current-edition certificate; the older A2 value (1.44 Ω) is obsolete and using it would be quoting a superseded standard. The IET OSG re-prints the table values for convenience but the source-of-truth is BS 7671 itself.',
+      'Max Zs in the STR comes from BS 7671 A4:2026 Table 41.3 for the OCPD type and rating in question. For Type B 32 A: 1.37 Ω. Always quote the A4:2026 value on a current-edition certificate; the 17th Edition value (1.44 Ω) is obsolete and using it would be quoting a superseded standard. The IET OSG re-prints the table values for convenience but the source-of-truth is BS 7671 itself.',
   },
   {
     id: 'm4-s6-sub8-rcbo-idn-blank',
@@ -51,7 +51,7 @@ const checks = [
       'On the STR row for a circuit protected by a 32 A Type B RCBO with IΔn = 30 mA, the IΔn column is left blank. Acceptable?',
     options: [
       'Yes — IΔn is obvious from the "RCBO" label, so a future inspector can infer 30 mA and the column saves time blank.',
-      'No — IΔn is a required field on any RCD or RCBO row; leaving it blank reads as "no RCD function" (Reg 642.4).',
+      'No — IΔn is a required field on any RCD or RCBO row; leaving it blank reads as "no RCD function" (Reg 644.3).',
       'Yes — IΔn only needs filling where the RCD is a standalone unit; for an integrated RCBO it is left blank by convention.',
       'Yes — the measured trip-time result proves the RCD works, so the rated IΔn becomes redundant information.',
     ],
@@ -93,11 +93,16 @@ const quizQuestions = [
   {
     id: 2,
     question:
-      'For a 2.5 mm² T&E ring final on Method 100 (Reference Method 100 — clipped direct), which "Reference Method" code goes in the column?',
-    options: ['C', 'A', '100', 'Method 7'],
-    correctAnswer: 2,
+      'A 2.5 mm² T&E ring final is clipped direct to the wall surface. Which Reference Method code goes in the column?',
+    options: [
+      'C',
+      'A',
+      '100',
+      '102',
+    ],
+    correctAnswer: 0,
     explanation:
-      "BS 7671 Appendix 4 Reference Methods: 100 = clipped direct; 101 = above plasterboard; 102 = enclosed in a building void with thermal insulation. The numerical methods (100, 101, 102) are UK-specific additions to the international A-G method codes (Method A-G covers the international methods like enclosed in conduit on a wall, in trunking, etc.). Use whichever method genuinely describes the cable installation — it affects the cable's current-carrying capacity from Appendix 4 tables.",
+      'Clipped direct is Reference Method C. Methods 100–103 are for flat T&E in contact with, or enclosed in, thermal insulation (e.g. in a ceiling or stud wall) — not clipped direct.',
   },
   {
     id: 3,
@@ -131,9 +136,9 @@ const quizQuestions = [
     question: 'The "Max Zs (Ω)" column on the STR for a Type B 16 A circuit per A4:2026:',
     options: [
       '1.37 Ω (reading the Type C 16 A row by mistake instead of Type B)',
-      '2.73 Ω (the A4:2026 value — the older A2 value of 2.87 Ω is obsolete)',
+      '2.73 Ω (the current Table 41.3 value — the 17th Edition value of 2.87 Ω is obsolete)',
       '4.37 Ω (reading the Type B 10 A row instead of the 16 A row)',
-      '2.87 Ω (the superseded A2 value, no longer valid on a current certificate)',
+      '2.87 Ω (the superseded 17th Edition value, no longer valid on a current certificate)',
     ],
     correctAnswer: 1,
     explanation:
@@ -164,11 +169,11 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      "AFDDs (arc fault detection devices) are recommended by Reg 421.1.7 for AC final circuits supplying socket-outlets ≤ 32 A in dwellings; the recommendation strengthens to a requirement in HRRBs under the Building Safety Act 2022 framework, with supporting fire-safety guidance covering HMOs / sleeping accommodation / care homes. The STR has been updated to include a column for the AFDD test result — typically a tick that the manufacturer's test procedure was followed and the device responded as documented. Free-text note column captures any abnormal LED indication or fault code from the test.",
+      "AFDDs are required by Reg 421.1.7 on socket-outlet circuits ≤ 32 A in HRRBs, HMOs, purpose-built student accommodation and care homes, and recommended elsewhere. Reg 643.10 requires the effectiveness of any manually operated AFDD test facility to be verified. The STR has been updated to include a column for the AFDD test result — typically a tick that the manufacturer's test procedure was followed and the device responded as documented. Free-text note column captures any abnormal LED indication or fault code from the test.",
   },
   {
     id: 8,
-    question: 'Per Reg 642.4 and Section 644, the STR is part of:',
+    question: 'Under Section 644, the STR is part of:',
     options: [
       'The certification pack — the signed STR, Schedule of Inspections and EIC together certify the installation.',
       "The installer's internal working notes — a draft kept for reference, not part of the formal certificate.",
@@ -240,7 +245,7 @@ export default function Sub8() {
           points={[
             'The Schedule of Test Results (STR) captures every test reading per circuit in around 16-20 columns. Header section captures common-to-all data (address, date, instrument serials, certificate reference).',
             'Per-circuit columns: identification (number, description, wiring type, reference method), cable data (CSA L+CPC), OCPD data (type/rating, max Zs from A4:2026 Table 41.3, RCBO IΔn), test readings (R1+R2 / r1/rn/r2, IR L-L / L-E / N-E, polarity, Zs measured, RCD trip time, AFDD).',
-            'Always record actual values not pass/fail; never leave required fields blank (write N/A if not applicable); always quote A4:2026 Table 41.3 max Zs values not the older A2 figures (e.g. B32 = 1.37 Ω not 1.44 Ω).',
+            'Always record actual values not pass/fail; never leave required fields blank (write N/A if not applicable); always quote A4:2026 Table 41.3 max Zs values not the 17th Edition figures (e.g. B32 = 1.37 Ω not 1.44 Ω).',
           ]}
         />
 
@@ -251,8 +256,8 @@ export default function Sub8() {
             'Complete every standard column on a per-circuit row for a domestic ring final, lighting circuit, immersion radial and EV charger sub-circuit.',
             'Quote A4:2026 Table 41.3 max Zs values for common Type B and Type C ratings.',
             'Differentiate ring final columns (r1, rn, r2 + R1+R2 from cross-connection) from radial circuit columns (R1+R2 alone).',
-            'Document the A4:2026 RCD trip-time test (1 × IΔn, ≤ 300 ms general non-delay) and AFDD test in the appropriate columns.',
-            'Apply Reg 642.4 (recording) and Reg 644.1.1 (defects must be corrected before certification).',
+            'Document the RCD trip-time test (1 × IΔn, ≤ 300 ms general non-delay) and AFDD test in the appropriate columns.',
+            'Apply Reg 644.3 (schedules with the certificate) and Reg 644.1.1 (defects must be corrected before certification).',
             'Spot and avoid common column-fill errors: blank fields, wrong max Zs version, missing units, missing IΔn on RCBO rows.',
             'Issue corrections on a paper STR with the conventional single-line + initials + date method.',
           ]}
@@ -447,8 +452,8 @@ export default function Sub8() {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 7671:2018+A4:2026 — Regulation 642.4 (Recording, paraphrased) and Section 644 (Certification)"
-          clause="The results of every test required by this Chapter shall be recorded as part of the certification of the installation. The Schedule of Test Results shall capture per-circuit measurements; the Schedule of Inspections shall capture visual inspection items; the Electrical Installation Certificate shall provide the top-level signed declaration. For a new installation, any defect or omission revealed during the inspection and testing shall be corrected before the Certificate is issued (Reg 644.1.1)."
+          source="BS 7671:2018+A4:2026 — Regulation 644.3 (Certificate and schedules)"
+          clause="The Certificate shall include details of the extent of the work covered, and: (a) Schedule(s) of Inspection; and (b) Schedule(s) of Circuit Details and Schedule(s) of Test Results. The schedules shall be based on the models in Appendix 6."
           meaning={
             <>
               The STR is part of the regulatory certification pack — not optional, not
@@ -458,7 +463,7 @@ export default function Sub8() {
               cross-reference both to the Schedule of Inspections.
             </>
           }
-          cite="Source: BS 7671:2018+A4:2026 Part 6, Chapter 64, Reg 642.4 and Section 644.1.1."
+          cite="Source: BS 7671:2018+A4:2026, Regulation 644.3."
         />
 
         <InlineCheck
@@ -982,7 +987,7 @@ export default function Sub8() {
             <>
               EV charger circuits are a frequent EICR finding because the disconnect-and-retest
               procedure is often skipped or not documented. The Notes column for this circuit does
-              the heavy lifting — it explicitly documents the A4:2026 Reg 643.3.3 follow-up, names
+              the heavy lifting — it explicitly documents the Reg 643.3.3 follow-up, names
               the equipment that was isolated, references the install drawing for the outdoor cable
               section. A future inspector reading this row five years from now has complete context
               and can trust the test results.
@@ -1008,7 +1013,7 @@ export default function Sub8() {
           points={[
             'STR header captures common-to-all data: address, date, person testing, instrument serials (with cal date), certificate cross-reference number to the parent EIC.',
             'Per-circuit rows have ~16-20 columns: identification (circuit number, description, wiring, reference method), cable data (CSA L+CPC), OCPD data (type/rating, max Zs, RCBO IΔn and type), test readings (R1+R2, ring r1/rn/r2, IR L-N/L-E/N-E, polarity, Zs calc/measured, RCD trip time, AFDD), notes.',
-            'Always quote A4:2026 Table 41.3 max Zs values: B6 = 7.28, B10 = 4.37, B16 = 2.73, B20 = 2.19, B32 = 1.37, B40 = 1.09 Ω. Older A2 values (e.g. B32 = 1.44) are obsolete.',
+            'Always quote A4:2026 Table 41.3 max Zs values: B6 = 7.28, B10 = 4.37, B16 = 2.73, B20 = 2.19, B32 = 1.37, B40 = 1.09 Ω. 17th Edition values (e.g. B32 = 1.44) are obsolete.',
             'Always record actual measured values, not pass/fail. RCD trip time as "28 ms" not "Pass". IR as ">999 MΩ" not "OK". Future inspectors can compare values for drift over time.',
             'Never leave required fields blank. Use "N/A" explicitly when not applicable (e.g. r1 on a radial; IΔn on a non-RCBO MCB). Blank cells create ambiguity.',
             'Document anomalies and limitations in Notes column: spurs documented with location and length, electronics that were disconnected and the A4:2026 250 V DC follow-up reading, any test that could not be completed and why.',

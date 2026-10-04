@@ -184,7 +184,7 @@ const sections = [
         <div className="space-y-4 my-6">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                 1
               </div>
               <div>
@@ -199,7 +199,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                 2
               </div>
               <div>
@@ -214,7 +214,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                 3
               </div>
               <div>
@@ -230,7 +230,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                 4
               </div>
               <div>
@@ -246,7 +246,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                 5
               </div>
               <div>
@@ -262,7 +262,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                 6
               </div>
               <div>
@@ -280,7 +280,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                 7
               </div>
               <div>
@@ -569,7 +569,7 @@ export default function SiteDiaryApprenticeGuidePage() {
       heroTitle={
         <>
           Site Diary for Apprentices —{' '}
-          <span className="text-yellow-400">How to Keep a Daily Log</span>
+          <span className="text-elec-yellow">How to Keep a Daily Log</span>
         </>
       }
       heroSubtitle="A well-kept site diary is one of the most powerful tools in an apprentice's toolkit. It provides evidence for your portfolio, prepares you for the EPA professional discussion, tracks your professional development, and creates a searchable record of your entire apprenticeship. This guide shows you how to do it effectively."

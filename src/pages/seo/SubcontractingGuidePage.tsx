@@ -190,7 +190,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Constructionline and Achilles</strong> — the leading supply chain databases
                 used by main contractors to find and vet subcontractors. Registration gives you
@@ -200,7 +200,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Supply chain days</strong> — major contractors regularly hold regional
                 supply chain events where subcontractors can meet procurement teams. Sign up for
@@ -209,7 +209,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Planning Portal research</strong> — identify projects with planning
                 permission in your area and research who the main contractor is likely to be.
@@ -218,7 +218,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Trade bodies and networking</strong> — ECA regional groups, NICEIC
                 contractor events, and local construction industry groups are all routes to meeting
@@ -244,7 +244,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CHAS</strong> — Contractors Health and Safety Assessment Scheme. Accepted by
                 over 50,000 buyers in UK construction. Annual fee from approximately £300 for sole
@@ -253,7 +253,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Constructionline</strong> — a supply chain management and pre-qualification
                 database. Silver level adds financial assessment and quality management to the CHAS
@@ -262,7 +262,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Safe Contractor</strong> — an alternative H&amp;S accreditation to CHAS,
                 operated by Alcumus. Widely accepted by facilities management contractors, housing
@@ -271,7 +271,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ISO 9001</strong> — quality management system certification. Required by
                 some public sector frameworks and larger private sector clients. More expensive and
@@ -304,7 +304,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Read the main contract conditions</strong> — liquidated damages (LDs)
                 clauses in the main contract typically flow down to subcontracts. If the main
@@ -313,7 +313,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Retention</strong> — most subcontracts include retention (typically 3 to 5
                 per cent) held until practical completion (half released) and end of defects
@@ -322,7 +322,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Programme risk</strong> — subcontractors often bear programme risk from
                 delays caused by other trades or the main contractor's programme management. Include
@@ -376,7 +376,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Domestic reverse charge VAT</strong> — since March 2021, the domestic
                 reverse charge applies to most subcontract electrical work between VAT-registered
@@ -404,7 +404,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Register before you start</strong> — register as a CIS subcontractor with
                 HMRC before receiving your first subcontract payment. A registered subcontractor has
@@ -413,7 +413,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Gross payment status</strong> — once you meet HMRC's criteria (turnover
                 threshold, tax compliance record), you can apply for gross payment status, meaning
@@ -422,7 +422,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Monthly statements</strong> — main contractors must provide a monthly CIS
                 deduction statement showing the gross amount paid, the deduction made, and the net
@@ -643,7 +643,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <PoundSterling className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Payment Applications and Invoicing</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -675,7 +675,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your electrical subcontracting business with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting, RAMS generation, invoice management, and AI business support."
+          description="Join 2,100+ UK electricians using Elec-Mate for professional quoting, RAMS generation, invoice management, and AI business support."
           icon={Briefcase}
         />
       </>
@@ -701,7 +701,7 @@ export default function SubcontractingGuidePage() {
       heroTitle={
         <>
           Electrical Subcontracting Guide UK:{' '}
-          <span className="text-yellow-400">How to Find Work and Protect Your Payment</span>
+          <span className="text-elec-yellow">How to Find Work and Protect Your Payment</span>
         </>
       }
       heroSubtitle="How to find main contractors, get CHAS and Constructionline, price winning subcontract bids, protect your payment rights under the Construction Act 1996, handle CIS deductions, and navigate direct vs labour-only subcontracting."
@@ -712,7 +712,7 @@ export default function SubcontractingGuidePage() {
       faqHeading="Frequently Asked Questions About Electrical Subcontracting"
       relatedPages={relatedPages}
       ctaHeading="Manage Your Subcontracting Business with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for professional quoting, RAMS generation, and AI business support. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for professional quoting, RAMS generation, and AI business support. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -158,35 +158,35 @@ const sections = [
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">25&deg;C</p>
-              <p className="text-yellow-400 text-lg font-bold">1.03</p>
+              <p className="text-elec-yellow text-lg font-bold">1.03</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">30&deg;C</p>
-              <p className="text-yellow-400 text-lg font-bold">1.00</p>
+              <p className="text-elec-yellow text-lg font-bold">1.00</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">35&deg;C</p>
-              <p className="text-yellow-400 text-lg font-bold">0.94</p>
+              <p className="text-elec-yellow text-lg font-bold">0.94</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">40&deg;C</p>
-              <p className="text-yellow-400 text-lg font-bold">0.87</p>
+              <p className="text-elec-yellow text-lg font-bold">0.87</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">45&deg;C</p>
-              <p className="text-yellow-400 text-lg font-bold">0.79</p>
+              <p className="text-elec-yellow text-lg font-bold">0.79</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">50&deg;C</p>
-              <p className="text-yellow-400 text-lg font-bold">0.71</p>
+              <p className="text-elec-yellow text-lg font-bold">0.71</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">55&deg;C</p>
-              <p className="text-yellow-400 text-lg font-bold">0.61</p>
+              <p className="text-elec-yellow text-lg font-bold">0.61</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">60&deg;C</p>
-              <p className="text-yellow-400 text-lg font-bold">0.50</p>
+              <p className="text-elec-yellow text-lg font-bold">0.50</p>
             </div>
           </div>
         </div>
@@ -203,38 +203,38 @@ const sections = [
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">25&deg;C</p>
-              <p className="text-yellow-400 text-lg font-bold">1.02</p>
+              <p className="text-elec-yellow text-lg font-bold">1.02</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">30&deg;C</p>
-              <p className="text-yellow-400 text-lg font-bold">1.00</p>
+              <p className="text-elec-yellow text-lg font-bold">1.00</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">35&deg;C</p>
-              <p className="text-yellow-400 text-lg font-bold">0.96</p>
+              <p className="text-elec-yellow text-lg font-bold">0.96</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">40&deg;C</p>
-              <p className="text-yellow-400 text-lg font-bold">0.91</p>
+              <p className="text-elec-yellow text-lg font-bold">0.91</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">45&deg;C</p>
-              <p className="text-yellow-400 text-lg font-bold">0.87</p>
+              <p className="text-elec-yellow text-lg font-bold">0.87</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">50&deg;C</p>
-              <p className="text-yellow-400 text-lg font-bold">0.82</p>
+              <p className="text-elec-yellow text-lg font-bold">0.82</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">55&deg;C</p>
-              <p className="text-yellow-400 text-lg font-bold">0.76</p>
+              <p className="text-elec-yellow text-lg font-bold">0.76</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">60&deg;C</p>
-              <p className="text-yellow-400 text-lg font-bold">0.71</p>
+              <p className="text-elec-yellow text-lg font-bold">0.71</p>
             </div>
           </div>
-          <p className="text-white/70 text-xs mt-3">
+          <p className="text-white text-xs mt-3">
             At 40&nbsp;&deg;C, 90&nbsp;&deg;C thermosetting cable derates to 0.91 versus 0.87 for
             70&nbsp;&deg;C PVC — one reason thermosetting is favoured for hot routes.
           </p>
@@ -247,7 +247,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
           <div className="flex items-start gap-3">
-            <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h3 className="font-bold text-white mb-1">
                 Solar PV installations — Reg 712.523.101
@@ -295,35 +295,35 @@ const sections = [
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">1 circuit</p>
-              <p className="text-yellow-400 text-lg font-bold">1.00</p>
+              <p className="text-elec-yellow text-lg font-bold">1.00</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">2 circuits</p>
-              <p className="text-yellow-400 text-lg font-bold">0.80</p>
+              <p className="text-elec-yellow text-lg font-bold">0.80</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">3 circuits</p>
-              <p className="text-yellow-400 text-lg font-bold">0.70</p>
+              <p className="text-elec-yellow text-lg font-bold">0.70</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">4 circuits</p>
-              <p className="text-yellow-400 text-lg font-bold">0.65</p>
+              <p className="text-elec-yellow text-lg font-bold">0.65</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">5 circuits</p>
-              <p className="text-yellow-400 text-lg font-bold">0.60</p>
+              <p className="text-elec-yellow text-lg font-bold">0.60</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">6 circuits</p>
-              <p className="text-yellow-400 text-lg font-bold">0.57</p>
+              <p className="text-elec-yellow text-lg font-bold">0.57</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">7 circuits</p>
-              <p className="text-yellow-400 text-lg font-bold">0.54</p>
+              <p className="text-elec-yellow text-lg font-bold">0.54</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">9+ circuits</p>
-              <p className="text-yellow-400 text-lg font-bold">0.50</p>
+              <p className="text-elec-yellow text-lg font-bold">0.50</p>
             </div>
           </div>
         </div>
@@ -364,7 +364,7 @@ const sections = [
               Cable touching insulation on one side only
             </h3>
             <p className="text-white text-sm leading-relaxed">
-              <strong className="text-yellow-400">Ci = 0.89</strong> — This is the common scenario
+              <strong className="text-elec-yellow">Ci = 0.89</strong> — This is the common scenario
               where cables are clipped to joists or studwork with insulation laid between the joists
               or packed into the stud wall. The cable has insulation on one side but can still
               dissipate some heat from the other side. This is by far the most frequently applied Ci
@@ -376,7 +376,7 @@ const sections = [
               Cable totally surrounded by thermal insulation (&gt;0.5m)
             </h3>
             <p className="text-white text-sm leading-relaxed">
-              <strong className="text-yellow-400">Ci = 0.50</strong> — If the cable is completely
+              <strong className="text-elec-yellow">Ci = 0.50</strong> — If the cable is completely
               enclosed in thermal insulation for a continuous length of more than 0.5 metres, the
               current-carrying capacity shall be taken as 0.5 times the capacity for that cable
               clipped direct to a surface and open (<strong>Reference Method C</strong>). This is an
@@ -385,7 +385,7 @@ const sections = [
               insulation completely surrounds the cable.
             </p>
             <p className="text-white text-sm leading-relaxed mt-2">
-              <strong className="text-yellow-400">Important:</strong> If the cable is installed in
+              <strong className="text-elec-yellow">Important:</strong> If the cable is installed in
               conduit or trunking (Reference Method A or B), the base I<sub>z</sub> is already lower
               than Method C. You must still work from the Method C figure when applying the 0.5
               factor per Reg 523.9 — using the conduit rating as the base would result in systematic
@@ -425,26 +425,26 @@ const sections = [
           <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">50&nbsp;mm</p>
-              <p className="text-yellow-400 text-lg font-bold">0.88</p>
+              <p className="text-elec-yellow text-lg font-bold">0.88</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">100&nbsp;mm</p>
-              <p className="text-yellow-400 text-lg font-bold">0.78</p>
+              <p className="text-elec-yellow text-lg font-bold">0.78</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">200&nbsp;mm</p>
-              <p className="text-yellow-400 text-lg font-bold">0.63</p>
+              <p className="text-elec-yellow text-lg font-bold">0.63</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">400&nbsp;mm</p>
-              <p className="text-yellow-400 text-lg font-bold">0.51</p>
+              <p className="text-elec-yellow text-lg font-bold">0.51</p>
             </div>
             <div className="p-3 rounded-lg bg-red-900/20 border border-red-700/40 text-center">
               <p className="text-white text-sm font-bold">&ge;500&nbsp;mm</p>
               <p className="text-red-300 text-lg font-bold">0.50</p>
             </div>
           </div>
-          <p className="text-white/70 text-xs mt-3">
+          <p className="text-white text-xs mt-3">
             These factors apply to conductors up to 10&nbsp;mm&sup2; in insulation with a thermal
             conductivity (&lambda;) greater than 0.04&nbsp;W&nbsp;m&#8315;&sup1;&nbsp;K&#8315;&sup1;.
             Above 0.5&nbsp;m of full enclosure, Reg 523.9 fixes the worst case at 0.5 &times; the
@@ -497,37 +497,37 @@ const sections = [
             </div>
             <div className="flex items-center justify-between p-3 rounded-lg bg-white/[0.04] border border-white/10">
               <p className="text-white text-sm font-semibold">MCB — BS EN 60898</p>
-              <p className="text-yellow-400 text-lg font-bold ml-3 shrink-0">1.00</p>
+              <p className="text-elec-yellow text-lg font-bold ml-3 shrink-0">1.00</p>
             </div>
             <div className="flex items-center justify-between p-3 rounded-lg bg-white/[0.04] border border-white/10">
               <p className="text-white text-sm font-semibold">RCBO — BS EN 61009-1</p>
-              <p className="text-yellow-400 text-lg font-bold ml-3 shrink-0">1.00</p>
+              <p className="text-elec-yellow text-lg font-bold ml-3 shrink-0">1.00</p>
             </div>
             <div className="flex items-center justify-between p-3 rounded-lg bg-white/[0.04] border border-white/10">
               <p className="text-white text-sm font-semibold">HRC fuse — BS 88 series</p>
-              <p className="text-yellow-400 text-lg font-bold ml-3 shrink-0">1.00</p>
+              <p className="text-elec-yellow text-lg font-bold ml-3 shrink-0">1.00</p>
             </div>
             <div className="flex items-center justify-between p-3 rounded-lg bg-white/[0.04] border border-white/10">
               <p className="text-white text-sm font-semibold">Cartridge fuse — BS 88-3 / BS 1362</p>
-              <p className="text-yellow-400 text-lg font-bold ml-3 shrink-0">1.00</p>
+              <p className="text-elec-yellow text-lg font-bold ml-3 shrink-0">1.00</p>
             </div>
             <div className="flex items-center justify-between p-3 rounded-lg bg-white/[0.04] border border-white/10">
               <p className="text-white text-sm font-semibold">MCCB — BS EN 60947-2</p>
-              <p className="text-yellow-400 text-lg font-bold ml-3 shrink-0">1.00</p>
+              <p className="text-elec-yellow text-lg font-bold ml-3 shrink-0">1.00</p>
             </div>
           </div>
-          <p className="text-white/70 text-xs mt-3">
+          <p className="text-white text-xs mt-3">
             Only the BS 3036 rewirable fuse attracts a Cf below 1.0. For every other device on this
             list Cf = 1.0 and drops out of the calculation.
           </p>
         </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h3 className="font-bold text-white mb-1">When does Cf apply?</h3>
               <p className="text-white text-sm leading-relaxed">
-                Cf = 0.725 applies <strong className="text-yellow-400">only</strong> when the
+                Cf = 0.725 applies <strong className="text-elec-yellow">only</strong> when the
                 protective device is a BS 3036 semi-enclosed fuse. For MCBs (BS EN 60898), RCBOs
                 (BS EN 61009-1), HRC fuses (BS 88 series), and cartridge fuses (BS 88-3), Cf = 1.0
                 and has no effect on the calculation. BS 3036 fuses are rarely installed in new work
@@ -551,7 +551,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
           <div className="flex items-start gap-3">
-            <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h3 className="font-bold text-white mb-1">EICR obligation — Section 523</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -718,7 +718,7 @@ const sections = [
         <div className="space-y-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">
                   Forgetting to apply any correction factors at all
@@ -735,7 +735,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Using the wrong grouping count</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -750,7 +750,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">
                   Ignoring thermal insulation in loft spaces
@@ -767,7 +767,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">
                   Applying correction factors to the design current instead of the protective device
@@ -866,7 +866,7 @@ export default function CorrectionFactorsGuidePage() {
       heroTitle={
         <>
           BS 7671 Correction Factors{' '}
-          <span className="text-yellow-400">Ca, Cg, Ci &amp; Cf Explained</span>
+          <span className="text-elec-yellow">Ca, Cg, Ci &amp; Cf Explained</span>
         </>
       }
       heroSubtitle="The complete guide to cable sizing correction factors under BS 7671. Ambient temperature (Ca from Table 4B1), grouping (Cg from Tables 4C1-4C6), thermal insulation (Ci from Regulation 523.9), and semi-enclosed fuse factor (Cf = 0.725). Worked examples, common mistakes, and how to apply the formula It = In / (Ca x Cg x Ci x Cf)."
@@ -881,7 +881,7 @@ export default function CorrectionFactorsGuidePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Cable sizing with automatic derating"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site cable sizing, 70+ calculators, and 19 certificate types — all built to BS 7671:2018+A4:2026. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site cable sizing, 70+ calculators, and 19 certificate types — all built to BS 7671:2018+A4:2026. 7-day free trial, cancel anytime."
     />
   );
 }

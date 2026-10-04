@@ -42,9 +42,9 @@ const checks = [
     question: 'Why does a cable need insulation around the conductor?',
     options: [
       'To stop current leaking out and to prevent shock',
-      'A = cut-out, B = electricity meter',
-      'Fibre with gradually changing refractive index across the core',
-      'Stable modal power distribution after long fibre length',
+      'To increase the current the conductor can carry',
+      'To lower the conductor resistance',
+      'To earth the conductor along its length',
     ],
     correctIndex: 0,
     explanation:

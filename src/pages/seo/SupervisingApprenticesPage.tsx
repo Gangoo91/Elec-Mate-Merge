@@ -236,7 +236,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4 space-y-4">
           <div>
             <h3 className="font-bold text-white mb-2 flex items-center gap-2">
-              <Calendar className="w-4 h-4 text-yellow-400" />
+              <Calendar className="w-4 h-4 text-elec-yellow" />
               Initial Training Plan (Start of Apprenticeship)
             </h3>
             <p className="text-white text-sm leading-relaxed">
@@ -318,7 +318,7 @@ const sections = [
                 className="flex items-start gap-4 p-3 rounded-xl bg-white/[0.03] border border-white/5"
               >
                 <div className="w-28 shrink-0">
-                  <p className="text-yellow-400 font-semibold text-sm">{row.period}</p>
+                  <p className="text-elec-yellow font-semibold text-sm">{row.period}</p>
                 </div>
                 <div className="flex-1">
                   <p className="text-white font-semibold text-sm">{row.rate}</p>
@@ -330,7 +330,7 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-1">
                 Always confirm current rates with the JIB
@@ -365,7 +365,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Allow preparation time:</strong> In the 2–4 weeks before the AM2, allow the
                 apprentice to attend additional mock assessment sessions at the training provider.
@@ -374,7 +374,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Provide varied experience:</strong> In the months leading up to the AM2,
                 ensure the apprentice has recently wired consumer units, carried out the full
@@ -383,7 +383,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Support, do not pressure:</strong> Anxiety is one of the factors that causes
                 AM2 failure — particularly time pressure anxiety. Encourage the apprentice without
@@ -392,7 +392,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Submit the gateway review promptly:</strong> Once the apprentice is
                 genuinely ready, submit the gateway review without delay. EMTA assessment centres
@@ -460,7 +460,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EIC and EICR Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -532,7 +532,7 @@ export default function SupervisingApprenticesPage() {
       heroTitle={
         <>
           Supervising Electrical Apprentices:{' '}
-          <span className="text-yellow-400">Employer Obligations, JIB Rates, and AM2 Support</span>
+          <span className="text-elec-yellow">Employer Obligations, JIB Rates, and AM2 Support</span>
         </>
       }
       heroSubtitle="Everything UK electrical employers need to know about supervising apprentices — legal obligations, supervision ratios near live conductors, JIB apprenticeship wage rates, training plan structure, AM2 preparation support, and the EPAO End Point Assessment process."

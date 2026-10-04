@@ -49,7 +49,7 @@ const INTENTS: Record<string, IntentOption[]> = {
       icon: FileCheck,
       label: 'I’ve got a cert to do',
       desc: 'EICR, EIC, Minor Works — start it now',
-      to: '/electrician/inspection-testing/new',
+      to: '/electrician/inspection-testing',
     },
     {
       key: 'quote',

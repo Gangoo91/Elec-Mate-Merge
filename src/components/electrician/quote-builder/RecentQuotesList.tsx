@@ -7,6 +7,7 @@ import { Quote, QuoteTag } from '@/types/quote';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { quoteRecipient, sendQuoteEmail } from '@/utils/sendQuoteEmail';
 import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 import { InvoiceDecisionDialog } from '@/components/electrician/invoice-builder/InvoiceDecisionDialog';
 import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
@@ -525,52 +526,25 @@ ${pdfDownloadUrl}`;
   // — the old mailto: approach couldn't attach the PDF and put an expiring
   // signed URL in the body instead.
   const handleShareEmail = async (quote: Quote) => {
+    const to = quoteRecipient(quote);
+    if (!to) {
+      toast({
+        title: 'No valid client email',
+        description: 'Add a valid client email to the quote, then try again.',
+        variant: 'destructive',
+      });
+      return;
+    }
     try {
-      const cleanTo = quote.client?.email?.trim();
-      if (!cleanTo || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanTo)) {
-        toast({
-          title: 'Invalid Client Email',
-          description:
-            'Client email address is invalid. Please correct it in the quote and try again.',
-          variant: 'destructive',
-        });
-        return;
-      }
-
-      let {
-        data: { session },
-        error: sessionError,
-      } = await supabase.auth.getSession();
-      if (sessionError || !session) {
-        const { data: refreshData, error: refreshError } = await supabase.auth.refreshSession();
-        if (refreshError || !refreshData.session) {
-          throw new Error('Please log in again to send quotes.');
-        }
-        session = refreshData.session;
-      }
-
       toast({
         title: 'Sending quote',
         description: 'Generating the PDF and emailing it to your client…',
       });
-
-      const { data, error } = await supabase.functions.invoke('send-quote-resend', {
-        body: { quoteId: quote.id },
-        headers: { Authorization: `Bearer ${session.access_token}` },
-      });
-
-      if (error) {
-        let errorMessage = 'Failed to send quote';
-        if (typeof error === 'string') errorMessage = error;
-        else if (error.message) errorMessage = error.message;
-        throw new Error(errorMessage);
-      }
-      if (data?.error) throw new Error(data.error + (data.hint ? ` (${data.hint})` : ''));
-      if (!data?.success) throw new Error(data?.message || 'Unknown error sending quote');
-
+      // ELE-1794 — the one send path (utils/sendQuoteEmail).
+      await sendQuoteEmail(quote);
       toast({
         title: 'Quote sent',
-        description: `Quote ${quote.quoteNumber} emailed to ${cleanTo}`,
+        description: `Quote ${quote.quoteNumber} emailed to ${to}`,
         variant: 'success',
       });
     } catch (error: any) {

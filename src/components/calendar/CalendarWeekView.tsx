@@ -3,7 +3,17 @@ import { startOfWeek, addDays, isToday, isSameDay, format, differenceInMinutes }
 import { useSwipeable } from 'react-swipeable';
 import { cn } from '@/lib/utils';
 import { cardCn, eyebrowCn } from './calendarStyles';
-import { displayColour, effectiveEnd, eventsOnDay, isMultiDay, layoutDayEvents } from './eventUtils';
+import {
+  displayColour,
+  effectiveEnd,
+  eventsOnDay,
+  hoursLabel,
+  isMultiDay,
+  isSyntheticEvent,
+  layoutDayEvents,
+  hoursOnDay,
+  occupiesTime,
+} from './eventUtils';
 import { useDragMove } from './useDragMove';
 import type { CalendarEvent } from '@/types/calendar';
 
@@ -25,6 +35,8 @@ interface CalendarWeekViewProps {
   anchor?: 'week' | 'day';
   /** Drag a block to a new time or column (mouse and pen only). */
   onMoveEvent?: (event: CalendarEvent, minuteShift: number, dayShift: number) => void;
+  /** Tap a day's heading to open that day's rail. */
+  onOpenDay?: (date: Date) => void;
 }
 const DEFAULT_DAYS = [1, 2, 3, 4, 5];
 
@@ -95,6 +107,7 @@ const CalendarWeekView = ({
   days = 7,
   anchor = 'week',
   onMoveEvent,
+  onOpenDay,
 }: CalendarWeekViewProps) => {
   const swipeHandlers = useSwipeable({
     onSwipedLeft: onSwipeLeft,
@@ -168,6 +181,20 @@ const CalendarWeekView = ({
   );
 
   const banner = useMemo(() => packBanner(weekDays, events), [weekDays, events]);
+
+  /** Booked hours per column, for the heading — the week's shape at a glance. */
+  const dayHours = useMemo(
+    () =>
+      weekDays.map((day) =>
+        hoursOnDay(
+          eventsOnDay(events, day).filter((e) => !isSyntheticEvent(e) && occupiesTime(e)),
+          day,
+          workingHoursStart,
+          workingHoursEnd
+        )
+      ),
+    [weekDays, events, workingHoursStart, workingHoursEnd]
+  );
   const hasBanner = banner.lanes.length > 0 || banner.hidden > 0;
 
   useEffect(() => {
@@ -210,18 +237,25 @@ const CalendarWeekView = ({
         className="grid border-b border-white/[0.10]"
         style={{ gridTemplateColumns: gridColumns }}
       >
-        <div className="h-14" />
-        {weekDays.map((day) => {
+        <div className="h-[60px]" />
+        {weekDays.map((day, i) => {
           const today = isToday(day);
+          const hours = dayHours[i];
           return (
-            <div
+            <button
               key={day.toISOString()}
+              type="button"
+              onClick={() => onOpenDay?.(day)}
+              disabled={!onOpenDay}
+              aria-label={`Open ${format(day, 'EEEE d MMMM')}`}
               className={cn(
-                'flex h-14 flex-col items-center justify-center gap-0.5',
+                'flex h-[60px] flex-col items-center justify-center gap-0.5 touch-manipulation enabled:hover:bg-white/[0.04]',
                 today && 'bg-elec-yellow/[0.06]'
               )}
             >
-              <span className={eyebrowCn}>{format(day, 'EEEEE')}</span>
+              {/* Three letters from here: at tablet width there is room, and
+                  "T" twice in a row made Tuesday and Thursday a guess. */}
+              <span className={eyebrowCn}>{format(day, 'EEE')}</span>
               <span
                 className={cn(
                   'flex h-7 w-7 items-center justify-center rounded-full text-xs font-semibold tabular-nums',
@@ -230,7 +264,10 @@ const CalendarWeekView = ({
               >
                 {format(day, 'd')}
               </span>
-            </div>
+              <span className="h-3 text-[10px] font-medium leading-3 tabular-nums text-white">
+                {hours > 0 ? hoursLabel(hours) : ''}
+              </span>
+            </button>
           );
         })}
       </div>
@@ -248,7 +285,7 @@ const CalendarWeekView = ({
           </div>
           {/* One bar per event across the days it covers, in lanes — the
               seven day cells are only the track it is drawn along. */}
-          <div className="relative col-span-7 space-y-1 py-1.5">
+          <div className="relative space-y-1 py-1.5" style={{ gridColumn: `span ${days}` }}>
             {banner.lanes.map((lane, laneIndex) => (
               <div key={laneIndex} className="relative h-6">
                 {lane.map((seg) => {
@@ -317,11 +354,15 @@ const CalendarWeekView = ({
                     }
                     className={cn(
                       'relative border-l border-t border-white/[0.05] touch-manipulation active:bg-white/[0.06]',
-                      working
-                        ? !workingDays.includes(day.getDay())
-                          ? 'bg-white/[0.02]'
-                          : 'bg-white/[0.03]'
-                        : 'bg-transparent'
+                      // Today's column carries its tint all the way down, not
+                      // just in the heading, so it can be found mid-scroll.
+                      isToday(day)
+                        ? 'bg-elec-yellow/[0.04]'
+                        : working
+                          ? !workingDays.includes(day.getDay())
+                            ? 'bg-white/[0.02]'
+                            : 'bg-white/[0.03]'
+                          : 'bg-transparent'
                     )}
                     style={{ height: HOUR_HEIGHT }}
                   >

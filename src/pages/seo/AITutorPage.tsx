@@ -249,14 +249,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Quote the regulation text</strong> exactly as written in BS 7671, so you
                 have the authoritative source.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Explain what it means in practice:</strong> "Every socket outlet rated 32A
                 or less needs 30 mA RCD protection. Every cable concealed in a wall or partition at
@@ -265,7 +265,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Give practical examples:</strong> "A kitchen ring final circuit with sockets
                 rated 13A — yes, needs RCD. A 40A cooker circuit — no, not required by 411.3.2
@@ -273,7 +273,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Highlight common mistakes:</strong> "Many electricians forget that 411.3.2
                 applies to mobile equipment up to 32A used outdoors, not just socket outlets."
@@ -448,7 +448,7 @@ export default function AITutorPage() {
       heroTitle={
         <>
           AI Tutor for Electricians:{' '}
-          <span className="text-yellow-400">Your Personal Study Assistant</span>
+          <span className="text-elec-yellow">Your Personal Study Assistant</span>
         </>
       }
       heroSubtitle="Ask any question about electrical regulations and get a clear, plain-English explanation. Generate unlimited practice questions for C&G 2382, 2391, and AM2 exams. Break down complex concepts step by step. Study on site, offline, between jobs."
@@ -471,7 +471,7 @@ export default function AITutorPage() {
       faqHeading="Frequently Asked Questions About the AI Tutor"
       relatedPages={relatedPages}
       ctaHeading="Start Learning with Your AI Tutor"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's AI Tutor for exam preparation and on-site learning. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate's AI Tutor for exam preparation and on-site learning. 7-day free trial, cancel anytime."
       toolPath="/tools/ai-tutor"
     />
   );

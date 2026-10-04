@@ -221,7 +221,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main switch in the off position.</strong> If the main switch (the big one,
                 usually on the left or top) is off, all power to the property is disconnected. Push
@@ -230,7 +230,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tripped RCD.</strong> An{' '}
                 <SEOInternalLink href="/guides/rcd-keeps-tripping">RCD</SEOInternalLink> protects
@@ -241,7 +241,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tripped MCB.</strong> MCBs (the smaller switches) protect individual
                 circuits. A tripped MCB will be in the off or middle position. Reset it by pushing
@@ -250,7 +250,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Old-style rewirable fuses.</strong> If your property has an older fuse box
                 with rewirable fuses (ceramic holders with fuse wire), a blown fuse will have broken
@@ -285,7 +285,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <div className="flex items-start gap-4">
-            <Phone className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+            <Phone className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-1">When to call 105</h4>
               <ul className="space-y-2 text-white text-sm leading-relaxed">
@@ -446,7 +446,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Your RCD or MCB keeps tripping after you reset it — there is an active fault that
                 needs{' '}
@@ -457,27 +457,27 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 You smell burning or see scorch marks on sockets, switches, or the consumer unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 You have an old fuse box with rewirable fuses and blown fuses are a recurring
                 problem.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 The power is off but no devices in the consumer unit appear to have tripped — the
                 fault may be in the meter tails or main switch.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 You have partial power loss — some circuits work and others do not, with no obvious
                 tripped devices.
@@ -512,28 +512,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Keep a torch and spare batteries</strong> in an accessible location. A head
                 torch is ideal — it keeps your hands free.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Know where your consumer unit is</strong> and how to identify tripped MCBs
                 and RCDs. Make sure the consumer unit is not blocked by furniture or stored items.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Keep your phone charged</strong> — you may need it to call 105, your
                 electrician, or emergency services.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Register for Priority Services</strong> if you are elderly, disabled, have
                 young children, or rely on electrical medical equipment. Your DNO will prioritise
@@ -541,7 +541,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Have your installation inspected regularly.</strong> A periodic{' '}
                 <SEOInternalLink href="/tools/eicr-certificate">
@@ -576,7 +576,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Power className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Power className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI Fault Diagnosis</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -636,7 +636,7 @@ export default function PowerCutWhatToDoPage() {
       badgeIcon={Power}
       heroTitle={
         <>
-          Power Cut: <span className="text-yellow-400">What to Do and Who to Call</span>
+          Power Cut: <span className="text-elec-yellow">What to Do and Who to Call</span>
         </>
       }
       heroSubtitle="The lights have gone out. Is it a power cut on the network or a fault inside your property? This guide walks you through exactly what to check, who to call, and when you need an electrician — step by step."

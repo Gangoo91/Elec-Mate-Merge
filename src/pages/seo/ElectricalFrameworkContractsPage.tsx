@@ -201,7 +201,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ESPO (Eastern Shires Purchasing Organisation)</strong> — one of the largest
                 local authority purchasing consortia in England. Operates frameworks for electrical
@@ -211,7 +211,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>YPO (Yorkshire Purchasing Organisation)</strong> — a major purchasing
                 consortium for Yorkshire, Humber, and North East England local authorities. YPO
@@ -220,7 +220,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Crown Commercial Service (CCS)</strong> — central government's purchasing
                 body. The CCS Facilities Management Marketplace and other CCS frameworks include
@@ -229,7 +229,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Direct council frameworks</strong> — larger local authorities (county
                 councils, metropolitan boroughs, London boroughs) often procure their own electrical
@@ -256,7 +256,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NHS Shared Business Services (NHS SBS)</strong> — procures frameworks on
                 behalf of NHS trusts nationally. The NHS SBS Estates and Facilities Management
@@ -265,7 +265,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HTM (Health Technical Memoranda)</strong> — NHS electrical work must comply
                 with relevant HTMs, particularly HTM 06-01 (Electrical Services Supply and
@@ -275,7 +275,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Higher accreditation requirements</strong> — NHS frameworks typically
                 require: ISO 45001 or equivalent; ISO 9001; public liability insurance of £10m or
@@ -308,7 +308,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>LHC (Local Housing Consortium)</strong> — procures frameworks for housing
                 associations and local authorities covering planned and reactive maintenance, and
@@ -317,7 +317,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Southern Construction Framework (SCF)</strong> — used by housing
                 associations, local authorities, and NHS bodies in the South of England for
@@ -326,7 +326,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Direct association frameworks</strong> — larger housing associations
                 (Clarion, L&amp;Q, Peabody, Sanctuary, Places for People) procure their own
@@ -336,7 +336,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR programmes</strong> — the Electrical Safety Standards in the Private
                 Rented Sector (England) Regulations 2020 and social housing electrical safety
@@ -365,7 +365,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardList className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Technical and professional ability</strong> — provide two to three relevant
                 project references of similar scale and type to the framework lots you are applying
@@ -375,7 +375,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardList className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Financial standing</strong> — the SQ will ask for your annual turnover,
                 current ratio, and may request audited accounts. The financial threshold is
@@ -384,7 +384,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardList className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>H&S credentials</strong> — CHAS, Safe Contractor, or Constructionline Gold
                 will usually satisfy the H&amp;S section. Upload a current certificate. If you do
@@ -393,7 +393,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardList className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Equality and diversity</strong> — public sector frameworks require an
                 equality and diversity policy. This must be a genuine policy, reviewed annually and
@@ -403,7 +403,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardList className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Environmental policy</strong> — a written environmental policy and evidence
                 of carbon reduction commitments are increasingly required, particularly for NHS and
@@ -429,7 +429,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Find a Tender Service (FTS)</strong> — the UK's official public procurement
                 notice portal (replaced OJEU after Brexit). All public contracts above the relevant
@@ -438,7 +438,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Contracts Finder</strong> — a UK government portal for contracts below the
                 FTS threshold (above £12,000 for central government, £30,000 for sub-central
@@ -447,7 +447,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consortium portals</strong> — register directly with ESPO, YPO, LHC, and
                 other purchasing consortia. These organisations maintain supplier registers and
@@ -456,7 +456,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Constructionline and Achilles</strong> — main contractors and public sector
                 clients use these databases to search for approved subcontractors when assembling
@@ -482,7 +482,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Works contract thresholds (2026)</strong> — the threshold for works
                 contracts (including electrical installation) is £5.34m for central government and
@@ -492,7 +492,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Light touch contracts</strong> — the Procurement Act 2023 introduces a Light
                 Touch Regime for certain social, health, and education services. These have a higher
@@ -501,7 +501,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Transparency notices</strong> — a new requirement under the Procurement Act
                 is planned procurement notices and pipeline notices. Public bodies must publish a
@@ -511,7 +511,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Direct award provisions</strong> — the Procurement Act 2023 expands the
                 grounds for direct award (without competition) in specific circumstances, including
@@ -597,7 +597,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <AlertTriangle className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Pre-Qualification Documentation</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -636,7 +636,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win and manage framework contracts with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting, RAMS generation, H&S documentation, and AI business support."
+          description="Join 2,100+ UK electricians using Elec-Mate for professional quoting, RAMS generation, H&S documentation, and AI business support."
           icon={Building2}
         />
       </>
@@ -662,7 +662,7 @@ export default function ElectricalFrameworkContractsPage() {
       heroTitle={
         <>
           Electrical Framework Contracts UK:{' '}
-          <span className="text-yellow-400">Getting on Local Authority and NHS Approved Lists</span>
+          <span className="text-elec-yellow">Getting on Local Authority and NHS Approved Lists</span>
         </>
       }
       heroSubtitle="How to get onto local authority, NHS, and housing association electrical framework contracts — understanding pre-qualification questionnaires, getting CHAS and Constructionline accreditation, navigating UK procurement thresholds, and winning call-off contracts once you are on a framework."
@@ -673,7 +673,7 @@ export default function ElectricalFrameworkContractsPage() {
       faqHeading="Frequently Asked Questions About Electrical Framework Contracts"
       relatedPages={relatedPages}
       ctaHeading="Build the Documentation to Win Framework Contracts"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for professional quoting, RAMS generation, and business management. Build the H&S and commercial documentation library that public sector clients require. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for professional quoting, RAMS generation, and business management. Build the H&S and commercial documentation library that public sector clients require. 7-day free trial, cancel anytime."
     />
   );
 }

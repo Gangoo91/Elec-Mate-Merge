@@ -157,7 +157,7 @@ const quizQuestions = [
     options: [
       'Work in the area furthest from plant and vehicles, since keeping clear of the traffic routes means the missing vest is not a real risk for that part of the job.',
       'Borrow any fluorescent jacket from another trade and carry on, since any high-visibility garment satisfies the rule and avoids a wasted trip to the van.',
-      'Stop and either fetch the vest, borrow a site-office spare, or step off site until equipped — working without required PPE breaches HASAWA s.7 and CDM 2015 Reg 15.',
+      'Stop and either fetch the vest, borrow a site-office spare, or step off site until equipped — working without required PPE breaches HASAWA s.7 and CDM 2015 Reg 8.',
       'Sign in, note on the induction sheet that the vest is in the van, and fetch it at the next break, since recording the omission honestly discharges the duty.',
     ],
     correctAnswer: 2,

@@ -349,18 +349,18 @@ export default function EICRCertificatePage() {
       {/* Hero — stronger, feature-led */}
       <section className="pb-8">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-5">
-          <FileCheck2 className="w-4 h-4 text-yellow-400" />
-          <span className="text-sm font-medium text-yellow-400">
+          <FileCheck2 className="w-4 h-4 text-elec-yellow" />
+          <span className="text-sm font-medium text-elec-yellow">
             BS 7671:2018+A4:2026 Compliant
           </span>
         </div>
 
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
           Scan the Board. Speak Your Results.{' '}
-          <span className="text-yellow-400">Send the EICR Before You Leave.</span>
+          <span className="text-elec-yellow">Send the EICR Before You Leave.</span>
         </h1>
 
-        <p className="text-base text-white/80 leading-relaxed mb-4">
+        <p className="text-base text-white leading-relaxed mb-4">
           An <strong className="text-white">EICR (Electrical Installation Condition Report)</strong>{' '}
           is the formal document produced after a periodic inspection and testing of an existing
           electrical installation. It replaces the older PIR, is defined by
@@ -394,7 +394,7 @@ export default function EICRCertificatePage() {
               key={pill.label}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm text-white"
             >
-              <pill.icon className="w-3.5 h-3.5 text-yellow-400" />
+              <pill.icon className="w-3.5 h-3.5 text-elec-yellow" />
               {pill.label}
             </span>
           ))}
@@ -409,7 +409,7 @@ export default function EICRCertificatePage() {
           </a>
           <a
             href="#how-elecmate-helps"
-            className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-yellow-500/40 text-white font-semibold rounded-xl touch-manipulation transition-colors"
+            className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-white/[0.1] text-white font-semibold rounded-xl touch-manipulation transition-colors"
           >
             See the Features
           </a>
@@ -502,14 +502,14 @@ export default function EICRCertificatePage() {
             <h3 className="font-bold text-white text-lg mb-4">Recommended EICR Intervals</h3>
             <ul className="space-y-3 text-white">
               <li className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <span className="flex-1 text-left">
                   <strong>Domestic (owner-occupied):</strong> Every 10 years, or on change of
                   occupancy
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <span className="flex-1 text-left">
                   <strong>Domestic (rented / private let):</strong> Every 5 years — legally required
                   under the Electrical Safety Standards in the Private Rented Sector (England)
@@ -517,31 +517,31 @@ export default function EICRCertificatePage() {
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <span className="flex-1 text-left">
                   <strong>Houses in Multiple Occupation (HMOs):</strong> Every 5 years
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <span className="flex-1 text-left">
                   <strong>Commercial premises:</strong> Every 5 years
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <span className="flex-1 text-left">
                   <strong>Industrial installations:</strong> Every 3 years
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <span className="flex-1 text-left">
                   <strong>Swimming pools and special locations:</strong> Every 1 year
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <span className="flex-1 text-left">
                   <strong>Petrol filling stations:</strong> Every 1 year
                 </span>
@@ -666,7 +666,7 @@ export default function EICRCertificatePage() {
         {/* A4:2026 changes relevant to EICR inspectors */}
         <div className="mt-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
           <h3 className="font-bold text-white text-base mb-3 flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-yellow-400 shrink-0" />
+            <ShieldCheck className="w-4 h-4 text-elec-yellow shrink-0" />
             New A4:2026 Rules That Generate EICR Observations
           </h3>
           <ul className="space-y-3 text-white text-sm leading-relaxed">
@@ -783,15 +783,15 @@ export default function EICRCertificatePage() {
 
       {/* ===== WHY ELECTRICIANS SWITCH ===== */}
       <section id="why-electricians-switch" className="pb-10 scroll-mt-24">
-        <div className="rounded-2xl bg-gradient-to-br from-yellow-500/10 via-yellow-600/5 to-transparent border border-white/[0.14] p-6 sm:p-8">
+        <div className="rounded-2xl bg-gradient-to-br from-white/[0.02] via-yellow-600/5 to-transparent border border-white/[0.14] p-6 sm:p-8">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-5">
-            <Zap className="w-3.5 h-3.5 text-yellow-400" />
-            <span className="text-xs font-semibold text-yellow-400 uppercase tracking-wider">
+            <Zap className="w-3.5 h-3.5 text-elec-yellow" />
+            <span className="text-xs font-semibold text-elec-yellow uppercase tracking-wider">
               Why Electricians Switch
             </span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
-            You Are Still Typing EICRs at Home. <span className="text-yellow-400">Why?</span>
+            You Are Still Typing EICRs at Home. <span className="text-elec-yellow">Why?</span>
           </h2>
           <p className="text-white leading-relaxed mb-6">
             You spend 2-4 hours on site doing the inspection. Then you drive home and spend another
@@ -835,9 +835,9 @@ export default function EICRCertificatePage() {
               ].map((s) => (
                 <div key={s.step} className="text-center">
                   <div className="w-12 h-12 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center mx-auto mb-3">
-                    <s.icon className="w-5 h-5 text-yellow-400" />
+                    <s.icon className="w-5 h-5 text-elec-yellow" />
                   </div>
-                  <div className="text-xs font-bold text-yellow-400 mb-1">Step {s.step}</div>
+                  <div className="text-xs font-bold text-elec-yellow mb-1">Step {s.step}</div>
                   <div className="font-semibold text-white text-sm">{s.label}</div>
                   <div className="text-sm text-white mt-0.5">{s.desc}</div>
                 </div>
@@ -877,8 +877,8 @@ export default function EICRCertificatePage() {
               yellow: {
                 bg: 'bg-gradient-to-b from-white/[0.08] to-white/[0.04]',
                 border: 'border-white/[0.14]',
-                icon: 'text-yellow-400',
-                glow: 'from-yellow-500/10',
+                icon: 'text-elec-yellow',
+                glow: 'from-white/[0.02]',
               },
               blue: {
                 bg: 'bg-blue-500/10',
@@ -926,7 +926,7 @@ export default function EICRCertificatePage() {
         </div>
 
         {/* Delivery methods callout */}
-        <div className="rounded-2xl bg-gradient-to-r from-yellow-500/10 to-yellow-600/5 border border-white/[0.14] p-6 mb-10">
+        <div className="rounded-2xl bg-gradient-to-r from-white/[0.02] to-yellow-600/5 border border-white/[0.14] p-6 mb-10">
           <h3 className="font-bold text-white text-lg mb-4">
             Send the Finished EICR However Your Client Wants It
           </h3>
@@ -939,7 +939,7 @@ export default function EICRCertificatePage() {
             ].map((method) => (
               <div key={method.label} className="flex flex-col items-center gap-2 text-center">
                 <div className="w-11 h-11 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center">
-                  <method.icon className="w-5 h-5 text-yellow-400" />
+                  <method.icon className="w-5 h-5 text-elec-yellow" />
                 </div>
                 <span className="text-sm font-medium text-white">{method.label}</span>
               </div>
@@ -962,7 +962,7 @@ export default function EICRCertificatePage() {
             <thead>
               <tr className="border-b border-white/10">
                 <th className="p-4 text-sm font-semibold text-white">Feature</th>
-                <th className="p-4 text-sm font-semibold text-center text-yellow-400">Elec-Mate</th>
+                <th className="p-4 text-sm font-semibold text-center text-elec-yellow">Elec-Mate</th>
                 <th className="p-4 text-sm font-semibold text-center text-white">Paper Forms</th>
                 <th className="p-4 text-sm font-semibold text-center text-white">
                   Desktop Software
@@ -1035,7 +1035,7 @@ export default function EICRCertificatePage() {
               { value: '36+', label: 'Training Courses' },
             ].map((stat) => (
               <div key={stat.label} className="text-center">
-                <div className="text-2xl sm:text-3xl font-bold text-yellow-400 mb-1">
+                <div className="text-2xl sm:text-3xl font-bold text-elec-yellow mb-1">
                   {stat.value}
                 </div>
                 <div className="text-sm text-white">{stat.label}</div>
@@ -1058,7 +1058,7 @@ export default function EICRCertificatePage() {
       {/* CTA */}
       <SEOCTASection
         heading="Stop writing EICR certificates by hand"
-        subheading="Join 1,600+ UK electricians creating professional digital certificates. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians creating professional digital certificates. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

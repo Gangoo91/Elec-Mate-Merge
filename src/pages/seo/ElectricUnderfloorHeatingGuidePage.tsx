@@ -139,7 +139,7 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-4">Heating Mat Systems</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Twin-conductor cable pre-attached to fibreglass mesh at a fixed spacing (typically
                 50mm to 100mm between passes). Standard output: 100W/m\u00b2 to 200W/m\u00b2.
@@ -148,7 +148,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Best for:</strong> Rectangular rooms, quick installation, tiled floors. The
                 mat is cut and folded to navigate the room shape — only the mesh is cut, never the
@@ -156,7 +156,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Limitations:</strong> Fixed spacing means fixed watt density — no ability to
                 increase output in colder areas. Less suitable for irregular-shaped rooms or areas
@@ -169,7 +169,7 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-4">Loose Wire Systems</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Twin-conductor cable fixed to the floor substrate using clip rails or adhesive
                 fixing clips. Spacing is set by the installer to achieve the required watt density.
@@ -178,7 +178,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Best for:</strong> Irregular-shaped rooms, new-build screeded floors,
                 whole-floor heating in living areas, variable watt density requirements (e.g. more
@@ -186,7 +186,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Limitations:</strong> Slower to install, requires screeding (adds floor
                 height), longer heat-up time due to screed thermal mass.
@@ -210,7 +210,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Solid concrete slab:</strong> Loose wire in screed is the standard approach.
                 Lay insulation board (typically 25mm to 50mm PIR) first to prevent heat loss
@@ -220,7 +220,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Suspended timber floor:</strong> UFH can be installed between joists
                 (clipped to the underside of floorboards) using specialist between-joist heating
@@ -230,7 +230,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tiled floor (renovation):</strong> Heating mat in tile adhesive is the
                 standard system for retrofitting UFH beneath tiles. The mat adds minimal floor
@@ -243,7 +243,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Thermal insulation above cable:</strong> BS 7671 Regulation 753.424.201
                 requires measures to limit the temperature of the heating unit zone to a maximum of
@@ -274,7 +274,7 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-3">Wiring a UFH Thermostat</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Supply:</strong> Live, neutral, and earth from the consumer unit or fused
                 spur to the thermostat backplate. The heating element (cold tail) connects to the
@@ -283,7 +283,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Floor sensor:</strong> A two-core sensor cable (typically 3m to 5m) runs
                 from the thermostat back-box through conduit into the floor. The sensor tip sits
@@ -293,7 +293,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Temperature limiting:</strong> Set the floor temperature limit to no more
                 than 35\u00b0C for most floor constructions per BS 7671 Regulation 753.423
@@ -322,7 +322,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Design current (Ib):</strong> Total wattage \u00f7 230V. A 1,500W bathroom
                 heating mat: Ib = 1,500 \u00f7 230 = 6.5A. A 3,000W living room system: Ib = 3,000
@@ -330,14 +330,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Overcurrent device (In):</strong> Select the RCBO rating above the design
                 current. For 6.5A, use a 10A RCBO. For 13A, use a 16A RCBO.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable size:</strong> 1.5mm\u00b2 twin and earth is suitable for most
                 domestic UFH circuits up to 16A when run in standard conditions. For larger systems
@@ -346,7 +346,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection:</strong> BS 7671 Regulation 753.415.1 requires that circuits
                 supplying heating units shall have additional protection by RCDs having the
@@ -373,7 +373,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Heating element position:</strong> The UFH element must be covered by at
                 least 50mm of material (adhesive, screed, or tiles) and must not be reachable from
@@ -382,7 +382,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Thermostat position:</strong> The thermostat must be outside Zone 2 (more
                 than 600mm horizontally from the bath rim) unless specifically rated for Zone 2
@@ -391,7 +391,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection:</strong> All circuits supplying equipment in bathroom zones
                 must be protected by a 30mA RCD (Regulation 701.411.3.3). An RCBO at the consumer
@@ -423,7 +423,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 753.2:</strong> Heating systems must be installed in accordance
                 with the manufacturer instructions, which form part of the compliance evidence
@@ -431,7 +431,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 753.423 — Protection against burns:</strong> In floor areas where
                 contact with skin or footwear is possible, the surface temperature of the floor
@@ -440,7 +440,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 753.424.201 — Overheating protection (A4:2026):</strong> For
                 floor or ceiling heating systems in buildings, one or more of the following shall be
@@ -452,7 +452,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 753.424.201 — Inseparable cold tail connections:</strong> Heating
                 units shall be inseparably connected to cold tails — for example, by a crimped
@@ -461,7 +461,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 753.415.1 — RCD protection:</strong> Circuits supplying heating
                 units shall have additional protection by RCDs with the characteristics of
@@ -469,7 +469,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 753.520.4 — Heating-free areas:</strong> Where room fittings
                 (such as fixed kitchen units, bathroom vanity units, or built-in furniture) are to
@@ -497,7 +497,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <SEOAppBridge href="/eic-certificate" label="Electrical Installation Certificate" />{' '}
                 — record UFH circuit details, RCBO rating, floor sensor type, and all test results
@@ -505,7 +505,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <SEOAppBridge href="/minor-works-certificate" label="Minor Works Certificate" /> —
                 issue a minor works certificate when connecting UFH to an existing suitable circuit
@@ -537,7 +537,7 @@ export default function ElectricUnderfloorHeatingGuidePage() {
       heroTitle={
         <>
           Electric Underfloor Heating Guide{' '}
-          <span className="text-yellow-400">— Mat, Loose Wire and BS 7671 Section 753</span>
+          <span className="text-elec-yellow">— Mat, Loose Wire and BS 7671 Section 753</span>
         </>
       }
       heroSubtitle="Mat vs loose wire systems, thermostat wiring, temperature limiting under BS 7671 Regulation 753, circuit sizing, RCBO protection, bathroom zone requirements, and insulation testing."

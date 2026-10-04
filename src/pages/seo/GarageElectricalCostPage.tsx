@@ -726,7 +726,7 @@ export default function GarageElectricalCostPage() {
       heroTitle={
         <>
           Garage Electrical Installation Cost UK 2026:{' '}
-          <span className="text-yellow-400">Garage Wiring Prices</span>
+          <span className="text-elec-yellow">Garage Wiring Prices</span>
         </>
       }
       heroSubtitle="Detailed breakdown of garage electrical installation costs in the UK for 2026 — detached garage from £800, integral garage from £400, SWA armoured cable and trenching costs, garage consumer unit, EV charger add-ons, and Part P compliance."
@@ -744,7 +744,7 @@ export default function GarageElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Garage Electrical Installation Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Your Garage Electrical Installation in Minutes"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to create professional garage electrical quotes with armoured cable, trenching, and EV charger options. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to create professional garage electrical quotes with armoured cable, trenching, and EV charger options. 7-day free trial, cancel anytime."
     />
   );
 }

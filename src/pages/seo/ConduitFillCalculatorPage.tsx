@@ -171,14 +171,14 @@ export default function ConduitFillCalculatorPage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
-        <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-elec-yellow text-sm font-medium mb-6">
             Part of 70 Electrical Calculators
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             Conduit Fill Calculator
-            <span className="block text-yellow-400 mt-1">Cable Factor Method to BS 7671</span>
+            <span className="block text-elec-yellow mt-1">Cable Factor Method to BS 7671</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             Calculate conduit fill using the cable factor method. Instantly determine the right
@@ -194,7 +194,7 @@ export default function ConduitFillCalculatorPage() {
             </Link>
             <a
               href="#how-it-works"
-              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-yellow-500/40 touch-manipulation transition-colors"
+              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-white/[0.1] touch-manipulation transition-colors"
             >
               See How It Works
             </a>
@@ -231,7 +231,7 @@ export default function ConduitFillCalculatorPage() {
               tension during installation, and future capacity for additional cables.
             </p>
             <p>
-              <strong className="text-yellow-400">Heat dissipation:</strong> When current flows
+              <strong className="text-elec-yellow">Heat dissipation:</strong> When current flows
               through a cable, the conductor generates heat due to its resistance. This heat must be
               dissipated through the cable insulation, through the air space inside the conduit,
               through the conduit wall, and finally to the surrounding environment. If the conduit
@@ -242,7 +242,7 @@ export default function ConduitFillCalculatorPage() {
               conduit's internal cross-sectional area.
             </p>
             <p>
-              <strong className="text-yellow-400">Pulling tension:</strong> Cables must be drawn
+              <strong className="text-elec-yellow">Pulling tension:</strong> Cables must be drawn
               through conduit during installation. The friction between the cable sheaths and the
               conduit wall, and between adjacent cables, determines how much force is needed to pull
               them through. If the conduit is overfilled, the pulling tension becomes excessive,
@@ -251,7 +251,7 @@ export default function ConduitFillCalculatorPage() {
               circuits, and reduced insulation resistance readings during testing.
             </p>
             <p>
-              <strong className="text-yellow-400">Future capacity:</strong> Good installation
+              <strong className="text-elec-yellow">Future capacity:</strong> Good installation
               practice and BS 7671 encourage leaving spare capacity in conduit systems to
               accommodate future circuit additions. An installation that is filled to maximum
               capacity on day one leaves no room for the additional circuits that building
@@ -301,7 +301,7 @@ export default function ConduitFillCalculatorPage() {
               factor, the cables will fit with adequate clearance for heat dissipation and pulling.
             </p>
             <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center my-6">
-              <p className="text-xl sm:text-2xl font-mono font-bold text-yellow-400">
+              <p className="text-xl sm:text-2xl font-mono font-bold text-elec-yellow">
                 Sum of cable factors ≤ Conduit factor
               </p>
               <p className="mt-3 text-sm text-white">
@@ -337,13 +337,13 @@ export default function ConduitFillCalculatorPage() {
 
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-6">
             <div className="grid grid-cols-3 gap-px bg-white/10">
-              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                 Conductor CSA
               </div>
-              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                 Cable Factor
               </div>
-              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                 Typical Use
               </div>
             </div>
@@ -393,16 +393,16 @@ export default function ConduitFillCalculatorPage() {
 
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-6">
             <div className="grid grid-cols-4 gap-px bg-white/10">
-              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                 Conduit Size
               </div>
-              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                 Straight Run
               </div>
-              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                 With Bends
               </div>
-              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                 Internal Diameter
               </div>
             </div>
@@ -442,7 +442,7 @@ export default function ConduitFillCalculatorPage() {
           <div className="space-y-6">
             {/* Example 1 */}
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <h3 className="font-bold text-yellow-400 text-lg mb-3">
+              <h3 className="font-bold text-elec-yellow text-lg mb-3">
                 Example 1: Singles in 20 mm Conduit (Straight Run)
               </h3>
               <div className="space-y-2 text-white leading-relaxed text-sm">
@@ -452,11 +452,11 @@ export default function ConduitFillCalculatorPage() {
                   conductors: 5 singles of 1.5 mm².
                 </p>
                 <p className="font-mono text-white">
-                  Total cable factor = 5 x 22 = <strong className="text-yellow-400">110</strong>
+                  Total cable factor = 5 x 22 = <strong className="text-elec-yellow">110</strong>
                 </p>
                 <p>
                   Conduit factor for 20 mm (straight run) ={' '}
-                  <strong className="text-yellow-400">460</strong>
+                  <strong className="text-elec-yellow">460</strong>
                 </p>
                 <p>
                   Result: <strong className="text-green-400">110 ≤ 460 — PASS</strong>. Plenty of
@@ -468,7 +468,7 @@ export default function ConduitFillCalculatorPage() {
 
             {/* Example 2 */}
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <h3 className="font-bold text-yellow-400 text-lg mb-3">
+              <h3 className="font-bold text-elec-yellow text-lg mb-3">
                 Example 2: Mixed Sizes in 25 mm Conduit (With Bends)
               </h3>
               <div className="space-y-2 text-white leading-relaxed text-sm">
@@ -485,11 +485,11 @@ export default function ConduitFillCalculatorPage() {
                   Cable factor for 1.5 mm² singles: 5 x 22 = 110
                 </p>
                 <p className="font-mono text-white">
-                  Total cable factor = 90 + 110 = <strong className="text-yellow-400">200</strong>
+                  Total cable factor = 90 + 110 = <strong className="text-elec-yellow">200</strong>
                 </p>
                 <p>
                   Conduit factor for 25 mm (with bends) ={' '}
-                  <strong className="text-yellow-400">560</strong>
+                  <strong className="text-elec-yellow">560</strong>
                 </p>
                 <p>
                   Result: <strong className="text-green-400">200 ≤ 560 — PASS</strong>. A 25 mm
@@ -500,8 +500,8 @@ export default function ConduitFillCalculatorPage() {
             </div>
 
             {/* Band I / Band II segregation warning */}
-            <div className="p-5 rounded-2xl border border-amber-500/30 bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
-              <h3 className="font-bold text-amber-400 text-base mb-2">
+            <div className="p-5 rounded-2xl border border-white/[0.1] bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
+              <h3 className="font-bold text-elec-yellow text-base mb-2">
                 Band I / Band II Segregation (OSG 7.4.1)
               </h3>
               <p className="text-white text-sm leading-relaxed mb-3">
@@ -535,7 +535,7 @@ export default function ConduitFillCalculatorPage() {
 
             {/* Example 3 */}
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <h3 className="font-bold text-yellow-400 text-lg mb-3">
+              <h3 className="font-bold text-elec-yellow text-lg mb-3">
                 Example 3: Heavy Run — Checking a 20 mm Conduit
               </h3>
               <div className="space-y-2 text-white leading-relaxed text-sm">
@@ -551,11 +551,11 @@ export default function ConduitFillCalculatorPage() {
                   Cable factor for 4.0 mm² singles: 3 x 43 = 129
                 </p>
                 <p className="font-mono text-white">
-                  Total cable factor = 270 + 129 = <strong className="text-yellow-400">399</strong>
+                  Total cable factor = 270 + 129 = <strong className="text-elec-yellow">399</strong>
                 </p>
                 <p>
                   Conduit factor for 20 mm with bends ={' '}
-                  <strong className="text-yellow-400">320</strong>
+                  <strong className="text-elec-yellow">320</strong>
                 </p>
                 <p>
                   Result: <strong className="text-red-400">399 &gt; 320 — FAIL</strong>. The 20 mm
@@ -609,7 +609,7 @@ export default function ConduitFillCalculatorPage() {
               risk of cable damage.
             </p>
             <div className="p-4 rounded-xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] text-sm text-white leading-relaxed">
-              <strong className="text-yellow-400">Reg 522.8.2 — buried conduit:</strong> Where a
+              <strong className="text-elec-yellow">Reg 522.8.2 — buried conduit:</strong> Where a
               conduit system is buried in the structure, cables shall not be drawn in until the
               conduit is completely erected between access points. This is a frequently overlooked
               site-sequencing requirement: all joints, bends and boxes must be in place before
@@ -688,7 +688,7 @@ export default function ConduitFillCalculatorPage() {
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex-shrink-0">
-                  <span className="font-bold text-yellow-400">{index + 1}</span>
+                  <span className="font-bold text-elec-yellow">{index + 1}</span>
                 </div>
                 <div>
                   <h3 className="font-bold text-white text-lg mb-1">{step.name}</h3>
@@ -792,7 +792,7 @@ export default function ConduitFillCalculatorPage() {
 
       <SEOCTASection
         heading="Size Conduit Correctly Every Time"
-        subheading="Join 1,600+ UK electricians using Elec-Mate for on-site calculations. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians using Elec-Mate for on-site calculations. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

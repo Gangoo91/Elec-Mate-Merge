@@ -62,9 +62,9 @@ const checks = [
       'An electrician gets a shock from a CU because the supply wasn’t locked off. What is the immediate cause vs the root cause?',
     options: [
       'Immediate cause = supply was live during work; root cause = no lock-off culture / no enforcement / no kit issued',
-      'To prevent individual strands from splaying, ensure all strands make contact with the terminal, and provide a consistent, repeatable connection',
-      'A pollution prevention guide for works and maintenance near water, published by the Environment Agency and partners',
-      'Faintness, nausea, breathlessness, paleness, sweating, and eventually loss of consciousness',
+      'Immediate cause = no lock-off culture; root cause = the supply was live during work',
+      'Immediate cause = the electrician was careless; root cause = the electrician was careless',
+      'Immediate cause = the CU was faulty; root cause = the manufacturer',
     ],
     correctIndex: 0,
     explanation:
@@ -74,12 +74,12 @@ const checks = [
     id: 'five-whys-check',
     question: 'When using the 5 Whys, when do you stop asking?',
     options: [
-      'The manufacturer declares conformity with applicable directives including essential health and safety requirements',
-      'It should be allocated to specific goals (extra debt payment, savings, business investment)',
-      'When you reach a cause you can actually fix at a system level (not just blame an individual)',
+      'After exactly five questions, whatever answer you have reached',
+      'As soon as you find the person who made the mistake',
+      'When the answer is the one the supervisor expected',
       'Temptation bundling pairs the habit with a simultaneous pleasure, not a delayed reward',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'The 5 in 5 Whys is a guideline — sometimes you need 3, sometimes 7. Stop when you reach a cause that points to a SYSTEM fix (process, training, kit, supervision) rather than just "Dave wasn’t paying attention". If your last answer is a person’s name, you haven’t finished — keep asking why that person was put in that position.',
   },
@@ -92,10 +92,10 @@ const quizQuestions = [
     id: 1,
     question: 'According to HSE HSG245, the goal of accident investigation is:',
     options: [
-      'The responsible person (usually the employer or building owner)',
+      'Finding out who was to blame so they can be disciplined',
       'Learning — identifying root cause and preventing recurrence',
-      'Persons not in their employment (e.g. members of the public)',
-      'It narrows down choices and improves accuracy',
+      'Producing the paperwork the insurer needs for a claim',
+      'Deciding whether the HSE needs to be told',
     ],
     correctAnswer: 1,
     explanation:
@@ -132,9 +132,9 @@ const quizQuestions = [
     question: 'Which of these is the FIRST stage of a workplace accident investigation?',
     options: [
       'Gather information — facts, photos, statements, equipment state',
-      'Supporting team working and project success at all levels',
-      'The time an activity can be delayed without affecting project completion',
-      'Replacing equipment under warranty or for traceability',
+      'Agree the action plan and assign owners',
+      'Analyse the information to find the root cause',
+      'Discipline the people involved',
     ],
     correctAnswer: 0,
     explanation:
@@ -183,13 +183,12 @@ const quizQuestions = [
   },
   {
     id: 8,
-    question:
-      'The HSE accident-causation iceberg suggests that for every fatal accident, there are roughly:',
+    question: 'Accident pyramid (iceberg) models suggest that for every fatal accident there are:',
     options: [
-      'Around 3,000 unsafe acts and conditions, hundreds of near-misses, and dozens of minor injuries',
-      'Make a phone call to discuss the situation, check for any dispute about the work, and attempt to agree a payment plan',
-      'They reduce grip on loads and underfoot surfaces, increasing the risk of slips and dropped loads',
-      'The longest sequence of dependent tasks determining minimum project duration',
+      'Many more minor injuries, far more near-misses, and thousands of unsafe acts and conditions underneath',
+      'About one near-miss — serious accidents rarely give any warning',
+      'More fatal accidents than minor injuries, because minor ones go unreported',
+      'No link at all — near-misses and serious accidents have different causes',
     ],
     correctAnswer: 0,
     explanation:

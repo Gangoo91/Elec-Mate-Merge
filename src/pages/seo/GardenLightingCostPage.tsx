@@ -198,14 +198,14 @@ const sections = [
               Budget for 4 to 8 fittings for a typical garden path.
             </p>
             <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm border-t border-white/10 pt-3">
-              <dt className="text-white/60">Power</dt>
+              <dt className="text-white">Power</dt>
               <dd className="text-white font-medium text-right">2W – 10W</dd>
-              <dt className="text-white/60">Output</dt>
+              <dt className="text-white">Output</dt>
               <dd className="text-white font-medium text-right">100 – 400 lm</dd>
-              <dt className="text-white/60">IP rating</dt>
+              <dt className="text-white">IP rating</dt>
               <dd className="text-white font-medium text-right">IP65</dd>
-              <dt className="text-white/60">Cost each</dt>
-              <dd className="text-yellow-300 font-semibold text-right">£30 – £120</dd>
+              <dt className="text-white">Cost each</dt>
+              <dd className="text-elec-yellow font-semibold text-right">£30 – £120</dd>
             </dl>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -216,13 +216,13 @@ const sections = [
               to wash steps for safety.
             </p>
             <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm border-t border-white/10 pt-3">
-              <dt className="text-white/60">Power</dt>
+              <dt className="text-white">Power</dt>
               <dd className="text-white font-medium text-right">1W – 3W</dd>
-              <dt className="text-white/60">Mounting</dt>
+              <dt className="text-white">Mounting</dt>
               <dd className="text-white font-medium text-right">Recessed</dd>
-              <dt className="text-white/60">IP rating</dt>
+              <dt className="text-white">IP rating</dt>
               <dd className="text-white font-medium text-right">IP67</dd>
-              <dt className="text-white/60">Cost each</dt>
+              <dt className="text-white">Cost each</dt>
               <dd className="text-green-300 font-semibold text-right">£15 – £60</dd>
             </dl>
           </div>
@@ -234,13 +234,13 @@ const sections = [
               full scheme to the homeowner.
             </p>
             <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm border-t border-white/10 pt-3">
-              <dt className="text-white/60">Power</dt>
+              <dt className="text-white">Power</dt>
               <dd className="text-white font-medium text-right">5W – 20W</dd>
-              <dt className="text-white/60">Mounting</dt>
+              <dt className="text-white">Mounting</dt>
               <dd className="text-white font-medium text-right">In-ground / spike</dd>
-              <dt className="text-white/60">IP rating</dt>
+              <dt className="text-white">IP rating</dt>
               <dd className="text-white font-medium text-right">IP67 min</dd>
-              <dt className="text-white/60">Cost each</dt>
+              <dt className="text-white">Cost each</dt>
               <dd className="text-blue-300 font-semibold text-right">£40 – £150</dd>
             </dl>
           </div>
@@ -252,13 +252,13 @@ const sections = [
               and surface-wired without trenching.
             </p>
             <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm border-t border-white/10 pt-3">
-              <dt className="text-white/60">Power</dt>
+              <dt className="text-white">Power</dt>
               <dd className="text-white font-medium text-right">10W – 50W</dd>
-              <dt className="text-white/60">Output</dt>
+              <dt className="text-white">Output</dt>
               <dd className="text-white font-medium text-right">800 – 4,000 lm</dd>
-              <dt className="text-white/60">IP rating</dt>
+              <dt className="text-white">IP rating</dt>
               <dd className="text-white font-medium text-right">IP65</dd>
-              <dt className="text-white/60">Cost each</dt>
+              <dt className="text-white">Cost each</dt>
               <dd className="text-red-300 font-semibold text-right">£30 – £100</dd>
             </dl>
           </div>
@@ -284,7 +284,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Cable and Wiring</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1.5mm2 3-core SWA cable</strong> — approximately £2.50 to £4.00 per metre. A
                 typical garden installation requires 20 to 50 metres of SWA cable depending on the
@@ -292,7 +292,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SWA cable glands, junction boxes, and connectors</strong> — £5 to £15 per
                 connection point. IP-rated junction boxes for outdoor use. Budget £30 to £80 for a
@@ -300,7 +300,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCBO at consumer unit</strong> — £25 to £55 for a dedicated 6A or 10A RCBO
                 for the garden lighting circuit.
@@ -312,21 +312,21 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Control and Switching</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Photocell (dusk-to-dawn)</strong> — £10 to £30. Automatically switches
                 lights on at dusk and off at dawn. Simple and reliable.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Astronomical time switch</strong> — £30 to £80. Programmable timer that
                 adjusts automatically for sunset and sunrise times throughout the year.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smart lighting controller (WiFi/Zigbee)</strong> — £50 to £200.
                 App-controlled lighting scenes, scheduling, and remote access. Integrates with smart
@@ -356,7 +356,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Trenching</strong> — hand-digging a 500mm deep cable trench through lawn and
                 flower beds takes approximately 3 to 5 metres per hour depending on soil conditions.
@@ -364,7 +364,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable installation</strong> — laying SWA cable, making off glands, jointing
                 at junction boxes, and connecting fittings. Allow 2 to 4 hours for a typical scheme.
@@ -372,14 +372,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit connection</strong> — installing the RCBO, connecting the SWA
                 cable, and labelling the circuit. Allow 1 to 2 hours. Labour cost: £50 to £100.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing and certification</strong> — testing the complete installation
                 including continuity, insulation resistance, earth fault loop impedance, RCD
@@ -408,7 +408,7 @@ const sections = [
         <div className="overflow-hidden rounded-2xl border border-white/10 my-4">
           <table className="w-full text-left text-sm">
             <thead>
-              <tr className="bg-white/[0.06] text-white/70">
+              <tr className="bg-white/[0.06] text-white">
                 <th className="px-4 py-3 font-semibold">Project type</th>
                 <th className="px-4 py-3 font-semibold">Fittings</th>
                 <th className="px-4 py-3 font-semibold text-right">Typical total</th>
@@ -418,7 +418,7 @@ const sections = [
               <tr className="bg-green-900/20">
                 <td className="px-4 py-3 align-top">
                   <span className="font-semibold text-white">Security lighting only</span>
-                  <p className="text-white/60 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Wall-mounted LED floodlights with PIR sensors, surface-wired from the consumer
                     unit. No trenching if mounted on the house exterior.
                   </p>
@@ -428,23 +428,23 @@ const sections = [
                   £300 – £700
                 </td>
               </tr>
-              <tr className="bg-yellow-900/20">
+              <tr className="bg-white/[0.06]">
                 <td className="px-4 py-3 align-top">
                   <span className="font-semibold text-white">Simple pathway scheme</span>
-                  <p className="text-white/60 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Budget fittings, short cable run, single circuit, photocell control. Ideal for a
                     front path or short garden walkway.
                   </p>
                 </td>
                 <td className="px-4 py-3 align-top whitespace-nowrap">4 – 6</td>
-                <td className="px-4 py-3 align-top text-right font-semibold text-yellow-300 whitespace-nowrap">
+                <td className="px-4 py-3 align-top text-right font-semibold text-elec-yellow whitespace-nowrap">
                   £500 – £1,000
                 </td>
               </tr>
               <tr className="bg-blue-900/20">
                 <td className="px-4 py-3 align-top">
                   <span className="font-semibold text-white">Mid-range garden scheme</span>
-                  <p className="text-white/60 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Mix of pathway, deck and feature lights across two circuits. SWA runs of 20 to
                     40 metres. Astronomical time switch or smart controller.
                   </p>
@@ -457,7 +457,7 @@ const sections = [
               <tr className="bg-purple-900/20">
                 <td className="px-4 py-3 align-top">
                   <span className="font-semibold text-white">Comprehensive landscape</span>
-                  <p className="text-white/60 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Multiple zones with independent switching, premium fittings, SWA runs exceeding
                     50 metres, smart home integration and professional lighting design.
                   </p>
@@ -496,14 +496,14 @@ const sections = [
         <div className="overflow-hidden rounded-2xl border border-white/10 my-4">
           <table className="w-full text-left text-sm">
             <thead>
-              <tr className="bg-white/[0.06] text-white/70">
+              <tr className="bg-white/[0.06] text-white">
                 <th className="px-4 py-3 font-semibold whitespace-nowrap">Regulation</th>
                 <th className="px-4 py-3 font-semibold">Requirement</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-white/10 text-white align-top">
               <tr>
-                <td className="px-4 py-3 font-mono text-yellow-300 whitespace-nowrap">714.1</td>
+                <td className="px-4 py-3 font-mono text-elec-yellow whitespace-nowrap">714.1</td>
                 <td className="px-4 py-3">
                   Scope — applies to outdoor lighting comprising luminaires, a wiring system and
                   accessories, including gardens, car parks, driveways and places open to the
@@ -512,14 +512,14 @@ const sections = [
                 </td>
               </tr>
               <tr>
-                <td className="px-4 py-3 font-mono text-yellow-300 whitespace-nowrap">714.410.3.6</td>
+                <td className="px-4 py-3 font-mono text-elec-yellow whitespace-nowrap">714.410.3.6</td>
                 <td className="px-4 py-3">
                   The protective measures of non-conducting location (Regulation 418.1) and
                   earth-free local equipotential bonding (Regulation 418.2) shall not be used.
                 </td>
               </tr>
               <tr>
-                <td className="px-4 py-3 font-mono text-yellow-300 whitespace-nowrap">714.411.201</td>
+                <td className="px-4 py-3 font-mono text-elec-yellow whitespace-nowrap">714.411.201</td>
                 <td className="px-4 py-3">
                   Where automatic disconnection of supply is the protective measure, all live parts
                   must have basic protection by insulation, barrier or enclosure. A door in street
@@ -527,7 +527,7 @@ const sections = [
                 </td>
               </tr>
               <tr>
-                <td className="px-4 py-3 font-mono text-yellow-300 whitespace-nowrap">714.411.2.201</td>
+                <td className="px-4 py-3 font-mono text-elec-yellow whitespace-nowrap">714.411.2.201</td>
                 <td className="px-4 py-3">
                   For a luminaire less than 2.80m above ground level, access to the light source
                   shall only be possible after removing a barrier or enclosure requiring the use of
@@ -535,7 +535,7 @@ const sections = [
                 </td>
               </tr>
               <tr>
-                <td className="px-4 py-3 font-mono text-yellow-300 whitespace-nowrap">714.411.3.4</td>
+                <td className="px-4 py-3 font-mono text-elec-yellow whitespace-nowrap">714.411.3.4</td>
                 <td className="px-4 py-3">
                   Except for lighting supplied from a SELV source, outdoor lighting accessible to
                   the public must have additional protection by an RCD with the rated residual
@@ -543,7 +543,7 @@ const sections = [
                 </td>
               </tr>
               <tr>
-                <td className="px-4 py-3 font-mono text-yellow-300 whitespace-nowrap">714.411.202</td>
+                <td className="px-4 py-3 font-mono text-elec-yellow whitespace-nowrap">714.411.202</td>
                 <td className="px-4 py-3">
                   A maximum disconnection time of 5 seconds applies to circuits feeding fixed
                   equipment used in highway power supplies (for compliance with 411.3.2.3 in a TN
@@ -579,7 +579,7 @@ const sections = [
         <div className="overflow-hidden rounded-2xl border border-white/10 my-4">
           <table className="w-full text-left text-sm">
             <thead>
-              <tr className="bg-white/[0.06] text-white/70">
+              <tr className="bg-white/[0.06] text-white">
                 <th className="px-4 py-3 font-semibold">Location</th>
                 <th className="px-4 py-3 font-semibold text-right whitespace-nowrap">Min. IP</th>
               </tr>
@@ -595,7 +595,7 @@ const sections = [
               </tr>
               <tr>
                 <td className="px-4 py-3">In-ground uplights, driveway and flood-prone spots</td>
-                <td className="px-4 py-3 text-right font-mono text-yellow-300">IP67</td>
+                <td className="px-4 py-3 text-right font-mono text-elec-yellow">IP67</td>
               </tr>
               <tr>
                 <td className="px-4 py-3">Pond, fountain and permanently submerged fittings</td>
@@ -661,7 +661,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -706,7 +706,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote garden lighting and outdoor electrical work"
-          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification."
           icon={TreePine}
         />
       </>
@@ -732,7 +732,7 @@ export default function GardenLightingCostPage() {
       heroTitle={
         <>
           Garden Lighting Installation Cost:{' '}
-          <span className="text-yellow-400">UK Pricing Guide 2026</span>
+          <span className="text-elec-yellow">UK Pricing Guide 2026</span>
         </>
       }
       heroSubtitle="From subtle pathway bollards to dramatic tree uplighting, garden lighting transforms outdoor spaces. This guide breaks down every cost — LED fittings, SWA cable, labour, trenching, controls, and certification — so you know exactly what to expect."
@@ -744,7 +744,7 @@ export default function GardenLightingCostPage() {
       faqHeading="Frequently Asked Questions About Garden Lighting Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Garden Lighting Projects with Confidence"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, itemised quoting, and on-site EIC certification. Win more outdoor lighting work with professional quotes. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, itemised quoting, and on-site EIC certification. Win more outdoor lighting work with professional quotes. 7-day free trial, cancel anytime."
     />
   );
 }

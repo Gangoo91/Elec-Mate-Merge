@@ -181,7 +181,7 @@ const sections = [
           </h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Simple installation (semi or detached, garage or short driveway)</strong> —
                 £800 to £1,000. Charger mounted close to the consumer unit, cable run of 3 to 8
@@ -190,7 +190,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard installation (terrace, medium run, earth rod)</strong> — £900 to
                 £1,100. Cable run of 8 to 15 metres, PME earth rod required, possible MCB addition.
@@ -199,7 +199,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Complex installation (steep terrace, long run, board upgrade)</strong> —
                 £1,100 to £1,400. Cable run over 15 metres on steep slopes or through the property,
@@ -208,7 +208,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>22kW three-phase charger</strong> — £1,200 to £2,000 installed. Requires an
                 existing three-phase supply and G99 approval from Northern Powergrid. Typical for
@@ -237,7 +237,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV chargepoint grant (OZEV)</strong> — up to £350 for flat owners and
                 tenants who own or lease an eligible plug-in vehicle. Covers 75% of installation
@@ -246,7 +246,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Workplace Charging Scheme</strong> — Sheffield businesses can claim up to
                 £350 per socket (maximum 40 sockets) for workplace EV charging points. Administered
@@ -254,7 +254,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smart Export Guarantee compatibility</strong> — Sheffield residents with
                 solar PV can maximise savings by pairing an EV smart charger with solar export
@@ -282,7 +282,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated final circuit (Regulation 722.533.101)</strong> — a 32A dedicated
                 circuit from the consumer unit. If no spare way exists, a consumer unit upgrade or
@@ -290,7 +290,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection (Regulation 722.531.3.101)</strong> — appropriate RCD
                 protection is required. Most smart chargers include integrated DC fault protection,
@@ -298,7 +298,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smart charger compliance</strong> — the Electric Vehicles (Smart Charge
                 Points) Regulations 2021 require all new home EV chargers to support smart
@@ -306,7 +306,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable sizing and voltage drop</strong> — on longer Sheffield cable runs, use{' '}
                 <SEOInternalLink href="/tools/cable-sizing-calculator">
@@ -374,7 +374,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98 notification (7kW single-phase)</strong> — submit online via Northern
                 Powergrid's portal. This is a notification, not an application — the installer
@@ -383,7 +383,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G99 application (22kW three-phase)</strong> — prior approval required before
                 installation. Allow 4 to 10 weeks for Northern Powergrid to assess network capacity.
@@ -391,7 +391,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Installer responsibility</strong> — the electrician submits the DNO
                 notification, not the homeowner. Confirm DNO notification is included in the quoted
@@ -416,7 +416,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sloped driveways</strong> — steep driveways require careful charger
                 positioning to ensure cable connections remain protected from water ingress and
@@ -425,7 +425,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hillside terrace back entries</strong> — many Sheffield terraces on
                 hillsides have parking accessed through a back entry below the property level. Cable
@@ -434,7 +434,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Underground routes on steep slopes</strong> — where an overhead cable route
                 is not feasible, underground cable routing may be required, especially on steep
@@ -466,7 +466,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Pricing Sheffield EV Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -502,7 +502,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify Sheffield EV charger installations"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification."
           icon={Car}
         />
       </>
@@ -528,7 +528,7 @@ export default function EVChargerInstallationSheffieldPage() {
       heroTitle={
         <>
           EV Charger Installation Sheffield:{' '}
-          <span className="text-yellow-400">Costs, Grants, and Compliance 2026</span>
+          <span className="text-elec-yellow">Costs, Grants, and Compliance 2026</span>
         </>
       }
       heroSubtitle="Home EV charger installation in Sheffield costs £800 to £1,200 for a 7kW wallbox. Covers OZEV grants up to £350, Northern Powergrid G98 notification, PME earthing requirements, and Sheffield's unique terrain considerations."
@@ -539,7 +539,7 @@ export default function EVChargerInstallationSheffieldPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in Sheffield"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify EV Charger Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

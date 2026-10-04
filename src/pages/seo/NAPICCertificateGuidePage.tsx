@@ -321,7 +321,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Certificate review.</strong> The assessor selects a sample of your recent
                 certificates (typically 3 to 5) and reviews them for accuracy, completeness, and
@@ -330,7 +330,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test instrument check.</strong> The assessor verifies that your test
                 instruments have valid calibration certificates (typically within the last 12
@@ -339,7 +339,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Qualification and insurance verification.</strong> Your 18th Edition,
                 inspection and testing, and any other relevant qualifications are checked. Your
@@ -347,7 +347,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Site inspection (optional).</strong> The assessor may arrange to visit a
                 recent job site to inspect the quality of your workmanship. This is more common for
@@ -377,7 +377,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Qualification certificates.</strong> 18th Edition (C&G 2382), Inspection and
                 Testing (C&G 2391 or equivalent), NVQ Level 3 or equivalent, and any specialist
@@ -385,7 +385,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Calibration certificates.</strong> All test instruments must have valid
                 calibration certificates. Most calibration houses recommend annual calibration. Keep
@@ -393,7 +393,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Public liability insurance.</strong> Minimum £2 million cover. The policy
                 must be current at all times during your membership. NAPIT will ask for a copy of
@@ -401,7 +401,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Certificate archive.</strong> Keep copies of all certificates you have
                 issued. Digital storage makes this straightforward — Elec-Mate stores all
@@ -431,7 +431,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part P notification.</strong> Both schemes provide the same Part P
                 notification service and issue Building Regulations Compliance Certificates. There
@@ -439,14 +439,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cost.</strong> NAPIT is generally slightly cheaper than NICEIC, particularly
                 for domestic-only electricians. The difference is typically £50 to £150 per year.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Brand recognition.</strong> NICEIC has stronger brand recognition with the
                 general public. Some electricians prefer NICEIC for the marketing advantage of a
@@ -455,7 +455,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Certificate standards.</strong> Both schemes require the same BS 7671 model
                 form compliance. The assessment criteria are equivalent. A certificate that passes
@@ -490,7 +490,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Camera className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI Board Scanner</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -566,7 +566,7 @@ export default function NAPICCertificateGuidePage() {
       heroTitle={
         <>
           NAPIT Certificate Guide:{' '}
-          <span className="text-yellow-400">Registration, Forms, and Compliance</span>
+          <span className="text-elec-yellow">Registration, Forms, and Compliance</span>
         </>
       }
       heroSubtitle="NAPIT is one of the UK's leading competent person schemes for electrical installers. This guide covers registration, costs, certificate requirements, assessment visits, and how to use digital tools to meet NAPIT's quality standards."
@@ -577,7 +577,7 @@ export default function NAPICCertificateGuidePage() {
       faqHeading="Frequently Asked Questions About NAPIT Certification"
       relatedPages={relatedPages}
       ctaHeading="Create NAPIT-Ready Certificates"
-      ctaSubheading="Join 1,600+ UK electricians producing scheme-compliant certificates with AI board scanning, voice test entry, and automatic validation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians producing scheme-compliant certificates with AI board scanning, voice test entry, and automatic validation. 7-day free trial, cancel anytime."
     />
   );
 }

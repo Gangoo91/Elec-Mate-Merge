@@ -219,7 +219,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Degraded seals and gaskets</strong> — rubber and silicone seals harden and
                 crack with UV exposure and temperature cycling. After 3 to 5 years outdoors, most
@@ -228,7 +228,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cracked lenses</strong> — polycarbonate and glass lenses can crack from
                 impact, thermal stress, or UV degradation. Even a hairline crack allows water to
@@ -236,7 +236,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable gland failure</strong> — the cable gland at the entry point of the
                 fitting is critical. If it is loose, the wrong size for the cable, or has perished,
@@ -245,7 +245,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Condensation build-up</strong> — even without a direct water leak,
                 temperature changes cause condensation inside outdoor fittings. Sealed fittings trap
@@ -459,7 +459,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Thermal stress</strong> — LED drivers contain electrolytic capacitors that
                 degrade with heat. Outdoor lights experience wide temperature swings (freezing
@@ -468,7 +468,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Moisture damage</strong> — even small amounts of moisture reaching the
                 driver PCB can cause component failure or corrosion of solder joints. This is the
@@ -476,7 +476,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Voltage spikes</strong> — mains voltage transients (from switching,
                 lightning, or supply fluctuations) can damage the input stage of the driver. Quality
@@ -484,7 +484,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Thermal shutdown</strong> — some drivers have thermal protection that shuts
                 the light off when the driver overheats, then resets when it cools. This causes
@@ -514,7 +514,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Timer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Timer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Digital timer lost settings</strong> — after a power cut, many digital
                 timers lose their programmed on/off times and revert to factory defaults (which may
@@ -522,7 +522,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Timer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Timer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mechanical timer jammed</strong> — older mechanical timers (with pins or
                 segments) can jam due to dirt, corrosion, or a worn motor. The timer stops advancing
@@ -530,7 +530,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dusk-to-dawn module failure</strong> — these are essentially photocells in a
                 separate module, usually mounted on the consumer unit rail or near the outdoor
@@ -539,7 +539,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Timer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Timer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Astronomical timer drift</strong> — some modern timers calculate sunrise and
                 sunset times based on location. If the location is set incorrectly, or the timer's
@@ -632,7 +632,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Routine</strong> — you want to replace an outdoor light fitting, add new
                 outdoor lighting, or have the outdoor circuit checked as part of a general
@@ -665,7 +665,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Zap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">1. Isolate the Outdoor Circuit</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -680,7 +680,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Eye className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">2. Inspect All IP-Rated Enclosures</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -695,7 +695,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Cable className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">3. SWA Cable Testing</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -710,7 +710,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">4. Repair and Certify</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -754,7 +754,7 @@ export default function OutdoorLightNotWorkingPage() {
       badgeIcon={Lightbulb}
       heroTitle={
         <>
-          Outdoor Light Not Working: <span className="text-yellow-400">Troubleshooting Guide</span>
+          Outdoor Light Not Working: <span className="text-elec-yellow">Troubleshooting Guide</span>
         </>
       }
       heroSubtitle="Your outdoor light has stopped working. This guide covers every common cause — from moisture ingress and sensor faults to cable damage and LED driver failure — tells you what to check yourself, and explains when to call an electrician."
@@ -765,7 +765,7 @@ export default function OutdoorLightNotWorkingPage() {
       faqHeading="Frequently Asked Questions About Outdoor Light Problems"
       relatedPages={relatedPages}
       ctaHeading="Certify Outdoor Electrical Work on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for Minor Works Certificates, EICR reports, and AI-powered fault diagnosis. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for Minor Works Certificates, EICR reports, and AI-powered fault diagnosis. 7-day free trial, cancel anytime."
     />
   );
 }

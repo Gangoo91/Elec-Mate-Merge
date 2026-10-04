@@ -194,7 +194,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Installing a new circuit</strong> — any new circuit from the consumer unit
                 or distribution board, including ring finals, radials, lighting circuits, dedicated
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Replacing a consumer unit</strong> — including like-for-like replacements
                 and upgrades. A full{' '}
@@ -217,7 +217,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Work in special locations</strong> — any electrical work (additions or
                 alterations) in a bathroom, shower room, or room containing a swimming pool or
@@ -312,28 +312,28 @@ const sections = [
           <h4 className="font-bold text-white mb-3">Approved Schemes for Electrical Work</h4>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC</strong> — the largest scheme, with several tiers: Approved
                 Contractor, Domestic Installer, and others. Annual fees and assessment.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NAPIT</strong> — offers domestic and commercial registration tiers. Known
                 for competitive fees and accessible assessment process.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ELECSA</strong> — part of the ECA group. Offers domestic installer
                 registration with a straightforward application process.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BRE Certification</strong> — the Building Research Establishment scheme,
                 less widely used but equally valid.
@@ -559,7 +559,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Correct Certificate for Every Job</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -612,7 +612,7 @@ export default function BuildingRegsElectricalPage() {
       heroTitle={
         <>
           Building Regulations for Electrical Work:{' '}
-          <span className="text-yellow-400">Approved Document P Explained</span>
+          <span className="text-elec-yellow">Approved Document P Explained</span>
         </>
       }
       heroSubtitle="Everything UK electricians need to know about Part P of the Building Regulations. Which work is notifiable, competent person schemes, building control, certification requirements, and what happens if you get it wrong."
@@ -623,7 +623,7 @@ export default function BuildingRegsElectricalPage() {
       faqHeading="Frequently Asked Questions About Building Regulations Electrical"
       relatedPages={relatedPages}
       ctaHeading="Generate Part P Compliant Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EIC, Minor Works, and EICR certificates. Correct BS 7671 format, instant PDF delivery, and scheme provider ready. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for EIC, Minor Works, and EICR certificates. Correct BS 7671 format, instant PDF delivery, and scheme provider ready. 7-day free trial, cancel anytime."
     />
   );
 }

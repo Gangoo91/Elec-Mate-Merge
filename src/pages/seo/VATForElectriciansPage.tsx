@@ -152,29 +152,29 @@ const sections = [
             <tbody className="divide-y divide-white/10">
               <tr>
                 <td className="px-4 py-3 font-medium">Compulsory registration</td>
-                <td className="px-4 py-3 text-yellow-400 font-bold whitespace-nowrap">£90,000</td>
-                <td className="px-4 py-3 text-white/80 hidden sm:table-cell">
+                <td className="px-4 py-3 text-elec-yellow font-bold whitespace-nowrap">£90,000</td>
+                <td className="px-4 py-3 text-white hidden sm:table-cell">
                   Rolling 12-month taxable turnover — register within 30 days of going over
                 </td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-medium">Deregistration</td>
                 <td className="px-4 py-3 text-blue-300 font-bold whitespace-nowrap">£88,000</td>
-                <td className="px-4 py-3 text-white/80 hidden sm:table-cell">
+                <td className="px-4 py-3 text-white hidden sm:table-cell">
                   You can apply to cancel registration if turnover falls below this
                 </td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-medium">Flat Rate Scheme — join limit</td>
                 <td className="px-4 py-3 text-blue-300 font-bold whitespace-nowrap">£150,000</td>
-                <td className="px-4 py-3 text-white/80 hidden sm:table-cell">
+                <td className="px-4 py-3 text-white hidden sm:table-cell">
                   Excluding VAT, in the next 12 months
                 </td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-medium">Cash Accounting Scheme — join limit</td>
                 <td className="px-4 py-3 text-blue-300 font-bold whitespace-nowrap">£1.35m</td>
-                <td className="px-4 py-3 text-white/80 hidden sm:table-cell">
+                <td className="px-4 py-3 text-white hidden sm:table-cell">
                   Estimated taxable turnover in the next 12 months
                 </td>
               </tr>
@@ -290,36 +290,36 @@ const sections = [
             <tbody className="divide-y divide-white/10">
               <tr>
                 <td className="px-4 py-3 font-medium">Standard (accruals)</td>
-                <td className="px-4 py-3 text-white/80 whitespace-nowrap">No limit</td>
-                <td className="px-4 py-3 text-white/80 hidden sm:table-cell">
+                <td className="px-4 py-3 text-white whitespace-nowrap">No limit</td>
+                <td className="px-4 py-3 text-white hidden sm:table-cell">
                   Material-heavy work; reclaiming all input VAT on every purchase
                 </td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-medium">Flat Rate Scheme</td>
-                <td className="px-4 py-3 text-white/80 whitespace-nowrap">Under £150,000</td>
-                <td className="px-4 py-3 text-white/80 hidden sm:table-cell">
+                <td className="px-4 py-3 text-white whitespace-nowrap">Under £150,000</td>
+                <td className="px-4 py-3 text-white hidden sm:table-cell">
                   Lower-cost / labour-led work; simpler admin, pay a fixed % of gross turnover
                 </td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-medium">Cash Accounting</td>
-                <td className="px-4 py-3 text-white/80 whitespace-nowrap">Up to £1.35m</td>
-                <td className="px-4 py-3 text-white/80 hidden sm:table-cell">
+                <td className="px-4 py-3 text-white whitespace-nowrap">Up to £1.35m</td>
+                <td className="px-4 py-3 text-white hidden sm:table-cell">
                   Slow-paying commercial clients; pay VAT only when you are paid
                 </td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-medium">Annual Accounting</td>
-                <td className="px-4 py-3 text-white/80 whitespace-nowrap">Up to £1.35m</td>
-                <td className="px-4 py-3 text-white/80 hidden sm:table-cell">
+                <td className="px-4 py-3 text-white whitespace-nowrap">Up to £1.35m</td>
+                <td className="px-4 py-3 text-white hidden sm:table-cell">
                   Steady turnover; one return a year with interim instalments
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
-        <p className="text-white/80 text-sm">
+        <p className="text-white text-sm">
           Schemes can sometimes be combined (for example Cash Accounting with Annual Accounting), but
           the Flat Rate Scheme cannot be used together with the Domestic Reverse Charge. See the{' '}
           <SEOInternalLink href="/cis-guide-electrician">CIS guide</SEOInternalLink> for how the
@@ -352,22 +352,22 @@ const sections = [
             <tbody className="divide-y divide-white/10">
               <tr>
                 <td className="px-4 py-3 font-medium">General building or construction services</td>
-                <td className="px-4 py-3 text-yellow-400 font-bold whitespace-nowrap">9.5%</td>
-                <td className="px-4 py-3 text-white/80 hidden sm:table-cell">
+                <td className="px-4 py-3 text-elec-yellow font-bold whitespace-nowrap">9.5%</td>
+                <td className="px-4 py-3 text-white hidden sm:table-cell">
                   Materials you supply are 10% or more of your turnover (most electricians)
                 </td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-medium">Labour-only building or construction services</td>
                 <td className="px-4 py-3 text-blue-300 font-bold whitespace-nowrap">14.5%</td>
-                <td className="px-4 py-3 text-white/80 hidden sm:table-cell">
+                <td className="px-4 py-3 text-white hidden sm:table-cell">
                   Materials you supply are less than 10% of your turnover
                 </td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-medium">Limited cost trader</td>
                 <td className="px-4 py-3 text-red-400 font-bold whitespace-nowrap">16.5%</td>
-                <td className="px-4 py-3 text-white/80 hidden sm:table-cell">
+                <td className="px-4 py-3 text-white hidden sm:table-cell">
                   Spend on goods is under 2% of turnover (or under £1,000 a year) — overrides the above
                 </td>
               </tr>
@@ -377,7 +377,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>How it works</strong> — you still charge your customer 20% VAT on your
                 invoice. But instead of calculating output VAT minus input VAT, you simply pay your
@@ -387,7 +387,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Example</strong> — on a £1,000 net invoice, you charge £1,200 (including 20%
                 VAT). Under FRS, you pay 9.5% of £1,200 = £114 to HMRC, keeping £86 more than the
@@ -395,7 +395,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>First year discount</strong> — in your first year of VAT registration, HMRC
                 applies a 1% discount to your flat rate. An electrician on the 9.5% rate pays 8.5% in
@@ -403,7 +403,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Limited cost trader rules</strong> — if your spend on relevant goods (not
                 services) is less than 2% of your gross turnover, or less than £1,000 a year, you
@@ -436,7 +436,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cash flow benefit</strong> — you only pay VAT to HMRC when your customer
                 pays you, not when you raise the invoice. For electricians with slow-paying
@@ -444,7 +444,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Automatic bad debt relief</strong> — if a customer does not pay, you never
                 pay the VAT to HMRC in the first place. Under standard VAT accounting, you must
@@ -452,7 +452,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Input VAT</strong> — under cash accounting, you also only reclaim input VAT
                 when you pay your suppliers. This partially offsets the output VAT benefit.
@@ -485,36 +485,36 @@ const sections = [
             <tbody className="divide-y divide-white/10">
               <tr>
                 <td className="px-4 py-3 font-medium">Most repair, rewire and maintenance work</td>
-                <td className="px-4 py-3 text-yellow-400 font-bold whitespace-nowrap">20%</td>
-                <td className="px-4 py-3 text-white/80 hidden sm:table-cell">
+                <td className="px-4 py-3 text-elec-yellow font-bold whitespace-nowrap">20%</td>
+                <td className="px-4 py-3 text-white hidden sm:table-cell">
                   Consumer unit change, fault finding, EICR remedials, commercial fit-out
                 </td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-medium">New build residential construction</td>
                 <td className="px-4 py-3 text-green-400 font-bold whitespace-nowrap">0%</td>
-                <td className="px-4 py-3 text-white/80 hidden sm:table-cell">
+                <td className="px-4 py-3 text-white hidden sm:table-cell">
                   First and second fix on a new dwelling for the developer
                 </td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-medium">Qualifying conversions / renovations</td>
                 <td className="px-4 py-3 text-blue-300 font-bold whitespace-nowrap">5%</td>
-                <td className="px-4 py-3 text-white/80 hidden sm:table-cell">
+                <td className="px-4 py-3 text-white hidden sm:table-cell">
                   Non-residential to residential conversion; some empty-home renovations
                 </td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-medium">Qualifying energy-saving materials</td>
                 <td className="px-4 py-3 text-green-400 font-bold whitespace-nowrap">0%</td>
-                <td className="px-4 py-3 text-white/80 hidden sm:table-cell">
+                <td className="px-4 py-3 text-white hidden sm:table-cell">
                   Certain installs in residential property (currently 0% in GB to 31 Mar 2027)
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
-        <p className="text-white/80 text-sm">
+        <p className="text-white text-sm">
           Zero-rating and the reduced rate only apply in specific, evidenced circumstances. Get the
           conditions wrong and HMRC can recover the under-charged VAT from you, so confirm
           eligibility before quoting any job at less than 20%.
@@ -522,7 +522,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Receipt className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Receipt className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Labour — standard rated at 20%</strong> — charges for your time and skill
                 are standard-rated in most circumstances. You charge 20% VAT on your labour element.
@@ -531,7 +531,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Receipt className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Receipt className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Materials — standard rated at 20%</strong> — materials sold as part of an
                 electrical installation are generally standard-rated. Materials themselves (consumer
@@ -540,7 +540,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Receipt className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Receipt className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New build residential — zero-rated</strong> — electrical installation work
                 carried out as part of the construction of a new residential dwelling is zero-rated.
@@ -608,7 +608,7 @@ const sections = [
             <h4 className="font-bold text-white mb-3 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5 text-red-400 shrink-0" /> Reverse charge applies
             </h4>
-            <ul className="space-y-2 text-sm text-white/90 list-disc pl-5">
+            <ul className="space-y-2 text-sm text-white list-disc pl-5">
               <li>Both you and your customer are VAT-registered</li>
               <li>The work falls within CIS</li>
               <li>Your customer is not an end user or intermediary</li>
@@ -619,7 +619,7 @@ const sections = [
             <h4 className="font-bold text-white mb-3 flex items-center gap-2">
               <ShieldCheck className="w-5 h-5 text-green-400 shrink-0" /> Charge VAT as normal
             </h4>
-            <ul className="space-y-2 text-sm text-white/90 list-disc pl-5">
+            <ul className="space-y-2 text-sm text-white list-disc pl-5">
               <li>Customer is an end user (uses the building themselves)</li>
               <li>Customer is not VAT-registered or not in CIS</li>
               <li>You are working direct for a domestic householder</li>
@@ -652,7 +652,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Quarterly deadline — one month and seven days</strong> — for most
                 electricians, VAT returns and payment are due one month and seven days after the end
@@ -660,7 +660,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MTD-compatible software required</strong> — you must use software such as
                 QuickBooks, Xero, FreeAgent, or Sage to keep your VAT records and submit returns.
@@ -669,7 +669,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Monthly returns option</strong> — if you regularly have more input VAT than
                 output VAT (common for electricians working under DRC), you can opt for monthly
@@ -696,7 +696,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Receipt className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Receipt className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">VAT-Compliant Invoices on Your Phone</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -729,7 +729,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional VAT invoicing for electricians — Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for professional invoicing. VAT-compliant invoices with correct labour/materials splits…"
+          description="Join 2,100+ UK electricians using Elec-Mate for professional invoicing. VAT-compliant invoices with correct labour/materials splits…"
           icon={Receipt}
         />
       </>
@@ -755,7 +755,7 @@ export default function VATForElectriciansPage() {
       heroTitle={
         <>
           VAT for Electricians UK:{' '}
-          <span className="text-yellow-400">Registration, Schemes & Reverse Charge</span>
+          <span className="text-elec-yellow">Registration, Schemes & Reverse Charge</span>
         </>
       }
       heroSubtitle="Everything UK electricians need to know about VAT — when mandatory registration kicks in at £90,000, the benefits of voluntary registration, the 9.5% / 14.5% flat rate scheme, the cash accounting scheme, VAT on materials vs labour, and the domestic reverse charge for CIS subcontractors."
@@ -773,7 +773,7 @@ export default function VATForElectriciansPage() {
       faqHeading="Frequently Asked Questions About VAT for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Professional VAT Invoicing on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for VAT-compliant invoicing. Correctly separated labour and materials, sent as professional PDFs from your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for VAT-compliant invoicing. Correctly separated labour and materials, sent as professional PDFs from your phone. 7-day free trial, cancel anytime."
     />
   );
 }

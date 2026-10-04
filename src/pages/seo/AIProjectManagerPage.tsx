@@ -420,7 +420,7 @@ export default function AIProjectManagerPage() {
       heroTitle={
         <>
           AI Project Manager:{' '}
-          <span className="text-yellow-400">Plan, Schedule, and Deliver On Time</span>
+          <span className="text-elec-yellow">Plan, Schedule, and Deliver On Time</span>
         </>
       }
       heroSubtitle="Describe any electrical project in plain English and get a complete project plan with task breakdowns, resource allocation, material lists with lead times, and progress tracking — all built specifically for UK electrical contractors."
@@ -443,7 +443,7 @@ export default function AIProjectManagerPage() {
       faqHeading="Frequently Asked Questions About AI Project Management"
       relatedPages={relatedPages}
       ctaHeading="Deliver Every Project On Time"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's AI Project Manager. Smart scheduling, resource planning, and progress tracking. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate's AI Project Manager. Smart scheduling, resource planning, and progress tracking. 7-day free trial, cancel anytime."
       toolPath="/tools/ai-project-manager"
     />
   );

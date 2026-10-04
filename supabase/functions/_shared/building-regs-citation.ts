@@ -56,3 +56,34 @@ export function buildingRegsCitation(
   if (/^[A-Z]{1,2}\d$/.test(num)) return `${book}, requirement ${num}`;
   return `${book} para ${num}`;
 }
+
+/*
+ * Jurisdiction. Asked "is a like-for-like board change notifiable in England?",
+ * Elec-AI answered NO — it had been handed Approved Document P (WALES) para
+ * 0.7, the older text whose non-notifiable list covers replacement work, and
+ * applied it to England. England is the default (nearly every user); Wales
+ * material is used only when the question is about Wales, and then the
+ * England-only documents step aside.
+ */
+export type BuildingRegsJurisdiction = 'england' | 'wales';
+
+export function buildingRegsJurisdiction(query: string | undefined | null): BuildingRegsJurisdiction {
+  return /\b(wales|welsh|cymru)\b/i.test(query ?? '') ? 'wales' : 'england';
+}
+
+const PRS_ENGLAND = /Private Rented Sector \(England\)/;
+
+/** True when this Building Regs unit should NOT be shown for the jurisdiction. */
+export function isOutOfJurisdiction(
+  j: BuildingRegsJurisdiction,
+  docType: string | undefined | null,
+  editionCode: string | undefined | null,
+  regNumber: string | undefined | null
+): boolean {
+  if (!isBuildingRegsDocType(docType)) return false;
+  const code = editionCode ?? '';
+  const walesUnit = code.includes('(Wales)') || (docType === 'legislation' && !!regNumber?.endsWith('-W'));
+  if (j === 'england') return walesUnit;
+  // Wales: England-only Approved Documents and the England-only PRS Regs step aside.
+  return docType === 'approved_doc' ? code.includes('(England)') : PRS_ENGLAND.test(code);
+}

@@ -421,7 +421,7 @@ const InspectionTestingModule1Section2 = () => {
           plainEnglish="Where RCDs have been provided as part of automatic disconnection of supply or as additional protection, Reg 643.8 requires their effectiveness to be verified by test. The test is type-appropriate (AC, A, F, B as fitted), at the rated residual operating current and at five times rated where additional protection is claimed."
         >
           <p>
-            A4:2026 modified RCD testing requirements alongside the 643.3 redraft. Modern
+            A2:2022 modified RCD testing requirements alongside the 643.3 redraft. Modern
             multifunction testers handle the type-correct test sequence automatically when the RCD
             type is selected at the meter. The acceptance criterion remains the manufacturer’s
             specified trip time (typically &lt;&nbsp;300&nbsp;ms at I&Delta;n for general-use,

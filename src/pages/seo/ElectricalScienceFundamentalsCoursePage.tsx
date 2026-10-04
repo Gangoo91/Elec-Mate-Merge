@@ -542,7 +542,7 @@ export default function ElectricalScienceFundamentalsCoursePage() {
       badgeIcon={Atom}
       heroTitle={
         <>
-          Electrical Science Fundamentals: <span className="text-yellow-400">Theory Course</span>
+          Electrical Science Fundamentals: <span className="text-elec-yellow">Theory Course</span>
         </>
       }
       heroSubtitle="Master the electrical science theory that underpins everything an electrician does. Ohm's law, Kirchhoff's laws, magnetism, transformers, AC theory, power factor, impedance, and three-phase systems. 12 comprehensive modules with video content, interactive quizzes, and AI-powered study tools."
@@ -560,7 +560,7 @@ export default function ElectricalScienceFundamentalsCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Ready to master electrical science?"
-      ctaSubheading="Join 1,600+ UK electricians studying smarter with Elec-Mate. 12 structured modules covering every electrical science topic from Ohm's law to three-phase power. Video explanations, interactive quizzes, and an AI tutor for any theory question. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians studying smarter with Elec-Mate. 12 structured modules covering every electrical science topic from Ohm's law to three-phase power. Video explanations, interactive quizzes, and an AI tutor for any theory question. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/electrical-science-fundamentals"
     />

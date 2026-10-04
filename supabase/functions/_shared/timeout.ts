@@ -44,7 +44,7 @@ export const Timeouts = {
   /** Quick operations (5s) - health checks, cache reads */
   QUICK: 5000,
 
-  /** Standard API calls (30s) - OpenAI, Lovable AI */
+  /** Standard API calls (30s) - OpenAI, Gemini */
   STANDARD: 30000,
 
   /** Long-running operations (60s) - web scraping, embeddings */

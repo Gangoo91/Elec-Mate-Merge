@@ -194,7 +194,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Individual supply per berth</strong> — each berth must be supplied through
                 its own socket outlet unit with individual overcurrent protection and RCD
@@ -203,7 +203,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCBO protection</strong> — modern marina pedestal units typically
                 incorporate an RCBO (Residual Current Circuit Breaker with Overcurrent protection)
@@ -213,7 +213,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP rating</strong> — socket outlet units must have a minimum IP rating of
                 IP44. Units on exposed pontoons or tidal locations may require IP55 or higher. The
@@ -223,7 +223,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Corrosion resistance</strong> — pedestal enclosures must be made from
                 materials resistant to marine corrosion. GRP (glass-reinforced plastic) and
@@ -303,7 +303,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>How ELM works</strong> — a current transformer fitted around the live and
                 neutral conductors of each shore power circuit continuously measures the difference
@@ -314,7 +314,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Alarm vs. trip</strong> — the ELM system typically provides an alarm rather
                 than automatically disconnecting the supply. This allows marina staff to investigate
@@ -323,7 +323,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Central monitoring</strong> — in modern marinas, ELM signals are aggregated
                 to a central marina management system, allowing marina staff to identify which berth
@@ -332,7 +332,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing at inspection</strong> — ELM systems must be tested at every
                 periodic inspection. Testing involves injecting a known residual current into the
@@ -358,7 +358,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>16 A blue single-phase</strong> — the standard connector for leisure craft
                 and small boats. Provides a nominal 3.68 kW supply at 230 V. This is the same
@@ -367,7 +367,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>32 A blue single-phase</strong> — used for larger motorboats and yachts with
                 higher power requirements (heating, air conditioning, refrigeration). Provides up to
@@ -375,7 +375,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Locking mechanism</strong> — marina-specific IEC 60309 socket outlets
                 typically incorporate a locking collar that prevents the plug from being
@@ -495,7 +495,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete EICRs On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -533,7 +533,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Marina inspection work made simple with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion, test result recording, and instant PDF export."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion, test result recording, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -559,7 +559,7 @@ export default function MarinaMooringElectricalPage() {
       heroTitle={
         <>
           Marina & Mooring Electrical Installation UK:{' '}
-          <span className="text-yellow-400">BS 7671 Section 709</span>
+          <span className="text-elec-yellow">BS 7671 Section 709</span>
         </>
       }
       heroSubtitle="Everything electricians and marina operators need to know about shore power electrical installations — BS 7671 Section 709 requirements, galvanic corrosion protection, earth leakage monitoring, IEC 60309 connectors, 30 mA RCD protection, and annual inspection obligations."
@@ -570,7 +570,7 @@ export default function MarinaMooringElectricalPage() {
       faqHeading="Frequently Asked Questions About Marina Electrical Installations"
       relatedPages={relatedPages}
       ctaHeading="Complete Marina EICRs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site inspection reporting, RCD and ELM test entry, and instant PDF export. Perfect for annual marina inspections. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site inspection reporting, RCD and ELM test entry, and instant PDF export. Perfect for annual marina inspections. 7-day free trial."
     />
   );
 }

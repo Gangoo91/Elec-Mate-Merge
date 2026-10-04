@@ -199,7 +199,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>0% — Gross payment status</strong> — the contractor pays the full invoice
                 amount with no deduction. Only available to electricians who have been granted gross
@@ -207,7 +207,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>20% — Standard rate (registered subcontractor)</strong> — if you are
                 registered with HMRC for CIS and the contractor can verify your UTR, they deduct 20%
@@ -216,7 +216,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>30% — Higher rate (unregistered subcontractor)</strong> — if HMRC cannot
                 verify you (because you are not registered or provided incorrect details), the
@@ -247,7 +247,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Get your UTR first</strong> — you cannot register for CIS without a Unique
                 Taxpayer Reference. If you do not have one, register for self-assessment first. See
@@ -259,7 +259,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Register online or by phone</strong> — log in to your HMRC online account
                 and register for CIS, or call the CIS Helpline on 0300 200 3210. Registration adds
@@ -267,7 +267,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Provide your UTR to contractors</strong> — before your first payment, give
                 your UTR and National Insurance number to the contractor. They must verify you with
@@ -276,7 +276,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Request monthly deduction statements</strong> — after each payment, your
                 contractor must provide a CIS deduction statement showing the gross amount paid, the
@@ -352,7 +352,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Verify before paying</strong> — before making the first payment to any
                 subcontractor, you must verify them with HMRC using their UTR and NI number. HMRC's
@@ -361,7 +361,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Monthly return deadline — 19th of each month</strong> — you must submit a
                 CIS monthly return to HMRC by the 19th of the month following the payment month. The
@@ -370,7 +370,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Nil returns</strong> — if you had no subcontractor payments in a month, you
                 must still file a nil return by the 19th. Failure to file (even a nil return)
@@ -378,7 +378,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pay the deductions over</strong> — the CIS deductions you have made must be
                 paid to HMRC by the 22nd of the month (online) or the 19th (by post). These
@@ -403,7 +403,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Declare gross income</strong> — on your self-assessment return, declare the
                 gross amount of CIS income (before deductions) as your trading income. Do not
@@ -411,7 +411,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Enter total CIS deductions</strong> — there is a specific box on the
                 self-employment pages of the self-assessment return for CIS deductions suffered.
@@ -419,7 +419,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>File early for faster refunds</strong> — if you are due a refund (common for
                 electricians with high expenses or lower income years), file your return as soon as
@@ -445,7 +445,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Subcontractor records</strong> — keep all monthly CIS deduction statements
                 from contractors, your invoices (showing gross amount, materials, and labour split),
@@ -453,7 +453,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Contractor records</strong> — if you are also a contractor, keep
                 subcontractor verification records, all monthly CIS returns submitted, evidence of
@@ -461,7 +461,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minimum three years</strong> — HMRC can open a compliance check into CIS
                 returns up to three years after filing. Keep all records for at least three years,
@@ -485,7 +485,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileText className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">CIS-Ready Invoices on Your Phone</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -518,7 +518,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional CIS invoicing with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for professional invoicing. Create CIS-compliant invoices with labour and materials clearly separated — on…"
+          description="Join 2,100+ UK electricians using Elec-Mate for professional invoicing. Create CIS-compliant invoices with labour and materials clearly separated — on…"
           icon={FileText}
         />
       </>
@@ -544,7 +544,7 @@ export default function CISGuideElectricianPage() {
       heroTitle={
         <>
           Construction Industry Scheme (CIS) Guide:{' '}
-          <span className="text-yellow-400">For UK Electricians</span>
+          <span className="text-elec-yellow">For UK Electricians</span>
         </>
       }
       heroSubtitle="Everything UK electricians need to know about CIS — how the scheme works, the 20% and 30% deduction rates, registering as a subcontractor, gross payment status, monthly contractor returns, and how to reclaim CIS deductions on your annual self-assessment return."
@@ -555,7 +555,7 @@ export default function CISGuideElectricianPage() {
       faqHeading="Frequently Asked Questions About CIS for Electricians"
       relatedPages={relatedPages}
       ctaHeading="CIS-Compliant Invoicing on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for professional invoicing with labour and materials clearly separated for CIS. Create invoices in seconds on site. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for professional invoicing with labour and materials clearly separated for CIS. Create invoices in seconds on site. 7-day free trial, cancel anytime."
     />
   );
 }

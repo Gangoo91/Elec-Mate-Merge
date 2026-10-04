@@ -232,7 +232,7 @@ const DomesticTestingGuide = () => {
       tips: [
         'Test both polarities',
         'Test ramp function if available',
-        'The 5×IΔn / 40 ms test and Appendix 3 Table 3A were deleted at A4:2026 — do not record one',
+        'The 5×IΔn / 40 ms test and Appendix 3 Table 3A were deleted at A2:2022 — do not record one',
         'Use test button regularly between instrument tests',
       ],
     },

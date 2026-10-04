@@ -198,11 +198,6 @@ serve(async (req) => {
       throw new Error('OPENAI_API_KEY not configured');
     }
 
-    const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
-    if (!LOVABLE_API_KEY) {
-      throw new Error('LOVABLE_API_KEY not configured');
-    }
-
     // Step 1: Generate embedding for inspection/testing knowledge (with retry)
     logger.debug('Generating query embedding');
     const embeddingStart = Date.now();

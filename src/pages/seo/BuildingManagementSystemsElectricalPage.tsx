@@ -222,7 +222,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BACnet MS/TP</strong> — the dominant open standard for HVAC and building
                 automation. Token-ring network over two-core shielded twisted pair (Belden 9841 or
@@ -231,7 +231,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Modbus RTU</strong> — widely used for power metering and industrial
                 equipment integration. Two-core shielded twisted pair (RS-485). Master-slave
@@ -240,7 +240,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>KNX</strong> — European standard (EN 50090 / IEC 14543) for building
                 automation wiring and devices. Two-core KNX twisted pair (YCYM 2×2×0.8 or similar).
@@ -250,7 +250,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>LONworks (LON)</strong> — a legacy protocol (ANSI/EIA-709.1) widely used in
                 existing BMS installations in the UK from the 1990s and 2000s. Still in service on
@@ -276,7 +276,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Metering hierarchy:</strong> TM47 defines a hierarchy — whole building,
                 major plant (chillers, boilers, AHUs), tenant supplies, lighting, small power — and
@@ -285,7 +285,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Meter accuracy:</strong> Revenue-grade meters (Class 1 or better per IEC
                 62053) are required at the building intake. Sub-metering can use Class 2 meters. The
@@ -293,7 +293,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Communication:</strong> TM47 recommends Modbus or MBus as the communication
                 protocol for meter data transmission to the BMS. Pulse output (S0) meters are the
@@ -301,7 +301,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CT sizing:</strong> The current transformer (CT) ratio must be selected to
                 match the circuit being metered. Oversized CTs reduce accuracy at low loads;
@@ -322,7 +322,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DALI lighting control</strong> — a DALI gateway bridges the DALI bus (IEC
                 62386) to the BMS (typically BACnet or Modbus). The BMS can monitor energy
@@ -332,7 +332,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical sub-metering</strong> — per CIBSE TM47, sub-meters on major
                 electrical loads (chillers, AHUs, lighting distribution boards, EV chargers) report
@@ -341,7 +341,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Generator and UPS monitoring</strong> — generator controllers and UPS
                 management systems typically provide Modbus or BACnet interfaces. The BMS monitors
@@ -349,7 +349,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Variable speed drives (VSDs)</strong> — VSDs on fan and pump motors provide
                 Modbus interfaces for speed control, energy monitoring, and fault reporting. BMS
@@ -379,7 +379,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ISO 16484-1:</strong> Project specification and implementation. Provides the
                 framework for writing BMS specifications and managing BMS projects, including
@@ -387,7 +387,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ISO 16484-3:</strong> Functions. Describes the standard functional modules
                 that a BMS should provide — setpoint management, scheduling, alarms, trending,
@@ -395,7 +395,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ISO 16484-5:</strong> Data communication protocol. The BACnet standard in
                 its international form. Maintained in alignment with ASHRAE Standard 135. Defines
@@ -404,7 +404,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ISO 16484-6:</strong> Data communication compliance testing. Defines how
                 BACnet devices are tested for conformance to the standard, which underpins the
@@ -431,7 +431,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1 — BMS installation electrician (£35–£45k):</strong> Work on BMS cable
                 installation projects. Learn to install DDC panels, sensor wiring, communications
@@ -440,7 +440,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2 — BMS commissioning engineer (£40–£55k):</strong> Learn to set up DDC
                 controllers, address BACnet and DALI devices, configure points lists, and perform
@@ -449,7 +449,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 3 — BMS engineer / applications engineer (£50–£65k):</strong> Develop
                 programming skills in BMS software environments (Trend IQ, Tridium Niagara, Siemens
@@ -458,7 +458,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 4 — Senior engineer / consultant (£60–£80k+):</strong> System design,
                 specification writing, project management. CIBSE membership and Chartered Engineer
@@ -496,7 +496,7 @@ export default function BuildingManagementSystemsElectricalPage() {
       heroTitle={
         <>
           Building Management Systems:{' '}
-          <span className="text-yellow-400">
+          <span className="text-elec-yellow">
             BACnet, DALI, and the BMS Career Path for Electricians
           </span>
         </>

@@ -151,31 +151,31 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>1-bed flat:</strong> £2,200–£3,500 (3–4 days)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>2-bed terraced house:</strong> £2,500–£4,000 (4–6 days)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>3-bed semi-detached:</strong> £3,800–£6,000 (5–7 days)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>4-bed detached:</strong> £5,500–£9,000 (7–10 days)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Large period property (5-bed+):</strong> £9,000–£13,000+ (10–15 days)
               </span>
@@ -212,7 +212,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Victorian back-to-backs and through-terraces (1860s–1900s):</strong> Highly
                 concentrated in Headingley, Hyde Park, Beeston, Holbeck, and Harehills.
@@ -222,7 +222,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Edwardian through-terraces (1900s–1910s):</strong> Found in Burley, Armley,
                 Bramley, and Chapel Allerton. Larger than back-to-backs, with rear gardens and more
@@ -230,7 +230,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1930s–1950s semis:</strong> Dominant across Roundhay, Moortown, Horsforth,
                 and Morley. Many still have original VIR wiring with no earth on lighting circuits.
@@ -239,7 +239,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1960s–1980s estates:</strong> Widespread across outer Leeds — Seacroft,
                 Gipton, Belle Isle, Middleton. Consumer units often have BS 3036 rewirable fuses.
@@ -369,35 +369,35 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New consumer unit</strong> — metal enclosure with RCBOs or dual-RCD
                 arrangement, SPD, and main switch.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>All circuit cables</strong> — twin and earth for ring finals, radials,
                 lighting, cooker, shower, and immersion heater circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Accessories</strong> — sockets, switches, ceiling roses, FCUs. Standard
                 white plastic included; upgrades extra.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing and bonding</strong> — main earth conductor and main bonding
                 conductors to gas, water, and oil pipework.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing and certification</strong> — initial verification of every circuit,
                 EIC, and Part P notification.
@@ -425,21 +425,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Verify NICEIC, NAPIT, or ELECSA registration</strong> — search by Leeds
                 postcode on the relevant register.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Get three comparable quotes</strong> — specify the same scope (property
                 size, number of circuits, consumer unit type) to compare like with like.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ask about Leeds housing stock experience</strong> — back-to-backs and
                 Victorian terraces require specific expertise. Ask for references from similar Leeds
@@ -447,7 +447,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Confirm EIC and Part P are included</strong> — non-negotiable. If absent
                 from the quote, the quote is incomplete.
@@ -482,7 +482,7 @@ export default function RewireCostLeedsPage() {
       badgeIcon={PoundSterling}
       heroTitle={
         <>
-          Rewire Cost Leeds: <span className="text-yellow-400">2026 Price Guide</span>
+          Rewire Cost Leeds: <span className="text-elec-yellow">2026 Price Guide</span>
         </>
       }
       heroSubtitle="Leeds rewire costs in 2026 across all property types — from Victorian back-to-backs in Headingley and Hyde Park to 1930s semis in Roundhay and Horsforth. Realistic Yorkshire prices, Part P guidance, and what to expect from a Leeds electrician."
@@ -493,7 +493,7 @@ export default function RewireCostLeedsPage() {
       faqHeading="Frequently Asked Questions About Rewire Costs in Leeds"
       relatedPages={relatedPages}
       ctaHeading="Quote Leeds Rewires with Real Trade Pricing"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI-powered rewire quoting, on-site EIC certificates, and project management. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for AI-powered rewire quoting, on-site EIC certificates, and project management. 7-day free trial."
     />
   );
 }

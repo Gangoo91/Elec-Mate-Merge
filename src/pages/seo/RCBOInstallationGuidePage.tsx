@@ -196,7 +196,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Split-load RCD board — advantage</strong>: lower initial cost. A split-load
                 board with two RCDs and eight MCBs is cheaper to supply and fit than an eight-way
@@ -204,7 +204,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Split-load RCD board — disadvantage</strong>: a single earth fault on any
                 circuit protected by one RCD will disconnect all circuits on that RCD. In a property
@@ -260,34 +260,34 @@ const sections = [
             <div className="bg-white/[0.06] px-4 py-3 font-semibold text-white">Typical use</div>
 
             <div className="bg-blue-900/30 px-4 py-3 font-semibold text-blue-200">AC</div>
-            <div className="bg-blue-900/20 px-4 py-3 text-white/90">
+            <div className="bg-blue-900/20 px-4 py-3 text-white">
               Alternating sinusoidal residual current only
             </div>
-            <div className="bg-blue-900/20 px-4 py-3 text-white/80">
+            <div className="bg-blue-900/20 px-4 py-3 text-white">
               Fixed equipment with no DC content only — restricted by Reg 531.3.3
             </div>
 
-            <div className="bg-yellow-900/30 px-4 py-3 font-semibold text-yellow-200">A</div>
-            <div className="bg-yellow-900/20 px-4 py-3 text-white/90">
+            <div className="bg-white/[0.06] px-4 py-3 font-semibold text-yellow-200">A</div>
+            <div className="bg-white/[0.06] px-4 py-3 text-white">
               Sinusoidal + pulsating DC residual current
             </div>
-            <div className="bg-yellow-900/20 px-4 py-3 text-white/80">
+            <div className="bg-white/[0.06] px-4 py-3 text-white">
               Standard domestic choice — sockets, lighting, appliances with electronic supplies
             </div>
 
             <div className="bg-green-900/30 px-4 py-3 font-semibold text-green-200">F</div>
-            <div className="bg-green-900/20 px-4 py-3 text-white/90">
+            <div className="bg-green-900/20 px-4 py-3 text-white">
               Type A behaviour + composite and higher-frequency residual currents
             </div>
-            <div className="bg-green-900/20 px-4 py-3 text-white/80">
+            <div className="bg-green-900/20 px-4 py-3 text-white">
               Variable speed drives, frequency inverters, modern heat pump controllers
             </div>
 
             <div className="bg-purple-900/30 px-4 py-3 font-semibold text-purple-200">B</div>
-            <div className="bg-purple-900/20 px-4 py-3 text-white/90">
+            <div className="bg-purple-900/20 px-4 py-3 text-white">
               Type F behaviour + smooth DC residual current, up to 1 kHz AC
             </div>
-            <div className="bg-purple-900/20 px-4 py-3 text-white/80">
+            <div className="bg-purple-900/20 px-4 py-3 text-white">
               Equipment with a DC leakage path — certain EV chargers, some solar inverters, medical
               equipment
             </div>
@@ -334,7 +334,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use Type A or Type F RCBOs</strong> — older Type AC devices are more
                 susceptible to nuisance tripping from the high-frequency components in LED driver
@@ -343,7 +343,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Limit fittings per circuit</strong> — if cumulative leakage is the issue,
                 split large lighting installations across multiple circuits, each protected by its
@@ -351,7 +351,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Specify low-leakage LED drivers</strong> — premium LED downlight brands
                 publish their driver leakage current figures. Selecting fittings with leakage below
@@ -360,7 +360,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check for wiring faults first</strong> — before blaming the LED drivers,
                 verify that there are no genuine earth faults on the circuit. Insulation resistance
@@ -386,7 +386,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1 — Safe isolation</strong>: isolate the consumer unit at the main
                 switch. Prove dead using an approved voltage indicator at the incoming terminals and
@@ -396,7 +396,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2 — Verify compatibility</strong>: confirm the replacement RCBO is
                 compatible with the consumer unit's busbar system. Many consumer unit manufacturers
@@ -406,7 +406,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 3 — Remove the MCB and fit the RCBO</strong>: withdraw the existing MCB
                 from the busbar. RCBOs are wider than MCBs — ensure there is adequate space. Connect
@@ -415,7 +415,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 4 — Test and certify</strong>: verify the RCBO's effectiveness with a
                 calibrated RCD tester to BS EN 61557-6. Under BS 7671, a general (non-delay) type RCD
@@ -449,7 +449,7 @@ const sections = [
             </div>
 
             <div className="bg-white/[0.02] px-4 py-3 font-semibold text-white">Hager</div>
-            <div className="bg-white/[0.02] px-4 py-3 text-white/85">
+            <div className="bg-white/[0.02] px-4 py-3 text-white">
               Invicta, Klik and other ranges accept Hager RCBOs. Verify any third-party device
               against Hager's own compatibility documentation before fitting.
             </div>
@@ -457,19 +457,19 @@ const sections = [
             <div className="bg-white/[0.04] px-4 py-3 font-semibold text-white">
               Schneider Electric
             </div>
-            <div className="bg-white/[0.04] px-4 py-3 text-white/85">
+            <div className="bg-white/[0.04] px-4 py-3 text-white">
               Acti9, Resi9 and Domae. Resi9 is widely used in domestic work; Acti9 is
               commercial-grade. Do not mix ranges.
             </div>
 
             <div className="bg-white/[0.02] px-4 py-3 font-semibold text-white">Eaton</div>
-            <div className="bg-white/[0.02] px-4 py-3 text-white/85">
+            <div className="bg-white/[0.02] px-4 py-3 text-white">
               Memshield 3 boards accept Eaton RCBOs. Memshield 2 is older and may have a different
               busbar configuration.
             </div>
 
             <div className="bg-white/[0.04] px-4 py-3 font-semibold text-white">ABB</div>
-            <div className="bg-white/[0.04] px-4 py-3 text-white/85">
+            <div className="bg-white/[0.04] px-4 py-3 text-white">
               Mistral consumer units accept ABB RCBO ranges. ABB also produce the MK range under
               their brand.
             </div>
@@ -477,7 +477,7 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <p className="flex items-start gap-3 text-white m-0">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <span>
               <strong>Cross-brand mixing is a compliance issue, not just a warranty one.</strong> For
               a single-phase supply rated up to 100A under the control of ordinary persons, BS 7671
@@ -505,42 +505,42 @@ const sections = [
         </p>
         <div className="grid sm:grid-cols-2 gap-4 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <div className="flex items-center gap-2 text-yellow-400 mb-1">
+            <div className="flex items-center gap-2 text-elec-yellow mb-1">
               <PoundSterling className="w-5 h-5 shrink-0" />
               <span className="text-2xl font-bold">£15–£22</span>
             </div>
             <p className="font-semibold text-white m-0">Entry-level Type A RCBO (6A–32A)</p>
-            <p className="text-white/70 text-sm m-0 mt-1">
+            <p className="text-white text-sm m-0 mt-1">
               Per device, trade price. Suitable for most standard domestic circuits.
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <div className="flex items-center gap-2 text-yellow-400 mb-1">
+            <div className="flex items-center gap-2 text-elec-yellow mb-1">
               <PoundSterling className="w-5 h-5 shrink-0" />
               <span className="text-2xl font-bold">£22–£32</span>
             </div>
             <p className="font-semibold text-white m-0">Mid-range Type A RCBO (Hager, Resi9)</p>
-            <p className="text-white/70 text-sm m-0 mt-1">
+            <p className="text-white text-sm m-0 mt-1">
               Per device. Better build quality and manufacturer-backed board compatibility.
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <div className="flex items-center gap-2 text-yellow-400 mb-1">
+            <div className="flex items-center gap-2 text-elec-yellow mb-1">
               <PoundSterling className="w-5 h-5 shrink-0" />
               <span className="text-2xl font-bold">£28–£45</span>
             </div>
             <p className="font-semibold text-white m-0">Type F RCBO</p>
-            <p className="text-white/70 text-sm m-0 mt-1">
+            <p className="text-white text-sm m-0 mt-1">
               Per device. Specify for heat pump, EV charger supply, or variable speed drive circuits.
             </p>
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
-            <div className="flex items-center gap-2 text-yellow-400 mb-1">
+            <div className="flex items-center gap-2 text-elec-yellow mb-1">
               <PoundSterling className="w-5 h-5 shrink-0" />
               <span className="text-2xl font-bold">£400–£900</span>
             </div>
             <p className="font-semibold text-white m-0">Full RCBO board replacement (domestic)</p>
-            <p className="text-white/70 text-sm m-0 mt-1">
+            <p className="text-white text-sm m-0 mt-1">
               Fitted, including labour, materials, certification and Building Regulations
               notification. Larger properties sit at the higher end.
             </p>
@@ -578,7 +578,7 @@ const sections = [
             <div className="bg-white/[0.02] px-4 py-3 font-semibold text-yellow-200">
               411.3.3
             </div>
-            <div className="bg-white/[0.02] px-4 py-3 text-white/85">
+            <div className="bg-white/[0.02] px-4 py-3 text-white">
               In AC systems, additional protection by a 30mA RCD is required for socket-outlets rated
               up to 32A and for mobile equipment up to 32A used outdoors. A 30mA RCBO satisfies this
               on an individual circuit.
@@ -587,7 +587,7 @@ const sections = [
             <div className="bg-white/[0.04] px-4 py-3 font-semibold text-yellow-200">
               531.3.2(b)
             </div>
-            <div className="bg-white/[0.04] px-4 py-3 text-white/85">
+            <div className="bg-white/[0.04] px-4 py-3 text-white">
               Lists the use of RCBOs for individual final circuits in residential premises as a means
               of limiting the risk of unwanted tripping — the regulatory basis for choosing an RCBO
               board over a shared-RCD split-load board.
@@ -596,7 +596,7 @@ const sections = [
             <div className="bg-white/[0.02] px-4 py-3 font-semibold text-yellow-200">
               531.3.3
             </div>
-            <div className="bg-white/[0.02] px-4 py-3 text-white/85">
+            <div className="bg-white/[0.02] px-4 py-3 text-white">
               Defines RCD Types AC, A, F and B by their response to DC components and frequencies, and
               restricts Type AC to fixed equipment with no DC load content. Determines which device
               type a circuit needs.
@@ -605,7 +605,7 @@ const sections = [
             <div className="bg-white/[0.04] px-4 py-3 font-semibold text-yellow-200">
               531.3.6
             </div>
-            <div className="bg-white/[0.04] px-4 py-3 text-white/85">
+            <div className="bg-white/[0.04] px-4 py-3 text-white">
               Confirms a 30mA RCD is recognised as additional protection under Regulation 415.1 and
               must comply with 411.3.3. Where installed at the origin of a final circuit, it may
               provide fault protection and additional protection simultaneously.
@@ -641,7 +641,7 @@ export default function RCBOInstallationGuidePage() {
       heroTitle={
         <>
           RCBO Installation Guide{' '}
-          <span className="text-yellow-400">— Types, Costs, and BS 7671</span>
+          <span className="text-elec-yellow">— Types, Costs, and BS 7671</span>
         </>
       }
       heroSubtitle="RCBOs provide individual circuit protection that split-load RCD boards cannot match. This guide covers the different RCBO types, how to resolve nuisance tripping on LED circuits, installation procedure, board compatibility, and how BS 7671 Regulation 531 applies."

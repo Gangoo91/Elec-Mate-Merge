@@ -45,7 +45,7 @@ export default function ElectricalMarketingTipsPage() {
       heroTitle={
         <>
           Marketing Tips for Electricians:{' '}
-          <span className="text-yellow-400">Get More Work in the UK</span>
+          <span className="text-elec-yellow">Get More Work in the UK</span>
         </>
       }
       heroSubtitle="Written by Andrew Moore, founder of Elec-Mate and a qualified electrician. The best electricians in the world still struggle if nobody knows they exist. This guide covers the marketing strategies that actually work for UK electricians, from Google Business Profile and social media to word of mouth, van livery, and review management. No jargon, no fluff, just practical advice that generates enquiries."
@@ -127,39 +127,39 @@ export default function ElectricalMarketingTipsPage() {
                 <h3 className="font-bold text-white text-lg mb-3">Must-Have Website Elements</h3>
                 <ul className="space-y-2 text-white text-sm leading-relaxed">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>Your name, business name, and a clear description of your services</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>Coverage area (list the towns, cities, or postcodes you serve)</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>Phone number prominently displayed (click-to-call on mobile)</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>Contact form or email address</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       Qualifications and competent person scheme registration (NICEIC, NAPIT, etc.)
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>Customer reviews or testimonials</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       Photos of your work (not stock images — real photos of your installations)
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>SSL certificate (HTTPS) — signals security and trust</span>
                   </li>
                 </ul>
@@ -252,39 +252,39 @@ export default function ElectricalMarketingTipsPage() {
               <div className="space-y-4 mt-6">
                 <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
                   <div className="flex items-center gap-2 mb-3">
-                    <Star className="w-5 h-5 text-yellow-400" />
+                    <Star className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">How to Generate Referrals</h3>
                   </div>
                   <ul className="space-y-2 text-white text-sm leading-relaxed">
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Do excellent work — this is the foundation of everything</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Leave the property cleaner than you found it</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Explain what you have done in language the customer understands</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Send professional certificates and documentation promptly</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Follow up a few days later to check everything is working well</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>
                         Politely ask for a Google review (most people are happy to leave one if
                         asked)
                       </span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>
                         Leave business cards — the customer may recommend you to neighbours,
                         friends, or family
@@ -339,56 +339,56 @@ export default function ElectricalMarketingTipsPage() {
               <div className="grid gap-4 sm:grid-cols-2 mt-6">
                 <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
                   <div className="flex items-center gap-2 mb-3">
-                    <Truck className="w-5 h-5 text-yellow-400" />
+                    <Truck className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">What to Include</h3>
                   </div>
                   <ul className="space-y-2 text-white text-sm leading-relaxed">
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Your business name (clear and readable from 30 metres)</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Your trade: "Electrician" or "Electrical Contractor"</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Phone number (large enough to read while driving past)</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Website or email address</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Competent person scheme logo (NICEIC, NAPIT, etc.)</span>
                     </li>
                   </ul>
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-center gap-2 mb-3">
-                    <Truck className="w-5 h-5 text-yellow-400" />
+                    <Truck className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">What to Avoid</h3>
                   </div>
                   <ul className="space-y-2 text-white text-sm leading-relaxed">
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Too much text — keep it clean and simple</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Long lists of services (no one reads them)</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Clip art or stock images — they look cheap</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Too many colours — stick to 2-3 for a professional look</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Dirty or damaged signage — remove it if it looks worn</span>
                     </li>
                   </ul>
@@ -458,7 +458,7 @@ export default function ElectricalMarketingTipsPage() {
               </p>
               <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
                 <div className="flex items-center gap-2 mb-3">
-                  <TrendingUp className="w-5 h-5 text-yellow-400" />
+                  <TrendingUp className="w-5 h-5 text-elec-yellow" />
                   <h3 className="font-bold text-white text-lg">A Simple ROI Example</h3>
                 </div>
                 <p className="text-sm text-white leading-relaxed">
@@ -515,34 +515,34 @@ export default function ElectricalMarketingTipsPage() {
                 <h3 className="font-bold text-white text-lg mb-4">How to Get More Reviews</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <MessageSquare className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <MessageSquare className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Ask at the right moment</strong> — the
+                      <strong className="text-elec-yellow">Ask at the right moment</strong> — the
                       best time to ask for a review is immediately after completing a job when the
                       customer is happy. "I'm really glad you're pleased with the work. If you have
                       a moment, a Google review would really help my business."
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <MessageSquare className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <MessageSquare className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Make it easy</strong> — send the customer
+                      <strong className="text-elec-yellow">Make it easy</strong> — send the customer
                       a direct link to your Google review page via text message or email. If they
                       have to search for your profile, most will not bother.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <MessageSquare className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <MessageSquare className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Follow up</strong> — a polite text a few
+                      <strong className="text-elec-yellow">Follow up</strong> — a polite text a few
                       days after the job thanking them and gently reminding them about the review
                       catches people who intended to leave one but forgot.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <MessageSquare className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <MessageSquare className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Respond to every review</strong> — thank
+                      <strong className="text-elec-yellow">Respond to every review</strong> — thank
                       people for positive reviews and address negative reviews professionally. Never
                       argue with a reviewer. A calm, factual response shows potential customers that
                       you handle problems maturely.
@@ -712,7 +712,7 @@ export default function ElectricalMarketingTipsPage() {
         },
       ]}
       ctaHeading="Look Professional, Get More Work"
-      ctaSubheading="Branded certificates, instant quotes, professional invoices, and AI-powered pricing. Elec-Mate makes you look professional at every customer touchpoint. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Branded certificates, instant quotes, professional invoices, and AI-powered pricing. Elec-Mate makes you look professional at every customer touchpoint. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

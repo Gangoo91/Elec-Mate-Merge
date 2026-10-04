@@ -56,10 +56,10 @@ const checks = [
     id: 'insulated-tools-check',
     question: 'A screwdriver marked "VDE 1000V" with the BS EN 60900 logo — what does that mean?',
     options: [
-      'Power exchanged between source and reactive components',
+      'Insulated for 1000 V DC only, so it must not be used on AC circuits',
       'Tested at 10 000 V AC, certified for use up to 1000 V AC live working',
-      'Emergency duration, type, battery test information and location',
-      'No fixed maximum, but must be appropriate for the application',
+      'Rated for live work on any voltage up to 10 000 V AC',
+      'Tested once at 1000 V by the manufacturer, with no rating for live working',
     ],
     correctIndex: 1,
     explanation:
@@ -109,9 +109,9 @@ const quizQuestions = [
     id: 3,
     question: 'How often must IEC 60903 insulating gloves be re-tested in service?',
     options: [
-      'To verify the RCD trips within the required time',
-      'Investigate the connection and clean/retighten as necessary',
-      'To identify variations in impedance along the circuit',
+      'Only when they show visible damage',
+      'Once a year, at the same time as the PAT test',
+      'Never — insulating gloves are single-use',
       'Every 6 months (and inspected before EVERY use)',
     ],
     correctAnswer: 3,

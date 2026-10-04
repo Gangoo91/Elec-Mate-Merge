@@ -236,12 +236,12 @@ const sections = [
           paperwork.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4 flex items-start gap-4">
-          <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+          <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
           <div>
             <p className="text-white text-sm font-semibold mb-0.5">
               Reviewed by Andrew Moore, founder of Elec-Mate
             </p>
-            <p className="text-white/60 text-xs leading-relaxed">
+            <p className="text-white text-xs leading-relaxed">
               The technical content on this page — regulation references, defect codes, test
               criteria, and A4:2026 changes — has been reviewed by an 18th Edition (BS 7671:2018)
               qualified electrician and 2391 Inspection and Testing certified inspector. Last
@@ -271,28 +271,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Camera className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Device identification</strong> — MCBs, RCBOs, RCDs, isolators, SPDs, and
                 AFDDs identified by their physical appearance, label text, and position.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Camera className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Current ratings</strong> — the amp rating of each device read from the
                 device face or label.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Camera className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Manufacturer recognition</strong> — Hager, Wylex, Schneider, MK, Contactum,
                 Fusebox, and other major UK brands recognised by device appearance.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Camera className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Board layout</strong> — the spatial arrangement of devices mapped from left
                 to right, including identification of split-load configurations and RCD/RCBO
@@ -366,10 +366,10 @@ const sections = [
           Edition, where RCD protection was not required at the time of installation).
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
-          <p className="text-yellow-400 text-xs font-semibold uppercase tracking-wide mb-2">
+          <p className="text-elec-yellow text-xs font-semibold uppercase tracking-wide mb-2">
             A4:2026 — Reg 411.3.3 Socket RCD Exception
           </p>
-          <p className="text-white/80 text-sm leading-relaxed">
+          <p className="text-white text-sm leading-relaxed">
             Under the revised Reg 411.3.3, omission of RCD protection on socket-outlets rated ≤ 32 A
             is only permitted outside dwellings, and only where a documented risk assessment
             determines that RCD protection is not necessary. In domestic premises there is no
@@ -589,7 +589,7 @@ export default function ElectricalAppWithAIPage() {
       badgeIcon={Brain}
       heroTitle={
         <>
-          <span className="text-yellow-400">AI-Powered Electrical App</span> — Smart Tools for Every
+          <span className="text-elec-yellow">AI-Powered Electrical App</span> — Smart Tools for Every
           Part of Your Work
         </>
       }

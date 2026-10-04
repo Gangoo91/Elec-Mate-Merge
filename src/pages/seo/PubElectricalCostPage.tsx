@@ -198,7 +198,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cellar cooling units</strong> — cellar coolers for ale and lager typically
                 draw 0.5–2.5kW each. A pub running 4–6 cooling units has a continuous cellar cooling
@@ -207,7 +207,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CO₂ and N₂ gas detection</strong> — cellar CO₂ and nitrogen gas detection
                 systems are required by HSE guidance where gas cylinders are stored (HSG187). The
@@ -218,7 +218,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cellar IP ratings</strong> — cellar areas that are hosed down require IP44
                 minimum for socket outlets and IP44 or higher for light fittings. All metallic
@@ -227,7 +227,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bar back equipment</strong> — undercounter bottle coolers, glasswashers
                 (3–6kW), coffee machines (2–3.5kW), and chilled display cabinets all require
@@ -254,7 +254,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Tv className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Tv className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit requirements</strong> — each gaming machine position requires a
                 dedicated 13A outlet with RCD protection. Shared circuits between gaming machines
@@ -263,7 +263,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Tv className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Tv className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Documentation</strong> — machine positions must be documented in the
                 premises licence or ancillary schedule. The electrician should confirm that the
@@ -272,7 +272,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Tv className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Tv className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>FOBTs in betting-licensed pubs</strong> — where a pub holds an ancillary
                 betting licence permitting Fixed Odds Betting Terminals, machine positions require
@@ -299,7 +299,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Coverage requirements</strong> — emergency lighting must cover all escape
                 routes (corridors, stairways leading to exits), each final exit door, changes of
@@ -308,7 +308,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Letting rooms</strong> — pubs with upstairs letting rooms or staff
                 accommodation require emergency lighting to BS 5266-1 in all sleeping areas,
@@ -317,7 +317,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing and log books</strong> — the premises licence responsible person
                 must maintain an emergency lighting log book. Monthly function tests and an annual
@@ -326,7 +326,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Installation costs</strong> — emergency lighting for a typical community pub
                 (ground floor only): £900–£2,500. A larger two-floor managed house with letting
@@ -441,60 +441,60 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main distribution board (3-phase, 100–200A TPN)</strong> — £1,000–£3,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cellar electrical installation</strong> — £1,500–£4,000. Includes cooling
                 unit circuits, CO₂ detection supply, IP-rated lighting, bonding, and isolators.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bar and back-bar circuits</strong> — £1,200–£3,500. Glasswasher, bottle
                 coolers, coffee machine, fridges, POS systems.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Gaming machine circuits (per machine)</strong> — £120–£250. RCD-protected
                 fused spur, outlet, and testing.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency lighting to BS 5266-1</strong> — £900–£5,500 depending on floor
                 area and whether letting rooms are present.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire alarm system</strong> — £1,200–£9,000 depending on category and
                 addressable versus conventional.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>General lighting, power and kitchen</strong> — £3,000–£10,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CCTV electrical supply</strong> — £350–£900.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Total new pub fit-out or full refurbishment</strong> —{' '}
                 <strong>£12,000–£35,000</strong>. A small community pub: £12,000–£18,000. A large
@@ -520,7 +520,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Five-year maximum</strong> — commercial EICR maximum interval is five years.
                 Pub company leases typically require an EICR on each change of tenant, meaning the
@@ -528,7 +528,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insurance requirements</strong> — pub insurers frequently require a
                 satisfactory EICR as a condition of cover, particularly for fire-related coverage.
@@ -536,7 +536,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Licensing authority</strong> — the licensing authority and fire safety
                 officer can request the EICR and emergency lighting certification during routine
@@ -545,7 +545,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR costs for a pub</strong> — a typical pub EICR costs £350–£900 depending
                 on size, number of distribution boards, and the scope of life-safety systems to be
@@ -573,7 +573,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Certify on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -591,7 +591,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage pub electrical contracts with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for commercial quoting, EIC and EICR completion, and emergency lighting certification. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for commercial quoting, EIC and EICR completion, and emergency lighting certification. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -617,7 +617,7 @@ export default function PubElectricalCostPage() {
       heroTitle={
         <>
           Pub Electrical Installation Cost UK 2025:{' '}
-          <span className="text-yellow-400">Licensed Premises Guide</span>
+          <span className="text-elec-yellow">Licensed Premises Guide</span>
         </>
       }
       heroSubtitle="Complete cost guide for UK pub and licensed premises electrical installations. Cellar cooling, gaming machine circuits, emergency lighting to BS 5266-1, fire alarm systems, CCTV, and EICR compliance. Typical fit-out £12,000–£35,000."
@@ -628,7 +628,7 @@ export default function PubElectricalCostPage() {
       faqHeading="Frequently Asked Questions: Pub Electrical Installation Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certificate Pub Electrical Work on Site"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for commercial quotes, EIC and EICR completion, and emergency lighting log books. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for commercial quotes, EIC and EICR completion, and emergency lighting log books. 7-day free trial, cancel anytime."
     />
   );
 }

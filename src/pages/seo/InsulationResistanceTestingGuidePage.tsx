@@ -183,7 +183,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>500V DC — circuits up to 500V nominal</strong>: This covers the vast
                 majority of domestic and commercial electrical installations — standard 230V
@@ -193,7 +193,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1000V DC — circuits above 500V and up to 1000V nominal</strong>: Applied to
                 higher-voltage industrial and commercial circuits. Uncommon in domestic work but
@@ -202,7 +202,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>250V DC — SELV and PELV circuits</strong>: Separated extra-low voltage and
                 protected extra-low voltage circuits (typically below 50V AC or 120V ripple-free DC)
@@ -234,7 +234,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1MΩ is a pass/fail threshold — not a target</strong>: A reading of exactly
                 1MΩ on a new or recently rewired installation is a fault, not an acceptable result.
@@ -245,7 +245,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Context matters on EICRs</strong>: On a periodic inspection of an older
                 installation, a reading of 2MΩ to 5MΩ on wiring that is 30 to 40 years old may
@@ -255,7 +255,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Multiple circuits tested together</strong>: Where all circuits in a
                 distribution board are tested simultaneously (all breakers closed, all neutrals
@@ -426,7 +426,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1MΩ to 2MΩ on an existing installation</strong>: Marginally passes but
                 warrants investigation. Consider a C3 observation. Inspect for moisture, damaged
@@ -463,7 +463,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Moisture ingress</strong>: The most common cause. Affects outdoor circuits,
                 bathroom circuits, and circuits near leaks. Water provides a conductive path between
@@ -472,7 +472,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Deteriorated rubber insulation</strong>: Older installations with
                 vulcanised rubber (VIR) or lead-sheathed cables are particularly susceptible.
@@ -482,7 +482,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable damaged by mechanical means</strong>: Cables routed through wall
                 cavities or beneath floors are sometimes caught by nails, staples, or screws — or
@@ -492,7 +492,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Overheated cables</strong>: Cables run in thermal insulation, bundled
                 excessively, or overloaded for extended periods suffer insulation degradation. The
@@ -501,7 +501,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Failed or disconnected equipment left in circuit</strong>: A failed
                 semiconductor, carbon-tracked switch, or corroded accessory in circuit during
@@ -530,7 +530,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test voltage used</strong>: Record "500V DC" or "1000V DC" as applicable.
                 This is required information — the result without the test voltage applied is
@@ -538,7 +538,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Results per circuit</strong>: L-N, L-E, and N-E values in MΩ for each
                 circuit. Where all circuits were tested together at the board, record the combined
@@ -546,7 +546,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Limitations</strong>: Note any circuits that could not be fully isolated or
                 any equipment that could not be disconnected. State the reason and any effect on the
@@ -554,7 +554,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Equipment disconnected</strong>: A brief note of significant items
                 disconnected for the test — for example, "3 × dimmer switches bypassed" — is good
@@ -584,7 +584,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Record Results On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -636,7 +636,7 @@ export default function InsulationResistanceTestingGuidePage() {
       heroTitle={
         <>
           Insulation Resistance Testing Guide:{' '}
-          <span className="text-yellow-400">IR Testing to BS 7671</span>
+          <span className="text-elec-yellow">IR Testing to BS 7671</span>
         </>
       }
               noindex={true}

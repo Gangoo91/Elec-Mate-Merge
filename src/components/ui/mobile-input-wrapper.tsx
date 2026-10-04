@@ -3,6 +3,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
 import { inputCn, labelCn } from '@/components/forms/fieldStyles';
+import { autoCompleteOff } from '@/lib/textEntry';
 
 interface MobileInputWrapperProps {
   label?: string;
@@ -61,7 +62,7 @@ export function MobileInputWrapper({
             onChange={(e) => onChange(e.target.value)}
             placeholder={placeholder}
             disabled={disabled}
-            autoComplete="off"
+            autoComplete={autoCompleteOff}
             className={cn(inputCn, icon && 'pl-8', unit && 'pr-14', error && '!border-red-400')}
           />
 

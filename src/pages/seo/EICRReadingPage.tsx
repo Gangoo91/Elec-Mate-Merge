@@ -213,7 +213,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mandatory EICR</strong> — every private landlord must obtain an EICR before
                 a new tenancy begins and at least every five years. The EICR must be provided to
@@ -222,7 +222,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Civil penalties</strong> — Reading Borough Council can impose civil
                 penalties of up to £30,000 per breach. Each separate failure (not obtaining an EICR,
@@ -231,7 +231,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HMO licensing</strong> — Reading Borough Council operates mandatory HMO
                 licensing and selective licensing in certain areas. A valid EICR is a mandatory
@@ -240,7 +240,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Section 21 restrictions</strong> — landlords cannot serve a valid Section 21
                 (no-fault eviction) notice where they have not provided the tenant with a copy of
@@ -266,7 +266,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Victorian and Edwardian terraces</strong> — areas including Oxford Road,
                 Whitley, Newtown, and Caversham contain large numbers of Victorian and Edwardian
@@ -276,7 +276,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Absence of RCD protection</strong> — properties wired or last rewired before
                 approximately 1995 frequently lack RCD protection on socket-outlet circuits. BS 7671
@@ -285,7 +285,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Student and professional HMOs</strong> — Reading's proximity to the
                 University of Reading and its major tech employers creates high demand for HMO
@@ -294,7 +294,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Modern flat developments</strong> — Reading's town centre regeneration has
                 produced a significant number of modern flat developments. These are generally well
@@ -319,7 +319,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Preparation</strong> — ensure all rooms, the consumer unit location, the
                 loft hatch, and any outbuildings are accessible. Notify tenants in advance that
@@ -327,7 +327,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Visual inspection</strong> — the inspector examines all accessible parts of
                 the fixed installation: wiring, accessories, the consumer unit, earthing and bonding
@@ -335,7 +335,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical testing</strong> — each circuit is tested in turn using
                 calibrated instruments. Results are recorded in the Schedule of Test Results. The
@@ -343,7 +343,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Typical duration</strong> — a one or two-bedroom Reading flat: two to three
                 hours. A three-bedroom house: three to five hours. An HMO with multiple consumer
@@ -376,7 +376,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C2 — Potentially dangerous</strong> — urgent remedial action required. Not
                 an immediate risk but potentially dangerous. Always makes the EICR Unsatisfactory.
@@ -425,14 +425,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>One-bedroom flat</strong> — £120 to £240. Modern purpose-built flats near
                 the town centre are typically faster to inspect than older Victorian conversions.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Two-bedroom property</strong> — £170 to £310. Victorian terraces in Oxford
                 Road and Whitley may be at the higher end due to aged wiring and more complex
@@ -440,14 +440,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom house</strong> — £200 to £370. Properties with rubber-
                 insulated wiring or multiple subboards require more inspection time and cost more.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HMO (4+ bedrooms)</strong> — £350 to £700+. Fire alarm systems, emergency
                 lighting, multiple consumer units, and communal areas significantly increase the
@@ -477,7 +477,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person scheme membership</strong> — use the NICEIC, NAPIT, or
                 ELECSA online registers to find Reading-based electricians with inspection and
@@ -486,7 +486,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Verify qualifications</strong> — the inspector should hold City and Guilds
                 2391 or C&G 2395 (Inspection and Testing) and a current BS 7671 18th Edition
@@ -494,7 +494,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HMO inspection experience</strong> — for Reading HMOs, prefer inspectors
                 with experience of HMO inspections including fire alarm system assessment and
@@ -502,7 +502,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Obtain multiple quotes</strong> — two or three quotes from registered
                 electricians provide a clear picture of the Reading market rate and help identify
@@ -530,7 +530,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete Reading EICRs On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -569,7 +569,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Reading EICR business with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -594,7 +594,7 @@ export default function EICRReadingPage() {
       badgeIcon={ShieldCheck}
       heroTitle={
         <>
-          EICR Reading: <span className="text-yellow-400">Electrical Inspection Guide 2026</span>
+          EICR Reading: <span className="text-elec-yellow">Electrical Inspection Guide 2026</span>
         </>
       }
       heroSubtitle="Everything you need to know about Electrical Installation Condition Reports in Reading — legal requirements under the 2020 Regulations, HMO licensing, Victorian and Edwardian property wiring, Thames Valley costs, and finding qualified inspectors."
@@ -605,7 +605,7 @@ export default function EICRReadingPage() {
       faqHeading="Frequently Asked Questions About EICRs in Reading"
       relatedPages={relatedPages}
       ctaHeading="Complete Reading EICRs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

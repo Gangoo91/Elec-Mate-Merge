@@ -297,7 +297,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Marketing communications</strong> — if you want to add customers to a
                 mailing list, send promotional emails or texts, or contact them about services they
@@ -306,7 +306,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Photos for marketing</strong> — using photos of completed work on your
                 website or social media requires consent if the photos could identify the
@@ -314,7 +314,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sharing data with third parties</strong> — beyond what is necessary for the
                 work (competent person scheme, HMRC), sharing data with other companies requires
@@ -341,32 +341,32 @@ const sections = [
       <>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-4 flex items-center gap-2">
-            <Clock className="w-4 h-4 text-yellow-400" /> Retention Periods
+            <Clock className="w-4 h-4 text-elec-yellow" /> Retention Periods
           </h4>
           <div className="space-y-3 text-white text-sm">
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Electrical certificates (EIC, EICR)</span>
-              <strong className="text-yellow-400">Life of installation</strong>
+              <strong className="text-elec-yellow">Life of installation</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Tax records (invoices, receipts, accounts)</span>
-              <strong className="text-yellow-400">5 years after filing deadline</strong>
+              <strong className="text-elec-yellow">5 years after filing deadline</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Accident and H&S records</span>
-              <strong className="text-yellow-400">3 to 40 years (varies)</strong>
+              <strong className="text-elec-yellow">3 to 40 years (varies)</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Customer records (completed jobs)</span>
-              <strong className="text-yellow-400">6 years (limitation period)</strong>
+              <strong className="text-elec-yellow">6 years (limitation period)</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Enquiries that did not proceed</span>
-              <strong className="text-yellow-400">3 to 6 months</strong>
+              <strong className="text-elec-yellow">3 to 6 months</strong>
             </div>
             <div className="flex justify-between pb-2">
               <span>Marketing consent</span>
-              <strong className="text-yellow-400">Until consent withdrawn</strong>
+              <strong className="text-elec-yellow">Until consent withdrawn</strong>
             </div>
           </div>
         </div>
@@ -439,10 +439,10 @@ const sections = [
               <h4 className="font-bold text-white mb-2">Fee Tiers (2026)</h4>
               <p>
                 Micro-organisations (fewer than 10 employees, turnover under £632,000):{' '}
-                <strong className="text-yellow-400">£40/year</strong>. Small organisations (fewer
+                <strong className="text-elec-yellow">£40/year</strong>. Small organisations (fewer
                 than 250 employees, turnover under £36 million):{' '}
-                <strong className="text-yellow-400">£60/year</strong>. Large organisations:{' '}
-                <strong className="text-yellow-400">£2,900/year</strong>. Most electricians fall
+                <strong className="text-elec-yellow">£60/year</strong>. Large organisations:{' '}
+                <strong className="text-elec-yellow">£2,900/year</strong>. Most electricians fall
                 into the micro tier at £40/year.
               </p>
             </div>
@@ -551,7 +551,7 @@ export default function GDPRForElectriciansPage() {
       heroTitle={
         <>
           GDPR for Electricians:{' '}
-          <span className="text-yellow-400">Compliance in Plain English</span>
+          <span className="text-elec-yellow">Compliance in Plain English</span>
         </>
       }
       heroSubtitle="If you hold customer names, addresses, or phone numbers, GDPR applies to you. ICO registration, data retention, privacy notices, and breach procedures — explained in practical terms for electricians."
@@ -562,7 +562,7 @@ export default function GDPRForElectriciansPage() {
       faqHeading="Frequently Asked Questions About GDPR for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Keep Customer Data Secure"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for secure customer records, certificates, and invoices. Cloud-encrypted, backed up, always accessible. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for secure customer records, certificates, and invoices. Cloud-encrypted, backed up, always accessible. 7-day free trial, cancel anytime."
     />
   );
 }

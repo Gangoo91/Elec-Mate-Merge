@@ -168,10 +168,10 @@ const sections = [
               </span>
               <h3 className="font-bold text-white">Design certificate</h3>
             </div>
-            <p className="text-white/80 text-sm mb-2">
+            <p className="text-white text-sm mb-2">
               Confirms the system was designed to BS 5839-1 and the fire risk assessment.
             </p>
-            <p className="text-yellow-400/90 text-xs font-medium">Issued by: the system designer</p>
+            <p className="text-elec-yellow/90 text-xs font-medium">Issued by: the system designer</p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-2">
@@ -180,10 +180,10 @@ const sections = [
               </span>
               <h3 className="font-bold text-white">Installation certificate</h3>
             </div>
-            <p className="text-white/80 text-sm mb-2">
+            <p className="text-white text-sm mb-2">
               Confirms the physical installation matches the approved design.
             </p>
-            <p className="text-yellow-400/90 text-xs font-medium">Issued by: the installer</p>
+            <p className="text-elec-yellow/90 text-xs font-medium">Issued by: the installer</p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-2">
@@ -192,10 +192,10 @@ const sections = [
               </span>
               <h3 className="font-bold text-white">Commissioning certificate</h3>
             </div>
-            <p className="text-white/80 text-sm mb-2">
+            <p className="text-white text-sm mb-2">
               Records the results of all functional tests carried out during commissioning.
             </p>
-            <p className="text-yellow-400/90 text-xs font-medium">
+            <p className="text-elec-yellow/90 text-xs font-medium">
               Issued by: the commissioning engineer
             </p>
           </div>
@@ -206,11 +206,11 @@ const sections = [
               </span>
               <h3 className="font-bold text-white">Verification certificate</h3>
             </div>
-            <p className="text-white/80 text-sm mb-2">
+            <p className="text-white text-sm mb-2">
               A check that the system as a whole conforms to BS 5839-1, arranged by the purchaser or
               user. Not needed on every system.
             </p>
-            <p className="text-yellow-400/90 text-xs font-medium">
+            <p className="text-elec-yellow/90 text-xs font-medium">
               Issued by: a competent verifier — Clause 41 permits one of the organisations already
               involved, or an independent third party
             </p>
@@ -222,11 +222,11 @@ const sections = [
               </span>
               <h3 className="font-bold text-white">Annual service records</h3>
             </div>
-            <p className="text-white/80 text-sm mb-2">
+            <p className="text-white text-sm mb-2">
               Ongoing documentation of testing, maintenance, and any defects found — kept for the
               life of the system.
             </p>
-            <p className="text-yellow-400/90 text-xs font-medium">
+            <p className="text-elec-yellow/90 text-xs font-medium">
               Issued by: the servicing engineer (with weekly tests logged by the Responsible Person)
             </p>
           </div>
@@ -259,34 +259,34 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 The system category (L1, L2, L3, L4, L5, P1, P2, or M) and the justification for the
                 chosen category based on the fire risk assessment.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Zone plans showing the detector layout, manual call point positions, sounder
                 positions, and the zone boundaries.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Cable routes, cable types (fire-resistant cable specification), and the containment
                 system used.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Panel specification, power supply details, and battery capacity calculations.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Cause-and-effect specification showing what each zone activation triggers (sounders,
                 door releases, dampers, lifts, ventilation shutdown).
@@ -304,51 +304,51 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">BS 5839-1 System Categories</h3>
           <div className="space-y-3">
             <div className="flex items-start justify-between gap-4 p-4 rounded-xl bg-red-900/30 border border-red-700/40">
-              <span className="text-yellow-400 font-bold shrink-0 w-12">L1</span>
+              <span className="text-elec-yellow font-bold shrink-0 w-12">L1</span>
               <span className="text-white text-sm">
                 Life protection with automatic detection throughout all areas of the building.
               </span>
             </div>
             <div className="flex items-start justify-between gap-4 p-4 rounded-xl bg-red-900/30 border border-red-700/40">
-              <span className="text-yellow-400 font-bold shrink-0 w-12">L2</span>
+              <span className="text-elec-yellow font-bold shrink-0 w-12">L2</span>
               <span className="text-white text-sm">
                 As L3, plus detection in specified high-risk or higher-hazard areas.
               </span>
             </div>
             <div className="flex items-start justify-between gap-4 p-4 rounded-xl bg-red-900/30 border border-red-700/40">
-              <span className="text-yellow-400 font-bold shrink-0 w-12">L3</span>
+              <span className="text-elec-yellow font-bold shrink-0 w-12">L3</span>
               <span className="text-white text-sm">
                 Detection on escape routes and in rooms opening onto those escape routes, to give
                 early warning for evacuation.
               </span>
             </div>
             <div className="flex items-start justify-between gap-4 p-4 rounded-xl bg-red-900/30 border border-red-700/40">
-              <span className="text-yellow-400 font-bold shrink-0 w-12">L4</span>
+              <span className="text-elec-yellow font-bold shrink-0 w-12">L4</span>
               <span className="text-white text-sm">
                 Detection within the escape routes only.
               </span>
             </div>
             <div className="flex items-start justify-between gap-4 p-4 rounded-xl bg-red-900/30 border border-red-700/40">
-              <span className="text-yellow-400 font-bold shrink-0 w-12">L5</span>
+              <span className="text-elec-yellow font-bold shrink-0 w-12">L5</span>
               <span className="text-white text-sm">
                 A bespoke life-safety category covering only specific areas defined by the fire risk
                 assessment or a particular fire safety objective.
               </span>
             </div>
             <div className="flex items-start justify-between gap-4 p-4 rounded-xl bg-blue-900/30 border border-blue-700/40">
-              <span className="text-yellow-400 font-bold shrink-0 w-12">P1</span>
+              <span className="text-elec-yellow font-bold shrink-0 w-12">P1</span>
               <span className="text-white text-sm">
                 Property protection with automatic detection throughout all areas of the building.
               </span>
             </div>
             <div className="flex items-start justify-between gap-4 p-4 rounded-xl bg-blue-900/30 border border-blue-700/40">
-              <span className="text-yellow-400 font-bold shrink-0 w-12">P2</span>
+              <span className="text-elec-yellow font-bold shrink-0 w-12">P2</span>
               <span className="text-white text-sm">
                 Property protection with detection in defined parts of the building only.
               </span>
             </div>
             <div className="flex items-start justify-between gap-4 p-4 rounded-xl bg-gray-900/60 border border-gray-700/40">
-              <span className="text-yellow-400 font-bold shrink-0 w-12">M</span>
+              <span className="text-elec-yellow font-bold shrink-0 w-12">M</span>
               <span className="text-white text-sm">
                 A manual system — manual call points and sounders only, with no automatic detection.
               </span>
@@ -377,28 +377,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Confirmation that detectors, call points, sounders, and interfaces have been
                 installed in the positions shown on the design drawings.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Cable installation details — cable type, route, containment, segregation from other
                 services, and fire stopping at penetrations.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Panel installation, power supply connection, battery installation, and earthing
                 arrangements.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Any deviations from the design and the reasons for them — for example, a detector
                 repositioned due to an obstruction not visible on the design drawings.
@@ -410,11 +410,11 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">
             Common Installation Certificate Failures
           </h3>
-          <p className="text-white/80 text-sm mb-3">
+          <p className="text-white text-sm mb-3">
             These are the most frequent reasons an installation certificate is found to be
             incomplete or non-compliant during verification:
           </p>
-          <ul className="space-y-2 text-white/90 text-sm list-disc list-inside">
+          <ul className="space-y-2 text-white text-sm list-disc list-inside">
             <li>
               Alarm signal cables sharing containment with mains power wiring without any of the
               segregation methods BS 7671 permits. Regulation 528.1 does not allow a voltage Band I
@@ -481,7 +481,7 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Device functional test</strong> — every detector, manual call point,
                 sounder, beacon, and interface device must be individually tested to confirm it
@@ -489,7 +489,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cause-and-effect verification</strong> — each zone or device activation must
                 be tested to confirm the programmed cause-and-effect responses occur correctly
@@ -497,7 +497,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sounder level measurement</strong> — sound pressure levels must be measured
                 in all accessible areas to confirm they meet the minimum 65dB(A) requirement
@@ -505,7 +505,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Battery capacity test</strong> — the standby batteries must be tested under
                 load to confirm they can sustain the system for the required standby period
@@ -513,7 +513,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>False alarm management</strong> — verification that any false alarm
                 management features (double-knock, coincidence detection, investigation delay) are
@@ -569,7 +569,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 The division of work elements between different organisations — where design,
                 installation and commissioning sat with different companies, each certifying only
@@ -577,21 +577,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 The evolution of the building design during construction — the building that was
                 designed for is not quite the building that was built.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 The lack of detailed information at the time of design — decisions that had to be
                 left open and settled later on site.
               </span>
             </li>
           </ul>
-          <p className="text-white/85 text-sm mt-4">
+          <p className="text-white text-sm mt-4">
             Those three are the reasons BS 5839-1:2025 Clause 41 actually gives. Note the thread
             running through them: each describes a way the system can end up with every individual
             certificate honest and the whole still not hanging together. An insurer, building
@@ -624,24 +624,24 @@ const sections = [
         </p>
         <div className="grid sm:grid-cols-3 gap-4 my-6">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <p className="text-yellow-400 font-bold text-sm mb-1">Weekly</p>
+            <p className="text-elec-yellow font-bold text-sm mb-1">Weekly</p>
             <p className="text-white font-bold mb-1">Test a call point</p>
-            <p className="text-white/70 text-xs">
+            <p className="text-white text-xs">
               Logged by the Responsible Person — a different manual call point each week.
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <p className="text-yellow-400 font-bold text-sm mb-1">Approximately every six months</p>
+            <p className="text-elec-yellow font-bold text-sm mb-1">Approximately every six months</p>
             <p className="text-white font-bold mb-1">Inspection and servicing</p>
-            <p className="text-white/70 text-xs">
+            <p className="text-white text-xs">
               By a competent person. BS 5839-1:2025 Clause 43.2.1 accepts any visit between five and
               seven months after the last one, measured from the date of acceptance as the datum.
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <p className="text-yellow-400 font-bold text-sm mb-1">Annually</p>
+            <p className="text-elec-yellow font-bold text-sm mb-1">Annually</p>
             <p className="text-white font-bold mb-1">Full inspection</p>
-            <p className="text-white/70 text-xs">
+            <p className="text-white text-xs">
               Every device tested over the course of the year, with a comprehensive report.
             </p>
           </div>
@@ -650,14 +650,14 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Service Record Requirements</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Calendar className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calendar className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Weekly test records</strong> — the Responsible Person must record the date,
                 time, call point tested, and result of each weekly test.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calendar className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calendar className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Six-monthly service reports</strong> — the servicing engineer records visual
                 inspections, battery checks, detector sensitivity tests (sample), and any faults
@@ -665,14 +665,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calendar className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calendar className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Annual inspection reports</strong> — comprehensive testing of every device,
                 battery capacity test, sounder level verification, and cable inspection results.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calendar className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calendar className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Defect and remedial records</strong> — any defects found during servicing
                 must be recorded with their severity, recommended actions, and confirmation of when
@@ -709,7 +709,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Design certificates</strong> should be issued by a qualified fire alarm
                 designer with knowledge of BS 5839-1, fire risk assessment principles, and the
@@ -717,7 +717,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Installation and commissioning certificates</strong> should be issued by a
                 fire alarm engineer with appropriate qualifications such as the FIA Foundation
@@ -725,7 +725,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Verification certificates</strong> should be issued by a person or
                 organisation independent of the installer, with equivalent or greater competence in
@@ -733,7 +733,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Service records</strong> should be completed by a competent fire alarm
                 servicing engineer. Many clients and insurers require the servicing company to hold
@@ -767,34 +767,34 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Design certificates and as-installed drawings for the fire alarm system.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Installation and commissioning certificates with all test results.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Weekly test records showing which call point was tested and the result.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Six-monthly service reports and annual inspection reports.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Records of any false alarms, faults, and remedial actions taken.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Records of any modifications or extensions to the system.</span>
             </li>
           </ul>
         </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-3">System Modifications and Extensions</h3>
-          <p className="text-white/90 text-sm">
+          <p className="text-white text-sm">
             Any modification to a fire alarm system — adding a zone, replacing a detector type,
             changing a sounder, upgrading the panel, or extending into a new area — requires its own
             documentation. This means an updated or supplementary design certificate confirming the
@@ -843,7 +843,7 @@ export default function FireAlarmCertificateRequirementsPage() {
       heroTitle={
         <>
           Fire Alarm Certificate Requirements:{' '}
-          <span className="text-yellow-400">BS 5839 UK Guide</span>
+          <span className="text-elec-yellow">BS 5839 UK Guide</span>
         </>
       }
       heroSubtitle="BS 5839 requires five types of certificate across the fire alarm system lifecycle: design, installation, commissioning, verification, and annual service records. This guide explains what each certificate must contain, who can issue them, and how long they must be kept."

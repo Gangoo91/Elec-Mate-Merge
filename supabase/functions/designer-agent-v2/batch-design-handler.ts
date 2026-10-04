@@ -1375,7 +1375,7 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
               if (retryError.message?.includes('402') || retryError.statusCode === 402) {
                 throw new CircuitDesignError(
                   'AI_TIMEOUT',
-                  'AI service requires payment - please add credits to your Lovable workspace',
+                  'AI usage limit reached - please try again shortly',
                   { error: retryError.message },
                   ['Add credits at Settings > Workspace > Usage']
                 );
@@ -1850,7 +1850,7 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
         suggestions: (body.mode === 'direct-design' && ragResults?.suggestions) ? ragResults.suggestions : undefined,
         metadata: {
           version: VERSION,
-          model: aiRequiredCircuits.length > 0 ? 'gpt-5-mini via Lovable AI' : 'Templates & Cache',
+          model: aiRequiredCircuits.length > 0 ? 'gpt-5-mini' : 'Templates & Cache',
           timings,
           ragHits: regulations.length,
           confidence,

@@ -11308,6 +11308,7 @@
         "npm:@capacitor/share@^8.0.1",
         "npm:@capacitor/splash-screen@^8.0.1",
         "npm:@capacitor/status-bar@^8.0.1",
+        "npm:@capgo/capacitor-app-tracking-transparency@^8.1.16",
         "npm:@capgo/capacitor-native-biometric@^8.4.2",
         "npm:@dnd-kit/core@^6.3.1",
         "npm:@dnd-kit/sortable@10",

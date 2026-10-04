@@ -252,7 +252,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Level 3 qualification</strong> in electrical installation or a related
                 engineering discipline. This includes NVQ Level 3, C&G 2357, C&G 2365, BTEC Level 3
@@ -261,7 +261,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>GCSE mathematics at grade C/4 or above</strong> (or Functional Skills Level
                 2 in mathematics). This is essential — the HNC involves significant mathematical
@@ -269,14 +269,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>GCSE English at grade C/4 or above</strong> (or Functional Skills Level 2 in
                 English). The HNC requires academic writing skills for assignments and reports.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Relevant industry experience.</strong> Most part-time programmes expect you
                 to be working in the electrical industry. Your workplace provides the context for
@@ -410,7 +410,7 @@ const sections = [
             </div>
           </div>
           <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <Award className="w-8 h-8 text-yellow-400 shrink-0 mt-1" />
+            <Award className="w-8 h-8 text-elec-yellow shrink-0 mt-1" />
             <div>
               <h3 className="font-bold text-white text-lg mb-1">Professional Registration</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -529,7 +529,7 @@ export default function HNCElectricalCoursePage() {
       badgeIcon={Award}
       heroTitle={
         <>
-          HNC Electrical: <span className="text-yellow-400">Higher National Certificate Guide</span>
+          HNC Electrical: <span className="text-elec-yellow">Higher National Certificate Guide</span>
         </>
       }
       heroSubtitle="Everything you need to know about studying for the HNC in Electrical and Electronic Engineering. Entry requirements, core modules, part-time options, career benefits, and AI-powered study support for the topics that challenge returning students."
@@ -547,7 +547,7 @@ export default function HNCElectricalCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Get the study support you need for your HNC"
-      ctaSubheading="Join 1,600+ UK electricians studying smarter with Elec-Mate. AI-powered explanations for engineering maths, circuit analysis, and electrical principles. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians studying smarter with Elec-Mate. AI-powered explanations for engineering maths, circuit analysis, and electrical principles. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/hnc-electrical"
     />

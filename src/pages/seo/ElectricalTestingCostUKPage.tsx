@@ -182,13 +182,13 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6">
             <div className="flex items-center gap-3 mb-4">
-              <Home className="w-6 h-6 text-yellow-400" />
+              <Home className="w-6 h-6 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">1-Bedroom Flat</h3>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-4">
               <div>
                 <div className="text-sm text-white mb-1">Price Range</div>
-                <div className="text-xl font-bold text-yellow-400">£120 — £180</div>
+                <div className="text-xl font-bold text-elec-yellow">£120 — £180</div>
               </div>
               <div>
                 <div className="text-sm text-white mb-1">Circuits</div>
@@ -208,13 +208,13 @@ const sections = [
 
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6">
             <div className="flex items-center gap-3 mb-4">
-              <Home className="w-6 h-6 text-yellow-400" />
+              <Home className="w-6 h-6 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">3-Bedroom House</h3>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-4">
               <div>
                 <div className="text-sm text-white mb-1">Price Range</div>
-                <div className="text-xl font-bold text-yellow-400">£180 — £280</div>
+                <div className="text-xl font-bold text-elec-yellow">£180 — £280</div>
               </div>
               <div>
                 <div className="text-sm text-white mb-1">Circuits</div>
@@ -233,13 +233,13 @@ const sections = [
 
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6">
             <div className="flex items-center gap-3 mb-4">
-              <Building2 className="w-6 h-6 text-yellow-400" />
+              <Building2 className="w-6 h-6 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">HMO / Commercial</h3>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-4">
               <div>
                 <div className="text-sm text-white mb-1">Price Range</div>
-                <div className="text-xl font-bold text-yellow-400">£250 — £2,000+</div>
+                <div className="text-xl font-bold text-elec-yellow">£250 — £2,000+</div>
               </div>
               <div>
                 <div className="text-sm text-white mb-1">Circuits</div>
@@ -282,7 +282,7 @@ const sections = [
               <thead>
                 <tr className="border-b border-white/10">
                   <th className="p-4 text-sm font-semibold text-white">Pricing Model</th>
-                  <th className="p-4 text-sm font-semibold text-yellow-400 text-right">Rate</th>
+                  <th className="p-4 text-sm font-semibold text-elec-yellow text-right">Rate</th>
                   <th className="p-4 text-sm font-semibold text-white">Best For</th>
                 </tr>
               </thead>
@@ -311,7 +311,7 @@ const sections = [
                 ].map((row, i) => (
                   <tr key={row.model} className={i < 3 ? 'border-b border-white/5' : ''}>
                     <td className="p-4 text-sm text-white">{row.model}</td>
-                    <td className="p-4 text-sm text-yellow-400 font-semibold text-right">
+                    <td className="p-4 text-sm text-elec-yellow font-semibold text-right">
                       {row.rate}
                     </td>
                     <td className="p-4 text-sm text-white">{row.best}</td>
@@ -371,7 +371,7 @@ const sections = [
               className="rounded-2xl bg-white/[0.04] border border-white/10 p-5"
             >
               <div className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <div>
                   <h4 className="font-bold text-white mb-1">{item.title}</h4>
                   <p className="text-white text-sm leading-relaxed">{item.description}</p>
@@ -402,7 +402,7 @@ const sections = [
               <thead>
                 <tr className="border-b border-white/10">
                   <th className="p-4 text-sm font-semibold text-white">Installation Type</th>
-                  <th className="p-4 text-sm font-semibold text-yellow-400 text-right">
+                  <th className="p-4 text-sm font-semibold text-elec-yellow text-right">
                     Max Interval
                   </th>
                   <th className="p-4 text-sm font-semibold text-white">Notes</th>
@@ -443,7 +443,7 @@ const sections = [
                 ].map((row, i) => (
                   <tr key={row.type} className={i < 5 ? 'border-b border-white/5' : ''}>
                     <td className="p-4 text-sm text-white">{row.type}</td>
-                    <td className="p-4 text-sm text-yellow-400 font-semibold text-right">
+                    <td className="p-4 text-sm text-elec-yellow font-semibold text-right">
                       {row.interval}
                     </td>
                     <td className="p-4 text-sm text-white">{row.notes}</td>
@@ -495,7 +495,7 @@ const sections = [
               className="rounded-2xl bg-white/[0.04] border border-white/10 p-5"
             >
               <div className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <div>
                   <h4 className="font-bold text-white mb-1">{item.title}</h4>
                   <p className="text-white text-sm leading-relaxed">{item.description}</p>
@@ -524,7 +524,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Camera className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI Board Scanner</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -538,7 +538,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">70 Electrical Calculators</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -553,7 +553,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">19 Certificate Types</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -566,7 +566,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <Search className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Defect Code AI</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -603,7 +603,7 @@ export default function ElectricalTestingCostUKPage() {
       heroTitle={
         <>
           Electrical Testing Cost UK 2026:{' '}
-          <span className="text-yellow-400">EICR and PAT Prices</span>
+          <span className="text-elec-yellow">EICR and PAT Prices</span>
         </>
       }
       heroSubtitle="How much should you charge for EICRs, PAT testing, initial verification, and periodic inspections in 2026? This guide covers every type of electrical testing cost in the UK, with pricing tables by property size and practical advice on maximising your testing profitability."
@@ -614,7 +614,7 @@ export default function ElectricalTestingCostUKPage() {
       faqHeading="Frequently Asked Questions About Electrical Testing Costs"
       relatedPages={relatedPages}
       ctaHeading="Earn more from every testing job"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to complete certificates on site, generate remedial quotes, and eliminate post-site paperwork. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to complete certificates on site, generate remedial quotes, and eliminate post-site paperwork. 7-day free trial, cancel anytime."
     />
   );
 }

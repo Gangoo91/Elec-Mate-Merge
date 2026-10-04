@@ -52,7 +52,7 @@ const quickCheckQuestions = [
     id: 'earthing-requirement',
     question: 'What earthing requirement applies to metallic cable management systems?',
     options: [
-      'Earthing is optional',
+      'Only the first section, at the board',
       'All metallic sections must be earthed',
       'Only outdoor systems need earthing',
     ],
@@ -144,16 +144,16 @@ const quizQuestions = [
   {
     id: 7,
     question:
-      'According to BS EN 61537, what is required for cable management systems in fire escape routes?',
+      'What does BS 7671 require of cable supports along fire escape routes (and, since 2018, throughout the installation)?',
     options: [
-      'They may be omitted to save space',
-      'They must be made only from PVC',
-      'They need no special fire considerations',
-      'Enhanced fire performance requirements',
+      'They may be cable-tied to the ceiling grid',
+      'They may be made from PVC throughout',
+      'They need support only at the ends of each run',
+      'Supports that will not fail prematurely in a fire',
     ],
     correctAnswer: 3,
     explanation:
-      'BS EN 61537 requires enhanced fire performance for cable management systems in escape routes to maintain safety during evacuation.',
+      'Cables must be supported so they do not collapse prematurely in a fire and obstruct people escaping or firefighters. Since BS 7671:2018 this applies throughout the installation, not just escape routes, so plastic-only supports and ceiling-grid ties are not enough.',
   },
   {
     id: 8,

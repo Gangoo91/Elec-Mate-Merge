@@ -257,7 +257,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Radio className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Radio className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Genny connection methods:</strong> Direct connection (crocodile clips to
                 cable termination conductors), inductive coupling (clamp the Genny transmitter coil
@@ -268,7 +268,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Radio className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Radio className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Signal frequencies:</strong> Most Genny systems operate at 33kHz (general
                 purpose) and 8Hz (selective, lower coupling to adjacent services). The
@@ -279,7 +279,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Radio className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Radio className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Signal coupling to adjacent services:</strong> The injected signal will
                 couple electromagnetically to any nearby metallic service running parallel to the
@@ -306,7 +306,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4 space-y-4">
           <div>
             <h3 className="font-bold text-white mb-2 flex items-center gap-2">
-              <Gauge className="w-4 h-4 text-yellow-400" />
+              <Gauge className="w-4 h-4 text-elec-yellow" />
               Depth Indication
             </h3>
             <p className="text-white text-sm leading-relaxed">
@@ -335,7 +335,7 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <h3 className="font-bold text-white mb-2 flex items-center gap-2">
-            <AlertTriangle className="w-4 h-4 text-yellow-400" />
+            <AlertTriangle className="w-4 h-4 text-elec-yellow" />
             Signal Sweep Technique
           </h3>
           <p className="text-white text-sm leading-relaxed">
@@ -551,7 +551,7 @@ export default function CableDetectorBuyingGuidePage() {
       heroTitle={
         <>
           Cable Detector Buying Guide:{' '}
-          <span className="text-yellow-400">CAT & Genny Systems for UK Electricians 2026</span>
+          <span className="text-elec-yellow">CAT & Genny Systems for UK Electricians 2026</span>
         </>
       }
       heroSubtitle="Everything you need to know about cable detectors — passive vs active detection, the CAT & Genny system, depth indication limitations, common survey errors, and the best cable avoidance tools for professional electrical and civil work in 2026."
@@ -562,7 +562,7 @@ export default function CableDetectorBuyingGuidePage() {
       faqHeading="Frequently Asked Questions About Cable Detectors"
       relatedPages={relatedPages}
       ctaHeading="Generate Method Statements and Risk Assessments for Cable Work"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI-generated method statements, risk assessments, and professional EIC certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for AI-generated method statements, risk assessments, and professional EIC certification. 7-day free trial, cancel anytime."
     />
   );
 }

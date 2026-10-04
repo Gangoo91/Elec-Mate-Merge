@@ -146,14 +146,14 @@ export default function RAMSGeneratorPage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
-        <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-elec-yellow text-sm font-medium mb-6">
             <Brain className="w-4 h-4" />8 AI Agents + 12 AI Tools Included
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             AI RAMS Generator
-            <span className="block text-yellow-400 mt-1">for Electricians</span>
+            <span className="block text-elec-yellow mt-1">for Electricians</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             Generate professional, site-specific Risk Assessments and Method Statements in under 60
@@ -169,7 +169,7 @@ export default function RAMSGeneratorPage() {
             </Link>
             <a
               href="#what-are-rams"
-              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-yellow-500/40 touch-manipulation transition-colors"
+              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-white/[0.1] touch-manipulation transition-colors"
             >
               Learn About RAMS
               <ArrowDown className="w-4 h-4 ml-1" />
@@ -183,7 +183,7 @@ export default function RAMSGeneratorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <BookOpen className="w-5 h-5 text-yellow-400" />
+              <BookOpen className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">What Are RAMS?</h2>
           </div>
@@ -195,7 +195,7 @@ export default function RAMSGeneratorPage() {
               work.
             </p>
             <p>
-              The <strong className="text-yellow-400">Risk Assessment</strong> identifies the
+              The <strong className="text-elec-yellow">Risk Assessment</strong> identifies the
               hazards associated with the work, evaluates the likelihood and severity of harm from
               each hazard, and specifies the control measures that will be implemented to reduce the
               risk to an acceptable level. A proper risk assessment follows the hierarchy of
@@ -206,7 +206,7 @@ export default function RAMSGeneratorPage() {
               severity (1-5) to produce a risk score before and after controls are applied.
             </p>
             <p>
-              The <strong className="text-yellow-400">Method Statement</strong> is a step-by-step
+              The <strong className="text-elec-yellow">Method Statement</strong> is a step-by-step
               description of how the work will be carried out safely. It follows the chronological
               sequence of the job from arrival on site through to completion and describes at each
               stage what work is being done, who is doing it, what equipment and materials are being
@@ -230,7 +230,7 @@ export default function RAMSGeneratorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <ShieldCheck className="w-5 h-5 text-yellow-400" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Legal Requirements for RAMS in Electrical Work
@@ -247,9 +247,9 @@ export default function RAMSGeneratorPage() {
               <h3 className="font-bold text-white text-lg mb-4">Key Legislation Requiring RAMS</h3>
               <ul className="space-y-3 text-white">
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>
-                    <strong className="text-yellow-400">
+                    <strong className="text-elec-yellow">
                       Health and Safety at Work etc. Act 1974
                     </strong>{' '}
                     — Section 2 places a general duty on every employer to ensure, so far as is
@@ -261,9 +261,9 @@ export default function RAMSGeneratorPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>
-                    <strong className="text-yellow-400">
+                    <strong className="text-elec-yellow">
                       Management of Health and Safety at Work Regulations 1999
                     </strong>{' '}
                     — Regulation 3 requires every employer to make a suitable and sufficient
@@ -274,9 +274,9 @@ export default function RAMSGeneratorPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>
-                    <strong className="text-yellow-400">
+                    <strong className="text-elec-yellow">
                       Construction (Design and Management) Regulations 2015
                     </strong>{' '}
                     — CDM 2015 applies to all construction work in Great Britain, which includes
@@ -287,9 +287,9 @@ export default function RAMSGeneratorPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>
-                    <strong className="text-yellow-400">
+                    <strong className="text-elec-yellow">
                       Electricity at Work Regulations 1989
                     </strong>{' '}
                     — Regulation 3 requires that all systems are maintained to prevent danger.
@@ -300,9 +300,9 @@ export default function RAMSGeneratorPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>
-                    <strong className="text-yellow-400">COSHH Regulations 2002</strong> — The
+                    <strong className="text-elec-yellow">COSHH Regulations 2002</strong> — The
                     Control of Substances Hazardous to Health Regulations require a specific
                     assessment of exposure to hazardous substances. For electricians, this covers
                     substances such as PVC fumes from cable stripping, silica dust from chasing
@@ -335,7 +335,7 @@ export default function RAMSGeneratorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <AlertTriangle className="w-5 h-5 text-yellow-400" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               What Goes in an Electrical Risk Assessment?
@@ -357,7 +357,7 @@ export default function RAMSGeneratorPage() {
           <div className="grid sm:grid-cols-2 gap-4 my-6">
             <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <div className="flex items-center gap-2 mb-3">
-                <Zap className="w-5 h-5 text-yellow-400" />
+                <Zap className="w-5 h-5 text-elec-yellow" />
                 <h3 className="font-bold text-white text-lg">Electrical Hazards</h3>
               </div>
               <p className="text-white text-sm leading-relaxed">
@@ -372,7 +372,7 @@ export default function RAMSGeneratorPage() {
             </div>
             <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
               <div className="flex items-center gap-2 mb-3">
-                <HardHat className="w-5 h-5 text-yellow-400" />
+                <HardHat className="w-5 h-5 text-elec-yellow" />
                 <h3 className="font-bold text-white text-lg">Working at Height</h3>
               </div>
               <p className="text-white text-sm leading-relaxed">
@@ -387,7 +387,7 @@ export default function RAMSGeneratorPage() {
             </div>
             <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
               <div className="flex items-center gap-2 mb-3">
-                <Flame className="w-5 h-5 text-yellow-400" />
+                <Flame className="w-5 h-5 text-elec-yellow" />
                 <h3 className="font-bold text-white text-lg">Fire and Hot Works</h3>
               </div>
               <p className="text-white text-sm leading-relaxed">
@@ -401,7 +401,7 @@ export default function RAMSGeneratorPage() {
             </div>
             <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
               <div className="flex items-center gap-2 mb-3">
-                <Activity className="w-5 h-5 text-yellow-400" />
+                <Activity className="w-5 h-5 text-elec-yellow" />
                 <h3 className="font-bold text-white text-lg">Manual Handling</h3>
               </div>
               <p className="text-white text-sm leading-relaxed">
@@ -435,7 +435,7 @@ export default function RAMSGeneratorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Method Statement Structure for Electrical Work
@@ -488,7 +488,7 @@ export default function RAMSGeneratorPage() {
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex-shrink-0">
-                  <span className="font-bold text-yellow-400">{item.step}</span>
+                  <span className="font-bold text-elec-yellow">{item.step}</span>
                 </div>
                 <div>
                   <h3 className="font-bold text-white text-lg mb-1">{item.title}</h3>
@@ -515,7 +515,7 @@ export default function RAMSGeneratorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Brain className="w-5 h-5 text-yellow-400" />
+              <Brain className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               How Elec-Mate AI Generates Your RAMS
@@ -564,7 +564,7 @@ export default function RAMSGeneratorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Zap className="w-5 h-5 text-yellow-400" />
+              <Zap className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               RAMS for Live Working and Restricted Situations
@@ -631,7 +631,7 @@ export default function RAMSGeneratorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <HelpCircle className="w-5 h-5 text-yellow-400" />
+              <HelpCircle className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Frequently Asked Questions
@@ -644,7 +644,7 @@ export default function RAMSGeneratorPage() {
                 className="group p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-white/[0.14] transition-colors"
               >
                 <summary className="flex items-start gap-3 cursor-pointer touch-manipulation list-none [&::-webkit-details-marker]:hidden">
-                  <ChevronRight className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0 transition-transform group-open:rotate-90" />
+                  <ChevronRight className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0 transition-transform group-open:rotate-90" />
                   <h3 className="font-bold text-white text-lg">{faq.question}</h3>
                 </summary>
                 <div className="mt-3 pl-8">
@@ -674,7 +674,7 @@ export default function RAMSGeneratorPage() {
 
       <SEOCTASection
         heading="Generate Professional RAMS in Seconds"
-        subheading="Join 1,600+ UK electricians using Elec-Mate for AI-powered risk assessments. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians using Elec-Mate for AI-powered risk assessments. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

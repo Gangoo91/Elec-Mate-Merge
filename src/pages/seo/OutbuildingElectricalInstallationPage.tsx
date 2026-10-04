@@ -170,7 +170,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Alternative — MICC cable or conduit</strong> — where the route is entirely
                 in conduit with draw boxes (accessible for cable replacement), standard cable in
@@ -196,7 +196,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Under open garden — 500mm minimum</strong> — where the cable runs under lawn
                 or garden beds that will only be disturbed by hand tools (spades and forks), a
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Under paths and drives — 600mm minimum</strong> — where the cable crosses a
                 path, driveway, or any surface that may be broken up for repair or alteration, a
@@ -216,7 +216,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Record the route</strong> — the cable route must be recorded on a drawing
                 with measurements from fixed reference points (walls, fence posts). This drawing
@@ -392,7 +392,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use a competent person scheme electrician</strong> — a NICEIC, NAPIT, or
                 ELECSA registered electrician can self-certify the work and notify the scheme on
@@ -400,7 +400,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EIC on completion</strong> — an Electrical Installation Certificate (EIC)
                 covering the entire outbuilding installation (cable route, sub-board, all circuits,
@@ -428,7 +428,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete the EIC Including Earth Test</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -460,7 +460,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run outbuilding electrical jobs with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for EIC certificates, quoting, and job management. Complete more jobs with less paperwork. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for EIC certificates, quoting, and job management. Complete more jobs with less paperwork. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -486,7 +486,7 @@ export default function OutbuildingElectricalInstallationPage() {
       heroTitle={
         <>
           Outbuilding Electrical Installation:{' '}
-          <span className="text-yellow-400">Garden Office Wiring Guide UK</span>
+          <span className="text-elec-yellow">Garden Office Wiring Guide UK</span>
         </>
       }
       heroSubtitle="Everything you need to know about running electricity to an outbuilding — SWA armoured cable requirements, trench depths under paths and drives, sub-board installation, 30mA RCD protection, and why TT earthing is the correct earthing system for separate outbuildings."
@@ -497,7 +497,7 @@ export default function OutbuildingElectricalInstallationPage() {
       faqHeading="Frequently Asked Questions About Outbuilding Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Complete Outbuilding EICs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, quoting, and job management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion, quoting, and job management. 7-day free trial, cancel anytime."
     />
   );
 }

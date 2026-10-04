@@ -230,7 +230,7 @@ const sections = [
                 <span><strong>Zone 1</strong> — explosive atmosphere likely in normal operation. Equipment: Category 1G or 2G (Ga or Gb). Ex d, Ex e, Ex ia, Ex ib, Ex p, Ex mb, Ex q permitted.</span>
               </li>
               <li className="flex items-start gap-3">
-                <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <span><strong>Zone 2</strong> — explosive atmosphere not likely but possible. Equipment: Category 1G, 2G or 3G (Ga, Gb or Gc). Ex n (non-sparking) also permitted here.</span>
               </li>
             </ul>
@@ -247,7 +247,7 @@ const sections = [
                 <span><strong>Zone 21</strong> — cloud of combustible dust likely in normal operation (around filling equipment, conveyors, dusty processes).</span>
               </li>
               <li className="flex items-start gap-3">
-                <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <span><strong>Zone 22</strong> — cloud of combustible dust not likely but possible (outer boundary of Zone 21).</span>
               </li>
             </ul>
@@ -269,23 +269,23 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Ex d — Flameproof enclosure.</strong> The enclosure can contain an internal explosion without igniting the surrounding atmosphere. Used for motors, junction boxes, switchgear. Zone 1 and Zone 2.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Ex e — Increased safety.</strong> Measures applied to prevent sparks and excessive temperatures. Used for terminal boxes, junction boxes where no sparking is expected. Zone 1 and Zone 2.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Ex ia — Intrinsic safety (Category ia).</strong> Energy limited so that any spark cannot ignite the explosive atmosphere. Used for instruments, sensors, transmitters. Zone 0, 1, and 2.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Ex n — Non-sparking.</strong> Equipment that will not ignite the surrounding atmosphere in normal operation. Zone 2 only. Suitable for lighting and general purpose equipment in the outer zone.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Ex p — Pressurised enclosure.</strong> The enclosure is pressurised with clean air or inert gas to prevent the ingress of the explosive atmosphere. Used for large motors, analysers, control panels.</span>
             </li>
           </ul>
@@ -306,23 +306,23 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Equipment selection</strong> — must match zone, gas group (IIA, IIB, IIC), and temperature class. Selection must be documented and traceable to the hazardous area classification drawing.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Cable selection</strong> — armoured cable (SWA or braided) or conduit systems to protect against mechanical damage. Cables must be rated for the operating temperature and chemical environment.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Cable entries</strong> — certified cable glands or conduit seals must be used to maintain the integrity of Ex d and Ex e enclosures. Unused entries must be sealed with certified blanking plugs.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Earthing and bonding</strong> — earthing must be designed to prevent electrostatic accumulation, which is an ignition risk for dust zones in particular.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Documentation</strong> — an installation dossier including zone classification drawing, equipment schedule with Ex certificate numbers, and as-installed drawings must be produced and retained.</span>
             </li>
           </ul>
@@ -344,15 +344,15 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Visual inspection</strong> — can be carried out without opening equipment. Checks for visible damage, missing fasteners, illegible labels, obvious deterioration. Can be done by trained operators as part of routine checks.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Close inspection</strong> — includes all visual inspection checks plus opening enclosures to check cable entries, fastener torque, internal condition, and equipment certification. Must be done by a competent person (CompEx-certified). Typically every 1 to 3 years.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Detailed inspection</strong> — includes all close inspection checks plus functional testing, insulation resistance testing, and full equipment verification. Must be done by a competent person. Typically every 3 years for most installations.</span>
             </li>
           </ul>
@@ -445,7 +445,7 @@ export default function ATEXHazardousAreaElectricalPage() {
       heroTitle={
         <>
           ATEX Hazardous Area Electrical Installations:{' '}
-          <span className="text-yellow-400">UK Electrician's Guide</span>
+          <span className="text-elec-yellow">UK Electrician's Guide</span>
         </>
       }
       heroSubtitle="Working in explosive atmospheres requires zone classification knowledge, Ex equipment selection, BS EN 60079-14 installation practice, and CompEx certification. This guide covers everything you need."

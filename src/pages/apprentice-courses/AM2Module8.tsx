@@ -9,11 +9,9 @@ import {
   ExamReviewPanel,
   type ExamReviewFilter,
 } from '@/components/apprentice-courses/ExamReviewPanel';
-import {
-  getRandomQuestions,
-  am2QuestionBank,
-  AM2Question,
-} from '@/data/apprentice-courses/am2/questionBank';
+import { am2QuestionBank, AM2Question } from '@/data/apprentice-courses/am2/questionBank';
+import { buildAM2Paper, verifiedFamilyCount } from '@/data/apprentice-courses/am2/am2Paper';
+import { useRecentPaperIds } from '@/hooks/useRecentPaperIds';
 import { shuffleAllQuestionOptions, createShuffleSalt } from '@/utils/shuffleOptions';
 import { toast } from 'sonner';
 import useSEO from '@/hooks/useSEO';
@@ -29,9 +27,9 @@ const AM2Module8 = () => {
   const examExit = useExamExit('/study-centre/apprentice/am2');
   useSEO(
     'Module 8: AM2 Mock Examination - AM2 Preparation Course',
-    // 256, counted from the bank — the description claimed 400, which was
-    // never true of this file and is a public-facing number.
-    'Practice AM2 knowledge test with 30 questions, 60-minute timer from a 256 question bank covering safe isolation, BS 7671, testing and fault finding'
+    // Counted, never typed: this description is public-facing, and the typed
+    // figure (first 400, then 256) was wrong both times.
+    `Practice AM2 knowledge test: 30 questions in 60 minutes from ${am2QuestionBank.length} questions plus worked calculations with new numbers every sitting, covering safe isolation, BS 7671, testing and fault finding`
   );
 
   // Exam state
@@ -55,6 +53,8 @@ const AM2Module8 = () => {
   const answersArray = examQuestions.map((_, index) => selectedAnswers[index]);
 
   const history = useMockExamHistory('am2-module8', user?.id ?? null);
+  // What this learner saw and missed last time, so the next paper differs.
+  const recentPaper = useRecentPaperIds('am2-module8', user?.id ?? null);
   const failureRates = useQuestionFailureRates(
     'am2-module8',
     examQuestions.map((q) => q.id),
@@ -119,7 +119,7 @@ const AM2Module8 = () => {
 
   const startExam = () => {
     const questions = shuffleAllQuestionOptions(
-      getRandomQuestions(30, { basic: 0.35, intermediate: 0.45, advanced: 0.2 }),
+      buildAM2Paper({ recentIds: recentPaper.recentIds, missedIds: recentPaper.missedIds }),
       createShuffleSalt()
     );
     setExamQuestions(questions);
@@ -254,7 +254,7 @@ const AM2Module8 = () => {
         // is open-book, so drilling this closed-book practises the wrong exam.
         // The four permitted documents are named because "open book" alone
         // leads people to revise with the wrong things to hand.
-        note="Open book, like the real Section E. Practise with BS 7671, Guidance Note 3, the On-Site Guide and a short guide to the Building Regulations — nothing else is allowed."
+        note={`Open book, like the real Section E. Practise with BS 7671, Guidance Note 3, the On-Site Guide and a short guide to the Building Regulations — nothing else is allowed. About a third of the paper is worked calculations and readings drawn from ${verifiedFamilyCount} question types with new numbers every sitting, and questions you got wrong last time come back.`}
         onStart={startExam}
         onExit={() => navigate(examExit.to)}
       />

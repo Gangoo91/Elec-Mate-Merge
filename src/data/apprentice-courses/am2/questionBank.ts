@@ -19,6 +19,10 @@ export interface AM2Question {
     | 'Building Regulations'
     | 'Safe Isolation'
     | 'Fault Finding';
+  /** Where the answer comes from — shown under "Why" in the review. */
+  reference?: string;
+  /** Drawn from a generated family (generatedQuestions.ts); numbers vary. */
+  generated?: boolean;
 }
 
 export const am2QuestionBank: AM2Question[] = [
@@ -91,7 +95,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Reasonably practicable means weighing the risk against the sacrifice (time, trouble, cost) needed to avert or reduce it - not just cost alone.',
     section: 'HASAWA 1974',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Legal Terms',
     category: 'Health & Safety',
   },
@@ -204,9 +208,9 @@ export const am2QuestionBank: AM2Question[] = [
     question:
       'What does EAW Regulation 16 require regarding persons working on electrical systems?',
     options: [
-      'They must be at least twenty-one years old',
-      'They must be employed on a full-time contract',
-      'They must hold an accredited engineering degree',
+      'They must hold a Level 3 qualification',
+      'They must be registered with a scheme',
+      'They must have passed the AM2',
       'They must be competent or supervised',
     ],
     correctAnswer: 3,
@@ -230,7 +234,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Regulation 13 requires precautions to prevent electrical equipment that has been made dead from being charged (re-energised) accidentally.',
     section: 'EAW 1989',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Isolation',
     category: 'Health & Safety',
   },
@@ -308,16 +312,16 @@ export const am2QuestionBank: AM2Question[] = [
     id: 17,
     question: 'Which list places the hierarchy of control measures in the correct order?',
     options: [
-      'PPE, administrative controls, engineering controls, substitution, elimination',
+      'Eliminate, substitute, administrative controls, engineering controls, PPE',
       'Eliminate, substitute, engineering controls, administrative controls, PPE',
-      'Identify, evaluate, record, review and communicate the hazard',
-      'Isolate, secure, prove dead, label and document the circuit',
+      'Substitute, eliminate, engineering controls, PPE, administrative controls',
+      'PPE, administrative controls, engineering controls, substitution, elimination',
     ],
     correctAnswer: 1,
     explanation:
-      'The hierarchy: elimination (remove hazard), substitution (use less hazardous), engineering controls, administrative controls, PPE (last resort).',
+      'The hierarchy runs elimination (remove the hazard), substitution (something less hazardous), engineering controls, administrative controls, then PPE as the last resort. Engineering controls sit above administrative ones because they act without relying on people following a procedure; substitution can only come after elimination has been ruled out.',
     section: 'Risk Assessment',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Control Measures',
     category: 'Health & Safety',
   },
@@ -353,7 +357,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'RIDDOR stands for Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013.',
     section: 'RIDDOR',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Definition',
     category: 'Health & Safety',
   },
@@ -404,7 +408,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Dangerous occurrences are specific near-miss events that had the potential to cause death or serious injury, listed in Schedule 2 of RIDDOR.',
     section: 'RIDDOR',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Dangerous Occurrences',
     category: 'Health & Safety',
   },
@@ -412,16 +416,16 @@ export const am2QuestionBank: AM2Question[] = [
     id: 23,
     question: 'Who is responsible for reporting incidents under RIDDOR?',
     options: [
-      'The injured person (once they have recovered)',
-      'Any witness to the incident (colleague or visitor)',
-      'The HSE inspector (assigned to the premises)',
-      'The responsible person (usually the employer)',
+      'The injured person, or a family member for them',
+      'Any witness who saw the incident happen',
+      'The HSE inspector who covers the premises',
+      'The responsible person, usually the employer',
     ],
     correctAnswer: 3,
     explanation:
       'The responsible person, usually the employer or person in control of the premises, must report RIDDOR incidents.',
     section: 'RIDDOR',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Responsibility',
     category: 'Health & Safety',
   },
@@ -432,15 +436,15 @@ export const am2QuestionBank: AM2Question[] = [
     question: 'According to the hierarchy of control, when should personal protective equipment be used?',
     options: [
       'As a last resort when other controls are not reasonably practicable',
-      'As the first control measure on every task, before all other controls',
-      'Only when an HSE inspector is present on site while the work is being done',
-      'Whenever the employee personally chooses to wear it on the task',
+      'First, so the operative is protected while other controls are arranged',
+      'Instead of administrative controls, as it protects the wearer directly',
+      'Only once elimination has been tried, ahead of engineering controls',
     ],
     correctAnswer: 0,
     explanation:
-      'PPE should be used as a last resort, after elimination, substitution, engineering and administrative controls have been considered.',
+      'PPE comes last, after elimination, substitution, engineering and administrative controls have been considered, because it protects only the wearer and only when worn correctly. It is not a stand-in while other controls are arranged, and it does not jump ahead of engineering controls once elimination has been ruled out.',
     section: 'PPE',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Hierarchy',
     category: 'Health & Safety',
   },
@@ -482,12 +486,12 @@ export const am2QuestionBank: AM2Question[] = [
     id: 27,
     question: 'When working near live electrical equipment, which eye protection is required?',
     options: [
-      'Tinted sunglasses to cut down glare',
-      'Standard untinted reading glasses',
-      'A dust mask fitted with an integrated visor',
+      'Standard impact-rated safety spectacles',
+      'Chemical splash goggles with indirect vents',
       'Arc-rated safety glasses or face shield',
+      'Tinted glasses to cut the glare from an arc',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
       'Arc-rated safety glasses or face shields protect against arc flash, which can cause severe burns and eye damage from intense light and heat.',
     section: 'PPE',
@@ -501,14 +505,14 @@ export const am2QuestionBank: AM2Question[] = [
     options: [
       'Use it properly, report defects, store it correctly',
       'Provide it for other workers, and replace it when needed',
-      'Modify it to suit the task, then hand it on to others',
+      'Choose which items to wear from their own view of the risk',
       'Buy it, maintain it and replace it at their own expense',
     ],
     correctAnswer: 0,
     explanation:
       'Employees must use PPE properly as trained, report defects or damage, and store it correctly when not in use.',
     section: 'PPE',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Employee Duties',
     category: 'Health & Safety',
   },
@@ -561,7 +565,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'A principal contractor must be appointed when there is more than one contractor working on a construction project.',
     section: 'CDM Regulations',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Principal Contractor',
     category: 'Health & Safety',
   },
@@ -608,7 +612,7 @@ export const am2QuestionBank: AM2Question[] = [
       'Confirm the ladder has been PAT tested, and record the test date on it',
       'Measure the ladder, confirming it extends to at least three metres',
       'Check for damage, ensure suitable for task, correct angle, secure base',
-      'Verify the ladder is rated to BS 7671, as the standard requires for site use',
+      'Check it has a current LOLER thorough examination certificate',
     ],
     correctAnswer: 2,
     explanation:
@@ -688,7 +692,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'An extraneous-conductive-part is a conductive part liable to introduce a potential, generally earth potential, and is not part of the electrical installation (e.g., metal pipes, structural steelwork).',
     section: 'Definitions',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Conductive Parts',
     category: 'BS 7671 Fundamentals',
   },
@@ -773,7 +777,7 @@ export const am2QuestionBank: AM2Question[] = [
     ],
     correctAnswer: 0,
     explanation:
-      'Under BS 7671 Table 41.1, a 230V TT final circuit must disconnect within 0.2 seconds. The old 1.0s value no longer applies; where ADS relies on an RCD this short time is readily achieved.',
+      'Under BS 7671 Table 41.1, a 230 V final circuit within its scope on a TT system must disconnect within 0.2 s, against 0.4 s on a TN system. Where automatic disconnection relies on an RCD, this short time is readily achieved.',
     section: 'Electric Shock',
     difficulty: 'advanced',
     topic: 'Disconnection Times',
@@ -860,7 +864,7 @@ export const am2QuestionBank: AM2Question[] = [
     ],
     correctAnswer: 0,
     explanation:
-      'TN-S supplies typically have Ze values up to 0.8Ω, as specified in the Electricity Safety, Quality and Continuity Regulations.',
+      'The On-Site Guide works with a typical maximum Ze of 0.8 Ω for a TN-S supply (0.35 Ω for TN-C-S) when it tabulates circuit lengths. These are typical maxima, not guarantees for every supply, so the actual Ze must still be measured or confirmed with the distributor.',
     section: 'Earthing Systems',
     difficulty: 'intermediate',
     topic: 'Ze Values',
@@ -877,7 +881,7 @@ export const am2QuestionBank: AM2Question[] = [
     ],
     correctAnswer: 1,
     explanation:
-      'TN-C-S (PME) supplies typically have Ze values up to 0.35Ω due to the parallel earth paths.',
+      'The On-Site Guide works with a typical maximum Ze of 0.35 Ω for a TN-C-S (PME) supply, against 0.8 Ω for TN-S, when it tabulates circuit lengths. These are typical maxima, not guarantees for every supply, so the actual Ze must still be measured or confirmed with the distributor.',
     section: 'Earthing Systems',
     difficulty: 'intermediate',
     topic: 'Ze Values',
@@ -1163,7 +1167,7 @@ export const am2QuestionBank: AM2Question[] = [
     ],
     correctAnswer: 3,
     explanation:
-      'Additional protection requires RCDs with rated residual operating current (IΔn) not exceeding 30mA and operating time not exceeding 40ms at 5×IΔn.',
+      'Additional protection is by an RCD with a rated residual operating current (IΔn) not exceeding 30 mA (Regulation 415.1). 100 mA and 300 mA devices are used for fault protection or protection against fire, not for additional protection.',
     section: 'Protective Devices',
     difficulty: 'intermediate',
     topic: 'RCD Rating',
@@ -1193,7 +1197,7 @@ export const am2QuestionBank: AM2Question[] = [
       'Type S',
       'Type A or Type B',
       'Type AC',
-      'Any type',
+      'Type AC rated at 10 mA',
     ],
     correctAnswer: 1,
     explanation:
@@ -1224,18 +1228,19 @@ export const am2QuestionBank: AM2Question[] = [
   // Earthing and Bonding (15 questions)
   {
     id: 143,
-    question: 'Where the earthing conductor is buried, what is the minimum cross-sectional area permitted for a copper earthing conductor?',
+    question:
+      'An earthing conductor is buried in the ground with no protection against corrosion. What minimum copper cross-sectional area does BS 7671 require?',
     options: [
-      'Always 6mm² copper regardless of the supply size',
-      'Always the same size as the line conductor of the circuit',
-      'Always 25mm² copper for any installation size',
-      'Depends on supply conductor size - refer to Table 54.7',
+      '16 mm² copper',
+      '10 mm² copper',
+      '6 mm² copper',
+      '25 mm² copper',
     ],
     correctAnswer: 3,
     explanation:
-      'Main earthing conductor size is determined from the line conductor size using the adiabatic method or Table 54.7 (54.8 in A4).',
+      'A buried earthing conductor is sized from Table 54.1, which depends on how it is protected. Where it is not protected against corrosion, the minimum is 25 mm² copper (or 50 mm² steel). 16 mm² copper applies only where it is protected against both corrosion and mechanical damage. 10 mm² is the main protective bonding minimum for a PME supply up to 35 mm², and 6 mm² is the general main bonding minimum; neither is the rule for a buried earthing conductor.',
     section: 'Earthing',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Conductor Sizing',
     category: 'BS 7671 Selection & Erection',
   },
@@ -1253,7 +1258,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'For supply conductors up to and including 35mm² copper, main bonding conductors must be at least 10mm² copper.',
     section: 'Bonding',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Bonding Size',
     category: 'BS 7671 Selection & Erection',
   },
@@ -1429,7 +1434,7 @@ export const am2QuestionBank: AM2Question[] = [
     ],
     correctAnswer: 2,
     explanation:
-      'The minimum insulation resistance for circuits up to 500V is 1.0MΩ, tested at 500V DC. BS 7671 Table 64, under Regulation 643.3.2. Guidance Note 3 prints the same values as its Table 6.1, so look for Table 64 if you are working from the Regs on the day.',
+      'BS 7671 Table 64 gives 500 V DC and a minimum of 1.0 MΩ for circuits up to and including 500 V, other than SELV and PELV, so a 230 V circuit must read at least 1.0 MΩ. 0.5 MΩ is the SELV/PELV minimum at 250 V DC.',
     section: 'Insulation Testing',
     difficulty: 'basic',
     topic: 'Minimum Values',
@@ -1589,7 +1594,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Table 3A has been deleted from Appendix 3. Regardless of RCD Type, effectiveness is deemed verified by a single alternating current test at the rated residual operating current: within 300 ms maximum for a general non-delay device, or between 130 ms minimum and 500 ms maximum for a delay S type.',
     section: 'RCD Testing',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Additional Protection',
     category: 'BS 7671 Inspection & Testing',
   },
@@ -1597,14 +1602,14 @@ export const am2QuestionBank: AM2Question[] = [
     id: 204,
     question: 'How often is the user recommended to operate the integral test button of an RCD?',
     options: [
-      'Quarterly by the user',
-      'Annually by the installer',
-      'Never',
+      'Quarterly, by the user',
+      'Six-monthly, by the user',
+      'Annually, by the installer',
       'Only during periodic inspection',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
-      'Users should operate the test button quarterly (every 3 months) to confirm the RCD trips correctly.',
+      'The RCD notice required by BS 7671 (Regulation 514.12) tells the user to test six-monthly by pressing the test button, then switch the device back on. The notice adds that temporary installations may need testing more often. Quarterly was the older wording.',
     section: 'RCD Testing',
     difficulty: 'intermediate',
     topic: 'User Testing',
@@ -1654,7 +1659,7 @@ export const am2QuestionBank: AM2Question[] = [
       'Line roughly 1.67 times neutral (the r1/r2 ratio)',
       'Neutral close to zero ohms (under 0.1Ω)',
       'Line approximately double the neutral (2:1)',
-      'Substantially the same (within 0.05Ω)',
+      'Substantially the same as each other',
     ],
     correctAnswer: 3,
     explanation:
@@ -1705,7 +1710,7 @@ export const am2QuestionBank: AM2Question[] = [
     options: [
       'A steadily increasing value (highest at the mid-point/far end)',
       'Half of the end-to-end value (r1+rn)/2 at every socket',
-      'Approximately the same (should be r1+rn)/4 or (r1+r2)/4',
+      'Substantially the same at each: (r1+rn)/4 or (r1+r2)/4',
       'Close to zero ohms at every socket (below 0.01Ω L/N)',
     ],
     correctAnswer: 2,
@@ -1796,14 +1801,14 @@ export const am2QuestionBank: AM2Question[] = [
     id: 253,
     question: 'What is notifiable work under Part P?',
     options: [
-      'Replacing an accessory such as a socket or switch',
-      'Work in special locations or involving new circuits',
-      'Adding a fused spur outside a special location',
-      'Any repair to an existing electrical fault',
+      'Replacing an accessory such as a socket or switch on an existing circuit',
+      'New circuits, a consumer unit change, or additions in a special location',
+      'Adding a fused spur to an existing circuit outside a special location',
+      'Any repair to an existing electrical fault, wherever it is found',
     ],
     correctAnswer: 1,
     explanation:
-      'Notifiable work includes work in special locations (bathrooms, swimming pools), new circuits, and consumer unit replacement.',
+      'In England, notifiable work is a new circuit, replacing a consumer unit, or an addition or alteration to existing circuits in a special location (regulation 12(6A); Approved Document P (England) para 2.5). Repairs, replacements and maintenance are not notifiable anywhere, and additions outside a special location are not notifiable (para 2.7).',
     section: 'Part P',
     difficulty: 'intermediate',
     topic: 'Notification',
@@ -1828,19 +1833,18 @@ export const am2QuestionBank: AM2Question[] = [
   },
   {
     id: 255,
-    question:
-      'What are the special locations under Part P where all electrical work is notifiable?',
+    question: "In England, which electrical work in a dwelling's bathroom is notifiable?",
     options: [
-      'Kitchens, utility rooms, and garages',
-      'Loft spaces, cellars, and outbuildings',
-      'Hallways, landings, and stairwells',
-      'Bathrooms, swimming pools, and hot tub areas',
+      'Any electrical work carried out anywhere in the bathroom',
+      'Replacing a damaged shaver socket with a like-for-like one',
+      'An addition to a circuit within the special location by the bath',
+      'Repairing a loose connection at the extractor fan isolator',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
-      'Special locations include rooms with a bath or shower, swimming pool/paddling pool areas, and hot tub areas where all electrical work is notifiable.',
+      'In England the special location is the space around the bath or shower: within 0.6 m of the bath or shower tray, up to 2.25 m above the floor (regulation 12(9)). An addition or alteration to a circuit inside it is notifiable, as is any new circuit. Repairs and like-for-like replacements are not notifiable anywhere, and work elsewhere in the room is not in the special location (Approved Document P (England) paras 2.5 and 2.7).',
     section: 'Part P',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Special Locations',
     category: 'Building Regulations',
   },
@@ -1865,16 +1869,17 @@ export const am2QuestionBank: AM2Question[] = [
   },
   {
     id: 257,
-    question: 'Name a competent person scheme for electrical work.',
+    question:
+      'Who runs the competent person schemes that electricians join in order to self-certify notifiable work?',
     options: [
-      'HSE, RIDDOR, COSHH, or PUWER',
-      'NAPIT, NICEIC, ELECSA, or Stroma',
-      'BSI, IET, JIB, or ECA',
-      'CSCS, ECS, CITB, or SmartCard',
+      'The Health and Safety Executive',
+      'Scheme operators authorised by government',
+      'The local authority building control body',
+      'The Joint Industry Board',
     ],
     correctAnswer: 1,
     explanation:
-      'Electrical competent person schemes include NAPIT, NICEIC, ELECSA, and several others approved by government.',
+      'Competent person schemes are run by scheme operators that government has authorised; the operator registers installers and passes their notifications to building control. Building control is the alternative route for installers who are not registered, the HSE enforces health and safety law, and the JIB grades electricians rather than registering them to self-certify.',
     section: 'CPS',
     difficulty: 'intermediate',
     topic: 'Scheme Names',
@@ -1941,11 +1946,11 @@ export const am2QuestionBank: AM2Question[] = [
       'Installing a new final circuit (from the consumer unit) in a kitchen',
       'Adding a socket outlet to an existing circuit (not in special location)',
       'Replacing the consumer unit (and all of its protective devices)',
-      'Installing a new circuit in a room containing a bath (a special location)',
+      'Installing a new circuit to supply an electric shower (in a bathroom)',
     ],
     correctAnswer: 1,
     explanation:
-      'Adding a socket to an existing circuit outside special locations is non-notifiable (but must still comply with BS 7671).',
+      'Adding a socket to an existing circuit outside a special location is not notifiable in England, though it must still comply with BS 7671 (Approved Document P (England) para 2.7). A new circuit anywhere is notifiable, and so is replacing a consumer unit.',
     section: 'Non-notifiable',
     difficulty: 'basic',
     topic: 'Examples',
@@ -2063,14 +2068,14 @@ export const am2QuestionBank: AM2Question[] = [
     id: 305,
     question: 'Under GS38, what maximum length of exposed metal tip is recommended for test probes?',
     options: [
-      '10mm (finger barriers)',
-      '4mm (2mm preferred)',
-      '20mm (shrouded probes)',
-      'No limit (fused leads)',
+      '10 mm, with finger barriers fitted',
+      '4 mm, with 2 mm or less preferred',
+      '20 mm, where the probe is shrouded',
+      'No limit, provided the leads are fused',
     ],
     correctAnswer: 1,
     explanation:
-      'GS38 specifies maximum 4mm exposed probe tip length, with 2mm being preferred to minimise arc flash risk.',
+      'GS38 asks for probes insulated to leave an exposed metal tip not exceeding 4 mm across any surface, and strongly recommends reducing that to 2 mm or less, or using spring-loaded retractable screened probes, wherever practicable. Fused leads and finger barriers are separate requirements, not a reason to allow more exposed metal.',
     section: 'GS38',
     difficulty: 'basic',
     topic: 'Test Equipment',
@@ -2098,7 +2103,7 @@ export const am2QuestionBank: AM2Question[] = [
     question: 'Which measurement category rating is required for testing at the origin of an installation?',
     options: [
       'CAT II',
-      'No rating required',
+      'Any CAT rating, provided the leads are fused',
       'CAT I',
       'CAT III or CAT IV',
     ],
@@ -2106,7 +2111,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Testing at origin requires CAT III (distribution level) or CAT IV (service entrance), depending on location.',
     section: 'GS38',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'CAT Ratings',
     category: 'Safe Isolation',
   },
@@ -2168,15 +2173,15 @@ export const am2QuestionBank: AM2Question[] = [
     question: 'What is the maximum fuse rating for GS38-compliant test leads?',
     options: [
       '3A',
-      'No fuse required',
+      '10A',
       '13A',
       '500mA or less',
     ],
     correctAnswer: 3,
     explanation:
-      'GS38 recommends fused leads with fuses rated at 500mA or less to limit energy in case of flashover.',
+      'GS38 asks for a suitable high-breaking-capacity fuse with a low current rating, usually not exceeding 500 mA, or a current-limiting resistor and a fuse. The low rating limits the energy released if the probes bridge live parts.',
     section: 'Test Equipment',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Fused Leads',
     category: 'Safe Isolation',
   },
@@ -2601,7 +2606,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 2,
     explanation: 'AMD refers to Amendments to BS 7671, which update the standard between editions.',
     section: 'Standards',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Amendments',
     category: 'BS 7671 Fundamentals',
   },
@@ -2611,7 +2616,7 @@ export const am2QuestionBank: AM2Question[] = [
       'What is the minimum IP rating for general electrical equipment in Zone 2 of a bathroom?',
     options: [
       'IPX0',
-      'No requirement',
+      'IPX2',
       'IPX7',
       'IPX4',
     ],
@@ -2659,7 +2664,7 @@ export const am2QuestionBank: AM2Question[] = [
   },
   {
     id: 374,
-    question: 'What information must a circuit identification label show?',
+    question: 'How must circuits be identified at a distribution board?',
     options: [
       'In pencil so they can be amended later',
       'Only on circuits supplying special locations',
@@ -2773,7 +2778,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Domestic installations should be inspected every 10 years or at change of occupancy, whichever is sooner (IET Guidance Note 3).',
     section: 'Inspection',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Periodic Inspection',
     category: 'BS 7671 Inspection & Testing',
   },
@@ -2967,14 +2972,14 @@ export const am2QuestionBank: AM2Question[] = [
     id: 392,
     question: 'At which points must the prospective fault current be determined?',
     options: [
-      'At the origin and at the most remote point of the installation',
+      'At the origin and at other relevant points in the installation',
       'At the neutral bar within the consumer unit enclosure only',
       'At every accessory point on each of the final circuits',
       'At the main earthing terminal located at the origin of the supply',
     ],
     correctAnswer: 0,
     explanation:
-      'PFC should be measured at the origin (highest value) and verified at the furthest point of the installation.',
+      'Regulation 643.7.3.201 requires the prospective short-circuit current and prospective earth fault current to be measured, calculated or determined at the origin and at other relevant points in the installation, such as distribution boards, so each protective device can be checked against its breaking capacity.',
     section: 'Testing',
     difficulty: 'intermediate',
     topic: 'PFC Location',
@@ -3016,16 +3021,16 @@ export const am2QuestionBank: AM2Question[] = [
   },
   {
     id: 395,
-    question: 'What test confirms no RCD nuisance tripping will occur from normal earth leakage?',
+    question: 'Under BS 7671:2018+A4:2026, what is the status of a ½ × IΔn no-trip test on an RCD?',
     options: [
-      '5×IΔn test (fast-trip check)',
-      '1×IΔn test (rated residual current)',
-      'Insulation resistance test (500 V d.c.)',
-      '½×IΔn (50%) no-trip test',
+      'A required test, recorded on every schedule of results',
+      'A useful diagnostic, but not part of the required verification',
+      'Required only for Type A and Type B devices',
+      'Required in place of the test at IΔn',
     ],
-    correctAnswer: 3,
+    correctAnswer: 1,
     explanation:
-      'The ½×IΔn (50%) test confirms the RCD will not trip at half rated current, avoiding nuisance tripping from normal leakage.',
+      'A2:2022 deleted Table 3A, and effectiveness is deemed verified by a single alternating current test at IΔn (NOTE to Regulation 643.8), with the test facility also verified. A ½ × IΔn check can still help investigate nuisance tripping, but it is not a required test and is not a substitute for the test at IΔn.',
     section: 'RCD Testing',
     difficulty: 'intermediate',
     topic: 'No-Trip Test',
@@ -3033,16 +3038,17 @@ export const am2QuestionBank: AM2Question[] = [
   },
   {
     id: 396,
-    question: 'What action is required if an RCD fails to operate within 40 ms at 5×IΔn?',
+    question:
+      'An RCD tested at IΔn disconnects in 190 ms. An apprentice says it must also trip within 40 ms at 5 × IΔn. What is the position under BS 7671:2018+A4:2026?',
     options: [
-      "The RCD must be replaced as it doesn't provide additional protection",
-      "No action, as the 40ms limit only applies to time-delayed Type S RCDs",
-      "Retest at 1×IΔn only and record that single result as a pass",
-      "Reduce the circuit load and the RCD will then pass the test",
+      'It passes: the test at IΔn is the verification, and 190 ms is within 300 ms',
+      'It fails unless it also trips within 40 ms when tested at 5 × IΔn',
+      'It must be replaced, as 190 ms is well over the 40 ms limit for RCDs',
+      'It passes only if a further test at ½ × IΔn also makes it trip',
     ],
     correctAnswer: 0,
     explanation:
-      "Failure to trip within 40ms at 5×IΔn means the RCD doesn't provide the required additional protection and must be replaced.",
+      'A2:2022 deleted Table 3A from Appendix 3. Effectiveness is deemed verified by an alternating current test at IΔn: 300 ms maximum for a general non-delay RCD (NOTE to Regulation 643.8), so 190 ms passes. 40 ms belonged to the deleted 5 × IΔn test, and a ½ × IΔn test should not trip the device at all.',
     section: 'RCD Testing',
     difficulty: 'intermediate',
     topic: 'RCD Failure',
@@ -3145,7 +3151,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'R1 is the line conductor and R2 is the circuit protective conductor — calling the neutral R2 is the single most common slip in this topic. The neutral loop is rn. Step 2 cross-connects line to neutral and proves those legs; step 3 cross-connects line to CPC and that reading at each socket is the R1+R2 recorded for Zs.',
     section: 'Ring Final Circuits',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Continuity',
     category: 'BS 7671 Inspection & Testing',
   },
@@ -3160,7 +3166,7 @@ export const am2QuestionBank: AM2Question[] = [
     ],
     correctAnswer: 2,
     explanation:
-      'Amendment 4 deleted Table 3A of Appendix 3. Effectiveness is deemed verified by an alternating current test at the rated residual operating current, regardless of whether the device is Type AC, A, F or B — a general non-delay RCD must operate within 300 ms. The ½x and 5x tests remain useful diagnostics but are no longer required.',
+      'A2:2022 deleted Table 3A of Appendix 3. Effectiveness is deemed verified by an alternating current test at the rated residual operating current, regardless of whether the device is Type AC, A, F or B — a general non-delay RCD must operate within 300 ms. The ½x and 5x tests remain useful diagnostics but are no longer required.',
     section: 'RCD Verification',
     difficulty: 'advanced',
     topic: 'RCD Testing',
@@ -3179,7 +3185,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Table 64 gives 250 V DC with a 0.5 MΩ minimum for SELV and PELV, 500 V DC with 1.0 MΩ for circuits up to and including 500 V, and 1000 V DC with 1.0 MΩ above 500 V. Applying 500 V to a SELV circuit risks damaging connected equipment.',
     section: 'Insulation Resistance',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Insulation Resistance',
     category: 'BS 7671 Inspection & Testing',
   },
@@ -3264,7 +3270,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'The wording recommends AFDDs to mitigate the risk of fire in AC final circuits of a fixed installation. It is advisory rather than a \'shall\', and it lists no premises types — the frequently quoted list of higher-risk residential buildings, HMOs, student accommodation and care homes is not in the regulation.',
     section: 'A4:2026 Changes',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'AFDDs',
     category: 'BS 7671 Fundamentals',
   },
@@ -3349,7 +3355,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Continuity of protective conductors comes first because every later test relies on a proven earth path. Insulation resistance follows, then polarity, then earth electrode resistance on TT systems. Testing insulation before continuity means trusting an earth path you have not verified.',
     section: 'Test Sequence',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Sequence',
     category: 'BS 7671 Inspection & Testing',
   },
@@ -3383,7 +3389,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Ze is the external earth fault loop impedance. Leaving the main earthing conductor connected allows parallel paths through gas and water bonding to lower the reading, flattering the result. Disconnecting it — with the installation safely isolated — gives the true external value for adding to R1+R2.',
     section: 'Ze Measurement',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Earth Fault Loop Impedance',
     category: 'BS 7671 Inspection & Testing',
   },
@@ -3417,7 +3423,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Polarity verification confirms that single-pole switching and protective devices are in the line conductor, that centre-contact lampholders have the line to the centre contact, and that socket-outlets are correctly wired. Reg 132.14.1 requires single-pole devices in the line conductor only.',
     section: 'Polarity',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Polarity',
     category: 'BS 7671 Inspection & Testing',
   },
@@ -3502,7 +3508,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'The adiabatic equation, S = sqrt(I squared t) / k, gives the minimum csa a protective conductor needs so it is not damaged by the fault current flowing for the disconnection time. Table 54.7 offers a simplified alternative that avoids the calculation but often yields a larger conductor.',
     section: 'Adiabatic',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'CPC Sizing',
     category: 'BS 7671 Selection & Erection',
   },
@@ -3513,11 +3519,11 @@ export const am2QuestionBank: AM2Question[] = [
       'A short circuit between line and neutral, which an insulation resistance test would not reveal if those two conductors were linked',
       'The RCD is undersized for the connected load, so normal load current alone exceeds its residual operating current',
       'An open circuit protective conductor, which a continuity test taken only at the origin of the circuit would not pick up on a radial',
-      'A neutral-to-earth fault, which insulation resistance testing between live conductors and earth can miss if the neutral was linked',
+      'A neutral-to-earth fault, which an insulation resistance test made only between line and earth would not reveal',
     ],
     correctAnswer: 3,
     explanation:
-      'Insulation resistance is commonly tested with line and neutral linked together against earth, which will detect a neutral-earth fault. Where the test was done line-to-earth only, or the neutral was disconnected at the time, a neutral-earth fault can pass unnoticed and then trip the RCD the moment the circuit is loaded.',
+      'An RCD trips on current that leaves by a path other than line and neutral. A neutral-to-earth fault puts load current into the earth path the moment the circuit is loaded. It is found by insulation resistance testing with line and neutral linked to earth, or by testing neutral to earth, so a test made only between line and earth can pass while the fault is still there.',
     section: 'Fault Finding',
     difficulty: 'advanced',
     topic: 'Diagnosis',
@@ -3563,12 +3569,12 @@ export const am2QuestionBank: AM2Question[] = [
     options: [
       'Replacing a damaged socket-outlet in a kitchen, on an existing ring final circuit',
       'Any electrical work carried out in a dwelling, however minor the alteration may be',
-      'Installing a new circuit, or any work in a room containing a bath or shower involving a new circuit',
+      'Installing a new circuit anywhere in the dwelling, whatever room it serves',
       'Replacing an existing consumer unit, but only where the earthing arrangement is TT',
     ],
     correctAnswer: 2,
     explanation:
-      'Notifiable work centres on new circuits and consumer unit replacement, plus certain work in special locations. Like-for-like replacement of an accessory on an existing circuit is maintenance and is not notifiable, though it must still comply with BS 7671.',
+      'In England a new circuit is notifiable wherever it goes, as is replacing a consumer unit (whatever the earthing arrangement) and an addition or alteration inside a special location. Like-for-like replacement of an accessory on an existing circuit is not notifiable, though it must still comply with BS 7671.',
     section: 'Part P',
     difficulty: 'intermediate',
     topic: 'Notification',
@@ -3587,7 +3593,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'A ramp test raises the residual current gradually from zero and reports the current at which the RCD actually operates — a 30 mA device might let go at 22 mA. It complements the timed test at IΔn and is useful when investigating nuisance tripping, though it has never been part of the required verification.',
     section: 'RCD Testing',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'RCD Testing',
     category: 'BS 7671 Inspection & Testing',
   },
@@ -3604,7 +3610,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'A Minor Works certificate covers additions and alterations to an existing circuit that do not extend to a new circuit. Introducing a new circuit, or replacing a consumer unit, requires an EIC. An EICR is for assessing the condition of an existing installation, not for certifying new work.',
     section: 'Certification',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Certificates',
     category: 'BS 7671 Inspection & Testing',
   },
@@ -3646,7 +3652,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Regulation 421.1.7 was introduced by A4:2026 and uses the word "recommending". It is advisory, not mandatory - it does not use "shall". Its stated purpose is mitigating fire risk in AC final circuits due to arc fault currents.',
     section: 'Protection against fire',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'AFDD status under A4:2026',
     category: 'BS 7671 Fundamentals',
   },
@@ -3664,7 +3670,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'The regulation limits its recommendation to AC final circuits of a fixed installation. The scope wording matters: it is not extended to DC circuits or to distribution circuits.',
     section: 'Protection against fire',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Scope of Reg 421.1.7',
     category: 'BS 7671 Fundamentals',
   },
@@ -3700,7 +3706,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'A4:2026 introduced a new Chapter 57 in Part 5 dealing with stationary secondary battery installations whose designed purpose is the storage and supply of electrical installations.',
     section: 'Stationary secondary batteries',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'New Chapter 57 in A4:2026',
     category: 'BS 7671 Selection & Erection',
   },
@@ -3718,7 +3724,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'A4:2026 revised Reg 411.3.3. RCD protection applies to socket-outlets rated 32 A or less unless an express exception is met. The exception permits omission only where, other than for a dwelling, a documented risk assessment determines RCD protection is not necessary.',
     section: 'Additional protection',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Reg 411.3.3 exception under A4:2026',
     category: 'BS 7671 Fundamentals',
   },
@@ -3736,7 +3742,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'The revised regulation applies specifically to socket-outlets with a rated current not exceeding 32 A. Sockets rated above 32 A are outside the scope described in this revision and have to be considered separately.',
     section: 'Additional protection',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Reg 411.3.3 scope limit',
     category: 'BS 7671 Fundamentals',
   },
@@ -3745,16 +3751,16 @@ export const am2QuestionBank: AM2Question[] = [
     question:
       'A 30 mA general-purpose RCD is being verified on the AM2 rig. What is the required test under BS 7671:2018+A4:2026?',
     options: [
-      'A test at 1x IdN and a further test at 5x IdN, recording the shorter of the two trip times',
-      'A no-trip test at half IdN, followed by a test at 5x IdN requiring operation within 40 ms',
-      'A single AC test at 1x IdN requiring operation within 300 ms, plus the integral test button',
-      'Tests at half, one and five times IdN, with the results compared against Appendix 3 Table 3A',
+      'A test at 1 × IΔn and a further test at 5 × IΔn, recording the shorter of the two trip times',
+      'A no-trip test at ½ × IΔn, followed by a test at 5 × IΔn requiring operation within 40 ms',
+      'A single AC test at 1 × IΔn requiring operation within 300 ms, plus the integral test button',
+      'Tests at ½, 1 and 5 times IΔn, with the results compared against Appendix 3 Table 3A',
     ],
     correctAnswer: 2,
     explanation:
-      'A4:2026 deleted Table 3A from Appendix 3, removing the 5x IdN row entirely. Verification is a single AC test at 1x IdN - a general-purpose non-delay RCD must operate within 300 ms - together with the manual test button. A half-IdN check some instruments run is pre-test confirmation, not part of the recorded verification.',
+      'A2:2022 deleted Table 3A from Appendix 3, removing the 5 × IΔn row entirely. Verification is a single AC test at 1 × IΔn, where a general non-delay RCD must operate within 300 ms, together with verifying the integral test facility (Regulation 643.7.3). A ½ × IΔn check that some instruments run is not part of the recorded verification.',
     section: 'RCD testing',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'RCD verification after Table 3A deletion',
     category: 'BS 7671 Inspection & Testing',
   },
@@ -3772,7 +3778,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Regulation 521.10.202 requires cables to be adequately supported so as to prevent premature collapse in the event of a fire, and it applies throughout the installation - it is not limited to escape routes.',
     section: 'Wiring systems',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Reg 521.10.202 scope',
     category: 'BS 7671 Selection & Erection',
   },
@@ -3790,7 +3796,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Regulation 514.9.1 requires symbols used in diagrams, charts, tables or schedules to comply with IEC 60617. BS EN 60617 was withdrawn - citing it is a common error. BS EN ISO 7010 covers safety signs, not circuit symbols.',
     section: 'Identification and notices',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'IEC 60617 vs withdrawn BS EN 60617',
     category: 'BS 7671 Selection & Erection',
   },
@@ -3866,7 +3872,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'The tests specified in Regulations 643.2 to 643.6 inclusive, where relevant, are conducted in the order shown prior to the installation being energised. Working out of order can leave a fault undetected until a live test exposes the tester to it.',
     section: 'Initial verification',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Order of the pre-energisation test sequence',
     category: 'BS 7671 Inspection & Testing',
   },
@@ -3884,7 +3890,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Defects found during the test sequence should be addressed before energisation, and where a defect materially affects safety it must be remedied before the installation is energised. Energising first and recording the defect as a departure is not acceptable.',
     section: 'Initial verification',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Defects found before energisation',
     category: 'BS 7671 Inspection & Testing',
   },
@@ -4042,7 +4048,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Frozen ground raises the measured resistance, so testing then gives a conservative worst-case figure. Testing after heavy rain gives an optimistically low value that may not hold for the rest of the year.',
     section: 'Earth electrode testing',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Least favourable conditions for electrode testing',
     category: 'BS 7671 Inspection & Testing',
   },
@@ -4060,7 +4066,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'The prospective fault current is derived, not directly measured: the instrument divides the nominal mains voltage by the measured loop impedance. The basic measuring principle is identical to that of an earth fault loop impedance tester.',
     section: 'Prospective fault current',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'How PFC is derived from loop impedance',
     category: 'BS 7671 Inspection & Testing',
   },
@@ -4184,23 +4190,22 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Cross-connecting the line and neutral legs puts two equal halves of the ring in parallel, so a correctly connected ring reads one quarter of the combined open loop resistance of line and neutral, and reads substantially the same at every socket on the ring. A rogue high reading points to a spur or a broken leg.',
     section: 'Ring final circuits',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Expected step 2 reading on a ring',
     category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 462,
-    question:
-      'In the ring final circuit continuity procedure, in what order are the end-to-end resistances measured?',
+    question: 'In the ring final circuit continuity test, what do r1, rn and r2 denote?',
     options: [
-      'r1 for one conductor loop, then rx, then rz for the protective loop',
-      'rz for the protective conductor loop first, then r1 and then rx',
-      'rx and rz together, with r1 derived arithmetically from the two',
-      'r1 and rz at the same time, with rx taken only if a fault shows',
+      'The end-to-end resistances of the line, neutral and cpc loops',
+      'The readings at the first, the nearest and the second socket',
+      'The line, neutral and cpc readings at the furthest socket only',
+      'The R1, Rn and R2 values recorded for Zs at each socket-outlet',
     ],
     correctAnswer: 0,
     explanation:
-      'The procedure takes r1 first for one conductor loop, then rx for the other, then rz for the protective conductor loop. Comparing the three end-to-end values before any cross-connection is what exposes a break or a conductor of reduced cross-sectional area.',
+      "Step 1 opens the ring at the board and measures each conductor's loop end to end: r1 for the line, rn for the neutral and r2 for the cpc. Comparing them before any cross-connection shows a break, or a cpc of smaller cross-sectional area (about 1.67 × r1 for 2.5/1.5 mm²).",
     section: 'Ring final circuits',
     difficulty: 'advanced',
     topic: 'Order of ring end-to-end measurements',
@@ -4220,7 +4225,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'The method applies where two conductors provide parallel paths for line and neutral with protective conductors present. Cross-connecting and then measuring around the ring verifies conductor continuity and detects cross-connections or breaks that the end-to-end readings alone can hide.',
     section: 'Ring final circuits',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Purpose of the cross-connection method',
     category: 'BS 7671 Inspection & Testing',
   },
@@ -4310,7 +4315,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Adequate information for testing and future maintenance means drawings, circuit lists, protective device details and any special instructions needed for routine inspection and testing or for fault finding. Without it, the next person on site has to derive the installation from scratch.',
     section: 'Documentation',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Information needed for future testing',
     category: 'BS 7671 Inspection & Testing',
   },
@@ -4344,7 +4349,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Step 3 cross-connects the line and protective conductors and measures line to protective conductor resistance at each socket-outlet in turn. A correctly wired ring gives a substantially equal reading at every point, and that reading is the circuit R1 + R2.',
     section: 'Ring final circuits',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Ring final circuit step 3 measurement',
     category: 'BS 7671 Inspection & Testing',
   },
@@ -4362,7 +4367,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'The multiple-signature form is the Appendix 6 model used for initial certification where different persons take responsibility for the design, the construction, and the inspection and testing of the installation or modification, each signing their own part.',
     section: 'Certification',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Multiple-signature EIC',
     category: 'BS 7671 Inspection & Testing',
   },
@@ -4415,7 +4420,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'A visual inspection of leads, probes and connectors is made before recorded measurements are taken, to find deterioration, damage, cracked insulation, exposed conductors or poor contacts. Any of these can produce an inaccurate reading that then goes on the certificate as fact.',
     section: 'Test equipment',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Pre-use checks on leads and probes',
     category: 'BS 7671 Inspection & Testing',
   },
@@ -4467,7 +4472,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Periodic inspection is not limited to looking. It denotes an inspection activity that includes whatever testing is necessary to assess the condition of the installation, and the tests required to reach the conclusion form part of the inspection.',
     section: 'Periodic inspection',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'What periodic inspection includes',
     category: 'BS 7671 Inspection & Testing',
   },
@@ -4574,15 +4579,16 @@ export const am2QuestionBank: AM2Question[] = [
   },
   {
     id: 484,
-    question: 'A candidate is asked which countries the Building Regulations containing Part P apply to. What is the correct answer?',
+    question: 'Which statement about Part P across Great Britain is correct?',
     options: [
-      'England and Wales, with Scotland having its own arrangements',
-      'The whole of the United Kingdom, without any variation',
-      'England only, with Wales having its own arrangements',
-      'Great Britain, excluding Northern Ireland but including Scotland',
+      'England and Wales each have a Part P with different notifiable work; Scotland has its own system',
+      'One Part P applies across Great Britain, with the same notifiable work everywhere',
+      'Part P applies in England only; Wales and Scotland have no equivalent',
+      'Wales follows the England list of notifiable work exactly; only Scotland differs',
     ],
     correctAnswer: 0,
-    explanation: 'The Building Regulations are made under the Building Act 1984 and apply in England and Wales; Scotland has separate building standards. Assuming UK-wide application is the common error, and it matters because notification rules differ across the nations.',
+    explanation:
+      'England and Wales each have their own Approved Document P, and the lists of notifiable work differ: work that is not notifiable in England can be notifiable in Wales. Scotland operates its own building standards system. Applying the England list in Wales, or assuming one rule for all of Great Britain, are the common errors.',
     section: 'Part P',
     category: 'Building Regulations',
     difficulty: 'intermediate',
@@ -4601,7 +4607,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation: 'Step 1 establishes the end-to-end resistance of the line, the neutral and the cpc individually, with the ring opened at the board. Measuring at outlets comes later, once the ends have been cross-connected.',
     section: 'Ring final circuits',
     category: 'BS 7671 Inspection & Testing',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Order of ring end-to-end measurements',
   },
   {
@@ -4649,7 +4655,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation: 'Resistance is inversely proportional to cross-sectional area, so a 1.5 mm² cpc against a 2.5 mm² line gives a ratio of 2.5 divided by 1.5, or about 1.67. Expecting the two readings to match is what leads candidates to condemn a healthy ring.',
     section: 'Ring Circuits',
     category: 'BS 7671 Inspection & Testing',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Conductor Sizes',
   },
   {
@@ -4697,7 +4703,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation: 'Step 3 cross-connects the line and cpc ends so that R1 + R2 can be read at each socket-outlet. Cross-connecting line and neutral is step 2, which is why performing them in the wrong order gives readings that cannot be interpreted.',
     section: 'Ring final circuits',
     category: 'BS 7671 Inspection & Testing',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Ring final circuit step 3 measurement',
   },
   {
@@ -4718,15 +4724,16 @@ export const am2QuestionBank: AM2Question[] = [
   },
   {
     id: 493,
-    question: 'Which description matches a special location for the purposes of Part P?',
+    question: "In England, what is a 'special location' for the purposes of Part P notification?",
     options: [
+      'The whole of any room containing a bath, a shower or a sauna heater',
+      'The space within 0.6 m of a bath or shower tray, up to 2.25 m high',
       'A kitchen, where the sink is within 600 mm of a socket-outlet',
-      'A room containing a bath tub, a shower basin or a sauna heater',
       'A garage, which is attached to and shares a supply with a house',
-      'A loft space, containing junction boxes for lighting circuits',
     ],
     correctAnswer: 1,
-    explanation: 'A special location is one containing a bath tub or shower basin, a swimming or paddling pool, or a hot air sauna. Kitchens, garages and loft spaces are not special locations, so additions to existing circuits there are treated differently.',
+    explanation:
+      'Regulation 12(9) defines the special location as the space around a bath tap or shower head: from the edge of the bath or shower tray out to 0.6 m, and from the floor up to 2.25 m. It is not the whole room, and in England kitchens and garages are not special locations at all, so additions to existing circuits there are not notifiable.',
     section: 'Part P',
     category: 'Building Regulations',
     difficulty: 'intermediate',
@@ -4745,7 +4752,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation: 'The parallel paths around an intact ring give a reading of roughly one quarter of the summed line and neutral loop resistances, and it should be substantially the same at every outlet. A reading well above that at one outlet points to a spur or a break.',
     section: 'Ring final circuits',
     category: 'BS 7671 Inspection & Testing',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Expected step 2 reading on a ring',
   },
   {
@@ -4913,9 +4920,9 @@ export const am2QuestionBank: AM2Question[] = [
     question: 'Work in a dwelling is non-notifiable. What still applies to it?',
     options: [
       'The Building Regulations and BS 7671 both still apply',
-      'The duty to leave the installation in a safe condition',
+      'Only BS 7671, as the Regulations cover notifiable work alone',
       'Nothing further, because non-notifiable work is unregulated',
-      'The manufacturer\'s instructions for the accessories used',
+      "The manufacturer's instructions for the accessories used",
     ],
     correctAnswer: 0,
     explanation: 'Notification and compliance are different things. Non-notifiable work still has to meet the Building Regulations and BS 7671; only the requirement to tell building control falls away.',
@@ -4985,7 +4992,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation: 'Equipment that could influence the measurement or be damaged by it is disconnected before the test, as required before connection under Table 64. Leaving electronics connected either destroys them or returns a reading that says nothing about the cable.',
     section: 'Insulation Testing',
     category: 'BS 7671 Inspection & Testing',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Safety Precautions',
   },
   {
@@ -5081,7 +5088,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation: 'With the earthing conductor connected, bonded metalwork provides parallel return paths that make the reading lower than the true external impedance. The measurement is only valid, and only safe to add to R1 + R2, when those paths are removed.',
     section: 'Ze Measurement',
     category: 'BS 7671 Inspection & Testing',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Earth Fault Loop Impedance',
   },
   {
@@ -5129,7 +5136,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation: 'Only a Ze measured with the earthing and extraneous paths properly separated represents the external loop, so only then does adding R1 + R2 give a meaningful Zs. Adding a contaminated Ze understates the loop impedance and can make a failing circuit look compliant.',
     section: 'Earth fault loop impedance',
     category: 'BS 7671 Inspection & Testing',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Parallel paths invalidating a Ze reading',
   },
   {
@@ -5150,15 +5157,17 @@ export const am2QuestionBank: AM2Question[] = [
   },
   {
     id: 520,
-    question: 'An electrician is asked to add a socket-outlet to an existing circuit in a room containing a shower. How should the work be treated?',
+    question:
+      'In England, a socket-outlet is added to an existing circuit in a bathroom, 3 m from the edge of the bath. How is the work treated under Part P?',
     options: [
-      'As work needing a minor works certificate, and nothing more',
-      'As work in a special location, which is notifiable',
-      'As an alteration to an existing circuit, which is exempt',
-      'As work outside Part P, because no new circuit is added',
+      'Notifiable, because the room contains a bath',
+      'Not notifiable, as it is outside the special location',
+      'Notifiable, because a socket-outlet is being added',
+      'Not notifiable, because bathroom work never is',
     ],
     correctAnswer: 1,
-    explanation: 'Additions and alterations to existing circuits are notifiable when they are in a special location, and a room containing a shower basin is one. The absence of a new circuit does not remove the notification requirement in that setting.',
+    explanation:
+      'In England the special location is only the space within 0.6 m of the bath or shower tray, up to 2.25 m high (regulation 12(9)). An addition to an existing circuit outside that space is not notifiable (Approved Document P (England) para 2.7). It must still comply with BS 7671, and Section 701 decides whether a socket may go there at all. Work inside the special location would be notifiable.',
     section: 'Part P',
     category: 'Building Regulations',
     difficulty: 'intermediate',
@@ -5177,7 +5186,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation: 'Because conductors are cold when tested but hot under fault, the measured value is compared against 0.8 of the tabulated figure. Comparing a cold reading directly against the table can pass a circuit that would fail at operating temperature.',
     section: 'Loop Impedance',
     category: 'BS 7671 Inspection & Testing',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Temperature Correction',
   },
   {
@@ -5200,13 +5209,14 @@ export const am2QuestionBank: AM2Question[] = [
     id: 523,
     question: 'Which of these is non-notifiable work in a dwelling?',
     options: [
-      'Installing a new lighting point in a room with a bath',
+      'Adding a lighting point within 0.6 m of the bath',
       'Installing a new circuit to supply a garden building',
       'Replacing a consumer unit with a modern equivalent',
       'Replacing a faulty light fitting on an existing circuit',
     ],
     correctAnswer: 3,
-    explanation: 'Replacing a light fitting is a straight replacement on an existing circuit and is not notifiable. New circuits, consumer unit replacements and additions in a special location all are.',
+    explanation:
+      'Replacing a light fitting is a straight replacement on an existing circuit and is not notifiable. New circuits and consumer unit replacements are, and so is an addition within 0.6 m of a bath, because that is inside the special location.',
     section: 'Non-notifiable',
     category: 'Building Regulations',
     difficulty: 'intermediate',
@@ -5225,7 +5235,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation: 'Cmin allows for voltage variation with time and place and for transformer tap changes, and is given the value 0.95 for a supply provided under the Electricity Safety, Quality and Continuity Regulations. The 0.8 figure is the separate rule-of-thumb applied to measured values.',
     section: 'Loop Impedance',
     category: 'BS 7671 Inspection & Testing',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Zs Formula',
   },
   {
@@ -5257,7 +5267,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation: 'A copy of the completed certificate, with all sections and test results filled in, goes to building control as well as to the customer. Countersigning by a scheme member is not a recognised route to compliance.',
     section: 'Certification',
     category: 'BS 7671 Inspection & Testing',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Documentation',
   },
   {
@@ -5273,7 +5283,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation: 'Distribution circuits may use the longer time where the stated conditions are met, whereas 230 V final circuits in a TN system require 0.4 s. Applying the final circuit time to a distribution circuit unnecessarily restricts the permitted loop impedance.',
     section: 'Electric Shock',
     category: 'BS 7671 Fundamentals',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Disconnection Times',
   },
   {
@@ -5369,7 +5379,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation: 'The instrument measures impedance and calculates current from it, which is why the displayed figure is derived rather than observed. No instrument creates an actual fault to measure the current directly.',
     section: 'Prospective fault current',
     category: 'BS 7671 Inspection & Testing',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'How PFC is derived from loop impedance',
   },
   {
@@ -5462,7 +5472,8 @@ export const am2QuestionBank: AM2Question[] = [
       '130 ms',
     ],
     correctAnswer: 0,
-    explanation: 'For a general non-delay device the effectiveness is deemed verified where it disconnects within 300 ms at the rated residual operating current. The 40 ms figure belongs to the higher test current, where manufacturers\' declared characteristics also have to be considered.',
+    explanation:
+      'For a general non-delay device, effectiveness is deemed verified where it disconnects within 300 ms at the rated residual operating current (NOTE to Regulation 643.8). 40 ms belonged to the 5 × IΔn test in Table 3A, which A2:2022 deleted; 130 ms and 500 ms are the window for a type S device.',
     section: 'RCD Testing',
     category: 'BS 7671 Inspection & Testing',
     difficulty: 'intermediate',
@@ -5497,7 +5508,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation: 'Part P is about dwellings. Commercial work is outside it, but the Electricity at Work Regulations and BS 7671 continue to apply, so nothing about the technical standard of the work changes.',
     section: 'Part P',
     category: 'Building Regulations',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Application',
   },
   {
@@ -5513,7 +5524,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation: 'A type S device must not operate too quickly either, because its delay is what gives discrimination with downstream devices; the acceptable window is 130 ms to 500 ms. A type S device that trips in 40 ms has lost the discrimination it was fitted to provide.',
     section: 'RCD Testing',
     category: 'BS 7671 Inspection & Testing',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Trip Times',
   },
   {
@@ -5582,7 +5593,8 @@ export const am2QuestionBank: AM2Question[] = [
   },
   {
     id: 547,
-    question: 'Why does Part P treat rooms containing a bath or shower differently from other rooms?',
+    question:
+      'Why does Part P treat the space around a bath or shower differently from the rest of a dwelling?',
     options: [
       'Because the wiring in them is always concealed in the structure',
       'Because they normally contain more accessories than other rooms',
@@ -5590,7 +5602,8 @@ export const am2QuestionBank: AM2Question[] = [
       'Because they are the only rooms with supplementary bonding',
     ],
     correctAnswer: 2,
-    explanation: 'The elevated risk of electric shock where a person is wet and in contact with earthed parts is why these locations attract extra requirements and notification. The quantity of accessories present is irrelevant to the classification.',
+    explanation:
+      'The elevated risk of electric shock where a person is wet and in contact with earthed parts is why the space around a bath or shower is a special location, so additions there are notifiable. The number of accessories, concealed wiring and bonding arrangements do not decide it.',
     section: 'Part P',
     category: 'Building Regulations',
     difficulty: 'intermediate',
@@ -5609,7 +5622,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation: 'A drive produces residual currents with DC components that a Type AC device cannot sense, so it may fail to operate when needed. The type has to be chosen against the residual current the load can actually produce.',
     section: 'RCD Selection',
     category: 'BS 7671 Selection & Erection',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'RCD Types',
   },
   {
@@ -5705,7 +5718,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation: 'The exception rests on a documented risk assessment and is not available for dwellings. Labels and mounting heights are not recognised grounds for omitting additional protection.',
     section: 'Additional protection',
     category: 'BS 7671 Fundamentals',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Reg 411.3.3 exception under A4:2026',
   },
   {
@@ -5737,7 +5750,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation: 'The requirement is an accessibility one, so that switches and socket-outlets are at heights convenient for people with limited reach or mobility. Cable zones and voltage drop are BS 7671 matters and are decided quite separately.',
     section: 'Accessibility',
     category: 'Building Regulations',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Socket Heights',
   },
   {
@@ -5753,7 +5766,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation: 'Every fuse and single-pole control or protective device must be in the line conductor only, so that operating it makes the equipment safe. A switch in the neutral leaves the fitting live even when switched off.',
     section: 'Polarity',
     category: 'BS 7671 Inspection & Testing',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'What polarity verification proves',
   },
   {
@@ -5827,10 +5840,11 @@ export const am2QuestionBank: AM2Question[] = [
       'Carrying out the work outside normal working hours',
       'Using a larger cable than the design strictly requires',
       'Fitting an accessory from a different manufacturer',
-      'Extending the work into a room with a shower',
+      'Extending the work to within 0.6 m of a shower tray',
     ],
     correctAnswer: 3,
-    explanation: 'Location changes the answer: an addition or alteration in a special location such as a room containing a shower is notifiable. Cable size, brand of accessory and working hours have no effect on notification.',
+    explanation:
+      'Location changes the answer: in England an addition or alteration inside the special location, the space within 0.6 m of a bath or shower tray up to 2.25 m high, is notifiable. Cable size, brand of accessory and working hours have no effect on notification.',
     section: 'Part P',
     category: 'Building Regulations',
     difficulty: 'advanced',
@@ -5897,7 +5911,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation: 'With no parallel path through the structure, the reading is the true R1 + R2 for that point. Where boxes are in contact with earthed fabric the reading is pulled lower and no longer represents the circuit conductors alone.',
     section: 'Continuity testing',
     category: 'BS 7671 Inspection & Testing',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Interpreting R1 + R2 without parallel paths',
   },
   {
@@ -5929,7 +5943,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation: 'Appendix 17 covers energy efficiency, and its scope was extended to dwellings with a reference to the Building Regulations. Prospective fault current, the model certificates and cable ratings are in other appendices.',
     section: 'Compliance',
     category: 'Building Regulations',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Standards',
   },
   {
@@ -5945,7 +5959,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation: 'Linking line and cpc at the board lets R1 + R2 be read directly at each point on the circuit. Test method 2 instead uses a long wandering lead from a fixed reference point, which is slower but avoids the temporary link.',
     section: 'Continuity testing',
     category: 'BS 7671 Inspection & Testing',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'When continuity tests are performed',
   },
   {
@@ -6025,7 +6039,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation: 'Defects materially affecting safety must be put right before energisation, because the point of the dead test sequence is to find them while the installation is safe to work on. Recording a dangerous defect and energising anyway inverts that logic.',
     section: 'Test Sequence',
     category: 'BS 7671 Inspection & Testing',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Sequence',
   },
   {
@@ -6041,7 +6055,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation: 'Evidence of compliance for notifiable work is the certificate plus the record that the work was notified or self-certified. This is exactly why the certificate must be kept safe by the householder.',
     section: 'Certification',
     category: 'BS 7671 Inspection & Testing',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Documentation',
   },
   {

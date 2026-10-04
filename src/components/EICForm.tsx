@@ -260,7 +260,9 @@ const EICFormInner = ({ onBack }: { onBack: () => void }) => {
         onTabChange={handleTabChange}
         completedTabs={completedTabs}
           history={
-            currentReportId ? { reportId: currentReportId, onRestored: replaceFormData } : undefined
+            currentReportId
+              ? { reportId: currentReportId, onRestored: replaceFormData, current: formData as Record<string, unknown> }
+              : undefined
           }
       />
 

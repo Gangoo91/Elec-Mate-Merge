@@ -226,15 +226,15 @@ export default function AM2ExamPreparationPage() {
       <section className="py-16 sm:py-24 px-5">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-6">
-            <GraduationCap className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium text-yellow-400">
+            <GraduationCap className="w-4 h-4 text-elec-yellow" />
+            <span className="text-sm font-medium text-elec-yellow">
               JIB/JTL AM2 Assessment Practice
             </span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
-            Prepare for the <span className="text-yellow-400">AM2 Assessment</span> Online
+            Prepare for the <span className="text-elec-yellow">AM2 Assessment</span> Online
           </h1>
-          <p className="text-base sm:text-lg text-white/90 max-w-2xl mx-auto leading-relaxed mb-5 text-left sm:text-center bg-white/[0.05] border border-white/10 rounded-xl px-5 py-4">
+          <p className="text-base sm:text-lg text-white max-w-2xl mx-auto leading-relaxed mb-5 text-left sm:text-center bg-white/[0.05] border border-white/10 rounded-xl px-5 py-4">
             The <strong>AM2 (Achievement Measurement 2)</strong> is the practical assessment of
             competence required to obtain the JIB ECS Gold Card and become a fully qualified
             Installation Electrician. It is open to candidates who hold a Level&nbsp;3 NVQ/SVQ in
@@ -257,7 +257,7 @@ export default function AM2ExamPreparationPage() {
             </a>
             <a
               href="#how-it-works"
-              className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-yellow-500/40 text-white font-semibold rounded-xl touch-manipulation transition-colors"
+              className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-white/[0.1] text-white font-semibold rounded-xl touch-manipulation transition-colors"
             >
               See How It Works
             </a>
@@ -322,7 +322,7 @@ export default function AM2ExamPreparationPage() {
           <div className="space-y-4">
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                   1
                 </div>
                 <div>
@@ -340,7 +340,7 @@ export default function AM2ExamPreparationPage() {
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                   2
                 </div>
                 <div>
@@ -358,7 +358,7 @@ export default function AM2ExamPreparationPage() {
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                   3
                 </div>
                 <div>
@@ -379,7 +379,7 @@ export default function AM2ExamPreparationPage() {
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                   4
                 </div>
                 <div>
@@ -421,14 +421,14 @@ export default function AM2ExamPreparationPage() {
             </p>
             <ol className="space-y-2 text-white text-sm leading-relaxed list-none">
               <li className="flex gap-3 p-3 rounded-xl bg-white/[0.04] border border-white/10">
-                <span className="font-bold text-yellow-400 shrink-0">1.</span>
+                <span className="font-bold text-elec-yellow shrink-0">1.</span>
                 <span>
                   <strong>Continuity of protective conductors</strong> — including the three-step
                   ring test on every ring final circuit (GN3 Reg 2.16).
                 </span>
               </li>
               <li className="flex gap-3 p-3 rounded-xl bg-white/[0.04] border border-white/10">
-                <span className="font-bold text-yellow-400 shrink-0">2.</span>
+                <span className="font-bold text-elec-yellow shrink-0">2.</span>
                 <span>
                   <strong>Insulation resistance</strong> — minimum 1.0 M&Omega; at 500 V DC for
                   circuits up to 500 V (BS 7671 Table 64). Disconnect or short-out sensitive
@@ -436,14 +436,14 @@ export default function AM2ExamPreparationPage() {
                 </span>
               </li>
               <li className="flex gap-3 p-3 rounded-xl bg-white/[0.04] border border-white/10">
-                <span className="font-bold text-yellow-400 shrink-0">3.</span>
+                <span className="font-bold text-elec-yellow shrink-0">3.</span>
                 <span>
                   <strong>Polarity</strong> — verify correct connection of line conductor to
                   single-pole devices and correct terminal identification.
                 </span>
               </li>
               <li className="flex gap-3 p-3 rounded-xl bg-white/[0.04] border border-white/10">
-                <span className="font-bold text-yellow-400 shrink-0">4.</span>
+                <span className="font-bold text-elec-yellow shrink-0">4.</span>
                 <span>
                   <strong>Earth fault loop impedance (Zs) and PSCC</strong> — measured after
                   energisation. Compare against the tabulated maximums (OSG Appendix B). The GN3
@@ -452,7 +452,7 @@ export default function AM2ExamPreparationPage() {
                 </span>
               </li>
               <li className="flex gap-3 p-3 rounded-xl bg-white/[0.04] border border-white/10">
-                <span className="font-bold text-yellow-400 shrink-0">5.</span>
+                <span className="font-bold text-elec-yellow shrink-0">5.</span>
                 <span>
                   <strong>RCD operation test</strong> — verify trip time and current using a
                   calibrated tester. A 30 mA RCD must trip within 40 ms at 5I&Delta;n and within 300
@@ -585,7 +585,7 @@ export default function AM2ExamPreparationPage() {
             How Elec-Mate Helps You Prepare for the AM2
           </h2>
           <div className="mb-6 flex items-start gap-3 px-4 py-3 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-            <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <p className="text-white text-sm leading-relaxed">
               <strong>Written and reviewed by Andrew Moore, founder of Elec-Mate</strong> — a
               qualified electrician (18th Edition, C&amp;G 2391 inspection and testing). All
@@ -702,7 +702,7 @@ export default function AM2ExamPreparationPage() {
                 key={step.name}
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                   {index + 1}
                 </div>
                 <div>
@@ -729,7 +729,7 @@ export default function AM2ExamPreparationPage() {
               >
                 <summary className="flex items-center justify-between p-4 min-h-[44px] touch-manipulation cursor-pointer text-white font-medium">
                   <span>{faq.question}</span>
-                  <ChevronDown className="w-5 h-5 text-yellow-400 group-open:rotate-180 transition-transform" />
+                  <ChevronDown className="w-5 h-5 text-elec-yellow group-open:rotate-180 transition-transform" />
                 </summary>
                 <div className="px-4 pb-4 text-white text-sm leading-relaxed">{faq.answer}</div>
               </details>
@@ -782,7 +782,7 @@ export default function AM2ExamPreparationPage() {
 
       <SEOCTASection
         heading="Pass the AM2 first time"
-        subheading="Join 1,600+ UK electricians preparing for assessments and qualifications. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians preparing for assessments and qualifications. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

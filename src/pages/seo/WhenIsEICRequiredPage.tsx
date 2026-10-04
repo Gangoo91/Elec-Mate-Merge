@@ -41,7 +41,7 @@ export default function WhenIsEICRequiredPage() {
       badgeIcon={FileCheck2}
       heroTitle={
         <>
-          When Is an <span className="text-yellow-400">EIC Required?</span>
+          When Is an <span className="text-elec-yellow">EIC Required?</span>
           <br />
           BS 7671 Guide
         </>
@@ -103,7 +103,7 @@ export default function WhenIsEICRequiredPage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">New Circuits</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -121,7 +121,7 @@ export default function WhenIsEICRequiredPage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Complete Rewires</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -135,7 +135,7 @@ export default function WhenIsEICRequiredPage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Consumer Unit Changes</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -152,7 +152,7 @@ export default function WhenIsEICRequiredPage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">New Builds and Extensions</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -166,7 +166,7 @@ export default function WhenIsEICRequiredPage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">
                       Alterations Involving New Circuits
                     </h3>
@@ -181,7 +181,7 @@ export default function WhenIsEICRequiredPage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">
                       All Notifiable Work Under Part P
                     </h3>
@@ -218,7 +218,7 @@ export default function WhenIsEICRequiredPage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Like-for-Like Replacements</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -233,7 +233,7 @@ export default function WhenIsEICRequiredPage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">
                       Adding a Spur to an Existing Circuit
                     </h3>
@@ -249,7 +249,7 @@ export default function WhenIsEICRequiredPage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Replacing a Light Fitting</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -287,9 +287,9 @@ export default function WhenIsEICRequiredPage() {
                 <h3 className="font-bold text-white text-lg mb-4">Required Qualifications</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         18th Edition IET Wiring Regulations (C&G 2382)
                       </strong>{' '}
                       — The current edition qualification covering BS 7671:2018+A4:2026. This is the
@@ -297,9 +297,9 @@ export default function WhenIsEICRequiredPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Inspection and Testing (C&G 2391 or equivalent)
                       </strong>{' '}
                       — This qualification demonstrates competence in carrying out the inspection
@@ -308,9 +308,9 @@ export default function WhenIsEICRequiredPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         NVQ Level 3 in Electrical Installation (or equivalent)
                       </strong>{' '}
                       — Demonstrates practical competence in designing and installing electrical
@@ -318,9 +318,9 @@ export default function WhenIsEICRequiredPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Competent Person Scheme Membership
                       </strong>{' '}
                       — Registration with NICEIC, NAPIT, ELECSA, BRE, or another approved scheme.
@@ -350,7 +350,7 @@ export default function WhenIsEICRequiredPage() {
               </p>
               <div className="space-y-3 mt-4">
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     1
                   </span>
                   <div>
@@ -363,7 +363,7 @@ export default function WhenIsEICRequiredPage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     2
                   </span>
                   <div>
@@ -377,7 +377,7 @@ export default function WhenIsEICRequiredPage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     3
                   </span>
                   <div>
@@ -390,7 +390,7 @@ export default function WhenIsEICRequiredPage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     4
                   </span>
                   <div>
@@ -404,7 +404,7 @@ export default function WhenIsEICRequiredPage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     5
                   </span>
                   <div>
@@ -418,7 +418,7 @@ export default function WhenIsEICRequiredPage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     6
                   </span>
                   <div>
@@ -451,7 +451,7 @@ export default function WhenIsEICRequiredPage() {
                 <h3 className="font-bold text-white text-lg mb-4">The Three Signatures</h3>
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
-                    <PenTool className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <PenTool className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <div>
                       <h4 className="font-bold text-white">Designer</h4>
                       <p className="text-white text-sm leading-relaxed">
@@ -464,7 +464,7 @@ export default function WhenIsEICRequiredPage() {
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <PenTool className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <PenTool className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <div>
                       <h4 className="font-bold text-white">Constructor (Installer)</h4>
                       <p className="text-white text-sm leading-relaxed">
@@ -478,7 +478,7 @@ export default function WhenIsEICRequiredPage() {
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <PenTool className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <PenTool className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <div>
                       <h4 className="font-bold text-white">Inspector and Tester</h4>
                       <p className="text-white text-sm leading-relaxed">
@@ -522,7 +522,7 @@ export default function WhenIsEICRequiredPage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <ShieldCheck className="w-5 h-5 text-yellow-400" />
+                    <ShieldCheck className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Auto-Validated Test Results</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -537,7 +537,7 @@ export default function WhenIsEICRequiredPage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Camera className="w-5 h-5 text-yellow-400" />
+                    <Camera className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Board Scanner</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -551,7 +551,7 @@ export default function WhenIsEICRequiredPage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <FileText className="w-5 h-5 text-yellow-400" />
+                    <FileText className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Professional PDF Export</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -655,7 +655,7 @@ export default function WhenIsEICRequiredPage() {
         },
       ]}
       ctaHeading="Complete EIC Forms on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for digital EIC forms with auto-validated test results, Board Scanner, digital signatures, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for digital EIC forms with auto-validated test results, Board Scanner, digital signatures, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

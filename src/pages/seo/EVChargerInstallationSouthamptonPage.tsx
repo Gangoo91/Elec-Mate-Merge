@@ -183,7 +183,7 @@ const sections = [
           </h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Simple installation (modern detached/semi, garage or driveway)</strong> —
                 £850 to £1,050. Short cable run, spare consumer unit way, straightforward earth rod
@@ -192,7 +192,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard installation (terrace or older semi, medium run)</strong> — £1,000
                 to £1,200. Cable run of 8 to 15 metres, PME earth rod, possible MCB addition.
@@ -200,7 +200,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Complex installation (long run, board upgrade)</strong> — £1,200 to £1,500.
                 Consumer unit replacement required, cable run over 15 metres, or underground cable
@@ -209,7 +209,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>22kW three-phase charger</strong> — £1,200 to £2,000 installed. Requires a
                 three-phase supply and G99 approval from SSEN. Suitable for commercial premises or
@@ -236,7 +236,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>OZEV EV chargepoint grant</strong> — up to £350 for flat owners and tenants.
                 Given Southampton's large student population and high proportion of private rented
@@ -245,7 +245,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Workplace Charging Scheme</strong> — Southampton businesses can claim up to
                 £350 per socket (maximum 40 sockets) for workplace EV charger installation.
@@ -253,7 +253,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Southampton City Council EV infrastructure</strong> — Southampton City
                 Council's Transport Strategy includes expanding on-street EV charging provision.
@@ -281,7 +281,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated final circuit (Regulation 722.533.101)</strong> — a dedicated 32A
                 circuit from the consumer unit. Older Southampton consumer units may not have a
@@ -289,7 +289,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection (Regulation 722.531.3.101)</strong> — appropriate RCD
                 protection is required for the EV circuit. Modern smart chargers typically include
@@ -298,7 +298,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smart charger compliance</strong> — the Electric Vehicles (Smart Charge
                 Points) Regulations 2021 requires all new home EV chargers to support smart
@@ -307,7 +307,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable sizing</strong> — verify cable selection against{' '}
                 <SEOInternalLink href="/tools/cable-sizing-calculator">
@@ -376,7 +376,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98 notification (7kW single-phase)</strong> — submit online via the SSEN
                 portal. This is a notification rather than an application for standard domestic 7kW
@@ -385,7 +385,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G99 application (22kW three-phase)</strong> — prior approval required from
                 SSEN before installation. Allow 4 to 10 weeks for SSEN to assess network capacity in
@@ -393,7 +393,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Installer responsibility</strong> — the electrician handles SSEN
                 notification. Confirm this is included in the quoted price. Chargers installed
@@ -417,7 +417,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Salt air and coastal proximity</strong> — properties closer to the
                 waterfront and docks may experience accelerated corrosion on exposed electrical
@@ -427,7 +427,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Waterfront apartments and converted dock buildings</strong> — Southampton
                 has seen significant waterfront residential development. These buildings typically
@@ -437,7 +437,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Port and industrial area proximity</strong> — properties near the dock areas
                 may have older or non-standard electrical supplies. Always confirm the supply type
@@ -463,7 +463,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Pricing Southampton EV Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -496,7 +496,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify Southampton EV charger installations"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification."
           icon={Car}
         />
       </>
@@ -522,7 +522,7 @@ export default function EVChargerInstallationSouthamptonPage() {
       heroTitle={
         <>
           EV Charger Installation Southampton:{' '}
-          <span className="text-yellow-400">Costs, Grants, and Compliance 2026</span>
+          <span className="text-elec-yellow">Costs, Grants, and Compliance 2026</span>
         </>
       }
       heroSubtitle="Home EV charger installation in Southampton costs £850 to £1,300 for a 7kW wallbox. Covers OZEV grants up to £350, SSEN (Scottish and Southern Electricity Networks) DNO notification, PME earthing requirements, and Southampton's coastal and port city considerations."
@@ -533,7 +533,7 @@ export default function EVChargerInstallationSouthamptonPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in Southampton"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify EV Charger Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

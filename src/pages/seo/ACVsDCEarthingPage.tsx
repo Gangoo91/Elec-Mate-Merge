@@ -164,7 +164,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type AC:</strong> Detects sinusoidal AC residual currents only. Used in
                 older installations. Not suitable for circuits supplying equipment with electronic
@@ -173,7 +173,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type A:</strong> Detects sinusoidal AC and pulsating DC residual currents.
                 Suitable for most domestic and commercial circuits, including those supplying
@@ -182,7 +182,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type B:</strong> Detects all residual current types including smooth DC.
                 Required for three phase EV chargers, specific solar PV configurations, and
@@ -285,7 +285,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Single phase 7.4kW (Mode 3):</strong> Type A RCD with additional DC
                 fault current protection (IEC 62955 compliant RDC device), or Type B RCD.
@@ -294,7 +294,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three phase 22kW (Mode 3):</strong> Type B RCD required. Three phase
                 rectification in the vehicle on-board charger can produce smooth DC fault
@@ -302,7 +302,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DC rapid chargers (Mode 4):</strong> The charger-to-vehicle connection
                 is DC. The AC supply to the charger cabinet requires Type B RCD protection
@@ -338,7 +338,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Panel mounting structure:</strong> Must be bonded to the installation
                 earth via a protective bonding conductor. The bonding conductor must be sized
@@ -347,7 +347,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inverter enclosure:</strong> The PE terminal of the inverter must be
                 connected to the installation earth. This connection is made via the PE
@@ -355,7 +355,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DC cable insulation:</strong> DC cables must be double insulated or
                 individually insulated and sheathed. The DC cable insulation resistance must
@@ -381,15 +381,15 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>DC cables do not normally include a PE conductor — the DC conductors are ungrounded in the IT system. The PE for equipment enclosures is provided by separate bonding conductors.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>The inverter PE terminal connects the inverter enclosure to the installation earth via the PE in the AC supply cable. This must be verified by continuity testing during commissioning.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>PE conductor size for DC bonding: follow BS 7671 Table 54.7, with the minimum size determined by the fault current that may flow through the conductor under fault conditions.</span>
             </li>
           </ul>
@@ -438,7 +438,7 @@ export default function ACVsDCEarthingPage() {
       heroTitle={
         <>
           AC vs DC Earthing:{' '}
-          <span className="text-yellow-400">Type B RCDs, Solar PV and EV Charging Requirements</span>
+          <span className="text-elec-yellow">Type B RCDs, Solar PV and EV Charging Requirements</span>
         </>
       }
       heroSubtitle="Type A RCDs cannot detect smooth DC fault currents from three phase EV chargers and solar PV systems. BS 7671 Regulation 411.3.3 and Table 7.3(ii) require Type B RCDs where DC fault currents may occur. This guide explains the difference, when Type B is required, and how to earth DC circuits correctly."

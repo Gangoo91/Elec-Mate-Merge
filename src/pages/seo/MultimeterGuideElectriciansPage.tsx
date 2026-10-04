@@ -263,7 +263,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CAT II 300V / 600V</strong> — Single-phase mains loads connected to the
                 fixed installation. Mains sockets, portable domestic appliances, extension leads.
@@ -328,23 +328,23 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Variable speed drives (VSDs) on motors — highly distorted current waveform
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 LED drivers and electronic lighting ballasts — spiky, non-sinusoidal current
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Switch-mode power supplies in computers, chargers, and UPS systems</span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Electronic dimmer switches and thyristor controllers</span>
             </li>
           </ul>
@@ -377,7 +377,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4 space-y-5">
           <div>
             <h3 className="font-bold text-white mb-2 flex items-center gap-2">
-              <Zap className="w-4 h-4 text-yellow-400" />
+              <Zap className="w-4 h-4 text-elec-yellow" />
               AC Voltage (VAC)
             </h3>
             <p className="text-white text-sm leading-relaxed">
@@ -521,7 +521,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Schedule of Test Results</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -567,7 +567,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Record test results, certify installations, find faults"
-          description="Join 1,600+ UK electricians using Elec-Mate to record multimeter readings, complete EIC and EICR certificates, and get AI fault-finding support on site."
+          description="Join 2,100+ UK electricians using Elec-Mate to record multimeter readings, complete EIC and EICR certificates, and get AI fault-finding support on site."
           icon={Wrench}
         />
       </>
@@ -593,7 +593,7 @@ export default function MultimeterGuideElectriciansPage() {
       heroTitle={
         <>
           Multimeter Guide for Electricians:{' '}
-          <span className="text-yellow-400">CAT Ratings, True RMS, and Best Meters 2026</span>
+          <span className="text-elec-yellow">CAT Ratings, True RMS, and Best Meters 2026</span>
         </>
       }
       heroSubtitle="Everything UK electricians need to know about multimeters — analogue vs digital, CAT III vs CAT IV safety ratings, True RMS vs average sensing, practical measurement techniques, and the best meters for professional electrical work in 2026."
@@ -604,7 +604,7 @@ export default function MultimeterGuideElectriciansPage() {
       faqHeading="Frequently Asked Questions About Multimeters for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Record Multimeter Readings and Certify Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site test result entry, EIC and EICR certification, and AI fault-finding support. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site test result entry, EIC and EICR certification, and AI fault-finding support. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -44,7 +44,7 @@ export default function EarthRodResistanceCalculatorPage() {
       badgeIcon={Zap}
       heroTitle={
         <>
-          <span className="text-yellow-400">Earth Rod Resistance Calculator</span> — Size Your Earth
+          <span className="text-elec-yellow">Earth Rod Resistance Calculator</span> — Size Your Earth
           Electrode for TT Systems
         </>
       }
@@ -150,7 +150,7 @@ export default function EarthRodResistanceCalculatorPage() {
                 calculated using the formula:
               </p>
               <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center my-6">
-                <p className="text-xl sm:text-2xl font-mono font-bold text-yellow-400">
+                <p className="text-xl sm:text-2xl font-mono font-bold text-elec-yellow">
                   R = (rho / 2 x pi x L) x ln(4L / d)
                 </p>
                 <p className="mt-3 text-sm text-white">
@@ -191,13 +191,13 @@ export default function EarthRodResistanceCalculatorPage() {
               </p>
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-6">
                 <div className="grid grid-cols-3 gap-px bg-white/10">
-                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                     Soil Type
                   </div>
-                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                     Resistivity (ohm-m)
                   </div>
-                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                     Notes
                   </div>
                 </div>
@@ -259,7 +259,7 @@ export default function EarthRodResistanceCalculatorPage() {
                 resistance is approximately one-third. In general, for N well-spaced identical rods:
               </p>
               <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center my-6">
-                <p className="text-xl sm:text-2xl font-mono font-bold text-yellow-400">
+                <p className="text-xl sm:text-2xl font-mono font-bold text-elec-yellow">
                   R(combined) = R(single) / N
                 </p>
                 <p className="mt-3 text-sm text-white">

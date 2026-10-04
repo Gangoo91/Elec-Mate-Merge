@@ -184,7 +184,7 @@ const sections = [
         <div className="space-y-4 my-6">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                 1
               </div>
               <div>
@@ -199,7 +199,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                 2
               </div>
               <div>
@@ -214,7 +214,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                 3
               </div>
               <div>
@@ -589,7 +589,7 @@ export default function EPAWhatToExpectPage() {
       heroTitle={
         <>
           EPA What to Expect —{' '}
-          <span className="text-yellow-400">End Point Assessment Explained</span>
+          <span className="text-elec-yellow">End Point Assessment Explained</span>
         </>
       }
       heroSubtitle="The End Point Assessment is the final hurdle of your electrical apprenticeship. This guide explains exactly what the three components involve, how you are graded, what the timeline looks like, the most common reasons apprentices fail, and how to prepare effectively using Elec-Mate's EPA Simulator."

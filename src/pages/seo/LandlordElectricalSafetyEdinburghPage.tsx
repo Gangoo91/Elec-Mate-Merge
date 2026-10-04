@@ -209,7 +209,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>First-tier Tribunal for Scotland</strong> — the Housing and Property Chamber
                 of the First-tier Tribunal is the primary enforcement body for Repairing Standard
@@ -219,7 +219,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>City of Edinburgh Council — HMO licensing</strong> — the Council has
                 significant powers through HMO licensing. EICR compliance is a condition of the HMO
@@ -228,7 +228,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Landlord registration</strong> — City of Edinburgh Council administers the
                 landlord registration scheme. Persistent failure to meet Repairing Standard
@@ -237,7 +237,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No council-issued fixed penalties</strong> — unlike in England, there are no
                 fixed civil penalties of up to £30,000 per breach issued by the council for failure
@@ -263,7 +263,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mandatory HMO licensing</strong> — all HMOs in Edinburgh (properties
                 occupied by three or more persons from more than one family, sharing facilities)
@@ -272,7 +272,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inspection frequency</strong> — Edinburgh HMO licence conditions typically
                 require EICRs at shorter intervals than the standard five years. Check your specific
@@ -280,7 +280,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Communal areas and fire safety systems</strong> — the EICR must cover all
                 fixed electrical installations in an HMO, including communal corridors, stair
@@ -292,7 +292,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consequences of non-compliance</strong> — operating an unlicensed HMO in
                 Edinburgh is a criminal offence. Failure to comply with EICR requirements can result
@@ -318,7 +318,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tenant application</strong> — any tenant in a private rented property in
                 Scotland can apply to the Tribunal if they believe the landlord has failed to comply
@@ -327,7 +327,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Repairing Standard Enforcement Order</strong> — if the Tribunal finds in
                 favour of the tenant, it can issue a Repairing Standard Enforcement Order (RSEO)
@@ -335,7 +335,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rent Relief Order</strong> — if a landlord fails to comply with an RSEO, the
                 Tribunal can issue a Rent Relief Order (RRO) reducing the rent by up to 90 per cent.
@@ -343,7 +343,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Landlord registration impact</strong> — a finding against a landlord at the
                 Tribunal can affect their registration status with City of Edinburgh Council,
@@ -421,7 +421,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No fixed statutory deadline</strong> — unlike the 28-day rule in England,
                 Scotland's Repairing Standard does not specify a fixed timescale for completing
@@ -430,7 +430,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C1 observations — immediate action required</strong> — where a C1 (danger
                 present) observation is recorded, the affected circuit may need to be disconnected
@@ -440,7 +440,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Written evidence of remedial work</strong> — once remedial work is
                 completed, the landlord should obtain written confirmation from a qualified
@@ -449,7 +449,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Common Edinburgh remedial work</strong> — typical remedial work in Edinburgh
                 rental properties includes fitting RCD protection on socket-outlet circuits
@@ -480,7 +480,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SELECT, NICEIC, or NAPIT registration</strong> — search the online registers
                 for Edinburgh-based inspectors. SELECT is the Scottish trade association and its
@@ -488,7 +488,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Required qualifications</strong> — the inspector should hold City and Guilds
                 2391 (Inspection and Testing) or equivalent, a current BS 7671 qualification (C&G
@@ -497,7 +497,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Professional indemnity insurance</strong> — verify that the inspector
                 carries professional indemnity insurance. Required for competent person scheme
@@ -505,7 +505,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Avoid unusually cheap quotes</strong> — a thorough EICR for a two-bedroom
                 Edinburgh tenement flat requires 2 to 4 hours and calibrated test equipment. Prices
@@ -529,28 +529,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>One-bedroom tenement flat</strong> — £130 to £220. The most common EICR in
                 Edinburgh, typically 3 to 5 circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Two-bedroom flat</strong> — £180 to £300. Usually 5 to 8 circuits. Victorian
                 tenement conversions may take longer than modern flats.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom house or flat</strong> — £250 to £420. Older Edinburgh
                 properties can take longer to inspect due to complex layouts.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HMO</strong> — £350 to £700+. Multiple consumer units, fire alarm systems,
                 and emergency lighting increase the inspection scope significantly.
@@ -580,7 +580,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete EICRs On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -612,7 +612,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your landlord EICR business in Edinburgh with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -638,7 +638,7 @@ export default function LandlordElectricalSafetyEdinburghPage() {
       heroTitle={
         <>
           Landlord Electrical Safety Edinburgh:{' '}
-          <span className="text-yellow-400">Repairing Standard 2026</span>
+          <span className="text-elec-yellow">Repairing Standard 2026</span>
         </>
       }
       heroSubtitle="Edinburgh landlords are governed by Scotland's Housing (Scotland) Act 2006 Repairing Standard — not the England 2020 Regulations. This guide explains the Scottish framework, First-tier Tribunal enforcement, HMO requirements, tenant rights, and EICR costs for Edinburgh in 2026."
@@ -649,7 +649,7 @@ export default function LandlordElectricalSafetyEdinburghPage() {
       faqHeading="Frequently Asked Questions About Landlord Electrical Safety in Edinburgh"
       relatedPages={relatedPages}
       ctaHeading="Complete Landlord EICRs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

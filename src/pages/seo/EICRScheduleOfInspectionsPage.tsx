@@ -151,7 +151,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">Items to Check</h3>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Condition of enclosure:</strong> Is the consumer unit or distribution board
                 in good physical condition? No cracks, burn marks, missing covers, or damage. For
@@ -160,14 +160,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Security of fixing:</strong> Is the board securely fixed to the wall? Are
                 all fixings present and tight?
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit identification:</strong> Are all circuits clearly identified with a
                 circuit chart or schedule? Does the chart correspond to the actual circuit
@@ -179,14 +179,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Adequacy of access:</strong> Can the consumer unit or distribution board be
                 accessed safely? Is there adequate working space in front of the board?
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Presence of SPDs:</strong> For installations where SPDs are required
                 (Section 443), are they present and in good condition? Check the status indicator on
@@ -194,7 +194,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>AFDDs (arc fault detection devices):</strong> Regulation 421.1.7 requires
                 AFDDs to BS EN 62606 on single-phase AC final circuits supplying socket-outlets
@@ -207,7 +207,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD six-monthly test notice:</strong> Is the notice advising the user to
                 test the RCD six-monthly by pressing the test button present? The Appendix 6 form
@@ -249,7 +249,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">Items to Check</h3>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable condition:</strong> Is the cable sheath intact and undamaged? Any
                 signs of overheating, discolouration, or deterioration? Cable types such as older
@@ -257,7 +257,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable supports and fixings:</strong> Are cables adequately supported at
                 appropriate intervals? Are clips, cleats, and fixings secure? Are cables protected
@@ -265,7 +265,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable routing:</strong> Are cables routed in safe zones where concealed in
                 walls? Any evidence of cables being routed through thermal insulation without
@@ -273,7 +273,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Containment condition:</strong> Is trunking, conduit, and cable tray in good
                 condition? Lids in place? No damage or corrosion? Adequate capacity (not
@@ -281,7 +281,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire barriers and seals:</strong> Are fire barriers present where cables
                 pass through fire-rated walls, floors, or ceilings? (Regulation 527.2) This is a
@@ -289,7 +289,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable identification:</strong> Are cables identified with appropriate
                 markings? For pre-harmonised wiring colours (red/black), have they been
@@ -316,7 +316,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">Items to Check</h3>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Condition of accessories:</strong> Are socket outlets, light switches,
                 ceiling roses, and other accessories in good physical condition? No cracks, damage,
@@ -324,7 +324,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Security of mounting:</strong> Are all accessories securely mounted to the
                 wall or surface? No loose fixings or accessories pulling away from the mounting
@@ -332,7 +332,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Suitability for environment:</strong> Are accessories appropriate for the
                 environment? For example, IP-rated accessories in bathrooms (BS 7671 Section 701),
@@ -340,7 +340,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Correct connection:</strong> Where accessible without removing accessories
                 from the wall, check for signs of incorrect connection — scorch marks indicating
@@ -348,7 +348,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Enclosure integrity:</strong> Are all covers, lids, and bezels in place? No
                 exposed live parts accessible to the user.
@@ -374,7 +374,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">Items to Check</h3>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main protective bonding:</strong> Are main protective bonding conductors
                 connected to incoming water, gas, oil, and other metallic services? Regulation
@@ -387,7 +387,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Supplementary bonding:</strong> Where required (such as bathrooms under
                 certain conditions), are supplementary bonding conductors present and correctly
@@ -395,7 +395,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection — socket outlets and special locations:</strong> Are 30 mA
                 RCDs fitted to circuits that require additional protection? This includes socket
@@ -404,7 +404,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection — domestic lighting circuits:</strong> Regulation 411.3.4
                 requires that, within domestic (household) premises, additional protection by an RCD
@@ -415,7 +415,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing arrangement:</strong> Is the earthing arrangement correct and
                 appropriate? Verify the type (TN-S, TN-C-S, TT). For TT systems, is the earth
@@ -423,14 +423,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing conductor:</strong> Is the main earthing conductor present, of
                 adequate size, correctly connected, and in good condition?
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SELV/PELV systems:</strong> Where separated extra-low voltage or protective
                 extra-low voltage systems are present, is the separation maintained?
@@ -465,7 +465,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">Items to Check</h3>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main switch:</strong> Is there a readily accessible means of isolation for
                 the entire installation? Is the main switch clearly identified? Can it be operated
@@ -473,7 +473,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit isolation:</strong> Can each circuit be individually isolated at the
                 distribution board? Are the isolating devices (MCBs, RCBOs) clearly labelled to
@@ -481,7 +481,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency switching:</strong> Where required (for example, immersion
                 heaters, fixed space heaters, and some commercial equipment), are emergency
@@ -489,7 +489,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Functional switching:</strong> Do local switches (light switches, cooker
                 switches, fused connection units) operate correctly and provide the switching
@@ -497,7 +497,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Firefighter&rsquo;s switch:</strong> Regulation 537.4.2 requires one in the
                 low-voltage circuit supplying outdoor lighting installations operating at a voltage
@@ -530,7 +530,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">Items to Check</h3>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Warning and caution labels:</strong> Are all required warning labels
                 present? This includes the RCD six-monthly test notice (Regulation 514.12.2, subject
@@ -542,7 +542,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Diagrams and documentation:</strong> Are circuit diagrams, schedules, and
                 as-installed drawings available and up to date? (Regulation 514.9.1 requires a
@@ -552,7 +552,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Presence of non-standard colours:</strong> If the installation contains
                 pre-harmonised wiring colours (red and black), are they re-identified where they
@@ -560,14 +560,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Previous alterations:</strong> Is there evidence of previous alterations or
                 additions? Are they of an acceptable standard? Have they been certificated?
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional protection requirements:</strong> Where the current edition of BS
                 7671 requires protection that was not required when the installation was originally
@@ -664,7 +664,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
           <ul className="space-y-3 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
-              <Eye className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Start at the origin:</strong> Begin at the supply intake and consumer unit,
                 then work outwards through the installation room by room. This systematic approach
@@ -672,7 +672,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use a torch:</strong> Many consumer units and ceiling voids are poorly lit.
                 A good torch reveals damage, discolouration, and defects that are invisible in
@@ -680,7 +680,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check every room:</strong> Do not skip rooms. Check every socket outlet,
                 switch, light fitting, and visible cable in every room. If you cannot access a room,
@@ -688,7 +688,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Look at the loft and under-stairs cupboard:</strong> These are common
                 locations for junction boxes, cable runs, and bonding connections. They are also
@@ -696,14 +696,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check the meter cupboard:</strong> Verify the supply type, check the
                 earthing arrangement at the cutout, and look at the condition of the meter tails.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Record findings in real time:</strong> Do not rely on memory. Record
                 observations as you find them using the Elec-Mate app or a notepad. Details that
@@ -785,7 +785,7 @@ export default function EICRScheduleOfInspectionsPage() {
       badgeIcon={Eye}
       heroTitle={
         <>
-          EICR Schedule of Inspections: <span className="text-yellow-400">What to Check</span>
+          EICR Schedule of Inspections: <span className="text-elec-yellow">What to Check</span>
         </>
       }
       heroSubtitle="The complete guide to the EICR schedule of inspections per BS 7671 Appendix 6. Every part explained — intake equipment, earthing and bonding arrangements, consumer units and distribution boards, distribution and final circuits, isolation and switching, bath or shower locations and other special locations. Common C2 and C3 observations, plus practical tips for a thorough visual inspection."
@@ -800,7 +800,7 @@ export default function EICRScheduleOfInspectionsPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Schedule of Inspections Built Into the App"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EICRs with the full BS 7671 Appendix 6 schedule of inspections. Tick items as you walk the installation. Board scanner pre-populates board details. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for EICRs with the full BS 7671 Appendix 6 schedule of inspections. Tick items as you walk the installation. Board scanner pre-populates board details. 7-day free trial."
     />
   );
 }

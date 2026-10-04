@@ -246,7 +246,7 @@ export default function AdultElectricalApprenticeshipPage() {
       heroTitle={
         <>
           Electrical Apprenticeships for Adults:{' '}
-          <span className="text-yellow-400">The Career Changer's Guide</span>
+          <span className="text-elec-yellow">The Career Changer's Guide</span>
         </>
       }
       heroSubtitle="No, you are not too old — there is no upper age limit, and many employers prefer adult apprentices. What you need is the honest arithmetic: what training pays at 25, 35 or 45, which of the three adult routes fits your situation, and how career changers with mortgages actually make it work."

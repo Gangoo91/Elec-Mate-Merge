@@ -190,7 +190,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 1:</strong> Electrical installations in dwellings must be
                 designed, installed, inspected, tested, and certified so that they are safe and do
@@ -198,7 +198,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 2:</strong> The technical standard for compliance is BS 7671 —
                 the IET Wiring Regulations. Work that complies with BS 7671 is deemed to satisfy
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 3:</strong> Certain categories of electrical work are
                 "notifiable" and must be reported to the local authority either through a competent
@@ -242,7 +242,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New circuits.</strong> Installing any new circuit from the consumer unit or
                 distribution board — whether it is a new ring circuit, a new radial circuit, a new
@@ -251,7 +251,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacement.</strong> Replacing or upgrading the consumer unit
                 is always notifiable, regardless of whether new circuits are being added. This
@@ -266,7 +266,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Any work in special locations.</strong> All electrical work in bathrooms,
                 shower rooms, swimming pools, and saunas is notifiable — including minor additions,
@@ -279,7 +279,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New installations.</strong> The complete electrical installation in a new
                 dwelling or a new extension to an existing dwelling is notifiable. This is typically
@@ -427,7 +427,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Submit a building notice.</strong> Before starting work, submit a building
                 notice to the local authority. This can usually be done online. The fee varies but
@@ -435,14 +435,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Complete the work.</strong> Carry out the installation in accordance with BS
                 7671. Complete an EIC with full test results.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Arrange inspection.</strong> Contact building control to arrange an
                 inspection visit. The building control officer will review the EIC, check the
@@ -450,7 +450,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Receive completion certificate.</strong> If the building control officer is
                 satisfied, they issue a completion certificate confirming the work complies with the
@@ -654,7 +654,7 @@ export default function NotifiableWorkGuidePage() {
       heroTitle={
         <>
           Notifiable Electrical Work:{' '}
-          <span className="text-yellow-400">Your Complete Part P Guide</span>
+          <span className="text-elec-yellow">Your Complete Part P Guide</span>
         </>
       }
       heroSubtitle="Which electrical work needs notification under Part P? When can you self-certify? What happens if you do not notify? This guide covers every aspect of the notification process for UK electricians and homeowners."

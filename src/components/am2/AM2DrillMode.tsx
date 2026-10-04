@@ -43,6 +43,13 @@ import {
   getCalibrationOutcome,
   type Confidence,
 } from './confidence';
+import {
+  buildRegOptions,
+  loadRealRegs,
+  pickFacets,
+  redactRegNumbers,
+  type PoolReg,
+} from './bs7671QuizPool';
 
 const QUESTION_COUNT = 8;
 
@@ -55,19 +62,6 @@ interface AttemptRow {
   incorrect_streak: number;
 }
 
-interface RegRow {
-  id: string;
-  reg_number: string;
-  title: string | null;
-  part: string | null;
-}
-
-interface FacetRow {
-  id: string;
-  content: string;
-  regulation_id: string | null;
-}
-
 type PriorityReason = 'blind-spot' | 'recently-wrong' | 'overdue' | 'lucky' | 'untested';
 
 interface DrillQuestion {
@@ -76,31 +70,16 @@ interface DrillQuestion {
   rawContent: string;
   reasonLabel: PriorityReason;
   reasonText: string;
-  correctReg: RegRow;
+  correctReg: PoolReg;
   options: Array<{ id: string; reg_number: string }>;
 }
 
-function shuffle<T>(arr: T[]): T[] {
-  const out = [...arr];
-  for (let i = out.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [out[i], out[j]] = [out[j], out[i]];
-  }
-  return out;
-}
-
-/** Same redaction logic as Bs7671RagQuiz — keep the answer out of the prompt. */
-function redactRegNumbers(text: string, regNumber: string): string {
-  if (!text) return '';
-  let out = text.replace(new RegExp(regNumber.replace(/\./g, '\\.'), 'g'), '[regulation]');
-  out = out.replace(/\b\d{3}\.\d+(?:\.\d+)*\b/g, '[regulation]');
-  out = out.replace(/Regulation\s+\[regulation\]/gi, '[regulation]');
-  out = out.replace(/Reg\.?\s+\[regulation\]/gi, '[regulation]');
-  return out;
-}
-
 /** Rank an attempt row by drill priority. */
-function priorityOf(row: AttemptRow): { score: number; reason: PriorityReason; reasonText: string } {
+function priorityOf(row: AttemptRow): {
+  score: number;
+  reason: PriorityReason;
+  reasonText: string;
+} {
   if (!row.last_correct && row.last_confidence === 'certain') {
     return { score: 100, reason: 'blind-spot', reasonText: 'Wrong while certain — dangerous gap' };
   }
@@ -144,18 +123,6 @@ export function AM2DrillMode({ onExit, onSessionComplete }: AM2DrillModeProps) {
   const [revealed, setRevealed] = useState(false);
   const [startedAt, setStartedAt] = useState(Date.now());
 
-  const buildOptions = useCallback(
-    (correct: RegRow, regsByPart: Map<string, RegRow[]>, allRegs: RegRow[]) => {
-      const partRegs = correct.part ? regsByPart.get(correct.part) ?? [] : [];
-      const pool = partRegs.length >= 4 ? partRegs : allRegs;
-      const distractors = shuffle(pool.filter((r) => r.id !== correct.id)).slice(0, 3);
-      const opts = [{ id: correct.id, reg_number: correct.reg_number }];
-      for (const d of distractors) opts.push({ id: d.id, reg_number: d.reg_number });
-      return shuffle(opts);
-    },
-    []
-  );
-
   const loadDrill = useCallback(async () => {
     if (!user?.id) {
       setPhase('empty');
@@ -167,7 +134,9 @@ export function AM2DrillMode({ onExit, onSessionComplete }: AM2DrillModeProps) {
       // 1. Pull this user's attempt rows.
       const { data: attemptData, error: attemptErr } = await supabase
         .from('am2_reg_attempts')
-        .select('regulation_id, reg_number, last_correct, last_confidence, next_review_at, incorrect_streak')
+        .select(
+          'regulation_id, reg_number, last_correct, last_confidence, next_review_at, incorrect_streak'
+        )
         .eq('user_id', user.id)
         .order('last_asked_at', { ascending: false })
         .limit(80);
@@ -179,7 +148,7 @@ export function AM2DrillMode({ onExit, onSessionComplete }: AM2DrillModeProps) {
         .map((row) => ({ row, ...priorityOf(row) }))
         .filter((r) => r.score > 0)
         .sort((a, b) => b.score - a.score)
-        .slice(0, QUESTION_COUNT);
+        .slice(0, QUESTION_COUNT * 2);
 
       if (ranked.length === 0) {
         // No drill candidates yet — apprentice hasn't generated any
@@ -188,61 +157,24 @@ export function AM2DrillMode({ onExit, onSessionComplete }: AM2DrillModeProps) {
         return;
       }
 
-      // 3. Pull the regulations for the picked attempts.
-      const regIds = ranked.map((r) => r.row.regulation_id);
-      const { data: regData, error: regErr } = await supabase
-        .from('bs7671_regulations')
-        .select('id, reg_number, title, part')
-        .in('id', regIds);
-      if (regErr) throw regErr;
-      const allRegs = (regData ?? []) as RegRow[];
+      // 3–5. Real BS 7671 regs only (also the distractor pool), and one
+      //      BS 7671 facet per reg that is actually about that reg. Older
+      //      attempts can point at Approved Document clauses or OCR-garbled
+      //      numbers from before the spot check was fixed — those drop out.
+      const allRegs = await loadRealRegs();
       const regById = new Map(allRegs.map((r) => [r.id, r]));
-
-      // 4. Pull facets for those regs — pick one facet per reg as the prompt.
-      const { data: facetData, error: facetErr } = await supabase
-        .from('bs7671_facets')
-        .select('id, content, regulation_id')
-        .in('regulation_id', regIds)
-        .gte('confidence_score', 0.5)
-        .limit(200);
-      if (facetErr) throw facetErr;
-      const facetsByReg = new Map<string, FacetRow[]>();
-      for (const f of (facetData ?? []) as FacetRow[]) {
-        if (!f.regulation_id) continue;
-        if (!f.content || f.content.length < 100) continue;
-        const arr = facetsByReg.get(f.regulation_id) ?? [];
-        arr.push(f);
-        facetsByReg.set(f.regulation_id, arr);
-      }
-
-      // 5. Distractor pool — fetch some regs from each part for plausible options.
-      const parts = Array.from(
-        new Set(allRegs.map((r) => r.part).filter((p): p is string => !!p))
-      );
-      const regsByPart = new Map<string, RegRow[]>();
-      if (parts.length > 0) {
-        const { data: poolData } = await supabase
-          .from('bs7671_regulations')
-          .select('id, reg_number, title, part')
-          .in('part', parts)
-          .limit(300);
-        for (const r of (poolData ?? []) as RegRow[]) {
-          if (!r.part) continue;
-          const arr = regsByPart.get(r.part) ?? [];
-          arr.push(r);
-          regsByPart.set(r.part, arr);
-        }
-      }
+      const rankedRegs = ranked
+        .map((r) => ({ r, reg: regById.get(r.row.regulation_id) }))
+        .filter((x): x is { r: (typeof ranked)[number]; reg: PoolReg } => !!x.reg);
+      const facetByReg = await pickFacets(rankedRegs.map((x) => x.reg));
 
       // 6. Build MCQ for each ranked reg.
       const built: DrillQuestion[] = [];
-      for (const r of ranked) {
-        const reg = regById.get(r.row.regulation_id);
-        if (!reg) continue;
-        const facetPool = facetsByReg.get(reg.id) ?? [];
-        if (facetPool.length === 0) continue;
-        const facet = facetPool[Math.floor(Math.random() * facetPool.length)];
-        const opts = buildOptions(reg, regsByPart, allRegs);
+      for (const { r, reg } of rankedRegs) {
+        if (built.length >= QUESTION_COUNT) break;
+        const facet = facetByReg.get(reg.id);
+        if (!facet) continue;
+        const opts = buildRegOptions(reg, allRegs);
         if (opts.length < 4) continue;
         built.push({
           facetId: facet.id,
@@ -270,7 +202,7 @@ export function AM2DrillMode({ onExit, onSessionComplete }: AM2DrillModeProps) {
       setError(e instanceof Error ? e.message : String(e));
       setPhase('error');
     }
-  }, [user?.id, buildOptions]);
+  }, [user?.id]);
 
   useEffect(() => {
     void loadDrill();
@@ -326,9 +258,7 @@ export function AM2DrillMode({ onExit, onSessionComplete }: AM2DrillModeProps) {
         <Loader2 className="h-6 w-6 animate-spin text-elec-yellow" />
         <div className="text-center max-w-xs">
           <p className="text-[13px] text-white font-medium">Picking your weakest regs…</p>
-          <p className="mt-1 text-[11.5px] text-white/55">
-            Ranking by what'll move you fastest.
-          </p>
+          <p className="mt-1 text-[11.5px] text-white/55">Ranking by what'll move you fastest.</p>
         </div>
       </div>
     );
@@ -344,8 +274,8 @@ export function AM2DrillMode({ onExit, onSessionComplete }: AM2DrillModeProps) {
           Nothing to drill yet.
         </h1>
         <p className="text-[13px] text-white/65 leading-relaxed">
-          Run a BS 7671 spot check first. As soon as you've answered a few regs, drill mode
-          ranks them by where you're weakest and feeds you the ones that'll move the needle.
+          Run a BS 7671 spot check first. As soon as you've answered a few regs, drill mode ranks
+          them by where you're weakest and feeds you the ones that'll move the needle.
         </p>
         {onExit && (
           <button
@@ -422,7 +352,12 @@ export function AM2DrillMode({ onExit, onSessionComplete }: AM2DrillModeProps) {
         <div className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_10%)] p-5 sm:p-6 grid grid-cols-3 gap-4">
           <div>
             <div className="text-[10px] uppercase tracking-[0.14em] text-white/55">Score</div>
-            <div className={cn('text-4xl sm:text-5xl font-semibold tabular-nums leading-none mt-1', tone)}>
+            <div
+              className={cn(
+                'text-4xl sm:text-5xl font-semibold tabular-nums leading-none mt-1',
+                tone
+              )}
+            >
               {pct}%
             </div>
             <div className={cn('mt-2 text-[12px] font-semibold', tone)}>{verdict}</div>
@@ -577,12 +512,17 @@ export function AM2DrillMode({ onExit, onSessionComplete }: AM2DrillModeProps) {
               disabled={isAnswered}
               className={cn(
                 'w-full text-left p-3.5 sm:p-4 rounded-xl border transition-colors touch-manipulation flex items-center gap-3',
-                neutralPreReveal && !isAnswered && 'border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.04]',
+                neutralPreReveal &&
+                  !isAnswered &&
+                  'border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.04]',
                 neutralPreReveal && isAnswered && 'border-white/[0.06] bg-white/[0.01] opacity-60',
                 pickedPreReveal && 'border-elec-yellow/50 bg-elec-yellow/[0.06]',
                 revealed && isCorrectOpt && 'border-emerald-400/40 bg-emerald-500/[0.08]',
                 revealed && !isCorrectOpt && isUserPick && 'border-red-400/40 bg-red-500/[0.08]',
-                revealed && !isCorrectOpt && !isUserPick && 'border-white/[0.04] bg-white/[0.01] opacity-50'
+                revealed &&
+                  !isCorrectOpt &&
+                  !isUserPick &&
+                  'border-white/[0.04] bg-white/[0.01] opacity-50'
               )}
             >
               <span className="text-[13.5px] font-mono tabular-nums text-white/85">
@@ -620,7 +560,7 @@ export function AM2DrillMode({ onExit, onSessionComplete }: AM2DrillModeProps) {
               )}
             </div>
             {currentQ.correctReg.part && (
-              <div className="text-[11px] text-white/55">Part {currentQ.correctReg.part}</div>
+              <div className="text-[11px] text-white/55">{currentQ.correctReg.part}</div>
             )}
             <button
               type="button"

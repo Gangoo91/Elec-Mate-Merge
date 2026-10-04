@@ -189,7 +189,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">London Pricing Breakdown (2026)</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Small flat (6-way board, split-load RCDs)</strong> — £550 to £800 total.
                 Common in purpose-built flats across zones 2 to 6. Materials: £150 to £250. Labour:
@@ -197,7 +197,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard terraced house (10-way with RCBOs and SPD)</strong> — £900 to
                 £1,500 total. The most common domestic job in London. Materials: £350 to £550.
@@ -205,7 +205,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large detached or semi (14-way high-integrity with SPD)</strong> — £1,400 to
                 £2,200 total. For properties with 12+ circuits, EV charger, and smart home systems.
@@ -213,7 +213,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-phase property</strong> — £2,000 to £2,800+ total. Required for larger
                 homes with three-phase supply, workshops, or commercial conversions. Materials: £800
@@ -335,7 +335,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1: Survey and isolation</strong> — the electrician surveys the existing
                 board, identifies all circuits, and safely isolates the mains supply at the DNO
@@ -343,7 +343,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2: Remove old board</strong> — the existing consumer unit is
                 disconnected and removed. In older London properties, this may reveal ageing cables
@@ -351,14 +351,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 3: Install new consumer unit</strong> — the new metal consumer unit is
                 mounted, fitted with RCBOs and SPD, and all circuits reconnected and labelled.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 4: Testing</strong> — every circuit is tested to BS 7671 standards
                 including insulation resistance, earth fault loop impedance, RCD trip times, and
@@ -366,7 +366,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 5: Certification</strong> — the electrician completes the{' '}
                 <SEOInternalLink href="/eic-certificate">
@@ -433,7 +433,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person scheme registration</strong> — verify they are registered
                 with NICEIC, NAPIT, or ELECSA. Check their registration number on the scheme's
@@ -441,7 +441,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Local to your area</strong> — choose an electrician based in your part of
                 London. A Bromley-based electrician working in Barnet will add travel time and cost.
@@ -449,7 +449,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Itemised quote</strong> — the quote should break down materials, labour,
                 Part P notification, and VAT separately. Be wary of single-figure quotes with no
@@ -457,7 +457,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EIC included</strong> — confirm the quote includes an Electrical
                 Installation Certificate and Part P notification. Some cheaper quotes exclude these
@@ -465,7 +465,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reviews and reputation</strong> — check Google reviews, Checkatrade, or
                 Trustpilot. London has a high volume of electricians and unfortunately some
@@ -501,7 +501,7 @@ export default function ConsumerUnitReplacementLondonPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Consumer Unit Replacement London: <span className="text-yellow-400">Cost Guide 2026</span>
+          Consumer Unit Replacement London: <span className="text-elec-yellow">Cost Guide 2026</span>
         </>
       }
       heroSubtitle="London consumer unit replacement costs are 15% to 30% higher than the national average. This guide covers local pricing for fuse board upgrades across the capital, from zone 1 flats to outer borough houses — including Part P notification, what to expect during the work, and how to choose a registered electrician."
@@ -512,7 +512,7 @@ export default function ConsumerUnitReplacementLondonPage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Replacement in London"
       relatedPages={relatedPages}
       ctaHeading="Quote Consumer Unit Replacements in London"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
     />
   );
 }

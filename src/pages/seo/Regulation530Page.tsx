@@ -180,7 +180,7 @@ const sections = [
           regulatory framework mandating it. Regulation 530.3.201 fills this gap.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h4 className="font-bold text-yellow-400 text-sm uppercase tracking-wide mb-3">
+          <h4 className="font-bold text-elec-yellow text-sm uppercase tracking-wide mb-3">
             Regulation 530.3.201 — Verbatim (BS 7671:2018+A4:2026)
           </h4>
           <blockquote className="border-l-4 border-yellow-400 pl-4 text-white italic text-sm leading-relaxed">
@@ -188,7 +188,7 @@ const sections = [
             appropriate use of either a unidirectional protective device or a bidirectional
             protective device.&rdquo;
           </blockquote>
-          <p className="text-white/70 text-xs leading-relaxed mt-3">
+          <p className="text-white text-xs leading-relaxed mt-3">
             NOTE: Product standards as listed in Appendix I, for some protective devices including
             RCCBs, RCBOs, circuit-breakers and AFDDs, require these devices to be marked to indicate
             if they are unidirectional &mdash; e.g. &ldquo;in&rdquo; and &ldquo;out&rdquo;,
@@ -240,32 +240,32 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">BS 7671 Amendment Timeline</h3>
           <div className="space-y-3">
             <div className="flex items-center gap-4 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-              <span className="text-yellow-400 font-bold shrink-0">2018</span>
+              <span className="text-elec-yellow font-bold shrink-0">2018</span>
               <span className="text-white">
                 BS 7671:2018 — 18th Edition published (the "brown book")
               </span>
             </div>
             <div className="flex items-center gap-4 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-              <span className="text-yellow-400 font-bold shrink-0">2020</span>
+              <span className="text-elec-yellow font-bold shrink-0">2020</span>
               <span className="text-white">
                 Amendment 1 (A1:2020) — corrections and clarifications
               </span>
             </div>
             <div className="flex items-center gap-4 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-              <span className="text-yellow-400 font-bold shrink-0">2022</span>
+              <span className="text-elec-yellow font-bold shrink-0">2022</span>
               <span className="text-white">
                 Amendment 2 (A2:2022) — SPD requirements, EV charging updates
               </span>
             </div>
             <div className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <span className="text-yellow-400 font-bold shrink-0">Jul 2024</span>
+              <span className="text-elec-yellow font-bold shrink-0">Jul 2024</span>
               <span className="text-white">
                 Amendment 3 (A3:2024) — Regulation 530.3.201 (bidirectional/unidirectional devices)
                 + two new definitions
               </span>
             </div>
             <div className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <span className="text-yellow-400 font-bold shrink-0">2026</span>
+              <span className="text-elec-yellow font-bold shrink-0">2026</span>
               <span className="text-white">
                 Amendment 4 (A4:2026) — redrafted Reg 421.1.7 (AFDDs now required for socket-outlet
                 circuits ≤32 A in higher-risk premises), new Reg 411.6.5, new group 419 — current
@@ -291,9 +291,9 @@ const sections = [
           </p>
           <ul className="space-y-2 text-white text-sm">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">Reg 421.1.7 (AFDDs)</strong> — redrafted. AFDDs
+                <strong className="text-elec-yellow">Reg 421.1.7 (AFDDs)</strong> — redrafted. AFDDs
                 conforming to BS EN 62606 are now <strong>required</strong> on single-phase AC final
                 circuits supplying socket-outlets rated up to 32 A in high rise residential
                 buildings, houses in multiple occupation, purpose-built student accommodation and
@@ -302,17 +302,17 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">Reg 411.6.5</strong> — inserted as part of a
+                <strong className="text-elec-yellow">Reg 411.6.5</strong> — inserted as part of a
                 reorganisation of the IT system requirements in Section 411.6 (Chapter 41,
                 Protection Against Electric Shock).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">New Regulation group 419</strong> — inserted for
+                <strong className="text-elec-yellow">New Regulation group 419</strong> — inserted for
                 installations where automatic disconnection in accordance with Regulation 411.3.2 is
                 not feasible, such as electronic equipment with limited short-circuit current.
               </span>
@@ -340,7 +340,7 @@ const sections = [
           both terms by reference to how the manufacturer intends the supply to be connected:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h4 className="font-bold text-yellow-400 text-sm uppercase tracking-wide mb-3">
+          <h4 className="font-bold text-elec-yellow text-sm uppercase tracking-wide mb-3">
             BS 7671 Part 2 — Definitions
           </h4>
           <div className="space-y-3 text-sm">
@@ -353,7 +353,7 @@ const sections = [
             </div>
             <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-4">
               <p className="text-white">
-                <strong className="text-yellow-400">Bidirectional protective device.</strong> A
+                <strong className="text-elec-yellow">Bidirectional protective device.</strong> A
                 protective device where it is intended by the manufacturer that a source of supply is
                 connected to either or both sets of connection terminals.
               </p>
@@ -376,7 +376,7 @@ const sections = [
             </p>
           </div>
           <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-            <ArrowLeftRight className="w-6 h-6 text-yellow-400 mb-3" />
+            <ArrowLeftRight className="w-6 h-6 text-elec-yellow mb-3" />
             <h3 className="font-bold text-white text-lg mb-2">Bidirectional Devices</h3>
             <p className="text-white text-sm leading-relaxed mb-3">
               Designed and tested to interrupt current flowing in either direction — from supply to
@@ -425,28 +425,28 @@ const sections = [
           solar PV installation are set out below:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-6">
-          <div className="grid grid-cols-12 gap-0 bg-white/[0.06] px-4 py-3 text-xs font-bold uppercase tracking-wide text-yellow-400">
+          <div className="grid grid-cols-12 gap-0 bg-white/[0.06] px-4 py-3 text-xs font-bold uppercase tracking-wide text-elec-yellow">
             <div className="col-span-5">Device</div>
             <div className="col-span-7">Why current can flow both ways</div>
           </div>
           <div className="divide-y divide-white/10">
             <div className="grid grid-cols-12 gap-0 px-4 py-3 text-sm">
               <div className="col-span-5 font-semibold text-white">AC isolator at the inverter</div>
-              <div className="col-span-7 text-white/90">
+              <div className="col-span-7 text-white">
                 Generated current flows from the inverter towards the consumer unit through this
                 isolator, so it sits in the generation-direction path.
               </div>
             </div>
             <div className="grid grid-cols-12 gap-0 px-4 py-3 text-sm bg-white/[0.02]">
               <div className="col-span-5 font-semibold text-white">MCB / RCBO for the PV circuit</div>
-              <div className="col-span-7 text-white/90">
+              <div className="col-span-7 text-white">
                 The protective device for the inverter's AC output circuit carries generated current
                 from the inverter to the consumer unit busbars.
               </div>
             </div>
             <div className="grid grid-cols-12 gap-0 px-4 py-3 text-sm">
               <div className="col-span-5 font-semibold text-white">Consumer unit main switch</div>
-              <div className="col-span-7 text-white/90">
+              <div className="col-span-7 text-white">
                 Where surplus generation is exported, the main switch sees both import and export
                 current, so it must suit bidirectional operation.
               </div>
@@ -492,19 +492,19 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>AC isolator for the battery inverter</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>MCB or RCBO protecting the battery circuit</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Main switch if the battery system exports to the grid</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Any upstream RCD in the path of bidirectional current</span>
             </li>
           </ul>
@@ -576,21 +576,21 @@ const sections = [
           number before you order.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-6">
-          <div className="grid grid-cols-12 gap-0 bg-white/[0.06] px-4 py-3 text-xs font-bold uppercase tracking-wide text-yellow-400">
+          <div className="grid grid-cols-12 gap-0 bg-white/[0.06] px-4 py-3 text-xs font-bold uppercase tracking-wide text-elec-yellow">
             <div className="col-span-4">Device</div>
             <div className="col-span-8">What to check before specifying</div>
           </div>
           <div className="divide-y divide-white/10">
             <div className="grid grid-cols-12 gap-0 px-4 py-3 text-sm">
               <div className="col-span-4 font-semibold text-white">Main switch</div>
-              <div className="col-span-8 text-white/90">
+              <div className="col-span-8 text-white">
                 Choose a main switch suited to generation/prosumer applications and confirm the
                 breaking capacity is rated for both directions of current flow.
               </div>
             </div>
             <div className="grid grid-cols-12 gap-0 px-4 py-3 text-sm bg-white/[0.02]">
               <div className="col-span-4 font-semibold text-white">MCBs &amp; RCBOs</div>
-              <div className="col-span-8 text-white/90">
+              <div className="col-span-8 text-white">
                 Some standard devices are already tested for bidirectional operation but not
                 marketed as such — confirm with the manufacturer. Check for any in/out or line/load
                 marking and observe it.
@@ -598,14 +598,14 @@ const sections = [
             </div>
             <div className="grid grid-cols-12 gap-0 px-4 py-3 text-sm">
               <div className="col-span-4 font-semibold text-white">AC isolators</div>
-              <div className="col-span-8 text-white/90">
+              <div className="col-span-8 text-white">
                 Rotary isolators for PV and battery circuits should be rated for the application and
                 for current flow in the generation direction.
               </div>
             </div>
             <div className="grid grid-cols-12 gap-0 px-4 py-3 text-sm bg-white/[0.02]">
               <div className="col-span-4 font-semibold text-white">RCDs</div>
-              <div className="col-span-8 text-white/90">
+              <div className="col-span-8 text-white">
                 If an RCD sits in the bidirectional path, confirm both its residual-current detection
                 and its switching/breaking capability are suitable for current in either direction.
                 See{' '}
@@ -614,7 +614,7 @@ const sections = [
             </div>
             <div className="grid grid-cols-12 gap-0 px-4 py-3 text-sm">
               <div className="col-span-4 font-semibold text-white">AFDDs</div>
-              <div className="col-span-8 text-white/90">
+              <div className="col-span-8 text-white">
                 Per the NOTE to 530.3.201, AFDDs (BS EN 62606) may be marked for orientation. Where
                 A4:2026 Reg 421.1.7 applies, place the AFDD at the origin of the circuit it protects.
               </div>
@@ -649,22 +649,22 @@ const sections = [
         <p>The certificate should specifically note:</p>
         <ul className="space-y-2 my-4">
           <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">The presence of embedded generation or storage</span>
           </li>
           <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">Which circuits carry bidirectional current</span>
           </li>
           <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
               Confirmation that all devices in the bidirectional path are rated for bidirectional
               operation
             </span>
           </li>
           <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
               The make and model of bidirectional devices installed
             </span>
@@ -705,7 +705,7 @@ export default function Regulation530Page() {
         <>
           Regulation 530.3.201
           <br />
-          <span className="text-yellow-400">Bidirectional Devices — BS 7671 A4:2026</span>
+          <span className="text-elec-yellow">Bidirectional Devices — BS 7671 A4:2026</span>
         </>
       }
       heroSubtitle="Amendment 3 (A3:2024) to BS 7671 introduced Regulation 530.3.201, requiring designers and installers to take account of whether a unidirectional or bidirectional protective device is appropriate — and to follow any orientation marking on the device. This guide explains what it means, which installations are affected, and how to comply."
@@ -716,7 +716,7 @@ export default function Regulation530Page() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Stay Current with BS 7671 Amendments"
-      ctaSubheading="Elec-Mate certificates reference BS 7671:2018+A4:2026 automatically. Bidirectional device fields are built into solar PV and battery storage certificates. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate certificates reference BS 7671:2018+A4:2026 automatically. Bidirectional device fields are built into solar PV and battery storage certificates. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

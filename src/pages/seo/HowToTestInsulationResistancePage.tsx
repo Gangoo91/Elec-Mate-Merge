@@ -172,15 +172,15 @@ export default function HowToTestInsulationResistancePage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
-        <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-elec-yellow text-sm font-medium mb-6">
             <ShieldCheck className="w-4 h-4" />
             BS 7671:2018+A4:2026 Compliant
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
             How to Test Insulation Resistance
-            <span className="block text-yellow-400 mt-1">BS 7671 Step-by-Step Guide</span>
+            <span className="block text-elec-yellow mt-1">BS 7671 Step-by-Step Guide</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             The complete guide to insulation resistance testing for UK electricians. Understand test
@@ -197,7 +197,7 @@ export default function HowToTestInsulationResistancePage() {
             </Link>
             <a
               href="#how-it-works"
-              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-yellow-500/40 touch-manipulation transition-colors"
+              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-white/[0.1] touch-manipulation transition-colors"
             >
               See Test Procedure
               <ArrowDown className="w-4 h-4 ml-1" />
@@ -211,7 +211,7 @@ export default function HowToTestInsulationResistancePage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <BookOpen className="w-5 h-5 text-yellow-400" />
+              <BookOpen className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               What Is Insulation Resistance and Why Does It Matter?
@@ -265,7 +265,7 @@ export default function HowToTestInsulationResistancePage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Zap className="w-5 h-5 text-yellow-400" />
+              <Zap className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Test Voltages and Minimum Values — BS 7671 Table 64
@@ -280,7 +280,7 @@ export default function HowToTestInsulationResistancePage() {
           </div>
           <div className="grid sm:grid-cols-3 gap-4 my-6">
             <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-              <h3 className="font-bold text-yellow-400 text-2xl mb-1">250 V DC</h3>
+              <h3 className="font-bold text-elec-yellow text-2xl mb-1">250 V DC</h3>
               <h4 className="font-bold text-white mb-3">SELV / PELV Circuits</h4>
               <p className="text-white text-sm leading-relaxed">
                 For circuits operating at extra-low voltage — SELV (Separated Extra-Low Voltage) and
@@ -290,7 +290,7 @@ export default function HowToTestInsulationResistancePage() {
               </p>
             </div>
             <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <h3 className="font-bold text-yellow-400 text-2xl mb-1">500 V DC</h3>
+              <h3 className="font-bold text-elec-yellow text-2xl mb-1">500 V DC</h3>
               <h4 className="font-bold text-white mb-3">Up to 500 V Circuits</h4>
               <p className="text-white text-sm leading-relaxed">
                 For circuits with a nominal voltage up to and including 500 V — which covers all
@@ -300,7 +300,7 @@ export default function HowToTestInsulationResistancePage() {
               </p>
             </div>
             <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-              <h3 className="font-bold text-yellow-400 text-2xl mb-1">1000 V DC</h3>
+              <h3 className="font-bold text-elec-yellow text-2xl mb-1">1000 V DC</h3>
               <h4 className="font-bold text-white mb-3">Above 500 V Circuits</h4>
               <p className="text-white text-sm leading-relaxed">
                 For circuits with a nominal voltage above 500 V, such as high-voltage distribution
@@ -312,7 +312,7 @@ export default function HowToTestInsulationResistancePage() {
           </div>
           <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Important Note</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -334,7 +334,7 @@ export default function HowToTestInsulationResistancePage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Activity className="w-5 h-5 text-yellow-400" />
+              <Activity className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Conductor Combinations — What to Test Between
@@ -350,7 +350,7 @@ export default function HowToTestInsulationResistancePage() {
           <div className="grid sm:grid-cols-2 gap-4 my-6">
             <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
               <div className="flex items-center gap-2 mb-3">
-                <span className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm">
+                <span className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm">
                   1
                 </span>
                 <h3 className="font-bold text-white text-lg">L+N Combined to Earth</h3>
@@ -366,7 +366,7 @@ export default function HowToTestInsulationResistancePage() {
             </div>
             <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <div className="flex items-center gap-2 mb-3">
-                <span className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm">
+                <span className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm">
                   2
                 </span>
                 <h3 className="font-bold text-white text-lg">Line to Neutral</h3>
@@ -400,7 +400,7 @@ export default function HowToTestInsulationResistancePage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <AlertTriangle className="w-5 h-5 text-yellow-400" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Common Causes of Low Insulation Resistance Readings
@@ -414,9 +414,9 @@ export default function HowToTestInsulationResistancePage() {
             </p>
             <ul className="space-y-3 my-4">
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>
-                  <strong className="text-yellow-400">Moisture ingress</strong> — Water in junction
+                  <strong className="text-elec-yellow">Moisture ingress</strong> — Water in junction
                   boxes, back boxes, or conduit systems is one of the most common causes of low IR
                   readings. This is particularly prevalent in outdoor circuits, bathroom
                   installations, and any circuit that runs through unheated spaces such as lofts or
@@ -425,9 +425,9 @@ export default function HowToTestInsulationResistancePage() {
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>
-                  <strong className="text-yellow-400">Heat-damaged insulation</strong> — Cables
+                  <strong className="text-elec-yellow">Heat-damaged insulation</strong> — Cables
                   routed too close to heat sources — recessed downlighters, immersion heaters,
                   heating pipes, and flue pipes — can suffer insulation degradation. The PVC
                   sheathing becomes brittle and may crack, exposing the conductor. This is a common
@@ -435,9 +435,9 @@ export default function HowToTestInsulationResistancePage() {
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>
-                  <strong className="text-yellow-400">Long cable runs</strong> — Every metre of
+                  <strong className="text-elec-yellow">Long cable runs</strong> — Every metre of
                   cable adds a small amount of capacitance between conductors and earth. On very
                   long cable runs (particularly in large commercial installations), this cumulative
                   capacitance can reduce the apparent insulation resistance reading. This is a
@@ -446,18 +446,18 @@ export default function HowToTestInsulationResistancePage() {
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>
-                  <strong className="text-yellow-400">Connected equipment not disconnected</strong>{' '}
+                  <strong className="text-elec-yellow">Connected equipment not disconnected</strong>{' '}
                   — Electronic devices, LED drivers, dimmer modules, and even neon indicator lamps
                   in switches provide parallel paths that reduce the measured insulation resistance.
                   Always ensure all equipment is disconnected before testing.
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>
-                  <strong className="text-yellow-400">Mechanical damage to cables</strong> — Nails,
+                  <strong className="text-elec-yellow">Mechanical damage to cables</strong> — Nails,
                   screws, or staples driven through cables during construction or DIY work are a
                   frequent cause of insulation failure. The conductor may still function but the
                   insulation is compromised, creating a leakage path to earth through the metallic
@@ -474,7 +474,7 @@ export default function HowToTestInsulationResistancePage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Thermometer className="w-5 h-5 text-yellow-400" />
+              <Thermometer className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Temperature and Humidity Effects on Readings
@@ -517,7 +517,7 @@ export default function HowToTestInsulationResistancePage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               How to Test Insulation Resistance — Step by Step
@@ -530,7 +530,7 @@ export default function HowToTestInsulationResistancePage() {
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex-shrink-0">
-                  <span className="font-bold text-yellow-400">{index + 1}</span>
+                  <span className="font-bold text-elec-yellow">{index + 1}</span>
                 </div>
                 <div>
                   <h3 className="font-bold text-white text-lg mb-1">{step.name}</h3>
@@ -574,7 +574,7 @@ export default function HowToTestInsulationResistancePage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <HelpCircle className="w-5 h-5 text-yellow-400" />
+              <HelpCircle className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Frequently Asked Questions
@@ -587,7 +587,7 @@ export default function HowToTestInsulationResistancePage() {
                 className="group p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-white/[0.14] transition-colors"
               >
                 <summary className="flex items-start gap-3 cursor-pointer touch-manipulation list-none [&::-webkit-details-marker]:hidden">
-                  <ChevronRight className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0 transition-transform group-open:rotate-90" />
+                  <ChevronRight className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0 transition-transform group-open:rotate-90" />
                   <h3 className="font-bold text-white text-lg">{faq.question}</h3>
                 </summary>
                 <div className="mt-3 pl-8">
@@ -622,7 +622,7 @@ export default function HowToTestInsulationResistancePage() {
 
       <SEOCTASection
         heading="Record Insulation Resistance Results Digitally"
-        subheading="Join 1,600+ UK electricians using Elec-Mate for on-site testing and certification. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians using Elec-Mate for on-site testing and certification. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

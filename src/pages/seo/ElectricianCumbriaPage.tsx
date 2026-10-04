@@ -191,7 +191,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Nuclear Site Licence conditions</strong> — Sellafield operates under a
                 Nuclear Site Licence issued by the Office for Nuclear Regulation (ONR). Licence
@@ -202,7 +202,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Security vetting</strong> — access to Sellafield requires a valid site pass.
                 Most contractor roles require Baseline Personnel Security Standard (BPSS) as a
@@ -212,7 +212,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SQEP framework</strong> — Sellafield requires electricians to demonstrate
                 they are Suitably Qualified and Experienced Persons (SQEP) for the work undertaken.
@@ -222,7 +222,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IEC 60364 and nuclear codes</strong> — while BS 7671 provides the baseline,
                 nuclear sites also apply IEC 60364 (the international standard underpinning BS 7671)
@@ -233,7 +233,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Permit-to-work systems</strong> — all electrical work at Sellafield is
                 managed under a formal permit-to-work (PTW) system. Electricians must understand and
@@ -353,7 +353,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New connections and upgrades</strong> — new supplies, capacity upgrades (for
                 example, from 60A to 100A for EV chargers or heat pumps), and service cable
@@ -363,7 +363,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98/G99 notifications</strong> — solar PV, battery storage, wind turbines,
                 and other generation equipment must be notified to ENW. Cumbria has significant wind
@@ -373,7 +373,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>TT earthing systems</strong> — rural Cumbria has a higher-than-average
                 proportion of properties with TT earthing, served by overhead distribution lines. On
@@ -385,7 +385,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large industrial and nuclear connections</strong> — Sellafield and BAE
                 Systems are among ENW's largest industrial customers. Their supply arrangements are
@@ -547,7 +547,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EIC and EICR Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -625,7 +625,7 @@ export default function ElectricianCumbriaPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Cumbria: <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Cumbria: <span className="text-elec-yellow">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Cumbria has one of the UK's most distinctive electrical labour markets, shaped by Sellafield nuclear site, BAE Systems's submarine facility in Barrow, and a vast rural county with TT earthing systems and growing renewables demand."
@@ -636,7 +636,7 @@ export default function ElectricianCumbriaPage() {
       faqHeading="Frequently Asked Questions About Electricians in Cumbria"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Cumbria Electricians"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the realities of Cumbria's nuclear sites, rural properties, and coastal industrial work. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the realities of Cumbria's nuclear sites, rural properties, and coastal industrial work. 7-day free trial."
     />
   );
 }

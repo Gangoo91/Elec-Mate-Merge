@@ -402,7 +402,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ShieldCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   At the Origin: Main Switch and Consumer Unit
@@ -512,7 +512,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Calculate PFC from Impedance</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -592,7 +592,7 @@ export default function PFCExplainedPage() {
       heroTitle={
         <>
           Prospective Fault Current:{' '}
-          <span className="text-yellow-400">What Every Electrician Must Know</span>
+          <span className="text-elec-yellow">What Every Electrician Must Know</span>
         </>
       }
       heroSubtitle="If the fault current exceeds the breaking capacity of the protective device, the device can explode. PFC is one of the most critical measurements in electrical testing — and one of the most commonly misunderstood. This guide explains what PFC is, how to measure it, and why it matters for every installation."
@@ -603,7 +603,7 @@ export default function PFCExplainedPage() {
       faqHeading="Frequently Asked Questions About Prospective Fault Current"
       relatedPages={relatedPages}
       ctaHeading="PFC Calculator in Your Pocket"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's 70+ calculators including PFC, Zs, cable sizing, voltage drop, adiabatic equation, and more. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate's 70+ calculators including PFC, Zs, cable sizing, voltage drop, adiabatic equation, and more. 7-day free trial, cancel anytime."
     />
   );
 }

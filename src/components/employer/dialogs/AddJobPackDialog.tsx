@@ -57,6 +57,7 @@ import {
   textareaClass,
   checkboxClass,
 } from '@/components/employer/editorial';
+import { autoCompleteOff } from '@/lib/textEntry';
 
 const COMMON_HAZARDS = [
   'Working at height',
@@ -600,7 +601,7 @@ export function AddJobPackDialog({
                   onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
                   placeholder="e.g. Commercial Rewiring"
                   className={inputClass}
-                  autoComplete="off"
+                  autoComplete={autoCompleteOff}
                 />
               </Field>
               <FormGrid cols={2}>
@@ -610,7 +611,7 @@ export function AddJobPackDialog({
                     onChange={(e) => setFormData((prev) => ({ ...prev, client: e.target.value }))}
                     placeholder="e.g. Tesco"
                     className={inputClass}
-                    autoComplete="off"
+                    autoComplete={autoCompleteOff}
                   />
                 </Field>
                 <Field label="Location" required>
@@ -619,7 +620,7 @@ export function AddJobPackDialog({
                     onChange={(e) => setFormData((prev) => ({ ...prev, location: e.target.value }))}
                     placeholder="e.g. Manchester"
                     className={inputClass}
-                    autoComplete="off"
+                    autoComplete={autoCompleteOff}
                   />
                 </Field>
               </FormGrid>
@@ -651,7 +652,7 @@ export function AddJobPackDialog({
                     }
                     placeholder="50000"
                     className={inputClass}
-                    autoComplete="off"
+                    autoComplete={autoCompleteOff}
                   />
                 </Field>
               </FormGrid>

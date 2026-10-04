@@ -187,14 +187,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Business name and purpose</strong> — state the trading name, the nature of
                 the business (electrical contracting), and the geographic area of operation.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Capital contributions</strong> — how much each partner is contributing at
                 the outset (cash, tools, vehicles) and whether interest is payable on capital
@@ -202,14 +202,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Profit and loss sharing</strong> — the agreed ratio for sharing profits and
                 losses. This can be different from the capital contribution ratio.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Decision-making</strong> — which decisions can each partner make alone
                 (day-to-day operational decisions) and which require agreement of all partners
@@ -217,14 +217,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Drawings and salary</strong> — how much each partner can draw from the
                 business, and whether a fixed "salary" is paid before profit is calculated.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Exit provisions</strong> — what happens when a partner wants to leave,
                 retires, becomes incapacitated, or dies. How is their share valued and paid out?
@@ -232,7 +232,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Non-compete clause</strong> — to prevent a departing partner immediately
                 setting up in competition and soliciting clients. Must be reasonable in scope and
@@ -355,7 +355,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Register by 5 October</strong> — each partner must register with HMRC by 5
                 October following the end of the first tax year in which they started trading. Use
@@ -364,7 +364,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Unique Taxpayer Reference (UTR)</strong> — the partnership gets its own UTR,
                 separate from the individual partners' UTRs. The nominated partner files the SA800
@@ -372,7 +372,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>VAT registration</strong> — if the partnership's combined turnover exceeds
                 the VAT registration threshold (£90,000 from April 2024), the partnership must
@@ -465,7 +465,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Valuing the business</strong> — agree upfront how the business will be
                 valued if a partner leaves. Common methods include net assets (book value of assets
@@ -474,7 +474,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Notifying HMRC</strong> — when the partnership ends, notify HMRC, file a
                 final partnership tax return (SA800), and each partner files their individual Self
@@ -483,7 +483,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Scheme registration</strong> — notify your scheme body (NICEIC, NAPIT, etc.)
                 of the dissolution. The remaining electrician can re-register as a sole trader, or
@@ -491,7 +491,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Client notification</strong> — inform clients of the change in business
                 structure, particularly those with ongoing contracts. Confirm which partner (or the
@@ -519,7 +519,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Users className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Both Partners, One Business Account</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -547,7 +547,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your electrical partnership with Elec-Mate"
-          description="Job scheduling, electrical certificates, quoting, and invoicing for two-person electrical partnerships. Join 1,600+ UK electricians using Elec-Mate."
+          description="Job scheduling, electrical certificates, quoting, and invoicing for two-person electrical partnerships. Join 2,100+ UK electricians using Elec-Mate."
           icon={Building2}
         />
       </>
@@ -573,7 +573,7 @@ export default function ElectricalBusinessPartnershipPage() {
       heroTitle={
         <>
           Electrical Business Partnership UK:{' '}
-          <span className="text-yellow-400">Complete Setup Guide</span>
+          <span className="text-elec-yellow">Complete Setup Guide</span>
         </>
       }
       heroSubtitle="Everything you need to know about starting a partnership with another electrician — choosing the right structure, drafting a partnership agreement, splitting profits, managing unlimited liability, registering with HMRC, and planning your exit."
@@ -584,7 +584,7 @@ export default function ElectricalBusinessPartnershipPage() {
       faqHeading="Frequently Asked Questions About Electrical Business Partnerships"
       relatedPages={relatedPages}
       ctaHeading="Manage your electrical partnership with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for job scheduling, electrical certificates, quoting, and invoicing. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for job scheduling, electrical certificates, quoting, and invoicing. 7-day free trial, cancel anytime."
     />
   );
 }

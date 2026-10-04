@@ -182,7 +182,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type B MCB (most domestic circuits):</strong> Maximum Zs ranges from 13.68
                 ohms (6 A) down to 0.86 ohms (50 A). Common values: 6 A = 7.28 ohms, 10 A = 4.37
@@ -191,7 +191,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type C MCB (inductive loads):</strong> Maximum Zs values are lower because
                 Type C MCBs require higher fault currents to trip magnetically. 6 A = 3.64 ohms, 10
@@ -199,7 +199,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>30 mA RCD (additional protection):</strong> Maximum Zs of 1667 ohms. This
                 very high limit means that RCD protection effectively resolves most Zs compliance
@@ -269,7 +269,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Activity className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Undersized CPC</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -333,7 +333,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main earthing terminal:</strong> Check that the main earth conductor is
                 securely connected and the terminal is clean and tight. Corrosion at this point
@@ -341,7 +341,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Distribution board earth bar:</strong> Check every CPC connection on the
                 earth bar. Loose earth connections at the board are extremely common, especially in
@@ -349,7 +349,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Socket and accessory terminals:</strong> Every socket, switch, and junction
                 box on the circuit has earth terminals. A single loose earth connection in a socket
@@ -357,7 +357,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Supply earth connection:</strong> On TN-S installations, check the earth
                 clamp on the cable sheath. On TN-C-S installations, check the supply company earth
@@ -400,7 +400,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Increase the cable size:</strong> Using 4.0 mm squared instead of 2.5 mm
                 squared reduces R1+R2 and brings Zs back within limits. This is the most common
@@ -408,7 +408,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Add a separate CPC:</strong> Running a separate, larger CPC alongside the
                 twin and earth cable reduces R2. For example, a 4.0 mm squared separate CPC in
@@ -417,7 +417,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use a lower-rated MCB:</strong> A 20 A Type B MCB has a maximum Zs of 2.19
                 ohms instead of 1.37 ohms for a 32 A. If the circuit loading permits, reducing the
@@ -425,7 +425,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Relocate the distribution board:</strong> In some cases (new builds,
                 extensions), positioning a sub-distribution board closer to the load reduces cable
@@ -552,14 +552,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 First, fix the root cause — tighten connections, upgrade cable, or improve the
                 earthing arrangement.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 If the root cause cannot be fully resolved, ensure the circuit is protected by a 30
                 mA RCD or RCBO, which will provide earth fault disconnection at much lower fault
@@ -567,7 +567,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Apply supplementary bonding in locations of increased risk as an additional measure
                 — never as the sole protective measure.
@@ -607,7 +607,7 @@ export default function EarthLoopTooHighPage() {
       heroTitle={
         <>
           Earth Loop Impedance Too High?{' '}
-          <span className="text-yellow-400">How to Find the Cause and Fix It</span>
+          <span className="text-elec-yellow">How to Find the Cause and Fix It</span>
         </>
       }
       heroSubtitle="When Zs exceeds the BS 7671 maximum for the protective device, the circuit cannot be guaranteed to disconnect safely during an earth fault. This guide explains why Zs goes high, how to identify loose connections, long cable runs, and undersized CPCs, and what to do about it."
@@ -618,7 +618,7 @@ export default function EarthLoopTooHighPage() {
       faqHeading="Frequently Asked Questions About High Earth Loop Impedance"
       relatedPages={relatedPages}
       ctaHeading="Check Zs Limits Instantly on Site"
-      ctaSubheading="Zs calculator, voice test entry, AI fault diagnosis, and digital EICR certificates. Join 1,600+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
+      ctaSubheading="Zs calculator, voice test entry, AI fault diagnosis, and digital EICR certificates. Join 2,100+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
     />
   );
 }

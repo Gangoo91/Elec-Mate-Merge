@@ -163,7 +163,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earn while you learn.</strong> As an apprentice, you earn a wage from day
                 one. No student debt. No three years of unpaid study. You are getting paid, gaining
@@ -171,7 +171,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>High demand, rising wages.</strong> The UK needs more electricians. The push
                 towards net zero (EV chargers, solar panels, heat pumps, battery storage) is driving
@@ -179,7 +179,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Job security.</strong> Every home, office, shop, factory, and hospital needs
                 electrical installations. Every installation needs maintaining and inspecting. The
@@ -187,7 +187,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Variety.</strong> No two days are the same. You might be wiring a new
                 kitchen extension on Monday, fault-finding on a commercial installation on Tuesday,
@@ -199,7 +199,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Be your own boss.</strong> Many electricians go self-employed after a few
                 years. You set your own hours, choose your own jobs, and build your own business.
@@ -223,7 +223,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maths — grade 4 (C) or above.</strong> This is the most important one. You
                 will use maths daily — Ohm's Law, cable sizing calculations, voltage drop, power
@@ -232,7 +232,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>English Language — grade 4 (C) or above.</strong> You need to read technical
                 documents (BS 7671, specifications, drawings) and write reports (EICR observations,
@@ -240,7 +240,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Science — grade 4 (C) or above (desirable).</strong> Physics is ideal
                 because it covers electricity, magnetism, and energy — all directly relevant. But
@@ -274,7 +274,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Duration: 3-4 years.</strong> The standard length is 42 months. Some
                 employers complete it in 36 months. You are employed full-time by a company
@@ -283,7 +283,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>College study.</strong> You work towards Level 2 and Level 3 qualifications
                 in electrical installation. This covers electrical theory (Ohm's Law, AC theory,
@@ -292,7 +292,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>On-the-job training.</strong> You spend most of your time on site with a
                 qualified electrician, learning by doing. You will start with basic tasks (chasing
@@ -301,7 +301,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>End Point Assessment (EPA).</strong> At the end of the apprenticeship, you
                 complete an independent assessment that tests your practical skills, technical
@@ -314,7 +314,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>AM2 Assessment.</strong> The AM2 is a two-day practical assessment at a
                 purpose-built centre. You install, test, and fault-find on realistic installations.
@@ -344,7 +344,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Monday: Kitchen Rewire</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -404,7 +404,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Friday: Second Fix and Fault Finding</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -432,14 +432,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Apprentice (Year 1-4):</strong> £12,000-£26,000 per year, rising each year.
                 No student debt. You are earning from day one.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Newly qualified (employed):</strong> £28,000-£35,000 per year. Your earning
                 power increases rapidly as you gain experience and can work independently. See{' '}
@@ -450,14 +450,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Experienced (employed, 5+ years):</strong> £35,000-£45,000 per year. Senior
                 electricians, project managers, and those with specialist skills earn more.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Self-employed:</strong> £40,000-£70,000+ per year. Your income depends on
                 how hard you work, how efficiently you operate, and what you charge. Many
@@ -469,7 +469,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Specialist areas:</strong> EV charger installers, solar PV engineers, data
                 centre electricians, and fire alarm specialists can command premium rates —
@@ -498,7 +498,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inspection and Testing (C&G 2391).</strong> Allows you to carry out EICRs
                 and initial verification. Opens up a steady stream of periodic inspection work — a
@@ -506,7 +506,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Specialisation.</strong>{' '}
                 <SEOInternalLink href="/guides/electrical-specialisations">
@@ -518,7 +518,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Self-employment.</strong> Start your own business, set your own rates, and
                 build your own client base. Many electricians go self-employed within 3-5 years of
@@ -526,7 +526,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Management.</strong> Site supervisor, contracts manager, project manager,
                 electrical manager. These roles combine technical knowledge with leadership and are
@@ -534,7 +534,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Design and consultancy.</strong> With further qualifications (such as a BEng
                 or HNC in electrical engineering), you can move into electrical design, building
@@ -542,7 +542,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Teaching and assessing.</strong> Experienced electricians can become college
                 lecturers, training centre instructors, or EPA assessors — passing their knowledge
@@ -632,7 +632,7 @@ export default function ElectricalCareersForSchoolLeaversPage() {
       heroTitle={
         <>
           Electrical Careers for School Leavers:{' '}
-          <span className="text-yellow-400">How to Start Your Journey</span>
+          <span className="text-elec-yellow">How to Start Your Journey</span>
         </>
       }
       heroSubtitle="No degree needed. Earn while you learn. High demand, rising wages, and a career with real progression. This guide covers everything a school leaver needs to know about becoming an electrician — from GCSE requirements to earning £50,000+ as a qualified spark."

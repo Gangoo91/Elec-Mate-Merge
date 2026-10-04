@@ -332,7 +332,7 @@ export default function PlugInSolarVsRooftopPage() {
       heroTitle={
         <>
           Plug-in Solar or Rooftop Solar?{' '}
-          <span className="text-yellow-400">
+          <span className="text-elec-yellow">
             {F.maxApparentPowerVA} VA Versus a Designed System
           </span>
         </>
@@ -364,7 +364,7 @@ export default function PlugInSolarVsRooftopPage() {
       faqHeading="Plug-in vs Rooftop Solar — Frequently Asked Questions"
       relatedPages={relatedPages}
       ctaHeading="Designing the System That Comes Next"
-      ctaSubheading="Elec-Mate covers both ends: a Plug-in Solar Suitability & Commissioning Certificate for the plug-in route, and the Solar PV Design Suite and Section 712 certification for a designed installation. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate covers both ends: a Plug-in Solar Suitability & Commissioning Certificate for the plug-in route, and the Solar PV Design Suite and Section 712 certification for a designed installation. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

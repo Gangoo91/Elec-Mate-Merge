@@ -43,6 +43,7 @@ import {
   inputClass,
 } from '@/components/employer/editorial';
 import { RequestSignatureSheet } from '@/components/employer/sheets/RequestSignatureSheet';
+import { autoCompleteOff } from '@/lib/textEntry';
 
 interface ViewInvoiceSheetProps {
   open: boolean;
@@ -477,7 +478,7 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
                   value={emailInput}
                   onChange={(e) => setEmailInput(e.target.value)}
                   className={inputClass}
-                  autoComplete="off"
+                  autoComplete={autoCompleteOff}
                 />
               </Field>
               <p className="text-sm text-white">

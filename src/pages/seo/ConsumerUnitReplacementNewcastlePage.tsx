@@ -306,7 +306,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Property sales</strong> — solicitors routinely request Part P compliance
                 documentation during property conveyancing. A consumer unit replacement without
@@ -334,7 +334,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Design verification</strong> — BS EN 61439-3 requires that the consumer unit
                 manufacturer demonstrates through testing or calculation that the assembly meets its
@@ -344,7 +344,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Routine verification</strong> — each consumer unit must be inspected and
                 tested during manufacture to verify wiring, markings, and protective conductor
@@ -353,7 +353,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>UKCA marking</strong> — since January 2022, consumer units placed on the UK
                 market must carry the UKCA (UK Conformity Assessed) mark rather than the EU CE mark.
@@ -446,21 +446,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>One-bedroom flat</strong> — £350 to £500. Typically 6 to 8 circuits. A
                 straightforward replacement with a metal dual-RCD or RCBO consumer unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Two to three-bedroom house</strong> — £450 to £650. The most common job type
                 in Newcastle. Usually 8 to 12 circuits. Includes full testing and certification.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Four-bedroom or larger house</strong> — £600 to £900. More circuits,
                 potentially a larger consumer unit with additional ways. Some older properties in
@@ -468,7 +468,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional work</strong> — earthing upgrades (TT systems requiring earth
                 electrode testing, or TN-C-S systems with defective PME earthing) can add £100 to
@@ -501,7 +501,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC or NAPIT registration</strong> — search the NICEIC online register or
                 NAPIT register for approved contractors based in Newcastle or the wider Tyne and
@@ -510,7 +510,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>City and Guilds 2382</strong> — the electrician should hold a current 18th
                 Edition (BS 7671:2018) qualification (City and Guilds 2382-18) and be familiar with
@@ -519,7 +519,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Public liability insurance</strong> — verify that the electrician carries
                 public liability insurance of at least £2 million. Reputable Newcastle electricians
@@ -527,7 +527,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Written quote</strong> — always obtain a written, itemised quote that
                 clearly states the scope of work, the make and model of consumer unit to be
@@ -554,7 +554,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete EICs On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -588,7 +588,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your consumer unit replacement business with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting."
           icon={FileCheck2}
         />
       </>
@@ -614,7 +614,7 @@ export default function ConsumerUnitReplacementNewcastlePage() {
       heroTitle={
         <>
           Consumer Unit Replacement Newcastle:{' '}
-          <span className="text-yellow-400">Fuse Box Upgrade Guide 2026</span>
+          <span className="text-elec-yellow">Fuse Box Upgrade Guide 2026</span>
         </>
       }
       heroSubtitle="Everything you need to know about consumer unit replacement in Newcastle — the metal enclosure requirement, Part P Building Regulations, BS EN 61439, costs of £400 to £800, and how to find a qualified NICEIC or NAPIT registered electrician."
@@ -625,7 +625,7 @@ export default function ConsumerUnitReplacementNewcastlePage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Replacement in Newcastle"
       relatedPages={relatedPages}
       ctaHeading="Complete Consumer Unit Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion with instant PDF export and built-in schedule of test results. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion with instant PDF export and built-in schedule of test results. 7-day free trial, cancel anytime."
     />
   );
 }

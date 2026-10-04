@@ -200,7 +200,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Scheme membership logos</strong> — display your NICEIC, NAPIT, or ELECSA
                 logo prominently with your registration number. Include a note that customers can
@@ -209,7 +209,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Live Google reviews widget</strong> — embed a live widget (available from
                 Elfsight or similar providers, from £5/month) that shows your current Google rating
@@ -218,7 +218,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part P explanation</strong> — explain in plain English that as a registered
                 electrician you can self-certify notifiable work, saving the customer the council
@@ -227,7 +227,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Public liability insurance</strong> — state your cover level clearly. £5m
                 public liability is the gold standard. Some larger customers (commercial property
@@ -235,7 +235,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Real photos of your work</strong> — avoid stock photos. Real photos of your
                 van, your completed work (consumer unit upgrades, EV chargers, clean cable runs),
@@ -336,7 +336,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Google Business Profile first</strong> — before spending time on website
                 SEO, make sure your Google Business Profile is fully optimised. It drives more local
@@ -346,7 +346,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Page titles and meta descriptions</strong> — every page on your site should
                 have a unique title including your target keyword and location. Example:
@@ -356,7 +356,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Location pages</strong> — if you cover multiple towns or areas, create a
                 separate page for each one. "Electrician in [Town]" pages, each with 300–500 words
@@ -366,7 +366,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Service pages</strong> — create individual pages for each main service
                 (EICR, consumer unit upgrade, EV charger installation, rewire, solar PV). Each page
@@ -376,7 +376,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NAP consistency</strong> — your business Name, Address, and Phone number
                 should be identical across your website, Google Business Profile, Checkatrade,
@@ -457,7 +457,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Phone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Phone className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Contact form essentials</strong> — keep your form short: name, phone number,
                 brief description of the job, and preferred contact time. Every additional field
@@ -466,7 +466,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Phone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Phone className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Response time commitment</strong> — state how quickly you respond: "We aim
                 to respond within 2 hours on weekdays." Displaying this alongside your form reduces
@@ -474,7 +474,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Phone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Phone className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Call tracking setup</strong> — services like CallRail (from £30/month) or
                 ResponseTap assign a unique phone number to each marketing channel (your website,
@@ -483,7 +483,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Phone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Phone className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>WhatsApp button</strong> — adding a WhatsApp click-to-chat button (free via
                 WhatsApp Business) generates additional enquiries from customers who prefer
@@ -508,7 +508,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DIY Wix or Squarespace — £180–£350/year</strong>: Platform subscription
                 (£15–£25/month) plus domain (£10–£15/year). Zero build cost. Takes 1–2 days of your
@@ -517,7 +517,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Freelancer on Wix/Squarespace — £300–£800 + £180–£350/year</strong>: A
                 competent freelancer builds the site for you on a platform you then manage. Good
@@ -526,7 +526,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>WordPress site — £800–£2,000 + £80–£200/year</strong>: A freelancer or small
                 agency builds a WordPress site. More powerful SEO capabilities and more flexibility,
@@ -535,7 +535,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Custom agency site — £2,000–£5,000+</strong>: Bespoke design and build by a
                 specialist agency. Justified only when you have consistent revenue, clear
@@ -566,7 +566,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <PoundSterling className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Quote While You Are Still Talking to Them
@@ -601,7 +601,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your electrical business from your phone"
-          description="Elec-Mate gives electricians professional quoting, invoicing, job management, and certification in one app. Join 1,600+ UK electricians. 7-day free trial."
+          description="Elec-Mate gives electricians professional quoting, invoicing, job management, and certification in one app. Join 2,100+ UK electricians. 7-day free trial."
           icon={Globe}
         />
       </>
@@ -627,7 +627,7 @@ export default function ElectricalBusinessWebsitePage() {
       heroTitle={
         <>
           Electrician Website Guide UK:{' '}
-          <span className="text-yellow-400">Build & Market Your Website</span>
+          <span className="text-elec-yellow">Build & Market Your Website</span>
         </>
       }
       heroSubtitle="Everything a UK electrician needs to know about building a website that wins jobs — trust signals, website builders vs custom, SEO basics, mobile optimisation, booking forms, call tracking, and realistic costs for 2026."

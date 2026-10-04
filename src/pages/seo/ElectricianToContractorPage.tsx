@@ -168,7 +168,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Register as self-employed with HMRC</strong> — do this as soon as you start
                 trading. You have until 5 October after the end of the tax year in which you first
@@ -177,7 +177,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part P competent person scheme</strong> — join NAPIT, NICEIC, ELECSA, or
                 equivalent to self-certify notifiable domestic electrical work. Without scheme
@@ -186,7 +186,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Public liability insurance</strong> — arrange cover before your first job. A
                 minimum of £2m is typically required; £5m is more appropriate for domestic work and
@@ -195,7 +195,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Business bank account</strong> — keep business and personal finances
                 separate from day one. This makes bookkeeping, VAT returns, and tax returns
@@ -203,7 +203,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Van and commercial insurance</strong> — your vehicle must be insured for
                 commercial use (carrying tools and equipment in the course of business). Standard
@@ -261,7 +261,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Briefcase className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Letting agents and estate agents</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -290,7 +290,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1 — Calculate your annual overhead</strong>. Add up all fixed and
                 variable costs: van (finance/lease/depreciation, insurance, fuel, servicing, road
@@ -301,7 +301,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2 — Set your labour rate</strong>. Add your desired annual salary
                 (before tax) to your annual overhead, divide by billable days. This is your
@@ -311,7 +311,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 3 — Price materials at cost plus margin</strong>. Add your trade price
                 for materials plus a margin (typically 15 to 30%) to cover procurement time, waste,
@@ -320,7 +320,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 4 — Add contingency and checking time</strong>. Most jobs contain
                 unforeseen elements — add 10 to 20% contingency on the labour element of complex
@@ -406,7 +406,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Annual billings consistently above £120,000–£150,000</strong> — at this
                 level, the additional cost of an employee (salary £28,000–£38,000, employer NI
@@ -415,7 +415,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Turning down work regularly</strong> — if you are declining enquiries
                 because you are fully booked, you are leaving revenue on the table. An employee who
@@ -423,7 +423,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Forward order book of 8–12 weeks</strong> — if you have consistent work
                 booked 8 to 12 weeks ahead, you have the visibility to support an employment
@@ -431,7 +431,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consider subcontracting first</strong> — before employing, consider engaging
                 a self-employed electrician on a job-by-job basis to manage demand peaks. This gives
@@ -461,7 +461,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Supply chain accreditation</strong> — CHAS (Contractors Health and Safety
                 Assessment Scheme), Constructionline, or Safe Contractor are required by most main
@@ -470,7 +470,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RAMS capability</strong> — commercial clients and main contractors require
                 Risk Assessment and Method Statements (RAMS) for all notifiable work. Invest time in
@@ -478,7 +478,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tender document quality</strong> — a professional, detailed tender with
                 itemised labour, materials, and preliminaries wins more than an equivalent price
@@ -487,7 +487,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>References and portfolio</strong> — keep records of completed commercial
                 projects with photographs, client contact details for references, and copies of the
@@ -521,7 +521,7 @@ export default function ElectricianToContractorPage() {
       heroTitle={
         <>
           From Electrician to Contractor:{' '}
-          <span className="text-yellow-400">Building Your Own Electrical Business</span>
+          <span className="text-elec-yellow">Building Your Own Electrical Business</span>
         </>
       }
       heroSubtitle="The practical guide to going self-employed and building a successful electrical contracting business — from your first job to hiring your first employee and tendering for commercial work."
@@ -532,7 +532,7 @@ export default function ElectricianToContractorPage() {
       faqHeading="Frequently Asked Questions About Starting an Electrical Contracting Business"
       relatedPages={relatedPages}
       ctaHeading="Run Your Electrical Business Professionally from Day One"
-      ctaSubheading="Elec-Mate gives electrical contractors professional quoting, on-site certification, and job management tools. 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate gives electrical contractors professional quoting, on-site certification, and job management tools. 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

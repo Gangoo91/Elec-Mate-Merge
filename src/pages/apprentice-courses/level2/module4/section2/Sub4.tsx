@@ -61,7 +61,7 @@ const checks = [
     ],
     correctIndex: 1,
     explanation:
-      'CDM 2015 Reg 13 places the induction duty on the principal contractor, and Reg 15 places the corresponding duty on the worker to co-operate with the safety arrangements. Until you have been inducted you are not signed in to the site H&S system and cannot lawfully work. Skipping the induction is a textbook s.7 / Reg 15 breach, and the induction gives you site-specific information no RAMS could have included — current trade clashes, live services, asbestos survey results, no-go zones.',
+      'CDM 2015 Reg 13 places the induction duty on the principal contractor, and Reg 8 places the corresponding duty on the worker to co-operate with the safety arrangements. Until you have been inducted you are not signed in to the site H&S system and cannot lawfully work. Skipping the induction is a textbook s.7 / Reg 8(4) breach, and the induction gives you site-specific information no RAMS could have included — current trade clashes, live services, asbestos survey results, no-go zones.',
   },
   {
     id: 'mod4-s2-sub4-healthcare',
@@ -262,7 +262,7 @@ export default function Sub4() {
             'Supplementary content — extends LO2 but is not directly mapped to a 204 AC. Designed to deepen apprentice understanding beyond the formal AC scope.',
             'Identify the major site-type categories an electrician encounters — domestic, commercial, industrial, construction, healthcare, education.',
             'State the headline preparation differences between site types — customer-facing, formal documentation, production constraints, safeguarding, clinical coordination.',
-            'Recognise the role of CDM 2015 (Reg 4 client, Reg 13 principal contractor, Reg 15 worker) on construction sites.',
+            'Recognise the role of CDM 2015 (Reg 4 client, Reg 13 principal contractor, Reg 8 worker) on construction sites.',
             'Identify the role of HTM 06-01 in coordinating electrical work in healthcare premises.',
             'Recognise the safeguarding and DBS implications of working in education premises during term time.',
             'Apply a structured prep approach to a new site type — sign-in, induction, hazard scan, agreed access and welfare arrangements — before tools come out.',
@@ -439,7 +439,7 @@ export default function Sub4() {
         <ConceptBlock
           title="Construction sites run on CDM 2015 — every operative inside the framework"
           plainEnglish="On a notifiable construction site (more than 30 days with 20+ workers, or 500+ person-days) CDM 2015 applies in full. The duty-holders are client, principal designer, principal contractor, contractor, designer, worker. Every operative arriving on site is brought into the framework via the principal contractor's induction (Reg 13) and stays inside it via the construction phase plan, daily briefings and ongoing site rules."
-          onSite="As an apprentice on a CDM site, the day-one experience is the induction. Site office, sign-in, watch a short induction video or talk, get your sign-in lanyard, get briefed on the construction phase plan extracts that affect your work. Skipping the induction or signing in without paying attention is a textbook s.7 / Reg 15 breach."
+          onSite="As an apprentice on a CDM site, the day-one experience is the induction. Site office, sign-in, watch a short induction video or talk, get your sign-in lanyard, get briefed on the construction phase plan extracts that affect your work. Skipping the induction or signing in without paying attention is a textbook s.7 / Reg 8(4) breach."
         >
           <p>CDM 2015 site-prep elements for an electrical operative:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -473,7 +473,7 @@ export default function Sub4() {
         </ConceptBlock>
 
         <RegsCallout
-          source="Construction (Design and Management) Regulations 2015 — Reg 4(1) and Reg 15(2)"
+          source="Construction (Design and Management) Regulations 2015 — Reg 4(1) and Reg 8(5)"
           clause={
             <>
               <p className="mb-2">
@@ -482,22 +482,23 @@ export default function Sub4() {
                 resources&hellip;&quot;
               </p>
               <p>
-                <strong>Reg 15(2)</strong> — &quot;A worker must report to the principal contractor
-                or contractor (as the case may be) anything they are aware of that is likely to
-                endanger their own health or safety or that of others.&quot;
+                <strong>Reg 8(5)</strong> — &quot;A person working on a project under the control of
+                another must report to that person anything they are aware of in relation to the
+                project which is likely to endanger their own health or safety or that of
+                others.&quot;
               </p>
             </>
           }
           meaning={
             <>
               Reg 4(1) is the client duty — the client is the duty-holder who commissions the work
-              and must make arrangements for time, resources and competent appointments. Reg 15(2)
-              is the worker duty — every operative on site has a personal duty to report hazards. As
-              an apprentice you are caught by Reg 15. Combined with HASAWA s.7, the worker-duty side
-              of CDM is very real and very personal.
+              and must make arrangements for time, resources and competent appointments. Reg 8(5) is
+              the worker duty — every operative on site has a personal duty to report hazards. As an
+              apprentice you are caught by Reg 8. Combined with HASAWA s.7, the worker-duty side of
+              CDM is very real and very personal.
             </>
           }
-          cite="Source: Construction (Design and Management) Regulations 2015 (SI 2015/51), Reg 4 and Reg 15 — verbatim from legislation.gov.uk."
+          cite="Source: Construction (Design and Management) Regulations 2015 (SI 2015/51), Regs 4 and 8, as reproduced in HSE L153."
         />
 
         <InlineCheck
@@ -699,7 +700,7 @@ export default function Sub4() {
             'Domestic prep is half wiring and half customer relationship. Floor protection, agreed hours, awareness of children/pets/elderly relatives — all part of HASAWA s.3 duty.',
             'Commercial premises typically demand out-of-hours work, sign-in/sign-out, formal hand-back at end of shift. Retail, office and hospitality each have their own rhythm.',
             'Industrial sites add production stop-times, formal lockout-tagout (LOTO) systems, ATEX zones in process plants, permit-to-work for any significant isolation. PUWER Reg 19 is the statutory hook.',
-            'Construction sites run on CDM 2015 from end to end. Reg 13 induction is mandatory before any work; Reg 15 makes co-operation a personal duty on the worker.',
+            'Construction sites run on CDM 2015 from end to end. Reg 13 induction is mandatory before any work; Reg 8 makes co-operation a personal duty on the worker.',
             'Healthcare runs on HTM 06-01 plus BS 7671. No unauthorised switching, ever. Estates/facilities team coordinates outages, Authorised Person signs the permit, clinical staff are briefed in advance.',
             'Education premises restrict work by safeguarding (DBS checks, no lone-contact rules) and the school calendar (most major work in holidays only).',
             "The prep workflow you apply has to match the site type. Apprentices who don't adapt cause disruption and damage their progression — recognising the differences is part of the qualification.",

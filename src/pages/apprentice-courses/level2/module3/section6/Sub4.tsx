@@ -42,9 +42,9 @@ const checks = [
     question:
       'A customer wants a 5 kW single-phase PV inverter on a 230 V supply. Which DNO connection process applies?',
     options: [
-      'BS 7671 Section 701 only.',
-      'No paperwork — DNOs don’t care about generation under 10 kW.',
-      'G98 — informal post-installation notification.',
+      'G98 — because single-phase domestic installs always fall under G98',
+      'No DNO process — generation under 10 kW is exempt',
+      'G98 — informal notification within 28 days of commissioning',
       'G99 — full DNO application before installation begins.',
     ],
     correctIndex: 3,
@@ -70,10 +70,10 @@ const checks = [
     question:
       'A PV install needs a DC isolator on the array side AND an AC isolator on the consumer-unit side. Why both?',
     options: [
-      'To verify that the earth fault loop impedance is low enough for the protective device to disconnect the supply within the maximum time specified by BS 7671 in the event of an earth fault',
-      '100 percent at full nameplate, because heat pumps run for many hours per day at high duty cycle, particularly during the heating season cold-snap morning and evening peaks. Manufacturer data may give a refined profile but defaulting to 100 percent is the safer design floor.',
+      'Because the AC isolator cannot be locked off, so a second device is needed for lock-off',
+      'Because BS 7671 requires two isolators on every circuit fed from a consumer unit',
       'Because the DC side is energised by daylight on the panels, and the AC side is energised by the grid. To work safely on the inverter or its terminals you need to isolate BOTH sources independently and prove both dead.',
-      'To plan, manage, and coordinate health and safety during the pre-construction phase, including identifying and eliminating or controlling foreseeable risks',
+      'Because the DC isolator only switches the negative conductor, so the AC isolator covers the positive',
     ],
     correctIndex: 2,
     explanation:

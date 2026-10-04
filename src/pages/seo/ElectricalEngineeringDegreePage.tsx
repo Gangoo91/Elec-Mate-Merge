@@ -133,7 +133,7 @@ const sections = [
     content: (
       <>
         <div className="rounded-2xl bg-white/[0.03] border border-white/10 px-5 py-3 mb-4 flex items-center gap-3">
-          <Award className="w-5 h-5 text-yellow-400 shrink-0" />
+          <Award className="w-5 h-5 text-elec-yellow shrink-0" />
           <p className="text-sm text-white leading-snug">
             Written and reviewed by Andrew Moore, founder of Elec-Mate — a qualified electrician (18th Edition, C&amp;G 2391 inspection and testing). Content is aligned to
             BS&nbsp;7671:2018+A4:2026 — the current edition of the IET Wiring Regulations.
@@ -147,7 +147,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrician</strong> — a skilled tradesperson qualified to install, test,
                 inspect, and certify electrical installations in buildings. Qualifications include
@@ -161,7 +161,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical engineer</strong> — a graduate-level professional who designs
                 electrical systems, conducts load calculations, produces specifications and
@@ -171,7 +171,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Where they overlap</strong> — commissioning engineers often come from an
                 installation background. Design engineers with site experience are highly valued.
@@ -184,7 +184,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Protected titles</strong> — &quot;Chartered Engineer&quot; and
                 &quot;Incorporated Engineer&quot; are protected titles in the UK, awarded by the
@@ -196,8 +196,8 @@ const sections = [
           </ul>
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] px-5 py-3 my-4">
-          <p className="text-sm text-white/80 leading-relaxed">
-            <strong className="text-yellow-400">
+          <p className="text-sm text-white leading-relaxed">
+            <strong className="text-elec-yellow">
               BS&nbsp;7671:2018+A4:2026 — current edition.
             </strong>{' '}
             A4:2026 was issued on 15&nbsp;April&nbsp;2026 and may be implemented immediately; the
@@ -237,7 +237,7 @@ const sections = [
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left">
               <thead>
-                <tr className="bg-white/[0.06] text-white/60 uppercase text-xs tracking-wide">
+                <tr className="bg-white/[0.06] text-white uppercase text-xs tracking-wide">
                   <th className="px-4 py-3 font-semibold">Route</th>
                   <th className="px-4 py-3 font-semibold">Duration (full-time)</th>
                   <th className="px-4 py-3 font-semibold hidden sm:table-cell">Professional outcome</th>
@@ -249,7 +249,7 @@ const sections = [
                   <td className="px-4 py-3 align-top whitespace-nowrap text-blue-300 font-semibold">
                     3 years
                   </td>
-                  <td className="px-4 py-3 align-top text-white/70 hidden sm:table-cell">
+                  <td className="px-4 py-3 align-top text-white hidden sm:table-cell">
                     Meets the academic standard for IEng; partially meets CEng (further learning
                     required).
                   </td>
@@ -259,7 +259,7 @@ const sections = [
                   <td className="px-4 py-3 align-top whitespace-nowrap text-blue-300 font-semibold">
                     4 years
                   </td>
-                  <td className="px-4 py-3 align-top text-white/70 hidden sm:table-cell">
+                  <td className="px-4 py-3 align-top text-white hidden sm:table-cell">
                     Same outcome as BEng plus a year of industry placement and stronger graduate
                     prospects.
                   </td>
@@ -269,7 +269,7 @@ const sections = [
                   <td className="px-4 py-3 align-top whitespace-nowrap text-blue-300 font-semibold">
                     4–5 years
                   </td>
-                  <td className="px-4 py-3 align-top text-white/70 hidden sm:table-cell">
+                  <td className="px-4 py-3 align-top text-white hidden sm:table-cell">
                     Fully meets the academic standard for CEng registration.
                   </td>
                 </tr>
@@ -278,7 +278,7 @@ const sections = [
                   <td className="px-4 py-3 align-top whitespace-nowrap text-blue-300 font-semibold">
                     ~2 years
                   </td>
-                  <td className="px-4 py-3 align-top text-white/70 hidden sm:table-cell">
+                  <td className="px-4 py-3 align-top text-white hidden sm:table-cell">
                     HNC counts as year one; join in year two. Popular with working electricians.
                   </td>
                 </tr>
@@ -287,7 +287,7 @@ const sections = [
                   <td className="px-4 py-3 align-top whitespace-nowrap text-blue-300 font-semibold">
                     ~1 year
                   </td>
-                  <td className="px-4 py-3 align-top text-white/70 hidden sm:table-cell">
+                  <td className="px-4 py-3 align-top text-white hidden sm:table-cell">
                     HND counts as years one and two; enter the final year directly.
                   </td>
                 </tr>
@@ -366,7 +366,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HNC to BEng top-up</strong> — typically two years full-time or three to four
                 years part-time. The HNC is recognised as the equivalent of the first year of a
@@ -374,7 +374,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HND to BEng top-up</strong> — typically one year full-time or two years
                 part-time. The HND is recognised as the equivalent of the first two years of a
@@ -382,7 +382,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part-time and distance learning</strong> — the University of Hertfordshire,
                 Teesside University, and several others offer part-time BEng top-up programmes
@@ -391,7 +391,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Prior learning recognition</strong> — most universities will consider your
                 trade experience and any CPD qualifications when assessing your application. A
@@ -428,7 +428,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Academic requirement</strong> — an accredited MEng, or a BEng plus a further
                 learning programme (typically a part-time master&apos;s, a recognised CPD programme,
@@ -438,7 +438,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Experience requirement</strong> — at least four years of progressive
                 professional engineering experience, with demonstrated competence in the five
@@ -448,7 +448,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Membership of a licensed professional body</strong> — CEng must be applied
                 for through a licensed professional body, most commonly the IET for electrical
@@ -457,7 +457,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Incorporated Engineer (IEng)</strong> — a step below CEng, achieved with an
                 accredited BEng alone plus experience. IEng is the professional grade for engineers
@@ -491,7 +491,7 @@ const sections = [
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left">
               <thead>
-                <tr className="bg-white/[0.06] text-white/60 uppercase text-xs tracking-wide">
+                <tr className="bg-white/[0.06] text-white uppercase text-xs tracking-wide">
                   <th className="px-4 py-3 font-semibold">Grade</th>
                   <th className="px-4 py-3 font-semibold">Post-nominal</th>
                   <th className="px-4 py-3 font-semibold hidden sm:table-cell">Who it is for</th>
@@ -500,29 +500,29 @@ const sections = [
               <tbody className="divide-y divide-white/10 text-white">
                 <tr>
                   <td className="px-4 py-3 font-semibold align-top">Student</td>
-                  <td className="px-4 py-3 align-top text-white/70">—</td>
-                  <td className="px-4 py-3 align-top text-white/70 hidden sm:table-cell">
+                  <td className="px-4 py-3 align-top text-white">—</td>
+                  <td className="px-4 py-3 align-top text-white hidden sm:table-cell">
                     Those in full-time education. Free.
                   </td>
                 </tr>
                 <tr>
                   <td className="px-4 py-3 font-semibold align-top">Associate Member</td>
-                  <td className="px-4 py-3 align-top text-yellow-300 font-semibold">AMIET</td>
-                  <td className="px-4 py-3 align-top text-white/70 hidden sm:table-cell">
+                  <td className="px-4 py-3 align-top text-elec-yellow font-semibold">AMIET</td>
+                  <td className="px-4 py-3 align-top text-white hidden sm:table-cell">
                     Those developing their engineering career.
                   </td>
                 </tr>
                 <tr>
                   <td className="px-4 py-3 font-semibold align-top">Member</td>
-                  <td className="px-4 py-3 align-top text-yellow-300 font-semibold">MIET</td>
-                  <td className="px-4 py-3 align-top text-white/70 hidden sm:table-cell">
+                  <td className="px-4 py-3 align-top text-elec-yellow font-semibold">MIET</td>
+                  <td className="px-4 py-3 align-top text-white hidden sm:table-cell">
                     Professionally active engineers; supports IEng/CEng applications.
                   </td>
                 </tr>
                 <tr>
                   <td className="px-4 py-3 font-semibold align-top">Fellow</td>
-                  <td className="px-4 py-3 align-top text-yellow-300 font-semibold">FIET</td>
-                  <td className="px-4 py-3 align-top text-white/70 hidden sm:table-cell">
+                  <td className="px-4 py-3 align-top text-elec-yellow font-semibold">FIET</td>
+                  <td className="px-4 py-3 align-top text-white hidden sm:table-cell">
                     Exceptional experience and contribution to the profession.
                   </td>
                 </tr>
@@ -533,7 +533,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Benefits</strong> — access to the IET online library (standards, journals,
                 and technical guides), CPD tracking tools, career development resources, local and
@@ -542,7 +542,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Subscription</strong> — student membership is free; professional grades pay
                 an annual subscription (check the IET for current rates). Employer-sponsored
@@ -550,7 +550,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CEng and IEng registration via IET</strong> — the IET conducts professional
                 reviews for both CEng and IEng registration. The process involves submitting a
@@ -576,7 +576,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Design engineer</strong> — produces electrical drawings, specifications,
                 cable schedules, load calculations, and technical submittals for construction
@@ -586,7 +586,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Project engineer</strong> — manages the technical delivery of electrical
                 installation projects, coordinating between design teams, site teams, and clients.
@@ -596,7 +596,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commissioning engineer</strong> — responsible for the testing, energisation,
                 and handover of electrical installations, including HV/LV switchgear, transformer
@@ -616,7 +616,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Other routes</strong> — power systems engineering (DNOs, National Grid),
                 building services engineering (M&E consultancies), renewable energy engineering
@@ -643,7 +643,7 @@ const sections = [
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left">
               <thead>
-                <tr className="bg-white/[0.06] text-white/60 uppercase text-xs tracking-wide">
+                <tr className="bg-white/[0.06] text-white uppercase text-xs tracking-wide">
                   <th className="px-4 py-3 font-semibold">Role / level</th>
                   <th className="px-4 py-3 font-semibold">Typical salary</th>
                   <th className="px-4 py-3 font-semibold hidden sm:table-cell">Notes</th>
@@ -653,12 +653,12 @@ const sections = [
                 <tr>
                   <td className="px-4 py-3 font-semibold align-top">
                     Graduate / junior design engineer
-                    <span className="block text-white/50 font-normal">0–3 years</span>
+                    <span className="block text-white font-normal">0–3 years</span>
                   </td>
-                  <td className="px-4 py-3 align-top whitespace-nowrap text-yellow-300 font-semibold">
+                  <td className="px-4 py-3 align-top whitespace-nowrap text-elec-yellow font-semibold">
                     £30,000–£40,000
                   </td>
-                  <td className="px-4 py-3 align-top text-white/70 hidden sm:table-cell">
+                  <td className="px-4 py-3 align-top text-white hidden sm:table-cell">
                     London roles typically £35,000–£45,000. Graduate schemes often include
                     structured development and study support.
                   </td>
@@ -666,12 +666,12 @@ const sections = [
                 <tr>
                   <td className="px-4 py-3 font-semibold align-top">
                     Mid-level design or project engineer
-                    <span className="block text-white/50 font-normal">3–7 years</span>
+                    <span className="block text-white font-normal">3–7 years</span>
                   </td>
-                  <td className="px-4 py-3 align-top whitespace-nowrap text-yellow-300 font-semibold">
+                  <td className="px-4 py-3 align-top whitespace-nowrap text-elec-yellow font-semibold">
                     £40,000–£58,000
                   </td>
-                  <td className="px-4 py-3 align-top text-white/70 hidden sm:table-cell">
+                  <td className="px-4 py-3 align-top text-white hidden sm:table-cell">
                     IEng registration and sector experience push towards the upper end. HV, data
                     centre and rail pay a premium.
                   </td>
@@ -679,34 +679,34 @@ const sections = [
                 <tr>
                   <td className="px-4 py-3 font-semibold align-top">
                     Senior / principal engineer
-                    <span className="block text-white/50 font-normal">7+ years</span>
+                    <span className="block text-white font-normal">7+ years</span>
                   </td>
-                  <td className="px-4 py-3 align-top whitespace-nowrap text-yellow-300 font-semibold">
+                  <td className="px-4 py-3 align-top whitespace-nowrap text-elec-yellow font-semibold">
                     £55,000–£75,000
                   </td>
-                  <td className="px-4 py-3 align-top text-white/70 hidden sm:table-cell">
+                  <td className="px-4 py-3 align-top text-white hidden sm:table-cell">
                     CEng holders and recognised specialists can reach £75,000–£90,000, especially in
                     London consultancies.
                   </td>
                 </tr>
                 <tr>
                   <td className="px-4 py-3 font-semibold align-top">Engineering manager / director</td>
-                  <td className="px-4 py-3 align-top whitespace-nowrap text-yellow-300 font-semibold">
+                  <td className="px-4 py-3 align-top whitespace-nowrap text-elec-yellow font-semibold">
                     £70,000–£100,000+
                   </td>
-                  <td className="px-4 py-3 align-top text-white/70 hidden sm:table-cell">
+                  <td className="px-4 py-3 align-top text-white hidden sm:table-cell">
                     CEng or equivalent expected. Package often includes bonus and car allowance.
                   </td>
                 </tr>
                 <tr>
                   <td className="px-4 py-3 font-semibold align-top">
                     Day-rate contracting
-                    <span className="block text-white/50 font-normal">experienced</span>
+                    <span className="block text-white font-normal">experienced</span>
                   </td>
-                  <td className="px-4 py-3 align-top whitespace-nowrap text-yellow-300 font-semibold">
+                  <td className="px-4 py-3 align-top whitespace-nowrap text-elec-yellow font-semibold">
                     £350–£650 / day
                   </td>
-                  <td className="px-4 py-3 align-top text-white/70 hidden sm:table-cell">
+                  <td className="px-4 py-3 align-top text-white hidden sm:table-cell">
                     HV commissioning, data centre design and offshore work command the highest day
                     rates.
                   </td>
@@ -714,7 +714,7 @@ const sections = [
               </tbody>
             </table>
           </div>
-          <p className="px-4 py-3 text-xs text-white/50 border-t border-white/10">
+          <p className="px-4 py-3 text-xs text-white border-t border-white/10">
             Indicative market guidance for 2026, not a quote or offer. Actual pay varies by employer,
             sector, location and specialism.
           </p>
@@ -740,7 +740,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Certify Electrical Work on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -896,7 +896,7 @@ export default function ElectricalEngineeringDegreePage() {
         heroTitle={
           <>
             Electrical Engineering Degree UK:{' '}
-            <span className="text-yellow-400">Routes, CEng and Salary Guide 2026</span>
+            <span className="text-elec-yellow">Routes, CEng and Salary Guide 2026</span>
           </>
         }
         heroSubtitle="An electrical engineering degree opens the path from skilled tradesperson to chartered engineer. This guide explains the difference between an electrical engineer and an electrician, BEng and MEng routes, HNC/HND to degree top-up options, how to become a Chartered Engineer (CEng), IET membership, and what electrical engineers earn across the UK in 2026."
@@ -907,7 +907,7 @@ export default function ElectricalEngineeringDegreePage() {
         faqHeading="Frequently Asked Questions About Electrical Engineering Degrees"
         relatedPages={relatedPages}
         ctaHeading="Manage Your Electrical Career with Elec-Mate"
-        ctaSubheading="Join 1,600+ UK electricians and engineers using Elec-Mate to certify, quote, and manage their electrical business. 7-day free trial — no charge until day 8."
+        ctaSubheading="Join 2,100+ UK electricians and engineers using Elec-Mate to certify, quote, and manage their electrical business. 7-day free trial — no charge until day 8."
       />
     </>
   );

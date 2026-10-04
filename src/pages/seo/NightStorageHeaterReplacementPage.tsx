@@ -138,7 +138,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Poor controllability</strong> — older storage heaters have limited ability
                 to respond to changing weather or occupancy. Heat stored overnight is released
@@ -147,7 +147,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lot 20 non-compliance</strong> — heaters manufactured before January 2018 do
                 not meet the Ecodesign minimum performance standards. Lot 20 requires electronic
@@ -156,7 +156,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Narrowing Economy 7 price differential</strong> — the gap between Economy 7
                 day and night rates has narrowed over recent years. The benefit of off-peak charging
@@ -165,7 +165,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Heat pump compatibility</strong> — properties heated by storage heaters are
                 increasingly prime candidates for air source heat pump (ASHP) retrofits,
@@ -201,7 +201,7 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Direct replacement for existing heaters — same circuit, same connection point.
                 Modern units include electronic thermostats, open window detection, and 24/7
@@ -209,7 +209,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Best suited to properties with existing Economy 7 wiring and meter. Minimal
                 electrical work required. Cost: \u00a3400 to \u00a3900 per heater supplied and
@@ -222,7 +222,7 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-4">2. Electric Panel Heaters</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Convection or fan-assisted heaters rated typically 750W to 2,500W. No off-peak
                 charging — heat on demand only. Can connect to existing spur circuits or fused
@@ -230,7 +230,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Economy 7 tariff no longer required. Single-rate tariff may be more cost-effective.
                 Supply cost: \u00a3150 to \u00a3500 per unit. Installation: \u00a350 to \u00a3150
@@ -243,7 +243,7 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-4">3. Infrared Panel Heaters</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Radiant heat panels rated typically 350W to 1,000W. Heat objects and people directly
                 rather than the air, making them more efficient in poorly insulated rooms. Can be
@@ -251,7 +251,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Installation is straightforward — most panels connect via a standard 13A plug or
                 fused spur. Supply cost: \u00a3200 to \u00a3600 per panel. No Off-Peak tariff
@@ -264,7 +264,7 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-4">4. Air Source Heat Pumps</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Whole-house heating solution. Requires wet underfloor heating or suitable radiators
                 (low-flow temperature compatible). Typical system cost: \u00a38,000 to \u00a315,000.
@@ -272,7 +272,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Requires a dedicated electrical supply — typically a 32A or 40A radial circuit with
                 appropriate cable sizing per BS 7671. Part P notification required. MCS
@@ -361,33 +361,33 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electronic thermostat</strong> with minimum 1\u00b0C precision
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Open window detection</strong> — heater reduces output when a rapid
                 temperature drop is detected (window opened)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Adaptive start</strong> — heater learns the thermal characteristics of the
                 room and adjusts heat-up timing
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Weekly programming</strong> — 24/7 time programming as a minimum
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Presence detection capability</strong> (for heaters above certain wattage
                 thresholds)
@@ -426,34 +426,34 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Up to 2kW (8.7A):</strong> 2.5mm\u00b2 twin and earth cable, 16A MCB (Type
                 B)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Up to 3kW (13A):</strong> 2.5mm\u00b2 twin and earth cable, 16A MCB (Type B)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Up to 3.68kW (16A):</strong> 2.5mm\u00b2 twin and earth cable, 20A MCB (Type
                 B)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3.68kW to 4.6kW (20A):</strong> 4mm\u00b2 twin and earth cable, 20A MCB
                 (Type B)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Over 4.6kW:</strong> 6mm\u00b2 or larger — calculate per BS 7671 Chapter 43
                 based on design current, installation method, and grouping derating factors
@@ -464,7 +464,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection</strong> — fixed electric heaters installed in domestic
                 premises must have 30mA RCD protection under Regulation 411.3.3. This applies to
@@ -472,7 +472,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Local isolation</strong> — each fixed heater requires a means of isolation
                 accessible without the use of a tool (Regulation 537.2). A double-pole fused spur
@@ -480,7 +480,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part P notification</strong> — new circuits for fixed heating in dwellings
                 in England are notifiable under Part P of the Building Regulations. Use a registered
@@ -511,7 +511,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Like-for-like Lot 20 storage heater replacement:</strong> \u00a3450 to
                 \u00a3950 per unit (supply and fit). No new circuits required if existing wiring is
@@ -519,7 +519,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electric panel heaters:</strong> \u00a3200 to \u00a3650 per heater (supply
                 and fit). May require new circuits or fused spurs. Additional cost if Economy 7
@@ -527,7 +527,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Infrared panel heaters:</strong> \u00a3250 to \u00a3700 per panel (supply
                 and fit). Wiring is typically simpler. Ceiling-mounted panels may require more
@@ -535,7 +535,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Air source heat pump (full system):</strong> \u00a38,000 to \u00a315,000
                 installed. Boiler Upgrade Scheme grant of \u00a37,500 reduces net cost. MCS
@@ -543,7 +543,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit upgrade (if required):</strong> \u00a3500 to \u00a31,200 for a
                 dual RCD or RCBO consumer unit. Often required where the existing board lacks
@@ -568,7 +568,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <SEOAppBridge
                   href="/eic-certificate"
@@ -578,14 +578,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <SEOAppBridge href="/tools/eicr-certificate" label="EICR Certificate" /> — document
                 the condition of existing storage heater circuits before replacement.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <SEOAppBridge href="/minor-works-certificate" label="Minor Works Certificate" /> — issue
                 minor works certificates for small additions like fused spurs for panel heaters.
@@ -616,7 +616,7 @@ export default function NightStorageHeaterReplacementPage() {
       heroTitle={
         <>
           Night Storage Heater Replacement{' '}
-          <span className="text-yellow-400">— Complete UK Guide</span>
+          <span className="text-elec-yellow">— Complete UK Guide</span>
         </>
       }
       heroSubtitle="Everything electricians and homeowners need to know about replacing old night storage heaters: Lot 20 compliance, wiring under BS 7671, Economy 7 tariff implications, and realistic costs for modern alternatives."

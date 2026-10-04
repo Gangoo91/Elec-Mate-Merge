@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useLoggingReminders } from '@/hooks/useLoggingReminders';
 import { useNavigate } from 'react-router-dom';
 import { Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -42,6 +43,8 @@ const ACTION_STATUSES = new Set([
 const APPROVED_STATUSES = new Set(['approved', 'signed_off', 'iqa_verified']);
 
 export function MyPortfolioSummaryCard() {
+  // Settings → Reminders drops the "add evidence as you go" line; the button stays (ELE-1804).
+  const { hidden: hideReminders } = useLoggingReminders();
   const [items, setItems] = useState<ItemRow[]>([]);
   const [submissions, setSubmissions] = useState<SubmissionRow[]>([]);
   const [unreadComments, setUnreadComments] = useState(0);
@@ -191,11 +194,13 @@ export function MyPortfolioSummaryCard() {
               <Stat value={stats.approved.toString()} label="Approved" tone="text-white" />
             </div>
 
-            <p className="mt-3 text-[11.5px] sm:text-[12px] text-white leading-snug">
-              {stats.actioning > 0 || unreadComments > 0
-                ? `Your tutor's left feedback. Respond to keep your portfolio moving toward sign-off.`
-                : 'Add evidence as you go — photos and reflections strengthen your IQA verification rate.'}
-            </p>
+            {(stats.actioning > 0 || unreadComments > 0 || !hideReminders) && (
+              <p className="mt-3 text-[11.5px] sm:text-[12px] text-white leading-snug">
+                {stats.actioning > 0 || unreadComments > 0
+                  ? `Your tutor's left feedback. Respond to keep your portfolio moving toward sign-off.`
+                  : 'Add evidence as you go — photos and reflections strengthen your IQA verification rate.'}
+              </p>
+            )}
 
             {stats.actioning > 0 || unreadComments > 0 ? (
               <div className="mt-4 space-y-2">

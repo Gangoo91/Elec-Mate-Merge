@@ -190,7 +190,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New tenants:</strong> the landlord must provide a copy of the current EICR
                 to each new tenant before or at the commencement of their tenancy. For student
@@ -199,7 +199,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Existing tenants:</strong> if an EICR is obtained during an existing tenancy
                 (for example, as the first EICR under the 2020 Regulations), a copy must be provided
@@ -207,7 +207,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Local authority copies:</strong> the local authority can request a copy of
                 the EICR at any time. The landlord must supply it within 7 days of the request.
@@ -215,7 +215,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Shorter intervals:</strong> where the EICR specifies a shorter interval (for
                 example, "next inspection in 3 years" due to the age of the wiring), the shorter
@@ -244,7 +244,7 @@ const sections = [
           </h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No RCD protection on socket circuits</strong> — properties with older
                 consumer units (single-fuse boards or older split-load boards without RCDs on socket
@@ -253,7 +253,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Overloaded ring circuits</strong> — student tenants often use multiple
                 extension leads and multi-way adapters in bedrooms (for phone chargers, laptops,
@@ -262,7 +262,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Missing bathroom supplementary bonding</strong> — older bathroom
                 installations may lack supplementary bonding of metallic bath, basin, pipework, and
@@ -271,7 +271,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Damaged wiring accessories</strong> — cracked or broken socket outlets,
                 light switches with exposed conductors, and damaged flex at light fittings are
@@ -280,7 +280,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Old consumer units without RCDs</strong> — rewirable fuse boards and early
                 MCB boards without RCDs are still found in older student house stock. Replacement
@@ -288,7 +288,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Deteriorated insulation</strong> — rubber-insulated cables from pre-1960s
                 installations may show evidence of insulation cracking or deterioration,
@@ -314,7 +314,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1 — Commission remedial work:</strong> arrange for a qualified
                 electrician to carry out the remedial work identified in the EICR within 28 days of
@@ -323,7 +323,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2 — Obtain confirmation:</strong> once remedial work is completed, the
                 electrician must issue either a new EICR (if a full inspection was required) or an
@@ -332,14 +332,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 3 — Provide confirmation to tenant:</strong> within 28 days of
                 receiving the written confirmation, provide a copy to each tenant of the property.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 4 — Provide confirmation to local authority:</strong> if the local
                 authority has requested a copy of the EICR or evidence of remediation, provide it
@@ -352,7 +352,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C3 findings (improvement recommended):</strong> a C3 observation does not
                 require remedial action under the 2020 Regulations — it is a recommendation only.
@@ -388,7 +388,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Remedial notices:</strong> where the council is satisfied that a landlord
                 has not complied with the 2020 Regulations, it can issue a remedial notice requiring
@@ -396,7 +396,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Civil penalty notices:</strong> where a landlord fails to comply with a
                 remedial notice, the local authority can arrange for the works to be carried out and
@@ -405,7 +405,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HMO licence conditions:</strong> for licensed HMOs, non-compliance with the
                 EICR requirement can be grounds for refusing to grant or renew the licence, or for
@@ -413,7 +413,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tenant complaints:</strong> tenants or their representatives (including
                 university accommodation offices) can report non-compliance to the local authority.
@@ -438,34 +438,34 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3-bedroom student house (6 to 8 circuits):</strong> \u00a3150 to \u00a3250
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>4 to 5 bedroom student HMO (8 to 12 circuits):</strong> \u00a3200 to
                 \u00a3350
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>6+ bedroom large HMO:</strong> \u00a3300 to \u00a3500 — larger boards, more
                 circuits, potential fire alarm system testing adds cost
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacement (C2 remediation):</strong> \u00a3500 to
                 \u00a31,200 for a modern RCBO board including installation and a new EICR
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Partial rewire (C2 old wiring remediation):</strong> \u00a3800 to
                 \u00a33,000 depending on extent and access
@@ -496,7 +496,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <SEOAppBridge href="/tools/eicr-certificate" label="EICR Certificate" /> — complete
                 student house EICRs on your phone. AI board scanning identifies circuit types and
@@ -505,7 +505,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <SEOAppBridge href="/eic-certificate" label="EIC Certificate" /> — issue EICs
                 for remedial works including consumer unit replacements and new circuits installed
@@ -513,7 +513,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <SEOInternalLink
                   href="/guides/eicr-observation-codes-explained"
@@ -547,7 +547,7 @@ export default function EICRForStudentHousesPage() {
       heroTitle={
         <>
           EICR for Student Houses{' '}
-          <span className="text-yellow-400">— HMO Electrical Inspection Guide</span>
+          <span className="text-elec-yellow">— HMO Electrical Inspection Guide</span>
         </>
       }
       heroSubtitle="The complete guide to EICR requirements for student houses and HMOs: mandatory 5-year inspection cycle, the most common defects found in student accommodation, what landlords must do after a C2 finding, and realistic costs."

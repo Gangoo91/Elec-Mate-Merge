@@ -235,35 +235,35 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Long Lead Method — Step by Step</h3>
           <ul className="space-y-3 text-white leading-relaxed">
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Step 1:</strong> Connect a temporary test lead
+                <strong className="text-elec-yellow">Step 1:</strong> Connect a temporary test lead
                 (the "long lead") between the line terminal of the circuit MCB (or the line busbar)
                 and the earth bar at the distribution board. This bridges R1 and R2 at the supply
                 end.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Step 2:</strong> Null the test instrument —
+                <strong className="text-elec-yellow">Step 2:</strong> Null the test instrument —
                 touch the probes together and press the zero/null button. This subtracts the
                 resistance of the test leads and the long lead itself from all subsequent readings.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Step 3:</strong> Go to the furthest point of the
+                <strong className="text-elec-yellow">Step 3:</strong> Go to the furthest point of the
                 circuit. Measure between the line terminal and the earth terminal at the accessory.
                 The current path is: probe → line terminal → R1 (back to DB) → long lead → R2 (out
                 to accessory) → earth terminal → probe. The reading is R1+R2.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Step 4:</strong> Record the reading. Repeat at
+                <strong className="text-elec-yellow">Step 4:</strong> Record the reading. Repeat at
                 every accessory on the circuit if required, or at the furthest point only for the
                 schedule of test results.
               </span>
@@ -286,9 +286,9 @@ const sections = [
           </p>
           <ul className="space-y-4 text-white leading-relaxed">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
-                <strong className="text-yellow-400">Method 1 — Long lead (circuit short):</strong>
+                <strong className="text-elec-yellow">Method 1 — Long lead (circuit short):</strong>
                 <p className="mt-1 text-sm">
                   A temporary lead links the line busbar to the earth bar at the DB, creating a
                   series path through R1 and R2. The instrument reads R1+R2 at the furthest point.
@@ -298,9 +298,9 @@ const sections = [
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
-                <strong className="text-yellow-400">Method 2 — Wandering lead (R2 only):</strong>
+                <strong className="text-elec-yellow">Method 2 — Wandering lead (R2 only):</strong>
                 <p className="mt-1 text-sm">
                   A supplementary test cable is connected to the CPC at the DB or MET; the other
                   probe is moved along the circuit to each luminaire or accessory. This measures the
@@ -370,37 +370,37 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white leading-relaxed">
             <li className="flex items-start gap-3">
-              <Cable className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">1.0/1.0 mm² (L/CPC):</strong> Approximately 36.2
+                <strong className="text-elec-yellow">1.0/1.0 mm² (L/CPC):</strong> Approximately 36.2
                 mΩ/m combined. A 20 m cable run gives R1+R2 of approximately 0.72 ohms.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">1.5/1.0 mm² (L/CPC):</strong> Approximately 30.2
+                <strong className="text-elec-yellow">1.5/1.0 mm² (L/CPC):</strong> Approximately 30.2
                 mΩ/m combined. A 20 m cable run gives R1+R2 of approximately 0.60 ohms.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">2.5/1.5 mm² (L/CPC):</strong> Approximately
+                <strong className="text-elec-yellow">2.5/1.5 mm² (L/CPC):</strong> Approximately
                 19.51 mΩ/m combined. A 30 m cable run gives R1+R2 of approximately 0.59 ohms.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">4.0/1.5 mm² (L/CPC):</strong> Approximately
+                <strong className="text-elec-yellow">4.0/1.5 mm² (L/CPC):</strong> Approximately
                 16.71 mΩ/m combined. A 30 m cable run gives R1+R2 of approximately 0.50 ohms.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">6.0/2.5 mm² (L/CPC):</strong> Approximately
+                <strong className="text-elec-yellow">6.0/2.5 mm² (L/CPC):</strong> Approximately
                 10.49 mΩ/m combined. A 40 m cable run gives R1+R2 of approximately 0.42 ohms.
               </span>
             </li>
@@ -417,35 +417,35 @@ const sections = [
           </p>
           <ul className="space-y-2 text-white leading-relaxed mb-3">
             <li className="flex items-start gap-3">
-              <Calculator className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">B16 MCB:</strong> tabulated 2.73 Ω → site limit
+                <strong className="text-elec-yellow">B16 MCB:</strong> tabulated 2.73 Ω → site limit
                 2.73 × 0.80 = <strong>2.18 Ω</strong>
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">B20 MCB:</strong> tabulated 2.19 Ω → site limit
+                <strong className="text-elec-yellow">B20 MCB:</strong> tabulated 2.19 Ω → site limit
                 2.19 × 0.80 = <strong>1.75 Ω</strong>
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">B32 MCB:</strong> tabulated 1.37 Ω → site limit
+                <strong className="text-elec-yellow">B32 MCB:</strong> tabulated 1.37 Ω → site limit
                 1.37 × 0.80 = <strong>1.10 Ω</strong>
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">B40 MCB:</strong> tabulated 1.09 Ω → site limit
+                <strong className="text-elec-yellow">B40 MCB:</strong> tabulated 1.09 Ω → site limit
                 1.09 × 0.80 = <strong>0.87 Ω</strong>
               </span>
             </li>
           </ul>
-          <p className="text-white/80 text-sm leading-relaxed">
+          <p className="text-white text-sm leading-relaxed">
             Source: BS 7671:2018+A4:2026 Table 41.3(a); GN3 0.80 site-test correction factor.
           </p>
         </div>
@@ -464,7 +464,7 @@ const sections = [
             approximately 20 % higher at operating temperature. GN3 Reg 5.78 provides worked
             examples of adjusting (R1+R2) measurements from 20 °C to 70 °C for Zs verification.
           </p>
-          <p className="text-white/80 text-sm leading-relaxed">
+          <p className="text-white text-sm leading-relaxed">
             Practical rule: where the GN3 0.80 factor is applied to the tabulated Zs limit, this
             implicitly accounts for both the ambient-temperature measurement and the
             operating-temperature conductor resistance, making the two approaches equivalent for
@@ -497,9 +497,9 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Ring Circuit Three-Stage Test</h3>
           <ul className="space-y-4 text-white leading-relaxed">
             <li className="flex items-start gap-3">
-              <CircleDot className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CircleDot className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
-                <strong className="text-yellow-400">Stage 1 — End-to-end resistance:</strong>
+                <strong className="text-elec-yellow">Stage 1 — End-to-end resistance:</strong>
                 <p className="mt-1">
                   Disconnect both ends of the ring at the DB. Measure the resistance of each
                   conductor separately: r1 (line-to-line), rn (neutral-to-neutral), r2 (CPC-to-CPC).
@@ -510,9 +510,9 @@ const sections = [
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <Link2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Link2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
-                <strong className="text-yellow-400">
+                <strong className="text-elec-yellow">
                   Stage 2 — Cross-connect L and N (figure-of-eight):
                 </strong>
                 <p className="mt-1">
@@ -525,9 +525,9 @@ const sections = [
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <Link2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Link2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
-                <strong className="text-yellow-400">Stage 3 — Cross-connect L and CPC:</strong>
+                <strong className="text-elec-yellow">Stage 3 — Cross-connect L and CPC:</strong>
                 <p className="mt-1">
                   Cross-connect the line and CPC conductors and repeat the measurements at each
                   socket outlet. The maximum reading at the midpoint gives the R1+R2 value at the
@@ -565,7 +565,7 @@ const sections = [
         <div className="space-y-4 mt-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Not nulling the test leads</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -579,7 +579,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Testing at the wrong point</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -593,7 +593,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Forgetting to remove the long lead</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -608,7 +608,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Parallel earth paths on ring circuits</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -731,7 +731,7 @@ export default function ContinuityTestingR1R2Page() {
       heroTitle={
         <>
           Continuity Testing R1+R2:{' '}
-          <span className="text-yellow-400">How to Test Protective Conductors</span>
+          <span className="text-elec-yellow">How to Test Protective Conductors</span>
         </>
       }
       heroSubtitle="The complete guide to R1+R2 continuity testing for UK electricians. What R1+R2 is, why it matters for Zs calculation, the long lead method, ring circuit continuity testing, acceptable values, and common mistakes to avoid. BS 7671 compliant."
@@ -744,7 +744,7 @@ export default function ContinuityTestingR1R2Page() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Auto-validate R1+R2 and Zs values on site"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site testing and certification. R1+R2 calculator, Zs lookup, voice test entry, board scanner. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site testing and certification. R1+R2 calculator, Zs lookup, voice test entry, board scanner. 7-day free trial, cancel anytime."
     />
   );
 }

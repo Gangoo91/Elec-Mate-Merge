@@ -418,7 +418,7 @@ export default function AIReportWriterPage() {
       badgeIcon={PenTool}
       heroTitle={
         <>
-          AI Report Writer: <span className="text-yellow-400">Professional Reports in Seconds</span>
+          AI Report Writer: <span className="text-elec-yellow">Professional Reports in Seconds</span>
         </>
       }
       heroSubtitle="Generate professional inspection summaries, condition reports, client proposals, and remedial recommendations — all branded with your company details and formatted for client presentation. Stop spending hours on paperwork."
@@ -441,7 +441,7 @@ export default function AIReportWriterPage() {
       faqHeading="Frequently Asked Questions About AI Report Writing"
       relatedPages={relatedPages}
       ctaHeading="Stop Spending Hours on Reports"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's AI Report Writer. Professional reports and proposals in seconds, not hours. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate's AI Report Writer. Professional reports and proposals in seconds, not hours. 7-day free trial, cancel anytime."
       toolPath="/tools/ai-report-writer"
     />
   );

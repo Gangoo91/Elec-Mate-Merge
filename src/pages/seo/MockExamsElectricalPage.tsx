@@ -152,7 +152,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Identify weak areas.</strong> You cannot fix what you do not know is broken.
                 Mock exams reveal exactly which topics you understand and which need more revision.
@@ -161,7 +161,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Build exam technique.</strong> The 18th Edition exam is open-book, but you
                 only have 2 minutes per question. Mock exams train you to navigate{' '}
@@ -171,7 +171,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reduce exam anxiety.</strong> Familiarity breeds confidence. By the time you
                 have done 10+ mock exams, the real thing feels like just another practice paper. You
@@ -179,7 +179,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Strengthen memory.</strong> The act of recalling information during a test
                 strengthens the neural pathways to that information. Every time you answer a
@@ -209,21 +209,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part 1 and 2:</strong> Scope, object, and fundamental principles.
                 Definitions (live part, exposed-conductive-part, extraneous-conductive-part).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part 3:</strong> Assessment of general characteristics — supply
                 characteristics, maximum demand, diversity, external influences.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part 4:</strong> Protection for safety — protection against electric shock,
                 overcurrent, overvoltage,{' '}
@@ -234,21 +234,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part 5:</strong> Selection and erection of equipment — wiring systems, cable
                 sizing (Appendix 4), isolation and switching, consumer units.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part 6:</strong> Inspection and testing — initial verification, periodic
                 inspection, certification.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part 7:</strong> Special installations — bathrooms, swimming pools, solar
                 PV, EV charging, temporary installations.
@@ -258,16 +258,16 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h4 className="font-bold text-white mb-3 flex items-center gap-2">
-            <Lightbulb className="w-5 h-5 text-yellow-400 shrink-0" />
+            <Lightbulb className="w-5 h-5 text-elec-yellow shrink-0" />
             18th Edition A4:2026 Key Changes — Live Exam Topics
           </h4>
-          <p className="text-white/80 text-sm mb-3">
+          <p className="text-white text-sm mb-3">
             Amendment 4 (2026) introduced several new requirements that are already appearing in the
             current C&G 2382 paper. These three are the most tested:
           </p>
-          <ul className="space-y-3 text-white/90 text-sm">
+          <ul className="space-y-3 text-white text-sm">
             <li className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reg 411.3.4 — RCD protection for domestic lighting circuits.</strong> Within
                 domestic (household) premises, all AC final circuits supplying luminaires must now
@@ -277,7 +277,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reg 421.1.7 — AFDD recommendation.</strong> Arc fault detection devices
                 (AFDDs) are recommended — not mandatory — in AC final circuits of a fixed
@@ -287,7 +287,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part 7, Sec 722 — EV load management.</strong> Section 722 (electric vehicle
                 charging installations) has significant changes in A4:2026. Reg 722.311.201 permits
@@ -331,7 +331,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Written exam topics:</strong> Testing sequence and procedures,
                 interpretation of test results, observation code classification (C1, C2, C3, and
@@ -345,7 +345,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Practical assessment:</strong> You will carry out a periodic inspection and
                 testing on a real installation, including continuity of protective conductors,
@@ -385,7 +385,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Installation tasks:</strong> You will install a single-phase electrical
                 distribution system from a wiring diagram. This typically includes: wiring a
@@ -394,7 +394,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Safe isolation:</strong> You must demonstrate the safe isolation procedure
                 correctly — using a voltage indicator compliant with GS38, proving dead on all
@@ -402,7 +402,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing:</strong> After installation, you carry out the full initial
                 verification testing sequence in the order prescribed by Reg 643.1 — the tests of
@@ -414,7 +414,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Certification:</strong> You must complete an Electrical Installation
                 Certificate (EIC) with schedule of test results for the installation you have built.
@@ -445,7 +445,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Knowledge test:</strong> Multiple-choice questions covering BS 7671, safe
                 working practices, electrical science, installation methods, and fault diagnosis.
@@ -453,14 +453,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Practical skills assessment:</strong> Installing, testing, and commissioning
                 an electrical installation. Similar to the AM2 but assessed under the EPA framework.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Professional discussion:</strong> A structured interview where you discuss
                 your workplace experience, using your{' '}
@@ -493,7 +493,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Study first, then test.</strong> Do not jump straight into mock exams
                 without revising the material first. Study each topic area, then test yourself on
@@ -502,7 +502,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Simulate exam conditions.</strong> Time yourself. Do not look up answers
                 mid-question (unless it is an open-book exam like the 18th Edition, in which case
@@ -511,7 +511,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Review every answer — especially the ones you got right.</strong> After
                 completing a mock, review every question. For wrong answers, understand why the
@@ -520,7 +520,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Track your scores.</strong> Keep a record of your mock exam scores over
                 time. You should see an upward trend. If your scores plateau, it means you are
@@ -528,7 +528,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Space your practice.</strong> Do not cram 10 mock exams into 2 days before
                 the real exam. Spread them out over several weeks, with study and revision between
@@ -552,7 +552,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Read the question carefully.</strong> Many exam questions are designed to
                 trip you up with careful wording. Words like "shall," "should," "may," and "is not
@@ -561,7 +561,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Do not spend too long on difficult questions.</strong> If a question is
                 taking more than 3 minutes, mark it and move on. Answer the questions you know
@@ -569,7 +569,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Eliminate wrong answers.</strong> In multiple-choice exams, you can often
                 eliminate 1 or 2 obviously wrong answers. This improves your odds even if you are
@@ -577,7 +577,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tab your BS 7671.</strong> For the 18th Edition exam, use sticky tabs to
                 mark the sections you need most frequently: Part 4 (protection), Appendix 4 (cable
@@ -585,7 +585,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Answer every question.</strong> In multiple-choice exams, there is no
                 penalty for guessing. Never leave a question blank — even a guess gives you a 25%
@@ -613,7 +613,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Brain className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Mock Exams with Explanations</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -681,7 +681,7 @@ export default function MockExamsElectricalPage() {
       heroTitle={
         <>
           Mock Exams for Electricians:{' '}
-          <span className="text-yellow-400">The Fastest Way to Pass</span>
+          <span className="text-elec-yellow">The Fastest Way to Pass</span>
         </>
       }
       heroSubtitle="Practice testing is the single most effective study method for electrical exams. This guide covers mock exams for 18th Edition, 2391, AM2, and EPA — with strategies for using them effectively, exam technique tips, and the tools to track your progress."
@@ -693,7 +693,7 @@ export default function MockExamsElectricalPage() {
       relatedPages={relatedPages}
       embeddedTool={<MockExamIndexLinks />}
       ctaHeading="Practice Exams on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for mock exams, flashcards, and structured revision. Track your scores, identify weak areas, and pass first time. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for mock exams, flashcards, and structured revision. Track your scores, identify weak areas, and pass first time. 7-day free trial, cancel anytime."
     />
   );
 }

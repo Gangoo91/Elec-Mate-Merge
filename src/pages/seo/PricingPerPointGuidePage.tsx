@@ -277,48 +277,48 @@ const sections = [
             </div>
             <div className="grid grid-cols-3 gap-4 border-b border-white/10 pb-2">
               <span>London</span>
-              <strong className="text-yellow-400">£110 to £140</strong>
-              <strong className="text-yellow-400">£130 to £160</strong>
+              <strong className="text-elec-yellow">£110 to £140</strong>
+              <strong className="text-elec-yellow">£130 to £160</strong>
             </div>
             <div className="grid grid-cols-3 gap-4 border-b border-white/10 pb-2">
               <span>South East</span>
-              <strong className="text-yellow-400">£100 to £130</strong>
-              <strong className="text-yellow-400">£120 to £150</strong>
+              <strong className="text-elec-yellow">£100 to £130</strong>
+              <strong className="text-elec-yellow">£120 to £150</strong>
             </div>
             <div className="grid grid-cols-3 gap-4 border-b border-white/10 pb-2">
               <span>South West</span>
-              <strong className="text-yellow-400">£90 to £115</strong>
-              <strong className="text-yellow-400">£105 to £135</strong>
+              <strong className="text-elec-yellow">£90 to £115</strong>
+              <strong className="text-elec-yellow">£105 to £135</strong>
             </div>
             <div className="grid grid-cols-3 gap-4 border-b border-white/10 pb-2">
               <span>Midlands</span>
-              <strong className="text-yellow-400">£85 to £110</strong>
-              <strong className="text-yellow-400">£100 to £130</strong>
+              <strong className="text-elec-yellow">£85 to £110</strong>
+              <strong className="text-elec-yellow">£100 to £130</strong>
             </div>
             <div className="grid grid-cols-3 gap-4 border-b border-white/10 pb-2">
               <span>North West</span>
-              <strong className="text-yellow-400">£85 to £105</strong>
-              <strong className="text-yellow-400">£95 to £125</strong>
+              <strong className="text-elec-yellow">£85 to £105</strong>
+              <strong className="text-elec-yellow">£95 to £125</strong>
             </div>
             <div className="grid grid-cols-3 gap-4 border-b border-white/10 pb-2">
               <span>North East</span>
-              <strong className="text-yellow-400">£80 to £100</strong>
-              <strong className="text-yellow-400">£90 to £120</strong>
+              <strong className="text-elec-yellow">£80 to £100</strong>
+              <strong className="text-elec-yellow">£90 to £120</strong>
             </div>
             <div className="grid grid-cols-3 gap-4 border-b border-white/10 pb-2">
               <span>Scotland</span>
-              <strong className="text-yellow-400">£80 to £105</strong>
-              <strong className="text-yellow-400">£95 to £125</strong>
+              <strong className="text-elec-yellow">£80 to £105</strong>
+              <strong className="text-elec-yellow">£95 to £125</strong>
             </div>
             <div className="grid grid-cols-3 gap-4 border-b border-white/10 pb-2">
               <span>Wales</span>
-              <strong className="text-yellow-400">£80 to £100</strong>
-              <strong className="text-yellow-400">£90 to £120</strong>
+              <strong className="text-elec-yellow">£80 to £100</strong>
+              <strong className="text-elec-yellow">£90 to £120</strong>
             </div>
             <div className="grid grid-cols-3 gap-4 pb-2">
               <span>Northern Ireland</span>
-              <strong className="text-yellow-400">£75 to £95</strong>
-              <strong className="text-yellow-400">£85 to £115</strong>
+              <strong className="text-elec-yellow">£75 to £95</strong>
+              <strong className="text-elec-yellow">£85 to £115</strong>
             </div>
           </div>
         </div>
@@ -476,27 +476,27 @@ const sections = [
           <div className="space-y-3 text-white text-sm">
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Solid-wall property (chasing required)</span>
-              <strong className="text-yellow-400">+15% to +25%</strong>
+              <strong className="text-elec-yellow">+15% to +25%</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Listed building (conservation constraints)</span>
-              <strong className="text-yellow-400">+25% to +40%</strong>
+              <strong className="text-elec-yellow">+25% to +40%</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Property occupied (working around furniture, residents)</span>
-              <strong className="text-yellow-400">+10% to +15%</strong>
+              <strong className="text-elec-yellow">+10% to +15%</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Multi-storey (3+ floors, restricted access)</span>
-              <strong className="text-yellow-400">+10% to +20%</strong>
+              <strong className="text-elec-yellow">+10% to +20%</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Premium fittings (customer-specified designer switches)</span>
-              <strong className="text-yellow-400">Price materials separately</strong>
+              <strong className="text-elec-yellow">Price materials separately</strong>
             </div>
             <div className="flex justify-between pb-2">
               <span>Bulk work (50+ points, repeat specification)</span>
-              <strong className="text-yellow-400">-5% to -10%</strong>
+              <strong className="text-elec-yellow">-5% to -10%</strong>
             </div>
           </div>
         </div>
@@ -597,7 +597,7 @@ export default function PricingPerPointGuidePage() {
       heroTitle={
         <>
           Pricing Electrical Work Per Point:{' '}
-          <span className="text-yellow-400">UK Rates for 2026</span>
+          <span className="text-elec-yellow">UK Rates for 2026</span>
         </>
       }
       heroSubtitle="What is a point, what does it include, and how much should you charge? Per-point rates by region, supply-and-fix vs labour only, and when this pricing method works best."
@@ -616,7 +616,7 @@ export default function PricingPerPointGuidePage() {
       relatedPages={relatedPages}
       heroCtaLabel="Build per-point quotes on your phone"
       ctaHeading="Quote Faster with Per-Point Pricing Built In"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional PDF quotes in minutes. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional PDF quotes in minutes. 7-day free trial, cancel anytime."
     />
   );
 }

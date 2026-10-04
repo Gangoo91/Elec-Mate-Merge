@@ -204,7 +204,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wired systems — preferred for commercial</strong> — all detectors, keypads,
                 and sirens are connected to the control panel by dedicated cable. No battery
@@ -215,7 +215,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wireless systems — suited to retrofits</strong> — detectors communicate with
                 the panel via encrypted radio frequency (RF). No cable runs required, making
@@ -226,7 +226,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hybrid systems</strong> — combine wired zones on the main panel with
                 wireless expansion zones for areas where cabling is impractical. Common on larger
@@ -254,7 +254,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mounting height</strong> — standard PIRs should be mounted at 2.0–2.4 metres
                 above floor level in corners, angled to provide coverage across the room. Too low
@@ -264,7 +264,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Avoid heat sources and draughts</strong> — do not mount PIRs where they face
                 south-facing windows (direct sunlight), above radiators or fan heaters, near air
@@ -274,7 +274,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pet-immune detectors</strong> — where pets are present, use pet-immune PIRs
                 (also called pet-tolerant). These use a downward-looking lens pattern or dual-zone
@@ -284,7 +284,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Walk-test every detector</strong> — after installation, walk-test every PIR
                 to confirm coverage. Enter the detection zone from each direction the manufacturer
@@ -310,7 +310,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Surface-mounted vs flush-mounted</strong> — surface-mounted contacts are
                 faster to install and visible (deterrent value). Flush-mounted contacts are hidden
@@ -320,7 +320,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wiring convention</strong> — contacts are wired in a normally-closed (NC)
                 loop. An open circuit (contact separated) triggers the alarm. This convention means
@@ -329,7 +329,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Double-pole contacts for metal frames</strong> — on metal door or window
                 frames, use non-magnetic contact sets designed for metallic frames. Standard
@@ -338,7 +338,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Shutter contacts and roller shutter detectors</strong> — for commercial
                 premises with roller shutters, use dedicated shutter contacts or vibration
@@ -365,7 +365,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Zone capacity</strong> — each detector or contact uses one zone (input).
                 Count the total number of detectors, contacts, panic buttons, and auxiliary inputs
@@ -374,7 +374,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>User codes and access levels</strong> — panels should support multiple user
                 codes at different access levels: engineer code (full access), manager code
@@ -383,7 +383,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Partitioning</strong> — for multi-tenant or multi-use buildings, choose a
                 panel that supports partitioned zones (areas). Each partition can be armed and
@@ -393,7 +393,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Communications module</strong> — for ARC monitoring, the panel requires a
                 communicator: IP (broadband), GSM/4G, or dual-path (both). Grade 3 systems require
@@ -474,7 +474,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NSI Gold</strong> — the highest level of NSI certification, required for
                 Grade 3 and Grade 4 installations, for police-URN-eligible systems, and for most
@@ -483,7 +483,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NSI Silver / SSAIB-approved</strong> — suitable for Grade 1 and Grade 2
                 domestic and light commercial systems. Still requires compliance with BS EN 50131
@@ -492,7 +492,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insurance implications</strong> — most commercial insurers require NSI or
                 SSAIB-approved installation to apply alarm-related premium discounts. Without
@@ -519,7 +519,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Police URN — professional only</strong> — a Police URN for police response
                 can only be issued for systems installed by NSI or SSAIB-approved companies. A
@@ -527,7 +527,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insurance requirements</strong> — domestic insurers vary. Some accept
                 self-installed systems for modest premium discounts; most commercial insurers
@@ -535,7 +535,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DIY limitations</strong> — consumer-grade wireless systems (Ring, Ajax, DSC)
                 are suitable for basic domestic applications and offer reasonable Grade 1 equivalent
@@ -563,7 +563,7 @@ const sections = [
         {/* Scope demarcation */}
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
           <h4 className="font-bold text-white mb-2">Scope Demarcation: Know Your Interface</h4>
-          <p className="text-white/80 text-sm leading-relaxed">
+          <p className="text-white text-sm leading-relaxed">
             The electrician&apos;s scope typically covers cabling, cable containment, PSU wiring,
             and provision of a mains power supply to the panel location. Detection device placement,
             control panel commissioning, zone programming, and ARC/URN registration remain with the
@@ -580,7 +580,7 @@ const sections = [
             <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-1">Cable Segregation — Most Common Mistake</h4>
-              <p className="text-white/80 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Alarm and emergency system cables must be run in dedicated containment, separate
                 from mains power circuits. Routing alarm cables with power circuits is the single
                 most-cited installation error in the PWI dataset and contravenes BS 7671 Reg 528
@@ -596,7 +596,7 @@ const sections = [
         {/* Standby battery compliance */}
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
           <h4 className="font-bold text-white mb-2">Standby Battery: Reg 570.6.1.1.1</h4>
-          <p className="text-white/80 text-sm leading-relaxed">
+          <p className="text-white text-sm leading-relaxed">
             The sealed lead-acid standby battery inside the alarm PSU is a stationary secondary
             battery installation. BS 7671:2018+A4:2026 Reg 570.6.1.1.1 requires it to conform to the
             relevant parts of BS EN IEC 62485 (safety requirements for stationary batteries). In
@@ -613,7 +613,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <PoundSterling className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Quote Security System Jobs Accurately</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -677,7 +677,7 @@ export default function IntruderAlarmInstallationPage() {
       heroTitle={
         <>
           Intruder Alarm Installation UK:{' '}
-          <span className="text-yellow-400">Burglar Alarm Wiring Guide</span>
+          <span className="text-elec-yellow">Burglar Alarm Wiring Guide</span>
         </>
       }
       heroSubtitle="The complete UK guide to intruder alarm installation — BS EN 50131 grades, wired vs wireless systems, PIR placement, door and window contacts, control panel sizing, ARC monitoring options, and NSI/SSAIB certification requirements."

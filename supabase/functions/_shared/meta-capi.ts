@@ -18,13 +18,7 @@ import { captureException } from './sentry.ts';
 const META_GRAPH_VERSION = 'v21.0';
 
 export type ActionSource =
-  | 'website'
-  | 'app'
-  | 'system_generated'
-  | 'email'
-  | 'phone_call'
-  | 'chat'
-  | 'other';
+  'website' | 'app' | 'system_generated' | 'email' | 'phone_call' | 'chat' | 'other';
 
 export interface CapiEvent {
   event_name: string;
@@ -171,4 +165,44 @@ export async function sendCapiEvents(events: CapiEvent[]): Promise<CapiResult> {
  */
 export function fireCapiEvent(event: CapiEvent): void {
   sendCapiEvents([event]).catch((err) => console.error('[meta-capi] fireCapiEvent failed', err));
+}
+
+/**
+ * Consent gate for server-side events (ELE-1812, 4 Oct 2026).
+ *
+ * Meta CAPI sends hashed email/name to Meta for ad measurement — that's
+ * tracking under PECR / UK GDPR, so it needs the person's opt-in, not just
+ * acceptance of the terms. The choice lives on profiles.ad_tracking_consent
+ * (set from the web cookie banner's "marketing" toggle, or the in-app
+ * privacy prompt + Apple's tracking dialog). NULL/false/unknown user = skip.
+ */
+export async function hasAdTrackingConsent(userId: string | null | undefined): Promise<boolean> {
+  if (!userId) return false;
+  const url = Deno.env.get('SUPABASE_URL');
+  const key = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+  if (!url || !key) return false;
+  try {
+    const res = await fetch(
+      `${url}/rest/v1/profiles?id=eq.${encodeURIComponent(userId)}&select=ad_tracking_consent`,
+      { headers: { apikey: key, Authorization: `Bearer ${key}` } }
+    );
+    if (!res.ok) return false;
+    const rows = (await res.json()) as { ad_tracking_consent: boolean | null }[];
+    return rows[0]?.ad_tracking_consent === true;
+  } catch {
+    return false;
+  }
+}
+
+/** fireCapiEvent, but only for someone who has opted in. Never throws. */
+export function fireCapiEventIfConsented(
+  userId: string | null | undefined,
+  event: CapiEvent
+): void {
+  hasAdTrackingConsent(userId)
+    .then((ok) => {
+      if (ok) fireCapiEvent(event);
+      else console.log('[meta-capi] skipped — no ad-tracking consent', event.event_name);
+    })
+    .catch(() => {});
 }

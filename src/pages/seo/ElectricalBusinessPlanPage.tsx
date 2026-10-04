@@ -164,7 +164,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <FileText className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">1. Executive Summary</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -215,7 +215,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <PoundSterling className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">5. Financial Projections</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -253,45 +253,45 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-4 flex items-center gap-2">
-            <BarChart3 className="w-4 h-4 text-yellow-400" /> Realistic Year 1 Projections (Sole
+            <BarChart3 className="w-4 h-4 text-elec-yellow" /> Realistic Year 1 Projections (Sole
             Trader, 2026)
           </h4>
           <div className="space-y-3 text-white text-sm">
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Billable hours per week (realistic)</span>
-              <strong className="text-yellow-400">25 to 30 hours</strong>
+              <strong className="text-elec-yellow">25 to 30 hours</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Working weeks per year (minus holidays, illness)</span>
-              <strong className="text-yellow-400">46 weeks</strong>
+              <strong className="text-elec-yellow">46 weeks</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Total billable hours (year 1)</span>
-              <strong className="text-yellow-400">1,150 to 1,380</strong>
+              <strong className="text-elec-yellow">1,150 to 1,380</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Average charge-out rate</span>
-              <strong className="text-yellow-400">£50 to £55/hour</strong>
+              <strong className="text-elec-yellow">£50 to £55/hour</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Labour revenue (year 1)</span>
-              <strong className="text-yellow-400">£57,500 to £75,900</strong>
+              <strong className="text-elec-yellow">£57,500 to £75,900</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Material sales (with markup)</span>
-              <strong className="text-yellow-400">£15,000 to £25,000</strong>
+              <strong className="text-elec-yellow">£15,000 to £25,000</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2 font-bold">
               <span>Total turnover (year 1)</span>
-              <strong className="text-yellow-400">£72,500 to £100,900</strong>
+              <strong className="text-elec-yellow">£72,500 to £100,900</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Total business costs</span>
-              <strong className="text-yellow-400">£25,000 to £35,000</strong>
+              <strong className="text-elec-yellow">£25,000 to £35,000</strong>
             </div>
             <div className="flex justify-between pt-2 text-lg font-bold">
               <span>Net profit (before tax)</span>
-              <strong className="text-yellow-400">£37,500 to £65,900</strong>
+              <strong className="text-elec-yellow">£37,500 to £65,900</strong>
             </div>
           </div>
         </div>
@@ -433,7 +433,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Overestimating billable hours</strong> — you will NOT bill 40 hours per
                 week. After travel, quoting, material collection, admin, and downtime, 25 to 30
@@ -441,7 +441,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ignoring cash flow timing</strong> — you buy materials and pay for fuel on
                 day one, but may not get paid for 14 to 30 days. Your cash flow forecast must show
@@ -449,14 +449,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No contingency fund</strong> — plan for 3 months of expenses as a cash
                 buffer. Without it, one slow month or a late-paying customer can put you under.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Copying someone else&apos;s plan</strong> — templates are useful for
                 structure, but the numbers must be yours. Your costs, your area, your target market.
@@ -506,7 +506,7 @@ export default function ElectricalBusinessPlanPage() {
       heroTitle={
         <>
           Electrical Business Plan Template:{' '}
-          <span className="text-yellow-400">Build a Business, Not Just a Job</span>
+          <span className="text-elec-yellow">Build a Business, Not Just a Job</span>
         </>
       }
       heroSubtitle="A practical business plan template for UK electricians. Financial projections, pricing strategy, marketing plan, and a realistic growth roadmap from startup to scaling."
@@ -517,7 +517,7 @@ export default function ElectricalBusinessPlanPage() {
       faqHeading="Frequently Asked Questions About Electrical Business Plans"
       relatedPages={relatedPages}
       ctaHeading="Manage Your Electrical Business in One Place"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, invoicing, and job management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for quoting, certification, invoicing, and job management. 7-day free trial, cancel anytime."
     />
   );
 }

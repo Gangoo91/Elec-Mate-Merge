@@ -407,7 +407,7 @@ export default function PlugInSolarRCDPage() {
       heroTitle={
         <>
           Plug-in Solar and RCDs:{' '}
-          <span className="text-yellow-400">What Is Recommended, What Is Required</span>
+          <span className="text-elec-yellow">What Is Recommended, What Is Required</span>
         </>
       }
       heroSubtitle="Electrical Safety First recommend at least a Type A, bidirectionally capable RCD on circuits used with plug-in solar. The law requires no particular type. Both are true, and it is two separate checks rather than one — this page separates them, cited to the specification, the Government Response and BS 7671."
@@ -438,7 +438,7 @@ export default function PlugInSolarRCDPage() {
       faqHeading="Plug-in Solar and RCDs — Frequently Asked Questions"
       relatedPages={relatedPages}
       ctaHeading="Recording the Answer, Not Just Knowing It"
-      ctaSubheading="Elec-Mate's Plug-in Solar Suitability & Commissioning Certificate checks the RCD type and bidirectional capability as separate questions, marks every finding as a requirement or as advice with the source against each, and turns them into a remedial list you can quote from. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's Plug-in Solar Suitability & Commissioning Certificate checks the RCD type and bidirectional capability as separate questions, marks every finding as a requirement or as advice with the source against each, and turns them into a remedial list you can quote from. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

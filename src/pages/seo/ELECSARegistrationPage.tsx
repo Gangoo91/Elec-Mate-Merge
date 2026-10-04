@@ -289,7 +289,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Qualifications:</strong> Your 18th Edition certificate (C&G 2382),
                 inspection and testing certificate (C&G 2391 or equivalent), and any other relevant
@@ -298,7 +298,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test equipment:</strong> Your multifunction tester, insulation resistance
                 tester, and any other test instruments must have current calibration certificates
@@ -307,7 +307,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Certificates and documentation:</strong> A sample of your recent EICs,
                 MEIWCs, and EICRs. The assessor checks for accuracy, completeness, correct test
@@ -317,7 +317,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Job inspection:</strong> The assessor visits one or more of your recent
                 installations to inspect the quality of workmanship. They check cable routing,
@@ -325,7 +325,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Technical discussion:</strong> The assessor may ask about your approach to
                 specific scenarios — for example, how you would determine the earth fault loop
@@ -355,7 +355,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Domestic Installer registration:</strong> Approximately £300 to £480 per
                 year, including annual subscription and periodic assessment. Initial registration
@@ -363,7 +363,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full Scope registration:</strong> Approximately £450 to £650 per year for
                 domestic and commercial work. Higher initial registration fee reflecting the broader
@@ -371,7 +371,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Notification fees:</strong> Each Part P notification submitted through the
                 portal incurs a small fee (typically £5 to £15 per notification, depending on your
@@ -380,7 +380,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Re-assessment fee:</strong> If you fail your periodic assessment and require
                 a re-assessment visit, there is an additional charge. The exact amount varies —
@@ -410,7 +410,7 @@ const sections = [
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3 mb-3">
-              <Home className="w-6 h-6 text-yellow-400 shrink-0" />
+              <Home className="w-6 h-6 text-elec-yellow shrink-0" />
               <h3 className="font-bold text-white text-lg">Domestic Installer</h3>
             </div>
             <ul className="space-y-2 text-white text-sm">
@@ -465,7 +465,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC:</strong> Largest scheme, highest consumer recognition, highest cost,
                 annual assessments. Best for electricians who value brand recognition and consumer
@@ -515,7 +515,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Keep qualifications current.</strong> Ensure your 18th Edition and
                 inspection and testing qualifications are up to date. When BS 7671 amendments are
@@ -523,7 +523,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maintain test equipment calibration.</strong> Get your multifunction tester
                 and other instruments calibrated annually. Keep the calibration certificates
@@ -531,7 +531,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Produce accurate certificates.</strong> Every EIC, MEIWC, and EICR you issue
                 should be complete, accurate, and compliant with BS 7671. This is the area most
@@ -539,7 +539,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>
                   Complete{' '}
@@ -551,7 +551,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Renew your insurance.</strong> Public liability insurance must remain in
                 force throughout your registration. Notify ELECSA if your insurance provider or
@@ -588,7 +588,7 @@ export default function ELECSARegistrationPage() {
       heroTitle={
         <>
           ELECSA Registration:{' '}
-          <span className="text-yellow-400">How to Join, What It Costs, and What You Get</span>
+          <span className="text-elec-yellow">How to Join, What It Costs, and What You Get</span>
         </>
       }
       heroSubtitle="ELECSA is a government-approved competent person scheme backed by the ECA. It lets you self-certify Part P work, build consumer trust, and access professional support. This guide covers everything you need to know about registering with ELECSA — process, assessment, costs, and how it compares to NICEIC and NAPIT."
@@ -599,7 +599,7 @@ export default function ELECSARegistrationPage() {
       faqHeading="Frequently Asked Questions About ELECSA Registration"
       relatedPages={relatedPages}
       ctaHeading="Professional Certification for Scheme-Registered Electricians"
-      ctaSubheading="Elec-Mate creates BS 7671-compliant certificates that pass any scheme assessment. Digital EICs, MEIWCs, and EICRs with full test schedules, AI tools, and instant delivery. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate creates BS 7671-compliant certificates that pass any scheme assessment. Digital EICs, MEIWCs, and EICRs with full test schedules, AI tools, and instant delivery. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

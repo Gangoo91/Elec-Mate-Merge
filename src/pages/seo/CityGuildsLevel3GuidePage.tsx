@@ -141,7 +141,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full qualification title:</strong> City & Guilds Level 3 Diploma in
                 Electrical Installations (Buildings and Structures). Qualification number: 2365.
@@ -149,7 +149,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Two stages:</strong> The 2365 is delivered in two stages — Level 2
                 Certificate (covering fundamentals) and Level 3 Diploma (covering advanced
@@ -158,7 +158,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Industry recognition:</strong> The C&G 2365 is recognised by JIB for ECS
                 Gold Card applications, by NICEIC/NAPIT/ELECSA for competent person scheme
@@ -167,7 +167,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Related qualifications:</strong> The 2365 is separate from C&G 2382
                 (18th Edition BS 7671), C&G 2391 (Inspection and Testing), and C&G 2396
@@ -192,7 +192,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Level 2 Certificate — Year 1/2:</strong> Covers fundamental electrical
                 science, installation methods, wiring systems, health and safety, basic testing,
@@ -201,7 +201,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Level 3 Diploma — Year 2/3:</strong> Covers electrical installation
                 technology, inspection and testing, fault diagnosis, electrical system design,
@@ -210,7 +210,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Guided learning hours:</strong> The total guided learning hours for the
                 Level 3 Diploma are approximately 600 to 700 hours. This includes formal teaching
@@ -310,7 +310,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Written examinations:</strong> Closed-book exams with multiple-choice
                 and short-answer questions. Sat at your college under controlled conditions.
@@ -319,7 +319,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Practical assignments:</strong> Tasks carried out in the college
                 workshop or assessed in the workplace. You are assessed on the quality of your
@@ -328,7 +328,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Synoptic assessment:</strong> A combined assessment that tests your
                 ability to apply knowledge and practical skills together in a realistic scenario.
@@ -337,7 +337,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Online assessments:</strong> Some units include online tests or
                 assignments completed through the City & Guilds Walled Garden platform. These
@@ -371,7 +371,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Know the distinction criteria:</strong> City & Guilds publishes
                 distinction criteria for each unit. These criteria go beyond passing — they
@@ -381,7 +381,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Go beyond the syllabus:</strong> Pass-level answers repeat the facts from
                 the course. Distinction-level answers explain the why — why does BS 7671 require
@@ -391,7 +391,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Practise calculation accuracy:</strong> In design and theory units,
                 distinction-level performance requires accurate and methodical calculations.
@@ -400,7 +400,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Practical quality matters:</strong> In practical assessment units,
                 distinction requires clean, professional installation work — cable routes that
@@ -428,7 +428,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Key test procedures:</strong> Continuity of protective conductors (low
                 resistance measurement), continuity of ring final circuit conductors (end-to-end
@@ -438,7 +438,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Documentation:</strong> Completing an Electrical Installation Certificate
                 (EIC) for new work or an EICR for periodic inspection. Understanding which
@@ -451,7 +451,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test instrument calibration:</strong> All test instruments must be
                 calibrated and have a current calibration certificate. Understanding calibration
@@ -477,7 +477,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Half-split method:</strong> Divides the circuit in half to identify which
                 half contains the fault. Eliminates 50% of the circuit with each test. More
@@ -485,7 +485,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Substitution method:</strong> Replacing suspect components one at a time
                 with known-good substitutes. Simple and effective for component-level faults.
@@ -493,7 +493,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fault categories:</strong> Open circuit (broken conductor or connection),
                 short circuit (unintended low-resistance path between conductors), high resistance
@@ -519,7 +519,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Design sequence:</strong> Determine design current (Ib), select protective
                 device rating (In ≥ Ib), determine correction factors (Ca, Cg, Ci, Cs), calculate
@@ -529,7 +529,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Correction factors:</strong> Ca (ambient temperature correction), Cg
                 (grouping correction for cables run together), Ci (correction for insulating
@@ -538,7 +538,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Exam preparation:</strong> Unit 305 exam questions often provide a
                 scenario and ask you to work through the full design sequence. Practise the
@@ -567,7 +567,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <GraduationCap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">End-Point Assessment (EPA)</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -626,7 +626,7 @@ export default function CityGuildsLevel3GuidePage() {
       heroTitle={
         <>
           City & Guilds Level 3 Electrical Installation:{' '}
-          <span className="text-yellow-400">2365 Qualification Guide</span>
+          <span className="text-elec-yellow">2365 Qualification Guide</span>
         </>
       }
       heroSubtitle="Everything you need to know about the City & Guilds 2365 Level 3 Diploma in Electrical Installations — qualification structure, units covered, assessment methods, how to achieve distinction, and what comes next after you qualify."

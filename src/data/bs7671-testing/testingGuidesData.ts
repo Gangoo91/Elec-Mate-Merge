@@ -208,7 +208,7 @@ export const testingGuides: TestGuide[] = [
         id: 'trip-time-5x',
         title: 'Optional: Trip Time at 5× Rated Current (diagnostic)',
         instruction:
-          'Not part of the required verification. BS 7671:2018+A4:2026 deleted Table 3A of Appendix 3, and effectiveness is now verified by the single AC test at IΔn above. Run this only as a diagnostic — 5× rated current (150mA for a 30mA RCD).',
+          'Not part of the required verification. BS 7671:2018+A2:2022 deleted Table 3A of Appendix 3, and effectiveness is now verified by the single AC test at IΔn above. Run this only as a diagnostic — 5× rated current (150mA for a 30mA RCD).',
         expectedResult: '40ms per BS EN 61008/61009 — a device characteristic, not a BS 7671 limit',
         tips: [
           'Do not record this as the certified trip time — the certified value is the one at IΔn',

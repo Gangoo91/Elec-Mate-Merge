@@ -172,14 +172,14 @@ export default function PowerFactorCalculatorPage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
-        <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-elec-yellow text-sm font-medium mb-6">
             Part of 70 Electrical Calculators
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             Power Factor Calculator
-            <span className="block text-yellow-400 mt-1">kW kVA kVAr Correction to BS 7671</span>
+            <span className="block text-elec-yellow mt-1">kW kVA kVAr Correction to BS 7671</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             Calculate power factor, convert between real, apparent, and reactive power, and size
@@ -195,7 +195,7 @@ export default function PowerFactorCalculatorPage() {
             </Link>
             <a
               href="#how-it-works"
-              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-yellow-500/40 touch-manipulation transition-colors"
+              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-white/[0.1] touch-manipulation transition-colors"
             >
               See How It Works
             </a>
@@ -250,7 +250,7 @@ export default function PowerFactorCalculatorPage() {
               but still causes current to flow through the cables and switchgear.
             </p>
             <p>
-              <strong className="text-yellow-400">The power triangle</strong> is the fundamental
+              <strong className="text-elec-yellow">The power triangle</strong> is the fundamental
               relationship that links these three quantities. Real power (kW) forms the horizontal
               leg, reactive power (kVAr) forms the vertical leg, and apparent power (kVA) is the
               hypotenuse. The angle between real power and apparent power is called the phase angle
@@ -286,20 +286,20 @@ export default function PowerFactorCalculatorPage() {
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              <strong className="text-yellow-400">Real (true) power (kW)</strong> is the power that
+              <strong className="text-elec-yellow">Real (true) power (kW)</strong> is the power that
               actually performs useful work. It heats elements, turns motor shafts, and produces
               light. Real power is what you pay for on a domestic electricity bill and what the load
               actually consumes. It is measured in kilowatts (kW) or watts (W).
             </p>
             <p>
-              <strong className="text-yellow-400">Apparent power (kVA)</strong> is the total power
+              <strong className="text-elec-yellow">Apparent power (kVA)</strong> is the total power
               that the supply must deliver to the installation. It is the product of the RMS voltage
               and the RMS current: for single-phase, kVA = V x I / 1000; for three-phase, kVA = V x
               I x 1.732 / 1000. Apparent power is what the supply cables, switchgear, transformer,
               and generator must be rated for. It is always equal to or greater than the real power.
             </p>
             <p>
-              <strong className="text-yellow-400">Reactive power (kVAr)</strong> is the power that
+              <strong className="text-elec-yellow">Reactive power (kVAr)</strong> is the power that
               oscillates between the supply and the load, sustaining the magnetic and electric
               fields in inductive and capacitive components. It does no useful work, but it is
               essential for the operation of motors, transformers, and other electromagnetic
@@ -308,7 +308,7 @@ export default function PowerFactorCalculatorPage() {
               (leading).
             </p>
             <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center my-6">
-              <p className="text-xl sm:text-2xl font-mono font-bold text-yellow-400">
+              <p className="text-xl sm:text-2xl font-mono font-bold text-elec-yellow">
                 kVA = sqrt(kW² + kVAr²)
               </p>
               <p className="mt-3 text-sm text-white">
@@ -345,7 +345,7 @@ export default function PowerFactorCalculatorPage() {
               on kVA rather than kW, which penalises low power factor even more heavily.
             </p>
             <p>
-              <strong className="text-yellow-400">Example:</strong> A factory draws 200 kW at a
+              <strong className="text-elec-yellow">Example:</strong> A factory draws 200 kW at a
               power factor of 0.70. The apparent power is 200 / 0.70 = 285.7 kVA, and the reactive
               power is sqrt(285.7² - 200²) = 204.1 kVAr. If the supplier charges based on kVA, the
               factory is paying for 285.7 kVA of capacity when it only needs 200 kW. If the maximum
@@ -372,7 +372,7 @@ export default function PowerFactorCalculatorPage() {
               often within 12 to 18 months.
             </p>
             <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mt-2">
-              <h3 className="font-bold text-yellow-400 mb-2">BS 7671 Design Obligation</h3>
+              <h3 className="font-bold text-elec-yellow mb-2">BS 7671 Design Obligation</h3>
               <p className="text-sm text-white leading-relaxed">
                 BS 7671:2018+A4:2026 Regulation 331.1(l) places a direct obligation on designers:
                 power factor shall be assessed as a characteristic of equipment likely to have
@@ -404,14 +404,14 @@ export default function PowerFactorCalculatorPage() {
               point of supply is reduced, bringing the power factor closer to unity.
             </p>
             <p>
-              <strong className="text-yellow-400">Fixed capacitor banks</strong> are used where the
+              <strong className="text-elec-yellow">Fixed capacitor banks</strong> are used where the
               load is constant or near-constant — for example, a single large motor that runs
               continuously. A fixed capacitor is wired in parallel with the load and provides a
               constant amount of kVAr correction. The capacitor size is calculated to correct the
               load's specific power factor to the target value.
             </p>
             <p>
-              <strong className="text-yellow-400">Automatic capacitor banks</strong> are used where
+              <strong className="text-elec-yellow">Automatic capacitor banks</strong> are used where
               the load varies throughout the day. An automatic unit contains multiple capacitor
               stages (steps), each with its own contactor, controlled by a power factor controller.
               The controller continuously monitors the power factor at the incoming supply and
@@ -420,7 +420,7 @@ export default function PowerFactorCalculatorPage() {
               increases.
             </p>
             <p>
-              <strong className="text-yellow-400">Detuned capacitor banks</strong> include series
+              <strong className="text-elec-yellow">Detuned capacitor banks</strong> include series
               reactors that shift the resonant frequency of the capacitor bank away from common
               harmonic frequencies. This prevents harmonic resonance — a dangerous condition where
               the capacitor bank amplifies harmonic currents instead of correcting the power factor.
@@ -440,7 +440,7 @@ export default function PowerFactorCalculatorPage() {
       <section className="py-8 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-            <h3 className="font-bold text-yellow-400 mb-2">
+            <h3 className="font-bold text-elec-yellow mb-2">
               Cable Sizing Impact — BS 7671 Reg 125.8
             </h3>
             <p className="text-sm text-white leading-relaxed">
@@ -478,7 +478,7 @@ export default function PowerFactorCalculatorPage() {
               clients.
             </p>
             <p>
-              <strong className="text-yellow-400">Reactive power charges:</strong> Many half-hourly
+              <strong className="text-elec-yellow">Reactive power charges:</strong> Many half-hourly
               metered tariffs include a charge for reactive power consumption above a threshold. The
               threshold is usually defined as a power factor below 0.95 or a reactive power
               exceeding 33% of the real power (which corresponds to a power factor of 0.95). The
@@ -486,14 +486,14 @@ export default function PowerFactorCalculatorPage() {
               up to several thousand pounds per year for large sites.
             </p>
             <p>
-              <strong className="text-yellow-400">Maximum demand charges based on kVA:</strong> Some
+              <strong className="text-elec-yellow">Maximum demand charges based on kVA:</strong> Some
               tariffs calculate the monthly maximum demand charge based on kVA rather than kW. Since
               kVA is always higher than kW when the power factor is below unity, the customer pays a
               premium for every kVA above the kW value. The excess kVA represents the reactive power
               component and is entirely avoidable with correction.
             </p>
             <p>
-              <strong className="text-yellow-400">Capacity charges:</strong> The agreed supply
+              <strong className="text-elec-yellow">Capacity charges:</strong> The agreed supply
               capacity (ASC) determines the maximum power a site can draw. If the ASC is defined in
               kVA, a site with poor power factor reaches its capacity limit at a lower kW level,
               potentially requiring a costly supply upgrade. Improving power factor increases the
@@ -513,7 +513,7 @@ export default function PowerFactorCalculatorPage() {
           <div className="space-y-6">
             {/* Example 1 */}
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <h3 className="font-bold text-yellow-400 text-lg mb-3">
+              <h3 className="font-bold text-elec-yellow text-lg mb-3">
                 Example 1: Single Motor Correction
               </h3>
               <div className="space-y-2 text-white leading-relaxed text-sm">
@@ -523,15 +523,15 @@ export default function PowerFactorCalculatorPage() {
                 </p>
                 <p className="font-mono text-white">
                   Existing angle = arccos(0.78) = 38.74 degrees, tan(38.74) ={' '}
-                  <strong className="text-yellow-400">0.8028</strong>
+                  <strong className="text-elec-yellow">0.8028</strong>
                 </p>
                 <p className="font-mono text-white">
                   Target angle = arccos(0.95) = 18.19 degrees, tan(18.19) ={' '}
-                  <strong className="text-yellow-400">0.3287</strong>
+                  <strong className="text-elec-yellow">0.3287</strong>
                 </p>
                 <p className="font-mono text-white">
                   kVAr required = 30 x (0.8028 - 0.3287) = 30 x 0.4741 ={' '}
-                  <strong className="text-yellow-400">14.2 kVAr</strong>
+                  <strong className="text-elec-yellow">14.2 kVAr</strong>
                 </p>
                 <p>
                   Result: Install a <strong className="text-green-400">15 kVAr capacitor</strong> at
@@ -543,7 +543,7 @@ export default function PowerFactorCalculatorPage() {
 
             {/* Example 2 */}
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <h3 className="font-bold text-yellow-400 text-lg mb-3">
+              <h3 className="font-bold text-elec-yellow text-lg mb-3">
                 Example 2: Factory Main Incomer Correction
               </h3>
               <div className="space-y-2 text-white leading-relaxed text-sm">
@@ -554,15 +554,15 @@ export default function PowerFactorCalculatorPage() {
                 </p>
                 <p className="font-mono text-white">
                   Before correction: kVA = 250 / 0.72 ={' '}
-                  <strong className="text-yellow-400">347.2 kVA</strong>
+                  <strong className="text-elec-yellow">347.2 kVA</strong>
                 </p>
                 <p className="font-mono text-white">
                   After correction: kVA = 250 / 0.95 ={' '}
-                  <strong className="text-yellow-400">263.2 kVA</strong>
+                  <strong className="text-elec-yellow">263.2 kVA</strong>
                 </p>
                 <p className="font-mono text-white">
                   Monthly saving = (347.2 - 263.2) x £4.50 = 84 x £4.50 ={' '}
-                  <strong className="text-yellow-400">£378 per month</strong>
+                  <strong className="text-elec-yellow">£378 per month</strong>
                 </p>
                 <p className="font-mono text-white">
                   Annual saving = £378 x 12 ={' '}
@@ -570,7 +570,7 @@ export default function PowerFactorCalculatorPage() {
                 </p>
                 <p>
                   kVAr required = 250 x (tan(43.95) - tan(18.19)) = 250 x (0.9646 - 0.3287) ={' '}
-                  <strong className="text-yellow-400">158.9 kVAr</strong>. Install a 150 kVAr
+                  <strong className="text-elec-yellow">158.9 kVAr</strong>. Install a 150 kVAr
                   automatic capacitor bank. Typical cost: £4,000 to £6,000 installed. Payback
                   period: 10 to 16 months.
                 </p>
@@ -579,7 +579,7 @@ export default function PowerFactorCalculatorPage() {
 
             {/* Example 3 */}
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <h3 className="font-bold text-yellow-400 text-lg mb-3">
+              <h3 className="font-bold text-elec-yellow text-lg mb-3">
                 Example 3: Power Triangle Conversion
               </h3>
               <div className="space-y-2 text-white leading-relaxed text-sm">
@@ -590,15 +590,15 @@ export default function PowerFactorCalculatorPage() {
                 </p>
                 <p className="font-mono text-white">
                   Apparent power = 400 x 120 x 1.732 / 1000 ={' '}
-                  <strong className="text-yellow-400">83.1 kVA</strong>
+                  <strong className="text-elec-yellow">83.1 kVA</strong>
                 </p>
                 <p className="font-mono text-white">
                   Reactive power = sqrt(83.1² - 72²) = sqrt(6905.61 - 5184) = sqrt(1721.61) ={' '}
-                  <strong className="text-yellow-400">41.5 kVAr</strong>
+                  <strong className="text-elec-yellow">41.5 kVAr</strong>
                 </p>
                 <p className="font-mono text-white">
                   Power factor = 72 / 83.1 ={' '}
-                  <strong className="text-yellow-400">0.867 lagging</strong>
+                  <strong className="text-elec-yellow">0.867 lagging</strong>
                 </p>
                 <p>
                   Result: The power factor is <strong className="text-red-400">below 0.90</strong> —
@@ -628,7 +628,7 @@ export default function PowerFactorCalculatorPage() {
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex-shrink-0">
-                  <span className="font-bold text-yellow-400">{index + 1}</span>
+                  <span className="font-bold text-elec-yellow">{index + 1}</span>
                 </div>
                 <div>
                   <h3 className="font-bold text-white text-lg mb-1">{step.name}</h3>
@@ -744,7 +744,7 @@ export default function PowerFactorCalculatorPage() {
 
       <SEOCTASection
         heading="Calculate Power Factor in Seconds"
-        subheading="Join 1,600+ UK electricians using Elec-Mate for on-site calculations. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians using Elec-Mate for on-site calculations. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

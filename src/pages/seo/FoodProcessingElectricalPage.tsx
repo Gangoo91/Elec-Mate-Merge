@@ -163,7 +163,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulatory framework</strong> — food processing electrical installations
                 must comply with BS 7671 (Wiring Regulations), DSEAR 2002 (where combustible dusts
@@ -172,7 +172,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Retailer requirements</strong> — major UK food retailers require their
                 suppliers to achieve certification to the BRC Global Standard or equivalent (IFS
@@ -215,7 +215,7 @@ const sections = [
             <div className="bg-blue-900/30 p-3 text-white">High-pressure (80 bar), high-temperature (80°C) close-range steam/water jets, all angles</div>
             <div className="bg-blue-900/30 p-3 text-blue-200 font-semibold">Required minimum</div>
           </div>
-          <p className="text-white/60 text-xs p-3 border-t border-white/10">
+          <p className="text-white text-xs p-3 border-t border-white/10">
             IP ratings are defined in IEC 60529 / BS EN 60529. The rating must be verified on the
             equipment certificate, not assumed from the enclosure material.
           </p>
@@ -302,9 +302,9 @@ const sections = [
               points, loading spouts, and sifters.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-900/30 border border-yellow-700/40 p-5">
-            <div className="text-yellow-300 font-bold text-lg mb-1">Zone 22</div>
-            <div className="text-xs uppercase tracking-wide text-yellow-400/80 mb-3">
+          <div className="rounded-2xl bg-white/[0.06] border border-yellow-700/40 p-5">
+            <div className="text-elec-yellow font-bold text-lg mb-1">Zone 22</div>
+            <div className="text-xs uppercase tracking-wide text-elec-yellow/80 mb-3">
               Category 3D (Dc) equipment
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -349,7 +349,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sloped tops</strong> — horizontal surfaces on electrical enclosures are
                 collection points for dust, food residues, and pests. All enclosures in food
@@ -359,7 +359,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No horizontal ledges or recesses</strong> — shelves, ledges, and recesses
                 inside and outside enclosures are contamination risks. All surfaces should be smooth
@@ -369,7 +369,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Continuous welds</strong> — intermittent or spot welds create crevices where
                 bacteria and food residues accumulate and are protected from cleaning. All welds on
@@ -378,7 +378,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Accessible for cleaning</strong> — all parts of the electrical installation
                 that require cleaning must be accessible without the need to dismantle equipment.
@@ -406,7 +406,7 @@ const sections = [
         <div className="grid gap-3 sm:grid-cols-3 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="font-bold text-white mb-1">304 (EN 1.4301)</div>
-            <div className="text-xs text-white/60 mb-3">18/8 austenitic</div>
+            <div className="text-xs text-white mb-3">18/8 austenitic</div>
             <p className="text-white text-sm leading-relaxed">
               Suitable for most food processing environments. Good corrosion resistance to common
               cleaning chemicals.
@@ -422,7 +422,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="font-bold text-white mb-1">316L</div>
-            <div className="text-xs text-white/60 mb-3">Low-carbon variant</div>
+            <div className="text-xs text-white mb-3">Low-carbon variant</div>
             <p className="text-white text-sm leading-relaxed">
               Preferred for welded fabrications to avoid carbide precipitation (sensitisation) at
               weld zones.
@@ -479,7 +479,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Stainless steel wire mesh tray</strong> — smooth-surfaced stainless steel
                 wire mesh cable tray is widely used in food factories. It is easy to clean, allows
@@ -488,7 +488,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minimise horizontal runs above open product</strong> — cable management
                 above open food should be minimised. Where overhead runs are unavoidable, use round
@@ -498,7 +498,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sealed conduit systems</strong> — in high-care and high-hygiene areas,
                 conduit systems may be preferred to open cable management because they enclose the
@@ -507,7 +507,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable types</strong> — cables in wash-down areas must have
                 chemical-resistant outer sheaths compatible with the cleaning agents used on site.
@@ -583,7 +583,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Physical separation of cable routes</strong> — cable management systems must
                 not create pathways for allergen-containing dust or debris to travel from allergen
@@ -592,7 +592,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Separate control panels</strong> — where allergen and non-allergen
                 production lines are in adjacent areas, separate control panels for each area
@@ -601,7 +601,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Panel ventilation and filtration</strong> — control panel ventilation
                 systems must not draw allergen-containing air from allergen zones and discharge it
@@ -611,7 +611,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Colour coding</strong> — many food factories use colour coding for
                 electrical accessories, cable ties, and tools to reinforce allergen zone
@@ -644,25 +644,25 @@ const sections = [
             <div className="bg-white/[0.06] p-3 font-semibold text-white">Regulation</div>
             <div className="bg-white/[0.06] p-3 font-semibold text-white">What it requires</div>
 
-            <div className="bg-white/[0.02] p-3 text-yellow-300 font-mono whitespace-nowrap">421.1.7</div>
+            <div className="bg-white/[0.02] p-3 text-elec-yellow font-mono whitespace-nowrap">421.1.7</div>
             <div className="bg-white/[0.02] p-3 text-white">
               AFDDs on socket-outlet final circuits (≤32 A) — required in specified residential
               building types, recommended for other premises such as food factories
             </div>
 
-            <div className="bg-white/[0.02] p-3 text-yellow-300 font-mono whitespace-nowrap">523.4 / 523.5</div>
+            <div className="bg-white/[0.02] p-3 text-elec-yellow font-mono whitespace-nowrap">523.4 / 523.5</div>
             <div className="bg-white/[0.02] p-3 text-white">
               Cable derating — ambient temperature determination, and lowest-temperature basis for
               mixed-temperature cable groups (Tables 4C1–4C6, Appendix 4)
             </div>
 
-            <div className="bg-white/[0.02] p-3 text-yellow-300 font-mono whitespace-nowrap">534.4.1.6</div>
+            <div className="bg-white/[0.02] p-3 text-elec-yellow font-mono whitespace-nowrap">534.4.1.6</div>
             <div className="bg-white/[0.02] p-3 text-white">
               Consideration of SPDs against switching overvoltages produced by current-using
               equipment within the installation (large motors, VFDs)
             </div>
 
-            <div className="bg-white/[0.02] p-3 text-yellow-300 font-mono whitespace-nowrap">411.3.3</div>
+            <div className="bg-white/[0.02] p-3 text-elec-yellow font-mono whitespace-nowrap">411.3.3</div>
             <div className="bg-white/[0.02] p-3 text-white">
               Additional protection by 30 mA RCD for socket-outlets (≤32 A), subject to the
               documented risk-assessment exception in non-dwellings
@@ -672,7 +672,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Arc fault detection — BS 7671 Reg 421.1.7</strong> — Reg 421.1.7 was
                 redrafted in BS 7671:2018+A4:2026. It is now a <em>requirement</em> to fit arc
@@ -690,7 +690,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable derating in high-temperature zones — BS 7671 Regs 523.4 &amp; 523.5</strong>{' '}
                 — Areas adjacent to ovens, tunnel pasteurisers, hot-fill lines, and drying plant can
@@ -707,7 +707,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Surge protective devices (SPDs) — BS 7671 Reg 534.4.1.6</strong> — Food
                 factories typically contain large numbers of VFD-driven conveyors, refrigeration
@@ -723,7 +723,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD additional protection — BS 7671 Reg 411.3.3</strong> — As revised in
                 A4:2026, Reg 411.3.3 applies additional protection by a 30 mA RCD to socket-outlets
@@ -754,7 +754,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <AlertTriangle className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Hygiene Rules Are Non-Negotiable</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -788,7 +788,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Produce professional electrical records for food factory"
-          description="Create test records and inspection reports that satisfy BRC Global Standard audit requirements. Join 1,600+ UK electricians using Elec-Mate."
+          description="Create test records and inspection reports that satisfy BRC Global Standard audit requirements. Join 2,100+ UK electricians using Elec-Mate."
           icon={ShieldCheck}
         />
       </>
@@ -814,7 +814,7 @@ export default function FoodProcessingElectricalPage() {
       heroTitle={
         <>
           Food Processing Electrical Installation UK:{' '}
-          <span className="text-yellow-400">Food Factory Wiring Guide</span>
+          <span className="text-elec-yellow">Food Factory Wiring Guide</span>
         </>
       }
       heroSubtitle="Everything UK electricians need to know about food processing electrical installation — IP69K wash-down ratings, ATEX dust explosion zones, hygienic design principles, stainless steel enclosures, BRC Global Standard requirements, and allergen zone electrical segregation."
@@ -826,7 +826,7 @@ export default function FoodProcessingElectricalPage() {
       faqHeading="Frequently Asked Questions About Food Processing Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Produce BRC-Ready Electrical Records with Elec-Mate"
-      ctaSubheading="Create professional test records and inspection reports for food factory BRC audits. Join 1,600+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
+      ctaSubheading="Create professional test records and inspection reports for food factory BRC audits. Join 2,100+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
     />
   );
 }

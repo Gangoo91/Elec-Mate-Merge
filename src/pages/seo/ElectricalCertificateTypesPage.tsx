@@ -145,13 +145,13 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">Key EICR Facts</h3>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Purpose:</strong> Report on the condition of an existing installation
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Legal requirement:</strong> Every 5 years for rented properties in England
                 (Electrical Safety Standards in the Private Rented Sector Regulations 2020).
@@ -159,14 +159,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Recommended intervals:</strong> 10 years (owner-occupied domestic), 5 years
                 (rented/commercial), 3 years (industrial), 1 year (swimming pools, petrol stations)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Overall assessment:</strong> Satisfactory or Unsatisfactory. Any C1 or C2{' '}
                 <SEOInternalLink href="/guides/eicr-observation-codes-explained">
@@ -176,7 +176,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Qualifications:</strong> C&G 2391 (Inspection and Testing) or equivalent,
                 plus 18th Edition (C&G 2382)
@@ -215,26 +215,26 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">When an EIC Is Required</h3>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Installation of a new circuit (e.g., dedicated cooker circuit, shower circuit, EV
                 charger circuit)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>Consumer unit replacement (always notifiable under Part P)</span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>Complete rewire of a property</span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>New-build electrical installation</span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>Significant alteration to an existing installation</span>
             </li>
           </ul>
@@ -296,19 +296,19 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">Minor Works Examples</h3>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>Adding a spur from an existing ring circuit for a new socket outlet</span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>Adding a new light fitting to an existing lighting circuit</span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>Replacing a fused connection unit with a different rating</span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>Relocating a light switch or adding a two-way switch</span>
             </li>
           </ul>
@@ -343,28 +343,28 @@ const sections = [
           </h3>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
-              <Car className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated circuit:</strong> Each charge point must have its own dedicated
                 circuit from the distribution board
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Car className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD type:</strong> Type A minimum for Mode 3 chargers; Type B or Type A with
                 DC 6 mA detection for chargers without built-in DC protection
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Car className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PME earthing:</strong> Risk assessment required for charge points accessible
                 to the public on PME (TN-C-S) supplies. May require earth electrode.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Car className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maximum demand:</strong> Impact on the existing installation's maximum
                 demand must be assessed and documented
@@ -398,7 +398,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">System Categories (BS 5839)</h3>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
-              <Flame className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Category L systems (Life protection):</strong> L1 (full coverage), L2
                 (coverage of high-risk areas plus escape routes), L3 (escape routes only), L4
@@ -406,14 +406,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Flame className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Category P systems (Property protection):</strong> P1 (full coverage), P2
                 (coverage of high-risk areas only)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Flame className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Category LD systems (Domestic life protection):</strong> LD1 (full
                 coverage), LD2 (escape routes plus high-risk rooms), LD3 (escape routes only — the
@@ -449,28 +449,28 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">Emergency Lighting Requirements</h3>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Duration:</strong> 3-hour emergency operation for most non-domestic premises
                 (1 hour may be acceptable where the premises can be evacuated and not reoccupied)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Illumination:</strong> Minimum 1 lux across the full width of escape routes,
                 0.5 lux minimum on the central band
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing:</strong> Monthly functional test (operate for sufficient time to
                 check operation), annual 3-hour full duration test
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Types:</strong> Maintained (always on), non-maintained (on only in
                 emergency), sustained (combination)
@@ -505,28 +505,28 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">Solar PV Certificate Requirements</h3>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
-              <Sun className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DC side:</strong> Panel specifications, string configuration, DC cable
                 sizing, DC isolator location, string voltage and current
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inverter:</strong> Make, model, maximum input voltage, MPPT configuration,
                 anti-islanding verification
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>AC side:</strong> Circuit protection, RCD type, connection method, G98/G99
                 compliance
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671 Section 712:</strong> Specific requirements for solar PV
                 installations including labelling, DC cable routing, and firefighter safety
@@ -569,25 +569,25 @@ const sections = [
           </h3>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
-              <Wrench className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Construction site tools (110V):</strong> Every 3 months
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Industrial equipment:</strong> Every 6 to 12 months depending on use
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial office equipment:</strong> Every 12 to 24 months
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hotel and hospitality:</strong> Every 12 months
               </span>
@@ -616,7 +616,7 @@ const sections = [
         <div className="grid gap-4 sm:grid-cols-2 mt-6">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
-              <Camera className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">AI Board Scanner</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -629,7 +629,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
-              <Mic className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Mic className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Voice Test Entry</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -642,7 +642,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
-              <Brain className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Defect Code AI</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -657,7 +657,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
-              <Receipt className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Receipt className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Remedial Estimator</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -670,7 +670,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
-              <Send className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Send className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Send via Email or WhatsApp</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -683,7 +683,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Auto BS 7671 Validation</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -762,7 +762,7 @@ export default function ElectricalCertificateTypesPage() {
       badgeIcon={FileCheck2}
       heroTitle={
         <>
-          Electrical Certificate Types UK: <span className="text-yellow-400">Complete Guide</span>
+          Electrical Certificate Types UK: <span className="text-elec-yellow">Complete Guide</span>
         </>
       }
       heroSubtitle="The complete guide to all UK electrical certificates — EICR, EIC, Minor Works, EV Charger, Fire Alarm (BS 5839), Emergency Lighting (BS 5266), Solar PV (MCS), and PAT Testing. What each certificate is for, when it is required, who can issue it, and the legal requirements. All 8 types available in one app. Last reviewed May 2026 against BS 7671:2018+A4:2026."
@@ -772,7 +772,7 @@ export default function ElectricalCertificateTypesPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="All 19 certificate types. One app. Your phone."
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EICR, EIC, Minor Works, EV Charger, Fire Alarm, Emergency Lighting, Solar PV, and PAT Testing certificates. Board scanner, voice test entry, digital signatures. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for EICR, EIC, Minor Works, EV Charger, Fire Alarm, Emergency Lighting, Solar PV, and PAT Testing certificates. Board scanner, voice test entry, digital signatures. 7-day free trial."
     />
   );
 }

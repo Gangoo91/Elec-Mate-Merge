@@ -45,7 +45,7 @@ export default function StartingElectricalBusinessPage() {
       badgeIcon={Briefcase}
       heroTitle={
         <>
-          Starting an <span className="text-yellow-400">Electrical Business</span> UK — The Complete
+          Starting an <span className="text-elec-yellow">Electrical Business</span> UK — The Complete
           2026 Startup Guide
         </>
       }

@@ -148,7 +148,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main switch</strong> — isolates the entire installation from the supply.
                 Modern installations use a double pole main switch (isolating both live and
@@ -156,7 +156,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCBs</strong> — one per circuit, sized to protect the cable. Typical values:
                 6 A (lighting), 20 A (immersion heater), 32 A (ring final sockets, electric shower).
@@ -164,7 +164,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCDs and RCBOs</strong> — detect earth fault current and disconnect within
                 milliseconds. Under Regulation 411.3.3 of{' '}
@@ -196,7 +196,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Victorian and Edwardian terraces</strong> — many Brighton properties retain
                 wiring installed in the 1960s and 1970s, often by the original developers of the
@@ -205,7 +205,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Converted flats</strong> — Brighton has a very high proportion of converted
                 flats. Each flat typically has its own consumer unit, which may be of varying age
@@ -214,7 +214,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large private rented sector</strong> — Brighton &amp; Hove has one of the
                 largest private rented sectors in Sussex and one of the highest HMO densities in the
@@ -223,7 +223,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>University of Brighton and University of Sussex</strong> — both universities
                 attract large student populations that drive demand for private rented accommodation
@@ -249,7 +249,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rewireable or cartridge fuses</strong> — no RCD protection, associated with
                 wiring that is typically 30 or more years old. Very common in Brighton Victorian
@@ -257,7 +257,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No RCD protection on socket circuits</strong> — C2 EICR observation under
                 Regulation 411.3.3 of BS 7671. Requires remedial action (consumer unit replacement)
@@ -265,21 +265,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Plastic enclosure</strong> — non-compliant for any domestic replacement
                 since January 2016 under Regulation 421.1.201 of BS 7671.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insufficient ways for modern demands</strong> — no spare capacity for EV
                 chargers, heat pumps, additional circuits, or smart home systems.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Burning smell, discoloration, or frequent tripping</strong> — signs of
                 deteriorated components requiring urgent inspection.
@@ -355,21 +355,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1-bedroom flat or studio</strong> — £450 to £600. Common across Brighton's
                 converted Victorian housing. Typically 6 to 10 circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>2–3 bedroom flat or terraced house</strong> — £550 to £750. Most common
                 Brighton residential scenario. 10 to 16 circuits. Allow 4 to 8 hours on site.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large house or HMO</strong> — £750 to £950+. High circuit count, multiple
                 consumer units, fire alarm testing, and potentially multiple RCD sections. Earthing
@@ -377,7 +377,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What is included</strong> — metal consumer unit (specified make and model),
                 all labour, circuit reconnection, bonding checks to Regulation 544.1.1, full testing
@@ -461,7 +461,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check scheme registration</strong> — use the NICEIC, NAPIT, or ELECSA online
                 contractor search to find registered Brighton electricians. Registration requires
@@ -470,7 +470,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Verify qualifications</strong> — the electrician should hold Level 3 NVQ in
                 Electrical Installations (or equivalent) and a current BS 7671 qualification (City
@@ -479,7 +479,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Written quotes specifying materials</strong> — insist on a written quote
                 specifying the make, model, and configuration of the consumer unit. Compare at least
@@ -488,7 +488,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Experience with converted properties</strong> — Brighton's converted flat
                 market means it is worth asking for experience of working in converted Victorian
@@ -514,7 +514,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Issue EICs On Site in Brighton</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -548,7 +548,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Brighton electrical business with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and professional certificate management."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and professional certificate management."
           icon={FileCheck2}
         />
       </>
@@ -574,7 +574,7 @@ export default function ConsumerUnitReplacementBrightonPage() {
       heroTitle={
         <>
           Consumer Unit Replacement Brighton:{' '}
-          <span className="text-yellow-400">Fuse Box Costs &amp; Regulations 2026</span>
+          <span className="text-elec-yellow">Fuse Box Costs &amp; Regulations 2026</span>
         </>
       }
       heroSubtitle="Everything Brighton homeowners and landlords need to know about consumer unit replacement — 2026 costs from £450 to £800, the mandatory metal enclosure requirement, Part P Building Regulations, and older wiring challenges in Brighton's Victorian converted properties."
@@ -585,7 +585,7 @@ export default function ConsumerUnitReplacementBrightonPage() {
       faqHeading="Frequently Asked Questions — Consumer Unit Replacement Brighton"
       relatedPages={relatedPages}
       ctaHeading="Complete Consumer Unit Certificates On Site in Brighton"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

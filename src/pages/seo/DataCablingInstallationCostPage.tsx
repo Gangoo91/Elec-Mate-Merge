@@ -176,7 +176,7 @@ const sections = [
           </h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cat6 data point</strong> — £80 to £150 per point. Includes Cat6 U/UTP cable
                 (305m box at £80 to £120 trade), single-gang faceplate with Cat6 module, patch panel
@@ -185,7 +185,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cat6a data point</strong> — £100 to £200 per point. Cat6a S/FTP cable is
                 thicker and more expensive (305m box at £150 to £250 trade). Requires Cat6a-rated
@@ -193,7 +193,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Double data point (two cables to one faceplate)</strong> — £140 to £260 per
                 position. A dual-port faceplate with two independent cable runs back to the patch
@@ -202,7 +202,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Volume pricing (50+ points)</strong> — £65 to £120 per Cat6 point, £85 to
                 £160 per Cat6a point. Larger projects benefit from economies of scale in cable
@@ -231,7 +231,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Horizontal cabling</strong> — the Cat6 or Cat6a cable runs from the comms
                 cabinet to each data point. Maximum 90 metres for permanent link, 100 metres for
@@ -240,7 +240,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Server className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Server className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Patch panel</strong> — mounts in the comms cabinet and provides the
                 termination point for all horizontal cables. A 24-port Cat6 patch panel costs £30 to
@@ -249,7 +249,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Server className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Server className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Comms cabinet</strong> — wall-mounted cabinets (6U to 12U) cost £80 to £200.
                 Floor-standing cabinets (22U to 42U) cost £250 to £600. The cabinet houses the patch
@@ -258,7 +258,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Network className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Network className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Faceplates and modules</strong> — single or double-gang faceplates with
                 snap-in Cat6 modules at each data point. Budget £5 to £12 per faceplate with
@@ -266,7 +266,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Containment</strong> — cable tray, basket, trunking, or conduit to support
                 and protect cable runs. Mini-trunking for visible runs in offices costs £1 to £3 per
@@ -275,7 +275,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Patch leads</strong> — short cables connecting the patch panel to the
                 network switch, and from the faceplate to the device. Budget £3 to £8 per patch
@@ -326,7 +326,7 @@ const sections = [
               <span>Testing and certification: £150 to £300</span>
             </li>
             <li className="flex items-start gap-3 pt-2 border-t border-white/10">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Total: £1,725 to £3,430</strong>
               </span>
@@ -402,7 +402,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wifi className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>AP cable run</strong> — each WiFi access point needs a Cat6 cable from the
                 comms cabinet to the AP mounting position (typically ceiling-mounted). Cost: £80 to
@@ -410,7 +410,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wifi className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PoE power</strong> — modern WiFi access points are powered via PoE (Power
                 over Ethernet), receiving both data and power through the same Cat6 cable from a PoE
@@ -419,7 +419,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wifi className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Coverage planning</strong> — typical coverage is one AP per 50 to 100 m² in
                 an office environment, depending on wall construction and user density. A 500 m²
@@ -450,7 +450,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Multimode fibre (OM3/OM4)</strong> — £2 to £5 per metre for 4-core cable.
                 Suitable for runs up to 300 metres at 10 Gbps. The standard choice for inter-floor
@@ -458,7 +458,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Single-mode fibre (OS2)</strong> — £1.50 to £4 per metre for 4-core cable.
                 Required for runs exceeding 300 metres or between separate buildings. Supports
@@ -466,7 +466,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fibre termination and testing</strong> — fusion splicing and OTDR testing
                 requires specialist equipment. Budget £200 to £500 per fibre link (each end
@@ -475,7 +475,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fibre patch panels and SFP modules</strong> — fibre patch panels cost £30 to
                 £80 each. SFP (Small Form-factor Pluggable) modules for the network switches cost
@@ -506,7 +506,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Channel test</strong> — tests the complete link from patch panel to
                 faceplate including patch leads. Measures insertion loss, return loss, NEXT
@@ -515,7 +515,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Permanent link test</strong> — tests the fixed cabling only (excludes patch
                 leads). More commonly used as it tests the installed infrastructure independently of
@@ -523,7 +523,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Certification report</strong> — each cable run gets an individual pass/fail
                 result against the relevant standard (Cat6 = TIA-568-C.2 Class E, Cat6a =
@@ -557,7 +557,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Quote Per Point Plus Fixed Costs</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -600,7 +600,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote data cabling projects professionally"
-          description="Join 1,600+ UK electricians using Elec-Mate for quoting with itemised pricing, professional PDF output, and AI cost engineering."
+          description="Join 2,100+ UK electricians using Elec-Mate for quoting with itemised pricing, professional PDF output, and AI cost engineering."
           icon={Wrench}
         />
       </>
@@ -626,7 +626,7 @@ export default function DataCablingInstallationCostPage() {
       heroTitle={
         <>
           Data Cabling Installation Cost:{' '}
-          <span className="text-yellow-400">UK Cat6 Pricing Guide 2026</span>
+          <span className="text-elec-yellow">UK Cat6 Pricing Guide 2026</span>
         </>
       }
       heroSubtitle="How much does data cabling cost per point? This guide covers Cat6 and Cat6a pricing, structured cabling components, comms cabinets, WiFi access point cabling, fibre backbone, and total project costs — from small office installations to large commercial infrastructure."
@@ -637,7 +637,7 @@ export default function DataCablingInstallationCostPage() {
       faqHeading="Frequently Asked Questions About Data Cabling Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Data Cabling Projects with Professional Pricing"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and AI-powered cost engineering. Diversify into data cabling with confidence. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for quoting, certification, and AI-powered cost engineering. Diversify into data cabling with confidence. 7-day free trial, cancel anytime."
     />
   );
 }

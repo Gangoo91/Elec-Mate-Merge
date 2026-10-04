@@ -194,7 +194,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Frequent MCB tripping:</strong> The MCB for the circuit trips repeatedly
                 during normal use — when you switch on certain appliances or when multiple
@@ -203,7 +203,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Warm socket faceplates:</strong> Socket outlets that feel warm to the touch
                 indicate that current flowing through the connections is generating heat. A hot
@@ -223,7 +223,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lights dimming under load:</strong> If lights on the same circuit (or even
                 on different circuits sharing the same supply) dim when a high-power appliance is
@@ -231,7 +231,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Warm extension leads or adaptors:</strong> If the cable of an extension lead
                 feels warm, the current through it is higher than ideal. Extension leads should be
@@ -324,14 +324,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Power className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Power className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>At 1.0 x In (rated current):</strong> The MCB should not trip. It is
                 designed to carry its rated current continuously.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Power className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Power className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>At 1.13 x In (conventional non-tripping current):</strong> The MCB should
                 not trip within 1 hour. For a 32A MCB, this means 36A for up to an hour without
@@ -339,7 +339,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Power className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Power className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>At 1.45 x In (conventional tripping current):</strong> The MCB should trip
                 within 1 hour. For a 32A MCB, 46A should cause a trip within an hour (often much
@@ -347,7 +347,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Power className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Power className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>At 2.55 x In or higher:</strong> The magnetic element trips the MCB
                 instantaneously (within milliseconds). For a Type B 32A MCB, this means 96 to 160A
@@ -450,14 +450,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lighting circuits:</strong> 66% of the total connected load. A 1,200W
                 lighting circuit has a diverse demand of 800W (3.5A).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Socket outlet circuits (domestic):</strong> 100% of the first 10A, plus 50%
                 of the remainder. This reflects the fact that you rarely use all sockets at full
@@ -465,21 +465,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cooking appliances:</strong> 10A plus 30% of the remaining connected load
                 plus 5A for a socket outlet in a cooker control unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electric shower:</strong> 100% — no diversity is applied because the shower
                 draws its full rated current whenever it is in use.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger:</strong> Typically 100% — the charger draws its full rated
                 current for extended periods during charging.
@@ -508,7 +508,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PlusCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PlusCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated circuits for high-power appliances:</strong> Electric showers,
                 cookers, EV chargers, and heat pumps should each have their own dedicated circuit
@@ -517,7 +517,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PlusCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PlusCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Split overloaded ring circuits:</strong> If a single ring circuit serves too
                 many outlets (for example, the entire ground floor of a large house), consider
@@ -526,7 +526,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PlusCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PlusCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional radial circuits:</strong> For areas with high demand (home
                 offices, workshops, utility rooms), adding a 20A radial circuit provides dedicated
@@ -534,7 +534,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PlusCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PlusCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit upgrade:</strong> If there are no spare ways in the consumer
                 unit, a larger board may be needed. This is an opportunity to bring the installation
@@ -579,7 +579,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Know your circuit layout.</strong> Understand which sockets are on which
                 circuit. This helps distribute high-power appliances across different circuits
@@ -587,7 +587,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Avoid multi-socket adaptors for high-power appliances.</strong> Kettles,
                 heaters, toasters, and irons should be plugged directly into the wall socket — not
@@ -595,7 +595,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Unwind extension leads fully.</strong> A coiled extension lead cannot
                 dissipate heat effectively. A 13A extension lead coiled up may only be able to
@@ -603,7 +603,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regular periodic inspection.</strong> A 5-yearly{' '}
                 <SEOInternalLink href="/guides/eicr-for-landlords">EICR</SEOInternalLink> checks
@@ -612,7 +612,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Plan for increased demand.</strong> Home offices, EV chargers, heat pumps,
                 and electric cooking are all increasing domestic electricity demand. When carrying
@@ -651,7 +651,7 @@ export default function OverloadedCircuitPage() {
       heroTitle={
         <>
           Overloaded Circuit:{' '}
-          <span className="text-yellow-400">Signs, Dangers, and the Correct Solutions</span>
+          <span className="text-elec-yellow">Signs, Dangers, and the Correct Solutions</span>
         </>
       }
       heroSubtitle="An overloaded circuit is a leading cause of electrical fires. This guide covers the warning signs, how to calculate maximum demand, why MCBs trip, the dangers of overloading cables, diversity factors, and when the correct solution is to add new circuits."

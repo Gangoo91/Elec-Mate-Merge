@@ -192,7 +192,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pre-contract information</strong> — before any contract is concluded you
                 must provide the customer with: your identity and business address; a description of
@@ -202,7 +202,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>14-day cancellation right</strong> — for off-premises contracts (signed at
                 the customer's property), the customer has 14 days to cancel without penalty. You
@@ -211,7 +211,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Starting work in the cancellation period</strong> — if the customer asks you
                 to start work within the 14-day period, they must give express written consent. If
@@ -221,7 +221,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional charges</strong> — you cannot add charges not disclosed before
                 the contract was made. Any additional charges — for access equipment, parking,
@@ -327,7 +327,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Small domestic jobs (under £1,000)</strong> — full payment on completion. A
                 deposit is not usually expected by customers on small jobs, and requesting one can
@@ -335,7 +335,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Medium domestic jobs (£1,000 to £5,000)</strong> — 25 to 30 per cent deposit
                 on acceptance, balance on practical completion. For jobs lasting more than one week,
@@ -344,7 +344,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Larger domestic jobs (rewires, extensions)</strong> — 30 per cent deposit,
                 30 per cent at first fix, 30 per cent at second fix, 10 per cent on practical
@@ -353,7 +353,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial subcontract work</strong> — the Housing Grants, Construction and
                 Regeneration Act 1996 requires interim payments at intervals of not less than 28
@@ -382,7 +382,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardList className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>The variation order process</strong> — when additional work is requested:
                 (1) pause and agree the scope of the additional work; (2) issue a written variation
@@ -391,7 +391,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardList className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Email is sufficient</strong> — a variation order does not need to be a
                 formal document. An email from you describing the additional scope and price,
@@ -400,7 +400,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardList className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What your terms should say</strong> — your standard terms should include a
                 clause stating that any additional work outside the agreed scope will be charged at
@@ -409,7 +409,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardList className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Unforeseen conditions</strong> — distinguish between variations requested by
                 the customer and additional costs arising from unforeseen conditions (concealed
@@ -436,7 +436,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard DLP — 12 months</strong> — for domestic electrical work, 12 months
                 is the standard and the period recommended by NICEIC, NAPIT, and most consumer
@@ -446,7 +446,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What constitutes a defect</strong> — a defect is a fault arising from poor
                 workmanship, incorrectly specified materials (where you chose the specification), or
@@ -457,7 +457,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Manufacturer's warranty</strong> — electrical products (consumer units,
                 luminaires, sockets) carry their own manufacturer's warranties, typically 2 to 5
@@ -484,7 +484,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Typical retention rates</strong> — 3 to 5 per cent of the gross value of
                 each interim payment application. The retention is deducted from each payment and
@@ -493,7 +493,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Release</strong> — half the retention (e.g. £5,000) is typically released at
                 practical completion of your section. The balance (e.g. £5,000) is released at the
@@ -503,7 +503,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Retention reform</strong> — there are ongoing proposals for a Retention
                 Deposit Scheme in the UK construction industry that would require retention to be
@@ -529,7 +529,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Letter before action</strong> — always the first step. A formal letter
                 stating the amount owed, the basis of the claim, and that you will take court action
@@ -538,7 +538,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Small claims court</strong> — for domestic disputes up to £10,000 (England
                 and Wales). Online application via Gov.uk Money Claim Online. Court fees from £35 to
@@ -547,7 +547,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Adjudication</strong> — for commercial subcontract disputes under the
                 Housing Grants, Construction and Regeneration Act 1996. An adjudicator's decision is
@@ -556,7 +556,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mediation</strong> — a voluntary process where both parties attempt to reach
                 agreement with the assistance of a neutral mediator. Courts actively encourage
@@ -582,7 +582,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileText className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Professional Quotes as Contracts</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -619,7 +619,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage customer contracts and documentation with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting, RAMS generation, invoice management, and AI business support."
+          description="Join 2,100+ UK electricians using Elec-Mate for professional quoting, RAMS generation, invoice management, and AI business support."
           icon={ClipboardList}
         />
       </>
@@ -645,7 +645,7 @@ export default function ContractTemplatesElectricianPage() {
       heroTitle={
         <>
           Electrical Contractor Contracts:{' '}
-          <span className="text-yellow-400">What to Include and Why</span>
+          <span className="text-elec-yellow">What to Include and Why</span>
         </>
       }
       heroSubtitle="What to include in domestic customer contracts for electrical work — Consumer Contracts Regulations 2013, payment schedules, variation orders, defects liability periods, retention, and dispute resolution. Protect your business with professional documentation."
@@ -656,7 +656,7 @@ export default function ContractTemplatesElectricianPage() {
       faqHeading="Frequently Asked Questions About Electrical Contractor Contracts"
       relatedPages={relatedPages}
       ctaHeading="Build Professional Customer Contracts with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for professional quoting, contracts, and business management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for professional quoting, contracts, and business management. 7-day free trial, cancel anytime."
     />
   );
 }

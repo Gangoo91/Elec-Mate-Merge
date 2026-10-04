@@ -132,7 +132,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong>Single-rate (standard) meter</strong>
                 <p className="mt-1">
@@ -144,7 +144,7 @@ const sections = [
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong>Economy 7 dual-rate meter</strong>
                 <p className="mt-1">
@@ -157,7 +157,7 @@ const sections = [
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong>Smart meter (SMETS2)</strong>
                 <p className="mt-1">
@@ -242,7 +242,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Octopus Agile</strong> — arguably the most well-known UK TOU tariff, Agile
                 prices electricity in half-hourly slots based on the wholesale market price. Prices
@@ -253,7 +253,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Overnight EV charging</strong> — most TOU tariffs offer a significantly
                 cheaper overnight rate, typically midnight to 6am or 7am. For an EV owner charging
@@ -263,7 +263,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Heat pump synergy</strong> — heat pumps can be paired with a thermal store
                 and programmed to heat the store overnight using cheap electricity, then use the
@@ -271,7 +271,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>TOU tariffs require behaviour change</strong> — to benefit from a TOU tariff
                 you need to shift discretionary loads (dishwasher, washing machine, EV charging)
@@ -341,7 +341,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Submit readings at least quarterly</strong> — most suppliers accept online
                 meter readings and will issue an accurate bill immediately. Quarterly readings are
@@ -349,7 +349,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Back-billing limit</strong> — UK energy suppliers cannot back-bill for
                 energy used more than 12 months before the bill date if the error was not the
@@ -358,7 +358,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Read your meter when you move</strong> — always take a meter reading on the
                 day you move in or out of a property and photograph the meter display. This prevents
@@ -481,7 +481,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What electricians can do</strong> — electricians can work on the consumer
                 unit (from the main switch downwards) without DNO involvement. Replacing a consumer
@@ -489,7 +489,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What requires DNO involvement</strong> — extending or relocating meter
                 tails, moving the meter position, upgrading from single-phase to three-phase supply,
@@ -499,7 +499,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Isolation for consumer unit work</strong> — when replacing a consumer unit,
                 the electrician needs the meter tails de-energised. The DNO can provide temporary
@@ -511,7 +511,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Are you an electrician? Manage all your certification with"
-          description="Complete EICs, EICRs, and minor works certificates on your phone. Join 1,600+ UK electricians. 7-day free trial, cancel anytime."
+          description="Complete EICs, EICRs, and minor works certificates on your phone. Join 2,100+ UK electricians. 7-day free trial, cancel anytime."
           icon={FileCheck2}
         />
       </>
@@ -537,7 +537,7 @@ export default function ElectricityMeterGuidePage() {
       heroTitle={
         <>
           Electricity Meter Guide UK:{' '}
-          <span className="text-yellow-400">Smart Meters, Types & Readings</span>
+          <span className="text-elec-yellow">Smart Meters, Types & Readings</span>
         </>
       }
       heroSubtitle="Everything you need to know about your electricity meter in the UK — from the three types of meter and how smart SMETS2 meters work, to time-of-use tariffs, faulty meters, and the rules around electrical work near the meter."
@@ -548,7 +548,7 @@ export default function ElectricityMeterGuidePage() {
       faqHeading="Frequently Asked Questions About Electricity Meters"
       relatedPages={relatedPages}
       ctaHeading="Are You an Electrician? Try Elec-Mate Free"
-      ctaSubheading="Complete all your electrical certificates on your phone, including EICs for consumer unit work. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Complete all your electrical certificates on your phone, including EICs for consumer unit work. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

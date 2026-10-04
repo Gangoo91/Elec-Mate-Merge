@@ -165,7 +165,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Common Reasons for 3-Phase Upgrade</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Factory className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Factory className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large workshops and outbuildings</strong> — 3-phase motors, welders,
                 compressors, and CNC machines require or benefit significantly from a 3-phase
@@ -174,7 +174,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV fleet charging</strong> — a single 7 kW charger works on single-phase,
                 but multiple chargers or a 22 kW 3-phase charger require a 3-phase supply.
@@ -182,7 +182,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Multiple heat pumps</strong> — a large property with air-source or
                 ground-source heat pumps may exceed single-phase capacity, particularly when
@@ -190,7 +190,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial kitchens</strong> — 3-phase ovens, induction hobs, and commercial
                 refrigeration require 3-phase power. Any commercial food premises will typically
@@ -198,7 +198,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Exceeding single-phase capacity</strong> — if the maximum demand assessment
                 shows the installation will regularly exceed the available single-phase capacity, a
@@ -225,7 +225,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">DNO Connection Costs</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard connection (network at boundary)</strong> — £1,000 to £1,500. Where
                 the existing 3-phase network already runs past the property, the DNO needs to
@@ -233,7 +233,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Short cable run required</strong> — £1,500 to £3,000. If the nearest 3-phase
                 network is within a few hundred metres but not at the boundary, the DNO must run
@@ -241,7 +241,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Network reinforcement needed</strong> — £3,000 to £10,000+. In rural areas
                 or locations far from the existing 3-phase network, significant infrastructure work
@@ -281,7 +281,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">3-Phase Board Costs (Trade Prices)</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Basic 3-phase distribution board (12-way)</strong> — £300 to £450 trade.
                 Unpopulated metal enclosure with incoming 3-phase isolator. Suitable for small
@@ -289,7 +289,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3-phase board with RCBOs and SPD (18 to 24-way)</strong> — £600 to £1,200
                 trade. Populated with 3-phase RCBOs, single-phase RCBOs for individual circuits, and
@@ -297,7 +297,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3-phase protective devices</strong> — 3-pole MCBs £25 to £50 each, 3-phase
                 RCBOs £80 to £150 each, 4-pole RCD £80 to £120, 3-phase SPD £120 to £250. These
@@ -305,7 +305,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional materials</strong> — 3-phase meter tails (25mm SWA typical) £80
                 to £150, earthing conductor, equipotential bonding, cable glands, trunking, and
@@ -376,7 +376,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Small workshop upgrade (network at boundary)</strong> — £2,500 to £4,000
                 total. DNO connection: £1,000 to £1,500. Materials: £800 to £1,200. Labour: £500 to
@@ -384,7 +384,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Medium commercial premises</strong> — £4,000 to £6,500 total. DNO
                 connection: £1,500 to £3,000. Materials: £1,000 to £1,500. Labour: £900 to £1,500.
@@ -392,7 +392,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large installation with network reinforcement</strong> — £6,500 to £12,000+
                 total. DNO connection: £3,000 to £10,000+. Materials: £1,200 to £2,000. Labour:
@@ -427,7 +427,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Application submission</strong> — completed online via the DNO's connections
                 portal. Requires site address, maximum demand assessment, site plan, and proposed
@@ -435,14 +435,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DNO survey and quotation</strong> — the DNO surveys the site and provides a
                 formal quotation. This typically takes 2 to 4 weeks from application.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Acceptance and payment</strong> — once the customer accepts the quotation
                 and pays, the DNO schedules the installation work. Payment is usually required in
@@ -450,7 +450,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DNO installation</strong> — the DNO installs the service cable, cutout, and
                 meter. This is typically scheduled 4 to 8 weeks after payment, depending on the
@@ -458,7 +458,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Total timeline</strong> — 6 to 12 weeks from application to energisation is
                 typical. Complex installations requiring network reinforcement can take 16 weeks or
@@ -517,7 +517,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Distance from 3-phase network</strong> — this is by far the biggest cost
                 variable. If the 3-phase network runs past the property, the connection cost is
@@ -526,7 +526,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Required capacity</strong> — a 60A per phase supply is standard, but higher
                 capacities (100A per phase or more) cost more from the DNO and require larger cables
@@ -534,7 +534,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Number of circuits</strong> — more circuits mean a larger distribution
                 board, more protective devices, and more testing time. A 12-way board for a workshop
@@ -542,7 +542,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable runs and containment</strong> — long cable runs between the meter and
                 the distribution board, or between the main board and sub-distribution boards, add
@@ -550,7 +550,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing arrangements</strong> — a 3-phase installation requires adequate
                 earthing. If the existing earthing is insufficient or needs upgrading, this adds
@@ -559,7 +559,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Location</strong> — London and the South East are 15% to 25% more expensive
                 than the national average for both DNO charges and electrician labour rates.
@@ -584,7 +584,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Maximum Demand Assessment</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -628,7 +628,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify 3-phase installations"
-          description="Join 1,600+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site EIC certification. Everything you need for 3-phase work."
+          description="Join 2,100+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site EIC certification. Everything you need for 3-phase work."
           icon={Wrench}
         />
       </>
@@ -654,7 +654,7 @@ export default function ThreePhaseInstallationCostPage() {
       heroTitle={
         <>
           3-Phase Installation Cost:{' '}
-          <span className="text-yellow-400">UK Supply Upgrade Guide 2026</span>
+          <span className="text-elec-yellow">UK Supply Upgrade Guide 2026</span>
         </>
       }
       heroSubtitle="How much does a 3-phase supply upgrade cost? This guide covers DNO application fees, 3-phase consumer unit costs, labour rates, G99 notification, and the factors that determine the total price — whether you are a property owner planning an upgrade or an electrician quoting the work."
@@ -665,7 +665,7 @@ export default function ThreePhaseInstallationCostPage() {
       faqHeading="Frequently Asked Questions About 3-Phase Installation Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote 3-Phase Installations with Real Trade Pricing"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI-powered cost engineering. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI-powered cost engineering. 7-day free trial, cancel anytime."
     />
   );
 }

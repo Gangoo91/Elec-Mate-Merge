@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Search, X, Clock, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { inputClass, SecondaryButton } from './editorial';
+import { autoCompleteOff } from '@/lib/textEntry';
 
 interface SearchResult {
   id: string;
@@ -86,7 +87,7 @@ export function MobileSearchSheet({
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 className={cn(inputClass, 'pr-10 h-12 text-base', !query && 'pl-10')}
-                autoComplete="off"
+                autoComplete={autoCompleteOff}
                 autoCorrect="off"
                 autoCapitalize="off"
               />

@@ -221,7 +221,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Award className="w-6 h-6 text-amber-400 mt-0.5 shrink-0" />
+              <Award className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Technician</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -275,7 +275,7 @@ const sections = [
             </tbody>
           </table>
         </div>
-        <p className="text-white/60 text-xs">
+        <p className="text-white text-xs">
           Signing-off competence is a BS 7671 standard, not a JIB grade: Reg 641.6 requires
           verification by skilled persons competent in such work. The JIB grade is the industry
           benchmark, while the statutory test is competence.
@@ -349,7 +349,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ArrowUpRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ArrowUpRight className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Apprentice to Electrician (3 to 4 years):</strong> Complete your
                 apprenticeship, pass the NVQ Level 3, take the{' '}
@@ -364,7 +364,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ArrowUpRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ArrowUpRight className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrician to Approved Electrician (1 to 2 years):</strong> Take and pass
                 the C&G 2391 (Inspection and Testing). Gain experience in inspection and testing
@@ -372,7 +372,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ArrowUpRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ArrowUpRight className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Approved Electrician to Technician (1 to 2 years):</strong> Take and pass
                 the{' '}
@@ -420,7 +420,7 @@ const sections = [
             </tbody>
           </table>
         </div>
-        <p className="text-white/60 text-xs">
+        <p className="text-white text-xs">
           Uplift figures are derived from the indicative 2026 national rates above and are for
           guidance only — confirm current rates with the JIB.
         </p>
@@ -449,7 +449,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ArrowUpRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ArrowUpRight className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New applicants:</strong> Apply for your ECS card through the JIB website.
                 Submit your qualification certificates. The JIB will verify them and assign the
@@ -457,7 +457,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ArrowUpRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ArrowUpRight className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regrading:</strong> If you have gained additional qualifications (for
                 example, passing the 2391 to move from Electrician to Approved Electrician), apply
@@ -466,7 +466,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ArrowUpRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ArrowUpRight className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Processing time:</strong> Typically 2 to 4 weeks from application to
                 receiving your new or updated ECS card.
@@ -567,7 +567,7 @@ export default function JIBGradingExplainedPage() {
       heroTitle={
         <>
           JIB Grading Explained:{' '}
-          <span className="text-yellow-400">Pay Rates, Grades, and Progression</span>
+          <span className="text-elec-yellow">Pay Rates, Grades, and Progression</span>
         </>
       }
       heroSubtitle="Understand JIB grades, 2026 pay rates, and how to progress from Electrician to Approved Electrician to Technician. Your roadmap to higher earnings and career growth."
@@ -578,7 +578,7 @@ export default function JIBGradingExplainedPage() {
       faqHeading="Frequently Asked Questions About JIB Grading"
       relatedPages={relatedPages}
       ctaHeading="Progress Your Electrical Career With Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for training, qualification tracking, and career development. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for training, qualification tracking, and career development. 7-day free trial, cancel anytime."
     />
   );
 }

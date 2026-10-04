@@ -45,7 +45,7 @@ export default function UPSInstallationGuidePage() {
         <>
           UPS Installation Guide
           <br />
-          <span className="text-yellow-400">Uninterruptible Power Supply</span>
+          <span className="text-elec-yellow">Uninterruptible Power Supply</span>
         </>
       }
       heroSubtitle="Uninterruptible power supplies protect critical loads from mains failure, voltage sags, surges, and frequency variations. From small desktop units to large three-phase systems, this guide covers UPS types, sizing, installation requirements, earthing considerations, maintenance, and how to test and commission a UPS installation to BS 7671."
@@ -85,7 +85,7 @@ export default function UPSInstallationGuidePage() {
               </p>
               <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mt-4">
                 <div className="flex items-center gap-2 mb-2">
-                  <AlertTriangle className="w-5 h-5 text-yellow-400" />
+                  <AlertTriangle className="w-5 h-5 text-elec-yellow" />
                   <h3 className="font-bold text-white text-lg">UPS vs Generator</h3>
                 </div>
                 <p className="text-white text-sm leading-relaxed">
@@ -112,7 +112,7 @@ export default function UPSInstallationGuidePage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Battery className="w-5 h-5 text-yellow-400" />
+                    <Battery className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Offline (Standby) UPS</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -126,7 +126,7 @@ export default function UPSInstallationGuidePage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Battery className="w-5 h-5 text-yellow-400" />
+                    <Battery className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Line-Interactive UPS</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -139,7 +139,7 @@ export default function UPSInstallationGuidePage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Battery className="w-5 h-5 text-yellow-400" />
+                    <Battery className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Online (Double Conversion) UPS</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -158,15 +158,15 @@ export default function UPSInstallationGuidePage() {
                 <div className="space-y-3">
                   <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
                     <span className="text-white font-bold">Offline</span>
-                    <span className="text-yellow-400 font-bold">5-12ms transfer</span>
+                    <span className="text-elec-yellow font-bold">5-12ms transfer</span>
                   </div>
                   <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
                     <span className="text-white font-bold">Line-Interactive</span>
-                    <span className="text-yellow-400 font-bold">2-4ms transfer</span>
+                    <span className="text-elec-yellow font-bold">2-4ms transfer</span>
                   </div>
                   <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                     <span className="text-white font-bold">Online (Double Conversion)</span>
-                    <span className="text-yellow-400 font-bold">0ms (no transfer)</span>
+                    <span className="text-elec-yellow font-bold">0ms (no transfer)</span>
                   </div>
                 </div>
               </div>
@@ -185,7 +185,7 @@ export default function UPSInstallationGuidePage() {
               </p>
               <div className="space-y-3 mt-4">
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     1
                   </span>
                   <div>
@@ -200,7 +200,7 @@ export default function UPSInstallationGuidePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     2
                   </span>
                   <div>
@@ -215,7 +215,7 @@ export default function UPSInstallationGuidePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     3
                   </span>
                   <div>
@@ -230,7 +230,7 @@ export default function UPSInstallationGuidePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     4
                   </span>
                   <div>
@@ -270,9 +270,9 @@ export default function UPSInstallationGuidePage() {
                 </h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Dedicated supply circuit</strong> — The
+                      <strong className="text-elec-yellow">Dedicated supply circuit</strong> — The
                       UPS input should be supplied from a dedicated circuit at the consumer unit or
                       distribution board. The circuit protection must be sized for the UPS input
                       current, which can be significantly higher than the output current during
@@ -280,9 +280,9 @@ export default function UPSInstallationGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Cable sizing</strong> — Input and output
+                      <strong className="text-elec-yellow">Cable sizing</strong> — Input and output
                       cables must be sized for the full rated current of the UPS, accounting for{' '}
                       <SEOInternalLink href="/guides/cable-sizing-guide-bs-7671">
                         derating factors
@@ -293,9 +293,9 @@ export default function UPSInstallationGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Ventilation and cooling</strong> — UPS
+                      <strong className="text-elec-yellow">Ventilation and cooling</strong> — UPS
                       systems generate significant heat, particularly online double-conversion types
                       which are typically 92-96% efficient. A 10kVA UPS at 94% efficiency generates
                       600W of heat. The room must have adequate ventilation or air conditioning to
@@ -304,18 +304,18 @@ export default function UPSInstallationGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Floor loading</strong> — Battery cabinets
+                      <strong className="text-elec-yellow">Floor loading</strong> — Battery cabinets
                       are heavy. A single battery string for a 10kVA UPS can weigh 200-400kg. Verify
                       that the floor can support the weight, particularly on raised access floors or
                       upper storeys.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Emergency power off (EPO)</strong> — A
+                      <strong className="text-elec-yellow">Emergency power off (EPO)</strong> — A
                       remote emergency power off button must be installed where required by fire
                       regulations or building management. The EPO should disconnect the UPS output
                       and bypass supply simultaneously, ensuring the load is completely
@@ -340,7 +340,7 @@ export default function UPSInstallationGuidePage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Zap className="w-5 h-5 text-yellow-400" />
+                    <Zap className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Non-Separately Derived Source</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -354,7 +354,7 @@ export default function UPSInstallationGuidePage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Zap className="w-5 h-5 text-yellow-400" />
+                    <Zap className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Separately Derived Source</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -394,18 +394,18 @@ export default function UPSInstallationGuidePage() {
                 <h3 className="font-bold text-white text-lg mb-4">Bypass Arrangements</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Internal automatic bypass</strong> — Built
+                      <strong className="text-elec-yellow">Internal automatic bypass</strong> — Built
                       into most UPS systems above 1kVA. Automatically transfers the load from
                       inverter to mains bypass if the inverter fails or is overloaded. This happens
                       without interruption but means the load is no longer protected by the UPS.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">External manual bypass switch</strong> — A
+                      <strong className="text-elec-yellow">External manual bypass switch</strong> — A
                       make-before-break rotary switch installed externally to the UPS. Allows the
                       load to be transferred to the mains bypass supply and the UPS to be completely
                       isolated for maintenance without any interruption to the load. Essential for
@@ -413,9 +413,9 @@ export default function UPSInstallationGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Wrap-around bypass panel</strong> — A
+                      <strong className="text-elec-yellow">Wrap-around bypass panel</strong> — A
                       complete bypass panel with input, output, and bypass contactors, plus manual
                       isolation for the UPS input and output. Used for large UPS systems (above
                       10kVA) and provides the most flexible maintenance access. The panel includes
@@ -440,7 +440,7 @@ export default function UPSInstallationGuidePage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Battery className="w-5 h-5 text-yellow-400" />
+                    <Battery className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Battery Types</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -455,7 +455,7 @@ export default function UPSInstallationGuidePage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Temperature Effects</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -468,7 +468,7 @@ export default function UPSInstallationGuidePage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <ClipboardCheck className="w-5 h-5 text-yellow-400" />
+                    <ClipboardCheck className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">
                       Battery Testing and Replacement
                     </h3>
@@ -501,9 +501,9 @@ export default function UPSInstallationGuidePage() {
                 <h3 className="font-bold text-white text-lg mb-4">UPS Commissioning Tests</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Standard BS 7671 tests</strong> —
+                      <strong className="text-elec-yellow">Standard BS 7671 tests</strong> —
                       Continuity, insulation resistance, polarity, Zs, and PSCC on the UPS input and
                       output circuits. Note that insulation resistance testing must be done with the
                       UPS disconnected — applying 500V DC to UPS input or output terminals with the
@@ -511,9 +511,9 @@ export default function UPSInstallationGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Mains failure simulation</strong> —
+                      <strong className="text-elec-yellow">Mains failure simulation</strong> —
                       Disconnect the mains input to the UPS and verify that the load transfers to
                       battery without interruption (or within the specified transfer time for
                       offline/line-interactive types). Check that the load remains stable during the
@@ -521,26 +521,26 @@ export default function UPSInstallationGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Mains restore test</strong> — Re-apply the
+                      <strong className="text-elec-yellow">Mains restore test</strong> — Re-apply the
                       mains supply and verify that the UPS transfers back from battery to mains
                       without interruption. Check that battery recharging begins automatically.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Bypass transfer test</strong> — Verify
+                      <strong className="text-elec-yellow">Bypass transfer test</strong> — Verify
                       that the internal bypass transfers the load to mains bypass without
                       interruption. Test the external manual bypass switch (if fitted) to confirm
                       make-before-break operation.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Runtime test</strong> — Run the UPS on
+                      <strong className="text-elec-yellow">Runtime test</strong> — Run the UPS on
                       battery under the actual connected load and time how long it supports the load
                       before the low-battery shutdown. Compare against the manufacturer's runtime
                       specification at the measured load level.

@@ -224,7 +224,7 @@ export default function ConnectAIPage() {
         <section className="relative overflow-hidden border-b border-elec-gray/40">
           <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow/5 via-transparent to-blue-500/5 pointer-events-none" />
           <div className="relative mx-auto max-w-6xl px-4 py-12 sm:py-20">
-            <div className="inline-flex items-center gap-2 rounded-full border border-elec-yellow/30 bg-elec-yellow/10 px-3 py-1 text-xs font-semibold text-elec-yellow uppercase tracking-wider mb-6">
+            <div className="inline-flex items-center gap-2 rounded-full border border-elec-yellow/30 bg-white/[0.06] px-3 py-1 text-xs font-semibold text-elec-yellow uppercase tracking-wider mb-6">
               <Sparkles className="w-3.5 h-3.5" />
               New — MCP server live
             </div>
@@ -283,7 +283,7 @@ export default function ConnectAIPage() {
               </a>
               <a
                 href="#how-to-connect"
-                className="inline-flex items-center gap-2 h-11 px-5 rounded-lg border border-elec-yellow/40 hover:bg-elec-yellow/10 transition-colors touch-manipulation font-semibold text-sm sm:text-base"
+                className="inline-flex items-center gap-2 h-11 px-5 rounded-lg border border-elec-yellow/40 hover:bg-white/[0.06] transition-colors touch-manipulation font-semibold text-sm sm:text-base"
               >
                 Other AI clients
                 <ArrowRight className="w-4 h-4" />
@@ -345,7 +345,7 @@ export default function ConnectAIPage() {
             <ol className="space-y-3 text-sm sm:text-base">
               {active.instructions.map((step, i) => (
                 <li key={i} className="flex gap-3">
-                  <span className="flex-none w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow text-xs font-bold flex items-center justify-center">
+                  <span className="flex-none w-6 h-6 rounded-full bg-white/[0.06] text-elec-yellow text-xs font-bold flex items-center justify-center">
                     {i + 1}
                   </span>
                   <span className="break-words">{step}</span>
@@ -364,7 +364,7 @@ export default function ConnectAIPage() {
               >
                 {active.after.map((step, i) => (
                   <li key={i} className="flex gap-3">
-                    <span className="flex-none w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow text-xs font-bold flex items-center justify-center">
+                    <span className="flex-none w-6 h-6 rounded-full bg-white/[0.06] text-elec-yellow text-xs font-bold flex items-center justify-center">
                       {active.instructions.length + 1 + i}
                     </span>
                     <span className="break-words">{step}</span>

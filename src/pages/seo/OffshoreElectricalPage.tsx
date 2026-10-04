@@ -152,7 +152,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulatory framework</strong> — UK offshore electrical installations are
                 governed by the Electricity at Work Regulations 1989 (EWR), the Offshore
@@ -163,7 +163,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Duty holder responsibility</strong> — the duty holder (typically the
                 operator of the installation) is responsible for ensuring all electrical work is
@@ -191,7 +191,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Zone 0</strong> — an explosive gas atmosphere is present continuously or for
                 long periods. Zone 0 locations on an offshore platform typically include the
@@ -202,7 +202,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Zone 1</strong> — an explosive atmosphere is likely to occur in normal
                 operation. Zone 1 encompasses the process deck and areas immediately surrounding
@@ -213,7 +213,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Zone 2</strong> — an explosive atmosphere is unlikely to occur in normal
                 operation but may occur in abnormal conditions. Zone 2 covers the wider process
@@ -223,7 +223,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Area classification drawings</strong> — every offshore installation has area
                 classification drawings that define the zone boundaries. These are produced in
@@ -371,7 +371,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Autonomy requirements</strong> — offshore UPS systems are typically sized to
                 provide power for a defined period (autonomy) that allows for safe shutdown of
@@ -381,7 +381,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>VRLA and lithium-ion batteries</strong> — valve-regulated lead-acid (VRLA)
                 batteries are the traditional technology for offshore UPS. Lithium-ion systems offer
@@ -390,7 +390,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maintenance requirements</strong> — offshore UPS maintenance includes
                 regular load bank testing (to verify autonomy), battery impedance testing,
@@ -418,7 +418,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Launch and release systems</strong> — the electrical components of the davit
                 system and on-load release mechanism must be maintained in perfect working order.
@@ -428,7 +428,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Battery maintenance</strong> — survival craft batteries (for engine
                 starting, navigation lights, and communications) must be maintained at full charge
@@ -438,7 +438,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Navigation and communication equipment</strong> — EPIRB (Emergency Position
                 Indicating Radio Beacon), SART (Search and Rescue Transponder), VHF radio, and
@@ -519,7 +519,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>2/2 rotation</strong> — two weeks offshore (14 days including travel), two
                 weeks at home. The most common pattern in the UK North Sea. Working days offshore
@@ -528,7 +528,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3/3 and 4/4 rotations</strong> — three or four weeks on, three or four weeks
                 off. More common on FPSO vessels and in international locations. Less common in the
@@ -537,7 +537,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Day rates — contractor/self-employed</strong> — £400 to £700 per day for
                 experienced offshore electrical engineers and CompEx-certified electricians. Day
@@ -547,7 +547,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Employed rates</strong> — offshore electrical engineers in employed
                 positions typically earn £55,000 to £85,000 per year plus offshore allowances, shift
@@ -574,7 +574,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Your Qualification Roadmap</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -608,7 +608,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage your offshore qualifications with Elec-Mate"
-          description="Keep your BOSIET, CompEx, 18th Edition, and all offshore certifications organised with renewal reminders. Join 1,600+ UK electricians using Elec-Mate."
+          description="Keep your BOSIET, CompEx, 18th Edition, and all offshore certifications organised with renewal reminders. Join 2,100+ UK electricians using Elec-Mate."
           icon={ShieldCheck}
         />
       </>
@@ -634,7 +634,7 @@ export default function OffshoreElectricalPage() {
       heroTitle={
         <>
           Offshore Electrical Engineer UK:{' '}
-          <span className="text-yellow-400">Oil & Gas Platform Guide</span>
+          <span className="text-elec-yellow">Oil & Gas Platform Guide</span>
         </>
       }
       heroSubtitle="Everything you need to know about offshore electrical engineering on UK oil and gas platforms — ATEX Zone 0, 1, and 2 classification, hazardous area equipment, essential services, ESD systems, BOSIET survival training, GWO certification, 2-week rotation patterns, and day rates of £400–£700."

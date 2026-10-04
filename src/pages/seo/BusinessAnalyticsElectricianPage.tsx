@@ -44,7 +44,7 @@ export default function BusinessAnalyticsElectricianPage() {
       heroTitle={
         <>
           Business Analytics
-          <span className="block text-yellow-400 mt-1">Dashboard for Electricians</span>
+          <span className="block text-elec-yellow mt-1">Dashboard for Electricians</span>
         </>
       }
       heroSubtitle="Stop running your electrical business blind. Elec-Mate's analytics dashboard gives you real-time visibility of revenue, profitability, customer trends, and cash flow — so every business decision is backed by data, not guesswork."
@@ -76,7 +76,7 @@ export default function BusinessAnalyticsElectricianPage() {
                 things tighten, instinct is not enough.
               </p>
               <p>
-                <strong className="text-yellow-400">Analytics gives you certainty.</strong> Instead
+                <strong className="text-elec-yellow">Analytics gives you certainty.</strong> Instead
                 of guessing, you can see precisely: how much revenue you are generating per week,
                 month, and quarter; which job types produce the highest profit margins; which
                 clients generate the most value (including repeat work and referrals); where your
@@ -115,7 +115,7 @@ export default function BusinessAnalyticsElectricianPage() {
                 tax return — months after the year has ended.
               </p>
               <p>
-                <strong className="text-yellow-400">Revenue by job type:</strong> Breaking down
+                <strong className="text-elec-yellow">Revenue by job type:</strong> Breaking down
                 revenue by job type (rewires, board changes, additional circuits, testing, EV
                 chargers, commercial work) reveals which types of work generate the most income.
                 This is not the same as profitability (a job type can generate high revenue but low
@@ -123,14 +123,14 @@ export default function BusinessAnalyticsElectricianPage() {
                 your strategy.
               </p>
               <p>
-                <strong className="text-yellow-400">Revenue by time period:</strong> Weekly,
+                <strong className="text-elec-yellow">Revenue by time period:</strong> Weekly,
                 monthly, and quarterly revenue tracking reveals seasonal patterns. Most UK
                 electrical businesses see peaks in spring and autumn with quieter periods in summer
                 and around Christmas. Understanding your seasonal pattern lets you plan marketing,
                 staffing, and cash reserves accordingly.
               </p>
               <p>
-                <strong className="text-yellow-400">Revenue by source:</strong> Where does your work
+                <strong className="text-elec-yellow">Revenue by source:</strong> Where does your work
                 come from? Word of mouth, Google, social media, directory listings, main
                 contractors, estate agents? Tracking revenue by source tells you which marketing
                 channels deliver the best return — and which you can stop wasting money on. The{' '}
@@ -154,7 +154,7 @@ export default function BusinessAnalyticsElectricianPage() {
                 is just 10%.
               </p>
               <p>
-                <strong className="text-yellow-400">Profit by job type:</strong> Elec-Mate's
+                <strong className="text-elec-yellow">Profit by job type:</strong> Elec-Mate's
                 analytics break down profit margins by job type. You might discover that EICR
                 inspections at £180 each have a 65% margin (£117 profit in 2 hours = £58.50/hour),
                 while full rewires at £5,000 have a 15% margin (£750 profit in 40 hours =
@@ -162,7 +162,7 @@ export default function BusinessAnalyticsElectricianPage() {
                 winning more of the high-profit-per-hour work.
               </p>
               <p>
-                <strong className="text-yellow-400">Actual vs quoted:</strong> Comparing what you
+                <strong className="text-elec-yellow">Actual vs quoted:</strong> Comparing what you
                 quoted against what the job actually cost reveals whether your estimating is
                 accurate. Consistent underquoting on a specific job type means you need to adjust
                 your pricing template. Consistent overquoting means you are pricing yourself out of
@@ -173,7 +173,7 @@ export default function BusinessAnalyticsElectricianPage() {
                 for individual job analysis and the analytics dashboard for trends across all jobs.
               </p>
               <p>
-                <strong className="text-yellow-400">Profit per hour worked:</strong> This is the
+                <strong className="text-elec-yellow">Profit per hour worked:</strong> This is the
                 single most important metric for any electrician. It accounts for all time invested
                 in a job — not just hours on site, but travel, procurement, admin, testing, and
                 certification time. The{' '}
@@ -197,7 +197,7 @@ export default function BusinessAnalyticsElectricianPage() {
                 analysis helps you identify and focus on the good ones.
               </p>
               <p>
-                <strong className="text-yellow-400">Client lifetime value:</strong> Instead of
+                <strong className="text-elec-yellow">Client lifetime value:</strong> Instead of
                 looking at each job in isolation, analytics tracks the total revenue and profit from
                 each client over time. A landlord who gives you 4 EICR inspections per year at £180
                 each is worth £720/year — or £3,600 over 5 years. A one-off domestic rewire at
@@ -205,7 +205,7 @@ export default function BusinessAnalyticsElectricianPage() {
                 days).
               </p>
               <p>
-                <strong className="text-yellow-400">Payment behaviour:</strong> Analytics tracks how
+                <strong className="text-elec-yellow">Payment behaviour:</strong> Analytics tracks how
                 quickly each client pays. If a commercial client consistently takes 60 days when
                 your terms say 30, you can see the cash flow impact and decide whether to tighten
                 terms, add a late payment charge, or stop working for them. The{' '}
@@ -213,7 +213,7 @@ export default function BusinessAnalyticsElectricianPage() {
                 factors in each client's payment history when forecasting.
               </p>
               <p>
-                <strong className="text-yellow-400">Referral tracking:</strong> Knowing which
+                <strong className="text-elec-yellow">Referral tracking:</strong> Knowing which
                 clients refer new work lets you nurture those relationships. A simple thank-you
                 message after a referral costs nothing but builds loyalty. Elec-Mate tracks referral
                 chains so you can see the total value generated by each referrer.
@@ -234,14 +234,14 @@ export default function BusinessAnalyticsElectricianPage() {
                 proactive planning ("I can see a gap in March and need to act now").
               </p>
               <p>
-                <strong className="text-yellow-400">Predictive cash position:</strong> Based on your
+                <strong className="text-elec-yellow">Predictive cash position:</strong> Based on your
                 historical payment collection patterns, Elec-Mate predicts when outstanding invoices
                 will actually be paid (not when they are due, but when they are likely to arrive
                 based on each client's track record). Combined with your scheduled expenses, this
                 gives an accurate week-by-week cash forecast.
               </p>
               <p>
-                <strong className="text-yellow-400">Scenario planning:</strong> What happens if that
+                <strong className="text-elec-yellow">Scenario planning:</strong> What happens if that
                 large commercial job gets delayed by 2 weeks? What if a key client pays 30 days
                 late? What if material costs increase by 10%? Analytics lets you model scenarios so
                 you can prepare contingency plans before problems materialise.
@@ -272,18 +272,18 @@ export default function BusinessAnalyticsElectricianPage() {
                 picture of your business health:
               </p>
               <p>
-                <strong className="text-yellow-400">1. Monthly revenue:</strong> How much money came
+                <strong className="text-elec-yellow">1. Monthly revenue:</strong> How much money came
                 in this month? Track against the same month last year and against your target. A
                 consistent upward trend means growth; a decline means something needs attention.
               </p>
               <p>
-                <strong className="text-yellow-400">2. Gross profit margin:</strong> What percentage
+                <strong className="text-elec-yellow">2. Gross profit margin:</strong> What percentage
                 of your revenue is profit after deducting direct costs (materials, labour,
                 subcontractors)? Target 25% to 40% depending on your job mix. Below 20% means your
                 pricing needs attention.
               </p>
               <p>
-                <strong className="text-yellow-400">3. Quote win rate:</strong> What percentage of
+                <strong className="text-elec-yellow">3. Quote win rate:</strong> What percentage of
                 quotes you send are accepted? A healthy win rate is 40% to 60%. Below 30% suggests
                 your pricing is too high or your quotes are not compelling enough. Above 70%
                 suggests you may be undercharging. The{' '}
@@ -291,13 +291,13 @@ export default function BusinessAnalyticsElectricianPage() {
                 this automatically.
               </p>
               <p>
-                <strong className="text-yellow-400">4. Average job value:</strong> What is the
+                <strong className="text-elec-yellow">4. Average job value:</strong> What is the
                 average value of each job you complete? Tracking this over time shows whether you
                 are moving towards higher-value work or getting stuck in small jobs that consume
                 your time.
               </p>
               <p>
-                <strong className="text-yellow-400">5. Debtor days:</strong> How many days on
+                <strong className="text-elec-yellow">5. Debtor days:</strong> How many days on
                 average does it take your clients to pay? Lower is better. If debtor days are
                 creeping up, you need to tighten payment terms or chase invoices more aggressively.
                 The{' '}
@@ -429,7 +429,7 @@ export default function BusinessAnalyticsElectricianPage() {
         },
       ]}
       ctaHeading="Run Your Business on Data, Not Guesswork"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's analytics to track revenue, margins, and KPIs. Make smarter decisions with real-time business intelligence. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate's analytics to track revenue, margins, and KPIs. Make smarter decisions with real-time business intelligence. 7-day free trial, cancel anytime."
       extraSchemas={[
         {
           '@type': 'SoftwareApplication',

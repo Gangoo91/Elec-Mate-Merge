@@ -97,10 +97,10 @@ const quizQuestions = [
     id: 2,
     question: 'What’s the correct hierarchy under WAHR 2005?',
     options: [
-      'Precautionary statements advising on handling, storage, and emergency response',
-      'Zinc oxide fume from the galvanised coating, which can cause metal fume fever',
+      'Mitigate the fall (harness) → prevent the fall (guard rails) → avoid working at height',
+      'Prevent the fall (collective) → avoid working at height → mitigate the fall (personal)',
       'Avoid working at height → prevent the fall (collective) → mitigate the fall (personal)',
-      'Competent person scheme membership or building control notification',
+      'Personal protection first → collective protection second → avoid working at height last',
     ],
     correctAnswer: 2,
     explanation:

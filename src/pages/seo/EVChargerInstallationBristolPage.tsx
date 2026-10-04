@@ -184,7 +184,7 @@ const sections = [
           </h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Simple installation (modern semi/detached, short cable run)</strong> — £750
                 to £1,050. Henleaze, Westbury-on-Trym, Fishponds, Keynsham. Modern consumer units
@@ -192,7 +192,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard installation (inter-war semi, 8–15m cable run)</strong> — £950 to
                 £1,200. Common across Bedminster, Knowle, Filton, Horfield. Possible earthing works
@@ -200,10 +200,10 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Complex installation (Victorian terrace, steep site, long run)</strong> —
-                £1,200 to £1,600+. Clifton, Redland, Totterdown, Montpelier, Kingsdown. Longer cable
+                £1,200 to £2,100+. Clifton, Redland, Totterdown, Montpelier, Kingsdown. Longer cable
                 runs, earthing works, board upgrade, and conservation area considerations.
               </span>
             </li>
@@ -259,7 +259,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Off-peak tariff scheduling</strong> — Bristol households on Octopus Go, OVO,
                 or similar time-of-use tariffs can reduce overnight charging costs by 50 to 70%.
@@ -267,7 +267,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Solar export integration</strong> — Bristol's relatively mild climate and
                 growing solar PV uptake makes solar-linked smart chargers such as Zappi popular.
@@ -275,7 +275,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>App control</strong> — schedule, monitor, and control charging remotely. All
                 compliant smart charger brands (Zappi, Ohme, Easee, Wallbox) include smartphone app
@@ -301,7 +301,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated circuit (Regulation 722.533.101)</strong> — each EV charger
                 requires its own dedicated circuit. Older Bristol consumer units without spare ways
@@ -309,7 +309,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection (Regulation 722.531.3.101)</strong> — appropriate RCD
                 protection including Type B or Type A with 6mA DC RDC-DD where the charger may
@@ -318,7 +318,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PME earthing (Regulation 722.411.4.1)</strong> — most Bristol properties are
                 on PME supplies. Outdoor chargers require an earth rod or charger with PEN fault
@@ -326,7 +326,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Voltage drop on long cable runs</strong> — Bristol terraces with long cable
                 runs (15 to 20 metres) from rear consumer units to front parking require careful{' '}
@@ -354,7 +354,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98 (standard domestic 7kW)</strong> — notification via the National Grid
                 Electricity Distribution online portal. No prior approval needed. Submit and proceed
@@ -362,7 +362,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G99 (three-phase/commercial)</strong> — prior approval required. Allow 4 to
                 10 weeks for network capacity assessment. Required for 22kW three-phase
@@ -370,7 +370,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Installer responsibility</strong> — the electrician submits DNO
                 notification. Confirm it is included in your quote before accepting.
@@ -392,7 +392,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>OZEV EV chargepoint grant</strong> — up to £350 for flat owners and tenants.
                 Not available to homeowners in houses. The OZEV-approved installer applies on your
@@ -400,7 +400,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bristol Clean Air Zone exemption</strong> — zero-emission vehicles are
                 exempt from Clean Air Zone charges. This reduces the running costs of EV ownership
@@ -408,7 +408,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Workplace Charging Scheme</strong> — Bristol businesses can claim up to £350
                 per socket (up to 40 sockets) for workplace EV charger installations via the OZEV
@@ -434,7 +434,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Pricing Bristol Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -466,7 +466,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify Bristol EV installations"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification."
           icon={Car}
         />
       </>
@@ -492,7 +492,7 @@ export default function EVChargerInstallationBristolPage() {
       heroTitle={
         <>
           EV Charger Installation Bristol:{' '}
-          <span className="text-yellow-400">Costs, DNO, and Grants 2026</span>
+          <span className="text-elec-yellow">Costs, DNO, and Grants 2026</span>
         </>
       }
       heroSubtitle="Local costs for EV charger installation in Bristol, National Grid DNO notification, OZEV grant, Clean Air Zone exemption, Victorian terrace and hillside property guidance, and Section 722 compliance."
@@ -503,7 +503,7 @@ export default function EVChargerInstallationBristolPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in Bristol"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify EV Charger Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

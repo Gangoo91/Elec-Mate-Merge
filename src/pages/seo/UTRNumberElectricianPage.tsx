@@ -195,7 +195,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Self-employed sole trader income over £1,000</strong> — if your
                 self-employment income (before expenses) exceeded £1,000 in a tax year, you must
@@ -204,7 +204,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Working under CIS as a subcontractor</strong> — any electrician working as a
                 subcontractor on construction projects where the contractor deducts CIS tax needs a
@@ -213,7 +213,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sole trader or partnership</strong> — if you operate as a self-employed sole
                 trader or in a partnership, you need a personal UTR. Partnerships also have a
@@ -221,7 +221,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Limited company director with dividends</strong> — if you run your
                 electrical business through a limited company and pay yourself dividends, you will
@@ -252,7 +252,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1 — Gather what you need</strong> — your National Insurance number,
                 your date of birth, your address and contact details, the date you started
@@ -260,7 +260,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2 — Register online</strong> — go to
                 gov.uk/register-for-self-assessment and select "I am self-employed or a sole
@@ -269,7 +269,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 3 — Receive your UTR by post</strong> — HMRC will post your UTR to your
                 registered address within approximately 10 working days. Do not throw this letter
@@ -278,7 +278,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 4 — Activate your online account</strong> — separately, HMRC will send
                 you an activation code by post. Use this to activate your HMRC online services
@@ -318,14 +318,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Day 1 — Online registration</strong> — completing the CWF1 form online takes
                 approximately 15 minutes if you have all your information ready.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Up to 10 working days — UTR letter arrives</strong> — HMRC aims to dispatch
                 the UTR letter within 10 working days. In practice it often arrives within 5 to 7
@@ -333,7 +333,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Up to 10 working days — activation code arrives</strong> — a separate letter
                 containing your activation code for HMRC online services arrives independently, also
@@ -341,7 +341,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CIS urgency — call HMRC</strong> — if you need to start CIS work before your
                 UTR arrives, call HMRC's Self-Assessment helpline on 0300 200 3310. Explain that you
@@ -367,7 +367,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>20% deduction — registered subcontractor</strong> — if you are registered
                 with HMRC for CIS and your contractor can verify your UTR, they deduct 20% from your
@@ -376,7 +376,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>30% deduction — unregistered subcontractor</strong> — if HMRC cannot verify
                 your UTR (because you have not registered or provided incorrect details), the
@@ -385,7 +385,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Claiming deductions back</strong> — CIS deductions count as advance payments
                 of your tax. When you complete your self-assessment return, you declare your CIS
@@ -394,7 +394,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Gross payment status</strong> — once your turnover exceeds certain
                 thresholds and you have a clean compliance history, you can apply for gross payment
@@ -479,7 +479,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileText className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Professional Invoices on Your Phone</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -509,7 +509,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Keep your accounts in order with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate to manage quotes, invoices, and job records on their phone."
+          description="Join 2,100+ UK electricians using Elec-Mate to manage quotes, invoices, and job records on their phone."
           icon={FileText}
         />
       </>
@@ -535,7 +535,7 @@ export default function UTRNumberElectricianPage() {
       heroTitle={
         <>
           UTR Number for Electricians:{' '}
-          <span className="text-yellow-400">Self-Assessment Registration Guide</span>
+          <span className="text-elec-yellow">Self-Assessment Registration Guide</span>
         </>
       }
       heroSubtitle="Everything UK electricians need to know about Unique Taxpayer Reference numbers — what a UTR is, when you need one, how to register with HMRC, the 10-working-day timeline, and how your UTR works under the Construction Industry Scheme."
@@ -546,7 +546,7 @@ export default function UTRNumberElectricianPage() {
       faqHeading="Frequently Asked Questions About UTR Numbers for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Keep Your Electrical Business Finances Organised"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for professional invoicing, payment tracking, and job records. Everything your accountant needs at self-assessment time. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for professional invoicing, payment tracking, and job records. Everything your accountant needs at self-assessment time. 7-day free trial, cancel anytime."
     />
   );
 }

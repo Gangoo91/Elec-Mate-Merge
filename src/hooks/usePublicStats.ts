@@ -18,7 +18,9 @@ type PublicStats = {
  * Fallbacks are deliberately conservative so a failed fetch UNDER-reports
  * rather than over-claims — same principle as useUserCount.
  */
-const FALLBACK: PublicStats = { users: '1,000+', certs: '970+', quoted: '£800k+' };
+// Checked 4 Oct 2026: 2,193 profiles, 1,088 completed certificates, £2,004,812
+// quoted. Kept just under the real figures so a failed fetch never over-claims.
+const FALLBACK: PublicStats = { users: '2,100+', certs: '1,000+', quoted: '£2.0m+' };
 
 const roundDown = (count: number) =>
   `${Math.floor(count / 10) * 10}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '+';

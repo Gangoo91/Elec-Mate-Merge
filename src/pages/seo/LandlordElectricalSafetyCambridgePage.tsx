@@ -212,7 +212,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Private rented sector team</strong> — Cambridge City Council operates a
                 dedicated private rented sector enforcement team that investigates complaints,
@@ -222,7 +222,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HMO licensing enforcement</strong> — Cambridge operates mandatory HMO
                 licensing as well as additional licensing schemes covering smaller HMOs in high
@@ -231,7 +231,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Complaint-driven investigations</strong> — many enforcement actions in
                 Cambridge begin with tenant complaints. Students who discover their property lacks a
@@ -240,7 +240,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Remedial action powers</strong> — if a landlord fails to comply with a
                 remedial notice issued by the council, the authority can arrange for the remedial
@@ -273,7 +273,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mandatory HMO licensing</strong> — applies to properties with five or more
                 occupants forming two or more households. A valid EICR covering all fixed electrical
@@ -282,7 +282,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional licensing</strong> — Cambridge City Council operates additional
                 licensing covering smaller HMOs (three or four occupants) in parts of the city with
@@ -292,7 +292,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Shorter EICR intervals for HMOs</strong> — Cambridge HMO licence conditions
                 typically require EICRs every three years or at each licence renewal (licences are
@@ -301,7 +301,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Summer inspection window</strong> — the Cambridge student rental market runs
                 on an academic year cycle, with most tenancies beginning in late June or September.
@@ -311,7 +311,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Victorian property challenges</strong> — many student houses in Romsey,
                 Coleridge, Cherry Hinton, and Mill Road areas are Victorian terraced properties with
@@ -463,7 +463,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>28 days maximum</strong> — all remedial work must be completed within 28
                 days of the EICR, unless the inspector specifies a shorter timeframe. The 28-day
@@ -472,7 +472,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C1 observations — immediate action</strong> — a C1 (danger present)
                 observation may require immediate disconnection of the affected circuit. Cambridge
@@ -481,7 +481,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Written confirmation required</strong> — once remedial work is complete, the
                 landlord must obtain written confirmation from a qualified electrician. This
@@ -490,7 +490,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Common Cambridge remedial work</strong> — typical remedial work in Cambridge
                 rental properties includes fitting RCD protection under Regulation 411.3.3 of BS
@@ -523,7 +523,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person schemes</strong> — use the NICEIC, NAPIT, or ELECSA online
                 registers to find Cambridge-based inspectors. Scheme registration confirms
@@ -531,7 +531,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Required qualifications</strong> — the inspector should hold City and Guilds
                 2391 (Inspection and Testing) or equivalent, and a current BS 7671 qualification
@@ -540,7 +540,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Book early</strong> — demand for EICR inspections in Cambridge peaks
                 significantly in May to July. Landlords who leave booking until late summer risk
@@ -549,7 +549,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insurance verification</strong> — confirm the inspector carries professional
                 indemnity insurance. This is a requirement of competent person scheme membership and
@@ -574,21 +574,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>One-bedroom flat</strong> — £120 to £200. Modern purpose-built flats are
                 typically quicker to inspect than converted Victorian properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Two to three-bedroom house</strong> — £180 to £320. Victorian terraced
                 houses with older wiring take longer and may cost more.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Student HMO (four to six bedrooms)</strong> — £300 to £500. Multiple
                 consumer units, fire alarm systems, and emergency lighting increase the inspection
@@ -596,7 +596,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large HMO (seven or more bedrooms)</strong> — £450 to £700+. Larger
                 properties with complex electrical installations and multiple distribution boards
@@ -627,7 +627,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete EICRs On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -663,7 +663,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Cambridge landlord EICR business with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -689,7 +689,7 @@ export default function LandlordElectricalSafetyCambridgePage() {
       heroTitle={
         <>
           Landlord Electrical Safety Cambridge:{' '}
-          <span className="text-yellow-400">EICR Requirements 2026</span>
+          <span className="text-elec-yellow">EICR Requirements 2026</span>
         </>
       }
       heroSubtitle="Everything Cambridge landlords need to know about electrical safety compliance — the 2020 Regulations, Cambridge City Council enforcement, student rental and HMO requirements, penalties of up to £30,000, EICR costs, and the summer inspection window."
@@ -700,7 +700,7 @@ export default function LandlordElectricalSafetyCambridgePage() {
       faqHeading="Frequently Asked Questions About Landlord Electrical Safety in Cambridge"
       relatedPages={relatedPages}
       ctaHeading="Complete Landlord EICRs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

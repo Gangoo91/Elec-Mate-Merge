@@ -180,7 +180,7 @@ const sections = [
           </h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Simple installation (detached/semi, short cable run)</strong> — £900 to
                 £1,300. Charger mounted near consumer unit, existing board has spare capacity.
@@ -188,7 +188,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard installation (terraced house, medium cable run)</strong> — £1,300
                 to £1,600. Cable run of 10 to 15 metres through the property, possible board
@@ -196,7 +196,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Complex installation (long run, board upgrade, earthing work)</strong> —
                 £1,600 to £2,200+. Cable run of 15 to 25 metres, consumer unit replacement, earth
@@ -225,7 +225,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Victorian and Edwardian terraces</strong> — the consumer unit is often at
                 the rear of the property (under the stairs or in the kitchen), while parking is at
@@ -235,7 +235,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Flats and converted properties</strong> — shared parking, freeholder
                 permission requirements, and communal electrical risers complicate installations.
@@ -244,7 +244,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>On-street parking only</strong> — many London properties have no off-street
                 parking. On-street EV charging requires a cable channel across the pavement (some
@@ -254,7 +254,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Conservation areas and listed buildings</strong> — charger mounting on the
                 front elevation may require planning permission. Check with your borough planning
@@ -263,7 +263,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ageing consumer units</strong> — many London properties still have older
                 consumer units without RCD protection. Adding a 32A EV charger circuit often
@@ -295,7 +295,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated circuit (Regulation 722.533.101)</strong> — each EV charger
                 requires a dedicated circuit. In London's older consumer units, this often means
@@ -304,7 +304,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection (Regulation 722.531.3.101)</strong> — the EV circuit must be
                 protected by an appropriate RCD. Where the charger can produce DC residual currents,
@@ -313,7 +313,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing (Regulation 722.411.4.1)</strong> — earthing arrangements require
                 particular attention. The majority of London properties are on PME supplies, where
@@ -322,7 +322,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable sizing for long runs</strong> — the long cable runs common in London
                 terraces require careful{' '}
@@ -395,7 +395,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98 notification (standard domestic)</strong> — for single-phase 7kW
                 chargers (up to 32A), submit a G98 notification via the UKPN online portal. This is
@@ -404,7 +404,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G99 application (three-phase/commercial)</strong> — for 22kW three-phase
                 chargers or multiple charge points, G99 requires prior approval from UKPN. Allow 4
@@ -413,7 +413,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Network capacity</strong> — in some London areas with heavy EV charger
                 uptake, UKPN may flag capacity constraints. This is more common in dense residential
@@ -443,7 +443,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV chargepoint grant (national)</strong> — available to flat owners and
                 tenants only (not homeowners in houses). Covers up to 75% of installation cost,
@@ -451,7 +451,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Borough on-street charging schemes</strong> — multiple London boroughs
                 including Westminster, Lambeth, Hackney, Wandsworth, Brent, and Islington have
@@ -460,7 +460,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Workplace Charging Scheme</strong> — London businesses can claim up to £350
                 per socket (up to 40 sockets) for workplace EV charger installations. This is a
@@ -468,7 +468,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mayor of London EV Infrastructure Strategy</strong> — the GLA is investing
                 in rapid charging hubs and supporting borough-level on-street charging rollouts.
@@ -494,7 +494,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Pricing London Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -528,7 +528,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify London EV installations"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification."
           icon={Car}
         />
       </>
@@ -554,7 +554,7 @@ export default function EVChargerInstallationLondonPage() {
       heroTitle={
         <>
           EV Charger Installation London:{' '}
-          <span className="text-yellow-400">Costs, DNO, and Grants 2026</span>
+          <span className="text-elec-yellow">Costs, DNO, and Grants 2026</span>
         </>
       }
       heroSubtitle="Local costs for EV charger installation across London, UKPN DNO notification process, London borough grants, terraced house and flat challenges, PME earthing considerations, and Section 722 compliance."
@@ -565,7 +565,7 @@ export default function EVChargerInstallationLondonPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in London"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify EV Charger Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

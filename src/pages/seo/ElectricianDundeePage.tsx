@@ -225,7 +225,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New connections</strong> — new supplies, service upgrades, and diversity of
                 supply queries for multi-occupancy properties. Apply through the SSEN connections
@@ -233,7 +233,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Solar PV and battery storage</strong> — G98 notification for systems up to
                 16A per phase (online, no prior approval needed). G99 application for larger
@@ -241,7 +241,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger notifications</strong> — chargers above 7.4 kW single-phase
                 require SSEN notification. Standard 7.4 kW domestic chargers typically fall under
@@ -314,7 +314,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacements</strong> — upgrading rewirable fuse boards in
                 older housing to modern RCD or RCBO consumer units. A building warrant is required
@@ -322,7 +322,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full rewires</strong> — essential on pre-1970s local authority housing and
                 older tenement flats. Allow additional time for surface-mounted trunking work in
@@ -330,7 +330,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICRs for the rental market</strong> — Dundee has a large student population
                 (University of Dundee, Abertay University) and a substantial HMO market. EICRs are
@@ -338,7 +338,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger installations</strong> — growing demand in suburban areas. SSEN
                 notification required where supply capacity is upgraded.
@@ -416,7 +416,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EIC and EICR Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -463,7 +463,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Dundee electricians"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -490,7 +490,7 @@ export default function ElectricianDundeePage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Dundee: <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Dundee: <span className="text-elec-yellow">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Dundee's mix of Victorian tenements, post-war social housing, and a growing waterfront commercial district creates steady demand for rewires, EICRs, and commercial electrical work. Find SELECT and NICEIC registered electricians in Dundee."
@@ -501,7 +501,7 @@ export default function ElectricianDundeePage() {
       faqHeading="Frequently Asked Questions About Electricians in Dundee"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Dundee Electricians"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Scottish Building Standards and the challenges of Dundee's housing stock. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Scottish Building Standards and the challenges of Dundee's housing stock. 7-day free trial."
     />
   );
 }

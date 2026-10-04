@@ -43,7 +43,7 @@ export default function BusbarSizingCalculatorPage() {
       badgeIcon={Activity}
       heroTitle={
         <>
-          <span className="text-yellow-400">Busbar Sizing Calculator</span> — Current Rating and
+          <span className="text-elec-yellow">Busbar Sizing Calculator</span> — Current Rating and
           Cross-Section Tool
         </>
       }
@@ -80,14 +80,14 @@ export default function BusbarSizingCalculatorPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
                 <ul className="space-y-4 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Current carrying capacity</strong> — the busbar must carry the full
                       load current without exceeding the maximum allowable temperature.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Temperature rise</strong> — the busbar temperature must not exceed the
                       limits set by the enclosure standard (BS EN 61439) under sustained load
@@ -95,7 +95,7 @@ export default function BusbarSizingCalculatorPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Voltage drop</strong> — the resistive voltage drop along the busbar
                       length must be within acceptable limits, particularly for long busbar trunking
@@ -103,7 +103,7 @@ export default function BusbarSizingCalculatorPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Short-circuit withstand</strong> — the busbar must withstand the
                       thermal and mechanical effects of the prospective short-circuit current for
@@ -135,27 +135,27 @@ export default function BusbarSizingCalculatorPage() {
                   <h3 className="font-bold text-white text-lg mb-3">Copper Busbars</h3>
                   <ul className="space-y-2 text-white text-sm leading-relaxed">
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Resistivity: 17.2 n-ohm-m at 20°C</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Density: 8,900 kg/m³</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Current density: 1.2-2.0 A/mm²</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>k factor (adiabatic): 159 bare, normal conditions (Table 54.6)</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Higher current capacity per mm²</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>More compact installation</span>
                     </li>
                   </ul>
@@ -164,27 +164,27 @@ export default function BusbarSizingCalculatorPage() {
                   <h3 className="font-bold text-white text-lg mb-3">Aluminium Busbars</h3>
                   <ul className="space-y-2 text-white text-sm leading-relaxed">
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Resistivity: 28.3 n-ohm-m at 20°C</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Density: 2,700 kg/m³</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Current density: 0.8-1.2 A/mm²</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>k factor (adiabatic): 105 bare, normal conditions (Table 54.6)</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>67% lighter than copper</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Lower material cost per metre</span>
                     </li>
                   </ul>
@@ -212,17 +212,17 @@ export default function BusbarSizingCalculatorPage() {
                 allowable current density for the busbar material and installation conditions.
               </p>
               <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4 text-center">
-                <p className="text-xl font-mono font-bold text-yellow-400">A = I / J</p>
+                <p className="text-xl font-mono font-bold text-elec-yellow">A = I / J</p>
                 <div className="mt-4 text-left max-w-md mx-auto space-y-1 text-sm text-white">
                   <p>
-                    <strong className="text-yellow-400">A</strong> = required cross-sectional area
+                    <strong className="text-elec-yellow">A</strong> = required cross-sectional area
                     in mm²
                   </p>
                   <p>
-                    <strong className="text-yellow-400">I</strong> = design current in amperes
+                    <strong className="text-elec-yellow">I</strong> = design current in amperes
                   </p>
                   <p>
-                    <strong className="text-yellow-400">J</strong> = allowable current density in
+                    <strong className="text-elec-yellow">J</strong> = allowable current density in
                     A/mm²
                   </p>
                 </div>
@@ -233,35 +233,35 @@ export default function BusbarSizingCalculatorPage() {
                 </h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Copper, enclosed panel:</strong> 1.2 A/mm² — the most conservative
                       value, used for busbars inside enclosed switchgear with limited ventilation.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Copper, ventilated enclosure:</strong> 1.6 A/mm² — for busbars inside
                       ventilated panels or trunking with adequate airflow.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Copper, free air:</strong> 2.0 A/mm² — for exposed busbars with
                       unrestricted airflow, such as open busbar systems in substations.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Aluminium, enclosed panel:</strong> 0.8 A/mm² — lower than copper due
                       to the higher resistivity of aluminium.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Aluminium, free air:</strong> 1.2 A/mm² — equivalent to copper in an
                       enclosed panel.
@@ -294,21 +294,21 @@ export default function BusbarSizingCalculatorPage() {
                 </h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Bare copper/aluminium busbars:</strong> maximum temperature rise of
                       70K above ambient (maximum 105°C at 35°C ambient).
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Insulated busbars:</strong> maximum temperature depends on the
                       insulation class — typically 90°C or 105°C for common insulation types.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Connection points:</strong> bolted connections must not exceed 105°C
                       for bare connections or 90°C for insulated connections (due to the higher
@@ -344,20 +344,20 @@ export default function BusbarSizingCalculatorPage() {
                 a voltage drop proportional to the current and the conductor length.
               </p>
               <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4 text-center">
-                <p className="text-xl font-mono font-bold text-yellow-400">Vd = I x R x L</p>
+                <p className="text-xl font-mono font-bold text-elec-yellow">Vd = I x R x L</p>
                 <div className="mt-4 text-left max-w-md mx-auto space-y-1 text-sm text-white">
                   <p>
-                    <strong className="text-yellow-400">Vd</strong> = voltage drop in volts
+                    <strong className="text-elec-yellow">Vd</strong> = voltage drop in volts
                   </p>
                   <p>
-                    <strong className="text-yellow-400">I</strong> = current in amperes
+                    <strong className="text-elec-yellow">I</strong> = current in amperes
                   </p>
                   <p>
-                    <strong className="text-yellow-400">R</strong> = resistance per metre (ohm/m),
+                    <strong className="text-elec-yellow">R</strong> = resistance per metre (ohm/m),
                     calculated from resistivity and cross-sectional area
                   </p>
                   <p>
-                    <strong className="text-yellow-400">L</strong> = busbar length in metres
+                    <strong className="text-elec-yellow">L</strong> = busbar length in metres
                   </p>
                 </div>
               </div>
@@ -401,13 +401,13 @@ export default function BusbarSizingCalculatorPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
                 <h3 className="font-bold text-white text-lg mb-4">Thermal Withstand Check</h3>
                 <div className="text-center mb-4">
-                  <p className="text-xl font-mono font-bold text-yellow-400">
+                  <p className="text-xl font-mono font-bold text-elec-yellow">
                     A<sub>min</sub> = root(I²t) / k
                   </p>
                 </div>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>
                         A<sub>min</sub>
@@ -416,13 +416,13 @@ export default function BusbarSizingCalculatorPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>I²t</strong> = let-through energy of the protective device in A²s
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>k</strong> = material factor from BS 7671 Table 54.6 for bare
                       conductors — 159 for copper, 105 for aluminium under normal conditions (see
@@ -451,7 +451,7 @@ export default function BusbarSizingCalculatorPage() {
                 </p>
                 <ul className="space-y-2 text-white text-sm leading-relaxed">
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Bare copper (Table 54.6):</strong> k = 228 where the busbar is visible
                       and in restricted areas, 159 under normal conditions, 138 where there is a
@@ -460,14 +460,14 @@ export default function BusbarSizingCalculatorPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Bare aluminium (Table 54.6):</strong> k = 125 visible and in
                       restricted areas, 105 under normal conditions, 91 where there is a fire risk.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Type-tested assemblies:</strong> for busbars inside a switchgear or
                       busbar trunking assembly, the manufacturer&apos;s verified short-circuit
@@ -525,7 +525,7 @@ export default function BusbarSizingCalculatorPage() {
             <>
               <div className="space-y-6">
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-3">
+                  <h3 className="font-bold text-elec-yellow text-lg mb-3">
                     Example 1: Main Distribution Board Busbar
                   </h3>
                   <div className="space-y-2 text-white leading-relaxed text-sm">
@@ -536,12 +536,12 @@ export default function BusbarSizingCalculatorPage() {
                     </p>
                     <p className="font-mono text-white">
                       Current density method: A = 630 / 1.2 ={' '}
-                      <strong className="text-yellow-400">525 mm²</strong>
+                      <strong className="text-elec-yellow">525 mm²</strong>
                     </p>
                     <p className="font-mono text-white">
                       Short-circuit check (k = 159, bare copper, normal conditions): A =
                       root(25000² x 0.1) / 159 = 7906 / 159 ={' '}
-                      <strong className="text-yellow-400">49.7 mm²</strong>
+                      <strong className="text-elec-yellow">49.7 mm²</strong>
                     </p>
                     <p>
                       The current density requirement governs (525 mm² vs 44.9 mm²). Select a
@@ -550,7 +550,7 @@ export default function BusbarSizingCalculatorPage() {
                   </div>
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-3">
+                  <h3 className="font-bold text-elec-yellow text-lg mb-3">
                     Example 2: Busbar Trunking Run
                   </h3>
                   <div className="space-y-2 text-white leading-relaxed text-sm">
@@ -560,14 +560,14 @@ export default function BusbarSizingCalculatorPage() {
                     </p>
                     <p className="font-mono text-white">
                       Required CSA: 1600 / 0.8 ={' '}
-                      <strong className="text-yellow-400">2000 mm²</strong> per phase
+                      <strong className="text-elec-yellow">2000 mm²</strong> per phase
                     </p>
                     <p className="font-mono text-white">
                       Resistance at 70°C: (28.3 x 10⁻⁶ x 1.20) / (2000 x 10⁻⁶) = 0.0170 ohm/m
                     </p>
                     <p className="font-mono text-white">
                       Vd = 1600 x 0.0170 x 30 / 1000 ={' '}
-                      <strong className="text-yellow-400">0.82V per phase</strong>
+                      <strong className="text-elec-yellow">0.82V per phase</strong>
                     </p>
                     <p>
                       As a percentage of 230V: 0.82 / 230 x 100 = 0.36% — well within the 5% limit.
@@ -731,7 +731,7 @@ export default function BusbarSizingCalculatorPage() {
         },
       ]}
       ctaHeading="Size Busbars in Seconds on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site calculations. Busbar sizing, cable sizing, voltage drop, and 50+ other calculators. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site calculations. Busbar sizing, cable sizing, voltage drop, and 50+ other calculators. 7-day free trial, cancel anytime."
     />
   );
 }

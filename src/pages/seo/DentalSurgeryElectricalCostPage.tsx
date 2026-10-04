@@ -165,7 +165,7 @@ const sections = [
           </h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Supplementary equipotential bonding</strong> — All
                 extraneous-conductive-parts and protective conductors within the patient environment
@@ -174,7 +174,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection</strong> — All circuits in the Group 1 medical location must
                 have 30 mA RCD protection per BS 7671 Section 411. Individual RCBOs are recommended
@@ -182,7 +182,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Socket outlet identification</strong> — Socket outlets in the medical
                 location should be clearly identified (coloured or labelled) to distinguish them
@@ -190,7 +190,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Protective conductor monitoring</strong> — The integrity of the protective
                 conductor for circuits supplying medical equipment should be monitored where
@@ -220,7 +220,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Per-Chair Electrical Requirements</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Chair unit hardwired connection</strong> — 1 to 3kW, dedicated circuit,
                 local isolator adjacent to the chair. Some chair units require a 20A supply. Cost:
@@ -228,7 +228,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ancillary socket outlets</strong> — 2 to 4 double sockets per treatment room
                 for ultrasonic scaler, additional curing light, patient monitor, and ancillary
@@ -236,7 +236,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dental operating light</strong> — Typically ceiling-mounted with a dedicated
                 connection point. LED dental lights draw 50 to 150W. Connection and ceiling rose:
@@ -244,7 +244,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IT and data</strong> — 2 data points per treatment room for the practice
                 management system and digital imaging. Cat6A data points: £80 to £150 each
@@ -272,7 +272,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Stethoscope className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Stethoscope className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Intraoral X-ray</strong> — 1 to 2kW, dedicated 13A circuit per X-ray unit.
                 Radiation warning light circuit wired to the X-ray control. Cost: £200 to £400 per
@@ -280,7 +280,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Stethoscope className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Stethoscope className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>OPG / Panoramic X-ray</strong> — 3 to 5kW, dedicated 20A or 32A circuit.
                 Requires stable voltage supply — consider a dedicated radial from the main board.
@@ -289,7 +289,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Stethoscope className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Stethoscope className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CBCT scanner</strong> — 5 to 10kW, dedicated 32A circuit, often with
                 specific voltage tolerance requirements. Some scanners require UPS protection. Cost:
@@ -297,7 +297,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Stethoscope className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Stethoscope className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dental compressor</strong> — 1.5 to 5kW, dedicated circuit, typically
                 located in a plant room. Oil-free dental compressors require a clean air supply and
@@ -307,7 +307,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Stethoscope className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Stethoscope className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Autoclave (steriliser)</strong> — 2 to 6kW, dedicated 20A or 32A circuit in
                 the decontamination room. Some autoclaves require a dedicated water supply with an
@@ -329,7 +329,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Single surgery practice (£8,000 to £12,000)</strong> — 1 treatment room with
                 Section 710 bonding, 1 intraoral X-ray, compressor circuit, decontamination room
@@ -338,7 +338,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3-surgery practice (£15,000 to £20,000)</strong> — 3 treatment rooms with
                 Section 710 bonding, intraoral X-ray in each, OPG room, compressor and suction
@@ -347,7 +347,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large multi-surgery practice (£20,000 to £25,000+)</strong> — 5+ treatment
                 rooms, CBCT scanner with UPS, multiple compressors, full IT server room, digital
@@ -377,7 +377,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671:2018+A4:2026 Section 710</strong> — Medical locations. Group 1
                 classification for dental treatment rooms. Supplementary bonding, RCD protection per
@@ -385,7 +385,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HTM 06-01</strong> — Department of Health guidance on electrical
                 installations in healthcare premises. Covers safety, resilience, and design criteria
@@ -393,7 +393,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ionising Radiation Regulations 2017</strong> — Applies to X-ray
                 installations. The dental practice must have a radiation protection adviser and the
@@ -402,7 +402,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CQC registration requirements</strong> — The Care Quality Commission
                 inspects dental premises. A valid EIC and regular EICR (typically 3-yearly for
@@ -428,7 +428,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Stethoscope className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Stethoscope className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Get Equipment Data Sheets</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -498,7 +498,7 @@ export default function DentalSurgeryElectricalCostPage() {
       heroTitle={
         <>
           Dental Surgery Electrical Cost:{' '}
-          <span className="text-yellow-400">UK Medical Location Guide 2026</span>
+          <span className="text-elec-yellow">UK Medical Location Guide 2026</span>
         </>
       }
       heroSubtitle="What does dental surgery electrical installation cost? This guide covers Section 710 medical location requirements, dental chair supply, X-ray equipment, compressors, sterilisation, and realistic pricing from £8,000 to £25,000 — for dental practice owners and electrical contractors."
@@ -509,7 +509,7 @@ export default function DentalSurgeryElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Dental Surgery Electrical Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Dental Surgery Electrical with Medical Location Compliance"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for medical location quoting with Section 710 compliance, equipment schedules, and CQC-ready EIC certificates. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for medical location quoting with Section 710 compliance, equipment schedules, and CQC-ready EIC certificates. 7-day free trial."
     />
   );
 }

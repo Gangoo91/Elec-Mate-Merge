@@ -149,7 +149,7 @@ export default function ElectricalDistributionSymbolsPage() {
       heroTitle={
         <>
           Distribution Board Symbols:{' '}
-          <span className="text-yellow-400">IEC 60617 reference for UK electricians</span>
+          <span className="text-elec-yellow">IEC 60617 reference for UK electricians</span>
         </>
       }
       heroSubtitle="Every distribution and protection device symbol — MCB, RCD, RCBO, SPD, contactor, ATS — drawn to IEC 60617 with BS 7671 protection-device cross-references."

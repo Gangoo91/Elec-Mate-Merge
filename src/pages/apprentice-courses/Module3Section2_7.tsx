@@ -27,7 +27,11 @@ const quickCheckQuestions = [
   {
     id: 'cable-separation',
     question: 'Name one way to separate power and data cables within the same trunking.',
-    options: ['Use cable ties', 'Use barriers or separate compartments', 'Use different colours'],
+    options: [
+      'Use cable ties',
+      'Use barriers or separate compartments',
+      'Run them on opposite sides with no barrier',
+    ],
     correctIndex: 1,
     explanation:
       'Physical barriers or separate compartments prevent electromagnetic interference between power and data cables.',
@@ -35,7 +39,11 @@ const quickCheckQuestions = [
   {
     id: 'entry-protection',
     question: 'What should be fitted at containment entry points to protect cable insulation?',
-    options: ['Insulation tape', 'Grommets or bushes', 'Paint'],
+    options: [
+      'Insulation tape',
+      'Grommets or bushes',
+      'Heat-shrink on the cable',
+    ],
     correctIndex: 1,
     explanation:
       'Grommets or bushes prevent sharp edges from damaging cable insulation at entry and exit points.',
@@ -46,7 +54,7 @@ const quickCheckQuestions = [
     options: [
       'It increases voltage drop',
       'It causes overheating and makes cable pulling difficult',
-      'It affects cable colour coding',
+      'It stops the RCD protecting the circuits',
     ],
     correctIndex: 1,
     explanation:
@@ -114,7 +122,7 @@ const quizQuestions = [
       'Insulation tape',
       'Grommets or bushes',
       'Adhesive pads',
-      'Paint',
+      'A coat of paint on the edge',
     ],
     correctAnswer: 1,
     explanation:

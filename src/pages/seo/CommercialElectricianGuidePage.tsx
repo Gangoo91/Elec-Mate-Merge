@@ -203,7 +203,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-phase supplies</strong> — commercial premises typically have a
                 three-phase 400V supply, not a single-phase 230V supply. You need to understand
@@ -213,7 +213,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Larger installations and distribution</strong> — commercial buildings have
                 main distribution boards feeding sub-distribution boards, sometimes across multiple
@@ -222,7 +222,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire alarm systems (BS 5839-1)</strong> — most commercial buildings require
                 a fire detection and alarm system. Design categories (L1 through L4, M) determine
@@ -232,7 +232,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency lighting (BS 5266)</strong> — commercial premises require
                 emergency escape lighting that operates when the normal lighting fails. The system
@@ -241,7 +241,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SWA cabling</strong> — Steel Wire Armoured cable is the standard for
                 external and underground cable runs on commercial sites. Stripping, terminating, and
@@ -249,7 +249,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Ruler className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Ruler className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Design work</strong> — commercial projects require electrical design:
                 schematic diagrams, distribution board schedules, cable sizing calculations,
@@ -279,7 +279,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Office fit-outs and refurbishments</strong> — installing power, lighting,
                 data, fire alarm, and emergency lighting for new office spaces or refurbishments of
@@ -289,7 +289,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Retail and hospitality</strong> — shop fits, restaurant installations, hotel
                 refurbishments, and leisure facilities. Typically involves decorative lighting,
@@ -298,7 +298,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Warehouse and industrial</strong> — power distribution for machinery and
                 equipment, high-bay lighting, three-phase motor installations, distribution board
@@ -307,7 +307,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Schools and education</strong> — new-build schools, refurbishments, and
                 planned maintenance programmes. Requires careful coordination with the school
@@ -315,7 +315,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Healthcare</strong> — hospitals, GP surgeries, dental practices, and care
                 homes. Specialist requirements including medical IT systems, supplementary
@@ -324,7 +324,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Periodic inspection and testing (commercial EICRs)</strong> — inspecting and
                 testing existing commercial installations. Larger, more complex, and more
@@ -354,7 +354,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Level 3 Diploma in Electrical Installation</strong> (C&G 2365, 2357, or
                 5357) — the foundation installation qualification. Same as domestic, but commercial
@@ -363,7 +363,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>18th Edition IET Wiring Regulations</strong> (C&G 2382-22) — essential
                 knowledge of{' '}
@@ -376,7 +376,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inspection and Testing</strong> (C&G 2391) — essential for carrying out
                 initial verification of your own installations and periodic inspections of existing
@@ -384,7 +384,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Design and Verification</strong> (C&G 2396) — the critical qualification
                 that distinguishes a commercial electrician from a domestic installer. Covers load
@@ -394,7 +394,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire alarm qualifications</strong> — FIA Foundation Module and FIA Unit 3
                 (Fire Detection and Alarm) for installing fire alarm systems to BS 5839-1. Required
@@ -402,7 +402,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SSIP accreditation</strong> (Safety Schemes in Procurement) — most main
                 contractors require SSIP-registered subcontractors. Options include CHAS,
@@ -507,7 +507,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Taking off from drawings</strong> — quantifying materials and labour from
                 architectural and electrical drawings, specifications, and bills of quantities. This
@@ -516,7 +516,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Material pricing</strong> — obtaining trade prices for all materials from
                 your electrical wholesaler. Commercial jobs involve bulk quantities, and discounts
@@ -525,7 +525,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Labour rates and measured work</strong> — calculating labour time based on
                 measured work rates. Industry pricing guides (SPONS Electrical, Electrical
@@ -534,7 +534,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Overhead and profit</strong> — commercial tenders must include your business
                 overheads (van, insurance, tools, scheme fees, office costs, admin time) and a
@@ -577,7 +577,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pre-qualification</strong> — before you can tender for work, most main
                 contractors require you to pass a pre-qualification process. This typically involves
@@ -588,7 +588,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Programme and coordination</strong> — your work must fit within the main
                 contractor's programme. First-fix electrical work typically follows structural and
@@ -598,7 +598,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Payment terms</strong> — commercial contracts typically operate on monthly
                 valuations with 30 to 60-day payment terms. You submit a monthly application for
@@ -608,7 +608,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Variations and extras</strong> — commercial contracts rarely run exactly to
                 plan. Changes to the scope, additional work, and unforeseen issues are managed
@@ -643,7 +643,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <HardHat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <HardHat className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Contractor duties</strong> — plan, manage, and monitor your own work to
                 ensure it is carried out safely and without risk to health. Provide your workers
@@ -655,7 +655,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <HardHat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <HardHat className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Designer duties (if applicable)</strong> — if you are designing the
                 electrical installation (not just installing someone else's design), you have
@@ -666,7 +666,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <HardHat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <HardHat className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RAMS (Risk Assessments and Method Statements)</strong> — for every
                 significant work activity, you must produce a risk assessment and method statement
@@ -702,7 +702,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Commercial EICR with Unlimited Circuits
@@ -718,7 +718,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Flame className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Fire Alarm and Emergency Lighting Certificates
@@ -741,7 +741,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Brain className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI Circuit Designer</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -755,7 +755,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Three-Phase Calculators</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -769,7 +769,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileText className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">RAMS Generator and AI Cost Engineer</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -804,7 +804,7 @@ export default function CommercialElectricianGuidePage() {
       heroTitle={
         <>
           Commercial Electrician Guide:{' '}
-          <span className="text-yellow-400">Working in Commercial Electrical Installation</span>
+          <span className="text-elec-yellow">Working in Commercial Electrical Installation</span>
         </>
       }
       heroSubtitle="Three-phase distribution, fire alarms, emergency lighting, SWA cabling, containment systems, and design work. What commercial electricians do, the qualifications you need, how to price commercial contracts, and how Elec-Mate handles it all."

@@ -193,7 +193,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ventilation</strong> — natural ventilation (AN) requires openings at low
                 level (inlet) and high level (outlet) with total area sufficient for the heat
@@ -203,7 +203,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical clearances</strong> — minimum phase-to-earth and phase-to-phase
                 clearances in air depend on voltage. At 11 kV, minimum clearance is 120 mm
@@ -223,7 +223,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Access and safety</strong> — HV transformer chambers must be lockable, with
                 warning notices (yellow triangular HV warning signs) on all access doors. A safety
@@ -273,7 +273,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ester fluid-filled</strong> — synthetic or natural ester dielectric fluid as
                 an alternative to mineral oil. Higher fire point than mineral oil (fire point
@@ -398,7 +398,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Timescales</strong> — DNO connection agreements for HV supplies and large LV
                 supplies typically take 3–12 months to process, depending on the network complexity.
@@ -426,7 +426,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insulation resistance tests</strong> — using a 5 kV insulation resistance
                 tester (for HV/LV transformers): primary to earth, secondary to earth, primary to
@@ -436,7 +436,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Turns ratio test</strong> — verifies the transformation ratio matches the
                 nameplate data and confirms the tap changer is set correctly. Carried out with a TTR
@@ -446,7 +446,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Vector group test</strong> — confirms the phase relationship between primary
                 and secondary voltages (e.g., Dyn11 — delta primary, star secondary with neutral,
@@ -455,7 +455,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Oil dielectric strength (oil-filled)</strong> — oil sample tested to BS EN
                 60156 using a standard oil test set. Minimum breakdown voltage 30 kV for a 2.5 mm
@@ -482,7 +482,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Annual visual inspection</strong> — check for oil leaks (oil-filled),
                 external damage, corrosion, termination integrity, label legibility, condition of
@@ -491,7 +491,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Oil sampling (oil-filled) — every 2–3 years</strong> — dissolved gas
                 analysis (DGA), moisture content, dielectric strength, acid number, and interfacial
@@ -500,7 +500,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Thermographic survey — every 2–3 years</strong> — infrared thermography of
                 all LV and HV terminations identifies loose connections and overloaded conductors
@@ -509,7 +509,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Protection relay testing — every 3–5 years</strong> — secondary injection
                 testing of overcurrent and earth fault relays to verify operating times and current
@@ -536,7 +536,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete the EIC on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -555,7 +555,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certificate transformer installations with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, commissioning test records, and instant PDF export. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion, commissioning test records, and instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -581,7 +581,7 @@ export default function TransformerInstallationGuidePage() {
       heroTitle={
         <>
           Transformer Installation UK:{' '}
-          <span className="text-yellow-400">Complete Electrical Guide</span>
+          <span className="text-elec-yellow">Complete Electrical Guide</span>
         </>
       }
       heroSubtitle="Everything UK electricians and engineers need to know about electrical transformer installation — types of transformer, ventilation and clearance requirements, oil-filled vs dry-type selection, primary and secondary protection, DNO notification, commissioning tests, and maintenance schedules."
@@ -592,7 +592,7 @@ export default function TransformerInstallationGuidePage() {
       faqHeading="Frequently Asked Questions About Transformer Installation"
       relatedPages={relatedPages}
       ctaHeading="Complete Transformer Installation EICs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site electrical installation certification, commissioning test records, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site electrical installation certification, commissioning test records, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

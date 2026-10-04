@@ -195,13 +195,13 @@ const defects = [
   {
     title: 'Missing or incorrect labelling',
     code: 'C2 / C3',
-    codeTint: 'bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-white/[0.14] text-yellow-300',
+    codeTint: 'bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-white/[0.14] text-elec-yellow',
     detail: 'No warning notice indicating PV/battery presence per Reg 514.15.1. Severity depends on whether other warning provisions exist.',
   },
   {
     title: 'Earthing conflicts (earth loop)',
     code: 'C3',
-    codeTint: 'bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-white/[0.14] text-yellow-300',
+    codeTint: 'bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-white/[0.14] text-elec-yellow',
     detail: 'PV DC string earthed both at the inverter and at the array. C2/C1 only if symptoms of fault current circulation are present.',
   },
   {
@@ -240,15 +240,15 @@ const sections = [
           <h3 className="font-bold text-white mb-2">Consumer vs generator vs prosumer</h3>
           <div className="grid sm:grid-cols-3 gap-3">
             <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10">
-              <p className="text-yellow-400 font-bold mb-1">Consumer</p>
+              <p className="text-elec-yellow font-bold mb-1">Consumer</p>
               <p className="text-white text-sm">Draws power from the supply only.</p>
             </div>
             <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10">
-              <p className="text-yellow-400 font-bold mb-1">Generator</p>
+              <p className="text-elec-yellow font-bold mb-1">Generator</p>
               <p className="text-white text-sm">Feeds power to the supply only.</p>
             </div>
             <div className="p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <p className="text-yellow-400 font-bold mb-1">Prosumer (PEI)</p>
+              <p className="text-elec-yellow font-bold mb-1">Prosumer (PEI)</p>
               <p className="text-white text-sm">Does both — consumes and produces / stores.</p>
             </div>
           </div>
@@ -274,7 +274,7 @@ const sections = [
           {prosumerSources.map((s) => (
             <div key={s.name} className={`p-5 rounded-2xl border ${s.tint}`}>
               <p className="text-white font-bold mb-1">{s.name}</p>
-              <p className="text-white/90 text-sm leading-relaxed">{s.note}</p>
+              <p className="text-white text-sm leading-relaxed">{s.note}</p>
             </div>
           ))}
         </div>
@@ -307,7 +307,7 @@ const sections = [
           ].map(([title, body]) => (
             <div key={title} className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
               <p className="text-white font-bold mb-1">{title}</p>
-              <p className="text-white/90 text-sm leading-relaxed">{body}</p>
+              <p className="text-white text-sm leading-relaxed">{body}</p>
             </div>
           ))}
         </div>
@@ -383,15 +383,15 @@ const sections = [
                 }`}
               >
                 <div className="flex items-center justify-between gap-3 mb-1">
-                  <span className="text-yellow-400 font-bold">{r.type}</span>
-                  <span className="text-white/70 text-xs text-right">{r.detects}</span>
+                  <span className="text-elec-yellow font-bold">{r.type}</span>
+                  <span className="text-white text-xs text-right">{r.detects}</span>
                 </div>
                 <p className="text-white text-sm leading-relaxed">{r.prosumer}</p>
               </div>
             ))}
           </div>
         </div>
-        <p className="text-white/80 text-sm">
+        <p className="text-white text-sm">
           The minimum acceptable type for any given circuit ultimately depends on the inverter
           topology and the manufacturer&rsquo;s instructions — always consult the inverter&rsquo;s
           installation manual alongside Reg 712.531.3.5.1.
@@ -421,14 +421,14 @@ const sections = [
             {labelLocations.map((l) => (
               <div
                 key={l.id}
-                className="flex items-start gap-3 p-4 rounded-xl bg-amber-900/20 border border-amber-700/40"
+                className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.06] border border-amber-700/40"
               >
-                <span className="text-yellow-400 font-bold shrink-0">{l.id}</span>
+                <span className="text-elec-yellow font-bold shrink-0">{l.id}</span>
                 <span className="text-white text-sm leading-relaxed">{l.text}</span>
               </div>
             ))}
           </div>
-          <p className="text-white/70 text-xs mt-4">
+          <p className="text-white text-xs mt-4">
             Reg 514.15.1 requires the warning notice to be durably marked and to identify the
             relevant point(s) of isolation. An example notice is given at Figure 11E of Appendix 11.
           </p>
@@ -449,7 +449,7 @@ const sections = [
         </p>
         <div className="grid sm:grid-cols-2 gap-4 my-6">
           <div className="p-5 rounded-2xl bg-emerald-900/20 border border-emerald-700/40">
-            <p className="text-yellow-400 font-bold text-lg mb-2">ENA G98 — "Notify"</p>
+            <p className="text-elec-yellow font-bold text-lg mb-2">ENA G98 — "Notify"</p>
             <ul className="space-y-2 text-white text-sm">
               <li>Small-scale generation.</li>
               <li>Inverter must be type-approved per the G98 product specification.</li>
@@ -458,7 +458,7 @@ const sections = [
             </ul>
           </div>
           <div className="p-5 rounded-2xl bg-blue-900/30 border border-blue-700/40">
-            <p className="text-yellow-400 font-bold text-lg mb-2">ENA G99 — "Apply"</p>
+            <p className="text-elec-yellow font-bold text-lg mb-2">ENA G99 — "Apply"</p>
             <ul className="space-y-2 text-white text-sm">
               <li>Larger generation.</li>
               <li>DNO approval required BEFORE installation.</li>
@@ -468,7 +468,7 @@ const sections = [
           </div>
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
-          <h3 className="font-bold text-yellow-300 mb-2">Check the type-approval database first</h3>
+          <h3 className="font-bold text-elec-yellow mb-2">Check the type-approval database first</h3>
           <p className="text-white leading-relaxed">
             The ENA maintains a published list of type-approved G98/G99 inverters. Confirm the
             installed equipment is on the list before signing off the prosumer inspection.
@@ -501,12 +501,12 @@ const sections = [
               </span>
               <div>
                 <p className="text-white font-bold">{d.title}</p>
-                <p className="text-white/85 text-sm leading-relaxed">{d.detail}</p>
+                <p className="text-white text-sm leading-relaxed">{d.detail}</p>
               </div>
             </div>
           ))}
         </div>
-        <p className="text-white/80 text-sm">
+        <p className="text-white text-sm">
           See our{' '}
           <SEOInternalLink href="/guides/bs-7671-a4-2026-luminaire-rcd-protection">
             RCD type selection guide
@@ -536,7 +536,7 @@ const sections = [
           ].map(([title, body]) => (
             <div key={title} className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
               <p className="text-white font-bold mb-1">{title}</p>
-              <p className="text-white/90 text-sm leading-relaxed">{body}</p>
+              <p className="text-white text-sm leading-relaxed">{body}</p>
             </div>
           ))}
         </div>
@@ -569,7 +569,7 @@ export default function ProsumerLVInstallationPage() {
       heroTitle={
         <>
           Prosumer&rsquo;s Low Voltage{' '}
-          <span className="text-yellow-400">Electrical Installation</span> (BS 7671 Chapter 82)
+          <span className="text-elec-yellow">Electrical Installation</span> (BS 7671 Chapter 82)
         </>
       }
       heroSubtitle='BS 7671:2018+A4:2026 introduced "Prosumer&rsquo;s low voltage electrical installation(s)" as a distinct installation type governed by the new Chapter 82 (Part 8 — Functional Requirements). This guide explains what counts as a prosumer installation, why Chapter 82 adds dedicated requirements, and what UK electricians must check on every installation that both consumes and produces electricity.'

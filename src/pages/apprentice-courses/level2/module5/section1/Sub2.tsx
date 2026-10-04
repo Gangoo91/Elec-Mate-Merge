@@ -65,7 +65,7 @@ const checks = [
     ],
     correctIndex: 2,
     explanation:
-      "Banksmen (also called traffic marshals or signallers) are formally trained for vehicle movements on site under the Workplace Transport guidance (HSG136). They have site authority to stop pedestrians and traffic during a movement. Their signal is binding on you under CDM 2015 Reg 15 (workers must co-operate with the PC's arrangements) and under HASAWA s.7(b) (workers must co-operate with safety duties). Ignoring a banksman is a fast way off site.",
+      "Banksmen (also called traffic marshals or signallers) are formally trained for vehicle movements on site under the Workplace Transport guidance (HSG136). They have site authority to stop pedestrians and traffic during a movement. Their signal is binding on you under CDM 2015 Reg 8 (workers must co-operate with the PC's arrangements) and under HASAWA s.7(b) (workers must co-operate with safety duties). Ignoring a banksman is a fast way off site.",
   },
   {
     id: 'mod5-s1-sub2-other-trades',
@@ -230,7 +230,7 @@ const faqs = [
     question:
       'Why is co-operation between trades treated as a statutory duty rather than just a polite-nice-to-have?',
     answer:
-      "HASAWA s.7(b) makes co-operation with safety arrangements a personal statutory duty on every employee — not optional. CDM 2015 Reg 15 reinforces it for construction sites specifically. The reason is that almost every serious incident on a multi-trade site has a 'failure to co-ordinate' element — a trade not knowing what another trade was doing, a sequence error, a hand-over miscommunication. Treating co-operation as a duty is what closes those gaps.",
+      "HASAWA s.7(b) makes co-operation with safety arrangements a personal statutory duty on every employee — not optional. CDM 2015 Reg 8 reinforces it for construction sites specifically. The reason is that almost every serious incident on a multi-trade site has a 'failure to co-ordinate' element — a trade not knowing what another trade was doing, a sequence error, a hand-over miscommunication. Treating co-operation as a duty is what closes those gaps.",
   },
 ];
 
@@ -256,7 +256,7 @@ export default function Sub2() {
           points={[
             "The trade workforce on a typical commercial fit-out includes electricians (Apprentice / Improver / Electrician / Approved), plumbers, joiners, plasterers, gas-safe engineers, painters, plant operators, labourers, banksmen and slingers/signallers. Each trade reports up its own contractor's chain to the Principal Contractor's site management.",
             "Your specific peer group as an apprentice is other apprentices, Improvers, the Approved Electrician you're paired with day to day, and the formally-allocated Mentor. The Approved Electrician directs the immediate task; the Foreman allocates the pairing.",
-            'Co-operation between trades is a statutory duty — HASAWA s.7(b) on every employee, CDM 2015 Reg 15 on every worker on a construction site. Trade clashes get resolved by conversation first, escalation to a Foreman if needed.',
+            'Co-operation between trades is a statutory duty — HASAWA s.7(b) on every employee, CDM 2015 Reg 8 on every worker on a construction site. Trade clashes get resolved by conversation first, escalation to a Foreman if needed.',
           ]}
         />
 
@@ -268,7 +268,7 @@ export default function Sub2() {
             'Identify the JIB grades for electricians (Apprentice / Improver / Electrician / Approved Electrician / Technician) and where the AM2 sits as the line between Improver and Electrician.',
             "Identify the apprentice's specific peer group — Improver, Approved Electrician, Mentor — and the role each plays in day-to-day learning.",
             'State the duty under HASAWA s.7 on every employee to take reasonable care and to co-operate with safety arrangements.',
-            "State the duty under CDM 2015 Reg 15 on every worker to co-operate with the Principal Contractor's arrangements and to comply with H&S information.",
+            "State the duty under CDM 2015 Reg 8 on every worker to co-operate with the Principal Contractor's arrangements and to comply with H&S information.",
           ]}
           initialVisibleCount={3}
         />
@@ -444,7 +444,7 @@ export default function Sub2() {
         <ConceptBlock
           title="Banksmen, slingers and signallers — vehicle and lift operations"
           plainEnglish="Banksmen (also called traffic marshals) direct vehicle movements on site — reversing tipper trucks, manoeuvring articulated lorries, controlling pedestrian access during a movement. Slingers attach loads to cranes and signallers direct the crane operator. All three roles require formal training and they have site authority to stop pedestrian and vehicle traffic during a movement."
-          onSite="When a banksman puts up a hand, you stop. Their signal is binding on you under CDM 2015 Reg 15 (workers must co-operate with the PC's arrangements) and under HASAWA s.7(b). Ignoring a banksman is a fast way off site. Crane lifts have an exclusion zone — if you're inside the zone during a lift, the slinger or signaller is responsible for clearing you out before the lift starts."
+          onSite="When a banksman puts up a hand, you stop. Their signal is binding on you under CDM 2015 Reg 8 (workers must co-operate with the PC's arrangements) and under HASAWA s.7(b). Ignoring a banksman is a fast way off site. Crane lifts have an exclusion zone — if you're inside the zone during a lift, the slinger or signaller is responsible for clearing you out before the lift starts."
         >
           <p>The legal framework:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -531,39 +531,36 @@ export default function Sub2() {
         </ConceptBlock>
 
         <RegsCallout
-          source="Construction (Design and Management) Regulations 2015 — Reg 15 (Workers' duties)"
+          source="Construction (Design and Management) Regulations 2015 — Reg 8 (General duties)"
           clause={
             <>
               <p className="mb-2">
-                <strong>Reg 15(1)</strong> &mdash; &quot;A worker must &mdash; (a) not carry out
-                construction work unless the worker has the skills, knowledge, training and
-                experience necessary to carry it out safely and without risk to health, or is in the
-                process of obtaining them; (b) report to the person in control of the way
-                construction work is carried out anything which the worker is aware is likely to
-                endanger the safety or health of the worker or others; and (c) co-operate with any
-                other person working on or in connection with the project to enable that person to
-                comply with their duties.&quot;
+                <strong>Reg 8(4)</strong> &mdash; &quot;A person with a duty or function under these
+                Regulations must cooperate with any other person working on or in relation to a
+                project, at the same or an adjoining construction site, to the extent necessary to
+                enable any person with a duty or function to fulfil that duty or function.&quot;
               </p>
               <p>
-                <strong>Reg 15(2)</strong> &mdash; &quot;A worker must comply with the requirements
-                of regulation 8 in so far as they relate to the performance of any duty assigned to
-                them.&quot;
+                <strong>Reg 8(5)</strong> &mdash; &quot;A person working on a project under the
+                control of another must report to that person anything they are aware of in relation
+                to the project which is likely to endanger their own health or safety or that of
+                others.&quot;
               </p>
             </>
           }
           meaning={
             <>
-              Reg 15 is the personal-duty regulation for every worker on a CDM site, including
-              apprentices. The three duties under Reg 15(1) are: don&apos;t do work you&apos;re not
-              competent for (Reg 15(1)(a) &mdash; this is why apprentices are supervised); report
-              hazards to the person in control (your Foreman, ultimately the Principal Contractor)
-              under Reg 15(1)(b); and co-operate with everyone else to let them comply with their
-              own duties under Reg 15(1)(c). The co-operation duty is what catches the cross-trade
-              clashes &mdash; you co-operate with the joiner, the plumber, the labourer and the
-              Principal Contractor&apos;s site team.
+              Reg 8 applies to anyone working on a project, apprentices included. Reg 8(4) is the
+              co-operation duty &mdash; it is what catches cross-trade clashes: you co-operate with
+              the joiner, the plumber, the labourer and the Principal Contractor&apos;s site team.
+              Reg 8(5) is the duty to report anything likely to endanger anyone to the person you
+              work under &mdash; your Foreman. Competence is put on your employer: Reg 15(7) says a
+              contractor must not put a person on site unless they have, or are in the process of
+              obtaining, the necessary skills, knowledge, training and experience, and Reg 15(8)
+              says the contractor must supervise them. That is why apprentices work supervised.
             </>
           }
-          cite="Source: Construction (Design and Management) Regulations 2015 (SI 2015/51), Reg 15 — verbatim from legislation.gov.uk."
+          cite="Source: CDM 2015 (SI 2015/51), Regs 8 and 15, as reproduced in HSE L153."
         />
 
         <RegsCallout
@@ -708,8 +705,8 @@ export default function Sub2() {
             <>
               Stop. Talk to the joiner. Agree who goes first or whether the spot can shift slightly.
               If you can&apos;t agree, fetch your Foreman (or the joiner&apos;s Foreman) to mediate
-              &mdash; they can re-sequence the work or adjust the programme. CDM 2015 Reg 15(1)(c)
-              puts a co-operation duty on you; HASAWA s.7(b) reinforces it. Conversation first;
+              &mdash; they can re-sequence the work or adjust the programme. CDM 2015 Reg 8(4) puts
+              a co-operation duty on you; HASAWA s.7(b) reinforces it. Conversation first;
               escalation if needed. Crashing through is always the worst option.
             </>
           }
@@ -745,13 +742,13 @@ export default function Sub2() {
               <strong>On the joiner clash</strong> &mdash; the joiners arrived early. You don&apos;t
               resolve it yourself &mdash; you flag it to Sam, Sam flags it to the Foreman, the
               Foreman has a conversation with the joiners&apos; Foreman to re-agree the sequence.
-              CDM 2015 Reg 15(1)(c) &quot;co-operate&quot; duty in action.
+              CDM 2015 Reg 8(4) &quot;co-operate&quot; duty in action.
               <br />
               <br />
               <strong>On the wet bay hazard</strong> &mdash; you avoid it until your Foreman or the
               main contractor&apos;s Site Manager confirms it&apos;s been made safe. Reporting
-              hazards under Reg 15(1)(b) is your duty too &mdash; if you spot anything else dodgy,
-              you tell the Foreman.
+              hazards under Reg 8(5) is your duty too &mdash; if you spot anything else dodgy, you
+              tell the Foreman.
             </>
           }
           whyItMatters={
@@ -787,9 +784,9 @@ export default function Sub2() {
             'JIB grades for electricians run Apprentice → Improver → Electrician → Approved Electrician → Technician. AM2 is the line between Improver and Electrician. ECS card evidences the grade and is required on most sites.',
             'Plant operators need the relevant competence card — PASMA for tower scaffolds, IPAF for MEWPs, CPCS or NPORS for heavy plant. Operating plant without the card is a HASAWA s.7 and PUWER 1998 Reg 9 breach.',
             "Labourers handle site logistics — moving materials, clearing access routes, breaking out spoil, supporting trades. They report up to their own contractor's Foreman and they're a legitimate, valuable part of the workforce.",
-            'Banksmen direct vehicle movements; slingers attach loads to cranes; signallers direct crane operators. All three have site authority to stop traffic and pedestrians during a movement. Their signal is binding under CDM 2015 Reg 15 and HASAWA s.7(b).',
+            'Banksmen direct vehicle movements; slingers attach loads to cranes; signallers direct crane operators. All three have site authority to stop traffic and pedestrians during a movement. Their signal is binding under CDM 2015 Reg 8 and HASAWA s.7(b).',
             "Your apprentice peer group is other apprentices, Improvers, the Approved Electrician you're paired with day to day, and the formally-allocated Mentor. The Approved Electrician directs the immediate task; the Foreman allocates the pairing.",
-            'HASAWA s.7 is the personal-duty section: s.7(a) reasonable care, s.7(b) co-operation. CDM 2015 Reg 15 reinforces both for construction sites. Trade clashes are resolved by conversation first, escalation to a Foreman if needed.',
+            'HASAWA s.7 is the personal-duty section: s.7(a) reasonable care, s.7(b) co-operation. CDM 2015 Reg 8 reinforces both for construction sites. Trade clashes are resolved by conversation first, escalation to a Foreman if needed.',
             "Equality Act 2010 protected characteristics apply on site. Site banter that crosses into discrimination is a personal s.39 issue for the perpetrator and a vicarious-liability issue for the employer. Reporting via your own chain or the main contractor's team is the right route.",
           ]}
         />

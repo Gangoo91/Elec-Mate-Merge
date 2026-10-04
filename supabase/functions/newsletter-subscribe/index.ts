@@ -52,6 +52,8 @@ interface Payload {
   last_name?: string;
   source: Source;
   event_id?: string; // for Meta CAPI dedup with browser Pixel
+  /** Visitor accepted marketing cookies — gates the server CAPI Lead. */
+  ad_tracking_consent?: boolean;
   utm?: Record<string, string | null | undefined>;
   /** Only for source === 'mock_exam_result'. Untrusted — sanitised below. */
   mock_result?: unknown;
@@ -362,9 +364,11 @@ serve(withSentry('newsletter-subscribe', async (req) => {
       );
     }
 
-    // Fire Meta CAPI Lead — deduped with the browser Pixel via event_id
+    // Fire Meta CAPI Lead — deduped with the browser Pixel via event_id.
+    // Only with the visitor's marketing consent (cookie banner), sent by the
+    // client as ad_tracking_consent — ELE-1812.
     const eventId = body.event_id || `lead_${crypto.randomUUID()}`;
-    fireCapiEvent({
+    if (body.ad_tracking_consent === true) fireCapiEvent({
       event_name: 'Lead',
       event_id: eventId,
       action_source: 'website',

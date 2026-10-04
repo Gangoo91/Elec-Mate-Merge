@@ -279,7 +279,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Daily electricity consumption</strong> — the average UK household uses 8 to
                 10kWh per day. A household with an EV charger, heat pump, or home office may use 15
@@ -288,7 +288,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Solar PV generation</strong> — if the property has solar PV, how much excess
                 generation is available to charge the battery? A 4kWp system in southern England
@@ -297,7 +297,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tariff structure</strong> — time-of-use tariffs (Octopus Go, Intelligent
                 Octopus, Agile) reward charging during cheap off-peak hours and discharging during
@@ -307,7 +307,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Backup requirement</strong> — if the homeowner wants backup power during
                 grid outages, the battery must be sized to cover essential loads for the expected
@@ -377,7 +377,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hybrid inverter (DC-coupled)</strong> — a single inverter that handles both
                 solar PV input and battery charging/discharging. It has DC inputs for the solar
@@ -387,7 +387,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Battery inverter (AC-coupled)</strong> — a standalone inverter for the
                 battery only, connecting to the AC side of the installation. This is used when
@@ -396,7 +396,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>All-in-one systems</strong> — some manufacturers (Tesla Powerwall, GivEnergy
                 All-in-One) integrate the battery and inverter into a single unit. These simplify
@@ -516,7 +516,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smart Export Guarantee (SEG)</strong> — energy suppliers are required to
                 offer SEG payments for exported electricity, but only if the installation is carried
@@ -525,7 +525,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Quality assurance</strong> — MCS certification requires the installer to
                 demonstrate competence, follow documented installation procedures, and comply with
@@ -560,7 +560,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>AC connection</strong> — the inverter AC output is connected to the consumer
                 unit via an appropriately sized cable and dedicated MCB or RCBO. The cable must be
@@ -570,7 +570,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DC wiring</strong> — the DC cables between the battery and inverter must be
                 correctly sized for the DC current and protected against overcurrent and short
@@ -579,7 +579,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CT clamp (current transformer)</strong> — most battery systems use a CT
                 clamp on the meter tails to monitor the household import/export in real time. The CT
@@ -589,7 +589,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing and bonding</strong> — the inverter and battery enclosures must be
                 earthed to the main earthing terminal. If the system includes an earth rod (for
@@ -622,13 +622,13 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Continuity of protective conductors (inverter and battery enclosure to MET)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Insulation resistance of AC wiring (500V DC with equipment disconnected, minimum
                 1&nbsp;M&#x03A9;). Where battery inverter or BMS electronics remain connected and are
@@ -638,19 +638,19 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Polarity verification at all AC termination points</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Earth fault loop impedance (Zs) on the inverter AC circuit</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>RCD operation on the inverter circuit (if RCBO or RCD protected)</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Functional testing — verify the system charges, discharges, and responds to CT clamp
                 readings correctly
@@ -703,7 +703,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -748,7 +748,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify battery storage systems"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
           icon={Battery}
         />
       </>
@@ -774,7 +774,7 @@ export default function BatteryStorageGuidePage() {
       heroTitle={
         <>
           Battery Storage Installation:{' '}
-          <span className="text-yellow-400">Home Battery Guide for UK Electricians</span>
+          <span className="text-elec-yellow">Home Battery Guide for UK Electricians</span>
         </>
       }
       embeddedTool={<CalculatorSurface><BatteryStorageCalculator /></CalculatorSurface>}
@@ -791,7 +791,7 @@ export default function BatteryStorageGuidePage() {
       faqHeading="Frequently Asked Questions About Home Battery Storage"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Certify Battery Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for battery storage installations. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for battery storage installations. 7-day free trial, cancel anytime."
     />
   );
 }

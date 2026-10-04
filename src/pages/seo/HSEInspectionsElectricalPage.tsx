@@ -171,7 +171,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Proactive (planned) inspections.</strong> HSE selects workplaces for routine
                 inspection based on risk profiles, industry sector, and compliance history.
@@ -180,7 +180,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reactive inspections following an incident.</strong> If a workplace
                 accident, injury, or dangerous occurrence is reported under RIDDOR, HSE will
@@ -190,7 +190,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Complaints.</strong> Anyone can report a health and safety concern to HSE.
                 Employees, contractors, members of the public, and even competitors can trigger an
@@ -198,7 +198,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Intelligence-led visits.</strong> HSE uses data from injury reports,
                 insurance claims, and other sources to identify workplaces or employers with poor
@@ -227,7 +227,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Current EICR.</strong> Is there a valid{' '}
                 <SEOInternalLink href="/tools/eicr-certificate">
@@ -238,7 +238,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maintenance records.</strong> Is there a documented{' '}
                 <SEOInternalLink href="/guides/electrical-maintenance-guide">
@@ -248,7 +248,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Safe working practices.</strong> Are electricians following{' '}
                 <SEOInternalLink href="/guides/safe-isolation-procedure">
@@ -258,7 +258,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competence of personnel.</strong> Can the people carrying out electrical
                 work demonstrate competence? Do they hold the relevant qualifications (18th Edition,
@@ -266,7 +266,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Risk assessments.</strong> Are there{' '}
                 <SEOInternalLink href="/guides/rams-template-electricians">
@@ -276,14 +276,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PAT testing.</strong> Is portable equipment being inspected and tested at
                 appropriate intervals? Are records available?
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test equipment.</strong> Is test equipment compliant with GS38 (HSE guidance
                 on electrical test equipment)? Is it within calibration? Are probes, leads, and
@@ -320,28 +320,28 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileWarning className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileWarning className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minimum compliance period:</strong> 21 days from the date of service. The
                 inspector may allow longer depending on the complexity of the work required.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileWarning className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileWarning className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Work can continue</strong> while the improvement is being made, unless a
                 separate prohibition notice is also issued.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileWarning className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileWarning className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Right of appeal</strong> to an Employment Tribunal within 21 days. The
                 notice is suspended during the appeal.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileWarning className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileWarning className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Failure to comply</strong> is a criminal offence with unlimited fines and
                 potential imprisonment.
@@ -479,7 +479,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Keep your EICR current.</strong> Ensure every premises you maintain or work
                 in has a valid EICR within its recommended re-inspection date. If it does not, flag
@@ -487,7 +487,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maintain up-to-date documentation.</strong> Certificates, maintenance logs,
                 risk assessments, method statements, and competence records should all be current
@@ -495,7 +495,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Follow safe working practices consistently.</strong> Safe isolation, permit
                 to work systems, correct PPE, and GS38-compliant test equipment should be standard
@@ -503,7 +503,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Train your team.</strong> Every electrician on your team should understand
                 the regulatory requirements, know the safe working procedures, and be able to
@@ -511,7 +511,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Act on defects promptly.</strong> If an EICR identifies C1 or C2 defects,
                 carry out the remedial work and document it. An inspector who finds unactioned
@@ -540,7 +540,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check their credentials.</strong> Ask to see the inspector's warrant card.
                 All HSE inspectors carry official identification. If you are unsure, you can call
@@ -548,7 +548,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Be cooperative and professional.</strong> Answer questions honestly. Do not
                 volunteer unnecessary information, but do not obstruct or mislead the inspector.
@@ -556,7 +556,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Provide documentation promptly.</strong> Have your EICRs, certificates, risk
                 assessments, and maintenance records available. Digital records on your phone are
@@ -564,7 +564,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Take notes.</strong> Record what the inspector examines, what questions they
                 ask, and what they say. If they issue any notices or recommendations, note the
@@ -572,7 +572,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ask questions.</strong> You are entitled to ask the inspector to clarify
                 anything you do not understand. If they identify a problem, ask what specifically
@@ -611,7 +611,7 @@ export default function HSEInspectionsElectricalPage() {
       heroTitle={
         <>
           HSE Inspections:{' '}
-          <span className="text-yellow-400">What Every Electrician Needs to Know</span>
+          <span className="text-elec-yellow">What Every Electrician Needs to Know</span>
         </>
       }
       heroSubtitle="HSE inspectors can visit without warning. They have the power to issue improvement notices, prohibition notices, and prosecute. This guide explains what they look for, how to prepare, and how to respond — so an inspection is a demonstration of competence, not a crisis."
@@ -622,7 +622,7 @@ export default function HSEInspectionsElectricalPage() {
       faqHeading="Frequently Asked Questions About HSE Inspections"
       relatedPages={relatedPages}
       ctaHeading="Stay Compliant With Digital Records"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for digital certificates, test results, and professional documentation. Always inspection-ready. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for digital certificates, test results, and professional documentation. Always inspection-ready. 7-day free trial, cancel anytime."
     />
   );
 }

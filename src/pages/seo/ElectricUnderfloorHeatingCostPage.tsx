@@ -172,7 +172,7 @@ const sections = [
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
-            <Thermometer className="w-6 h-6 text-yellow-400 mb-3" />
+            <Thermometer className="w-6 h-6 text-elec-yellow mb-3" />
             <h3 className="font-bold text-white text-base mb-2">Heating Mat</h3>
             <p className="text-white text-sm leading-relaxed">
               Pre-spaced element on fibreglass mesh. Available in standard widths (0.5m) and
@@ -213,7 +213,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Small bathroom (4–8m², mat system)</strong> — £800 to £1,200. Includes a
                 150W/m² heating mat, programmable thermostat with floor sensor, dedicated circuit
@@ -221,14 +221,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Kitchen or utility room (10–15m², mat or loose element)</strong> — £1,200 to
                 £1,800. Larger element area, longer circuit run from consumer unit, WiFi thermostat.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Living room or open-plan area (15–30m², loose element)</strong> — £1,800 to
                 £2,500. Full room coverage, loose element for layout flexibility, smart thermostat
@@ -257,7 +257,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Element wattage</strong> — total floor area (m²) × element output (W/m²).
                 Typical values: 100 to 150W/m² for tiles (primary heat source), 80 to 100W/m² for
@@ -265,7 +265,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Daily run time</strong> — controlled by the thermostat schedule. In a
                 well-insulated floor, the thermostat cycles the element on and off to maintain the
@@ -274,7 +274,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electricity tariff</strong> — at a standard rate of 25p per kWh, a 1.5kW
                 bathroom element running an average of 1.5 hours per day consumes 2.25kWh and costs
@@ -304,7 +304,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Programmable thermostat (standard)</strong> — 7-day programme with multiple
                 on/off periods per day. Air sensor in the thermostat body. Suitable for bathrooms
@@ -313,7 +313,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smart thermostat with WiFi (recommended)</strong> — app control, geofencing,
                 energy monitoring, and compatibility with Alexa/Google Home. The Warmup 4iE and
@@ -322,7 +322,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dual-sensor thermostat (mandatory for wood and laminate)</strong> — monitors
                 both air temperature (via sensor in thermostat body) and floor temperature (via
@@ -352,14 +352,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated circuit</strong> — a dedicated circuit from the consumer unit is
                 required. Do not connect UFH as a spur from a socket circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable sizing</strong> — 2.5mm twin and earth is appropriate for most
                 domestic UFH circuits (up to 3kW element). For larger systems (3kW to 4kW), 4mm
@@ -371,7 +371,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection (Reg 753.411.3.2)</strong> — Regulation 753.411.3.2 of BS
                 7671:2018+A4:2026 requires that RCDs with the characteristics specified in
@@ -385,7 +385,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Element testing</strong> — test the element continuity (resistance check
                 against manufacturer datasheet) and insulation resistance (500V DC, minimum 1
@@ -417,7 +417,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Test Before and After Tiling</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -491,7 +491,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify UFH installations on your phone"
-          description="Join 1,600+ UK electricians using Elec-Mate for underfloor heating installation quotes, element testing records, and EIC certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for underfloor heating installation quotes, element testing records, and EIC certification."
           icon={Thermometer}
         />
       </>
@@ -517,7 +517,7 @@ export default function ElectricUnderfloorHeatingCostPage() {
       heroTitle={
         <>
           Electric Underfloor Heating Cost:{' '}
-          <span className="text-yellow-400">Installation, Running Costs and Circuits</span>
+          <span className="text-elec-yellow">Installation, Running Costs and Circuits</span>
         </>
       }
       heroSubtitle="Electric underfloor heating installation typically costs £800 to £2,500 per room. This guide covers mat vs loose element systems, installation costs, running cost calculations, thermostat controls, and the electrical circuit requirements including Part P notification."

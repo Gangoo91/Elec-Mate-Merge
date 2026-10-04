@@ -224,14 +224,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New connections</strong> — apply through NGED's connections portal for new
                 supplies, service upgrades, and generation connections.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98/G99</strong> — solar PV and battery storage. G98 for systems up to 16A
                 per phase is an online notification. G99 for larger systems requires NGED
@@ -239,7 +239,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing</strong> — most Cheltenham properties are supplied on TN-C-S (PME)
                 systems. Older Regency properties in the town centre may have TN-S earthing from
@@ -263,7 +263,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <Landmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Over 5,000 listed buildings</strong> — Cheltenham has one of the highest
                 concentrations of listed buildings in England. Montpellier, Pittville, and the
@@ -272,7 +272,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <Landmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>External work requires consent</strong> — EV charger mounting, external
                 lighting, security cameras with visible cabling, and new meter box locations on
@@ -281,7 +281,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <Landmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Conservation area restrictions</strong> — even unlisted buildings in
                 conservation areas may require permission for visible external alterations. The six
@@ -290,7 +290,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <Landmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Internal rewiring approach</strong> — preserve ornamental plasterwork,
                 cornices, and ceiling roses. Route cables through floor voids wherever possible. Use
@@ -420,7 +420,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EIC and EICR Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -450,7 +450,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Cheltenham electricians"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -478,7 +478,7 @@ export default function ElectricianCheltenhamPage() {
       heroTitle={
         <>
           Electrician in Cheltenham:{' '}
-          <span className="text-yellow-400">Local Electricians 2026</span>
+          <span className="text-elec-yellow">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Cheltenham's exceptional Regency architecture, conservation area restrictions, and affluent professional population demand electricians with heritage property expertise and a premium approach. Find NICEIC and NAPIT registered electricians in Cheltenham."
@@ -489,7 +489,7 @@ export default function ElectricianCheltenhamPage() {
       faqHeading="Frequently Asked Questions About Electricians in Cheltenham"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Cheltenham Electricians"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for electricians working in heritage properties and premium markets. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for electricians working in heritage properties and premium markets. 7-day free trial."
     />
   );
 }

@@ -81,13 +81,13 @@ export function SEOTableOfContents({ items }: SEOTableOfContentsProps) {
       >
         <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
           <SheetTrigger asChild>
-            <button className="h-11 touch-manipulation rounded-xl border border-white/20 bg-[#0a0a0a]/95 px-4 text-[14px] font-semibold text-white backdrop-blur-md transition-colors hover:bg-white/[0.06]">
+            <button className="h-11 touch-manipulation rounded-xl border border-white/20 bg-background/95 px-4 text-[14px] font-semibold text-white backdrop-blur-md transition-colors hover:bg-white/[0.06]">
               Contents
             </button>
           </SheetTrigger>
           <SheetContent
             side="bottom"
-            className="h-[85vh] overflow-hidden rounded-t-2xl border-white/[0.12] bg-[#0a0a0a] p-0"
+            className="h-[85vh] overflow-hidden rounded-t-2xl border-white/[0.12] bg-background p-0"
           >
             <SheetHeader className="border-b border-white/[0.12] px-5 pb-3 pt-5">
               <SheetTitle className="text-left text-[11px] font-semibold uppercase tracking-[0.2em] text-white">

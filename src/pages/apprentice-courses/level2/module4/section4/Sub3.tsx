@@ -5,7 +5,7 @@
  *
  * Frame: BS 951 clamp on the consumer side, within 600 mm of the meter,
  * pipe cleaned to bare metal, jointing paste applied, label fitted.
- * Different clamp for gas vs water (DSEAR — gas needs insulating insert).
+  * Same BS 951 clamp standard on gas and water; Reg 544.1.2 sets the position.
  */
 
 import { useNavigate } from 'react-router-dom';
@@ -52,14 +52,14 @@ const checks = [
     question:
       'You are connecting a main bonding clamp to a steel gas pipe in a meter cabinet. Which type of BS 951 clamp do you fit?',
     options: [
-      'Any standard brass BS 951 clamp — clamp type makes no difference on gas pipework.',
+      'A clamp with an insulating insert at the contact face, so no current can pass between clamp and pipe.',
       'A plastic-bodied clamp, because metal clamps are not permitted on gas services.',
-      'A gas-rated BS 951 clamp with an insulating insert at the contact face, for DSEAR compliance.',
-      'A galvanised steel clamp, matched to the steel gas pipe to avoid galvanic action.',
+      'A BS 951 earth clamp sized for the pipe, fitted to clean bare metal on the consumer side and labelled — the same clamp standard as on water pipework.',
+      'A jubilee clip wrapped round the bare conductor and the pipe.',
     ],
     correctIndex: 2,
     explanation:
-      "Gas service connections need a BS 951 clamp specifically rated for gas — typically with an insulating insert at the back of the clamp jaw to limit the contact area to the bond connection point. Brass body acceptable but the design must comply with the gas industry DSEAR (Dangerous Substances and Explosive Atmospheres Regulations) and the gas distributor's specification. Standard non-insulated brass clamps are normally only used on water.",
+      'Main bonding to a gas pipe uses an ordinary BS 951 earth clamp sized for the pipe, on clean bare metal within 600 mm of the meter outlet on the consumer side (Reg 544.1.2), with the "Safety Electrical Connection — Do Not Remove" label (Reg 514.13.1). An insulating insert would defeat the purpose — the bond has to make a low-resistance electrical connection.',
   },
   {
     id: 'm4-s4-sub3-warning-label',
@@ -193,9 +193,9 @@ const quizQuestions = [
 
 const faqs = [
   {
-    question: 'Why brass for water but insulated brass for gas?',
+    question: 'Do gas and water need different bonding clamps?',
     answer:
-      'Water clamps just need durable electrical contact and corrosion resistance — standard brass BS 951 fits the bill. Gas clamps must additionally meet DSEAR (Dangerous Substances and Explosive Atmospheres Regulations) — the clamp must not act as a potential ignition source in the rare event of a gas leak. The insulating insert on a gas-rated BS 951 limits the clamp’s contact area to the bond connection point only, reducing the risk of a sparking joint elsewhere on the clamp body. Always check the BS 951 manufacturer datasheet — it will state "suitable for gas" or "water only".',
+      'Both use a BS 951 earth clamp. The clamp has to make a durable, low-resistance connection to clean bare metal, so pick one sized for the pipe diameter and the conductor, and check the manufacturer’s data for the pipe material it suits. What BS 7671 sets is the position (Reg 544.1.2) and the label (Reg 514.13.1), not a different clamp for gas.',
   },
   {
     question: 'Can I daisy-chain bonding clamps from gas to water with a single conductor?',
@@ -220,7 +220,7 @@ const faqs = [
   {
     question: 'How do I know if the BS 951 clamp is "the right kind" for the application?',
     answer:
-      "Read the data label on the clamp. BS 951 is a standard, but individual clamp models cover different scopes — some are water-only, some are gas-rated (DSEAR-compliant), some are for specific pipe diameters, some for round vs flat conductors. The label tells you the model number, the conductor size range, the pipe size range, and the application (water/gas/oil). If the clamp doesn't carry an obvious data label, don't fit it — go back to the wholesaler for a clearly identified clamp.",
+      "Read the data label on the clamp. BS 951 is a standard, but individual clamp models cover different pipe diameters, conductor sizes and pipe materials. The label tells you the model number, the conductor size range and the pipe size range. If the clamp doesn't carry an obvious data label, don't fit it — go back to the wholesaler for a clearly identified clamp.",
   },
 ];
 
@@ -246,7 +246,7 @@ export default function Sub3() {
           points={[
             "BS 951 earth clamp on the consumer side of the meter, on consumer's hard metal pipework, before any branch, within 600 mm of the meter outlet union where practicable — per Reg 544.1.2.",
             'Pipe cleaned to bright bare metal under the clamp jaw, jointing paste applied, clamp torqued to manufacturer spec.',
-            'Mandatory yellow warning label "SAFETY ELECTRICAL CONNECTION — DO NOT REMOVE" per Reg 514.13.1. Different clamp design for gas (DSEAR-rated, insulating insert) vs water (standard brass).',
+            'Mandatory yellow warning label "SAFETY ELECTRICAL CONNECTION — DO NOT REMOVE" per Reg 514.13.1. The same BS 951 clamp standard serves gas and water — size it for the pipe and conductor.',
           ]}
         />
 
@@ -306,26 +306,20 @@ export default function Sub3() {
         </ConceptBlock>
 
         <ConceptBlock
-          title="Gas vs water — different clamp specifications"
-          plainEnglish="Water clamps are standard brass. Gas clamps additionally must satisfy DSEAR — typically a brass clamp with an insulating insert at the back of the jaw to prevent the clamp acting as a sparking joint anywhere except the controlled bond connection."
-          onSite={`Read the clamp data label or wholesaler description carefully. "Suitable for gas" or "DSEAR compliant" or "complies with IGEM/G/5" all flag a gas-rated clamp. If the label only says "BS 951" with no gas mention, treat as water-only.`}
+          title="Gas and water — same clamp standard, same position rule"
+          plainEnglish="Both services take a BS 951 earth clamp sized for the pipe and the conductor. BS 7671 does not ask for a different clamp on gas. What it sets is the position (Reg 544.1.2) and the warning label (Reg 514.13.1)."
+          onSite="Pick the clamp by pipe diameter and conductor size from the manufacturer’s data. On gas, work on the consumer’s hard metal pipework after the meter outlet union — never on the meter or the supply pipe."
         >
           <p>
-            The Dangerous Substances and Explosive Atmospheres Regulations (DSEAR) require any
-            equipment in a potentially flammable atmosphere to not act as an ignition source. The
-            Institution of Gas Engineers and Managers (IGEM) publishes guidance (IGEM/G/5) on
-            bonding to gas installations that the trade follows.
+            Reg 544.1.2: the bond goes as near as practicable to the point of entry of the service.
+            Where there is a meter, isolation point or union, it goes on the consumer’s hard metal
+            pipework before any branch, and where practicable within 600 mm of the meter outlet
+            union, or at the point of entry to the building if the meter is external.
           </p>
           <p>
-            The practical effect: gas-rated BS 951 clamps incorporate features that limit any risk
-            of a sparking metal-to-metal contact along the clamp body — typically an insulating
-            sleeve or insert at the back of the clamp jaw, leaving only the deliberate bond contact
-            face exposed. This contains any potential arcing to the one controlled location.
-          </p>
-          <p>
-            Standard non-gas BS 951 clamps are entirely fine for water, oil and structural steel.
-            Don’t fit a gas-rated clamp on water (waste of money) and never fit a water-only clamp
-            on gas (DSEAR breach plus potentially Code C2 on the next EICR).
+            The clamp has to make a durable, low-resistance connection — clean bright metal under
+            the jaw, tightened to the manufacturer’s figure — and carry the &quot;Safety Electrical
+            Connection — Do Not Remove&quot; label.
           </p>
         </ConceptBlock>
 
@@ -748,8 +742,7 @@ export default function Sub3() {
               the meter outside, this is internal pipework. (2) Verify before any branch: position
               the bond between the floor entry and the stop-tap, before the cold-tap feed branches
               off. (3) Check 600 mm rule: floor entry to stop-tap is only 200 mm, comfortable to
-              bond within that band. (4) Select clamp: medium BS 951 brass for copper pipe, rated
-              for 10 mm² conductor, water-rated (no need for gas-DSEAR features). (5) Mark the pipe
+              bond within that band. (4) Select clamp: medium BS 951 brass for copper pipe, rated for 10 mm² conductor. (5) Mark the pipe
               at the proposed clamp position, clean a 50 mm band with fine wire wool to bright
               copper, wipe clean. (6) Apply CuPro paste in a thin film to the cleaned band. (7)
               Position clamp body on top, U-bolt under, hand-snug the nuts evenly. (8) Torque
@@ -783,7 +776,7 @@ export default function Sub3() {
         <KeyTakeaways
           points={[
             "Reg 544.1.2 governs bond clamp position: consumer side of the meter, on consumer's hard metal pipework, before any branch, within 600 mm of the meter outlet union (or point of entry to the building if meter is external) where practicable.",
-            'BS 951 is the British Standard for earth/bonding clamps. Different specifications for gas (DSEAR-rated, insulating insert) vs water (standard brass).',
+            'BS 951 is the British Standard for earth/bonding clamps — the same standard for gas and water. Size the clamp for the pipe diameter and the conductor.',
             'Pipe must be cleaned to bright bare metal under the clamp jaw — file or wire wool a 30-50 mm band wider than the clamp.',
             'Conductive jointing paste (CuPro for copper, Penetrox for aluminium) fills micro-voids and prevents galvanic corrosion at the dissimilar-metal joint.',
             'Torque pipe-clamping and conductor-clamping screws to manufacturer specification (typically 4-6 Nm for domestic clamps).',

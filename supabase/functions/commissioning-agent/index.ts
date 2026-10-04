@@ -9,6 +9,7 @@ import { createLogger, generateRequestId } from '../_shared/logger.ts';
 import { getTestSequence } from '../shared/bs7671TestingRequirements.ts';
 import { getMaxZs } from '../shared/bs7671ProtectionData.ts';
 import { captureException } from '../_shared/sentry.ts';
+import { fetchChatCompletions, fetchEmbeddings } from '../_shared/llm-direct.ts';
 
 // corsHeaders imported from shared deps
 
@@ -29,8 +30,8 @@ serve(async (req) => {
       previousAgentOutputs,
       requestSuggestions,
     } = await req.json();
-    const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
-    if (!lovableApiKey) throw new ValidationError('LOVABLE_API_KEY not configured');
+    const aiApiKey = Deno.env.get('OPENAI_API_KEY');
+    if (!aiApiKey) throw new ValidationError('OPENAI_API_KEY not configured');
 
     logger.info('✅ Commissioning Agent: Processing testing query', { requestSuggestions });
 
@@ -67,10 +68,10 @@ serve(async (req) => {
     const embeddingResponse = await withRetry(
       () =>
         withTimeout(
-          fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
+          fetchEmbeddings({
             method: 'POST',
             headers: {
-              Authorization: `Bearer ${lovableApiKey}`,
+              Authorization: `Bearer ${aiApiKey}`,
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
@@ -225,10 +226,10 @@ Keep it friendly but technically accurate with exact regulation numbers and valu
     const response = await withRetry(
       () =>
         withTimeout(
-          fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+          fetchChatCompletions({
             method: 'POST',
             headers: {
-              Authorization: `Bearer ${lovableApiKey}`,
+              Authorization: `Bearer ${aiApiKey}`,
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
@@ -249,14 +250,14 @@ Keep it friendly but technically accurate with exact regulation numbers and valu
             }),
           }),
           Timeouts.LONG, // Allow more time for complex testing analysis
-          'Lovable AI commissioning generation'
+          'AI commissioning generation'
         ),
       RetryPresets.STANDARD
     );
 
     if (!response.ok) {
       const errorText = await response.text();
-      logger.error('Lovable AI error:', { status: response.status, error: errorText });
+      logger.error('AI error:', { status: response.status, error: errorText });
       throw new Error(`AI gateway error: ${response.status}`);
     }
 

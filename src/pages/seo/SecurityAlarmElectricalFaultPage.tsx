@@ -185,7 +185,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BatteryLow className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BatteryLow className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Low battery threshold</strong> — most alarm panels generate a low battery
                 warning when the standby battery voltage drops below approximately 11.5 V under
@@ -194,7 +194,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BatteryLow className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BatteryLow className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Night-time sounder activation</strong> — a low standby battery causes the
                 alarm to sound intermittently, often in the early hours of the morning when ambient
@@ -203,7 +203,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BatteryLow className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BatteryLow className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wireless detector batteries</strong> — in wireless alarm systems, each
                 detector has its own battery, typically a lithium primary cell rated for 3 to 5
@@ -213,7 +213,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BatteryLow className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BatteryLow className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Charging circuit fault</strong> — if a replacement battery also rapidly
                 discharges, the fault is in the panel's battery charging circuit rather than the
@@ -240,7 +240,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mains power loss indication</strong> — most panels display a mains power
                 fault (often a yellow or amber LED labelled AC or MAINS) when the 230 V supply to
@@ -249,7 +249,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Blown transformer fuse</strong> — the alarm panel transformer or SMPS may
                 have an internal thermal fuse or a replaceable fuse on the panel PCB. A blown fuse
@@ -259,7 +259,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Failed transformer or SMPS</strong> — an alarm panel power supply that fails
                 to charge the battery or provide operating voltage, confirmed by measuring the DC
@@ -291,7 +291,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wifi className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PSTN line fault</strong> — traditional telephone line monitoring is being
                 superseded by IP and cellular communication as the PSTN is phased out across the UK
@@ -300,7 +300,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wifi className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP / broadband communication fault</strong> — broadband outages, router
                 failures, or changes to router settings (firewall rules, IP address changes) can
@@ -310,7 +310,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wifi className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>GSM / 4G cellular fault</strong> — cellular communicators rely on mobile
                 network coverage. A SIM that has expired, been deactivated, or is out of credit will
@@ -381,7 +381,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ShieldAlert className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldAlert className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EICR and Security Alarm Systems</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -415,7 +415,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Generate electrical certificates on your phone with"
-          description="Join 1,600+ UK electricians using Elec-Mate for EICRs, minor works certificates, and BS 7671-compliant documentation. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for EICRs, minor works certificates, and BS 7671-compliant documentation. 7-day free trial."
           icon={ShieldAlert}
         />
       </>
@@ -441,7 +441,7 @@ export default function SecurityAlarmElectricalFaultPage() {
       heroTitle={
         <>
           Security Alarm Electrical Fault:{' '}
-          <span className="text-yellow-400">Alarm Wiring Problems Explained</span>
+          <span className="text-elec-yellow">Alarm Wiring Problems Explained</span>
         </>
       }
       heroSubtitle="Your security alarm is beeping, showing a fault indicator, or sounding unexpectedly. This guide explains tamper alerts, low battery faults, power supply problems, and communication failures — and tells you when to reset yourself versus when to call an engineer."
@@ -452,7 +452,7 @@ export default function SecurityAlarmElectricalFaultPage() {
       faqHeading="Frequently Asked Questions About Security Alarm Faults"
       relatedPages={relatedPages}
       ctaHeading="Generate Electrical Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EICRs, minor works certificates, and BS 7671-compliant documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for EICRs, minor works certificates, and BS 7671-compliant documentation. 7-day free trial, cancel anytime."
     />
   );
 }

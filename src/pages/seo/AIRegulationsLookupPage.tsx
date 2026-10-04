@@ -344,7 +344,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Solar PV with battery storage</strong> — where power can flow in both
                 directions through the consumer unit, from the grid to the loads and from the
@@ -352,7 +352,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Battery energy storage systems (BESS)</strong> — standalone or integrated
                 battery systems that can supply power back to the installation or export to the
@@ -360,7 +360,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Vehicle-to-grid (V2G) EV chargers</strong> — chargers that can draw power
                 from the EV battery and feed it back to the installation or grid.
@@ -390,7 +390,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>During EICR inspections:</strong> Looking up the correct regulation
                 reference for an{' '}
@@ -402,7 +402,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Answering client questions:</strong> A landlord asks "Why do I need to
                 upgrade my consumer unit?" You look up the relevant regulation and can cite it
@@ -411,7 +411,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Discussions with building control:</strong> A building control inspector
                 queries your installation. You can look up the specific regulation in seconds and
@@ -419,7 +419,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Design decisions:</strong> Checking requirements for special locations
                 (bathrooms, swimming pools, agricultural installations) before starting work. "What
@@ -462,7 +462,7 @@ export default function AIRegulationsLookupPage() {
       heroTitle={
         <>
           AI Regulations Lookup:{' '}
-          <span className="text-yellow-400">Search BS 7671 in Plain English</span>
+          <span className="text-elec-yellow">Search BS 7671 in Plain English</span>
         </>
       }
       heroSubtitle="Ask any question about electrical regulations and get the specific BS 7671 regulation number, full text, and practical guidance. Covers the complete 18th Edition with Amendment 4:2026, the IET On-Site Guide, and all eight Guidance Notes."
@@ -485,7 +485,7 @@ export default function AIRegulationsLookupPage() {
       faqHeading="Frequently Asked Questions About AI Regulations Lookup"
       relatedPages={relatedPages}
       ctaHeading="Search BS 7671 in Seconds"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's AI Regulations Lookup. Ask any question, get the specific regulation with practical guidance. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate's AI Regulations Lookup. Ask any question, get the specific regulation with practical guidance. 7-day free trial, cancel anytime."
       toolPath="/tools/ai-regulations-lookup"
     />
   );

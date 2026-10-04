@@ -4,7 +4,7 @@
  * oil / structural steel / lightning protection / PV / battery / pools.
  *
  * Frame: Reg 411.3.1.2 + 544.1.2 give the general rule. Each service has
- * its own quirks — DSEAR for gas, plastic for modern incoming pipes,
+ * its own quirks — position on gas, plastic for modern incoming pipes,
  * BS EN 62305 for lightning, Section 712 for PV, special-location sections
  * for pools and agricultural. Walk the building, identify each
  * extraneous-conductive-part, bond accordingly.
@@ -32,7 +32,7 @@ import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Bonding scenarios across services | Level 2 Module 4.4.6 | Elec-Mate';
 const DESCRIPTION =
-  'Bonding gas, water, oil, structural steel, lightning protection, PV arrays, battery storage and special-location services — the per-service quirks behind the general Reg 411.3.1.2 + 544.1.2 framework, plus DSEAR, BS EN 62305 and Section 712 cross-references.';
+  'Bonding gas, water, oil, structural steel, lightning protection, PV arrays, battery storage and special-location services — the per-service quirks behind the general Reg 411.3.1.2 + 544.1.2 framework, plus BS EN 62305 and Section 712 cross-references.';
 
 const checks = [
   {
@@ -84,14 +84,14 @@ const quizQuestions = [
     id: 1,
     question: 'For a steel gas service pipe entering a domestic property, the BS 951 clamp must:',
     options: [
-      'Be any standard brass BS 951 clamp — the same clamp used on water is perfectly fine for gas.',
-      'Comply with BS 951 and be gas-rated — an insulating insert at the contact face for DSEAR.',
+      'Be an ordinary BS 951 clamp sized for the pipe, on clean bare metal on the consumer side within 600 mm of the meter outlet, labelled per Reg 514.13.1.',
+      'Have an insulating insert at the contact face, so no current can pass between clamp and pipe.',
       'Be a plastic-bodied clamp, since metal clamps are not permitted anywhere on gas pipework.',
       'Be fitted on the supply side of the meter, where the steel service pipe is at its thickest.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Gas-rated BS 951 clamps have an insulating insert that limits contact area to the deliberate bond connection point only, complying with DSEAR. Standard non-gas BS 951 brass clamps are for water, oil, structural steel — not gas. Always check the data label.',
+      'Gas bonding uses an ordinary BS 951 clamp — the same standard as water — sized for the pipe and fitted to clean bare metal on the consumer side, within 600 mm of the meter outlet and before any branch (Reg 544.1.2), with the Reg 514.13.1 label. An insulating insert would defeat the bond, plastic clamps are not used for bonding, and the supply side of the meter is the gas transporter’s pipework.',
   },
   {
     id: 2,
@@ -133,7 +133,7 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      'Metal oil supply pipework is extraneous-conductive — bond per the same rules as gas. DSEAR considerations apply (oil/diesel is flammable so the clamp design needs to limit sparking risk in the unlikely event of leak + fault). Treat oil installation per gas convention: gas-spec or oil-spec BS 951 clamp, consumer side, before any branch.',
+      'Metal oil supply pipework is extraneous-conductive — bond per the same rules as gas. Use a BS 951 clamp sized for the pipe, on the consumer side, before any branch (Reg 544.1.2).',
   },
   {
     id: 5,
@@ -141,7 +141,7 @@ const quizQuestions = [
       'A property has battery energy storage (e.g. Tesla Powerwall, GivEnergy) installed alongside a PV array. What additional bonding considerations apply?',
     options: [
       'No additional bonding is required — the battery is fully self-contained and earthed internally.',
-      'Per Section 712 + Section 426 + manufacturer instructions, bond the enclosure back to system earth.',
+      'Per Chapter 57 (stationary secondary batteries, new in A4:2026), Section 712 for the PV and the manufacturer’s instructions, connect the enclosure to the system earth as specified.',
       'The battery enclosure must be bonded to a separate dedicated earth rod, isolated from the building earth.',
       'Only the AC output of the inverter needs consideration; the DC battery side is outside BS 7671 scope.',
     ],
@@ -245,13 +245,13 @@ export default function Sub6() {
         <p className="max-w-3xl text-[13px] leading-relaxed text-white">
           Gas, water, oil, structural steel, lightning protection, PV arrays, battery storage,
           swimming pools — the per-service quirks behind the general Reg 411.3.1.2 + 544.1.2
-          framework, plus DSEAR, BS EN 62305 and Section 712 cross-references.
+          framework, plus BS EN 62305 and Section 712 cross-references.
         </p>
 
         <TLDR
           points={[
             'General rule: any extraneous-conductive-part that enters the building gets bonded to the MET per Reg 411.3.1.2 + Reg 544.1.2 (consumer side, before branch, within 600 mm where practicable).',
-            "Per-service quirks: gas needs DSEAR-rated BS 951 clamp; oil similar; plastic supply pipes don't need bonding (not extraneous-conductive); structural steel often bonded at multiple points; LPS earth bonded to MET per BS EN 62305.",
+            "Per-service quirks: gas bonded on the consumer side after the meter outlet union; oil the same; plastic supply pipes don't need bonding (not extraneous-conductive); structural steel often bonded at multiple points; LPS earth bonded to MET per BS EN 62305.",
             'Special locations (swimming pools 702, agricultural 705, exhibitions 711) and modern systems (PV 712, battery storage) have additional rules in their own BS 7671 sections plus separate standards like BS EN 62305.',
           ]}
         />
@@ -269,27 +269,15 @@ export default function Sub6() {
           initialVisibleCount={3}
         />
 
-        <ContentEyebrow>Gas — DSEAR matters</ContentEyebrow>
+        <ContentEyebrow>Gas — position matters</ContentEyebrow>
 
         <ConceptBlock
-          title="Gas services — BS 951 clamp with insulating insert, consumer side, within 600 mm"
-          plainEnglish="Same Reg 544.1.2 position rules as water. Different clamp specification — gas-rated BS 951 has an insulating insert at the back of the jaw to limit any sparking risk to the controlled bond connection point only."
-          onSite={`On every domestic install with a gas service. Steel pipe usually, sometimes copper for run-in from external meters. Look for "DSEAR compliant" or "complies with IGEM/G/5" on the clamp data label. If the label only says BS 951 with no gas mention, treat as water-only.`}
+          title="Gas services — BS 951 clamp, consumer side, within 600 mm"
+          plainEnglish="Same Reg 544.1.2 position rule as water, and the same BS 951 clamp standard. The bond goes on the consumer’s hard metal pipework after the meter outlet union, before any branch, within 600 mm where practicable."
+          onSite="On every domestic install with a gas service. Steel pipe usually, sometimes copper for run-in from external meters. Never clamp onto the meter itself or the supply pipe — that is the gas transporter’s equipment."
         >
           <p>The gas-specific considerations:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>
-              <strong>DSEAR compliance.</strong> Dangerous Substances and Explosive Atmospheres
-              Regulations require any equipment in a potentially flammable atmosphere to not act as
-              an ignition source. Gas-rated BS 951 clamps incorporate an insulating insert
-              (typically a thin polymer ring at the back of the clamp jaw) that limits metallic
-              contact to the deliberate bond connection point only.
-            </li>
-            <li>
-              <strong>IGEM/G/5.</strong> Institution of Gas Engineers and Managers guidance document
-              for bonding to gas installations. Cross-references BS 7671 Reg 411.3.1.2 and 544.1.2
-              with gas-industry-specific application notes.
-            </li>
             <li>
               <strong>Plastic supply pipes.</strong> Modern domestic gas services are increasingly
               polyethylene (PE) up to the meter for corrosion resistance. PE is not extraneous-
@@ -298,8 +286,12 @@ export default function Sub6() {
             </li>
             <li>
               <strong>Position.</strong> Per Reg 544.1.2 — consumer side of meter, before any
-              branch, within 600 mm of meter outlet union. External meter — bond at point of entry
-              of pipework into the building.
+              branch, within 600 mm of meter outlet union where practicable. External meter — bond
+              at the point of entry of the pipework into the building.
+            </li>
+            <li>
+              <strong>Label.</strong> &quot;Safety Electrical Connection — Do Not Remove&quot; at
+              the clamp (Reg 514.13.1).
             </li>
           </ul>
         </ConceptBlock>
@@ -320,8 +312,7 @@ export default function Sub6() {
               through the wall or floor).
             </li>
             <li>
-              Standard brass BS 951 — no DSEAR insulating insert needed. Sized for the pipe diameter
-              (usually 15-28 mm in domestic).
+              Standard BS 951 clamp sized for the pipe diameter (usually 15-28 mm in domestic).
             </li>
             <li>
               Plastic incoming water supply (modern blue MDPE pipe) doesn’t need bonding. Bond the
@@ -360,7 +351,7 @@ export default function Sub6() {
 
         <ConceptBlock
           title="Oil-fuelled boilers — bond per gas convention"
-          plainEnglish="Oil supply pipework (steel) entering the building gets bonded per the same rules as gas — DSEAR considerations apply because oil/diesel is flammable."
+          plainEnglish="Oil supply pipework (steel) entering the building gets bonded per the same rules as gas — Reg 544.1.2 position, BS 951 clamp, Reg 514.13.1 label."
         >
           <p>
             Oil-fired domestic central heating and commercial oil-fed boilers typically have a steel
@@ -371,9 +362,8 @@ export default function Sub6() {
           <p>The bond install:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
-              BS 951 clamp suitable for oil — similar specification to gas (DSEAR considerations
-              apply because oil vapour is flammable). Many BS 951 clamps marked "suitable for gas"
-              are also suitable for oil.
+              BS 951 clamp sized for the pipe, fitted to clean bare metal on the consumer side
+              before any branch.
             </li>
             <li>
               Position per Reg 544.1.2 — consumer side of any external isolator/valve, before any
@@ -460,10 +450,10 @@ export default function Sub6() {
           </p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
-              <strong>Non-isolated LPS</strong> — the LPS earth is directly bonded to the
-              building’s electrical MET. Simplest, common on most commercial buildings. Works
-              because the electrical and lightning earth networks reach the same potential during a
-              strike — no flashover, no equipment damage.
+              <strong>Non-isolated LPS</strong> — the LPS earth is directly bonded to the building’s
+              electrical MET. Simplest, common on most commercial buildings. Works because the
+              electrical and lightning earth networks reach the same potential during a strike — no
+              flashover, no equipment damage.
             </li>
             <li>
               <strong>Isolated LPS</strong> — the LPS down-conductors are kept electrically isolated
@@ -498,9 +488,9 @@ export default function Sub6() {
               Sized per the system designer’s specification (often 6 mm² or 10 mm² Cu).
             </li>
             <li>
-              <strong>AC-side bonding</strong> — the inverter’s AC output is part of the
-              building’s normal electrical install and is governed by standard BS 7671 bonding (Reg
-              411.3.1.2 etc.) and main bonding at the MET.
+              <strong>AC-side bonding</strong> — the inverter’s AC output is part of the building’s
+              normal electrical install and is governed by standard BS 7671 bonding (Reg 411.3.1.2
+              etc.) and main bonding at the MET.
             </li>
             <li>
               <strong>Surge protection</strong> — surge protective devices (SPDs) on both DC and AC
@@ -516,7 +506,7 @@ export default function Sub6() {
         </ConceptBlock>
 
         <ConceptBlock
-          title="Battery energy storage — Section 712 + Section 426 + manufacturer"
+          title="Battery energy storage — Chapter 57 + Section 712 + manufacturer"
           plainEnglish="Battery enclosures get bonded back to the system earth. The DC busbars need fault-current path provisions. Manufacturer instructions are normative — read them alongside BS 7671."
         >
           <p>
@@ -531,8 +521,9 @@ export default function Sub6() {
               disconnection times, Reg 415.1.1 RCD additional protection).
             </li>
             <li>
-              Manufacturer installation instructions are normative per Reg 134.1 — always read
-              alongside BS 7671 Section 712.
+              Manufacturer installation instructions must be followed (Regs 134.1.1 and 510.3) —
+              read them alongside BS 7671 Chapter 57 (stationary secondary batteries, new in
+              A4:2026) and Section 712.
             </li>
             <li>G98/G99 commissioning paperwork to the DNO if grid-connected.</li>
           </ul>
@@ -618,15 +609,15 @@ export default function Sub6() {
               the MET. The bond does nothing electrically (plastic doesn’t conduct, no current can
               flow through it), but the install passes visual inspection because the cable looks
               correct. Six months later an EICR engineer codes it as an observation — not C1 or C2
-              because there’s no danger created, but the install includes a non-functional bond
-              that suggests the electrician didn’t understand the requirement.
+              because there’s no danger created, but the install includes a non-functional bond that
+              suggests the electrician didn’t understand the requirement.
             </>
           }
           doInstead={
             <>
               Identify whether the incoming pipe is metal or plastic before fitting any bond. BS
-              7671 Part 2 — extraneous-conductive-part requires conductive material. Plastic
-              doesn’t qualify. The metal CONSUMER-SIDE pipework downstream of the meter still does
+              7671 Part 2 — extraneous-conductive-part requires conductive material. Plastic doesn’t
+              qualify. The metal CONSUMER-SIDE pipework downstream of the meter still does
               (typically the steel or copper internal pipework). Bond there per the standard 600 mm
               / before branch / consumer side rules. On modern installs where everything is plastic
               until well inside the building, the bond goes wherever the first metal pipework
@@ -652,21 +643,21 @@ export default function Sub6() {
               (1) MET location: typically inside the main electrical intake panel, near the supply
               head and meter. (2) Earthing conductor from MET to the supplier PEN block — sized per
               Table 54.8 against the 95 mm² PEN = 25 mm² Cu minimum. (3) Main bonding to gas
-              service: 25 mm² G/Y (Table 54.8 against 95 mm² PEN), gas-rated BS 951 clamp on
-              consumer-side steel pipework before any branch, within 600 mm of meter outlet,
-              dedicated cable back to the MET. (4) Main bonding to water service: 25 mm² G/Y,
-              standard brass BS 951 clamp on consumer- side metal pipework before any branch, within
-              600 mm of stop-tap, dedicated cable back to MET. (5) Structural steel bonding:
-              identify accessible bonding points on the steel frame — typically the nearest column
-              to the MET, plus 2-3 additional accessible columns/beams at strategic points around
-              the building. 25 mm² G/Y from each bond point back to the MET (no daisy-chain). BS 951
-              clamps suited to the steel section (purpose-made structural bonding clamps for large
-              sections). (6) LPS bonding: per BS EN 62305 designer’s spec — Class III LPS is
-              typically non-isolated, so direct bond from the LPS earth electrode network to the
-              MET. 25 mm² Cu cable. (7) Document on the EIC: every bond point, cable size,
-              continuity reading, photo of the install. (8) Continuity test every bond from MET to
-              the connection point per Sub 4. (9) Sign off when every bond tests under 0.05 ohm and
-              warning labels are fitted at every clamp.
+              service: 25 mm² G/Y (Table 54.8 against 95 mm² PEN), BS 951 clamp on consumer-side
+              steel pipework before any branch, within 600 mm of meter outlet, dedicated cable back
+              to the MET. (4) Main bonding to water service: 25 mm² G/Y, standard brass BS 951 clamp
+              on consumer- side metal pipework before any branch, within 600 mm of stop-tap,
+              dedicated cable back to MET. (5) Structural steel bonding: identify accessible bonding
+              points on the steel frame — typically the nearest column to the MET, plus 2-3
+              additional accessible columns/beams at strategic points around the building. 25 mm²
+              G/Y from each bond point back to the MET (no daisy-chain). BS 951 clamps suited to the
+              steel section (purpose-made structural bonding clamps for large sections). (6) LPS
+              bonding: per BS EN 62305 designer’s spec — Class III LPS is typically non-isolated, so
+              direct bond from the LPS earth electrode network to the MET. 25 mm² Cu cable. (7)
+              Document on the EIC: every bond point, cable size, continuity reading, photo of the
+              install. (8) Continuity test every bond from MET to the connection point per Sub 4.
+              (9) Sign off when every bond tests under 0.05 ohm and warning labels are fitted at
+              every clamp.
             </>
           }
           whyItMatters={
@@ -691,7 +682,7 @@ export default function Sub6() {
         <KeyTakeaways
           points={[
             'General rule: every extraneous-conductive-part entering the building gets bonded to the MET per Reg 411.3.1.2 + Reg 544.1.2 (consumer side, before branch, within 600 mm).',
-            'Gas services need DSEAR-rated BS 951 clamps with insulating insert. Water uses standard brass BS 951. Oil follows gas convention.',
+            'Gas, water and oil services all take a BS 951 clamp sized for the pipe — Reg 544.1.2 sets the position, Reg 514.13.1 the label.',
             "Plastic incoming services (PE gas, blue MDPE water) don't need bonding — not extraneous-conductive. The metal consumer-side pipework downstream still does.",
             'Structural steel framing on commercial buildings is bonded at multiple accessible points back to the MET — independent dedicated cables, no daisy-chain.',
             'Lightning protection systems per BS EN 62305 are bonded to the MET — directly (non-isolated LPS) or via a spark gap (isolated LPS).',

@@ -179,9 +179,9 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
       >
         <span className="font-semibold text-white pr-4">{question}</span>
         {open ? (
-          <ChevronUp className="w-5 h-5 text-yellow-400 flex-shrink-0" />
+          <ChevronUp className="w-5 h-5 text-elec-yellow flex-shrink-0" />
         ) : (
-          <ChevronDown className="w-5 h-5 text-yellow-400 flex-shrink-0" />
+          <ChevronDown className="w-5 h-5 text-elec-yellow flex-shrink-0" />
         )}
       </button>
       {open && (
@@ -212,13 +212,13 @@ export default function AIElectricianToolsPage() {
       <section className="py-16 sm:py-24 px-5">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-6">
-            <Brain className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium text-yellow-400">
+            <Brain className="w-4 h-4 text-elec-yellow" />
+            <span className="text-sm font-medium text-elec-yellow">
               8 Elec-AI Specialists Trained on BS 7671
             </span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white mb-5 leading-tight">
-            AI Tools Built for <span className="text-yellow-400">UK Electricians</span>
+            AI Tools Built for <span className="text-elec-yellow">UK Electricians</span>
           </h1>
           <p className="text-lg text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             Eight purpose-built Elec-AI specialists trained on BS 7671:2018+A4:2026 (Amendment
@@ -262,7 +262,7 @@ export default function AIElectricianToolsPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <CircuitBoard className="w-6 h-6 text-yellow-400" />
+              <CircuitBoard className="w-6 h-6 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Circuit Designer — Complete Electrical Design from a Description
@@ -315,7 +315,7 @@ export default function AIElectricianToolsPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <PoundSterling className="w-6 h-6 text-yellow-400" />
+              <PoundSterling className="w-6 h-6 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Cost Engineer — Quote Jobs in Minutes, Not Hours
@@ -358,7 +358,7 @@ export default function AIElectricianToolsPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Wrench className="w-6 h-6 text-yellow-400" />
+              <Wrench className="w-6 h-6 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Installation Guide — Step-by-Step for Any Circuit Type
@@ -409,7 +409,7 @@ export default function AIElectricianToolsPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <CalendarCheck className="w-6 h-6 text-yellow-400" />
+              <CalendarCheck className="w-6 h-6 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Maintenance Agent &amp; Health and Safety Specialist
@@ -496,7 +496,7 @@ export default function AIElectricianToolsPage() {
             ].map((item) => (
               <div key={item.step} className="flex gap-5 items-start">
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex-shrink-0">
-                  <span className="text-yellow-400 font-bold text-lg">{item.step}</span>
+                  <span className="text-elec-yellow font-bold text-lg">{item.step}</span>
                 </div>
                 <div>
                   <h3 className="font-bold text-white text-lg mb-1">{item.title}</h3>
@@ -553,7 +553,7 @@ export default function AIElectricianToolsPage() {
                 key={item}
                 className="flex items-center gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10"
               >
-                <CheckCircle2 className="w-5 h-5 text-yellow-400 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-elec-yellow flex-shrink-0" />
                 <span className="text-white text-sm font-medium">{item}</span>
               </div>
             ))}
@@ -615,7 +615,7 @@ export default function AIElectricianToolsPage() {
 
       <SEOCTASection
         heading="Ask your first question in 30 seconds"
-        subheading="Join 1,600+ UK electricians using AI to save hours on design, quoting, and documentation. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians using AI to save hours on design, quoting, and documentation. 7-day free trial, cancel anytime."
       />
     </PublicPageLayout>
   );

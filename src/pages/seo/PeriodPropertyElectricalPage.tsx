@@ -150,7 +150,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pre-1901 (Victorian and earlier)</strong> — rubber insulation, lead
                 sheathing, knob-and-tube systems, cast iron or Bakelite fuse boards. No earthing as
@@ -162,7 +162,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1901–1918 (Edwardian and WWI-era)</strong> — VIR (Vulcanised India Rubber)
                 cables, early radial circuits, wooden or Bakelite switchboards. Some properties had
@@ -174,7 +174,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1918–1939 (Interwar)</strong> — rubber-insulated radial circuits, 5-amp
                 round pin sockets, rewirable fuse boards. The National Grid era. See our{' '}
@@ -185,7 +185,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1945–1966 (Early post-war)</strong> — introduction of the ring main (1947)
                 and 13-amp sockets. Early PVC insulation. Rewirable fuse boards. Better than earlier
@@ -347,7 +347,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insulation resistance testing</strong> — the EICR includes insulation
                 resistance tests (1000V DC for circuits rated up to 500V) that reveal deterioration
@@ -356,7 +356,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth continuity and loop impedance</strong> — the inspector measures the
                 continuity of protective earth conductors and the earth fault loop impedance. High
@@ -365,7 +365,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD testing</strong> — where RCDs are present, the inspector tests their
                 operating time using a calibrated RCD tester. An RCD that takes more than 40
@@ -373,7 +373,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Visual inspection</strong> — the inspector opens a representative sample of
                 accessories (sockets, switches, light fittings) to inspect the condition of cables,
@@ -405,7 +405,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C2 — Absence of RCD protection (Regulation 411.3.3)</strong> — by far the
                 most common C2 in period homes. Remedied by fitting a new consumer unit with RCD or
@@ -413,7 +413,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C2 — No protective earth conductor on circuits</strong> — missing earth
                 wires on lighting and/or socket circuits. Remedied by rewiring affected circuits in
@@ -421,7 +421,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C2 — Inadequate main equipotential bonding</strong> — missing or undersized
                 bonding conductors to gas and water services. Relatively inexpensive to rectify
@@ -429,7 +429,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C2 — Deteriorated cable insulation</strong> — insulation resistance below
                 1MΩ, or visible cracking and deterioration at inspection points. Requires rewiring
@@ -437,7 +437,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C3 — Insufficient socket outlets</strong> — recommendation to increase
                 socket provision. Does not make the EICR Unsatisfactory but is associated with the
@@ -445,7 +445,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C3 — Old wiring colours without labels</strong> — pre-harmonisation wiring
                 colours (red/black) should be labelled where new work in brown/blue colours has been
@@ -524,7 +524,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Targeted remedials only</strong> — £200 to £800. Install missing bonding,
                 label old-colour wiring, fit missing earth sleeving. Does not address the absence of
@@ -532,7 +532,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacement</strong> — £450 to £1,000. Modern metal-clad
                 consumer unit with RCD or RCBO protection. Addresses the absence of RCD protection.
@@ -540,7 +540,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Partial rewire</strong> — £1,000 to £3,500. Rewire the most problematic
                 circuits (typically those with deteriorated insulation or absent earthing) while
@@ -549,7 +549,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full rewire</strong> — £2,500 to £12,000+ depending on property size and
                 type. Replaces all wiring, consumer unit, accessories. The definitive solution for a
@@ -577,7 +577,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Complete EICRs On Site with Photographs
@@ -616,7 +616,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete period property EICRs professionally with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, photographic documentation, and professional quoting."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, photographic documentation, and professional quoting."
           icon={FileCheck2}
         />
       </>
@@ -642,7 +642,7 @@ export default function PeriodPropertyElectricalPage() {
       heroTitle={
         <>
           Period Property Electrical Guide:{' '}
-          <span className="text-yellow-400">Old House Electrical Safety UK</span>
+          <span className="text-elec-yellow">Old House Electrical Safety UK</span>
         </>
       }
       heroSubtitle="This guide covers the electrical safety considerations for all period properties built before 1966 — from Victorian terraces to post-war semis. What to look for at the survey stage, why an EICR is essential, the most common C2 and C3 observations in old houses, and how to approach electrical upgrades cost-effectively."
@@ -653,7 +653,7 @@ export default function PeriodPropertyElectricalPage() {
       faqHeading="Frequently Asked Questions About Period Property Electrical Safety"
       relatedPages={relatedPages}
       ctaHeading="Complete Period Property EICRs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

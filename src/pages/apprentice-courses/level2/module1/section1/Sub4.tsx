@@ -122,7 +122,7 @@ const quizQuestions = [
     id: 4,
     question: 'Under Part P (England), which is notifiable work in a dwelling?',
     options: [
-      'Replacing a consumer unit, or any new circuit, or work in a bathroom',
+      'Replacing a consumer unit, adding a new circuit, or adding to or altering a circuit in the special location around a bath or shower',
       'Adding a single socket to an existing ring final circuit',
       'Replacing a damaged light switch like-for-like in a hallway',
       'Swapping a faulty 13 A socket-outlet for an identical one',

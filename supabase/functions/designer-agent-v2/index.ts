@@ -1,4 +1,4 @@
-// DEPLOYMENT v3.3.1 - Fixed lovableApiKey initialization - 2025-10-24T16:10:00Z
+// DEPLOYMENT v3.3.1 - 2025-10-24
 import { corsHeaders, serve } from '../_shared/deps.ts';
 import { createLogger } from '../_shared/logger.ts';
 import { MetricsCollector } from '../_shared/metrics.ts';

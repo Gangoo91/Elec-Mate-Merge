@@ -99,7 +99,7 @@ const faqs = [
   {
     question: 'How do I test an RCD when I suspect it is the fault?',
     answer:
-      'Regulation 643.8 requires the effectiveness of automatic disconnection by RCDs used for additional protection to be verified with test equipment to BS EN 61557-6. The note to that regulation states that, regardless of RCD type, effectiveness is deemed verified where the RCD disconnects within the stated time on an alternating current test at its rated residual operating current (IΔn) — 300 ms maximum for a general non-delay type. Table 3A, which previously set out the half-times and five-times tripping criteria, was deleted at A4:2026, so those are no longer installation verification requirements in BS 7671. If the RCD trips within that time on test but still trips in service, the RCD is doing its job and the fault is earth leakage on the circuit — chase it with a milliamp clamp meter on the live circuit, then insulation resistance testing after isolation.',
+      'Regulation 643.8 requires the effectiveness of automatic disconnection by RCDs used for additional protection to be verified with test equipment to BS EN 61557-6. The note to that regulation states that, regardless of RCD type, effectiveness is deemed verified where the RCD disconnects within the stated time on an alternating current test at its rated residual operating current (IΔn) — 300 ms maximum for a general non-delay type. Table 3A, which previously set out the half-times and five-times tripping criteria, was deleted at A2:2022, so those are no longer installation verification requirements in BS 7671. If the RCD trips within that time on test but still trips in service, the RCD is doing its job and the fault is earth leakage on the circuit — chase it with a milliamp clamp meter on the live circuit, then insulation resistance testing after isolation.',
   },
 ];
 
@@ -494,7 +494,7 @@ const sections = [
           equipment to BS EN 61557-6. Its note states that, regardless of RCD type, effectiveness is
           deemed verified where the device disconnects within the stated time on an alternating
           current test at IΔn — a maximum of 300 ms for a general non-delay type. Table 3A, which
-          previously gave the half-times and five-times criteria, was deleted at A4:2026.
+          previously gave the half-times and five-times criteria, was deleted at A2:2022.
         </p>
       </>
     ),
@@ -732,7 +732,7 @@ export default function ElectricalFaultFindingMethodologyPage() {
       faqHeading="Frequently Asked Questions About Electrical Fault Finding"
       relatedPages={relatedPages}
       ctaHeading="Document Fault Investigations and Certify Repairs on Your Phone"
-      ctaSubheading="Elec-Mate's AI fault diagnosis and certification tools help you record findings, attach photos, and issue professional reports and certificates on site. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's AI fault diagnosis and certification tools help you record findings, attach photos, and issue professional reports and certificates on site. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

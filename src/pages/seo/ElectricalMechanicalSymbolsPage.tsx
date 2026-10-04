@@ -149,7 +149,7 @@ export default function ElectricalMechanicalSymbolsPage() {
       heroTitle={
         <>
           Mechanical + HVAC Symbols:{' '}
-          <span className="text-yellow-400">Heating, hot water + AC references</span>
+          <span className="text-elec-yellow">Heating, hot water + AC references</span>
         </>
       }
       heroSubtitle="Every heating, hot water and air conditioning electrical termination symbol — drawn to IEC 60617 with BS 7671 supply requirements for each appliance."

@@ -187,15 +187,15 @@ export default function PATTestingPage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
-        <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-elec-yellow text-sm font-medium mb-6">
             <Plug className="w-4 h-4" />
             Part of 19 Certificate Types
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             PAT Testing App
-            <span className="block text-yellow-400 mt-1">Portable Appliance Testing</span>
+            <span className="block text-elec-yellow mt-1">Portable Appliance Testing</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             Digital PAT testing records on your phone. Visual inspection checklists, automated
@@ -212,7 +212,7 @@ export default function PATTestingPage() {
             </Link>
             <a
               href="#how-it-works"
-              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-yellow-500/40 touch-manipulation transition-colors"
+              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-white/[0.1] touch-manipulation transition-colors"
             >
               See How It Works
               <ArrowDown className="w-4 h-4 ml-1" />
@@ -226,7 +226,7 @@ export default function PATTestingPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <BookOpen className="w-5 h-5 text-yellow-400" />
+              <BookOpen className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">What Is PAT Testing?</h2>
           </div>
@@ -272,7 +272,7 @@ export default function PATTestingPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <ShieldCheck className="w-5 h-5 text-yellow-400" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Legal Requirements for PAT Testing
@@ -288,7 +288,7 @@ export default function PATTestingPage() {
             </p>
             <div className="space-y-4 my-6">
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                <h3 className="font-bold text-yellow-400 text-lg mb-2">
+                <h3 className="font-bold text-elec-yellow text-lg mb-2">
                   The Electricity at Work Regulations 1989
                 </h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -302,7 +302,7 @@ export default function PATTestingPage() {
                 </p>
               </div>
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                <h3 className="font-bold text-yellow-400 text-lg mb-2">
+                <h3 className="font-bold text-elec-yellow text-lg mb-2">
                   The Health and Safety at Work Act 1974
                 </h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -315,7 +315,7 @@ export default function PATTestingPage() {
                 </p>
               </div>
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                <h3 className="font-bold text-yellow-400 text-lg mb-2">
+                <h3 className="font-bold text-elec-yellow text-lg mb-2">
                   The Provision and Use of Work Equipment Regulations 1998 (PUWER)
                 </h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -345,7 +345,7 @@ export default function PATTestingPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <BookOpen className="w-5 h-5 text-yellow-400" />
+              <BookOpen className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               The IET Code of Practice (5th Edition)
@@ -394,7 +394,7 @@ export default function PATTestingPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Eye className="w-5 h-5 text-yellow-400" />
+              <Eye className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Visual Inspection vs Formal Testing
@@ -410,66 +410,66 @@ export default function PATTestingPage() {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                 <div className="flex items-center gap-2 mb-3">
-                  <Eye className="w-5 h-5 text-yellow-400" />
+                  <Eye className="w-5 h-5 text-elec-yellow" />
                   <h3 className="font-bold text-white text-lg">Visual Inspection</h3>
                 </div>
                 <ul className="space-y-2 text-white text-sm">
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>Check cable for cuts, fraying, or exposed conductors</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>Check plug for cracks, overheating, or bent pins</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>Verify correct fuse rating for the appliance</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>Check cable entry point and strain relief</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>Check casing for damage or missing parts</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>Check for signs of overheating or burning</span>
                   </li>
                 </ul>
               </div>
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                 <div className="flex items-center gap-2 mb-3">
-                  <Zap className="w-5 h-5 text-yellow-400" />
+                  <Zap className="w-5 h-5 text-elec-yellow" />
                   <h3 className="font-bold text-white text-lg">Formal Electrical Tests</h3>
                 </div>
                 <ul className="space-y-2 text-white text-sm">
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
                       Earth continuity (Class I only): less than 0.1 ohm + cable resistance
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>Insulation resistance (Class I): greater than 1 megohm at 500 V DC</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>Insulation resistance (Class II): greater than 2 megohm at 500 V DC</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>Lead polarity (extension leads): correct wiring verified</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>Earth leakage (where required): below published limits</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
                       Touch current (alternative to insulation resistance for IT equipment)
                     </span>
@@ -495,7 +495,7 @@ export default function PATTestingPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Plug className="w-5 h-5 text-yellow-400" />
+              <Plug className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Class I, Class II, and Class III Equipment Explained
@@ -510,7 +510,7 @@ export default function PATTestingPage() {
             </p>
             <div className="grid sm:grid-cols-3 gap-4 my-6">
               <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                <h3 className="font-bold text-yellow-400 text-2xl mb-1">Class I</h3>
+                <h3 className="font-bold text-elec-yellow text-2xl mb-1">Class I</h3>
                 <h4 className="font-bold text-white mb-3">Basic Insulation + Earth</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Relies on basic insulation plus a protective earth connection. Has a three-core
@@ -521,7 +521,7 @@ export default function PATTestingPage() {
                 </p>
               </div>
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                <h3 className="font-bold text-yellow-400 text-2xl mb-1">Class II</h3>
+                <h3 className="font-bold text-elec-yellow text-2xl mb-1">Class II</h3>
                 <h4 className="font-bold text-white mb-3">Double Insulation</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Relies on double insulation or reinforced insulation for protection. Has a
@@ -532,7 +532,7 @@ export default function PATTestingPage() {
                 </p>
               </div>
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                <h3 className="font-bold text-yellow-400 text-2xl mb-1">Class III</h3>
+                <h3 className="font-bold text-elec-yellow text-2xl mb-1">Class III</h3>
                 <h4 className="font-bold text-white mb-3">Safety Extra-Low Voltage</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Designed to be supplied from a Safety Extra-Low Voltage (SELV) source — typically
@@ -561,7 +561,7 @@ export default function PATTestingPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Clock className="w-5 h-5 text-yellow-400" />
+              <Clock className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Suggested Testing Intervals by Environment
@@ -581,36 +581,36 @@ export default function PATTestingPage() {
               </h3>
               <ul className="space-y-3 text-white">
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>
-                    <strong className="text-yellow-400">Construction sites:</strong> Every 3 months.
+                    <strong className="text-elec-yellow">Construction sites:</strong> Every 3 months.
                     The harsh environment, frequent movement, and heavy use of equipment
                     significantly increase the risk of damage. 110 V equipment should also be
                     inspected regularly.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>
-                    <strong className="text-yellow-400">Industrial premises:</strong> Every 6 to 12
+                    <strong className="text-elec-yellow">Industrial premises:</strong> Every 6 to 12
                     months, depending on the type of equipment and environment. Heavy industrial
                     equipment in dusty, wet, or corrosive environments should be tested more
                     frequently.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>
-                    <strong className="text-yellow-400">Hotels, public premises, schools:</strong>{' '}
+                    <strong className="text-elec-yellow">Hotels, public premises, schools:</strong>{' '}
                     Every 12 to 24 months. Higher footfall and less-careful use of equipment
                     increase the risk compared to offices. Kitchen and catering equipment should be
                     tested more frequently.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>
-                    <strong className="text-yellow-400">Offices and shops:</strong> Every 24 to 48
+                    <strong className="text-elec-yellow">Offices and shops:</strong> Every 24 to 48
                     months. IT equipment in offices is generally low-risk and static, so longer
                     intervals are appropriate. Portable equipment such as kettles and heaters should
                     be tested more frequently than IT equipment.
@@ -635,7 +635,7 @@ export default function PATTestingPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Briefcase className="w-5 h-5 text-yellow-400" />
+              <Briefcase className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               PAT Testing as a Business Opportunity for Electricians
@@ -682,7 +682,7 @@ export default function PATTestingPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               How to Carry Out PAT Testing — Step by Step
@@ -695,7 +695,7 @@ export default function PATTestingPage() {
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex-shrink-0">
-                  <span className="font-bold text-yellow-400">{index + 1}</span>
+                  <span className="font-bold text-elec-yellow">{index + 1}</span>
                 </div>
                 <div>
                   <h3 className="font-bold text-white text-lg mb-1">{step.name}</h3>
@@ -726,7 +726,7 @@ export default function PATTestingPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Record Keeping Requirements
@@ -790,7 +790,7 @@ export default function PATTestingPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <HelpCircle className="w-5 h-5 text-yellow-400" />
+              <HelpCircle className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Frequently Asked Questions
@@ -803,7 +803,7 @@ export default function PATTestingPage() {
                 className="group p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-white/[0.14] transition-colors"
               >
                 <summary className="flex items-start gap-3 cursor-pointer touch-manipulation list-none [&::-webkit-details-marker]:hidden">
-                  <ChevronRight className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0 transition-transform group-open:rotate-90" />
+                  <ChevronRight className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0 transition-transform group-open:rotate-90" />
                   <h3 className="font-bold text-white text-lg">{faq.question}</h3>
                 </summary>
                 <div className="mt-3 pl-8">
@@ -851,7 +851,7 @@ export default function PATTestingPage() {
 
       <SEOCTASection
         heading="Start PAT Testing Digitally"
-        subheading="Join 1,600+ UK electricians using Elec-Mate for professional testing and certification. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians using Elec-Mate for professional testing and certification. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

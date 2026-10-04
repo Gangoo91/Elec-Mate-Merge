@@ -175,7 +175,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Only some circuits have C1/C2 defects.</strong> If 3 out of 10 circuits have
                 deteriorating insulation resistance but the other 7 are satisfactory, replacing only
@@ -183,7 +183,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>The property has mixed-age wiring.</strong> Extensions, loft conversions,
                 and previous alterations often use newer cable. These sections may have decades of
@@ -191,7 +191,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Budget constraints.</strong> A full rewire of a 3-bedroom house costs £4,000
                 to £8,000. A partial rewire targeting the worst circuits might cost £1,500 to £3,500
@@ -199,7 +199,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minimal disruption is needed.</strong> In an occupied property, rewiring
                 specific rooms or circuits is less disruptive than a full rewire, which typically
@@ -231,7 +231,7 @@ const sections = [
           </h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full rewire:</strong> £4,000 to £8,000. Includes new consumer unit, all new
                 circuits, first and second fix throughout, full inspection and testing. Duration: 5
@@ -239,7 +239,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Partial rewire (3-4 circuits):</strong> £1,500 to £3,500. Includes consumer
                 unit upgrade (if needed), replacement of defective circuits, connection to existing
@@ -247,7 +247,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit upgrade only:</strong> £800 to £1,500. Includes new metal
                 consumer unit with RCBOs or dual RCD split-load board, main switch, connection of
@@ -285,7 +285,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Connection points are accessible.</strong> BS 7671 Regulation 526.3 requires
                 that every connection is accessible for inspection, testing, and maintenance.
@@ -294,7 +294,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable compatibility.</strong> When connecting new T&E cable to older cable
                 types, the termination method must be appropriate for both conductor sizes and
@@ -303,7 +303,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Existing cable condition verified.</strong> Before connecting new work to an
                 existing cable, the electrician must verify the condition of the existing cable —
@@ -312,7 +312,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Protective devices are appropriate.</strong> The new consumer unit or
                 existing protective devices must be rated for both the new and existing cable sizes.
@@ -409,7 +409,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <p className="text-white text-sm leading-relaxed">
               <strong>Important:</strong> The EIC for a partial rewire should clearly describe the
               extent of the work — which circuits were replaced, which were retained, and where the
@@ -483,7 +483,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Receipt className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Receipt className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EICR-to-Quote Pipeline</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -524,7 +524,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify partial rewires from your phone"
-          description="Join 1,600+ UK electricians using Elec-Mate to turn EICR defects into priced quotes, complete EIC certificates on site…"
+          description="Join 2,100+ UK electricians using Elec-Mate to turn EICR defects into priced quotes, complete EIC certificates on site…"
           icon={FileCheck2}
         />
       </>
@@ -549,7 +549,7 @@ export default function PartialRewireGuidePage() {
       badgeIcon={Cable}
       heroTitle={
         <>
-          Partial Rewire: <span className="text-yellow-400">When a Full Rewire Is Not Needed</span>
+          Partial Rewire: <span className="text-elec-yellow">When a Full Rewire Is Not Needed</span>
         </>
       }
       heroSubtitle="Not every property needs a full rewire. A partial rewire targets only the defective circuits and saves 40-60% of the cost. This guide explains when a partial rewire is the right choice, how to connect old and new wiring safely, and what certification is required."

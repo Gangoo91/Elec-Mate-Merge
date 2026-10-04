@@ -155,16 +155,16 @@ const quizQuestions = [
   {
     id: 6,
     question:
-      'The drawing pack symbol legend is incomplete — there is a symbol on the kitchen layout that is not in the legend, and it does not match anything in IEC 60617 / IEC 60617. What does Reg 514.9.2 (A4:2026) say about this?',
+      'A symbol on the kitchen layout is not in the legend and does not match anything in IEC 60617. What does BS 7671 Reg 514.9.1 say about symbols?',
     options: [
       'Non-standard symbols are acceptable on site provided a legend entry is added to the pack later',
       'The installer may define any missing symbol to mean whatever best fits the rest of the layout',
-      'Diagrams and notices shall comply with the applicable standards — a non-standard symbol is a non-conformance for the designer to fix',
+      'Symbols used shall comply with IEC 60617 — a non-standard symbol is a non-conformance for the designer to fix',
       'The regulation applies only to commercial installation drawings, never to domestic ones',
     ],
     correctAnswer: 2,
     explanation:
-      '514.9.2 (introduced in A4:2026) requires diagrams, charts and notices to comply with the applicable standards — and IEC 60617 is the applicable standard for graphical symbols on UK electrical drawings. A non-standard symbol on an installation drawing is a regulation non-conformance, and the right response is an RFI to the designer.',
+      'Regulation 514.9.1 requires any symbol used to comply with IEC 60617, so a non-standard symbol is a non-conformance for the designer to correct, not something the installer guesses at. (514.9.2, added by A2:2022, adds that diagrams and notices comply with BS EN 61082-1 and related standards.)',
   },
   {
     id: 7,
@@ -264,7 +264,7 @@ export default function Sub5() {
             'Read IEC 60617 / IEC 60617 graphical symbols off a real layout drawing — sockets, switches, FCUs, lights, smoke detectors, MET, protective devices.',
             'Convert measurements off a 1:50 floor plan into real cable run distances using a scale rule, and add the right allowance for routing, drops and slack.',
             'Cross-reference the schedule of accessories, cable schedule and layout drawings to spot discrepancies and raise them as RFIs in writing before starting work.',
-            'Apply Reg 514.9.2 (A4:2026 — diagrams shall comply with applicable standards) and Reg 526.1 (manufacturer instructions for terminations) when reviewing a drawing pack for completeness.',
+            'Apply Reg 514.9.2 (A2:2022 — diagrams shall comply with applicable standards) and Reg 526.1 (manufacturer instructions for terminations) when reviewing a drawing pack for completeness.',
           ]}
           initialVisibleCount={3}
         />
@@ -603,18 +603,19 @@ export default function Sub5() {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 7671:2018+A4:2026 — Regulation 514.9.2 (paraphrased — new in A4:2026)"
-          clause="514.9.2 has been introduced to advise that all diagrams, charts, and information or instruction notices comply with the applicable standards specified."
+          source="BS 7671:2018+A4:2026 — Regulation 514.9.2"
+          clause="All diagrams, charts, and information or instruction notices shall comply with BS EN 61082-1, BS EN IEC/IEEE 82079-1, and, where appropriate, BS EN 81346-1. All warning notices and other relevant safety signs shall comply with BS ISO 3864-1, BS EN ISO 7010, and BS EN IEC/IEEE 82079-1."
           meaning={
             <>
               The regulation that anchors everything in this Sub. Drawings need to use the
-              applicable standards — IEC 60617 for graphical symbols, BS EN 60073 / 60446 for
-              notices. A drawing pack with home-made symbols, missing legend entries, or
-              non-standard scale notation does not comply with 514.9.2 and is an RFI back to the
-              designer. Your job on site is to spot that and flag it, not to guess.
+              applicable standards — BS EN 61082-1 for diagrams, BS EN ISO 7010 for safety signs,
+              and IEC 60617 for graphical symbols (Reg 514.9.1). A drawing pack with home-made
+              symbols, missing legend entries, or non-standard scale notation does not comply with
+              514.9.2 and is an RFI back to the designer. Your job on site is to spot that and flag
+              it, not to guess.
             </>
           }
-          cite="Source: BS 7671:2018+A4:2026 Part 5, Regulation 514.9.2 (paraphrased — full A4:2026 wording in the published amendment)"
+          cite="Source: BS 7671:2018+A4:2026, Regulation 514.9.2 (added by A2:2022)."
         />
 
         <SectionRule />
@@ -794,7 +795,7 @@ export default function Sub5() {
             "Schematic gives you the system's logic in one diagram. Layouts give you positions in IEC 60617 / IEC 60617 symbols. Schedules turn both into ordering lists.",
             'Use a scale rule on the matching face — read real metres directly. Multiplying by the scale denominator on top of that is the classic double-conversion mistake.',
             'Discrepancies between any two designer documents are an RFI in writing, not a guess. The cost of asking is an email. The cost of guessing wrong is a strip-out at handover.',
-            'Reg 514.9.2 (A4:2026) requires diagrams to comply with applicable standards. Reg 526.1 makes manufacturer terminal instructions a regulation requirement. Both back you up when you raise pack quality issues.',
+            'Reg 514.9.2 (added by A2:2022) requires diagrams to comply with applicable standards. Reg 526.1 makes manufacturer terminal instructions a regulation requirement. Both back you up when you raise pack quality issues.',
           ]}
         />
 

@@ -111,7 +111,7 @@ const quizQuestions = [
       'They must use the pre-2004 colour code',
       'They must be installed at exactly 50 mm depth',
       'They must avoid electromagnetic interference',
-      'They must comply with bathroom zoning requirements',
+      'They must have mechanical protection or 30 mA RCD protection as BS 7671 requires',
     ],
     correctAnswer: 3,
     explanation:

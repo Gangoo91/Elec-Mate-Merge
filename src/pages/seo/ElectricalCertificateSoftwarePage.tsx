@@ -46,7 +46,7 @@ export default function ElectricalCertificateSoftwarePage() {
       badgeIcon={FileCheck2}
       heroTitle={
         <>
-          <span className="text-yellow-400">Electrical Certificate Software</span> Built for UK
+          <span className="text-elec-yellow">Electrical Certificate Software</span> Built for UK
           Electricians
         </>
       }

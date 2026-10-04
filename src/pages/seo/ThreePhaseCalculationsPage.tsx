@@ -203,9 +203,9 @@ const sections = [
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-2">Line Values</h3>
             <p className="text-white text-sm leading-relaxed">
-              <strong className="text-yellow-400">Line voltage (VL)</strong> is measured between any
+              <strong className="text-elec-yellow">Line voltage (VL)</strong> is measured between any
               two phase conductors: L1 to L2, L2 to L3, or L3 to L1. In the UK, VL = 400V.{' '}
-              <strong className="text-yellow-400">Line current (IL)</strong> is the current flowing
+              <strong className="text-elec-yellow">Line current (IL)</strong> is the current flowing
               in each phase conductor of the supply cable. This is the current you measure with a
               clamp meter on any one of the three phase conductors. Line current is the value used
               for cable sizing and protective device selection.
@@ -214,9 +214,9 @@ const sections = [
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h3 className="font-bold text-white text-lg mb-2">Phase Values</h3>
             <p className="text-white text-sm leading-relaxed">
-              <strong className="text-yellow-400">Phase voltage (Vp)</strong> is measured between
+              <strong className="text-elec-yellow">Phase voltage (Vp)</strong> is measured between
               any phase conductor and the neutral: L1 to N, L2 to N, or L3 to N. In the UK, Vp =
-              230V. <strong className="text-yellow-400">Phase current (Ip)</strong> is the current
+              230V. <strong className="text-elec-yellow">Phase current (Ip)</strong> is the current
               flowing through each individual load element or winding. In a star configuration, the
               phase current equals the line current (Ip = IL). In a delta configuration, the phase
               current is the line current divided by root 3 (Ip = IL / 1.732).
@@ -236,17 +236,17 @@ const sections = [
               Delta (&Delta;)
             </div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">Voltage</div>
-            <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+            <div className="p-2 rounded bg-white/[0.04] text-center text-elec-yellow font-bold">
               V<sub>L</sub> = &radic;3 &times; V<sub>p</sub>
             </div>
-            <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+            <div className="p-2 rounded bg-white/[0.04] text-center text-elec-yellow font-bold">
               V<sub>L</sub> = V<sub>p</sub>
             </div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">Current</div>
-            <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+            <div className="p-2 rounded bg-white/[0.04] text-center text-elec-yellow font-bold">
               I<sub>L</sub> = I<sub>p</sub>
             </div>
-            <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+            <div className="p-2 rounded bg-white/[0.04] text-center text-elec-yellow font-bold">
               I<sub>L</sub> = &radic;3 &times; I<sub>p</sub>
             </div>
           </div>
@@ -274,24 +274,24 @@ const sections = [
             </p>
             <ul className="space-y-2 text-white text-sm leading-relaxed">
               <li className="flex items-start gap-3">
-                <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>
                   Phase voltage across each element: V<sub>p</sub> = V<sub>L</sub> / &radic;3 = 400
                   / 1.732 = 230V
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>
                   Line current equals phase current: I<sub>L</sub> = I<sub>p</sub>
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>Neutral available — allows connection of single-phase 230V loads</span>
               </li>
               <li className="flex items-start gap-3">
-                <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>
                   Standard for UK distribution — domestic and commercial supplies are star-connected
                 </span>
@@ -307,24 +307,24 @@ const sections = [
             </p>
             <ul className="space-y-2 text-white text-sm leading-relaxed">
               <li className="flex items-start gap-3">
-                <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>
                   Phase voltage across each element: V<sub>p</sub> = V<sub>L</sub> = 400V
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>
                   Line current = &radic;3 x phase current: I<sub>L</sub> = &radic;3 &times; I
                   <sub>p</sub>
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>No neutral — only three-phase and line-to-line loads can be connected</span>
               </li>
               <li className="flex items-start gap-3">
-                <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>Common for three-phase motors at running speed (star-delta starting)</span>
               </li>
             </ul>
@@ -375,22 +375,22 @@ const sections = [
               Example (30kW)
             </div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">1.0</div>
-            <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+            <div className="p-2 rounded bg-white/[0.04] text-center text-elec-yellow font-bold">
               1.44A
             </div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">43.3A</div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">0.9</div>
-            <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+            <div className="p-2 rounded bg-white/[0.04] text-center text-elec-yellow font-bold">
               1.60A
             </div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">48.1A</div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">0.85</div>
-            <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+            <div className="p-2 rounded bg-white/[0.04] text-center text-elec-yellow font-bold">
               1.70A
             </div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">50.9A</div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">0.8</div>
-            <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+            <div className="p-2 rounded bg-white/[0.04] text-center text-elec-yellow font-bold">
               1.80A
             </div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">54.1A</div>
@@ -424,30 +424,30 @@ const sections = [
             <h3 className="font-bold text-white mb-2">Typical power factors by load type</h3>
             <div className="space-y-2 text-white text-sm">
               <p>
-                <strong className="text-yellow-400">Resistive loads (heaters, kettles):</strong> cos
+                <strong className="text-elec-yellow">Resistive loads (heaters, kettles):</strong> cos
                 phi = 1.0 (unity)
               </p>
               <p>
-                <strong className="text-yellow-400">Fluorescent lighting:</strong> cos phi = 0.5 to
+                <strong className="text-elec-yellow">Fluorescent lighting:</strong> cos phi = 0.5 to
                 0.9 (varies with ballast type)
               </p>
               <p>
-                <strong className="text-yellow-400">LED lighting (with driver):</strong> cos phi =
+                <strong className="text-elec-yellow">LED lighting (with driver):</strong> cos phi =
                 0.9 to 0.95
               </p>
               <p>
-                <strong className="text-yellow-400">Induction motors (full load):</strong> cos phi =
+                <strong className="text-elec-yellow">Induction motors (full load):</strong> cos phi =
                 0.8 to 0.9
               </p>
               <p>
-                <strong className="text-yellow-400">Induction motors (light load):</strong> cos phi
+                <strong className="text-elec-yellow">Induction motors (light load):</strong> cos phi
                 = 0.3 to 0.5
               </p>
               <p>
-                <strong className="text-yellow-400">Welding equipment:</strong> cos phi = 0.4 to 0.6
+                <strong className="text-elec-yellow">Welding equipment:</strong> cos phi = 0.4 to 0.6
               </p>
               <p>
-                <strong className="text-yellow-400">Computer loads:</strong> cos phi = 0.65 to 0.9
+                <strong className="text-elec-yellow">Computer loads:</strong> cos phi = 0.65 to 0.9
                 (depends on PSU type)
               </p>
             </div>
@@ -491,25 +491,25 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">Phase balancing in practice</h3>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
-              <BarChart3 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart3 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>List all single-phase circuits with their maximum demand (Ib)</span>
             </li>
             <li className="flex items-start gap-3">
-              <BarChart3 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart3 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Allocate the largest loads first, assigning each to the phase with the lowest total
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BarChart3 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart3 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>Continue allocating smaller loads to equalise the phase totals</span>
             </li>
             <li className="flex items-start gap-3">
-              <BarChart3 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart3 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>Record the phase allocation on the circuit schedule (EIC Section 7)</span>
             </li>
             <li className="flex items-start gap-3">
-              <BarChart3 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart3 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Three-phase loads are inherently balanced and do not need phase allocation
               </span>
@@ -590,12 +590,12 @@ const sections = [
           <div className="grid grid-cols-2 gap-3">
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">Lighting circuits</p>
-              <p className="text-yellow-400 text-lg font-bold">12V</p>
+              <p className="text-elec-yellow text-lg font-bold">12V</p>
               <p className="text-white text-xs">3% of 400V</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">Other circuits</p>
-              <p className="text-yellow-400 text-lg font-bold">20V</p>
+              <p className="text-elec-yellow text-lg font-bold">20V</p>
               <p className="text-white text-xs">5% of 400V</p>
             </div>
           </div>
@@ -659,7 +659,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-4">
             <p className="text-white text-sm leading-relaxed">
-              <strong className="text-yellow-400">A4:2026 note — buried cables:</strong> Tables 4A2,
+              <strong className="text-elec-yellow">A4:2026 note — buried cables:</strong> Tables 4A2,
               4D4A, 4E4A, 4H4A, and 4J4A in Appendix 4 were revised in A4:2026 to reflect updated
               methods for buried cable installation. If the three-phase cable run is buried (direct
               in soil or in ducts), you must use the revised A4:2026 table values — pre-A4 values
@@ -685,21 +685,21 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">Which Appendix 4 table do I use?</h3>
           <div className="space-y-2 text-white text-sm">
             <p>
-              <strong className="text-yellow-400">
+              <strong className="text-elec-yellow">
                 PVC twin and earth (T+E) 70&deg;C — single-phase:
               </strong>{' '}
               Table 4D1A. Standard flat grey cable for domestic and single-phase commercial
               circuits.
             </p>
             <p>
-              <strong className="text-yellow-400">
+              <strong className="text-elec-yellow">
                 XLPE twin and earth (T+E) 90&deg;C — single-phase:
               </strong>{' '}
               Table 4D5A. Higher-rated T+E cable; still single-phase (two loaded conductors), 230V.
               Do not use for three-phase motor or heating circuits.
             </p>
             <p>
-              <strong className="text-yellow-400">
+              <strong className="text-elec-yellow">
                 3-core XLPE SWA 90&deg;C — three-phase (400V):
               </strong>{' '}
               Table 4D4A. The correct table for three-phase submains, motor feeds, and heating
@@ -737,7 +737,7 @@ const sections = [
               <p>
                 <strong>Line current:</strong> I<sub>L</sub> = 11,000 &divide; (1.732 &times; 400
                 &times; 0.85) = 11,000 &divide; 588.9 ={' '}
-                <strong className="text-yellow-400">18.7A</strong>
+                <strong className="text-elec-yellow">18.7A</strong>
               </p>
               <p>
                 <strong>Protective device:</strong> 20A Type C MCB (Type C for motor inrush)
@@ -762,7 +762,7 @@ const sections = [
               </p>
               <p>
                 VD = 16 &times; 18.7 &times; 25 &divide; 1000 ={' '}
-                <strong className="text-yellow-400">7.5V</strong> (1.9% of 400V — within 5% limit)
+                <strong className="text-elec-yellow">7.5V</strong> (1.9% of 400V — within 5% limit)
               </p>
             </div>
           </div>
@@ -780,7 +780,7 @@ const sections = [
               <p>
                 <strong>Line current:</strong> I<sub>L</sub> = 60,000 &divide; (1.732 &times; 400
                 &times; 0.9) = 60,000 &divide; 623.5 ={' '}
-                <strong className="text-yellow-400">96.2A</strong>
+                <strong className="text-elec-yellow">96.2A</strong>
               </p>
               <p>
                 <strong>Protective device:</strong> 100A TP MCCB
@@ -793,7 +793,7 @@ const sections = [
                 <strong>
                   Required I<sub>t</sub>:
                 </strong>{' '}
-                100 &divide; 0.65 = <strong className="text-yellow-400">153.8A</strong>
+                100 &divide; 0.65 = <strong className="text-elec-yellow">153.8A</strong>
               </p>
               <p>
                 <strong>Cable selection:</strong> 70mm&sup2; multicore SWA required for this current
@@ -818,7 +818,7 @@ const sections = [
               <p>
                 <strong>Line current:</strong> I<sub>L</sub> = 24,000 &divide; (1.732 &times; 400
                 &times; 1.0) = 24,000 &divide; 692.8 ={' '}
-                <strong className="text-yellow-400">34.6A</strong>
+                <strong className="text-elec-yellow">34.6A</strong>
               </p>
               <p>
                 <strong>Protective device:</strong> 40A Type B MCB (three-pole)
@@ -905,7 +905,7 @@ export default function ThreePhaseCalculationsPage() {
       heroTitle={
         <>
           Three Phase Calculations{' '}
-          <span className="text-yellow-400">Power, Current &amp; Voltage</span>
+          <span className="text-elec-yellow">Power, Current &amp; Voltage</span>
         </>
       }
       heroSubtitle="The complete guide to three-phase electrical calculations. Power formula (P = root 3 x VL x IL x cos phi), line vs phase values, star vs delta configurations, phase balancing, three-phase voltage drop, and cable sizing — with worked examples for motors, distribution boards, and commercial loads."
@@ -915,7 +915,7 @@ export default function ThreePhaseCalculationsPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Three-phase calculations, one tap away"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for three-phase power, cable sizing, and voltage drop calculations. 70+ calculators, 19 certificate types — all BS 7671:2018+A4:2026. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for three-phase power, cable sizing, and voltage drop calculations. 70+ calculators, 19 certificate types — all BS 7671:2018+A4:2026. 7-day free trial."
     />
   );
 }

@@ -149,9 +149,9 @@ const quickCheckQuestions = [
     id: 'cable-selection',
     question: 'What is the most critical factor when selecting cable for underground installation?',
     options: [
-      'Cost',
+      'Voltage drop',
       'Mechanical protection',
-      'Colour',
+      'Current rating',
       'Flexibility',
     ],
     correctIndex: 1,
@@ -205,7 +205,7 @@ const quizQuestions = [
     question:
       'When installing cables over thermal insulation, what adjustment is typically required?',
     options: [
-      'Reduce the cable size to save material',
+      'Fit a cable with a smaller cpc',
       'Use a smaller protective device only',
       'Increase cable size for derating',
       'Apply extra mechanical clips',
@@ -233,8 +233,8 @@ const quizQuestions = [
     options: [
       'UV resistance',
       'High current capacity',
-      'Low cost',
-      'Bright colours',
+      'A flame-retardant sheath',
+      'Extra flexibility',
     ],
     correctAnswer: 0,
     explanation:
@@ -271,9 +271,9 @@ const quizQuestions = [
     question:
       'What is the primary consideration when selecting cable for bathroom underfloor heating?',
     options: [
-      'Low cost and easy availability',
-      'Bright sheath colour for identification',
-      'Maximum flexibility for coiling',
+      'A larger csa than the supply cable',
+      'A flame-retardant LSZH sheath',
+      'A metallic screen for EMC',
       'Heat resistance and moisture protection',
     ],
     correctAnswer: 3,
@@ -310,7 +310,7 @@ const quizQuestions = [
     id: 10,
     question: 'What factor determines the minimum burial depth for underground cables?',
     options: [
-      'The colour of the cable sheath',
+      "The cable's current rating",
       'The supply voltage of the circuit',
       'Location and risk of mechanical damage',
       'The number of conductors in the cable',

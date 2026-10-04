@@ -225,7 +225,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three phase motors above 2.2kW:</strong> Electric motors above 2.2kW are
                 typically three phase because single phase motors of this size have poor efficiency
@@ -235,7 +235,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large EV charging:</strong> 22kW AC EV chargers require three phase (3 ×
                 32A). 7.4kW chargers can be single phase. DC rapid chargers (50kW, 150kW) require a
@@ -243,7 +243,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial catering:</strong> Combination ovens, commercial dishwashers,
                 bratt pans, and large commercial ovens are typically three phase. A fully equipped
@@ -251,7 +251,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large heat pumps and HVAC:</strong> Air source heat pumps above 12kW output
                 and large commercial HVAC systems typically require three phase. Some domestic heat
@@ -275,7 +275,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <p className="font-bold text-white mb-2">Typical DNO Upgrade Costs</p>
               <ul className="space-y-1 text-white text-sm">
@@ -311,7 +311,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Increased neutral current:</strong> With single phase loads, the neutral
                 carries the vector sum of the three phase currents. A perfectly balanced three phase
@@ -320,7 +320,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Voltage imbalance:</strong> Unbalanced loading causes voltage imbalance —
                 the voltage on the heavily loaded phase is lower and the lightly loaded phase is
@@ -329,7 +329,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reduced transformer efficiency:</strong> Unbalanced loading reduces the
                 efficiency of the transformer supplying the installation and can cause transformer
@@ -416,7 +416,7 @@ export default function SinglePhaseVsThreePhasePage() {
       heroTitle={
         <>
           Single Phase vs Three Phase:{' '}
-          <span className="text-yellow-400">When to Upgrade and What It Costs</span>
+          <span className="text-elec-yellow">When to Upgrade and What It Costs</span>
         </>
       }
       heroSubtitle="Three phase supply is needed when the connected load exceeds 15kW. A DNO upgrade costs £2,000 to £10,000+ depending on network proximity. This guide covers when three phase is required, the upgrade process, load balancing, and wiring differences."

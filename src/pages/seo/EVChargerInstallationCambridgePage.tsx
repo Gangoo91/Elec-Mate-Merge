@@ -189,7 +189,7 @@ const sections = [
           </h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Simple installation (modern detached/semi, garage or driveway)</strong> —
                 £850 to £1,050. Short cable run, spare consumer unit way, standard earth rod. Common
@@ -197,7 +197,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard installation (terrace or Victorian semi)</strong> — £1,000 to
                 £1,200. Cable run of 8 to 15 metres, PME earth rod required, possible MCB addition
@@ -206,16 +206,16 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Complex installation (listed building, conservation area, long run)</strong>{' '}
-                — £1,200 to £1,600+. Internal cable routing required to avoid visible external
+                — £1,200 to £2,100+. Internal cable routing required to avoid visible external
                 works, possible consumer unit upgrade, specialist fixings. Conservation areas and
                 listed properties in the city centre and Newnham areas.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>22kW three-phase charger</strong> — £1,200 to £2,000 installed. Requires a
                 three-phase supply and G99 approval from UKPN. Suitable for technology sector
@@ -244,7 +244,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>OZEV EV chargepoint grant</strong> — up to £350 for flat owners and tenants
                 who own or lease an eligible plug-in vehicle. Cambridge's large student and research
@@ -253,7 +253,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Workplace Charging Scheme</strong> — Cambridge's many tech companies,
                 biotech firms, and research institutions can claim up to £350 per socket (maximum 40
@@ -262,7 +262,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Greater Cambridge EV strategy</strong> — the Greater Cambridge Partnership
                 and Cambridgeshire and Peterborough Combined Authority support EV charging
@@ -291,7 +291,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated final circuit (Regulation 722.533.101)</strong> — a dedicated 32A
                 circuit from the consumer unit. Older Cambridge consumer units in Victorian
@@ -300,7 +300,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection (Regulation 722.531.3.101)</strong> — appropriate RCD
                 protection covering the EV circuit. Modern smart chargers typically include
@@ -309,7 +309,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smart charger compliance</strong> — the Electric Vehicles (Smart Charge
                 Points) Regulations 2021 requires all new home EV chargers to support smart
@@ -318,7 +318,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable sizing</strong> — use{' '}
                 <SEOInternalLink href="/tools/cable-sizing-calculator">
@@ -388,7 +388,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98 notification (7kW single-phase)</strong> — submit online via the UKPN
                 portal. This is a notification, not an application — the installer proceeds with
@@ -397,7 +397,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G99 application (22kW three-phase)</strong> — prior approval required from
                 UKPN before installation. Allow 4 to 10 weeks. Required for three-phase chargers and
@@ -406,7 +406,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Installer responsibility</strong> — the electrician handles UKPN
                 notification. Confirm this is included in the quoted price. Failure to notify UKPN
@@ -432,7 +432,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Conservation areas across Cambridge</strong> — Cambridge City Council
                 designates extensive conservation areas covering much of the historic centre, the
@@ -443,7 +443,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Listed buildings</strong> — Listed Building Consent from Cambridge City
                 Council is required for any works that alter the character of a listed building,
@@ -453,7 +453,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Internal cable routing</strong> — for conservation area and listed building
                 properties, running the cable internally (through floors, walls, and ceilings) and
@@ -464,7 +464,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Village properties in the Cambridge green belt</strong> — surrounding
                 villages including Grantchester, Trumpington, Cherry Hinton, and Histon may have
@@ -491,7 +491,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Pricing Cambridge EV Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -525,7 +525,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify Cambridge EV charger installations"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification."
           icon={Car}
         />
       </>
@@ -551,7 +551,7 @@ export default function EVChargerInstallationCambridgePage() {
       heroTitle={
         <>
           EV Charger Installation Cambridge:{' '}
-          <span className="text-yellow-400">Costs, Grants, and Conservation Areas 2026</span>
+          <span className="text-elec-yellow">Costs, Grants, and Conservation Areas 2026</span>
         </>
       }
       heroSubtitle="Home EV charger installation in Cambridge costs £850 to £1,300 for a 7kW wallbox. Covers OZEV grants up to £350, UK Power Networks (UKPN) DNO notification, PME earthing, conservation area and listed building planning requirements, and Part P compliance."
@@ -562,7 +562,7 @@ export default function EVChargerInstallationCambridgePage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in Cambridge"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify EV Charger Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

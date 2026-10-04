@@ -5,13 +5,14 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import SidebarNavSection from './SidebarNavSection';
 import SidebarFooter from './SidebarFooter';
 import { mainNavItems } from './SidebarNavItems';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useScrollLock } from '@/hooks/use-scroll-lock';
 import { useHasCollegeLink } from '@/hooks/useHasCollegeLink';
 import { isEmployerUser } from '@/config/employerAccess';
 import { useEmployerCoAdmin } from '@/hooks/useEmployerCoAdmin';
 import SafeLink from '@/components/common/SafeLink';
 import { ChevronLeft } from 'lucide-react';
+import { SidebarSearch } from './SidebarSearch';
 
 interface SidebarProps {
   open: boolean;
@@ -48,6 +49,14 @@ const Sidebar = ({
       return () => document.removeEventListener('keydown', handleEscape);
     }
   }, [open, setOpen]);
+
+  // Header 🔍 / ⌘K: make sure the sidebar is on screen before search focuses —
+  // the drawer on phones, and un-collapse it on desktop.
+  const openForSearch = useCallback(() => {
+    // Only the phone/tablet drawer — on desktop `open` would also lock page scroll.
+    if (!window.matchMedia('(min-width: 1024px)').matches) setOpen(true);
+    else if (desktopCollapsed) onToggleDesktopCollapsed?.();
+  }, [setOpen, desktopCollapsed, onToggleDesktopCollapsed]);
 
   // Prevent body scroll when mobile sidebar is open
   useScrollLock(open);
@@ -177,15 +186,19 @@ const Sidebar = ({
 
         {/* Navigation with custom scrollbar */}
         <nav className="flex-1 overflow-y-auto pt-3 pb-4 px-3 custom-scrollbar">
-          <SidebarNavSection
-            items={mainNavItems}
-            userRole={userRole}
-            userEmail={user?.email}
-            hasCollegeLink={hasCollegeLink}
-            hasEmployerAccess={isEmployerUser(profile, user?.email) || isEmployerCoAdmin}
-            adminRole={adminRole}
-            onItemClick={() => setOpen(false)}
-          />
+          {/* ELE-1804 — the box IS the search: typing swaps the menu for
+              matching pages; clearing it brings the menu back. */}
+          <SidebarSearch open={open} onPick={() => setOpen(false)} onRequestOpen={openForSearch}>
+            <SidebarNavSection
+              items={mainNavItems}
+              userRole={userRole}
+              userEmail={user?.email}
+              hasCollegeLink={hasCollegeLink}
+              hasEmployerAccess={isEmployerUser(profile, user?.email) || isEmployerCoAdmin}
+              adminRole={adminRole}
+              onItemClick={() => setOpen(false)}
+            />
+          </SidebarSearch>
         </nav>
 
         {/* Footer with premium upgrade CTA */}

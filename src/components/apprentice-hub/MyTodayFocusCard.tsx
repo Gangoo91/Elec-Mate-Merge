@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { useLoggingReminders } from '@/hooks/useLoggingReminders';
 import { motion } from 'framer-motion';
 import { ChevronRight, RefreshCw } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -50,6 +51,8 @@ function resolveHref(kind: ActionKind, target?: string): string {
 }
 
 export function MyTodayFocusCard() {
+  // Settings → Reminders drops the AI's "log your hours" suggestion (ELE-1804).
+  const { hidden: hideReminders } = useLoggingReminders();
   const { brief, loading, refreshing, refresh } = useApprenticeDailyBrief();
   const navigate = useNavigate();
 
@@ -98,32 +101,34 @@ export function MyTodayFocusCard() {
 
       {brief.bullets.length > 0 && (
         <ul className="mt-4 divide-y divide-white/[0.10] border-t border-white/[0.10]">
-          {brief.bullets.map((b, i) => (
-            <li key={i}>
-              <button
-                type="button"
-                onClick={() => navigate(resolveHref(b.action_kind, b.action_target))}
-                className="flex w-full items-start gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
-              >
-                <span
-                  aria-hidden="true"
-                  className="mt-0.5 h-8 w-[3px] shrink-0 rounded-full bg-elec-yellow"
-                />
-                <span className="min-w-0 flex-1">
-                  <span className="block text-[14px] font-semibold leading-snug text-white">
-                    {b.title}
+          {brief.bullets
+            .filter((b) => !hideReminders || b.action_kind !== 'open_otj')
+            .map((b, i) => (
+              <li key={i}>
+                <button
+                  type="button"
+                  onClick={() => navigate(resolveHref(b.action_kind, b.action_target))}
+                  className="flex w-full items-start gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="mt-0.5 h-8 w-[3px] shrink-0 rounded-full bg-elec-yellow"
+                  />
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[14px] font-semibold leading-snug text-white">
+                      {b.title}
+                    </span>
+                    <span className="mt-1 block text-[12.5px] leading-relaxed text-white">
+                      {b.why}
+                    </span>
+                    <span className="mt-1.5 block text-[12px] font-medium text-elec-yellow">
+                      {b.action_label}
+                    </span>
                   </span>
-                  <span className="mt-1 block text-[12.5px] leading-relaxed text-white">
-                    {b.why}
-                  </span>
-                  <span className="mt-1.5 block text-[12px] font-medium text-elec-yellow">
-                    {b.action_label}
-                  </span>
-                </span>
-                <ChevronRight className="mt-0.5 h-4 w-4 shrink-0 text-white" aria-hidden="true" />
-              </button>
-            </li>
-          ))}
+                  <ChevronRight className="mt-0.5 h-4 w-4 shrink-0 text-white" aria-hidden="true" />
+                </button>
+              </li>
+            ))}
         </ul>
       )}
 

@@ -151,8 +151,8 @@ const sections = [
     heading: 'Why Tool Insurance Matters for Electricians',
     content: (
       <>
-        <div className="rounded-xl bg-white/[0.04] border border-white/10 px-4 py-3 mb-4 flex items-center gap-3 text-sm text-white/70">
-          <Users className="w-4 h-4 text-yellow-400 shrink-0" />
+        <div className="rounded-xl bg-white/[0.04] border border-white/10 px-4 py-3 mb-4 flex items-center gap-3 text-sm text-white">
+          <Users className="w-4 h-4 text-elec-yellow shrink-0" />
           <span>
             Written by the Elec-Mate team and reviewed by an 18th Edition &amp; 2391 qualified
             electrician.
@@ -198,20 +198,20 @@ const sections = [
               <ul className="space-y-2">
                 <li>
                   Multifunction tester (Fluke/Megger):{' '}
-                  <strong className="text-yellow-400">£800–£1,500</strong>
+                  <strong className="text-elec-yellow">£800–£1,500</strong>
                 </li>
                 <li>
-                  PAT tester: <strong className="text-yellow-400">£200–£600</strong>
+                  PAT tester: <strong className="text-elec-yellow">£200–£600</strong>
                 </li>
                 <li>
-                  Thermal imaging camera: <strong className="text-yellow-400">£200–£1,000</strong>
+                  Thermal imaging camera: <strong className="text-elec-yellow">£200–£1,000</strong>
                 </li>
                 <li>
                   Voltage indicators, proving units:{' '}
-                  <strong className="text-yellow-400">£100–£300</strong>
+                  <strong className="text-elec-yellow">£100–£300</strong>
                 </li>
                 <li>
-                  Clamp meter, multimeter: <strong className="text-yellow-400">£50–£300</strong>
+                  Clamp meter, multimeter: <strong className="text-elec-yellow">£50–£300</strong>
                 </li>
               </ul>
             </div>
@@ -222,20 +222,20 @@ const sections = [
               <ul className="space-y-2">
                 <li>
                   Cordless drill set (DeWalt/Makita):{' '}
-                  <strong className="text-yellow-400">£200–£600</strong>
+                  <strong className="text-elec-yellow">£200–£600</strong>
                 </li>
                 <li>
-                  SDS drill: <strong className="text-yellow-400">£150–£400</strong>
+                  SDS drill: <strong className="text-elec-yellow">£150–£400</strong>
                 </li>
                 <li>
-                  Full hand tool set: <strong className="text-yellow-400">£500–£1,500</strong>
+                  Full hand tool set: <strong className="text-elec-yellow">£500–£1,500</strong>
                 </li>
                 <li>
-                  Cable rods, fish tapes: <strong className="text-yellow-400">£100–£300</strong>
+                  Cable rods, fish tapes: <strong className="text-elec-yellow">£100–£300</strong>
                 </li>
                 <li>
                   Access equipment (steps, ladders):{' '}
-                  <strong className="text-yellow-400">£100–£400</strong>
+                  <strong className="text-elec-yellow">£100–£400</strong>
                 </li>
               </ul>
             </div>
@@ -245,15 +245,15 @@ const sections = [
           <h4 className="font-bold text-white mb-2">Typical Total Replacement Values</h4>
           <div className="grid gap-3 sm:grid-cols-3 text-white text-sm">
             <div>
-              <p className="font-bold text-yellow-400">Newly Qualified</p>
+              <p className="font-bold text-elec-yellow">Newly Qualified</p>
               <p>Basic kit: £3,000–£5,000</p>
             </div>
             <div>
-              <p className="font-bold text-yellow-400">Experienced Sole Trader</p>
+              <p className="font-bold text-elec-yellow">Experienced Sole Trader</p>
               <p>Full kit: £7,000–£12,000</p>
             </div>
             <div>
-              <p className="font-bold text-yellow-400">Specialist / Commercial</p>
+              <p className="font-bold text-elec-yellow">Specialist / Commercial</p>
               <p>Advanced kit: £10,000–£15,000+</p>
             </div>
           </div>
@@ -321,7 +321,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Shield className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Tool Breakdown / Mechanical Failure</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -381,32 +381,32 @@ const sections = [
           <h4 className="font-bold text-white mb-2">Key Comparison Points</h4>
           <ul className="space-y-2 text-white text-sm">
             <li className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New-for-old vs indemnity</strong> — always choose new-for-old if available
               </span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Excess amount</strong> — typically £100 to £250, lower is better
               </span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Per-item limit</strong> — must be high enough for your most expensive test
                 instrument
               </span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cover location</strong> — van only, or van + site + home workshop
               </span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Overnight cover</strong> — some policies exclude overnight theft from van
               </span>
@@ -562,7 +562,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Camera className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Photograph Every Tool</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -624,7 +624,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1. Report to the police immediately.</strong> Call 101 or report online. You
                 need a crime reference number — without it, your insurer will not process the claim.
@@ -632,7 +632,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>2. Photograph the damage.</strong> Take photos of forced entry (broken
                 locks, damaged doors, smashed windows). This proves the theft was forcible and your
@@ -640,14 +640,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3. Contact your insurer.</strong> Most policies require notification within
                 48 hours. Have your policy number, crime reference number, and tool inventory ready.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>4. Provide your tool register.</strong> Submit your inventory spreadsheet,
                 photos, serial numbers, and purchase receipts. The more evidence you provide, the
@@ -655,7 +655,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>5. Get replacement quotes.</strong> The insurer may ask for quotes for
                 replacement tools. Provide like-for-like replacements at current retail prices.
@@ -710,7 +710,7 @@ export default function ElectricianToolInsurancePage() {
       heroTitle={
         <>
           Electrician Tool Insurance UK 2026:{' '}
-          <span className="text-yellow-400">Cover Your Kit, Protect Your Income</span>
+          <span className="text-elec-yellow">Cover Your Kit, Protect Your Income</span>
         </>
       }
       heroSubtitle="Most electricians carry £5,000 to £15,000 of tools and test equipment. Standard van insurance does NOT cover them. This guide explains the types of cover, compares providers, details van security discounts, and shows you how to document your kit for a successful claim."
@@ -721,7 +721,7 @@ export default function ElectricianToolInsurancePage() {
       faqHeading="Frequently Asked Questions About Electrician Tool Insurance"
       relatedPages={relatedPages}
       ctaHeading="Protect Your Business With the Right Tools"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Manage your business professionally from your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for quoting, certification, and job management. Manage your business professionally from your phone. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -44,7 +44,7 @@ export default function BreakEvenCalculatorPage() {
       heroTitle={
         <>
           Break-Even Calculator
-          <span className="block text-yellow-400 mt-1">For UK Electricians</span>
+          <span className="block text-elec-yellow mt-1">For UK Electricians</span>
         </>
       }
       heroSubtitle="Your break-even point is the minimum revenue you need to cover all your business costs — before you make a single pound of profit. Know this number and you can price with confidence, set meaningful targets, and understand exactly how pricing decisions affect your bottom line. Most sole trader electricians have never calculated it."
@@ -115,44 +115,44 @@ export default function BreakEvenCalculatorPage() {
                 workload changes.
               </p>
               <p>
-                <strong className="text-yellow-400">Fixed costs</strong> stay the same regardless of
+                <strong className="text-elec-yellow">Fixed costs</strong> stay the same regardless of
                 how many jobs you do. Even in a month with zero work, these costs must be paid. For
                 a sole trader electrician, typical fixed costs include:
               </p>
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
                 <ul className="space-y-2 text-white">
                   <li className="flex items-start gap-2">
-                    <ShieldCheck className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <ShieldCheck className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>Van lease or finance: £250 to £400 per month</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <ShieldCheck className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <ShieldCheck className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>Van insurance: £100 to £210 per month</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <ShieldCheck className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <ShieldCheck className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>Public liability insurance: £20 to £45 per month</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <ShieldCheck className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <ShieldCheck className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>Certification body fees (NICEIC/NAPIT): £35 to £70 per month</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <ShieldCheck className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <ShieldCheck className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>Phone contract: £20 to £50 per month</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <ShieldCheck className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <ShieldCheck className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>Software subscriptions: £10 to £30 per month</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <ShieldCheck className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <ShieldCheck className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>Accountancy fees: £25 to £100 per month</span>
                   </li>
                 </ul>
               </div>
               <p>
-                <strong className="text-yellow-400">Variable costs</strong> change with your
+                <strong className="text-elec-yellow">Variable costs</strong> change with your
                 workload. The more jobs you do, the higher these costs. Typical variable costs
                 include fuel (£10 to £30 per job depending on distance), consumables (drill bits,
                 fixings, tape, cable ties — £5 to £20 per job), and materials purchased for specific
@@ -180,13 +180,13 @@ export default function BreakEvenCalculatorPage() {
                 revenue that is left after paying variable costs.
               </p>
               <p>
-                <strong className="text-yellow-400">Step 1: Total your monthly fixed costs.</strong>{' '}
+                <strong className="text-elec-yellow">Step 1: Total your monthly fixed costs.</strong>{' '}
                 Using the example above, a sole trader might have fixed costs of £1,200 per month
                 (excluding their own salary) or £2,800 per month (including a modest salary of
                 £1,600 after tax).
               </p>
               <p>
-                <strong className="text-yellow-400">
+                <strong className="text-elec-yellow">
                   Step 2: Calculate your contribution margin.
                 </strong>{' '}
                 If you charge £300 per day and your variable costs per day are approximately £30
@@ -194,14 +194,14 @@ export default function BreakEvenCalculatorPage() {
                 terms, that is 90% (£270 / £300).
               </p>
               <p>
-                <strong className="text-yellow-400">Step 3: Calculate break-even.</strong> Monthly
+                <strong className="text-elec-yellow">Step 3: Calculate break-even.</strong> Monthly
                 fixed costs of £2,800 / contribution margin of £270 per day = 10.4 billable days per
                 month. Round up to 11 days. This means you need 11 billable days per month to cover
                 all your costs including your salary. Every day beyond 11 is pure profit at your
                 contribution margin rate.
               </p>
               <p>
-                <strong className="text-yellow-400">The profit zone:</strong> If you work 20
+                <strong className="text-elec-yellow">The profit zone:</strong> If you work 20
                 billable days per month, you have 9 days above break-even. At £270 contribution
                 margin per day, that is £2,430 per month in profit — on top of your salary. This is
                 why knowing your break-even point is so powerful: it shows you exactly how much
@@ -227,20 +227,20 @@ export default function BreakEvenCalculatorPage() {
                 is a healthy buffer.
               </p>
               <p>
-                <strong className="text-yellow-400">Below 20% margin of safety:</strong> Your
+                <strong className="text-elec-yellow">Below 20% margin of safety:</strong> Your
                 business is vulnerable. A few cancelled jobs, a week of illness, or a quiet patch
                 could push you below break-even. Focus on building your client base, increasing your{' '}
                 <SEOInternalLink href="/tools/pricing-strategy-electrician">prices</SEOInternalLink>
                 , or reducing fixed costs.
               </p>
               <p>
-                <strong className="text-yellow-400">20% to 40% margin of safety:</strong> Reasonable
+                <strong className="text-elec-yellow">20% to 40% margin of safety:</strong> Reasonable
                 but not comfortable. You can absorb normal fluctuations but a prolonged quiet period
                 would be concerning. This is typical for electricians in their first two years of
                 business.
               </p>
               <p>
-                <strong className="text-yellow-400">Above 40% margin of safety:</strong> Healthy
+                <strong className="text-elec-yellow">Above 40% margin of safety:</strong> Healthy
                 position. Your business can withstand significant revenue drops without making a
                 loss. You have room to invest in growth, take holidays, and absorb unexpected costs
                 without financial stress.
@@ -264,7 +264,7 @@ export default function BreakEvenCalculatorPage() {
                 margin.
               </p>
               <p>
-                <strong className="text-yellow-400">Example: £20 day rate increase.</strong>{' '}
+                <strong className="text-elec-yellow">Example: £20 day rate increase.</strong>{' '}
                 Increasing your day rate from £300 to £320 raises your contribution margin from £270
                 to £290. Your break-even point drops from 10.4 days to 9.7 days — nearly a full day
                 less per month. Over a year, this adds £4,400 in profit (220 working days x £20).
@@ -272,7 +272,7 @@ export default function BreakEvenCalculatorPage() {
                 your fixed costs do not change.
               </p>
               <p>
-                <strong className="text-yellow-400">Example: £20 day rate decrease.</strong>{' '}
+                <strong className="text-elec-yellow">Example: £20 day rate decrease.</strong>{' '}
                 Reducing your rate from £300 to £280 drops your contribution margin to £250 and
                 pushes your break-even from 10.4 to 11.2 days. You now need an extra day per month
                 just to break even. Over a year, you lose £4,400 in profit. This is why competing on
@@ -311,7 +311,7 @@ export default function BreakEvenCalculatorPage() {
                 billable days or jobs.
               </p>
               <p>
-                <strong className="text-yellow-400">Example:</strong> Break-even revenue of £2,800
+                <strong className="text-elec-yellow">Example:</strong> Break-even revenue of £2,800
                 per month plus a profit target of £2,000 per month = total revenue target of £4,800.
                 At £300 per day, that is 16 billable days per month. This is your working target —
                 16 days of billable work out of approximately 22 working days, giving you a
@@ -458,7 +458,7 @@ export default function BreakEvenCalculatorPage() {
         },
       ]}
       ctaHeading="Know Your Break-Even, Price with Confidence"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to calculate break-even, set targets, and price every job for profit. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to calculate break-even, set targets, and price every job for profit. 7-day free trial, cancel anytime."
       extraSchemas={[
         {
           '@type': 'SoftwareApplication',

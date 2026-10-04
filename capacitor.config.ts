@@ -31,7 +31,7 @@ const config: CapacitorConfig = {
     SplashScreen: {
       launchAutoHide: false, // We hide manually after first React paint
       launchFadeOutDuration: 300, // Smooth fade into the app
-      backgroundColor: '#0a0a0a', // Dark background matching app
+      backgroundColor: '#1c1c1c', // = the app's ground (hsl 0 0% 11%), so splash → app has no flash
       showSpinner: false,
       androidScaleType: 'CENTER_INSIDE',
       splashFullScreen: true,
@@ -41,7 +41,7 @@ const config: CapacitorConfig = {
     // Status Bar
     StatusBar: {
       style: 'DARK', // Light text on dark background
-      backgroundColor: '#0a0a0a',
+      backgroundColor: '#1c1c1c',
     },
 
     // Push Notifications
@@ -49,11 +49,13 @@ const config: CapacitorConfig = {
       presentationOptions: ['badge', 'sound', 'alert'],
     },
 
-    // Keyboard — 'native' shrinks WKWebView when keyboard opens,
-    // so fixed bottom sheets sit above the keyboard automatically
+    // Keyboard — 'native' shrinks the WebView when the keyboard opens, so
+    // fixed bottom sheets sit above the keyboard automatically. On Android
+    // the inset is applied by Capacitor's SystemBars plugin; its Android-only
+    // `resizeOnFullScreen` workaround conflicts with that and is omitted
+    // (SystemBars logs a warning if it is set). ELE-1802.
     Keyboard: {
       resize: 'native',
-      resizeOnFullScreen: true,
     },
 
     // iOS specific
@@ -66,15 +68,19 @@ const config: CapacitorConfig = {
 
   // iOS specific configuration
   ios: {
-    backgroundColor: '#0a0a0a',
+    backgroundColor: '#1c1c1c',
     preferredContentMode: 'mobile',
   },
 
   // Android specific configuration
   android: {
-    backgroundColor: '#0a0a0a',
+    backgroundColor: '#1c1c1c',
     allowMixedContent: false,
-    captureInput: true,
+    // `captureInput` is deliberately NOT set (ELE-1802). It swaps Chromium's
+    // input connection for a bare BaseInputConnection meant for games that
+    // read raw keys: with it on, Gboard glide typing and suggestions were
+    // dead on every field and the focused field was never scrolled above the
+    // keyboard, because Chromium's IME adapter never saw the keyboard.
     webContentsDebuggingEnabled: false, // Set to true for debugging
   },
 };

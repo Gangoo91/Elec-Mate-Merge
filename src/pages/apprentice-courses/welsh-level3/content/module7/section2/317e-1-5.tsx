@@ -430,7 +430,7 @@ export default function Lesson317E_1_5() {
           <li>
             <strong>RCD operation (Reg 643.7.3 simplified A4:2026 method).</strong> Single AC test
             at 1 times IΔn — must trip in 300 ms or less. The old multi-test sequence at multiples
-            of IΔn (5x, 0.5x, half-cycle) and Table 3A in older editions are deleted in A4:2026.
+            of IΔn (5x, 0.5x, half-cycle) and Table 3A in older editions are deleted in A2:2022.
           </li>
           <li>
             <strong>AFDD test (Reg 643.7.x where AFDD installed).</strong> Press the integral test
@@ -547,8 +547,8 @@ export default function Lesson317E_1_5() {
       />
 
       <ConceptBlock
-        title="Reg 643.7.3 — A4:2026 simplified RCD test"
-        plainEnglish="A4:2026 deleted the old multi-test RCD sequence (1×IΔn, 0.1×IΔn, half-cycle, Table 3A trip times) and replaced it with a single AC test at 1×IΔn. The device must operate within 300 ms — the AC test confirms basic functionality. The integral test button covers the mechanical / electronic operation. This is the biggest single Part 6 change in the amendment."
+        title="Reg 643.7.3 — A2:2022 simplified RCD test"
+        plainEnglish="A2:2022 deleted the old multi-test RCD sequence (1×IΔn, 0.1×IΔn, half-cycle, Table 3A trip times) and replaced it with a single AC test at 1×IΔn. The device must operate within 300 ms — the AC test confirms basic functionality. The integral test button covers the mechanical / electronic operation. This is the biggest single Part 6 change in the amendment."
         onSite="Don't apply the old method on a current EIC. Single AC test at IΔn, must trip in 300 ms. Old multi-test RCD testers still work — just use the 1×IΔn function. Record the trip time on the Schedule of Test Results."
       >
         <p>The new Reg 643.7.3 RCD test sequence:</p>

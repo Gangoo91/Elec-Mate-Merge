@@ -509,7 +509,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bosch GMS 120 (80 to 100 pounds)</strong> — detects cables, metal pipes, and
                 wooden studs. Three detection modes with separate indicators for each. Detection
@@ -519,7 +519,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Stanley FatMax S300 (40 to 60 pounds)</strong> — basic stud, metal, and AC
                 cable detection. Detection depth: 38mm for AC cables, 51mm for metal, 38mm for wood.
@@ -528,7 +528,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Zircon MultiScanner i520 (50 to 70 pounds)</strong> — combines stud finding
                 with AC cable detection. Works well in plasterboard partitions. Less effective in
@@ -554,7 +554,7 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
-            <ShieldCheck className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+            <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div className="text-white text-sm space-y-2">
               <p>
                 <strong>When a cable is not in a safe zone:</strong> GN3 9th Ed Reg 5.9 confirms
@@ -598,7 +598,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Plan</strong> — obtain service drawings from the asset owners before any
                 excavation. For electrical cables, request drawings from the DNO (UK Power Networks,
@@ -607,7 +607,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Detect</strong> — use a cable avoidance tool (CAT) to scan the work area
                 before excavation. Scan in multiple directions. Use active mode (with a signal
@@ -616,7 +616,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dig safely</strong> — hand-dig within 500mm of a detected service. No
                 mechanical excavation (mini digger, breaker) within this zone. Use insulated hand
@@ -744,7 +744,7 @@ export default function BestCableDetector2026Page() {
       heroTitle={
         <>
           Best Cable Detector 2026:{' '}
-          <span className="text-yellow-400">Pipe and Wire Finders for UK Electricians</span>
+          <span className="text-elec-yellow">Pipe and Wire Finders for UK Electricians</span>
         </>
       }
       heroSubtitle="Avoid cable strikes, trace hidden circuits, and scan walls safely. Professional CAT scanners and budget wall detectors compared with honest buying advice."
@@ -755,7 +755,7 @@ export default function BestCableDetector2026Page() {
       faqHeading="Frequently Asked Questions About Cable Detectors"
       relatedPages={relatedPages}
       ctaHeading="Complete Certificates and Document Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EIC and EICR certificates with on-site completion and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for EIC and EICR certificates with on-site completion and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

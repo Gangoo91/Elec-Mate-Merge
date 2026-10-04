@@ -152,25 +152,25 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>2-bed tenement flat:</strong> £2,200–£3,800 (3–5 days)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>3-bed semi-detached or villa:</strong> £3,500–£5,500 (5–7 days)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>4-bed detached:</strong> £5,000–£8,000 (7–10 days)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Large stone-built villa (5-bed+):</strong> £8,000–£13,000+ (10–15 days)
               </span>
@@ -263,7 +263,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>West End tenements (1880s–1910s):</strong> Partick, Hyndland, Dowanhill,
                 Hillhead, Kelvinside. Red or blonde sandstone, high ceilings (3 to 4 metres), shared
@@ -273,7 +273,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Southside tenements and villas (1870s–1910s):</strong> Shawlands, Langside,
                 Pollokshields, Govanhill, and Queen's Park. Mix of tenement flats and larger
@@ -283,7 +283,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inter-war semis and bungalows (1920s–1940s):</strong> Bearsden,
                 Bishopbriggs, Newton Mearns, Clarkston. Rendered brick or harl construction.
@@ -292,7 +292,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Post-war council estates (1950s–1970s):</strong> Drumchapel, Easterhouse,
                 Castlemilk, Pollok, and Cranhill. High-rise blocks, deck-access flats, and terraced
@@ -301,7 +301,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Converted tenement flats:</strong> Throughout inner Glasgow. Quality of
                 conversion varies considerably. Shared sub-mains, undersized consumer units, and
@@ -422,35 +422,35 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New consumer unit</strong> — metal enclosure with RCBOs or dual-RCD
                 arrangement, surge protection device (SPD), and main switch.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>All circuit cables</strong> — twin and earth for ring finals, radials,
                 lighting circuits, cooker, shower, and immersion heater circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Accessories</strong> — sockets, switches, ceiling roses, and fused
                 connection units. Standard white plastic included; upgraded finishes are extra.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing and bonding</strong> — main earth conductor, main bonding to gas,
                 water, and oil pipework.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing and certification</strong> — initial verification testing of every
                 circuit, EIC, and Building Standards completion certificate submission.
@@ -482,7 +482,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sandstone chasing is noisy and dusty</strong> — angle grinding sandstone
                 walls generates considerably more dust and debris than cutting modern plasterboard
@@ -491,7 +491,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Power is off during first fix</strong> — the electricity supply is isolated
                 while new circuits are installed. Plan for no cooking, heating, or power for several
@@ -500,7 +500,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Replastering is a separate cost</strong> — after chases are filled, a
                 plasterer is needed to reinstate the wall surfaces. In listed properties or where
@@ -510,7 +510,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Shared stairwells in tenements</strong> — if cables need to route through
                 the common stairwell or across other flats' areas, coordination with fellow owners
@@ -534,7 +534,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Verify NICEIC, NAPIT, or SELECT registration</strong> — SELECT is the
                 Electrical Contractors Association of Scotland. Search by Glasgow postcode on any of
@@ -542,7 +542,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ask about sandstone tenement experience</strong> — rewiring a West End
                 sandstone flat is very different from rewiring a post-war semi. Ask for references
@@ -550,7 +550,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Confirm Scottish Building Standards knowledge</strong> — your electrician
                 must understand the completion certificate process used in Scotland, not just the
@@ -558,14 +558,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Get at least three comparable quotes</strong> — ensure each specifies the
                 consumer unit type, number of circuits, and whether making good is included.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Confirm EIC and minimum £2 million public liability insurance</strong> —
                 both are mandatory. Ask for copies before work starts.
@@ -600,7 +600,7 @@ export default function RewireCostGlasgowPage() {
       badgeIcon={PoundSterling}
       heroTitle={
         <>
-          House Rewire Cost Glasgow: <span className="text-yellow-400">2025 Price Guide</span>
+          House Rewire Cost Glasgow: <span className="text-elec-yellow">2025 Price Guide</span>
         </>
       }
       heroSubtitle="Glasgow rewire costs in 2025 — from West End sandstone tenements and Victorian Southside villas to post-war estates. Scotland's Building Standards system explained, real prices by property type, and what rewiring a sandstone flat actually involves."
@@ -611,7 +611,7 @@ export default function RewireCostGlasgowPage() {
       faqHeading="Frequently Asked Questions About Rewire Costs in Glasgow"
       relatedPages={relatedPages}
       ctaHeading="Quote Glasgow Rewires with Real Trade Pricing"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI-powered rewire quoting, on-site EIC certificates, and project management. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for AI-powered rewire quoting, on-site EIC certificates, and project management. 7-day free trial."
     />
   );
 }

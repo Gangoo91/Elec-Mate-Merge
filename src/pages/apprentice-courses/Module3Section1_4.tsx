@@ -50,12 +50,12 @@ const quickCheckQuestions = [
     id: 'swa-glands',
     question: 'Why must correct glands be used when terminating SWA?',
     options: [
+      'To make stripping easier',
       'To earth the armour and provide sealing',
-      'To reduce the voltage drop along the cable',
-      'To increase the current rating of the cable',
-      'To allow the cable to be bent more tightly',
+      'To insulate the armour from earth',
+      'To stop the cores twisting inside the cable',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'Correct glands ensure the armour is properly earthed and provide IP-rated protection against moisture and dust ingress.',
   },
@@ -69,7 +69,7 @@ const quizQuestions = [
       'Reduce voltage drop',
       'Provide mechanical protection',
       'Increase flexibility',
-      'Reduce current capacity',
+      'Act as the neutral conductor',
     ],
     correctAnswer: 1,
     explanation:
@@ -142,20 +142,20 @@ const quizQuestions = [
       'Cut them flush with the inner sheath and discard them',
       'Twist them all together into a single earth tail',
       'Strip them back further than the conductors',
-      'Leave them long and fold back over the gland',
+      'Cut them to length so they spread evenly over the gland cone',
     ],
     correctAnswer: 3,
     explanation:
-      'Armour wires should be left long enough to fold back over the gland body to ensure proper earthing contact.',
+      'The armour wires are cut to the length the gland needs and spread evenly over its cone, so the gland clamps them all and gives a reliable earth path. Cutting them flush loses the earth path, and twisting them into a tail clamps them unevenly.',
   },
   {
     id: 8,
     question: 'What type of saw is typically used to cut through SWA armour?',
     options: [
       'Hacksaw with fine teeth',
-      'Chainsaw',
-      'Wood saw',
-      'Jigsaw',
+      'Coarse-toothed wood saw',
+      'Tile saw',
+      'Pad saw',
     ],
     correctAnswer: 0,
     explanation:

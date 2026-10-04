@@ -154,7 +154,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DC-coupled storage:</strong> The battery connects on the DC side of the
                 system, between the panels and the inverter. A hybrid inverter manages both solar
@@ -187,7 +187,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tesla Powerwall 3 (13.5 kWh usable):</strong> The market-leading premium
                 product. Includes an integrated solar inverter, simplifying new installations.
@@ -197,7 +197,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SolarEdge Home Battery (9.7 kWh):</strong> DC-coupled system that integrates
                 with SolarEdge inverters and power optimisers. Ideal for new SolarEdge installations
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Givenergy All-In-One (8.2 kWh, expandable to 22.1 kWh):</strong> A popular
                 all-in-one hybrid inverter and battery unit from the leading UK-headquartered
@@ -215,7 +215,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Growatt ARK (5.84–11.68 kWh, modular):</strong> A cost-effective modular
                 battery system used with Growatt hybrid inverters. Popular with installers for its
@@ -246,7 +246,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>5 kWh usable:</strong> Appropriate for a 1–2 bedroom home with 2,000–2,500
                 kWh/year consumption. Covers most summer evenings but will not provide a full
@@ -254,7 +254,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>7.5–10 kWh usable:</strong> The most common size for a UK three-bedroom
                 family home with 3,500 kWh/year consumption. Stores sufficient energy for most
@@ -263,7 +263,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>13–15 kWh usable:</strong> Suitable for larger homes, EV charging
                 optimisation, or customers who want near-total energy independence in summer. Also
@@ -387,7 +387,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lithium iron phosphate (LFP):</strong> 92–97% round-trip efficiency. The
                 dominant chemistry in current UK home storage systems (Givenergy, Growatt, Tesla
@@ -396,7 +396,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lithium NMC:</strong> 90–95% round-trip efficiency. Used in some premium
                 products. Higher energy density allows smaller form factor but may degrade faster at
@@ -404,7 +404,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>AC-coupling efficiency penalty:</strong> In AC-coupled systems, add the
                 losses from the two additional conversion stages (solar inverter AC output → battery
@@ -500,7 +500,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Manage solar battery storage jobs with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for quoting, job management, and certification. Issue MCS installation certificates, EICs…"
+          description="Join 2,100+ UK electricians using Elec-Mate for quoting, job management, and certification. Issue MCS installation certificates, EICs…"
           icon={Battery}
         />
       </>
@@ -526,7 +526,7 @@ export default function SolarBatteryStorageInstallationPage() {
       heroTitle={
         <>
           Solar Battery Storage Installation UK:{' '}
-          <span className="text-yellow-400">Home Battery Guide 2025</span>
+          <span className="text-elec-yellow">Home Battery Guide 2025</span>
         </>
       }
       heroSubtitle="Everything homeowners and electricians need to know about solar battery storage in the UK — AC-coupled vs DC-coupled, popular battery systems, sizing, current costs, MCS requirements, and round-trip efficiency."
@@ -537,7 +537,7 @@ export default function SolarBatteryStorageInstallationPage() {
       faqHeading="Frequently Asked Questions About Solar Battery Storage"
       relatedPages={relatedPages}
       ctaHeading="Quote and Manage Battery Storage Installations"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Issue MCS installation certificates on your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for quoting, certification, and job management. Issue MCS installation certificates on your phone. 7-day free trial, cancel anytime."
     />
   );
 }

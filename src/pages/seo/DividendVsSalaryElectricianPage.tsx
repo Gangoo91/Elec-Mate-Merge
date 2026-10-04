@@ -186,22 +186,22 @@ const sections = [
               </h4>
               <ul className="space-y-2">
                 <li>
-                  Income tax: <strong className="text-yellow-400">£0</strong> (within personal
+                  Income tax: <strong className="text-elec-yellow">£0</strong> (within personal
                   allowance)
                 </li>
                 <li>
-                  Employee NI: <strong className="text-yellow-400">£0</strong> (below primary
+                  Employee NI: <strong className="text-elec-yellow">£0</strong> (below primary
                   threshold)
                 </li>
                 <li>
-                  Employer NI: <strong className="text-yellow-400">~£480</strong> (13.8% above
+                  Employer NI: <strong className="text-elec-yellow">~£480</strong> (13.8% above
                   £9,100)
                 </li>
                 <li>
                   State pension: <strong className="text-green-400">Qualifying year</strong>
                 </li>
                 <li>
-                  Corp tax saving: <strong className="text-yellow-400">£2,390</strong> (19% of
+                  Corp tax saving: <strong className="text-elec-yellow">£2,390</strong> (19% of
                   £12,570)
                 </li>
               </ul>
@@ -213,15 +213,15 @@ const sections = [
               </h4>
               <ul className="space-y-2">
                 <li>
-                  Income tax: <strong className="text-yellow-400">£0</strong> (within personal
+                  Income tax: <strong className="text-elec-yellow">£0</strong> (within personal
                   allowance)
                 </li>
                 <li>
-                  Employee NI: <strong className="text-yellow-400">£0</strong> (below primary
+                  Employee NI: <strong className="text-elec-yellow">£0</strong> (below primary
                   threshold)
                 </li>
                 <li>
-                  Employer NI: <strong className="text-yellow-400">£0</strong> (at secondary
+                  Employer NI: <strong className="text-elec-yellow">£0</strong> (at secondary
                   threshold)
                 </li>
                 <li>
@@ -229,7 +229,7 @@ const sections = [
                   LEL)
                 </li>
                 <li>
-                  Corp tax saving: <strong className="text-yellow-400">£1,729</strong> (19% of
+                  Corp tax saving: <strong className="text-elec-yellow">£1,729</strong> (19% of
                   £9,100)
                 </li>
               </ul>
@@ -262,21 +262,21 @@ const sections = [
           <div className="grid gap-4 sm:grid-cols-3 text-white text-sm">
             <div className="rounded-xl bg-blue-500/10 border border-blue-500/20 p-4">
               <h4 className="font-bold text-white mb-2">Basic Rate</h4>
-              <p className="text-yellow-400 text-2xl font-bold">8.75%</p>
+              <p className="text-elec-yellow text-2xl font-bold">8.75%</p>
               <p className="text-white text-xs mt-2">
                 On dividends within the basic rate band (income up to £50,270)
               </p>
             </div>
             <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-4">
               <h4 className="font-bold text-white mb-2">Higher Rate</h4>
-              <p className="text-yellow-400 text-2xl font-bold">33.75%</p>
+              <p className="text-elec-yellow text-2xl font-bold">33.75%</p>
               <p className="text-white text-xs mt-2">
                 On dividends within the higher rate band (£50,270–£125,140)
               </p>
             </div>
             <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-4">
               <h4 className="font-bold text-white mb-2">Additional Rate</h4>
-              <p className="text-yellow-400 text-2xl font-bold">39.35%</p>
+              <p className="text-elec-yellow text-2xl font-bold">39.35%</p>
               <p className="text-white text-xs mt-2">On dividends above £125,140 total income</p>
             </div>
           </div>
@@ -284,7 +284,7 @@ const sections = [
         <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-6 my-4">
           <h4 className="font-bold text-white mb-2">Dividend Allowance</h4>
           <p className="text-white text-sm">
-            The first <strong className="text-yellow-400">£1,000</strong> of dividend income each
+            The first <strong className="text-elec-yellow">£1,000</strong> of dividend income each
             year is tax-free (the dividend allowance). This applies regardless of your other income.
             Dividends above £1,000 are taxed at the rates above.
           </p>
@@ -310,7 +310,7 @@ const sections = [
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Small Profits Rate</h3>
-            <p className="text-yellow-400 text-2xl font-bold mb-2">19%</p>
+            <p className="text-elec-yellow text-2xl font-bold mb-2">19%</p>
             <p className="text-white text-sm leading-relaxed">
               Applies to companies with profits up to £50,000. Most sole electricians operating
               through a limited company fall into this band after deducting their salary, business
@@ -319,7 +319,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Main Rate</h3>
-            <p className="text-yellow-400 text-2xl font-bold mb-2">25%</p>
+            <p className="text-elec-yellow text-2xl font-bold mb-2">25%</p>
             <p className="text-white text-sm leading-relaxed">
               Applies to companies with profits above £250,000. Between £50,000 and £250,000,
               marginal relief applies — the effective rate gradually increases from 19% to 25%. The
@@ -348,7 +348,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-4 flex items-center gap-2">
-            <Calculator className="w-5 h-5 text-yellow-400" /> Step-by-Step Calculation
+            <Calculator className="w-5 h-5 text-elec-yellow" /> Step-by-Step Calculation
           </h4>
           <div className="space-y-3 text-white text-sm">
             <div className="flex justify-between border-b border-white/10 pb-2">
@@ -385,7 +385,7 @@ const sections = [
             </div>
             <div className="flex justify-between pt-2">
               <span className="font-bold">Total take-home</span>
-              <strong className="text-yellow-400 text-lg">£47,360</strong>
+              <strong className="text-elec-yellow text-lg">£47,360</strong>
             </div>
             <div className="flex justify-between">
               <span className="font-bold">Total tax paid (all taxes)</span>
@@ -393,7 +393,7 @@ const sections = [
             </div>
             <div className="flex justify-between">
               <span className="font-bold">Effective tax rate</span>
-              <strong className="text-yellow-400">21.1%</strong>
+              <strong className="text-elec-yellow">21.1%</strong>
             </div>
           </div>
         </div>
@@ -411,7 +411,7 @@ const sections = [
               Take-home: <strong>£47,878</strong>
             </p>
             <p className="pt-2 font-bold">
-              Ltd company saving: approximately <span className="text-yellow-400">-£518/year</span>{' '}
+              Ltd company saving: approximately <span className="text-elec-yellow">-£518/year</span>{' '}
               at this profit level
             </p>
             <p className="text-xs mt-2">
@@ -439,19 +439,19 @@ const sections = [
               <h4 className="font-bold text-white mb-3">Employee NI (Class 1 Primary)</h4>
               <ul className="space-y-2">
                 <li>
-                  Lower earnings limit: <strong className="text-yellow-400">£6,396/year</strong>
+                  Lower earnings limit: <strong className="text-elec-yellow">£6,396/year</strong>
                 </li>
                 <li>
-                  Primary threshold: <strong className="text-yellow-400">£12,570/year</strong>
+                  Primary threshold: <strong className="text-elec-yellow">£12,570/year</strong>
                 </li>
                 <li>
-                  Upper earnings limit: <strong className="text-yellow-400">£50,270/year</strong>
+                  Upper earnings limit: <strong className="text-elec-yellow">£50,270/year</strong>
                 </li>
                 <li>
-                  Rate: <strong className="text-yellow-400">8%</strong> (threshold to UEL)
+                  Rate: <strong className="text-elec-yellow">8%</strong> (threshold to UEL)
                 </li>
                 <li>
-                  Rate above UEL: <strong className="text-yellow-400">2%</strong>
+                  Rate above UEL: <strong className="text-elec-yellow">2%</strong>
                 </li>
               </ul>
             </div>
@@ -459,13 +459,13 @@ const sections = [
               <h4 className="font-bold text-white mb-3">Employer NI (Class 1 Secondary)</h4>
               <ul className="space-y-2">
                 <li>
-                  Secondary threshold: <strong className="text-yellow-400">£9,100/year</strong>
+                  Secondary threshold: <strong className="text-elec-yellow">£9,100/year</strong>
                 </li>
                 <li>
-                  Rate: <strong className="text-yellow-400">13.8%</strong> (above threshold)
+                  Rate: <strong className="text-elec-yellow">13.8%</strong> (above threshold)
                 </li>
                 <li>
-                  Employment allowance: <strong className="text-yellow-400">£10,500</strong>
+                  Employment allowance: <strong className="text-elec-yellow">£10,500</strong>
                 </li>
                 <li className="text-white text-xs mt-2">
                   Note: Single-director companies with no other employees cannot claim the
@@ -597,23 +597,23 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">DIY with Software</h3>
             <ul className="space-y-2 text-white text-sm">
               <li className="flex items-start gap-2">
-                <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>Cost: £240–£480/year (FreeAgent, Xero, etc.)</span>
               </li>
               <li className="flex items-start gap-2">
-                <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>Automated invoicing, bank feeds, and MTD compliance</span>
               </li>
               <li className="flex items-start gap-2">
-                <AlertTriangle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>You need to understand tax rules to optimise properly</span>
               </li>
               <li className="flex items-start gap-2">
-                <AlertTriangle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>Errors are your responsibility (penalties, interest)</span>
               </li>
               <li className="flex items-start gap-2">
-                <AlertTriangle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>Takes 3–5 hours per month of your time</span>
               </li>
             </ul>
@@ -652,7 +652,7 @@ export default function DividendVsSalaryElectricianPage() {
       heroTitle={
         <>
           Dividend vs Salary for Electricians:{' '}
-          <span className="text-yellow-400">Optimise Your Ltd Company Tax in 2026</span>
+          <span className="text-elec-yellow">Optimise Your Ltd Company Tax in 2026</span>
         </>
       }
       heroSubtitle="How you extract money from your limited company determines how much tax you pay. The right salary/dividend split can save you thousands per year. This guide covers optimal salary, dividend tax rates, corporation tax, NI thresholds, a full worked example, IR35 risks, and whether you need an accountant."
@@ -663,7 +663,7 @@ export default function DividendVsSalaryElectricianPage() {
       faqHeading="Frequently Asked Questions About Dividend vs Salary"
       relatedPages={relatedPages}
       ctaHeading="Grow Your Limited Company Revenue"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional tools that help your limited company earn more. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional tools that help your limited company earn more. 7-day free trial, cancel anytime."
     />
   );
 }

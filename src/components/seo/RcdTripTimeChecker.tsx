@@ -9,7 +9,7 @@
  * time", "300ma rcd trip times" — and the phrasing reveals the misconception
  * driving them: people expect the permitted time to change with the rating.
  *
- * It does not. Since Amendment 4 deleted Table 3A of Appendix 3, the required
+ * It does not. Since Amendment 2 (2022) deleted Table 3A of Appendix 3, the required
  * verification is a single AC test at IΔn whatever the device rating or type,
  * and the acceptance time is the same 300 ms for any general (non-delay) RCD —
  * 30 mA, 100 mA, 300 mA or 500 mA alike. Only Type S differs (130–500 ms).
@@ -164,7 +164,7 @@ export default function RcdTripTimeChecker() {
                   Not the ½× and 5× tests
                 </p>
                 <p className="mt-1 text-[13px] leading-relaxed text-white">
-                  Amendment 4 deleted Table 3A of Appendix 3, so the half-rated and five-times tests
+                  Amendment 2 (2022) deleted Table 3A of Appendix 3, so the half-rated and five-times tests
                   are no longer part of the required verification. BS EN 61008/61009 still quote{' '}
                   {isS ? '50 to 200 ms' : '40 ms'} at five times rated current, but that describes
                   how the device is built — not a test BS 7671 asks you to record.

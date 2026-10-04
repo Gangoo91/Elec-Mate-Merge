@@ -149,7 +149,7 @@ export default function ElectricalLightingSymbolsPage() {
       heroTitle={
         <>
           Lighting Symbols:{' '}
-          <span className="text-yellow-400">IEC 60617 reference for UK electricians</span>
+          <span className="text-elec-yellow">IEC 60617 reference for UK electricians</span>
         </>
       }
       heroSubtitle="Every lighting symbol used on UK electrical drawings — pendant to high bay, plus emergency lighting and exit signs to BS 5266 and BS EN 1838 — drawn to IEC 60617."

@@ -149,7 +149,7 @@ export default function ElectricalSafetySymbolsPage() {
       heroTitle={
         <>
           Safety, Fire + Security Symbols:{' '}
-          <span className="text-yellow-400">IEC 60617 + BS 5839 reference</span>
+          <span className="text-elec-yellow">IEC 60617 + BS 5839 reference</span>
         </>
       }
       heroSubtitle="Every life-safety and security symbol — fire detection to access control — drawn to IEC 60617 with BS 5839, BS EN 54 and BS 8300 cross-references."

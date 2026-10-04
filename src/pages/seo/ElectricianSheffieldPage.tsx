@@ -180,7 +180,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person scheme registration</strong> — ask for their NICEIC, NAPIT,
                 ELECSA, or other scheme registration number. Search it online on the scheme
@@ -189,7 +189,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ECS card</strong> — the Electrotechnical Certification Scheme card confirms
                 the holder's qualifications and competence level. A gold ECS card indicates a
@@ -197,7 +197,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Public liability insurance</strong> — ensure your electrician carries at
                 least £2 million public liability cover. For industrial conversion and commercial
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Recent references and reviews</strong> — ask for contact details of 2 to 3
                 recent Sheffield customers, or check verified reviews on Checkatrade, Trustpilot, or
@@ -295,7 +295,7 @@ const sections = [
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New connections:</strong> Apply online at northernpowergrid.com or call 0800
                 011 3332. New domestic connections in Sheffield typically take 30 to 60 working days
@@ -303,7 +303,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Service upgrades:</strong> If a property needs a larger supply (for example,
                 upgrading from 60A to 100A for an EV charger and heat pump), request a service
@@ -312,7 +312,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98/G99 notifications:</strong> Solar PV and battery storage up to 16A per
                 phase require G98 notification. Larger systems require G99 approval. Submit via the
@@ -320,7 +320,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Power cuts:</strong> Report via 105. Sheffield occasionally experiences
                 supply issues in older areas with ageing underground cables, particularly during
@@ -353,7 +353,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Factory className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Factory className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Supply arrangements:</strong> Former industrial buildings often have a
                 three-phase supply that may be oversized for residential use or may need splitting
@@ -362,7 +362,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Factory className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Factory className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Long cable runs and thick masonry:</strong> Industrial buildings have cable
                 runs of 30 metres or more and walls of 450mm to 600mm solid stone or brick. Voltage
@@ -375,7 +375,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Factory className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Factory className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire compartmentation:</strong> When cables pass through fire-rated walls or
                 floors in multi-dwelling conversions, fire-stopping must be installed using
@@ -384,7 +384,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Factory className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Factory className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Communal systems:</strong> Conversion projects require communal lighting
                 with emergency lighting to BS 5266, fire detection in communal areas to BS 5839-1,
@@ -471,7 +471,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR requirement:</strong> Sheffield City Council requires a satisfactory
                 EICR for all HMO licence applications, no older than 5 years. C1 or C2 observations
@@ -479,7 +479,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire detection:</strong> Grade A1 LD2 system to BS 5839-6. Interlinked
                 mains-powered detectors with battery backup in all escape routes, kitchens (heat
@@ -488,7 +488,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency lighting:</strong> Escape routes must have emergency lighting to
                 BS 5266. Monthly function tests and annual full-duration tests required, with
@@ -496,7 +496,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection:</strong> All socket outlet circuits must have 30mA RCD
                 protection as required by Regulation 411.3.3. A dual-RCD or RCBO consumer unit is
@@ -582,7 +582,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Store className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Store className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Retail fit-outs:</strong> Meadowhall's 290 stores undergo regular
                 refurbishment cycles. Retail electrical fit-outs include three-phase supplies,
@@ -592,7 +592,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Store className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Store className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Logistics and warehousing:</strong> The Lower Don Valley around Meadowhall
                 contains major logistics facilities, distribution centres, and light industrial
@@ -601,7 +601,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Store className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Store className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charging infrastructure:</strong> Meadowhall and the surrounding retail
                 parks are installing EV charging infrastructure in car parks. These are large-scale
@@ -634,7 +634,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Quote on Site, Win More Work</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -679,7 +679,7 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Join 1,600+ UK electricians using Elec-Mate"
+          title="Join 2,100+ UK electricians using Elec-Mate"
           description="Cable sizing, professional quoting, and on-site certification. Everything a Sheffield electrician needs for HMOs, conversions, and domestic work."
           icon={MapPin}
         />
@@ -707,7 +707,7 @@ export default function ElectricianSheffieldPage() {
       heroTitle={
         <>
           Electrician in Sheffield:{' '}
-          <span className="text-yellow-400">Find Qualified Electricians in 2026</span>
+          <span className="text-elec-yellow">Find Qualified Electricians in 2026</span>
         </>
       }
       heroSubtitle="How to find a registered electrician in Sheffield, what to expect on pricing, and the specific challenges of electrical work in Sheffield properties. Covers Northern Powergrid DNO, industrial conversions, stone-built terraces, university HMOs, Peak District conservation, and Meadowhall commercial work."
@@ -718,7 +718,7 @@ export default function ElectricianSheffieldPage() {
       faqHeading="Frequently Asked Questions About Electricians in Sheffield"
       relatedPages={relatedPages}
       ctaHeading="Quote, Certify, and Grow Your Sheffield Electrical Business"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. 7-day free trial, cancel anytime."
     />
   );
 }

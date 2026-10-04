@@ -141,7 +141,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Annual generation estimate</strong> — a 4kW south-facing system at 35° pitch
                 in Nottingham generates approximately 3,400 to 3,600 kWh per year. A 6kW system
@@ -149,7 +149,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bill savings</strong> — with electricity at approximately 24p/kWh (2025
                 average), a 4kW system can save £500 to £700 per year on electricity bills through
@@ -157,7 +157,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Payback period</strong> — at current electricity prices, a 4kW system
                 costing £6,500 installed typically achieves payback in 8 to 12 years, with a system
@@ -166,7 +166,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Nottingham-specific factors</strong> — the city's relatively flat topography
                 means few shading issues from hills. Victorian terraced housing in areas such as The
@@ -198,7 +198,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3kW system (8–10 panels)</strong> — £4,500 to £6,500. Suitable for smaller
                 properties or limited roof space. Generates approximately 2,600 to 2,800 kWh per
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>4kW system (10–13 panels)</strong> — £5,500 to £8,000. The most popular
                 residential system size. Generates approximately 3,400 to 3,600 kWh per year. Covers
@@ -214,7 +214,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>6kW system (15–18 panels)</strong> — £7,500 to £11,000. Recommended for
                 larger households, home workers, or homes with electric vehicles. Generates
@@ -222,7 +222,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Battery storage add-on</strong> — £3,500 to £6,000 for a 9.5–10kWh battery
                 (GivEnergy, Tesla Powerwall, or Solis). Installing at the same time as the solar
@@ -273,7 +273,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Non-MCS installations</strong> — solar panels installed by non-MCS-certified
                 contractors do not qualify for SEG payments, regardless of the quality of the
@@ -361,7 +361,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Popular battery systems in 2025</strong> — GivEnergy All-in-One (9.5kWh,
                 £3,800 to £5,200 installed), Tesla Powerwall 3 (13.5kWh, £9,000 to £12,000
@@ -370,7 +370,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Self-consumption uplift</strong> — without battery storage, a typical
                 household self-consumes 30 to 40 per cent of solar generation. With a 9.5kWh
@@ -379,7 +379,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Grid charging</strong> — hybrid inverter systems can also charge the battery
                 from the grid overnight at cheap-rate tariffs (such as Octopus Go at 7p/kWh) and
@@ -388,7 +388,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>VAT on battery storage</strong> — battery storage installed alongside a
                 solar PV system is subject to 0% VAT until March 2027. Standalone battery
@@ -415,7 +415,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Permitted development conditions</strong> — panels must not project more
                 than 200mm above the plane of the roof surface; the installation must not be higher
@@ -424,7 +424,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Conservation areas</strong> — if your property is in a conservation area
                 (parts of The Park, Lace Market, and various Nottinghamshire villages have
@@ -434,7 +434,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Listed buildings</strong> — permitted development rights do not apply to
                 listed buildings. Any solar installation on a listed building in Nottingham requires
@@ -443,7 +443,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Flat roofs</strong> — solar panels on flat roofs are typically treated as
                 ground-mounted systems and may require planning permission if the panels are visible
@@ -474,7 +474,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Verify MCS certification</strong> — check the installer's MCS certificate
                 number on the MCS database before signing any contract. MCS certification must be
@@ -482,7 +482,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Get three quotes</strong> — prices vary considerably. Obtain at least three
                 quotes from different MCS-certified Nottingham installers. Ensure all quotes include
@@ -491,7 +491,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insist on a site survey</strong> — a reputable installer will conduct a
                 proper site survey (in person or via satellite imagery tools such as Google Project
@@ -500,7 +500,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check workmanship warranties</strong> — panels typically carry 25-year
                 performance guarantees from the manufacturer. Inverters typically carry 10 to
@@ -527,7 +527,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Zap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   EV Charging and Solar Commissioning Certificates
@@ -562,7 +562,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your solar PV business with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site certification, quoting, and job management."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site certification, quoting, and job management."
           icon={Sun}
         />
       </>
@@ -588,7 +588,7 @@ export default function SolarPanelInstallationNottinghamPage() {
       heroTitle={
         <>
           Solar Panel Installation Nottingham:{' '}
-          <span className="text-yellow-400">2025 Costs and Guide</span>
+          <span className="text-elec-yellow">2025 Costs and Guide</span>
         </>
       }
       heroSubtitle="Everything you need to know about solar panel installation in Nottingham — typical 4kW system costs of £5,500 to £8,000, East Midlands irradiance data, MCS installer requirements, Smart Export Guarantee payments, battery storage options, and planning permission rules."
@@ -599,7 +599,7 @@ export default function SolarPanelInstallationNottinghamPage() {
       faqHeading="Frequently Asked Questions About Solar Panel Installation in Nottingham"
       relatedPages={relatedPages}
       ctaHeading="Complete Solar Installation Certificates On Site"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, professional quoting, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion, professional quoting, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

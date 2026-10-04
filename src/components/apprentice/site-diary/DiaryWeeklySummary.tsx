@@ -7,6 +7,7 @@
  */
 
 import { useMemo, useState } from 'react';
+import { useLoggingReminders } from '@/hooks/useLoggingReminders';
 import { ChevronDown, ChevronUp, TrendingUp, TrendingDown, Minus, Flame } from 'lucide-react';
 import type { SiteDiaryEntry } from '@/hooks/site-diary/useSiteDiaryEntries';
 import { toLocalISODate } from '@/lib/localDate';
@@ -28,6 +29,8 @@ export function DiaryWeeklySummary({
   entries,
   aiSummary,
 }: DiaryWeeklySummaryProps & { aiSummary?: string | null }) {
+  // Settings → Reminders hides the streak/portfolio nudging (ELE-1804).
+  const { hidden: hideReminders } = useLoggingReminders();
   const { currentStreak, milestones, nextMilestone, daysToNextMilestone, streakMessage } =
     useDiaryStreak(entries);
   const [collapsed, setCollapsed] = useState(() => {
@@ -242,7 +245,7 @@ export function DiaryWeeklySummary({
             </div>
 
             {/* Next milestone progress */}
-            {nextMilestone && currentStreak > 0 && (
+            {!hideReminders && nextMilestone && currentStreak > 0 && (
               <div className="space-y-1">
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] text-white">
@@ -262,7 +265,7 @@ export function DiaryWeeklySummary({
             )}
 
             {/* Motivational message */}
-            <p className="text-[11px] text-white italic">{streakMessage}</p>
+            {!hideReminders && <p className="text-[11px] text-white italic">{streakMessage}</p>}
           </div>
 
           {/* AI weekly summary */}

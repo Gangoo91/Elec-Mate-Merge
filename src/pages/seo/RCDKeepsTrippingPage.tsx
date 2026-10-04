@@ -44,7 +44,7 @@ export default function RCDKeepsTrippingPage() {
         <>
           RCD Keeps Tripping?
           <br />
-          <span className="text-yellow-400">Causes & How to Fix It</span>
+          <span className="text-elec-yellow">Causes & How to Fix It</span>
         </>
       }
       heroSubtitle="A tripping RCD is one of the most common electrical faults in UK homes. This guide explains every cause — from a faulty kettle to deteriorated wiring — and walks you through the diagnostic process step by step."
@@ -96,7 +96,7 @@ export default function RCDKeepsTrippingPage() {
               <div className="space-y-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Zap className="w-5 h-5 text-yellow-400" />
+                    <Zap className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">1. Faulty Appliance</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -113,7 +113,7 @@ export default function RCDKeepsTrippingPage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Activity className="w-5 h-5 text-yellow-400" />
+                    <Activity className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">2. Moisture Ingress</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -129,7 +129,7 @@ export default function RCDKeepsTrippingPage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Cable className="w-5 h-5 text-yellow-400" />
+                    <Cable className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">
                       3. Deteriorated Cable Insulation
                     </h3>
@@ -148,7 +148,7 @@ export default function RCDKeepsTrippingPage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">
                       4. Cumulative Standing Leakage (Nuisance Tripping)
                     </h3>
@@ -169,7 +169,7 @@ export default function RCDKeepsTrippingPage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <ShieldCheck className="w-5 h-5 text-yellow-400" />
+                    <ShieldCheck className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">5. Faulty RCD</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -186,7 +186,7 @@ export default function RCDKeepsTrippingPage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Wrench className="w-5 h-5 text-yellow-400" />
+                    <Wrench className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">
                       6. Incorrect RCD Type for the Load
                     </h3>
@@ -222,57 +222,57 @@ export default function RCDKeepsTrippingPage() {
               </p>
               <div className="grid sm:grid-cols-2 gap-4 my-6">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-3">
+                  <h3 className="font-bold text-elec-yellow text-lg mb-3">
                     Signs of Nuisance Tripping
                   </h3>
                   <ul className="space-y-2 text-white text-sm leading-relaxed">
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>RCD trips at random times with no pattern</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>Multiple circuits share the same RCD</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>
                         Tripping often occurs when a motor starts (fridge, washing machine)
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>All insulation resistance tests pass (&gt;1 MΩ)</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>RCD resets and holds with no appliances plugged in</span>
                     </li>
                   </ul>
                 </div>
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-3">
+                  <h3 className="font-bold text-elec-yellow text-lg mb-3">
                     Signs of a Genuine Fault
                   </h3>
                   <ul className="space-y-2 text-white text-sm leading-relaxed">
                     <li className="flex items-start gap-2">
-                      <AlertTriangle className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>RCD trips immediately on resetting</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <AlertTriangle className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>Tripping consistently linked to one appliance or circuit</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <AlertTriangle className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>Burning smell, scorch marks, or discolouration visible</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <AlertTriangle className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>Tripping correlates with rain or damp conditions</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <AlertTriangle className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>Insulation resistance test shows values below 1 MΩ</span>
                     </li>
                   </ul>
@@ -302,7 +302,7 @@ export default function RCDKeepsTrippingPage() {
               </h3>
               <div className="space-y-3">
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     1
                   </span>
                   <p className="text-white text-sm leading-relaxed">
@@ -313,7 +313,7 @@ export default function RCDKeepsTrippingPage() {
                   </p>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     2
                   </span>
                   <p className="text-white text-sm leading-relaxed">
@@ -324,7 +324,7 @@ export default function RCDKeepsTrippingPage() {
                   </p>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     3
                   </span>
                   <p className="text-white text-sm leading-relaxed">
@@ -351,33 +351,33 @@ export default function RCDKeepsTrippingPage() {
                 <h4 className="font-bold text-white mb-3">Insulation Resistance Test Procedure</h4>
                 <ul className="space-y-2 text-white text-sm leading-relaxed">
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
                       Isolate the supply and prove dead using the safe isolation procedure
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
                       Disconnect all loads and electronic equipment (500V DC test voltage will
                       damage them)
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
                       Test insulation resistance between L-E and N-E on each circuit at 500V DC
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
                       Minimum acceptable value: 1.0 MΩ (BS 7671 Table 64). Values below this
                       indicate insulation breakdown
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
                       A circuit reading below 1 MΩ has a confirmed insulation fault — investigate
                       further to locate the exact point of failure
@@ -424,7 +424,7 @@ export default function RCDKeepsTrippingPage() {
                   </p>
                 </div>
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-2">Type A</h3>
+                  <h3 className="font-bold text-elec-yellow text-lg mb-2">Type A</h3>
                   <p className="text-white text-sm leading-relaxed">
                     Detects sinusoidal AC and pulsating DC residual currents. Now the standard for
                     most domestic circuits. Handles the leakage waveforms from washing machines,
@@ -475,28 +475,28 @@ export default function RCDKeepsTrippingPage() {
               </p>
               <ul className="space-y-3 my-4">
                 <li className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     The RCD trips immediately on resetting, even with all appliances disconnected —
                     this indicates a fault in the fixed wiring
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     You can smell burning or see scorch marks on sockets, switches, or the consumer
                     unit
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     The tripping has started after building work, DIY, or a new appliance being
                     installed (a nail through a cable or a cross-connected neutral)
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     The property has old wiring (rubber-insulated cable, rewirable fuses, no earth
                     wire) — an{' '}
@@ -505,7 +505,7 @@ export default function RCDKeepsTrippingPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     The consumer unit has no circuit labels, making it impossible to identify which
                     circuit is causing the trip
@@ -556,7 +556,7 @@ export default function RCDKeepsTrippingPage() {
               </div>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">
                       Identify and disconnect the faulty appliance.
@@ -566,7 +566,7 @@ export default function RCDKeepsTrippingPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">
                       Reduce the number of appliances on the affected RCD.
@@ -577,7 +577,7 @@ export default function RCDKeepsTrippingPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">
                       Switch off the circuit breaker for the faulty circuit.
@@ -696,7 +696,7 @@ export default function RCDKeepsTrippingPage() {
         },
       ]}
       ctaHeading="Diagnose Electrical Faults Faster with Elec-Mate"
-      ctaSubheading="70+ calculators, AI fault diagnosis, and digital EICR forms. Join 1,600+ UK electricians. 7-day free trial, cancel anytime."
+      ctaSubheading="70+ calculators, AI fault diagnosis, and digital EICR forms. Join 2,100+ UK electricians. 7-day free trial, cancel anytime."
     />
   );
 }

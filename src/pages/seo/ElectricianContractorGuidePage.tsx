@@ -234,7 +234,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Employer's Liability Insurance</strong> — legally required from day one.
                 Minimum £5 million cover (most policies provide £10 million). You must display the
@@ -242,7 +242,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PAYE registration</strong> — register as an employer with HMRC before your
                 first employee's start date. You must operate PAYE, deducting income tax and
@@ -250,7 +250,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Workplace pension</strong> — auto-enrolment applies from the first employee.
                 You must set up a qualifying workplace pension scheme and enrol eligible employees.
@@ -258,7 +258,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Employment contract</strong> — you must provide a written statement of
                 employment terms on or before the employee's first day. This must include pay rate,
@@ -266,7 +266,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Health and safety</strong> — once you have 5 or more employees, you must
                 have a written health and safety policy. Regardless of employee count, you have a
@@ -382,7 +382,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Register as a CIS contractor</strong> — before making your first payment to
                 a subcontractor, register with HMRC as a CIS contractor. You can register online
@@ -390,7 +390,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Verify subcontractors</strong> — before making the first payment to any
                 subcontractor, verify them with HMRC. HMRC will confirm the subcontractor's
@@ -399,7 +399,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Make deductions correctly</strong> — deduct the correct percentage from the
                 labour element of each payment. Materials, plant hire, and VAT are excluded from the
@@ -408,7 +408,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>File monthly returns</strong> — submit a CIS return to HMRC by the 19th of
                 each month, reporting all payments and deductions made in the previous tax month.
@@ -416,7 +416,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pay deductions to HMRC</strong> — pay the total CIS deductions to HMRC by
                 the 22nd of each month (or 19th if paying by cheque). Late payment attracts
@@ -447,7 +447,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Employer's Liability (EL)</strong> — legally required. Minimum £5 million,
                 typically £10 million. Must be in place from the moment you employ anyone, including
@@ -455,7 +455,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Public Liability (PL)</strong> — covers claims from third parties for injury
                 or property damage arising from your work. £2 million is the minimum for domestic
@@ -463,7 +463,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Professional Indemnity (PI)</strong> — covers claims arising from
                 professional advice, design errors, or certification mistakes. Increasingly required
@@ -471,14 +471,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Contractors All-Risks</strong> — covers tools, materials, and work in
                 progress against theft, damage, fire, and flood while on site or in transit.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fleet/Motor Trade Insurance</strong> — covers all your business vehicles. A
                 fleet policy is typically cheaper per vehicle than individual policies once you have
@@ -514,7 +514,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Truck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Truck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Finance options</strong> — outright purchase, hire purchase (HP), contract
                 hire, or finance lease. Contract hire is increasingly popular because it includes
@@ -523,7 +523,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Truck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Truck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electric vehicles</strong> — electric vans attract significant tax benefits:
                 0% benefit-in-kind (BIK) rate for company vans, 100% first-year capital allowance,
@@ -533,7 +533,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Truck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Truck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Van racking</strong> — standardise the racking system across your fleet so
                 that any operative can work from any van. Bott, Sortimo, and Modul-System are the
@@ -541,7 +541,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Truck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Truck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Vehicle tracking</strong> — GPS tracking systems provide real-time location
                 data, driving behaviour analysis, and historical route information. Benefits include
@@ -631,7 +631,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Brain className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Certification platform</strong> — all your electricians producing
                 certificates from the same app ensures consistency, compliance, and easy access to
@@ -641,7 +641,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Brain className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Quoting and invoicing</strong> — standardise your quoting process so that
                 every quote has a consistent format, accurate pricing, and clear terms. Elec-Mate
@@ -650,7 +650,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Brain className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Health and safety documentation</strong> — generate RAMS for every job.
                 Elec-Mate's{' '}
@@ -660,7 +660,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Brain className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Training and CPD</strong> — keep your team's skills current with structured
                 training. Elec-Mate includes 18th Edition courses, inspection and testing training,
@@ -697,7 +697,7 @@ export default function ElectricianContractorGuidePage() {
       heroTitle={
         <>
           Electrical Contractor Guide:{' '}
-          <span className="text-yellow-400">Running and Growing a Team</span>
+          <span className="text-elec-yellow">Running and Growing a Team</span>
         </>
       }
       heroSubtitle="From sole trader to limited company, employing your first electrician to managing a fleet of vans — this guide covers everything you need to know about running and growing an electrical contracting business in the UK. CIS, insurance, apprenticeships, pricing, and the systems that let you scale."

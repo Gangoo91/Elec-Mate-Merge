@@ -32,6 +32,7 @@ import HandoutPrompt from '@/components/inspection/shared/HandoutPrompt';
 import { sharePdfBytesFromUrlToWhatsAppWeb } from '@/utils/share-pdf-to-whatsapp-web';
 import { sharePdfFileNative, canShareFilesToWhatsApp } from '@/utils/share-pdf-file-native';
 import { importWithRetry } from '@/utils/lazyWithRetry';
+import { autoCompleteOff } from '@/lib/textEntry';
 
 // Feature flag: set to true to use Gotenberg (v2), false to revert to PDF Monkey (v1)
 const USE_GOTENBERG_PDF = false;
@@ -744,7 +745,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
               <Input
                 id="email"
                 type="email"
-                autoComplete="off"
+                autoComplete={autoCompleteOff}
                 placeholder="client@example.com"
                 value={emailRecipient}
                 onChange={(e) => setEmailRecipient(e.target.value)}

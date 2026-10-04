@@ -186,7 +186,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HV/LV transformers:</strong> Most factories receive an 11kV (or 33kV) HV
                 supply from the utility network, transformed to 400V LV by a dedicated on-site
@@ -196,7 +196,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>TN-S earthing:</strong> Factory installations commonly use TN-S earthing
                 with a separate PE conductor throughout. This minimises earth fault loop impedance,
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Phase balance:</strong> Single-phase loads (lighting, small power) in
                 factories must be distributed evenly across all three phases to maintain balance. A
@@ -215,7 +215,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Voltage drop:</strong> Cable sizing for factory circuits must ensure voltage
                 drop stays within the limits of{' '}
@@ -302,7 +302,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fixed capacitor banks:</strong> For loads that are relatively constant
                 (base-load motors, transformers), fixed capacitor banks are connected permanently to
@@ -311,7 +311,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Automatic PFC panels:</strong> For factories with variable loads, automatic
                 power factor correction (APFC) panels switch capacitor stages in and out as the load
@@ -321,7 +321,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Harmonic detuned filters:</strong> Factories with large VFD installations
                 generate significant harmonic currents (5th, 7th, 11th harmonics). Plain capacitor
@@ -397,7 +397,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP44 — General factory:</strong> Protection against solid objects greater
                 than 1mm and splashing water from any direction. Suitable for general factory floor
@@ -405,7 +405,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP54 / IP55 — Dusty or wet areas:</strong> IP54 provides dust protection
                 (ingress not completely prevented but not enough to interfere with operation) and
@@ -414,7 +414,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP65 / IP66 — Food & beverage / wash-down:</strong> IP65 is dust-tight and
                 protects against low-pressure water jets. IP66 adds protection against powerful
@@ -423,7 +423,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IK ratings:</strong> In addition to IP ratings, industrial enclosures in
                 areas subject to mechanical impact (e.g. forklift traffic, vibration) should be
@@ -502,7 +502,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable trays and ladders:</strong> Perforated cable tray or cable ladder is
                 used for main distribution routes along structural steelwork. Cable ladder provides
@@ -511,7 +511,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Steel conduit:</strong> Steel conduit provides mechanical protection for
                 cables in areas where impact or abrasion is likely, or where chemical exposure
@@ -520,7 +520,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Segregation:</strong> Power cables (especially VFD output cables) generate
                 high-frequency electromagnetic interference. A minimum separation of 300mm must be
@@ -530,7 +530,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable selection:</strong> Armoured cables (SWA — Steel Wire Armoured) are
                 standard for factory power distribution. The armour provides mechanical protection
@@ -558,7 +558,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <AlertTriangle className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Safe Isolation is Non-Negotiable</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -591,7 +591,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage factory electrical projects with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site certification, quoting, and project management."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site certification, quoting, and project management."
           icon={FileCheck2}
         />
       </>
@@ -617,7 +617,7 @@ export default function FactoryElectricalInstallationPage() {
       heroTitle={
         <>
           Factory Electrical Installation UK:{' '}
-          <span className="text-yellow-400">Industrial Wiring Guide</span>
+          <span className="text-elec-yellow">Industrial Wiring Guide</span>
         </>
       }
       heroSubtitle="The complete technical guide to factory electrical installation in the UK — covering three-phase supplies, motor control centres, power factor correction, HRC fuses, IP ratings for industrial environments, ATEX zone classification, and cable management."
@@ -628,7 +628,7 @@ export default function FactoryElectricalInstallationPage() {
       faqHeading="Frequently Asked Questions — Factory Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Manage Your Factory Electrical Projects with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site certification, quoting, and project management in industrial environments. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site certification, quoting, and project management in industrial environments. 7-day free trial, cancel anytime."
     />
   );
 }

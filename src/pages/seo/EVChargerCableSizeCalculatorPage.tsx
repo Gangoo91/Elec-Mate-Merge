@@ -45,7 +45,7 @@ export default function EVChargerCableSizeCalculatorPage() {
       badgeIcon={Car}
       heroTitle={
         <>
-          <span className="text-yellow-400">EV Charger Cable Size Calculator</span> — Size the
+          <span className="text-elec-yellow">EV Charger Cable Size Calculator</span> — Size the
           Circuit for 7.4kW and 22kW Chargers
         </>
       }
@@ -78,9 +78,9 @@ export default function EVChargerCableSizeCalculatorPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
                 <ul className="space-y-3 text-white text-sm">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Load assessment</strong> — can the
+                      <strong className="text-elec-yellow">Load assessment</strong> — can the
                       property's supply take the charger on top of the existing maximum demand? Is
                       load management needed? That is covered by the{' '}
                       <SEOInternalLink href="/tools/ev-charger-load-calculator">
@@ -90,9 +90,9 @@ export default function EVChargerCableSizeCalculatorPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Cable sizing</strong> — once the charger
+                      <strong className="text-elec-yellow">Cable sizing</strong> — once the charger
                       is viable, what cable does the dedicated circuit need for the run length and
                       installation method? That is this page.
                     </span>
@@ -203,22 +203,22 @@ export default function EVChargerCableSizeCalculatorPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
                 <ol className="space-y-3 text-white text-sm list-decimal pl-5">
                   <li>
-                    <strong className="text-yellow-400">Design current:</strong> 7400 / 230 ={' '}
+                    <strong className="text-elec-yellow">Design current:</strong> 7400 / 230 ={' '}
                     <strong>32.2A</strong> → 32A circuit
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Cable capacity:</strong> 6mm² twin and
+                    <strong className="text-elec-yellow">Cable capacity:</strong> 6mm² twin and
                     earth carries comfortably above 32A in favourable methods — confirm the derated
                     figure for the actual route in the calculator
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Voltage drop:</strong> using the published
+                    <strong className="text-elec-yellow">Voltage drop:</strong> using the published
                     figure of approximately 7.3 mV/A/m for 6mm² copper: 32A x 25m x 7.3 mV/A/m =
                     5,840mV = <strong>5.84V</strong>. As a percentage: 5.84 / 230 ={' '}
                     <strong>2.5%</strong> — within the 5% limit
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Same cable at 40m:</strong> 32 x 40 x 7.3 =
+                    <strong className="text-elec-yellow">Same cable at 40m:</strong> 32 x 40 x 7.3 =
                     9,344mV = <strong>9.34V = 4.1%</strong> — still passing, but close enough to
                     the limit that 10mm² (approximately 4.4 mV/A/m, giving 5.63V = 2.4% at 40m) is
                     the safer specification, especially allowing for future supply voltage
@@ -456,7 +456,7 @@ export default function EVChargerCableSizeCalculatorPage() {
         },
       ]}
       ctaHeading="Design EV charger circuits with confidence"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EV circuit design, cable sizing, and certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for EV circuit design, cable sizing, and certification. 7-day free trial, cancel anytime."
       toolPath="/tools/ev-charger-cable-size-calculator"
     />
   );

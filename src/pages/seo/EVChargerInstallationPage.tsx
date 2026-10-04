@@ -46,7 +46,7 @@ export default function EVChargerInstallationPage() {
         <>
           EV Charger Installation UK
           <br />
-          <span className="text-yellow-400">Requirements, Regulations & Cost</span>
+          <span className="text-elec-yellow">Requirements, Regulations & Cost</span>
         </>
       }
       heroSubtitle="EV charger installation is one of the fastest-growing areas of domestic electrical work. This guide covers everything an electrician needs to know — charger types, cable sizing, earthing requirements, RCD selection, IET Code of Practice compliance, grants, DNO notification, and realistic costs."
@@ -71,7 +71,7 @@ export default function EVChargerInstallationPage() {
               </p>
               <div className="grid sm:grid-cols-3 gap-4 my-6">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                  <h3 className="font-bold text-yellow-400 text-2xl mb-1">3.6 kW</h3>
+                  <h3 className="font-bold text-elec-yellow text-2xl mb-1">3.6 kW</h3>
                   <h4 className="font-bold text-white mb-3">Slow Charger (16A Single Phase)</h4>
                   <p className="text-white text-sm leading-relaxed">
                     Draws 16A from a single-phase supply. Adds approximately 10-15 miles of range
@@ -82,7 +82,7 @@ export default function EVChargerInstallationPage() {
                   </p>
                 </div>
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-2xl mb-1">7 kW</h3>
+                  <h3 className="font-bold text-elec-yellow text-2xl mb-1">7 kW</h3>
                   <h4 className="font-bold text-white mb-3">Fast Charger (32A Single Phase)</h4>
                   <p className="text-white text-sm leading-relaxed">
                     The standard for domestic installations. Draws 32A from a single-phase supply.
@@ -97,7 +97,7 @@ export default function EVChargerInstallationPage() {
                   </p>
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                  <h3 className="font-bold text-yellow-400 text-2xl mb-1">22 kW</h3>
+                  <h3 className="font-bold text-elec-yellow text-2xl mb-1">22 kW</h3>
                   <h4 className="font-bold text-white mb-3">Fast Charger (32A Three Phase)</h4>
                   <p className="text-white text-sm leading-relaxed">
                     Requires a three-phase supply, which most domestic properties do not have. Adds
@@ -136,9 +136,9 @@ export default function EVChargerInstallationPage() {
                 </h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Dedicated circuit (Regulation 722.531.3.101)
                       </strong>{' '}
                       — Each EV charging point must be supplied by its own dedicated circuit from
@@ -146,18 +146,18 @@ export default function EVChargerInstallationPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Continuous duty rating</strong> — The
+                      <strong className="text-elec-yellow">Continuous duty rating</strong> — The
                       cable, protective device, and all connections must be rated for the full load
                       current (32A) drawn continuously. No diversity is applied to EV charging
                       circuits because the vehicle can charge at maximum rate for extended periods.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Cable sizing</strong> — Minimum 6mm² PVC
+                      <strong className="text-elec-yellow">Cable sizing</strong> — Minimum 6mm² PVC
                       twin-and-earth (for short runs clipped direct). 10mm² required for longer runs
                       to meet the{' '}
                       <SEOInternalLink href="/tools/voltage-drop-calculator">
@@ -167,9 +167,9 @@ export default function EVChargerInstallationPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         PME earthing restrictions (Regulation 722.411.4.1)
                       </strong>{' '}
                       — On PME supplies, the EV circuit protective conductor must NOT be connected
@@ -177,9 +177,9 @@ export default function EVChargerInstallationPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         30 mA RCD protection (Regulation 722.411.3.2)
                       </strong>{' '}
                       — Type A RCD minimum, with additional 6 mA DC protection (built into most
@@ -187,9 +187,9 @@ export default function EVChargerInstallationPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Local isolation</strong> — A means of
+                      <strong className="text-elec-yellow">Local isolation</strong> — A means of
                       isolation must be provided adjacent to the charger for maintenance and
                       emergency disconnection.
                     </span>
@@ -270,7 +270,7 @@ export default function EVChargerInstallationPage() {
               </p>
               <div className="grid sm:grid-cols-2 gap-4 my-6">
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-3">Standard Arrangement</h3>
+                  <h3 className="font-bold text-elec-yellow text-lg mb-3">Standard Arrangement</h3>
                   <p className="text-white text-sm leading-relaxed mb-3">
                     <strong className="text-white">32A Type A RCBO (30 mA)</strong> — where the
                     charger has built-in 6 mA DC residual current detection. Most modern domestic
@@ -323,7 +323,7 @@ export default function EVChargerInstallationPage() {
               <p>The Code of Practice covers:</p>
               <ul className="space-y-2 my-4">
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Charging modes and connector types</strong> —
                     Detailed explanation of Mode 1, 2, 3, and 4 charging and the Type 1, Type 2,
@@ -331,7 +331,7 @@ export default function EVChargerInstallationPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Supply assessment</strong> — How to assess
                     whether the existing supply can accommodate the additional load, including
@@ -339,7 +339,7 @@ export default function EVChargerInstallationPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Earthing assessment</strong> — The PME earthing
                     considerations, TT earth electrode installation, and earth electrode resistance
@@ -347,14 +347,14 @@ export default function EVChargerInstallationPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Circuit design</strong> — Cable selection,
                     voltage drop, protection coordination, and installation methods.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Certification requirements</strong> — What must
                     be documented on the EIC and the additional EV-specific documentation required.
@@ -387,7 +387,7 @@ export default function EVChargerInstallationPage() {
                       <h4 className="font-bold text-white">Charger unit (7 kW wallbox)</h4>
                       <p className="text-white text-sm">Ohme, Zappi, Pod Point, Easee, etc.</p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-lg">£300 - £800</span>
+                    <span className="font-bold text-elec-yellow text-lg">£300 - £800</span>
                   </div>
                   <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
                     <div>
@@ -396,28 +396,28 @@ export default function EVChargerInstallationPage() {
                         Including cable, protective device, testing, EIC
                       </p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-lg">£400 - £700</span>
+                    <span className="font-bold text-elec-yellow text-lg">£400 - £700</span>
                   </div>
                   <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
                     <div>
                       <h4 className="font-bold text-white">Earth rod (if PME supply)</h4>
                       <p className="text-white text-sm">Copper-clad rod, connections, testing</p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-lg">£80 - £150</span>
+                    <span className="font-bold text-elec-yellow text-lg">£80 - £150</span>
                   </div>
                   <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
                     <div>
                       <h4 className="font-bold text-white">Consumer unit upgrade (if needed)</h4>
                       <p className="text-white text-sm">Additional way, new board if full</p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-lg">£100 - £600</span>
+                    <span className="font-bold text-elec-yellow text-lg">£100 - £600</span>
                   </div>
                   <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                     <div>
                       <h4 className="font-bold text-white">Total installed (typical)</h4>
                       <p className="text-white text-sm">Standard domestic installation</p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-xl">£800 - £1,500</span>
+                    <span className="font-bold text-elec-yellow text-xl">£800 - £1,500</span>
                   </div>
                 </div>
               </div>
@@ -454,7 +454,7 @@ export default function EVChargerInstallationPage() {
               </p>
               <ul className="space-y-2 my-4">
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Renters and flat-dwellers</strong> —
                     Owner-occupiers of houses were removed from eligibility in April 2022, but
@@ -462,7 +462,7 @@ export default function EVChargerInstallationPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Workplace Charging Scheme</strong> — Businesses
                     can claim up to £350 per socket (up to 40 sockets) for workplace EV charger
@@ -470,7 +470,7 @@ export default function EVChargerInstallationPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Local authority schemes</strong> — Some local
                     councils offer additional grants or funding for residential EV charging,
@@ -517,7 +517,7 @@ export default function EVChargerInstallationPage() {
                   </p>
                 </div>
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-3">Part P Notification</h3>
+                  <h3 className="font-bold text-elec-yellow text-lg mb-3">Part P Notification</h3>
                   <p className="text-white text-sm leading-relaxed mb-3">
                     Installing a new circuit for an EV charger is notifiable under{' '}
                     <SEOInternalLink href="/part-p-building-regulations">

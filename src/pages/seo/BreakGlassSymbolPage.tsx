@@ -28,7 +28,7 @@ const sections = [
           showCategoryHeadings={false}
           showImageObjectSchema={true}
         />
-        <p className="text-sm text-white/70 mt-4">
+        <p className="text-sm text-white mt-4">
           Right-click the symbol above to save the SVG, or use the{' '}
           <SEOInternalLink href="/ai-diagram-builder">AI Diagram Builder</SEOInternalLink> to drop
           it into a working drawing.
@@ -131,7 +131,7 @@ export default function BreakGlassSymbolPage() {
       heroTitle={
         <>
           Manual Call Point (Break Glass) Symbol{' '}
-          <span className="text-yellow-400">IEC 60617 reference</span>
+          <span className="text-elec-yellow">IEC 60617 reference</span>
         </>
       }
       heroSubtitle="Manual call point break glass fire alarm electrical symbol IEC 60617 — what it represents, where it appears in UK electrical drawings, and how it relates to the rest of the symbol library."

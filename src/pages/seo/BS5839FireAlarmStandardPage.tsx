@@ -165,7 +165,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS 5839-1</strong> — Fire detection and fire alarm systems for buildings.
                 Covers non-domestic premises including offices, shops, factories, hospitals,
@@ -176,7 +176,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS 5839-6</strong> — Fire detection and fire alarm systems for domestic
                 premises. Covers individual dwellings, flats, maisonettes, and sheltered housing.
@@ -210,7 +210,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Design</strong> — system category selection based on the fire risk
                 assessment, detector types and siting, sounder coverage, manual call point
@@ -219,7 +219,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Installation</strong> — cable installation methods, fire-resistant cable
                 requirements, segregation from other services, containment systems, connection
@@ -227,7 +227,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commissioning</strong> — full functional testing of every device, cause and
                 effect testing, sounder level measurements, battery drain tests, false alarm
@@ -235,7 +235,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maintenance</strong> — weekly user tests, monthly checks, quarterly
                 inspections, and annual professional servicing. The standard sets out exactly what
@@ -278,27 +278,27 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Bell className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Bell className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 A smoke alarm on every storey of the dwelling used as living accommodation.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Bell className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Bell className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 A heat alarm in every kitchen (smoke alarms are not suitable in kitchens due to
                 cooking fumes causing false alarms).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Bell className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Bell className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 All alarms must be interlinked so that activation of any one alarm sounds all alarms
                 in the dwelling.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Bell className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Bell className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Mains-powered alarms with battery back-up are recommended for new installations
                 (Grade D1). Battery-only alarms (Grade F1) are acceptable for existing dwellings
@@ -330,7 +330,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Category L — Life Protection</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>L1 — Full coverage.</strong> Detectors installed throughout all areas of the
                 building, including roof voids, floor voids, and risers. This provides the earliest
@@ -339,7 +339,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>L2 — Coverage of escape routes plus high-risk areas.</strong> Detectors in
                 all corridors, stairways, landings, and rooms that open onto escape routes, plus any
@@ -348,7 +348,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>L3 — Coverage of escape routes only.</strong> Detectors in corridors,
                 stairways, landings, and rooms that open onto escape routes. The aim is to warn
@@ -357,7 +357,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>L4 — Coverage of escape routes within circulation areas only.</strong>{' '}
                 Detectors in corridors, stairways, and landings only — not in rooms. This provides a
@@ -365,7 +365,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>L5 — Custom coverage.</strong> Detectors installed only in specific areas
                 identified in the fire risk assessment. Used where only certain parts of the
@@ -378,7 +378,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Category P — Property Protection</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>P1 — Full coverage for property protection.</strong> Detectors throughout
                 the building to give the earliest possible warning of fire for the purpose of
@@ -387,7 +387,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>P2 — Partial coverage for property protection.</strong> Detectors in
                 high-risk areas only, such as plant rooms, server rooms, or areas with flammable
@@ -418,7 +418,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Grade A</strong> — A fire alarm panel with conventional or addressable
                 detection, dedicated fire alarm cabling (typically fire-resistant FP200 or MICC),
@@ -428,7 +428,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Grade B</strong> — Similar to Grade A but uses a fire alarm control panel
                 with a power supply that forms part of the dwelling mains supply, rather than a
@@ -436,7 +436,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Grade C</strong> — Detectors and sounders connected to a common central
                 power supply (for example, a mains transformer with battery back-up) but without a
@@ -445,7 +445,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Grade D1</strong> — Mains-powered detectors with a tamper-proof
                 (non-user-replaceable) integral standby battery, interlinked by hard wiring. This is
@@ -456,7 +456,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Grade D2</strong> — Mains-powered detectors with a user-replaceable integral
                 standby battery, interlinked by radio (wireless). Used where running new wiring for
@@ -465,7 +465,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Grade F1</strong> — Battery-only detectors (no mains connection),
                 interlinked by radio. Used in existing dwellings where mains wiring is not available
@@ -473,7 +473,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Grade F2</strong> — Battery-only detectors with no interlinking. These are
                 standalone individual smoke alarms. The lowest grade and the minimum level of
@@ -502,7 +502,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Detector siting</strong> — smoke detectors must be sited on the ceiling, at
                 least 300mm from any wall or light fitting. In corridors, detectors must be spaced
@@ -516,7 +516,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable requirements</strong> — for Grade A systems, fire-resistant cable must
                 be used (BS 7629 or BS 8434, commonly known as FP200 or MICC). Standard PVC cables
@@ -525,7 +525,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Manual call points</strong> — required at every exit point on every storey
                 in commercial premises (BS 5839-1). They must be mounted at a height of 1.4m from
@@ -534,7 +534,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sounder coverage</strong> — fire alarm sounders must achieve a minimum sound
                 level of 65dB(A) in all accessible areas, or 75dB(A) at the bedhead in sleeping
@@ -593,7 +593,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-1">
                 Before You Test — Isolation and Notification
@@ -616,7 +616,7 @@ const sections = [
           </h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Weekly — User test.</strong> Activate one manual call point per week
                 (rotating through all call points over the year) to confirm the panel enters fire
@@ -624,7 +624,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Monthly — Standby supply checks.</strong> Where an automatically started
                 generator forms part of the standby supply, run it on load for at least an hour;
@@ -634,7 +634,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Approximately every 6 months — Professional inspection.</strong> A competent
                 person carries out the periodic inspection and service visit (clause 43.2.1), which
@@ -644,7 +644,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Annually — Full professional service.</strong> Every detector, call point,
                 sounder, and interface device is tested. Battery capacity is tested under load.
@@ -731,7 +731,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Fire Alarm Certificate Template</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -798,7 +798,7 @@ export default function BS5839FireAlarmStandardPage() {
       heroTitle={
         <>
           BS 5839 Fire Alarm Standard:{' '}
-          <span className="text-yellow-400">The Complete UK Guide</span>
+          <span className="text-elec-yellow">The Complete UK Guide</span>
         </>
       }
       heroSubtitle="BS 5839 is the UK standard for fire detection and fire alarm systems. Part 1 covers commercial premises, Part 6 covers domestic dwellings. This guide explains system categories, grades, design requirements, testing intervals, and certification — everything an electrician needs to know. Reviewed by Andrew Moore, founder of Elec-Mate, against BS 5839 and current FIA guidance."

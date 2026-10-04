@@ -227,7 +227,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>First-tier Tribunal for Scotland</strong> — tenants apply directly to the
                 Housing and Property Chamber. The Tribunal inspects the property, determines whether
@@ -236,7 +236,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Enforcement orders</strong> — an RSEO specifies what work must be done and
                 by when. Failure to comply can be reported to the local authority and can affect the
@@ -244,7 +244,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Glasgow City Council role</strong> — while the Tribunal handles Repairing
                 Standard enforcement, Glasgow City Council manages landlord registration, HMO
@@ -253,7 +253,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Glasgow tenement stock</strong> — Glasgow has a large stock of Victorian and
                 Edwardian tenement flats. These properties commonly have aged wiring, inadequate
@@ -278,7 +278,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HMO licensing</strong> — in Scotland, an HMO is defined as a property
                 occupied by three or more unrelated persons as their only or main residence. This is
@@ -287,7 +287,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Student areas</strong> — the West End (around the University of Glasgow),
                 Partick, Hillhead, and areas near Glasgow Caledonian University have high
@@ -296,7 +296,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inspection frequency</strong> — Glasgow City Council typically requires
                 EICRs every three years for HMOs, more frequent than the standard five-year
@@ -412,14 +412,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tribunal-set timescales</strong> — the Tribunal specifies a reasonable
                 timescale for completion of remedial work in the enforcement order.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Urgent safety issues</strong> — C1 (danger present) observations should be
                 addressed immediately regardless of any formal timescale. Landlords have a common
@@ -427,7 +427,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Common Glasgow remedial work</strong> — RCD protection (Regulation 411.3.3),
                 consumer unit replacements in tenement flats, earthing upgrades, rewiring of
@@ -447,7 +447,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person schemes</strong> — search NICEIC, NAPIT, SELECT (Scotland's
                 trade association for the electrical industry), or ELECSA for Glasgow-based
@@ -455,7 +455,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SELECT membership</strong> — SELECT is the Scottish Joint Industry Board
                 (SJIB) trade association. Many Scottish electricians are SELECT members rather than
@@ -463,7 +463,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SP Energy Networks</strong> — the DNO for Glasgow is SP Energy Networks
                 (part of Scottish Power). Inspectors should be familiar with their earthing
@@ -483,26 +483,26 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>One-bedroom flat</strong> — £100 to £180.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Two-bedroom tenement flat</strong> — £150 to £250. Glasgow's tenement stock
                 often requires extra time due to older wiring and limited access.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom house</strong> — £220 to £360.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HMO</strong> — £300 to £600+.
               </span>
@@ -525,7 +525,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete EICRs On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -541,7 +541,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your EICR business with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -563,7 +563,7 @@ export default function LandlordElectricalSafetyGlasgowPage() {
       heroTitle={
         <>
           Landlord Electrical Safety Glasgow:{' '}
-          <span className="text-yellow-400">Scottish Repairing Standard 2026</span>
+          <span className="text-elec-yellow">Scottish Repairing Standard 2026</span>
         </>
       }
       heroSubtitle="Glasgow landlord electrical safety under Scottish law — the Housing (Scotland) Act 2006 Repairing Standard, First-tier Tribunal enforcement, HMO licensing, and finding qualified inspectors. Note: Scotland uses different legislation from England."
@@ -574,7 +574,7 @@ export default function LandlordElectricalSafetyGlasgowPage() {
       faqHeading="Frequently Asked Questions About Landlord Electrical Safety in Glasgow"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

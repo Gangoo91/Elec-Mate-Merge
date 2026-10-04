@@ -189,7 +189,7 @@ const sections = [
           </h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Simple installation (modern semi/detached, short cable run)</strong> — £650
                 to £950. Woolton, West Derby, Crosby, Formby, Halewood. Modern consumer unit, clear
@@ -197,7 +197,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard installation (inter-war semi, 8–14m cable run)</strong> — £800 to
                 £1,100. Common across south Liverpool: Allerton, Aigburth, Wavertree, Childwall.
@@ -205,7 +205,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Complex installation (Victorian terrace, long run, board upgrade)</strong> —
                 £1,000 to £1,400+. Inner Liverpool: Kensington, Wavertree terraces, Toxteth,
@@ -270,7 +270,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Off-peak tariff scheduling</strong> — Liverpool households on time-of-use
                 tariffs such as Octopus Go or OVO Charge Anytime can cut overnight charging costs by
@@ -278,7 +278,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Remote monitoring and control</strong> — start, stop, and schedule charging
                 from a smartphone app. All OZEV-approved smart charger brands include app control as
@@ -286,7 +286,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Energy metering</strong> — smart chargers record energy consumption per
                 session, useful for HMRC business mileage claims if the vehicle is used for work.
@@ -312,7 +312,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated circuit (Regulation 722.533.101)</strong> — each EV charger
                 requires its own dedicated circuit from the consumer unit. Older Liverpool consumer
@@ -320,7 +320,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection (Regulation 722.531.3.101)</strong> — appropriate RCD
                 protection including Type A with 6mA DC RDC-DD or Type B RCD where required. Most
@@ -328,7 +328,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PME earthing (Regulation 722.411.4.1)</strong> — outdoor chargers on PME
                 supplies require an earth rod or charger with integrated PEN fault detection. Site
@@ -336,7 +336,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable sizing</strong> — long cable runs in Victorian Liverpool terraces
                 require careful{' '}
@@ -364,7 +364,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98 (standard domestic 7kW)</strong> — notification via the Electricity
                 North West online portal. No prior approval needed. Proceed with installation after
@@ -372,7 +372,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G99 (three-phase or commercial)</strong> — prior approval required from
                 Electricity North West. Allow 4 to 10 weeks. Required for 22kW three-phase
@@ -380,7 +380,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Installer responsibility</strong> — the electrician submits the DNO
                 notification. Confirm it is included in your quote before accepting.
@@ -403,14 +403,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>OZEV EV chargepoint grant</strong> — up to £350 for flat owners and tenants.
                 Not available to homeowners in houses. Applied for by the OZEV-approved installer.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Liverpool City Region EV strategy</strong> — the Liverpool City Region
                 Combined Authority has committed to expanding EV charging infrastructure across
@@ -419,7 +419,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Workplace Charging Scheme</strong> — Liverpool businesses can claim up to
                 £350 per socket (up to 40 sockets) for workplace EV charger installations via the
@@ -445,7 +445,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Pricing Liverpool Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -477,7 +477,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify Liverpool EV installations"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification."
           icon={Car}
         />
       </>
@@ -503,7 +503,7 @@ export default function EVChargerInstallationLiverpoolPage() {
       heroTitle={
         <>
           EV Charger Installation Liverpool:{' '}
-          <span className="text-yellow-400">Costs, DNO, and Grants 2026</span>
+          <span className="text-elec-yellow">Costs, DNO, and Grants 2026</span>
         </>
       }
       heroSubtitle="Local costs for EV charger installation in Liverpool and Merseyside, Electricity North West DNO notification, OZEV grant eligibility, smart charger requirements, and Section 722 compliance."
@@ -514,7 +514,7 @@ export default function EVChargerInstallationLiverpoolPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in Liverpool"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify EV Charger Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

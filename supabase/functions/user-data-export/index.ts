@@ -1,11 +1,29 @@
-// ELE-400, ELE-401, ELE-405, ELE-408
+// ELE-400, ELE-401, ELE-405, ELE-408, ELE-1812
 // User Data Export — GDPR Art. 15 (Right of Access) & Art. 20 (Data Portability)
-// Exports all personal data, writes audit log, sends confirmation email
+//
+// Builds a ZIP of everything the user holds (see _shared/data-export-zip.ts),
+// keeps it privately in `data-exports/<uid>/` for 7 days, emails a download
+// link and returns the same link to the app.
+//
+// Records are fetched one table at a time (export_user_data_counts →
+// export_user_table) and compressed as they arrive: the heaviest real account
+// holds 45 MB across 130 tables, which the old all-in-one jsonb + JSZip path
+// could not build inside the edge runtime's CPU and memory limits.
 
 import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import { Resend } from '../_shared/mailer.ts';
 import { captureException } from '../_shared/sentry.ts';
+import { accountEmailHtml, escapeHtml } from '../_shared/account-email.ts';
+import {
+  ZipWriter,
+  sectionName,
+  sortTables,
+  summaryHtml,
+  toCsv,
+  type ExportFile,
+  type SummarySection,
+} from '../_shared/data-export-zip.ts';
 
 const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
 
@@ -15,24 +33,19 @@ const corsHeaders = {
     'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
-// Helper: fetch from a table by user_id, return [] on any error
-async function fetchTable(
-  supabase: ReturnType<typeof createClient>,
-  table: string,
-  userId: string,
-  userIdColumn = 'user_id'
-): Promise<unknown[]> {
-  try {
-    const { data, error } = await supabase
-      .from(table)
-      .select('*')
-      .eq(userIdColumn, userId);
-    if (error) return [];
-    return data ?? [];
-  } catch {
-    return [];
-  }
-}
+const json = (body: unknown, status = 200) =>
+  new Response(JSON.stringify(body), {
+    status,
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+  });
+
+const LINK_SECONDS = 60 * 60 * 24 * 7;
+const ROW_CAP = 20000; // must match export_user_table()
+const FILE_CAP = 1000;
+// Same rule as export_user_table(): credentials never leave in an export.
+const SECRET_COL = /(encrypted|secret|password|api_key|(^|_)token$)/i;
+const stripSecrets = (row: Record<string, unknown>) =>
+  Object.fromEntries(Object.entries(row).filter(([k]) => !SECRET_COL.test(k)));
 
 serve(async (req: Request): Promise<Response> => {
   if (req.method === 'OPTIONS') {
@@ -41,12 +54,7 @@ serve(async (req: Request): Promise<Response> => {
 
   try {
     const authHeader = req.headers.get('Authorization');
-    if (!authHeader) {
-      return new Response(JSON.stringify({ error: 'Not authenticated' }), {
-        status: 401,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
-    }
+    if (!authHeader) return json({ error: 'Not authenticated' }, 401);
 
     const supabaseAdmin = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
@@ -54,221 +62,244 @@ serve(async (req: Request): Promise<Response> => {
       { auth: { persistSession: false, autoRefreshToken: false } }
     );
 
-    // Authenticate the requesting user
     const token = authHeader.replace('Bearer ', '');
     const { data: userData, error: userError } = await supabaseAdmin.auth.getUser(token);
-    if (userError || !userData.user) {
-      return new Response(JSON.stringify({ error: 'Invalid token' }), {
-        status: 401,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
-    }
+    if (userError || !userData.user) return json({ error: 'Invalid token' }, 401);
 
     const userId = userData.user.id;
     const userEmail = userData.user.email ?? '';
     const exportedAt = new Date().toISOString();
+    const bucket = supabaseAdmin.storage.from('data-exports');
+
+    // A second tap (or a script) shouldn't rebuild the ZIP and send another
+    // email straight away.
+    const { data: existing } = await bucket.list(userId);
+    const recent = (existing ?? []).find(
+      (o: { created_at?: string }) =>
+        o.created_at && Date.now() - new Date(o.created_at).getTime() < 2 * 60 * 1000
+    );
+    if (recent) {
+      return json(
+        {
+          error:
+            'You exported your data a moment ago — check your email for the download link, or try again in a couple of minutes.',
+          code: 'too_soon',
+        },
+        429
+      );
+    }
 
     console.log(`📦 GDPR data export started for user ${userId}`);
 
-    // --- Collect all personal data ---
-    const [
-      profiles,
-      certificates,
-      inspectionReports,
-      quotes,
-      invoices,
-      customers,
-      projects,
-      priceBookItems,
-      timeEntries,
-      siteAssessments,
-      tasks,
-      userSettings,
-      quizAttempts,
-      studyProgress,
-      safeIsolationRecords,
-      preUseChecks,
-      portfolioItems,
-      siteVisits,
-      userSafetyDocuments,
-      elecIdProfiles,
-      elecIdEmployerProfiles,
-      mentalHealthMoodEntries,
-      mentalHealthJournalEntries,
-      mentalHealthSleepEntries,
-      mentalHealthSafetyPlans,
-      mentalHealthGroundingProgress,
-      mentalHealthPrefs,
-      peerSupporterProfiles,
-      peerConversationsAsSeeker,
-      peerMessagesSent,
-      peerBlocks,
-      peerReports,
-    ] = await Promise.all([
-      fetchTable(supabaseAdmin, 'profiles', userId, 'id'),
-      fetchTable(supabaseAdmin, 'certificates', userId),
-      fetchTable(supabaseAdmin, 'inspection_reports', userId),
-      fetchTable(supabaseAdmin, 'quotes', userId),
-      fetchTable(supabaseAdmin, 'invoices', userId),
-      fetchTable(supabaseAdmin, 'customers', userId),
-      fetchTable(supabaseAdmin, 'projects', userId),
-      fetchTable(supabaseAdmin, 'price_book_items', userId),
-      fetchTable(supabaseAdmin, 'time_entries', userId),
-      fetchTable(supabaseAdmin, 'site_assessments', userId),
-      fetchTable(supabaseAdmin, 'tasks', userId),
-      fetchTable(supabaseAdmin, 'user_settings', userId),
-      fetchTable(supabaseAdmin, 'quiz_attempts', userId),
-      fetchTable(supabaseAdmin, 'study_progress', userId),
-      fetchTable(supabaseAdmin, 'safe_isolation_records', userId),
-      fetchTable(supabaseAdmin, 'pre_use_checks', userId),
-      fetchTable(supabaseAdmin, 'portfolio_items', userId),
-      fetchTable(supabaseAdmin, 'site_visits', userId),
-      fetchTable(supabaseAdmin, 'user_safety_documents', userId),
-      fetchTable(supabaseAdmin, 'elec_id_profiles', userId),
-      fetchTable(supabaseAdmin, 'employer_elec_id_profiles', userId),
-      fetchTable(supabaseAdmin, 'mental_health_mood_entries', userId),
-      fetchTable(supabaseAdmin, 'mental_health_journal_entries', userId),
-      fetchTable(supabaseAdmin, 'mental_health_sleep_entries', userId),
-      fetchTable(supabaseAdmin, 'mental_health_safety_plans', userId),
-      fetchTable(supabaseAdmin, 'mental_health_grounding_progress', userId),
-      fetchTable(supabaseAdmin, 'mental_health_prefs', userId),
-      fetchTable(supabaseAdmin, 'mental_health_peer_supporters', userId),
-      fetchTable(supabaseAdmin, 'mental_health_peer_conversations', userId, 'seeker_id'),
-      fetchTable(supabaseAdmin, 'mental_health_peer_messages', userId, 'sender_id'),
-      fetchTable(supabaseAdmin, 'mental_health_peer_blocks', userId, 'blocker_id'),
-      fetchTable(supabaseAdmin, 'mental_health_peer_reports', userId, 'reporter_id'),
-    ]);
+    // --- Profile (keyed by id, not user_id) and peer conversations where they
+    // were the supporter (keyed by the supporter record) ---
+    const { data: profileRow } = await supabaseAdmin
+      .from('profiles')
+      .select('*')
+      .eq('id', userId)
+      .maybeSingle();
+    const profile = profileRow ? stripSecrets(profileRow as Record<string, unknown>) : null;
 
-    // Peer conversations reference the supporter record (mental_health_peer_supporters.id),
-    // not the auth user id — fetch the supporter side separately so the user gets every
-    // conversation they were a party to, whichever side they sat on.
-    const supporterRecordId = (peerSupporterProfiles[0] as { id?: string } | undefined)?.id;
-    const peerConversationsAsSupporter = supporterRecordId
-      ? await fetchTable(
-          supabaseAdmin,
-          'mental_health_peer_conversations',
-          supporterRecordId,
-          'supporter_id'
-        )
-      : [];
-    const peerConversations = [...peerConversationsAsSeeker, ...peerConversationsAsSupporter];
+    const { data: supporter } = await supabaseAdmin
+      .from('mental_health_peer_supporters')
+      .select('id')
+      .eq('user_id', userId)
+      .maybeSingle();
+    const { data: supporterConversations } = supporter?.id
+      ? await supabaseAdmin
+          .from('mental_health_peer_conversations')
+          .select('*')
+          .eq('supporter_id', supporter.id)
+      : { data: [] };
 
-    // Build export object — only include sections that have data
-    const exportData: Record<string, unknown> = {};
+    // --- Which tables hold their rows ---
+    const { data: counts, error: countsError } = await supabaseAdmin.rpc(
+      'export_user_data_counts',
+      { p_user: userId }
+    );
+    if (countsError) throw new Error(`export_user_data_counts: ${countsError.message}`);
+    const totals = (counts ?? {}) as Record<string, number>;
 
-    if (profiles.length > 0) exportData.profile = profiles[0];
-    if (certificates.length > 0) exportData.certificates = certificates;
-    if (inspectionReports.length > 0) exportData.inspectionReports = inspectionReports;
-    if (quotes.length > 0) exportData.quotes = quotes;
-    if (invoices.length > 0) exportData.invoices = invoices;
-    if (customers.length > 0) exportData.customers = customers;
-    if (projects.length > 0) exportData.projects = projects;
-    if (priceBookItems.length > 0) exportData.priceBookItems = priceBookItems;
-    if (timeEntries.length > 0) exportData.timeEntries = timeEntries;
-    if (siteAssessments.length > 0) exportData.siteAssessments = siteAssessments;
-    if (tasks.length > 0) exportData.tasks = tasks;
-    if (userSettings.length > 0) exportData.settings = userSettings;
-    if (quizAttempts.length > 0) exportData.quizAttempts = quizAttempts;
-    if (studyProgress.length > 0) exportData.studyProgress = studyProgress;
-    if (safeIsolationRecords.length > 0) exportData.safeIsolationRecords = safeIsolationRecords;
-    if (preUseChecks.length > 0) exportData.preUseChecks = preUseChecks;
-    if (portfolioItems.length > 0) exportData.portfolioItems = portfolioItems;
-    if (siteVisits.length > 0) exportData.siteVisits = siteVisits;
-    if (userSafetyDocuments.length > 0) exportData.safetyDocuments = userSafetyDocuments;
-    if (elecIdProfiles.length > 0) exportData.elecIdProfile = elecIdProfiles[0];
-    if (elecIdEmployerProfiles.length > 0) exportData.elecIdEmployerProfile = elecIdEmployerProfiles[0];
-    if (mentalHealthMoodEntries.length > 0) exportData.mentalHealthMoodEntries = mentalHealthMoodEntries;
-    if (mentalHealthJournalEntries.length > 0) exportData.mentalHealthJournalEntries = mentalHealthJournalEntries;
-    if (mentalHealthSleepEntries.length > 0) exportData.mentalHealthSleepEntries = mentalHealthSleepEntries;
-    if (mentalHealthSafetyPlans.length > 0) exportData.mentalHealthSafetyPlans = mentalHealthSafetyPlans;
-    if (mentalHealthGroundingProgress.length > 0) exportData.mentalHealthGroundingProgress = mentalHealthGroundingProgress;
-    if (mentalHealthPrefs.length > 0) exportData.mentalHealthPreferences = mentalHealthPrefs;
-    if (peerSupporterProfiles.length > 0) exportData.peerSupporterProfile = peerSupporterProfiles[0];
-    if (peerConversations.length > 0) exportData.peerConversations = peerConversations;
-    if (peerMessagesSent.length > 0) exportData.peerMessagesSent = peerMessagesSent;
-    if (peerBlocks.length > 0) exportData.peerBlocks = peerBlocks;
-    if (peerReports.length > 0) exportData.peerReports = peerReports;
-
-    const fullExport = {
-      exportedAt,
-      exportVersion: '2.0',
-      userId,
-      dataController: {
-        name: 'Elec-Mate Ltd',
-        icoRegistration: 'ZB935897',
-        contact: 'privacy@elec-mate.com',
-      },
-      gdprNote:
-        'This export fulfils your right of access (UK GDPR Article 15) and right to data portability (Article 20). Data is provided in machine-readable JSON format.',
-      data: exportData,
-    };
-
-    // --- Write audit log (non-blocking — failure does not fail the export) ---
-    supabaseAdmin
-      .from('security_audit_log')
-      .insert({
-        user_id: userId,
-        action: 'gdpr_data_export',
-        table_name: 'all',
-        record_id: userId,
-        metadata: {
-          exportedAt,
-          sectionsExported: Object.keys(exportData),
-          totalSections: Object.keys(exportData).length,
-        },
-      })
-      .then(({ error }) => {
-        if (error) console.warn('Audit log write failed (non-critical):', error.message);
-      });
-
-    // --- Send confirmation email (non-blocking) ---
-    if (userEmail) {
-      resend.emails
-        .send({
-          from: 'Elec-Mate <noreply@elec-mate.com>',
-          to: [userEmail],
-          subject: 'Your Elec-Mate data export',
-          html: `
-            <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; background: #111; color: #fff; padding: 32px; border-radius: 12px;">
-              <div style="margin-bottom: 24px;">
-                <span style="background: #FACC15; color: #000; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 14px;">⚡ Elec-Mate</span>
-              </div>
-              <h2 style="color: #fff; margin-bottom: 8px;">Your data export is ready</h2>
-              <p style="color: #aaa; margin-bottom: 24px;">
-                Your data export was requested on <strong style="color: #fff;">${new Date(exportedAt).toLocaleString('en-GB', { timeZone: 'Europe/London', dateStyle: 'long', timeStyle: 'short' })}</strong>.
-              </p>
-              <p style="color: #aaa;">
-                This export contains all personal data we hold about you, fulfilling your right of access under UK GDPR Article 15.
-              </p>
-              <div style="background: #1a1a1a; border: 1px solid #333; border-radius: 8px; padding: 16px; margin: 24px 0;">
-                <p style="color: #FACC15; margin: 0 0 8px; font-weight: bold;">⚠️ Security notice</p>
-                <p style="color: #aaa; margin: 0; font-size: 14px;">
-                  If you did not request this data export, please contact us immediately at 
-                  <a href="mailto:privacy@elec-mate.com" style="color: #FACC15;">privacy@elec-mate.com</a>.
-                  Your account may be at risk.
-                </p>
-              </div>
-              <p style="color: #666; font-size: 12px; margin-top: 32px;">
-                Elec-Mate Ltd · ICO Registration: ZB935897 · privacy@elec-mate.com
-              </p>
-            </div>
-          `,
-        })
-        .catch((err: unknown) => console.warn('Confirmation email failed (non-critical):', err));
+    // --- Files: newest first, signed in one call per bucket ---
+    const { data: fileRows } = await supabaseAdmin.rpc('export_user_files', { p_user: userId });
+    const allFiles = (fileRows ?? []) as ExportFile[];
+    const files = allFiles.slice(0, FILE_CAP);
+    const byBucket = new Map<string, ExportFile[]>();
+    for (const f of files) byBucket.set(f.bucket, [...(byBucket.get(f.bucket) ?? []), f]);
+    for (const [b, list] of byBucket) {
+      const { data: signed } = await supabaseAdmin.storage.from(b).createSignedUrls(
+        list.map((f) => f.path),
+        LINK_SECONDS
+      );
+      list.forEach((f, i) => (f.downloadUrl = signed?.[i]?.signedUrl ?? null));
     }
 
-    console.log(`✅ GDPR data export completed for user ${userId} — ${Object.keys(exportData).length} sections`);
+    // --- Build the ZIP, one table at a time ---
+    const zip = new ZipWriter();
+    const sections: SummarySection[] = [];
+    for (const table of sortTables(Object.keys(totals))) {
+      const { data: rows, error } = await supabaseAdmin.rpc('export_user_table', {
+        p_user: userId,
+        p_table: table,
+      });
+      if (error) throw new Error(`export_user_table(${table}): ${error.message}`);
+      const list = (rows ?? []) as Record<string, unknown>[];
+      if (!list.length) continue;
+      const csv = `spreadsheets/${sectionName(table).replace(/[\\/:*?"<>|]+/g, '-')}.csv`;
+      await zip.add(csv, toCsv(list));
+      await zip.add(`data/${table}.json`, JSON.stringify(list, null, 1));
+      sections.push({ table, rows: list.length, total: Number(totals[table]) || list.length, csv });
+    }
+    if (profile) await zip.add('spreadsheets/Your profile.csv', toCsv([profile]));
 
-    return new Response(JSON.stringify(fullExport), {
-      status: 200,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    await zip.add(
+      'data/_account.json',
+      JSON.stringify(
+        {
+          exportedAt,
+          exportVersion: '4.0',
+          userId,
+          dataController: {
+            name: 'Elec-Mate Ltd',
+            icoRegistration: 'ZB935897',
+            contact: 'info@elec-mate.com',
+          },
+          gdprNote:
+            'This export fulfils your right of access (UK GDPR Article 15) and right to data portability (Article 20).',
+          profile,
+          peerConversationsAsSupporter: supporterConversations ?? [],
+          tables: sections.map((s) => ({
+            table: s.table,
+            file: `data/${s.table}.json`,
+            rows: s.rows,
+            rowsHeld: s.total,
+          })),
+          files,
+          filesHeld: allFiles.length,
+          filesNote: 'Download links expire 7 days after the export was made.',
+        },
+        null,
+        2
+      )
+    );
+
+    const name = String(profile?.full_name ?? '').trim();
+    await zip.add(
+      'Read me first.html',
+      summaryHtml({ name, exportedAt, sections, files, filesTotal: allFiles.length })
+    );
+
+    const bytes = zip.finish();
+    const zipName = `elec-mate-data-${exportedAt.slice(0, 10)}.zip`;
+
+    // One export at a time — replace any earlier ZIP for this account.
+    if (existing?.length) {
+      await bucket.remove(existing.map((o: { name: string }) => `${userId}/${o.name}`));
+    }
+    const path = `${userId}/${zipName}`;
+    const up = await bucket.upload(path, bytes, { contentType: 'application/zip', upsert: true });
+    if (up.error) throw new Error(`upload: ${up.error.message}`);
+    const { data: signedZip, error: signError } = await bucket.createSignedUrl(path, LINK_SECONDS, {
+      download: zipName,
+    });
+    if (signError || !signedZip?.signedUrl) throw new Error('could not sign the download link');
+    const zipUrl = signedZip.signedUrl;
+
+    // --- Audit log ---
+    const { error: auditError } = await supabaseAdmin.from('security_audit_log').insert({
+      user_id: userId,
+      action: 'gdpr_data_export',
+      table_name: 'all',
+      record_id: userId,
+      metadata: {
+        exportedAt,
+        tables: sections.length,
+        rows: sections.reduce((s, x) => s + x.rows, 0),
+        files: allFiles.length,
+        zipBytes: bytes.length,
+      },
+    });
+    if (auditError) console.warn('Audit log write failed (non-critical):', auditError.message);
+
+    // --- Email the link ---
+    if (userEmail) {
+      const firstName = name.split(/\s+/)[0];
+      const when = new Date(exportedAt).toLocaleString('en-GB', {
+        timeZone: 'Europe/London',
+        dateStyle: 'long',
+        timeStyle: 'short',
+      });
+      const count = (t: string) => (Number(totals[t]) || 0).toLocaleString('en-GB');
+      const html = accountEmailHtml({
+        title: 'Your Elec-Mate data',
+        eyebrow: 'Your data',
+        heading: 'Your Elec-Mate data<br>is ready to download',
+        firstName: firstName || undefined,
+        paragraphs: [
+          `You asked for a copy of your data on <strong style="color:#0C1B2A;">${escapeHtml(when)}</strong>. Here it is — everything we hold about you and your work in Elec-Mate.`,
+        ],
+        panel: {
+          label: 'Download',
+          title: 'One ZIP file, ready to open',
+          body: 'Open <strong>Read me first</strong> inside for a summary. Every kind of record is a spreadsheet that opens in Excel, and there are links to your photos and documents. This link works for 7 days.',
+          button: { text: 'Download your data', url: zipUrl },
+        },
+        facts: [
+          { k: 'Certificates and reports', v: count('reports') },
+          { k: 'Quotes', v: count('quotes') },
+          { k: 'Invoices', v: count('invoices') },
+          { k: 'Clients', v: count('customers') },
+          { k: 'Photos and documents', v: allFiles.length.toLocaleString('en-GB') },
+          {
+            k: 'File size',
+            v: `${Math.max(0.1, bytes.length / 1048576).toFixed(1)} MB`,
+          },
+        ],
+        note: {
+          title: 'Didn’t ask for this?',
+          body: 'Reply to this email straight away and change your password — someone may have access to your account.',
+        },
+      });
+      try {
+        await resend.emails.send({
+          from: 'Elec-Mate <founder@elec-mate.com>',
+          to: [userEmail],
+          subject: 'Your Elec-Mate data is ready to download',
+          html,
+        });
+      } catch (err) {
+        console.warn('Export email failed (non-critical):', err);
+      }
+    }
+
+    console.log(
+      `✅ GDPR data export for ${userId}: ${sections.length} tables, ${allFiles.length} files, ${(bytes.length / 1048576).toFixed(1)} MB`
+    );
+
+    // Older app builds save this response as a .json file, so it has to read
+    // sensibly on its own — they'll be in use for months.
+    return json({
+      message:
+        'Your Elec-Mate data is in a ZIP file. Download it from zipUrl below — the link works for 7 days, and we have emailed it to you too.',
+      zipUrl,
+      zipName,
+      exportedAt,
+      tables: sections.length,
+      files: allFiles.length,
     });
   } catch (error) {
-    await captureException(error, { functionName: 'user-data-export', requestUrl: req.url, requestMethod: req.method });
+    await captureException(error, {
+      functionName: 'user-data-export',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
     console.error('Data export error:', error);
-    return new Response(
-      JSON.stringify({ error: error instanceof Error ? error.message : 'Export failed' }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    return json(
+      {
+        error:
+          'We couldn’t build your export just now. Please try again in a few minutes, or email info@elec-mate.com and we’ll send it to you.',
+      },
+      500
     );
   }
 });

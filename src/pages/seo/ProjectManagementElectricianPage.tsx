@@ -47,7 +47,7 @@ export default function ProjectManagementElectricianPage() {
       heroTitle={
         <>
           Project Management
-          <span className="block text-yellow-400 mt-1">For Electrical Contractors</span>
+          <span className="block text-elec-yellow mt-1">For Electrical Contractors</span>
         </>
       }
       heroSubtitle="Juggling multiple jobs, coordinating staff, tracking materials, and keeping clients informed — all from your phone. Elec-Mate's project management tools are built for how electricians actually work, replacing spreadsheets, whiteboards, and memory with a system that keeps everything on track."
@@ -81,7 +81,7 @@ export default function ProjectManagementElectricianPage() {
                 return visits.
               </p>
               <p>
-                <strong className="text-yellow-400">The cost of poor project management:</strong> A
+                <strong className="text-elec-yellow">The cost of poor project management:</strong> A
                 missed material delivery delays a job by a day, costing you a day's revenue (£250 to
                 £350) plus the client relationship damage. A double-booked operative means one
                 client gets let down. A job that overruns because nobody spotted the delay early
@@ -113,13 +113,13 @@ export default function ProjectManagementElectricianPage() {
                 overruns.
               </p>
               <p>
-                <strong className="text-yellow-400">Calendar view:</strong> See all your jobs on a
+                <strong className="text-elec-yellow">Calendar view:</strong> See all your jobs on a
                 day, week, or month view. Colour-coded by job type or status (quoted, confirmed, in
                 progress, complete). Drag and drop to reschedule. Tap a job to see full details
                 including address, scope, materials, and contact information.
               </p>
               <p>
-                <strong className="text-yellow-400">Time estimation:</strong> Based on your
+                <strong className="text-elec-yellow">Time estimation:</strong> Based on your
                 historical data (tracked through the{' '}
                 <SEOInternalLink href="/tools/job-profitability-calculator">
                   job profitability calculator
@@ -129,13 +129,13 @@ export default function ProjectManagementElectricianPage() {
                 slot, and a 2-hour EICR should not block out a full day.
               </p>
               <p>
-                <strong className="text-yellow-400">Travel time:</strong> The scheduler accounts for
+                <strong className="text-elec-yellow">Travel time:</strong> The scheduler accounts for
                 travel between jobs. Two jobs on opposite sides of town with only 30 minutes between
                 them is a recipe for lateness and stress. The scheduler flags unrealistic gaps and
                 suggests reordering to minimise travel.
               </p>
               <p>
-                <strong className="text-yellow-400">Recurring work:</strong> Set up recurring jobs
+                <strong className="text-elec-yellow">Recurring work:</strong> Set up recurring jobs
                 for regular clients — monthly emergency lighting tests, annual EICR inspections,
                 quarterly PAT testing rounds. These populate your calendar automatically so you
                 never forget a regular booking.
@@ -161,21 +161,21 @@ export default function ProjectManagementElectricianPage() {
                 availability — while keeping everyone productively busy without overloading anyone.
               </p>
               <p>
-                <strong className="text-yellow-400">Skills matrix:</strong> Not all electricians are
+                <strong className="text-elec-yellow">Skills matrix:</strong> Not all electricians are
                 interchangeable. One might have EV charger qualifications, another might specialise
                 in fire alarm systems, and your apprentice can only work under supervision.
                 Elec-Mate tracks qualifications and skills for each team member so you can see at a
                 glance who is qualified for each job.
               </p>
               <p>
-                <strong className="text-yellow-400">Availability view:</strong> See who is available
+                <strong className="text-elec-yellow">Availability view:</strong> See who is available
                 on any given day. Track holidays, training days, sick days, and existing
                 commitments. Spot gaps in coverage before they become problems — if both your EV
                 charger-qualified sparks are on holiday the same week and you have an EV install
                 booked, you need to know now, not the night before.
               </p>
               <p>
-                <strong className="text-yellow-400">Utilisation tracking:</strong> Monitor how much
+                <strong className="text-elec-yellow">Utilisation tracking:</strong> Monitor how much
                 of each operative's time is billable versus non-billable. Low utilisation means
                 either insufficient work (a sales problem) or too much downtime between jobs (a
                 scheduling problem). Use the{' '}
@@ -199,20 +199,20 @@ export default function ProjectManagementElectricianPage() {
                 returns, delays, and frustrated clients.
               </p>
               <p>
-                <strong className="text-yellow-400">Material lists per job:</strong> When you create
+                <strong className="text-elec-yellow">Material lists per job:</strong> When you create
                 a quote in Elec-Mate, the material list is saved. When the quote is accepted, the
                 materials move to a procurement list. You can see all materials needed across all
                 upcoming jobs, consolidated into a single order for your wholesaler — reducing
                 delivery charges and ensuring you have everything before you start.
               </p>
               <p>
-                <strong className="text-yellow-400">Stock awareness:</strong> Track what you carry
+                <strong className="text-elec-yellow">Stock awareness:</strong> Track what you carry
                 in your van as standard stock (common accessories, cable, fixings) versus
                 job-specific materials that need ordering. When standard stock runs low, Elec-Mate
                 flags it so you can reorder before you run out on site.
               </p>
               <p>
-                <strong className="text-yellow-400">Cost tracking:</strong> Every material purchase
+                <strong className="text-elec-yellow">Cost tracking:</strong> Every material purchase
                 is logged against a job, feeding into the{' '}
                 <SEOInternalLink href="/tools/job-profitability-calculator">
                   profitability calculator
@@ -246,21 +246,21 @@ export default function ProjectManagementElectricianPage() {
                 unhappy, and recovery options are limited and expensive.
               </p>
               <p>
-                <strong className="text-yellow-400">Status tracking:</strong> Each job moves through
+                <strong className="text-elec-yellow">Status tracking:</strong> Each job moves through
                 stages: quoted, accepted, materials ordered, in progress (first fix, second fix,
                 testing), complete, invoiced, paid. A quick glance at your dashboard shows the
                 status of every active job. Jobs that have been "in progress" longer than the
                 scheduled duration are automatically flagged.
               </p>
               <p>
-                <strong className="text-yellow-400">Photo progress logs:</strong> Take photos
+                <strong className="text-elec-yellow">Photo progress logs:</strong> Take photos
                 directly within Elec-Mate as work progresses. These serve multiple purposes:
                 evidence for your certification records, client updates showing progress, dispute
                 resolution if issues arise later, and training material for apprentices. Photos are
                 automatically tagged with the job, date, and location.
               </p>
               <p>
-                <strong className="text-yellow-400">Checklists:</strong> Create checklists for each
+                <strong className="text-elec-yellow">Checklists:</strong> Create checklists for each
                 job type — first fix items, second fix items, testing requirements, handover
                 documentation. Operatives tick off items as they complete them, giving you
                 visibility of progress without needing to visit every site.
@@ -280,21 +280,21 @@ export default function ProjectManagementElectricianPage() {
                 calls and dramatically improves client satisfaction.
               </p>
               <p>
-                <strong className="text-yellow-400">Automated notifications:</strong> Elec-Mate can
+                <strong className="text-elec-yellow">Automated notifications:</strong> Elec-Mate can
                 send automatic updates to clients at key stages — quote accepted confirmation, job
                 scheduled confirmation (with date and estimated duration), "on my way" notification
                 on the morning of the job, job completed notification, and invoice sent. Each
                 message is professional, branded, and sent without you lifting a finger.
               </p>
               <p>
-                <strong className="text-yellow-400">Progress sharing:</strong> For longer jobs
+                <strong className="text-elec-yellow">Progress sharing:</strong> For longer jobs
                 (rewires, commercial fit-outs), share progress photos with the client through
                 Elec-Mate. This builds trust, reduces anxiety, and creates a record that the client
                 can refer to. It also demonstrates professionalism that sets you apart from
                 competitors who disappear for a week and then turn up with a bill.
               </p>
               <p>
-                <strong className="text-yellow-400">Post-completion follow-up:</strong> After the
+                <strong className="text-elec-yellow">Post-completion follow-up:</strong> After the
                 job, Elec-Mate can send an automatic follow-up asking for feedback and inviting a
                 Google review. Positive reviews drive new business. The{' '}
                 <SEOInternalLink href="/tools/customer-management-electrician">
@@ -434,7 +434,7 @@ export default function ProjectManagementElectricianPage() {
         },
       ]}
       ctaHeading="Manage Every Job Like a Professional"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to schedule jobs, track materials, manage staff, and keep clients happy. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to schedule jobs, track materials, manage staff, and keep clients happy. 7-day free trial, cancel anytime."
       extraSchemas={[
         {
           '@type': 'SoftwareApplication',

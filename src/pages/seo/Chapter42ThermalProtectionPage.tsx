@@ -250,7 +250,7 @@ const sections = [
           <h4 className="font-bold text-white mb-3">Fire-Stopping Methods</h4>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Intumescent sealant</strong> — expands when exposed to heat, sealing the gap
                 around the cable. Suitable for small penetrations with a few cables. Must be applied
@@ -258,7 +258,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire-rated mortar or cement</strong> — used for larger penetrations.
                 Proprietary fire-stopping mortars are tested and certified for specific fire
@@ -266,7 +266,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire pillows</strong> — intumescent pillows placed in cable trays or
                 trunking passing through fire barriers. They expand in a fire to seal the tray.
@@ -274,7 +274,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Proprietary fire collars and sleeves</strong> — pre-formed fire-stopping
                 devices that clamp around the cable or pipe penetration. Quick to install and
@@ -308,7 +308,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>When fire hoods are needed</strong> — fire hoods are required for recessed
                 luminaires installed in ceilings that form part of a fire barrier. This includes
@@ -318,7 +318,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What a fire hood does</strong> — the fire hood is a metal or intumescent
                 enclosure that sits above the downlighter in the ceiling void. In normal operation,
@@ -328,7 +328,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire hood + thermal insulation</strong> — if thermal insulation (loft
                 insulation) is present above the ceiling, the fire hood also prevents insulation
@@ -338,7 +338,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>LED downlighters</strong> — modern LED downlighters generate significantly
                 less heat than halogen. Some LED downlighters are fire-rated in themselves (with an
@@ -408,7 +408,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <p className="text-white text-sm">
               <strong>Practical tip:</strong> In loft spaces with deep insulation (300mm+), clip
               cables to the top of the joists or run them on standoff clips to keep them above the
@@ -444,7 +444,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Flame propagation</strong> — cables installed in escape routes must not
                 propagate flame. Standard PVC-insulated cables (6242Y T&E) meet the single-cable
@@ -455,7 +455,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable fixings</strong> — cable fixings in escape routes must be
                 fire-resistant. Standard plastic cable clips soften and fail in a fire, allowing
@@ -465,7 +465,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smoke and toxic fumes</strong> — in higher-risk locations (hospitals, care
                 homes, high-rise buildings), low-smoke halogen-free (LSOH) cables may be specified
@@ -500,7 +500,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Metal consumer units</strong> — all new domestic consumer units must comply
                 with BS EN 61439-3 and have a non-combustible (metal) enclosure. Existing plastic
@@ -509,7 +509,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Non-domestic enclosures</strong> — in non-domestic premises, the enclosure
                 material depends on the location and fire risk. Distribution boards in areas with
@@ -519,7 +519,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Junction boxes and accessories</strong> — junction boxes behind combustible
                 surfaces (such as timber-framed walls) should be metal or mounted in a
@@ -544,7 +544,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable routing</strong> — identify thermal insulation locations before
                 routing cables. Clip cables to joist tops or use standoff clips in insulated loft
@@ -552,7 +552,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire-stopping</strong> — fire-stop every cable penetration through a
                 fire-rated building element. Use tested and certified products. Photograph the
@@ -561,7 +561,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Downlighters</strong> — install fire hoods on all recessed downlighters in
                 fire-rated ceilings unless the luminaire itself is fire-rated. Check the IC rating
@@ -569,14 +569,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer units</strong> — use metal consumer units in all domestic
                 installations. Ensure adequate clearance from combustible materials around the unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Escape routes</strong> — use metal cable clips in escape routes. Ensure
                 fire-stopping at all penetrations through corridor and stairway walls. Consider LSOH
@@ -612,7 +612,7 @@ export default function Chapter42ThermalProtectionPage() {
       badgeIcon={BookOpen}
       heroTitle={
         <>
-          Chapter 42: <span className="text-yellow-400">Protection Against Thermal Effects</span>
+          Chapter 42: <span className="text-elec-yellow">Protection Against Thermal Effects</span>
         </>
       }
       heroSubtitle="Electrical faults are a leading cause of domestic fires. Chapter 42 of BS 7671 sets out the requirements for fire protection from electrical equipment, fire-stopping cable penetrations, fire hoods for downlighters, cable derating in insulation, and wiring in escape routes."
@@ -623,7 +623,7 @@ export default function Chapter42ThermalProtectionPage() {
       faqHeading="Frequently Asked Questions About Chapter 42 and Thermal Effects"
       relatedPages={relatedPages}
       ctaHeading="Size Cables with Correct Derating and Document Fire Protection"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing with Ci derating, on-site EIC/EICR certificates, and professional fire protection documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing with Ci derating, on-site EIC/EICR certificates, and professional fire protection documentation. 7-day free trial, cancel anytime."
     />
   );
 }

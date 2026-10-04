@@ -104,8 +104,16 @@ const HUBS: HubDef[] = [
   },
 ];
 
+/** The hub cards this role can see — the home-screen customise sheet lists the same ones. */
+export function hubsForRole(role: string | null | undefined) {
+  const r = role || 'electrician';
+  return HUBS.filter((h) => h.roles.includes(r)).map((h) => ({ id: h.id, title: h.title }));
+}
+
 interface EditorialHubGridProps {
   label?: string;
+  /** Opens the in-place customise sheet. Without it, falls back to Settings. */
+  onCustomise?: () => void;
 }
 
 /**
@@ -121,7 +129,7 @@ interface EditorialHubGridProps {
  * HubToolGrid, so a hub card here is the same object as a tool card anywhere
  * else in the app.
  */
-export function EditorialHubGrid({ label = 'Your hubs' }: EditorialHubGridProps) {
+export function EditorialHubGrid({ label = 'Your hubs', onCustomise }: EditorialHubGridProps) {
   const navigate = useNavigate();
   const { profile } = useAuth();
   const data = useSharedDashboardData();
@@ -166,7 +174,7 @@ export function EditorialHubGrid({ label = 'Your hubs' }: EditorialHubGridProps)
               a 13px tap target on a phone. */}
           <button
             type="button"
-            onClick={() => navigate('/settings?tab=preferences')}
+            onClick={() => (onCustomise ? onCustomise() : navigate('/settings?tab=preferences'))}
             className="-my-2 -mr-2 flex h-11 shrink-0 items-center px-2 text-[12px] font-semibold text-elec-yellow touch-manipulation"
           >
             Customise →

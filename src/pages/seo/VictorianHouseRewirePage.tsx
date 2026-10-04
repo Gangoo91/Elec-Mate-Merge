@@ -212,7 +212,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Knob-and-tube (pre-1920)</strong> — individual conductors run through
                 ceramic knobs nailed to joists and through ceramic tubes at penetration points. No
@@ -222,7 +222,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lead-sheathed and VIR (1900s–1950s)</strong> — Vulcanised India Rubber (VIR)
                 insulated cables with a lead sheath or woven braid outer covering. Often run in
@@ -232,7 +232,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Early PVC (1950s–1966)</strong> — PVC-insulated cables began appearing in UK
                 properties from the early 1950s. Pre-1966 PVC wiring is significantly better than
@@ -242,7 +242,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Round pin sockets</strong> — the presence of 5A or 15A round pin sockets (BS
                 546) is a reliable indicator that the wiring has not been modernised. Round pin
@@ -324,7 +324,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Chasing masonry</strong> — cutting cable channels (chases) into Victorian
                 brickwork is significantly harder and more time-consuming than chasing modern
@@ -334,7 +334,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Making good</strong> — once cables are chased in and fixed, the channels
                 must be filled and made good. In a Victorian property with original horsehair
@@ -344,7 +344,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Surface mounting</strong> — in some areas (loft spaces, garages, utility
                 rooms, and areas that will be covered by kitchen units) cables can be run in surface
@@ -353,7 +353,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Floor voids</strong> — Victorian properties with suspended timber ground
                 floors offer an alternative route for cables running at low level. Socket outlet
@@ -437,7 +437,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Two-bedroom Victorian terrace</strong> — £3,000 to £5,000. Typically 10 to
                 14 circuits. Solid wall construction adds 1 to 2 days compared to a modern
@@ -445,7 +445,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom Victorian terrace</strong> — £4,500 to £7,000. The most common
                 Victorian property type. Double-fronted Victorians may fall at the higher end of
@@ -453,7 +453,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Four or five-bedroom Victorian townhouse</strong> — £6,000 to £12,000+.
                 Three-storey properties with multiple reception rooms, large kitchens, and original
@@ -461,7 +461,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacement only</strong> — £400 to £900. Replaces the fuse
                 board with a modern metal-clad unit with RCD protection, but does not address the
@@ -553,7 +553,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EICR First — Then Quote the Rewire</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -588,7 +588,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage Victorian house rewires with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion, professional quoting, and job management."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion, professional quoting, and job management."
           icon={FileCheck2}
         />
       </>
@@ -614,7 +614,7 @@ export default function VictorianHouseRewirePage() {
       heroTitle={
         <>
           Rewiring a Victorian House:{' '}
-          <span className="text-yellow-400">Costs, Hazards & What to Expect</span>
+          <span className="text-elec-yellow">Costs, Hazards & What to Expect</span>
         </>
       }
       heroSubtitle="Victorian properties built before 1901 often contain rubber-insulated wiring, lead-sheathed cables, knob-and-tube systems, and cast iron fuse boards. This guide covers the real dangers, the challenges of rewiring through solid masonry walls, how to preserve cornicing and period features, and rewire costs of £3,000 to £8,000 or more."
@@ -625,7 +625,7 @@ export default function VictorianHouseRewirePage() {
       faqHeading="Frequently Asked Questions About Victorian House Rewiring"
       relatedPages={relatedPages}
       ctaHeading="Complete Victorian House EICRs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -221,7 +221,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Conductor position:</strong> For best accuracy, centre the conductor in the
                 jaw opening. Conductors pressed against the jaw wall can read 1–2% low. Modern
@@ -230,7 +230,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Jaw gap:</strong> Ensure the jaw closes fully and cleanly. Any debris,
                 paint, or damage to the jaw mating surfaces creates a gap in the magnetic circuit
@@ -238,7 +238,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Low-current accuracy:</strong> At currents below 10% of full scale, accuracy
                 degrades significantly. A 400A range meter measuring 5A may have errors exceeding
@@ -247,7 +247,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Adjacent conductors:</strong> Strong magnetic fields from adjacent current-
                 carrying conductors can add to the clamp's reading. Where possible, keep the
@@ -256,7 +256,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Harmonics and waveform:</strong> Use a True RMS clamp meter for circuits
                 with non-linear loads. Average-sensing clamps read incorrectly on distorted
@@ -280,7 +280,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Load measurement on live circuits:</strong> Verify actual current draw
                 against the design value. Identify overloaded circuits before they cause breaker
@@ -288,7 +288,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-phase load balance:</strong> Measure current on each phase of a
                 three-phase distribution board. Identify imbalanced loading and redistribute
@@ -296,7 +296,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Motor starting current:</strong> Many clamp meters have a peak hold function
                 that captures the brief but high starting current of an induction motor. Useful for
@@ -304,7 +304,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Neutral current in three-phase systems:</strong> In a system with
                 significant harmonic loading, the neutral conductor may carry current exceeding the
@@ -312,7 +312,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth/leakage current:</strong> Clamp around all circuit conductors together
                 to measure imbalance (leakage current). Used for RCD pre-testing and investigating
@@ -502,7 +502,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Load Survey Documentation</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -545,7 +545,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Document load measurements and certify installations"
-          description="Join 1,600+ UK electricians using Elec-Mate for load survey documentation, EIC and EICR certification, and AI fault-finding support. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for load survey documentation, EIC and EICR certification, and AI fault-finding support. 7-day free trial."
           icon={Wrench}
         />
       </>
@@ -571,7 +571,7 @@ export default function ClampMeterGuideElectriciansPage() {
       heroTitle={
         <>
           Clamp Meter Guide for Electricians:{' '}
-          <span className="text-yellow-400">AC vs DC, Accuracy, and Best Meters 2026</span>
+          <span className="text-elec-yellow">AC vs DC, Accuracy, and Best Meters 2026</span>
         </>
       }
       heroSubtitle="Everything UK electricians need to know about clamp meters — how inductive and Hall-effect clamps work, accuracy limitations, harmonic assessment, leakage current pre-testing, and the best clamp meters for professional electrical work in 2026."
@@ -582,7 +582,7 @@ export default function ClampMeterGuideElectriciansPage() {
       faqHeading="Frequently Asked Questions About Clamp Meters for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Record Load Measurements and Certify Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for load survey documentation, EIC and EICR certificates, and AI fault-finding support on site. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for load survey documentation, EIC and EICR certificates, and AI fault-finding support on site. 7-day free trial, cancel anytime."
     />
   );
 }

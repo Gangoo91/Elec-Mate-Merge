@@ -147,7 +147,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insulation degradation</strong> — moisture reduces cable insulation
                 resistance (IR), potentially to below 1M\u03a9 (the BS 7671 Table 64 minimum).
@@ -156,7 +156,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Terminal corrosion</strong> — moisture on copper conductors causes oxidation
                 and electrochemical corrosion, increasing contact resistance and generating
@@ -164,7 +164,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tracking and arcing</strong> — moisture on the surface of insulation in
                 consumer units and accessories creates conductive tracks that can cause arcing,
@@ -195,7 +195,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pre-works EICR</strong> — documents the condition of the installation before
                 any disturbance. Identifies cables at risk, existing defects, and establishes who is
@@ -204,7 +204,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Post-works EICR</strong> — confirms the installation is satisfactory after
                 all remediation and electrical reinstatement work is complete. Provides the landlord
@@ -235,28 +235,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>AD1 — negligible</strong> (standard dry indoor location): standard IP2X
                 accessories are sufficient. Normal domestic wiring.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>AD2 — free fall of water</strong> (damp rooms, condensation): IP44
                 accessories required. Applicable to damp basements and cellars with rising damp.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>AD3 — spraying water</strong>: IP55 accessories required. Applicable to
                 outdoor areas or rooms subject to hosing-down.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>AD6 — waves</strong> / AD7 — immersion: IP67/IP68 required. Applicable to
                 areas subject to periodic flooding.
@@ -279,7 +279,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Always replace cables that were buried in re-plastered walls.</strong>{' '}
                 Cables buried under new plaster cannot be easily inspected or replaced in the
@@ -292,7 +292,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable assessment after damp exposure</strong> — test IR at 500V DC on any
                 cables that have been exposed to moisture. Below 1M\u03a9 confirms replacement is
@@ -301,7 +301,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Age of existing cables</strong> — cables installed before 2004 use the old
                 (pre-harmonised) colour code (red/black). Any exposed and replaced cables should use
@@ -328,7 +328,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pre-works meeting</strong> — agree cable locations with the damp contractor
                 before drilling begins. Mark cable positions with chalk or tape on the wall surface.
@@ -337,7 +337,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sequence of works</strong> — ideally: (1) EICR; (2) electrician strips out
                 cables from affected walls; (3) damp contractor installs DPC; (4) plasterer
@@ -362,7 +362,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical Safety Standards Regulations 2020</strong> — landlords must have
                 a valid EICR every 5 years. C1 or C2 defects (including damp- related damage) must
@@ -370,7 +370,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Housing Health and Safety Rating System (HHSRS)</strong> — damp is a
                 category 1 hazard (requiring immediate remedy) if it presents a risk to health.
@@ -380,7 +380,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Renters Reform</strong> — the Renters Reform Bill, when enacted, will extend
                 the Decent Homes Standard to the private rented sector, further tightening
@@ -413,7 +413,7 @@ export default function ElectricalDampProofingPage() {
       heroTitle={
         <>
           Electrical Work in Damp Buildings{' '}
-          <span className="text-yellow-400">— DPC & EICR Guide</span>
+          <span className="text-elec-yellow">— DPC & EICR Guide</span>
         </>
       }
       heroSubtitle="A complete guide to electrical issues in damp buildings — moisture damage, EICR requirements before and after DPC injection, IP ratings under BS 7671 Chapter 52, cable replacement, and landlord obligations."

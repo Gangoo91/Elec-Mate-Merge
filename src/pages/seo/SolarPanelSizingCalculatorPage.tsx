@@ -44,7 +44,7 @@ export default function SolarPanelSizingCalculatorPage() {
       badgeIcon={Sun}
       heroTitle={
         <>
-          <span className="text-yellow-400">Solar Panel Sizing Calculator</span> — Design PV Systems
+          <span className="text-elec-yellow">Solar Panel Sizing Calculator</span> — Design PV Systems
           for UK Roofs
         </>
       }
@@ -140,23 +140,23 @@ export default function SolarPanelSizingCalculatorPage() {
                 annual generation. Working from roof space:
               </p>
               <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4 text-center">
-                <p className="text-xl font-mono font-bold text-yellow-400">
+                <p className="text-xl font-mono font-bold text-elec-yellow">
                   Number of panels = Available area / Panel area
                 </p>
-                <p className="text-xl font-mono font-bold text-yellow-400 mt-2">
+                <p className="text-xl font-mono font-bold text-elec-yellow mt-2">
                   System kWp = Number of panels x Panel wattage / 1000
                 </p>
                 <div className="mt-3 text-left max-w-md mx-auto space-y-1 text-sm text-white">
                   <p>
-                    <strong className="text-yellow-400">Standard panel size:</strong> approximately
+                    <strong className="text-elec-yellow">Standard panel size:</strong> approximately
                     1.7m x 1.0m (1.7m²)
                   </p>
                   <p>
-                    <strong className="text-yellow-400">Typical panel wattage:</strong> 400W
+                    <strong className="text-elec-yellow">Typical panel wattage:</strong> 400W
                     (0.4kWp)
                   </p>
                   <p>
-                    <strong className="text-yellow-400">10 panels:</strong> 10 x 0.4 = 4.0kWp system
+                    <strong className="text-elec-yellow">10 panels:</strong> 10 x 0.4 = 4.0kWp system
                   </p>
                 </div>
               </div>
@@ -187,23 +187,23 @@ export default function SolarPanelSizingCalculatorPage() {
                 </p>
                 <ul className="space-y-1 text-white text-sm">
                   <li>
-                    <strong className="text-yellow-400">South (180°):</strong> 100% — optimal
+                    <strong className="text-elec-yellow">South (180°):</strong> 100% — optimal
                     orientation
                   </li>
                   <li>
-                    <strong className="text-yellow-400">South-east / South-west:</strong> 95-97% —
+                    <strong className="text-elec-yellow">South-east / South-west:</strong> 95-97% —
                     minimal loss
                   </li>
                   <li>
-                    <strong className="text-yellow-400">East (90°) / West (270°):</strong> 85-90% —
+                    <strong className="text-elec-yellow">East (90°) / West (270°):</strong> 85-90% —
                     good for spreading generation
                   </li>
                   <li>
-                    <strong className="text-yellow-400">North-east / North-west:</strong> 65-75% —
+                    <strong className="text-elec-yellow">North-east / North-west:</strong> 65-75% —
                     reduced but viable
                   </li>
                   <li>
-                    <strong className="text-yellow-400">North (0°):</strong> 55-65% — generally not
+                    <strong className="text-elec-yellow">North (0°):</strong> 55-65% — generally not
                     recommended
                   </li>
                 </ul>
@@ -240,24 +240,24 @@ export default function SolarPanelSizingCalculatorPage() {
                 </p>
                 <ul className="space-y-1 text-white text-sm">
                   <li>
-                    <strong className="text-yellow-400">South-west England:</strong> 1,000-1,050
+                    <strong className="text-elec-yellow">South-west England:</strong> 1,000-1,050
                     kWh/kWp
                   </li>
                   <li>
-                    <strong className="text-yellow-400">South-east England:</strong> 950-1,000
+                    <strong className="text-elec-yellow">South-east England:</strong> 950-1,000
                     kWh/kWp
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Midlands:</strong> 880-930 kWh/kWp
+                    <strong className="text-elec-yellow">Midlands:</strong> 880-930 kWh/kWp
                   </li>
                   <li>
-                    <strong className="text-yellow-400">North England:</strong> 830-880 kWh/kWp
+                    <strong className="text-elec-yellow">North England:</strong> 830-880 kWh/kWp
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Scotland:</strong> 780-850 kWh/kWp
+                    <strong className="text-elec-yellow">Scotland:</strong> 780-850 kWh/kWp
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Northern Ireland:</strong> 800-870 kWh/kWp
+                    <strong className="text-elec-yellow">Northern Ireland:</strong> 800-870 kWh/kWp
                   </li>
                 </ul>
               </div>
@@ -308,19 +308,19 @@ export default function SolarPanelSizingCalculatorPage() {
                 <p className="font-semibold text-white mb-3">Typical battery sizing guidance:</p>
                 <ul className="space-y-1 text-white text-sm">
                   <li>
-                    <strong className="text-yellow-400">Small system (2-3kWp):</strong> 3-5kWh
+                    <strong className="text-elec-yellow">Small system (2-3kWp):</strong> 3-5kWh
                     battery
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Medium system (3-5kWp):</strong> 5-10kWh
+                    <strong className="text-elec-yellow">Medium system (3-5kWp):</strong> 5-10kWh
                     battery
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Large system (5-8kWp):</strong> 10-13kWh
+                    <strong className="text-elec-yellow">Large system (5-8kWp):</strong> 10-13kWh
                     battery
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Very large (8kWp+):</strong> 13-20kWh or
+                    <strong className="text-elec-yellow">Very large (8kWp+):</strong> 13-20kWh or
                     multiple units
                   </li>
                 </ul>
@@ -362,7 +362,7 @@ export default function SolarPanelSizingCalculatorPage() {
               </p>
               <div className="grid gap-4 sm:grid-cols-2 my-4">
                 <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
-                  <h4 className="font-bold text-yellow-400 text-lg mb-2">G98 — Simplified</h4>
+                  <h4 className="font-bold text-elec-yellow text-lg mb-2">G98 — Simplified</h4>
                   <p className="text-white text-sm mb-2">For systems up to and including:</p>
                   <ul className="space-y-1 text-white text-sm">
                     <li>3.68kW per phase (single-phase)</li>
@@ -374,7 +374,7 @@ export default function SolarPanelSizingCalculatorPage() {
                   </p>
                 </div>
                 <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
-                  <h4 className="font-bold text-yellow-400 text-lg mb-2">G99 — Full Application</h4>
+                  <h4 className="font-bold text-elec-yellow text-lg mb-2">G99 — Full Application</h4>
                   <p className="text-white text-sm mb-2">For systems exceeding:</p>
                   <ul className="space-y-1 text-white text-sm">
                     <li>3.68kW per phase (single-phase)</li>
@@ -435,7 +435,7 @@ export default function SolarPanelSizingCalculatorPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
                 <ul className="space-y-2 text-white text-sm">
                   <li>
-                    <strong className="text-yellow-400">
+                    <strong className="text-elec-yellow">
                       (a) Double or reinforced insulation (Section 412):
                     </strong>{' '}
                     DC wiring, enclosures, and equipment use double insulation or reinforced
@@ -443,7 +443,7 @@ export default function SolarPanelSizingCalculatorPage() {
                     earthing.
                   </li>
                   <li>
-                    <strong className="text-yellow-400">(b) SELV or PELV (Section 414):</strong> The
+                    <strong className="text-elec-yellow">(b) SELV or PELV (Section 414):</strong> The
                     DC side is arranged so that voltage is maintained within extra-low voltage
                     limits. This is only practicable for very small systems.
                   </li>
@@ -474,27 +474,27 @@ export default function SolarPanelSizingCalculatorPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
                 <ul className="space-y-2 text-white text-sm">
                   <li>
-                    <strong className="text-yellow-400">Insulation resistance (IR) test:</strong>{' '}
+                    <strong className="text-elec-yellow">Insulation resistance (IR) test:</strong>{' '}
                     Each string tested at 500V DC between live conductors and earth. Acceptance
                     criterion: ≥1MΩ (per PWI acceptance criteria for PV strings).
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Open-circuit voltage (Voc) check:</strong>{' '}
+                    <strong className="text-elec-yellow">Open-circuit voltage (Voc) check:</strong>{' '}
                     Measure the open-circuit voltage of each string and compare against the expected
                     value calculated from the panel datasheets and site temperature. A significant
                     deviation indicates a wiring fault or damaged panel.
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Polarity check:</strong> Verify correct
+                    <strong className="text-elec-yellow">Polarity check:</strong> Verify correct
                     polarity of all PV string connections, including MC4 connectors, before
                     connecting to the inverter. Reversed polarity can damage the inverter.
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Earth continuity:</strong> Verify continuity
+                    <strong className="text-elec-yellow">Earth continuity:</strong> Verify continuity
                     of all protective bonding conductors (dead test) prior to energisation.
                   </li>
                   <li>
-                    <strong className="text-yellow-400">AC output verification:</strong> Commission
+                    <strong className="text-elec-yellow">AC output verification:</strong> Commission
                     the inverter per manufacturer instructions and verify AC output voltage and
                     frequency are within supply limits.
                   </li>
@@ -665,7 +665,7 @@ export default function SolarPanelSizingCalculatorPage() {
         },
       ]}
       ctaHeading="Design solar PV systems with precision"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for solar sizing, cable calculations, and certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for solar sizing, cable calculations, and certification. 7-day free trial, cancel anytime."
       toolPath="/tools/solar-panel-sizing-calculator"
     />
   );

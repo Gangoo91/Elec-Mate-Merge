@@ -222,7 +222,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Permitted development (Class A, Part 2, Schedule 2, GPDO 2015)</strong>— EV
                 charge points on or within the curtilage of non-domestic buildings are generally
@@ -232,7 +232,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>When planning permission is required</strong> — listed buildings and their
                 curtilage, conservation areas (for some types of charge point), car park canopy
@@ -241,7 +241,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part S compliance</strong> — new non-residential buildings and major
                 renovations must comply with Part S of the Building Regulations. This requires
@@ -251,7 +251,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DNO notification</strong> — installations above a certain size (typically
                 above 3.68kW for single chargers, or multiple chargers) may require notification to
@@ -278,7 +278,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CT clamp monitoring</strong> — current transformers on the incoming supply
                 measure total building load. The load management system subtracts this from the
@@ -287,7 +287,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Priority charging</strong> — most commercial load management systems allow
                 priority rules to be configured. Fleet vehicles that need to depart at a specific
@@ -296,7 +296,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Network management portals</strong> — networked charge points (Pod Point
                 Pro, Easee Charge, Wallbox Commander) provide fleet managers with a web portal
@@ -306,7 +306,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Battery storage integration</strong> — large fleet charging installations
                 can benefit from behind-the-meter battery storage. Batteries charge during off-peak
@@ -333,7 +333,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Single-phase 7.4kW</strong> — suitable for car-park employee charging where
                 vehicles park for 6–10 hours. A 7.4kW charger adds approximately 35–40 miles of
@@ -343,7 +343,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-phase 22kW</strong> — ideal for fleet vehicles with high daily mileage
                 requiring rapid turnaround. Delivers up to 22kW (subject to the vehicle's onboard
@@ -353,7 +353,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Vehicle onboard charger limits</strong> — most current passenger EVs are
                 limited to 7.4kW AC (single-phase). Installing a 22kW charger for these vehicles
@@ -363,7 +363,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cost comparison</strong> — a single-phase 7.4kW charger costs approximately
                 £500–900 supply and install per socket. A three-phase 22kW charger costs £800–1,800
@@ -391,7 +391,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Employee charging — benefit in kind exemption</strong> — HMRC does not treat
                 free workplace EV charging as a benefit in kind under ITEPA 2003 s.239, provided the
@@ -400,7 +400,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Employee access control</strong> — RFID cards, fobs, or app-based
                 authentication restrict charger access to authorised employees. Network-connected
@@ -409,7 +409,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Public visitor charging — PCP Regulations 2023</strong> — if charge points
                 are to be used by members of the public (customers, delivery drivers, visitors not
@@ -420,7 +420,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mixed-use sites</strong> — a common approach for retail or hospitality sites
                 is to install separate chargers for employees (RFID access, WCS-funded) and for
@@ -446,7 +446,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Single charger (wall-mounted, existing supply)</strong> — £800–1,800 supply
                 and install, including charger, cable run up to 10m, circuit protective device,
@@ -454,7 +454,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>5-charger installation with load management</strong> — £5,500–9,000,
                 including load management controller, CT clamps, sub-distribution board, five
@@ -462,7 +462,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>20-charger car park installation</strong> — £20,000–45,000 depending on
                 groundworks, cable trench length, and charger specification. WCS grant: up to £7,000
@@ -471,7 +471,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DNO supply upgrade</strong> — if the existing supply cannot support the
                 planned charger load even with load management, a supply upgrade via the
@@ -500,7 +500,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Certificates & Documentation On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -537,7 +537,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more workplace EV charging contracts with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for EV certificates, quoting, and job management. Professional documentation wins commercial repeat business."
+          description="Join 2,100+ UK electricians using Elec-Mate for EV certificates, quoting, and job management. Professional documentation wins commercial repeat business."
           icon={FileCheck2}
         />
       </>
@@ -563,7 +563,7 @@ export default function WorkplaceEVChargingPage() {
       heroTitle={
         <>
           Workplace EV Charging Installation UK:{' '}
-          <span className="text-yellow-400">Business EV Charger Guide 2026</span>
+          <span className="text-elec-yellow">Business EV Charger Guide 2026</span>
         </>
       }
       heroSubtitle="The complete guide to installing EV charge points at UK business premises — Workplace Charging Scheme grants of up to £14,000, planning permission requirements, dynamic load balancing for fleets, 3-phase charger options, and how to manage employee and visitor charging."
@@ -574,7 +574,7 @@ export default function WorkplaceEVChargingPage() {
       faqHeading="Frequently Asked Questions About Workplace EV Charging"
       relatedPages={relatedPages}
       ctaHeading="Complete EV Charging Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EV charging certificates, commercial quoting, and job management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for EV charging certificates, commercial quoting, and job management. 7-day free trial, cancel anytime."
     />
   );
 }

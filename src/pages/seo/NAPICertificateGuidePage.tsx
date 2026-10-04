@@ -777,7 +777,7 @@ export default function NAPICertificateGuidePage() {
       badgeIcon={ShieldCheck}
       heroTitle={
         <>
-          NAPIT Certificate Guide: <span className="text-yellow-400">Registration & Forms</span>
+          NAPIT Certificate Guide: <span className="text-elec-yellow">Registration & Forms</span>
         </>
       }
       heroSubtitle="NAPIT is a Government-authorised competent person scheme under Part P of the Building Regulations, so a registered electrician can self-certify notifiable domestic work. This guide covers which certificate you actually issue, registration categories and qualifications, costs, the application and annual assessment, and how building control notification works."
@@ -792,7 +792,7 @@ export default function NAPICertificateGuidePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Certificates That Work With Any Scheme"
-      ctaSubheading="Join 1,600+ UK electricians producing BS 7671:2018+A4:2026 certificates with Elec-Mate. Appendix 6 model forms, PDF export, digital signatures and cloud storage — ready to upload to your scheme portal. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians producing BS 7671:2018+A4:2026 certificates with Elec-Mate. Appendix 6 model forms, PDF export, digital signatures and cloud storage — ready to upload to your scheme portal. 7-day free trial."
     />
   );
 }

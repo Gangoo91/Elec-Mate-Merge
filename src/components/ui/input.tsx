@@ -1,15 +1,21 @@
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
+import { autoCompleteOff, isAndroidNative } from '@/lib/textEntry';
 
 const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<'input'>>(
   ({ className, type, inputMode, ...props }, ref) => {
     // Convert type=number → type=text + inputMode=decimal (no spinner chrome)
     // Convert type=password → type=text + pw-masked class (-webkit-text-security:disc)
+    // — except on native Android (ELE-1802): a masked TEXT field is a plain text
+    // field to Gboard, which would learn and later suggest the password now that
+    // the real input connection is in place. Android keeps a true password field,
+    // whose dots Chromium colours correctly anyway.
     // This bypasses iOS Safari's native password masking pipeline which ignores CSS
     // colour overrides on dark backgrounds, making dots invisible.
     const isPassword = type === 'password';
-    const finalType = type === 'number' ? 'text' : isPassword ? 'text' : type;
+    const finalType =
+      type === 'number' ? 'text' : isPassword ? (isAndroidNative ? 'password' : 'text') : type;
     const finalInputMode =
       inputMode ||
       (type === 'number'
@@ -31,7 +37,8 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<'input'>>(
         type={finalType}
         inputMode={finalInputMode}
         spellCheck="false"
-        autoComplete="off"
+        // Omitted on Android so Gboard keeps glide typing (ELE-1802); see textEntry.ts.
+        autoComplete={autoCompleteOff}
         autoCorrect="off"
         autoCapitalize="off"
         style={{ fontSize: '16px', ...props.style }}
@@ -69,7 +76,7 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<'input'>>(
           // (date pickers, autofill) with dark mode colours.
           '[color-scheme:dark]',
           // Password masking via CSS rather than type="password" (iOS Safari fix)
-          isPassword && 'pw-masked',
+          isPassword && !isAndroidNative && 'pw-masked',
           // Date/time inputs: strip top/bottom padding and use line-height centering.
           // iOS WKWebView native date chrome + py-3 = oversized input box.
           isDateLike && '!py-0 leading-[3rem] md:leading-[2.75rem]',

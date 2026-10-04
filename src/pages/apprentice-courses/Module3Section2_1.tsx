@@ -26,8 +26,8 @@ const quickCheckQuestions = [
     question: 'Name two ways containment improves safety.',
     options: [
       'Mechanical protection and environmental protection',
-      'Faster installation and lower costs',
-      'Higher voltage rating and bigger conductors',
+      'Higher current rating and lower voltage drop',
+      'No need for RCDs and no need for earthing',
     ],
     correctIndex: 0,
     explanation:
@@ -37,7 +37,7 @@ const quickCheckQuestions = [
     id: 'containment-maintenance',
     question: 'Why is cable containment important for future maintenance?',
     options: [
-      'It reduces installation costs',
+      'It removes the need to isolate before work',
       'It makes cables easier to access and replace without damaging structures',
       'It increases current capacity',
     ],
@@ -49,7 +49,7 @@ const quickCheckQuestions = [
     id: 'containment-environment',
     question: 'Give one environmental factor that containment can protect against.',
     options: [
-      'Low voltage',
+      'Overcurrent',
       'Moisture, dust, heat, or UV exposure',
       'Electromagnetic interference only',
     ],
@@ -74,7 +74,7 @@ const quizQuestions = [
     options: [
       'To increase the current-carrying capacity of cables',
       'To protect cables from damage and maintain safety',
-      'To reduce the cost of the cables themselves',
+      'To act as the circuit protective conductor',
       'To remove the need to test the installation',
     ],
     correctAnswer: 1,
@@ -113,9 +113,9 @@ const quizQuestions = [
     question: 'Name one situation where containment is typically required for cable protection.',
     options: [
       'Public spaces and industrial environments',
-      'Only in domestic loft spaces',
-      'Only where cables are buried underground',
-      'Only on circuits above 1000 V',
+      'Wherever cables run at extra-low voltage',
+      'Wherever a circuit is rated above 32 A',
+      'Wherever a cable has a cpc',
     ],
     correctAnswer: 0,
     explanation:
@@ -128,7 +128,7 @@ const quizQuestions = [
       'PVC',
       'Steel',
       'Rubber',
-      'Aluminium foil',
+      'Aluminium',
     ],
     correctAnswer: 1,
     explanation:

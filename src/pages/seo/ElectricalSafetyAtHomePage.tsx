@@ -248,7 +248,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Generally permitted without notification</strong> — replacing like-for-like
                 fittings such as swapping a socket faceplate, replacing a ceiling light fitting (not
@@ -257,7 +257,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Notifiable work</strong> — installing a new circuit, adding a circuit in a
                 kitchen or bathroom, any work in a bathroom (including replacing a fitting),
@@ -267,7 +267,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consequences of unpermitted work</strong> — completing notifiable work
                 without registration or building control notification can invalidate your home
@@ -460,7 +460,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check for the CE or UKCA mark</strong> — only buy Christmas lights marked
                 with the UKCA (UK Conformity Assessed) or CE mark, indicating they meet UK or
@@ -468,7 +468,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check lights before use</strong> — inspect lights each year for damaged
                 wires, broken bulbs, or loose connections. Discard any sets with damaged wiring. Do
@@ -476,7 +476,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Do not leave lights on unattended</strong> — turn off Christmas lights when
                 leaving the house and before going to bed. Use a timer switch to automate this if
@@ -484,7 +484,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Indoor and outdoor lights are different</strong> — outdoor Christmas lights
                 must be rated for outdoor use with an IP rating of at least IP44. Using indoor
@@ -492,7 +492,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Keep lights away from real trees</strong> — real Christmas trees dry out
                 over the season and become increasingly flammable. Keep lights well clear of dry
@@ -549,7 +549,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Are you an electrician? Complete EICRs faster with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Start your 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Start your 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -574,7 +574,7 @@ export default function ElectricalSafetyAtHomePage() {
       badgeIcon={ShieldCheck}
       heroTitle={
         <>
-          Electrical Safety at Home UK: <span className="text-yellow-400">Your Complete Guide</span>
+          Electrical Safety at Home UK: <span className="text-elec-yellow">Your Complete Guide</span>
         </>
       }
       heroSubtitle="Everything you need to know about keeping your home electrically safe — from testing your RCD monthly and avoiding overloaded sockets, to the truth about socket covers for children and Christmas decoration safety."
@@ -585,7 +585,7 @@ export default function ElectricalSafetyAtHomePage() {
       faqHeading="Frequently Asked Questions About Home Electrical Safety"
       relatedPages={relatedPages}
       ctaHeading="Are You an Electrician? Try Elec-Mate Free"
-      ctaSubheading="Complete EICRs on your phone with AI board scanning, voice test entry, and instant PDF export. Join 1,600+ UK electricians. 7-day free trial, cancel anytime."
+      ctaSubheading="Complete EICRs on your phone with AI board scanning, voice test entry, and instant PDF export. Join 2,100+ UK electricians. 7-day free trial, cancel anytime."
     />
   );
 }

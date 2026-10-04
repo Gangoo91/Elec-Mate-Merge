@@ -168,7 +168,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person scheme registration</strong> — ask for their NICEIC, NAPIT,
                 ELECSA, or other scheme registration number. Verify it online on the scheme
@@ -176,21 +176,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ECS card</strong> — the Electrotechnical Certification Scheme card confirms
                 the holder's qualifications. A gold ECS card indicates a qualified electrician.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Public liability insurance</strong> — ensure your electrician carries at
                 least £2 million public liability cover. Ask for a copy of the certificate.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>References and reviews</strong> — check verified reviews on Checkatrade,
                 Trustpilot, or Google Business. Ask for contact details of recent local customers.
@@ -214,14 +214,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full rewire (3-bed terrace)</strong> — £3,800 to £6,000 including new
                 consumer unit, all circuits, testing, and Part P certification.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacement</strong> — £480 to £750 including supply
                 isolation, new 18th Edition compliant unit with RCBOs, testing, and Part P
@@ -229,28 +229,28 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR</strong> — £170 to £280 for a 2 to 3 bedroom house. Required every 5
                 years for rented properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional double socket</strong> — £90 to £150 depending on cable run
                 length and wall type.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger installation</strong> — £650 to £1,100 for a 7kW home charger
                 including supply, installation, earthing, and Part P certification.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency call-out</strong> — £110 to £180 for the first hour including
                 travel, plus £45 to £65 per additional hour.
@@ -323,7 +323,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New connections and supply upgrades</strong> — apply to UKPN for new
                 supplies or upgrades from single-phase to three-phase. Suffolk lead times are
@@ -331,14 +331,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Meter relocations</strong> — UKPN handles the meter and cutout; your
                 electrician installs the new meter tails and consumer unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98/G99 notification</strong> — required for solar PV, battery storage, and
                 generator installations. Suffolk has seen significant growth in domestic solar PV
@@ -415,7 +415,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Home className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Growth Opportunities</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -445,7 +445,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Ipswich electrical business from your phone"
-          description="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs…"
+          description="Join 2,100+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs…"
           icon={MapPin}
         />
       </>
@@ -472,7 +472,7 @@ export default function ElectricianIpswichPage() {
       heroTitle={
         <>
           Electrician in Ipswich:{' '}
-          <span className="text-yellow-400">Find Qualified Electricians in 2026</span>
+          <span className="text-elec-yellow">Find Qualified Electricians in 2026</span>
         </>
       }
       heroSubtitle="How to find a registered electrician in Ipswich, what to expect on pricing, and the specific challenges of electrical work in Ipswich properties. Covers UKPN connections, Part P compliance, waterfront developments, and Suffolk-specific considerations."
@@ -483,7 +483,7 @@ export default function ElectricianIpswichPage() {
       faqHeading="Frequently Asked Questions About Electricians in Ipswich"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Ipswich and send instant PDFs to your customers. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Ipswich and send instant PDFs to your customers. 7-day free trial."
     />
   );
 }

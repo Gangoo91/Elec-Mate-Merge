@@ -135,8 +135,8 @@ export default function CourseTemplate({
       {/* Hero */}
       <section className="pb-8">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-5">
-          <BadgeIcon className="w-4 h-4 text-yellow-400" />
-          <span className="text-sm font-medium text-yellow-400">{badge}</span>
+          <BadgeIcon className="w-4 h-4 text-elec-yellow" />
+          <span className="text-sm font-medium text-elec-yellow">{badge}</span>
         </div>
 
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
@@ -154,13 +154,13 @@ export default function CourseTemplate({
           </a>
           <a
             href="#modules"
-            className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-yellow-500/40 text-white font-semibold rounded-xl touch-manipulation transition-colors"
+            className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-white/[0.1] text-white font-semibold rounded-xl touch-manipulation transition-colors"
           >
             See the Modules
           </a>
         </div>
-        <p className="text-xs text-white/60 mb-6">
-          Free for 7 days · No charge until day 8 · Cancel anytime · Used by 1,600+ UK electricians
+        <p className="text-xs text-white mb-6">
+          Free for 7 days · No charge until day 8 · Cancel anytime · Used by 2,100+ UK electricians
         </p>
 
         <SEOReadingMeta readingTime={readingTime} dateUpdated={dateModified} />
@@ -223,7 +223,7 @@ export default function CourseTemplate({
                 key={mod.title}
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                   {index + 1}
                 </div>
                 <div>

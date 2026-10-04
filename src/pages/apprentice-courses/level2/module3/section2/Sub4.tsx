@@ -8,7 +8,7 @@
  *   - Forward to §3 (cable runs / wiring decisions that depend on accurate
  *     measurement off scaled drawings)
  *
- * Reg sources cited: 514.9.2 (A4:2026 — diagrams shall comply with
+ * Reg sources cited: 514.9.2 (A2:2022 — diagrams shall comply with
  * applicable standards), Reg 132.13 (Documentation — paraphrased; see
  * 132.13.1 Diagrams and 132.13.2 Routine maintenance).
  */
@@ -547,19 +547,18 @@ export default function Sub4() {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 7671 — Regulation 514.9.2 (new in A4:2026) — applied to scale"
-          clause="514.9.2 — All diagrams, charts, and information or instruction notices used in electrical installations shall comply with the applicable standards specified."
+          source="BS 7671:2018+A4:2026 — Regulation 514.9.2 — applied to scale"
+          clause="All diagrams, charts, and information or instruction notices shall comply with BS EN 61082-1, BS EN IEC/IEEE 82079-1, and, where appropriate, BS EN 81346-1. All warning notices and other relevant safety signs shall comply with BS ISO 3864-1, BS EN ISO 7010, and BS EN IEC/IEEE 82079-1."
           meaning={
             <>
-              The applicable standards for construction drawings include the use of recognised
-              metric scales (BS EN ISO 5455 covers scales for technical drawings — typically the
-              1:1, 1:2, 1:5, 1:10, 1:20, 1:50, 1:100, 1:200 series). Drawings produced with
-              non-standard scales, or without a clear scale bar, don't help anyone read the install
-              reliably and can be flagged as non-compliant. The corollary on site: always confirm
-              the scale before measuring.
+              Diagrams have to comply with BS EN 61082-1. Technical drawings use the recognised
+              metric scales (BS EN ISO 5455 — typically the 1:1, 1:2, 1:5, 1:10, 1:20, 1:50, 1:100,
+              1:200 series). Drawings produced with non-standard scales, or without a clear scale
+              bar, don't help anyone read the install reliably and can be flagged as non-compliant.
+              The corollary on site: always confirm the scale before measuring.
             </>
           }
-          cite="Reference: BS 7671:2018+A4:2026 Part 5, Section 514.9.2 (paraphrased)"
+          cite="Source: BS 7671:2018+A4:2026, Regulation 514.9.2 (added by A2:2022)."
         />
 
         <RegsCallout

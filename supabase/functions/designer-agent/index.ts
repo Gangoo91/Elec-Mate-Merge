@@ -31,6 +31,7 @@ import {
   calculateEarthFaultLoop 
 } from '../_shared/bs7671-unified-calculations.ts';
 import { handleBatchDesign } from './batch-design-handler.ts';
+import { fetchChatCompletions } from '../_shared/llm-direct.ts';
 
 // TypeScript Interfaces for Type Safety
 interface CircuitCalculations {
@@ -141,8 +142,8 @@ serve(async (req) => {
       hasConversationSummary: !!conversationSummary,
       previousAgents: previousAgentOutputs.map((a: any) => a.agent)
     });
-    const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
-    if (!lovableApiKey) throw new ValidationError('LOVABLE_API_KEY not configured');
+    const aiApiKey = Deno.env.get('OPENAI_API_KEY');
+    if (!aiApiKey) throw new ValidationError('OPENAI_API_KEY not configured');
 
     logger.info('Designer Agent v3.0 processing with Intelligent Hybrid RAG', { messageCount: messages.length });
 
@@ -1127,15 +1128,15 @@ IMPORTANT - RESPONSE FORMAT:
 - Don't just dump regulation text - interpret it practically`;
     }
 
-    // Call Lovable AI Gateway with retry + timeout (60s for complex design calculations)
+    // Call AI Gateway with retry + timeout (60s for complex design calculations)
     const response = await logger.time(
-      'Lovable AI design generation',
+      'AI design generation',
       () => withRetry(
         () => withTimeout(
-          fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+          fetchChatCompletions({
             method: 'POST',
             headers: {
-              'Authorization': `Bearer ${lovableApiKey}`,
+              'Authorization': `Bearer ${aiApiKey}`,
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
@@ -1153,7 +1154,7 @@ IMPORTANT - RESPONSE FORMAT:
             }),
           }),
           modelConfig.timeoutMs, // Use configured timeout (280s)
-          'Lovable AI design generation'
+          'AI design generation'
         ),
         RetryPresets.STANDARD
       )
@@ -1161,7 +1162,7 @@ IMPORTANT - RESPONSE FORMAT:
 
     if (!response.ok) {
       const errorText = await response.text();
-      logger.error('Lovable AI error', { status: response.status, error: errorText });
+      logger.error('AI error', { status: response.status, error: errorText });
       
       // Specific error messages for common failures
       if (response.status === 429) {
@@ -1731,7 +1732,7 @@ IMPORTANT - RESPONSE FORMAT:
         const regenResponse = await fetch(aiGatewayUrl, {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${LOVABLE_API_KEY}`,
+            'Authorization': `Bearer ${AI_API_KEY}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({

@@ -154,7 +154,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Why cleanrooms need specialist electrical design</strong> — standard
                 electrical installation practices that are perfectly acceptable in commercial or
@@ -164,7 +164,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Collaboration with HVAC and process engineers</strong> — cleanroom
                 electrical installation cannot be designed in isolation. The electrical installation
@@ -253,7 +253,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minimise the electrical installation footprint</strong> — every additional
                 component inside the cleanroom is a potential particle source. Locate distribution
@@ -263,7 +263,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sealed conduit systems</strong> — sealed conduit systems are preferred in
                 high-classification cleanrooms because they completely enclose the cables and
@@ -273,7 +273,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable selection</strong> — cables with smooth, low-particle-generation
                 sheaths are specified for cleanroom use. Some cleanroom-specific cable products are
@@ -283,7 +283,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Avoidance of particle-generating fasteners</strong> — self-tapping screws,
                 open bolts, and standard cable ties shed particles from their threads, cutting
@@ -370,7 +370,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sealed cable glands</strong> — all cable entries through cleanroom walls
                 must use cleanroom-compatible sealed glands. The gland must seal against both the
@@ -379,7 +379,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Conduit with sealed ends</strong> — where conduit passes through the
                 cleanroom wall, both ends must be sealed after cables are installed. Proprietary
@@ -389,7 +389,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire stopping</strong> — all penetrations through the cleanroom envelope
                 must also be fire-stopped to maintain the fire compartmentation of the building. BS
@@ -406,7 +406,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Documentation</strong> — every penetration through the cleanroom envelope
                 should be documented as part of the as-built record. Undocumented penetrations are a
@@ -480,7 +480,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Motor control centres</strong> — AHU motor control centres (MCCs) must be
                 located outside the cleanroom envelope, in dedicated plant rooms or service
@@ -489,7 +489,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Heating and cooling coil connections</strong> — AHUs serving cleanrooms
                 include pre-heat coils, cooling coils (with electric chilled water or DX
@@ -499,7 +499,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Redundancy</strong> — critical cleanrooms (ISO 5 and ISO 6) often have
                 redundant AHUs or fans with automatic changeover to minimise the risk of cleanroom
@@ -630,7 +630,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <AlertTriangle className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Cleanroom Protocols Are Not Optional</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -664,7 +664,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Produce qualification-ready electrical records with"
-          description="Create professional test records and inspection reports that support cleanroom IQ/OQ/PQ qualification. Join 1,600+ UK electricians using Elec-Mate."
+          description="Create professional test records and inspection reports that support cleanroom IQ/OQ/PQ qualification. Join 2,100+ UK electricians using Elec-Mate."
           icon={ShieldCheck}
         />
       </>
@@ -690,7 +690,7 @@ export default function CleanroomElectricalPage() {
       heroTitle={
         <>
           Cleanroom Electrical Installation UK:{' '}
-          <span className="text-yellow-400">ISO Cleanroom Wiring Guide</span>
+          <span className="text-elec-yellow">ISO Cleanroom Wiring Guide</span>
         </>
       }
       heroSubtitle="Everything UK electricians need to know about cleanroom electrical installation — ISO 14644 classifications (ISO 5 to ISO 8), minimising particle generation, flush-mounted fittings, sealed cable entries, HEPA filtration electrical controls, air handling unit electrical systems, positive pressure monitoring, and UPS for critical environments."

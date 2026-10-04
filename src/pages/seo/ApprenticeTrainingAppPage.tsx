@@ -394,7 +394,7 @@ export default function ApprenticeTrainingAppPage() {
       heroTitle={
         <>
           Apprentice Training App:{' '}
-          <span className="text-yellow-400">Everything You Need to Qualify</span>
+          <span className="text-elec-yellow">Everything You Need to Qualify</span>
         </>
       }
       heroSubtitle="Flashcards, mock exams, EPA simulator, AM2 preparation, site diary, OJT tracker, and portfolio builder — all in one app that works offline on site. Built for UK electrical apprentices."

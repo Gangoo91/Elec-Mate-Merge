@@ -1236,7 +1236,7 @@ const InspectionDetailsSectionInner = ({
         <FormField
           label="Extent of inspection"
           required
-          hint="Section D — the parts of the installation that have been inspected and tested."
+          hint="Section D — the parts of the installation that have been inspected and tested. Agree it with the client before you start; the model form expects the extent settled beforehand."
           trailing={
             <div className="flex items-center gap-2.5">
               {!isFieldMarker(formData.extentOfInspection) && (

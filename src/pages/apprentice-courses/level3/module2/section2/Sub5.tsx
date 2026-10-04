@@ -515,7 +515,7 @@ export default function Sub5() {
 
         <ConceptBlock
           title="A4:2026 RCD test change — single AC test at 1×IΔn, full stop"
-          plainEnglish="Pre-A4:2026 RCD verification used a multi-current sequence — half-rated, rated, and a five-times-rated test for additional protection. A4:2026 redrafted Reg 643.8 and deleted Table 3A (the multi-current performance table) from Appendix 3. Now there is a single alternating current test at 1×IΔn, regardless of RCD type (Type AC, A, F, B). Older test schedules and older test instruments need updating."
+          plainEnglish="Pre-A4:2026 RCD verification used a multi-current sequence — half-rated, rated, and a five-times-rated test for additional protection. A2:2022 redrafted Reg 643.8 and deleted Table 3A (the multi-current performance table) from Appendix 3. Now there is a single alternating current test at 1×IΔn, regardless of RCD type (Type AC, A, F, B). Older test schedules and older test instruments need updating."
           onSite="On the inverter or EV-charger circuit, the RCD test is now: select the matching IΔn on the MFT, select alternating current, run the test once, record the operating time. Pass criterion per Reg 643.8 is a single 1×IΔn AC test — a general non-delay RCD must disconnect within 300 ms, a delay 'S' type within 130–500 ms. The deleted 5×IΔn / 40 ms test no longer applies. The change matters when reading older EIC and EICR records — anything pre-A4:2026 will quote multi-current readings; anything post-A4:2026 should quote a single 1×IΔn reading."
         >
           <p>Practical implications on env tech inspection and test:</p>

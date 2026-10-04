@@ -115,7 +115,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'Table 64 — circuits up to and including 500 V (with the exception of SELV/PELV): test voltage 500 V DC, minimum IR 1.0 MΩ. A4:2026 Reg 643.3.3 added the 250 V DC follow-up test at 1 MΩ minimum after reconnection of any electronic equipment that had to be disconnected for the main test.',
+      'Table 64 — circuits up to and including 500 V (with the exception of SELV/PELV): test voltage 500 V DC, minimum IR 1.0 MΩ. Reg 643.3.3 (A2:2022) added the 250 V DC follow-up test at 1 MΩ minimum after reconnection of any electronic equipment that had to be disconnected for the main test.',
   },
   {
     id: 4,
@@ -152,12 +152,12 @@ const quizQuestions = [
     options: [
       'Just re-test the IR on that one circuit — the pinch only affected insulation, so once the IR passes there is no need to revisit any other reading.',
       'Re-test every circuit on the board from scratch — a single fault on one circuit invalidates the whole dead-test sequence, so the full set must be repeated.',
-      'Per Reg 643.7.2 (paraphrased): "If any test indicates a failure to comply, that test and any preceding test, the results of which may have been influenced by the fault indicated, shall be repeated after the fault has been rectified." So: repeat IR on the rectified circuit; also repeat continuity on that circuit (which preceded IR and could have been influenced by the same fault). Document corrected reading on the STR.',
+      'Per Reg 643.1: "If any test indicates a failure to comply, that test and any preceding test, the results of which may have been influenced by the fault indicated, shall be repeated after the fault has been rectified." So: repeat IR on the rectified circuit; also repeat continuity on that circuit (which preceded IR and could have been influenced by the same fault). Document corrected reading on the STR.',
       'Record the original 0.7 MΩ reading on the STR with a note that it was repaired — there is no need to re-test once the cause has been removed.',
     ],
     correctAnswer: 2,
     explanation:
-      'Reg 643.7.2 (and IET GN3): if a test fails, fix the fault and repeat that test plus any preceding test that could have been influenced. A pinched cable sheath could affect continuity readings (parallel paths via the metal box and CPC) as well as IR — re-test both. Document the original failed reading, the corrective action, and the post-correction passing reading on the STR for the audit trail.',
+      'Reg 643.1 (and IET GN3): if a test fails, fix the fault and repeat that test plus any preceding test that could have been influenced. A pinched cable sheath could affect continuity readings (parallel paths via the metal box and CPC) as well as IR — re-test both. Document the original failed reading, the corrective action, and the post-correction passing reading on the STR for the audit trail.',
   },
   {
     id: 7,
@@ -247,7 +247,7 @@ export default function Sub7() {
           points={[
             'Dead-test sequence per BS 7671 Section 643: safe isolation → continuity of CPCs (incl bonding) → ring final continuity → insulation resistance → polarity → earth electrode (TT only). Live tests follow first energisation.',
             'Each test depends on the previous ones being valid. Continuity first (the CPC is the reference path); IR second (the live conductors against the verified CPC); polarity third (uses continuity); earth electrode last on TT.',
-            'A4:2026 brought three sequence-impacting changes: Table 41.3 max Zs values reduced (B32 1.44→1.37 Ω); Reg 643.3.3 added the 250 V DC IR follow-up test; Reg 643.7.3/643.8 redrafted RCD testing (single AC test at 1×IΔn, ≤ 300 ms non-delay).',
+            'A2:2022 changed the test details: it redrafted the insulation resistance tests (Reg 643.3.3 adds a 250 V DC test after reconnecting equipment) and deleted Table 3A, so an RCD is verified by one AC test at IΔn (NOTE to Reg 643.8 — 300 ms for a general non-delay RCD).',
           ]}
         />
 
@@ -259,7 +259,7 @@ export default function Sub7() {
             'Apply the A4:2026 updates: revised Table 41.3 max Zs values, the 250 V DC IR follow-up test, the simplified RCD trip-time test.',
             'Bridge from dead-test sequence to live-test sequence after first energisation: Ze, PFC, Zs at far end, RCD trip times, functional.',
             'Cite all the relevant Section 643 regs: 643.1, 643.2.1, 643.3, 643.6, 643.7, 643.8, 643.10.',
-            'Apply Reg 643.7.2 (paraphrased) — repeat any failed test plus preceding tests after rectification.',
+            'Apply Reg 643.1 — repeat any failed test plus preceding tests after rectification.',
             'Manage time and sequence on a real install — typical timings, common decision points, when to pause for investigation.',
             'Document the entire sequence on the schedule of test results with realistic readings at every step.',
           ]}
@@ -294,7 +294,7 @@ export default function Sub7() {
             <li>
               <strong>Phase 3 — Insulation resistance</strong> (Sub 3, Reg 643.3 / Table 64).
               Disconnect electronics first; 500 V DC between L+N (linked) to E and L to N; reconnect
-              electronics; A4:2026 Reg 643.3.3 follow-up at 250 V DC.
+              electronics; Reg 643.3.3 follow-up at 250 V DC.
             </li>
             <li>
               <strong>Phase 4 — Polarity</strong> (Sub 4, Reg 643.6). Continuity from CU line out to
@@ -316,7 +316,7 @@ export default function Sub7() {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 7671:2018+A4:2026 — Regulation 643.7.2 (Sequence and re-testing after fault rectification) — paraphrased"
+          source="BS 7671:2018+A4:2026 — Regulation 643.1 (Sequence and re-testing after fault rectification)"
           clause="If any test indicates a failure to comply, that test and any preceding test, the results of which may have been influenced by the fault indicated, shall be repeated after the fault has been rectified."
           meaning={
             <>
@@ -328,7 +328,7 @@ export default function Sub7() {
               reading.
             </>
           }
-          cite="Source: BS 7671:2018+A4:2026 Part 6, Chapter 64, Regulation 643.7.2 (paraphrased)."
+          cite="Source: BS 7671:2018+A4:2026 Part 6, Chapter 64, Regulation 643.1."
         />
 
         <InlineCheck
@@ -635,7 +635,7 @@ export default function Sub7() {
               regardless of any pre-installation test of the cable. Run the test every time, on
               every new circuit, on every modification. R1+R2 reading takes thirty seconds; the
               consequences of skipping it are days of fault-finding and an unhappy customer. A4:2026
-              also doubles down — Reg 643.7.2 (paraphrased) makes clear that test results that
+              also doubles down — Reg 643.1 makes clear that test results that
               depend on continuity are invalid if continuity itself is not verified.
             </>
           }
@@ -699,8 +699,8 @@ export default function Sub7() {
           points={[
             'BS 7671 Section 643 dead-test sequence: safe isolation → continuity (CPCs + bonding) → ring final continuity → insulation resistance → polarity → earth electrode (TT only). Live tests follow first energisation.',
             'Each test depends on the previous ones being valid. Get the order right; document each step; do not progress with unresolved issues.',
-            'A4:2026 changes affecting the sequence: revised Table 41.3 max Zs (B32 1.44→1.37 Ω); Reg 643.3.3 added the 250 V DC IR follow-up after reconnection; Reg 643.7.3/643.8 simplified RCD testing to a single 1×IΔn AC test (≤ 300 ms general non-delay).',
-            'Reg 643.7.2 (paraphrased): when a test fails, fix the fault and repeat that test PLUS any preceding tests that could have been influenced. Document the original reading, the action, and the corrected reading.',
+            'Changes affecting the sequence: Table 41.3 max Zs fell when the 2018 edition applied Cmin 0.95 (B32 1.44→1.37 Ω); A2:2022 added the Reg 643.3.3 250 V DC IR follow-up after reconnection and simplified RCD testing to a single 1×IΔn AC test (Reg 643.8, ≤ 300 ms general non-delay).',
+            'Reg 643.1: when a test fails, fix the fault and repeat that test PLUS any preceding tests that could have been influenced. Document the original reading, the action, and the corrected reading.',
             'Live test sequence after first energisation: live polarity → Ze → PFC → Zs at far end of every circuit → RCD trip times → functional. Compare live Zs to dead-test calc — should agree to ~0.05-0.10 Ω.',
             'Ze typically measured 0.20-0.40 Ω on TN-C-S, 0.6-1.0 Ω on TN-S, 50-200 Ω on TT. Use measured Ze (not DNO published worst-case) for final Zs verification.',
             'Bonding continuity: < 0.05 Ω rule of thumb for main bonding runs; no specific BS 7671 numerical limit but the regulation requires "negligible resistance".',

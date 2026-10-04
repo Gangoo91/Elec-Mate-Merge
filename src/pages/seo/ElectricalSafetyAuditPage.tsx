@@ -44,7 +44,7 @@ export default function ElectricalSafetyAuditPage() {
       heroTitle={
         <>
           Electrical Safety Audit:{' '}
-          <span className="text-yellow-400">Workplace Compliance Guide</span>
+          <span className="text-elec-yellow">Workplace Compliance Guide</span>
         </>
       }
       heroSubtitle="A thorough electrical safety audit protects workers, satisfies regulators, and prevents costly incidents. This guide covers every stage of the process, from understanding the legal framework to delivering corrective actions and maintaining ongoing compliance across UK workplaces."
@@ -108,7 +108,7 @@ export default function ElectricalSafetyAuditPage() {
               <div className="grid gap-4 sm:grid-cols-2 mt-6">
                 <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
                   <div className="flex items-center gap-2 mb-3">
-                    <Search className="w-5 h-5 text-yellow-400" />
+                    <Search className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Inspection</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -121,7 +121,7 @@ export default function ElectricalSafetyAuditPage() {
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-center gap-2 mb-3">
-                    <ClipboardCheck className="w-5 h-5 text-yellow-400" />
+                    <ClipboardCheck className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Audit</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -159,9 +159,9 @@ export default function ElectricalSafetyAuditPage() {
                 <h3 className="font-bold text-white text-lg mb-4">Key Legislation</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Electricity at Work Regulations 1989
                       </strong>{' '}
                       — The primary legislation. Regulation 4(2) requires all electrical systems to
@@ -170,9 +170,9 @@ export default function ElectricalSafetyAuditPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Health and Safety at Work Act 1974
                       </strong>{' '}
                       — Sections 2 and 3 impose general duties on employers to ensure the health and
@@ -181,9 +181,9 @@ export default function ElectricalSafetyAuditPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Management of Health and Safety at Work Regulations 1999
                       </strong>{' '}
                       — Regulation 3 requires suitable and sufficient risk assessments, including
@@ -191,9 +191,9 @@ export default function ElectricalSafetyAuditPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">BS 7671:2018+A2:2022</strong> — While not
+                      <strong className="text-elec-yellow">BS 7671:2018+A2:2022</strong> — While not
                       legislation, it is the national standard for electrical installations.
                       Compliance with{' '}
                       <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>{' '}
@@ -201,9 +201,9 @@ export default function ElectricalSafetyAuditPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Regulatory Reform (Fire Safety) Order 2005
                       </strong>{' '}
                       — Requires the responsible person to carry out a fire risk assessment, which
@@ -237,13 +237,13 @@ export default function ElectricalSafetyAuditPage() {
                 </h3>
                 <ul className="space-y-2 text-white text-sm leading-relaxed">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       Electrical safety policy (written, signed, dated, reviewed annually)
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <SEOInternalLink href="/tools/eicr-certificate">
                         EICR reports
@@ -252,7 +252,7 @@ export default function ElectricalSafetyAuditPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <SEOInternalLink href="/eic-certificate">
                         EIC certificates
@@ -261,32 +261,32 @@ export default function ElectricalSafetyAuditPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <SEOInternalLink href="/guides/pat-testing-guide-uk">PAT testing</SEOInternalLink>{' '}
                       records for all portable appliances
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       Maintenance logs showing planned and reactive maintenance activities
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       Electrical risk assessments (current and reviewed within the last 12 months)
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       Training records proving competence of staff who work on electrical systems
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <SEOInternalLink href="/guides/safe-isolation-procedure">
                         Safe isolation
@@ -295,13 +295,13 @@ export default function ElectricalSafetyAuditPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       Emergency procedures and incident reports involving electrical events
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       Contractor management records (competency checks, insurance verification)
                     </span>
@@ -392,7 +392,7 @@ export default function ElectricalSafetyAuditPage() {
                 </div>
                 <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
                   <div className="flex items-center gap-2 mb-3">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Major (Urgent Action)</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -404,7 +404,7 @@ export default function ElectricalSafetyAuditPage() {
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-center gap-2 mb-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">
                       Minor (Improvement Opportunity)
                     </h3>
@@ -605,7 +605,7 @@ export default function ElectricalSafetyAuditPage() {
         },
       ]}
       ctaHeading="Stay Audit-Ready With Elec-Mate"
-      ctaSubheading="Digital certificates, automatic re-inspection reminders, full audit trails, and AI-powered safety documentation. Join 1,600+ UK electricians who never worry about missing paperwork. 7-day free trial."
+      ctaSubheading="Digital certificates, automatic re-inspection reminders, full audit trails, and AI-powered safety documentation. Join 2,100+ UK electricians who never worry about missing paperwork. 7-day free trial."
     />
   );
 }

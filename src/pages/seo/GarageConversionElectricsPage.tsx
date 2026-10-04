@@ -190,7 +190,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part P (Electrical safety)</strong> — all new circuits, alterations to
                 existing circuits, and consumer unit work are notifiable. A registered electrician
@@ -198,7 +198,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part L (Energy efficiency)</strong> — lighting must meet energy efficiency
                 requirements. At least 75% of light fittings must be low-energy (LED). The
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part B (Fire safety)</strong> — fire separation from the main house,
                 interconnected smoke detection, and fire-stopping of cable penetrations. The
@@ -214,7 +214,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part F (Ventilation)</strong> — mechanical extract ventilation may be
                 required, which needs an electrical supply. Factor this into the circuit design.
@@ -237,7 +237,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Extend the house consumer unit</strong> — if the house CU has spare ways and
                 the cable route to the garage is short, add new circuits directly from the house CU.
@@ -245,7 +245,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Upgrade existing garage sub-panel</strong> — if the garage already has a
                 sub-panel (common in integral garages), replace it with a modern RCBO board. Reuse
@@ -253,7 +253,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New sub-main and consumer unit</strong> — for high-demand conversions
                 (kitchen, heating, EV charger), run a new sub-main from the house CU and install a
@@ -262,7 +262,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger circuits — Section 722</strong> — EV charging circuits are a
                 special installation under BS 7671 Section 722. They require a dedicated circuit
@@ -314,7 +314,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>General lighting</strong> — LED downlights (6W to 10W each) are the standard
                 choice. Space at approximately 1.2m centres for even coverage. A 5m x 3m garage
@@ -322,7 +322,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Task lighting</strong> — for home offices, provide additional lighting at
                 desk positions (wall lights or under-cabinet strips). For kitchens, under-cabinet
@@ -330,7 +330,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Switching</strong> — switch at the entrance door. For bedrooms, provide
                 two-way switching (door and bedside). For larger spaces, consider a dimmer circuit
@@ -338,7 +338,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part L compliance</strong> — at least 75% of fittings must be low-energy.
                 With LED throughout, this is automatically satisfied.
@@ -410,7 +410,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electric panel heaters</strong> — simplest option. One or two wall-mounted
                 panel heaters (1kW to 2kW each) on a dedicated radial circuit. Low installation cost
@@ -418,7 +418,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electric underfloor heating</strong> — popular in garage conversions because
                 the floor is typically insulated and re-screeded as part of the structural work.
@@ -427,7 +427,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Air source heat pump feed</strong> — if the conversion is substantial, a
                 small air source heat pump may be specified by the M&E designer. The electrician
@@ -436,7 +436,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Fan className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Fan className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mechanical extract ventilation</strong> — if the room has limited natural
                 ventilation, a continuous or intermittent extract fan is needed. Wire from a fused
@@ -516,42 +516,42 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Continuity of protective conductors on all new circuits</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Ring final circuit continuity (if ring circuits are used)</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Insulation resistance on all new circuits (500V DC, minimum 1 megohm)</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Polarity verification at every termination point</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Earth fault loop impedance (Zs) on every circuit</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>RCD operation on all RCD/RCBO protected circuits</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Prospective fault current at the origin</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Functional testing of smoke alarms (interconnection, battery backup)</span>
             </li>
           </ul>
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
-            <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <p className="font-semibold text-white mb-1">
                 A4:2026 compliance checkpoint — Reg 411.3.4
@@ -672,28 +672,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bedroom / playroom</strong> — lighting, 4-6 sockets, heating circuit, smoke
                 detection: £1,500 to £2,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Home office</strong> — enhanced lighting, 6-8 sockets, data cabling,
                 heating, dedicated circuits: £2,000 to £3,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Kitchen / utility room</strong> — cooker circuit, multiple socket circuits,
                 extract fan, lighting, heating, appliance circuits: £3,000 to £4,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Add-ons</strong> — consumer unit upgrade at house: £300 to £500. New
                 sub-main: £200 to £500. Underfloor heating: £400 to £800. Data cabling (Cat6): £80
@@ -718,7 +718,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -746,7 +746,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify garage conversion electrics"
-          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification."
           icon={Warehouse}
         />
       </>
@@ -772,7 +772,7 @@ export default function GarageConversionElectricsPage() {
       heroTitle={
         <>
           Garage Conversion Electrics:{' '}
-          <span className="text-yellow-400">Complete Electrical Guide UK 2026</span>
+          <span className="text-elec-yellow">Complete Electrical Guide UK 2026</span>
         </>
       }
       heroSubtitle="Everything you need to know about the electrical work in a garage conversion — Building Regulations, consumer unit design, lighting, socket layout, heating and ventilation circuits, fire safety, and realistic 2026 pricing."
@@ -788,7 +788,7 @@ export default function GarageConversionElectricsPage() {
       faqHeading="Frequently Asked Questions About Garage Conversion Electrics"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Garage Conversions on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

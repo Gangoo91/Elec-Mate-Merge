@@ -267,7 +267,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-1">
             Table 54.8 — PME main bonding conductor sizing
           </h3>
-          <p className="text-white/60 text-xs mb-4">
+          <p className="text-white text-xs mb-4">
             Minimum main bonding conductor vs the supply PEN (neutral) conductor — BS 7671 Reg
             544.1.1
           </p>
@@ -279,33 +279,33 @@ const sections = [
               Min main bonding
             </div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">≤ 35 mm²</div>
-            <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+            <div className="p-2 rounded bg-white/[0.04] text-center text-elec-yellow font-bold">
               10 mm²
             </div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">
               over 35 up to 50 mm²
             </div>
-            <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+            <div className="p-2 rounded bg-white/[0.04] text-center text-elec-yellow font-bold">
               16 mm²
             </div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">
               over 50 up to 95 mm²
             </div>
-            <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+            <div className="p-2 rounded bg-white/[0.04] text-center text-elec-yellow font-bold">
               25 mm²
             </div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">
               over 95 up to 150 mm²
             </div>
-            <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+            <div className="p-2 rounded bg-white/[0.04] text-center text-elec-yellow font-bold">
               35 mm²
             </div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">over 150 mm²</div>
-            <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+            <div className="p-2 rounded bg-white/[0.04] text-center text-elec-yellow font-bold">
               50 mm²
             </div>
           </div>
-          <p className="text-white/50 text-xs mt-3">
+          <p className="text-white text-xs mt-3">
             Most UK domestic PME supplies use a 16–25 mm² PEN, so <strong>10 mm²</strong> is the
             standard main bonding size. Non-PME (TN-S/TT): at least half the earthing-conductor csa,
             minimum 6 mm² (Reg 544.1.1).
@@ -746,7 +746,7 @@ export default function BondingConductorsGuidePage() {
       heroTitle={
         <>
           Bonding Conductors UK Guide:{' '}
-          <span className="text-yellow-400">Main and Supplementary Bonding Explained</span>
+          <span className="text-elec-yellow">Main and Supplementary Bonding Explained</span>
         </>
       }
       heroSubtitle="A complete practical guide to protective bonding conductors in UK electrical installations — main bonding of gas, water and oil services, supplementary bonding in bathrooms, conductor sizing, when bonding can be omitted with RCD protection, and common bonding defects found on EICRs."
@@ -762,7 +762,7 @@ export default function BondingConductorsGuidePage() {
       faqHeading="Frequently Asked Questions About Bonding Conductors"
       relatedPages={relatedPages}
       ctaHeading="Complete Bonding Tests and EICRs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with bonding continuity recording, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion with bonding continuity recording, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

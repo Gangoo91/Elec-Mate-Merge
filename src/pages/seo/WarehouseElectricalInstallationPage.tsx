@@ -188,7 +188,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Photometric design:</strong> A DIALux or Relux photometric design study
                 should be carried out for all warehouse lighting installations. The design must
@@ -198,7 +198,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Controls:</strong> DALI (Digital Addressable Lighting Interface) or wireless
                 lighting control systems allow individual luminaire addressing, daylight dimming,
@@ -208,7 +208,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit design:</strong> High-bay lighting circuits in warehouses are
                 typically single-phase final circuits, each serving a row or zone of luminaires.
@@ -218,7 +218,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maintained illuminance:</strong> LED luminaire manufacturers provide a
                 maintenance factor (typically 0.85 to 0.90 for LED in clean environments) which
@@ -245,7 +245,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main distribution board (MDB):</strong> The MDB receives the incoming LV
                 supply and distributes it to zone distribution boards throughout the warehouse. The
@@ -255,7 +255,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Zone distribution boards:</strong> Sub-main feeder cables distribute power
                 from the MDB to zone boards within each warehouse bay. Zone boards serve lighting,
@@ -265,7 +265,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Busbar trunking systems:</strong> For large warehouses with high power
                 requirements, overhead busbar trunking (busway) provides a flexible distribution
@@ -276,7 +276,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Voltage drop:</strong> In a large warehouse the distance from the MDB to the
                 furthest distribution board can be 150 metres or more. Cable sizing must ensure that
@@ -372,7 +372,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part L sub-metering:</strong> Building Regulations Part L2A (new
                 non-domestic buildings) requires sub-metering of significant energy uses. For
@@ -382,7 +382,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Half-hourly metering:</strong> Warehouse operators with a maximum demand
                 above 100 kW are required to have a half-hourly electricity meter. This data allows
@@ -391,7 +391,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Power quality monitoring:</strong> Warehouses with large VFD installations,
                 UPS systems, or EV charging can experience power quality issues including harmonic
@@ -515,7 +515,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main protective bonding:</strong> All metallic services entering the
                 warehouse (gas, water, oil pipelines, structural steelwork) must be connected by
@@ -526,7 +526,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Structural steelwork bonding:</strong> The structural steel frame of a
                 warehouse should be connected to the earthing system. This provides an additional
@@ -536,7 +536,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Static bonding for racking:</strong> Metal racking systems in dry warehouses
                 handling plastic packaging, granular materials, or powders can accumulate dangerous
@@ -563,7 +563,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Testing and Commissioning Records</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -599,7 +599,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage warehouse electrical projects with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site certification, quoting, and project management."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site certification, quoting, and project management."
           icon={FileCheck2}
         />
       </>
@@ -625,7 +625,7 @@ export default function WarehouseElectricalInstallationPage() {
       heroTitle={
         <>
           Warehouse Electrical Installation UK:{' '}
-          <span className="text-yellow-400">Industrial Lighting & Power Guide</span>
+          <span className="text-elec-yellow">Industrial Lighting & Power Guide</span>
         </>
       }
       heroSubtitle="The complete technical guide to warehouse and logistics facility electrical installation — covering high-bay LED lighting design, three-phase distribution, EV charging infrastructure, energy management, fire detection integration, and emergency lighting."
@@ -636,7 +636,7 @@ export default function WarehouseElectricalInstallationPage() {
       faqHeading="Frequently Asked Questions — Warehouse Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Manage Your Warehouse Electrical Projects with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -43,7 +43,7 @@ export default function ElectricalSiteInductionPage() {
       badgeIcon={HardHat}
       heroTitle={
         <>
-          Site Induction for Electricians: <span className="text-yellow-400">What to Expect</span>
+          Site Induction for Electricians: <span className="text-elec-yellow">What to Expect</span>
         </>
       }
       heroSubtitle="Every construction and commercial site requires a site induction before you start work. This guide explains what a site induction covers, the CDM 2015 requirements behind it, what documentation you need to bring, the RAMS review process, permit to work systems, and emergency procedures you will be briefed on."
@@ -111,27 +111,27 @@ export default function ElectricalSiteInductionPage() {
                 </h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Regulation 13(4)</strong> — The principal
+                      <strong className="text-elec-yellow">Regulation 13(4)</strong> — The principal
                       contractor must ensure that every worker is provided with appropriate
                       supervision, instructions, and information, including a suitable site
                       induction.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Regulation 15(2)</strong> — Construction
+                      <strong className="text-elec-yellow">Regulation 15(2)</strong> — Construction
                       work must be planned, managed, and monitored to ensure it is carried out
                       without risk to health or safety. The induction is part of this management
                       system.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Regulation 8(6)</strong> — Contractors
+                      <strong className="text-elec-yellow">Regulation 8(6)</strong> — Contractors
                       must not employ or allow anyone to work on a construction site unless they
                       have the necessary skills, knowledge, training, and experience, or are under
                       appropriate supervision.
@@ -185,9 +185,9 @@ export default function ElectricalSiteInductionPage() {
                 </h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         ACS distribution assemblies (Reg 421.1201)
                       </strong>{' '}
                       — any distribution board or assembly provided for use on a construction site
@@ -197,9 +197,9 @@ export default function ElectricalSiteInductionPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Equipment supply compatibility (Reg 704.313.3)
                       </strong>{' '}
                       — all equipment and tools must be identified with, and compatible with, the
@@ -210,9 +210,9 @@ export default function ElectricalSiteInductionPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Plugs, socket-outlets and wiring systems (Reg 704.511.1)
                       </strong>{' '}
                       — Section 704 contains specific amended requirements for plugs,
@@ -247,7 +247,7 @@ export default function ElectricalSiteInductionPage() {
               <div className="space-y-4 mt-6">
                 <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
                   <div className="flex items-center gap-2 mb-3">
-                    <MapPin className="w-5 h-5 text-yellow-400" />
+                    <MapPin className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Site Layout and Access</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -259,7 +259,7 @@ export default function ElectricalSiteInductionPage() {
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-center gap-2 mb-3">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Site-Specific Hazards</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -270,7 +270,7 @@ export default function ElectricalSiteInductionPage() {
                     identifies these so you can recognise and avoid them.
                   </p>
                   <p className="text-white text-sm leading-relaxed mt-3">
-                    <strong className="text-yellow-400">Electrician-specific:</strong> Some
+                    <strong className="text-elec-yellow">Electrician-specific:</strong> Some
                     construction sites operate a reduced-voltage supply for portable tools via a
                     step-down transformer, meaning tools rated only for 230&nbsp;V may not be
                     suitable. BS&nbsp;7671 Reg&nbsp;704.313.3 requires all equipment to be
@@ -281,7 +281,7 @@ export default function ElectricalSiteInductionPage() {
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-center gap-2 mb-3">
-                    <HardHat className="w-5 h-5 text-yellow-400" />
+                    <HardHat className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">PPE Requirements</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -293,7 +293,7 @@ export default function ElectricalSiteInductionPage() {
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-center gap-2 mb-3">
-                    <ClipboardCheck className="w-5 h-5 text-yellow-400" />
+                    <ClipboardCheck className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Site Rules</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -306,7 +306,7 @@ export default function ElectricalSiteInductionPage() {
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-center gap-2 mb-3">
-                    <Users className="w-5 h-5 text-yellow-400" />
+                    <Users className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Key Personnel</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -344,15 +344,15 @@ export default function ElectricalSiteInductionPage() {
                 </h3>
                 <ul className="space-y-2 text-white text-sm leading-relaxed">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>Specific description of the electrical work to be carried out</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>Site-specific hazards and how they will be controlled</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <SEOInternalLink href="/guides/safe-isolation-procedure">
                         Safe isolation procedures
@@ -361,23 +361,23 @@ export default function ElectricalSiteInductionPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>Access equipment and working at height arrangements</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>PPE requirements specific to the tasks</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>Emergency procedures including first aid and fire</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>Names and qualifications of operatives</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>Waste management and environmental controls</span>
                   </li>
                 </ul>
@@ -491,39 +491,39 @@ export default function ElectricalSiteInductionPage() {
                 <h3 className="font-bold text-white text-lg mb-3">Induction Checklist</h3>
                 <ul className="space-y-2 text-white text-sm leading-relaxed">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>CSCS card (valid and in date) or equivalent competence card</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>Photo ID (driving licence or passport)</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>Qualification certificates (NVQ Level 3, 2391, 18th Edition, etc.)</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>Public liability insurance certificate (current year)</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>Employers liability insurance (if you employ anyone)</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>Competent person scheme registration card (NICEIC, NAPIT, etc.)</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>Site-specific RAMS (submitted in advance if required)</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>Full PPE appropriate to the site requirements</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>Test instrument calibration certificates (if testing is required)</span>
                   </li>
                 </ul>
@@ -621,7 +621,7 @@ export default function ElectricalSiteInductionPage() {
         },
       ]}
       ctaHeading="Turn Up to Every Induction Fully Prepared"
-      ctaSubheading="AI-generated RAMS, digital qualification storage, and instant access to all your site documents from your phone. Join 1,600+ UK electricians who never get turned away from a site induction. 7-day free trial."
+      ctaSubheading="AI-generated RAMS, digital qualification storage, and instant access to all your site documents from your phone. Join 2,100+ UK electricians who never get turned away from a site induction. 7-day free trial."
     />
   );
 }

@@ -1,6 +1,7 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import { captureException } from '../_shared/sentry.ts';
+import { fetchEmbeddings } from '../_shared/llm-direct.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -21,10 +22,10 @@ serve(async (req) => {
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
-    const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
+    const aiApiKey = Deno.env.get('OPENAI_API_KEY');
 
-    if (!lovableApiKey) {
-      throw new Error('LOVABLE_API_KEY not configured');
+    if (!aiApiKey) {
+      throw new Error('OPENAI_API_KEY not configured');
     }
 
     // Split content into lines
@@ -72,10 +73,10 @@ serve(async (req) => {
     for (const chunk of chunks) {
       try {
         // Generate embedding
-        const embeddingResponse = await fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
+        const embeddingResponse = await fetchEmbeddings({
           method: 'POST',
           headers: {
-            Authorization: `Bearer ${lovableApiKey}`,
+            Authorization: `Bearer ${aiApiKey}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({

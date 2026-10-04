@@ -249,7 +249,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow text-black font-bold text-sm shrink-0">
                 1
               </span>
               <span>
@@ -260,7 +260,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow text-black font-bold text-sm shrink-0">
                 2
               </span>
               <span>
@@ -271,7 +271,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow text-black font-bold text-sm shrink-0">
                 3
               </span>
               <span>
@@ -282,7 +282,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow text-black font-bold text-sm shrink-0">
                 4
               </span>
               <span>
@@ -293,7 +293,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow text-black font-bold text-sm shrink-0">
                 5
               </span>
               <span>
@@ -321,7 +321,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard 7kW installation</strong> — £800 to £1,200 all-in, including
                 charger unit, dedicated circuit, RCD protection, commissioning, and EIC. After OZEV
@@ -329,7 +329,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Long cable run (over 15 metres)</strong> — add £100 to £250. Common in
                 Brighton's Victorian terraced houses where the consumer unit is at the front of the
@@ -337,7 +337,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit upgrade</strong> — £400 to £700 additional. Older Brighton
                 properties (pre-2000) often have full or outdated consumer units that need upgrading
@@ -345,7 +345,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth electrode installation</strong> — £200 to £400 additional, if required
                 following the PME earthing risk assessment. More common in detached garages with no
@@ -375,7 +375,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lamp column charging</strong> — Brighton & Hove City Council is rolling out
                 lamp column chargers across the city, converting existing street lighting into 3.6kW
@@ -384,7 +384,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Garage or rear access charging</strong> — if your terraced property has a
                 rear garage or rear access yard (common in many Brighton terraced streets), a home
@@ -393,7 +393,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Public charging</strong> — Brighton has a growing network of public chargers
                 including rapid chargers at Regency Square car park, Churchill Square, and a number
@@ -402,7 +402,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Communal charging for flats</strong> — residents of purpose-built flat
                 developments in Brighton can apply for the EV Infrastructure Grant for Residential
@@ -484,14 +484,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>OZEV registration</strong> — verify your installer is on the OZEV approved
                 installer list at gov.uk. Only OZEV-registered installers can apply the EVHS grant.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC or NAPIT registration</strong> — provides assurance of technical
                 competence, qualifications, and professional indemnity and public liability
@@ -499,7 +499,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Local experience</strong> — choose an installer with experience of
                 Brighton's specific housing challenges — Victorian terraces, rear garage cable runs,
@@ -507,7 +507,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>All-inclusive written quote</strong> — confirm the quote includes the
                 charger unit, all cabling, protection devices, earth electrode (if needed),
@@ -533,7 +533,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete EV Certificates On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -567,7 +567,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your EV charger installation business in Brighton with"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EV certification, instant PDF export, and professional quoting."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EV certification, instant PDF export, and professional quoting."
           icon={Zap}
         />
       </>
@@ -593,7 +593,7 @@ export default function EVChargerInstallationBrightonPage() {
       heroTitle={
         <>
           EV Charger Installation Brighton:{' '}
-          <span className="text-yellow-400">Home EV Charging & OZEV Grants 2026</span>
+          <span className="text-elec-yellow">Home EV Charging & OZEV Grants 2026</span>
         </>
       }
       heroSubtitle="Everything Brighton & Hove residents need to know about home EV charger installation — OZEV grants up to £350, typical costs of £800 to £1,200 for a 7kW unit, options for terraced houses without driveways, and how to find a qualified OZEV-approved installer."
@@ -604,7 +604,7 @@ export default function EVChargerInstallationBrightonPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in Brighton"
       relatedPages={relatedPages}
       ctaHeading="Complete EV Installation Certificates On Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EV certification, OZEV documentation, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EV certification, OZEV documentation, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -195,7 +195,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Perforated cable tray</strong> — the standard choice for most commercial
                 installations. A pressed steel tray with punched holes in the base and sides for
@@ -204,7 +204,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Solid bottom (return flange) tray</strong> — pressed steel tray with a solid
                 base without perforations. The sides fold inward at the top to form a return flange
@@ -213,7 +213,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ladder cable tray</strong> — consists of two parallel side rails connected
                 by rungs, similar in appearance to a ladder. Provides very good ventilation and is
@@ -222,7 +222,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wire mesh (basket tray)</strong> — formed from welded wire mesh. Very
                 lightweight, flexible, and easy to cut and modify on site. Widely used for data and
@@ -252,7 +252,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hot-dip galvanised (HDG) steel</strong> — the standard specification for
                 commercial and industrial installations. The zinc coating provides excellent
@@ -261,7 +261,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pre-galvanised (mill-galvanised) steel</strong> — lighter zinc coating than
                 HDG, applied before the tray is formed. Cheaper than HDG but offers less corrosion
@@ -269,7 +269,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Stainless steel (304 or 316 grade)</strong> — used in food production,
                 pharmaceutical manufacturing, marine environments, and wet areas where galvanised
@@ -278,7 +278,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PVC (uPVC) tray</strong> — non-conductive, lightweight, and completely
                 corrosion-resistant. Used in chemical environments where metallic tray would
@@ -305,7 +305,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Straight horizontal runs</strong> — typically 1200mm to 1500mm support
                 centres for light and medium-duty tray with modest cable loading. For heavy-duty
@@ -314,7 +314,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>At bends and fittings</strong> — support within 300mm either side of bends,
                 tees, reducers, and crosses. Fittings create point loads and concentrate stress in
@@ -322,7 +322,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Vertical runs</strong> — support at 1200mm to 1500mm centres. Cable weight
                 on vertical tray must be managed with cable cleats or ties at regular intervals —
@@ -330,7 +330,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Suspended installations</strong> — threaded rod hangers, channel brackets,
                 and wall brackets are the common support methods. All supports must be fixed into
@@ -356,7 +356,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Section bonding</strong> — fit earth bonds (green/yellow conductor or
                 braided earth strap) at every joint between tray sections, whether the physical
@@ -365,7 +365,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>System earth connection</strong> — connect the tray system to the main
                 earthing terminal with an appropriate earth conductor. The run length and
@@ -398,7 +398,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>40% maximum fill</strong> — the tray cross-sectional area occupied by cables
                 (including cable sheaths) should not exceed approximately 40%. This allows adequate
@@ -406,7 +406,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Grouping derating</strong> — cables installed in groups on tray have their
                 current ratings reduced by the grouping factors in BS 7671 Appendix 4 Table 4C1. The
@@ -415,7 +415,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Segregation</strong> — power cables and data/communications cables should be
                 run on separate tray systems, or separated by a divider within the same tray, to
@@ -439,7 +439,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard lengths</strong> — cable tray is typically supplied in 3m lengths.
                 Order fittings (bends, tees, reducers, crosses) separately and include in the
@@ -447,7 +447,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cutting</strong> — cut cable tray with an angle grinder with a cutting disc,
                 a hacksaw, or a jigsaw with a metal-cutting blade. Always deburr cut edges with a
@@ -455,7 +455,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Touch-up after cutting</strong> — apply cold zinc spray or touch-up paint to
                 all cut edges on galvanised tray to restore corrosion protection. Bare steel edges
@@ -479,7 +479,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1. Set out the route</strong> — mark the tray route on walls, columns, and
                 ceilings. Coordinate with other services (HVAC, plumbing, structural steel) to avoid
@@ -487,7 +487,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>2. Fix supports</strong> — install wall brackets, ceiling drops, or channel
                 (Unistrut/Strut) supports at the required spacing. Fix into structural elements
@@ -495,7 +495,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3. Install tray sections</strong> — lay tray sections onto supports and
                 connect with splice plates and M6 bolts. Install bends, tees, and reducers at
@@ -503,7 +503,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>4. Earth bond and connect</strong> — fit earth bonds at every joint. Connect
                 the tray to the MET. Test continuity of the earthing system before installing
@@ -511,7 +511,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>5. Install and secure cables</strong> — draw cables into position and tie at
                 regular intervals using cable ties or strapping. Maintain segregation between power
@@ -537,7 +537,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Certify Commercial Installations on Site
@@ -583,7 +583,7 @@ export default function CableTrayInstallationPage() {
       heroTitle={
         <>
           Cable Tray Installation UK:{' '}
-          <span className="text-yellow-400">Commercial Cable Management Guide</span>
+          <span className="text-elec-yellow">Commercial Cable Management Guide</span>
         </>
       }
       heroSubtitle="Everything electricians need to know about cable tray — types, materials, support spacing, earthing, fill ratio, ordering and cutting, and the complete sequence for a typical commercial installation."
@@ -594,7 +594,7 @@ export default function CableTrayInstallationPage() {
       faqHeading="Frequently Asked Questions About Cable Tray Installation"
       relatedPages={relatedPages}
       ctaHeading="Complete Commercial Installation Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to certify commercial installations on site. Record circuit details, earth continuity, and test results — instant PDF export. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to certify commercial installations on site. Record circuit details, earth continuity, and test results — instant PDF export. 7-day free trial."
     />
   );
 }

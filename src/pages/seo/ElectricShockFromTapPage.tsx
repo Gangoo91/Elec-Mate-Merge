@@ -230,7 +230,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>The RCD should trip.</strong> Under BS 7671, socket-outlet circuits rated up
                 to 32A (Reg 411.3.3) and AC final circuits supplying luminaires in domestic premises
@@ -244,7 +244,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>But older installations may not have RCD protection.</strong> Many
                 properties still have immersion heaters on circuits without RCD protection —
@@ -253,7 +253,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>How to test:</strong> switch off the immersion heater circuit at the
                 consumer unit. If the shock from the tap stops, the immersion heater is almost
@@ -294,7 +294,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Incoming water pipe</strong> — bonded as close as practicable to the point
                 of entry, but on the consumer's side of any insulating insert and before any branch
@@ -302,7 +302,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Incoming gas pipe</strong> — bonded to the consumer's hard metal pipework
                 after the meter and before any branch pipework; where practicable within 600mm of
@@ -311,7 +311,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Other services</strong> — incoming oil pipes, structural steelwork,
                 lightning protection systems, and central heating pipework where it enters the
@@ -474,7 +474,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">1. Voltage Measurement on Metalwork</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -559,7 +559,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>
                   Ensure the circuits BS 7671 requires to be RCD-protected actually are.
@@ -574,7 +574,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Verify main protective bonding.</strong> Check that bonding conductors are
                 connected to water and gas pipes, correctly sized per Reg 544.1.1 (Table 54.8 under
@@ -583,7 +583,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ensure domestic lighting circuits have 30mA RCD protection.</strong> BS 7671
                 Regulation 411.3.4 requires that, within domestic (household) premises, AC final
@@ -596,7 +596,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check supplementary bonding in bathrooms.</strong> BS 7671 Regulation
                 701.415.2 requires supplementary bonding in a room containing a bath or shower —
@@ -610,7 +610,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regular periodic inspection.</strong> A 5-yearly{' '}
                 <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> will identify
@@ -619,7 +619,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Replace ageing immersion heaters.</strong> If the immersion heater is more
                 than 10-15 years old, consider proactive replacement. Element failure is a matter of
@@ -657,7 +657,7 @@ export default function ElectricShockFromTapPage() {
       heroTitle={
         <>
           Electric Shock from a Tap?{' '}
-          <span className="text-yellow-400">Causes and Emergency Response</span>
+          <span className="text-elec-yellow">Causes and Emergency Response</span>
         </>
       }
       heroSubtitle="An electric shock from a tap means live current is energising your pipework. The most common cause is a faulty immersion heater, but bonding failures and PME supply faults can also be responsible. This guide covers what to do immediately, the causes, and how electricians diagnose the problem."
@@ -674,7 +674,7 @@ export default function ElectricShockFromTapPage() {
       relatedPages={relatedPages}
       heroCtaLabel="Find the fault faster with AI"
       ctaHeading="Diagnose Electrical Faults Faster with AI"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI fault diagnosis, BS 7671 calculators, and digital certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for AI fault diagnosis, BS 7671 calculators, and digital certificates. 7-day free trial, cancel anytime."
     />
   );
 }

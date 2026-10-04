@@ -349,7 +349,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type F — when specified by the appliance manufacturer:</strong> EV charger
                 circuits, heat pump circuits, and air conditioning circuits where the manufacturer
@@ -381,14 +381,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type A RCBO:</strong> £15 to £30 — the standard for most domestic circuits.
                 Modest premium over Type AC for significantly better protection.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type F RCBO:</strong> £25 to £50 — only needed for specific circuits with
                 frequency converter loads. Do not fit Type F across the entire board unless
@@ -396,7 +396,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type B RCBO:</strong> £80 to £200 — expensive and physically large. Only
                 specify where smooth DC fault currents are present. Check if the equipment has
@@ -422,7 +422,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 531.3.3:</strong> The characteristics of an RCD shall be selected
                 in accordance with the duty the device is required to perform. Where the load may
@@ -432,7 +432,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 411.3.3:</strong> Additional protection by an RCD with a rated
                 residual operating current not exceeding 30mA. This regulation specifies where RCD
@@ -441,7 +441,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 722.531.3.101 (EV charging):</strong> The supply to EV charging
                 equipment shall be protected by an RCD that can detect DC fault currents. This can
@@ -490,7 +490,7 @@ export default function RCDTypesComparisonPage() {
       badgeIcon={ShieldCheck}
       heroTitle={
         <>
-          RCD Types: <span className="text-yellow-400">AC, A, F, and B Explained</span>
+          RCD Types: <span className="text-elec-yellow">AC, A, F, and B Explained</span>
         </>
       }
       heroSubtitle="Using the wrong RCD type means it may not trip during a fault. This guide explains what each type detects, when each is required under BS 7671, the cost differences, and practical specification guidance for UK electricians."
@@ -501,7 +501,7 @@ export default function RCDTypesComparisonPage() {
       faqHeading="Frequently Asked Questions About RCD Types"
       relatedPages={relatedPages}
       ctaHeading="Record RCD Types and Test Results on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site certification with RCD type recording and compliance checking. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site certification with RCD type recording and compliance checking. 7-day free trial, cancel anytime."
     />
   );
 }

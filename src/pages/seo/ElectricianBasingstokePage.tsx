@@ -413,7 +413,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Professional On-Site Certification</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -445,7 +445,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Basingstoke electricians"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the South East market."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the South East market."
           icon={MapPin}
         />
       </>
@@ -473,7 +473,7 @@ export default function ElectricianBasingstokePage() {
       heroTitle={
         <>
           Electrician in Basingstoke:{' '}
-          <span className="text-yellow-400">Local Electricians 2026</span>
+          <span className="text-elec-yellow">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Basingstoke's South East location, large 1960s—1980s housing stock, and major business park sector create strong demand for consumer unit upgrades, EICRs, EV chargers, and commercial electrical work. Find NICEIC and NAPIT approved electricians in Basingstoke."
@@ -484,7 +484,7 @@ export default function ElectricianBasingstokePage() {
       faqHeading="Frequently Asked Questions About Electricians in Basingstoke"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Basingstoke Electricians"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the South East market. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the South East market. 7-day free trial."
     />
   );
 }

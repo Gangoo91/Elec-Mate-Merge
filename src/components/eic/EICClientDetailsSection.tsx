@@ -356,33 +356,59 @@ const EICClientDetailsSection = ({ formData, onUpdate }: EICClientDetailsSection
             The convenience ELE-1387 was protecting is kept as a one-tap copy
             rather than as a forced duplication.
           */}
+          {/*
+            ELE-1796 (Craig Soper, 2 Oct 2026) — both boxes were being filled
+            with the same text because nothing on screen said what each is for;
+            the rationale lived only in the comment above, and the Copy button
+            plus "leave blank if the same" made duplicating the default.
+
+            On the BS 7671 Appendix 6 model EIC, "Description of installation"
+            is the New / Addition / Alteration tick (our Type of work chips)
+            and "Extent of installation covered by this Certificate" is the one
+            free-text line — the boundary the signatories vouch for ("The
+            extent of liability of the signatory … is limited to the work
+            described above"). Both stay; each now says what it wants.
+          */}
           <FormField label="Description of installation" required>
             <Input
               data-field="description"
               value={localValues.description || ''}
               onChange={(e) => handleFieldChange('description', e.target.value)}
-              placeholder="e.g., Full rewire of 3-bed semi-detached — all circuits from new consumer unit"
+              placeholder="e.g. 3-bed semi — consumer unit replaced with a 12-way board, SPD and Type A RCBOs"
               className={inputCn}
             />
+            <span className="mt-1.5 block text-[11px] leading-snug text-white">
+              What the installation is and what this job did to it. The type-of-work chips above
+              print as the model form&apos;s New / Addition / Alteration ticks.
+            </span>
           </FormField>
 
-          <FormField label="Extent covered by this certificate">
-            <div className="flex items-end gap-2">
-              <Input
-                value={localValues.extentOfInstallation || ''}
-                onChange={(e) => handleFieldChange('extentOfInstallation', e.target.value)}
-                placeholder="Leave blank if the same as the description"
-                className={inputCn}
-              />
-              <button
-                type="button"
-                onClick={() => handleFieldChange('extentOfInstallation', localValues.description || '')}
-                disabled={!localValues.description}
-                className="h-11 flex-shrink-0 rounded-xl border border-white/[0.16] bg-white/[0.06] px-3 text-[12px] font-semibold text-white transition-colors hover:bg-white/[0.12] touch-manipulation active:scale-[0.98] disabled:opacity-40"
-              >
-                Copy
-              </button>
-            </div>
+          <FormField label="Extent of installation covered by this certificate">
+            <Input
+              value={localValues.extentOfInstallation || ''}
+              onChange={(e) => handleFieldChange('extentOfInstallation', e.target.value)}
+              placeholder="e.g. New consumer unit and the six circuits reconnected to it — existing wiring beyond the CU not covered"
+              className={inputCn}
+            />
+            <span className="mt-1.5 block text-[11px] leading-snug text-white">
+              The boundary you are certifying, and nothing beyond it — this is what limits your
+              liability to the work you did. Say what is covered and, where it helps, what is not.
+              {!localValues.extentOfInstallation && localValues.description && (
+                <>
+                  {' '}
+                  Left blank, the certificate prints the description here.{' '}
+                  <button
+                    type="button"
+                    onClick={() =>
+                      handleFieldChange('extentOfInstallation', localValues.description || '')
+                    }
+                    className="underline text-elec-yellow touch-manipulation"
+                  >
+                    Use the description
+                  </button>
+                </>
+              )}
+            </span>
           </FormField>
       </div>
 

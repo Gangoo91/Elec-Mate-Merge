@@ -259,7 +259,7 @@ export default function FindElectricalApprenticeshipPage() {
       heroTitle={
         <>
           How to Find an Electrical Apprenticeship{' '}
-          <span className="text-yellow-400">(Including the Unadvertised Ones)</span>
+          <span className="text-elec-yellow">(Including the Unadvertised Ones)</span>
         </>
       }
       heroSubtitle="The five channels that hold nearly every electrical apprenticeship in the UK, the application calendar that decides who gets the big-scheme places, and the speculative approach that finds the unadvertised ones at small local firms."

@@ -192,7 +192,7 @@ const quizQuestions = [
     question: 'Which flex type is suitable for food preparation areas?',
     options: [
       'Standard PVC',
-      'Rubber HOFR',
+      'Unsheathed PVC flex',
       'Artic flex',
       'Heat and oil resistant',
     ],

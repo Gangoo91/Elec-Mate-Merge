@@ -142,7 +142,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ofqual regulated:</strong> EAL qualifications appear on the Regulated
                 Qualifications Framework (RQF) and are regulated by Ofqual (the Office of
@@ -151,7 +151,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Approved EPAO:</strong> EAL is an approved End-Point Assessment
                 Organisation for the Level 3 Electrical Installation apprenticeship (ST0145),
@@ -160,7 +160,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Industry recognition:</strong> EAL is recognised by JIB for ECS card
                 applications, by NICEIC, NAPIT, and ELECSA for competent person scheme
@@ -169,7 +169,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Technical focus:</strong> EAL's roots in engineering and manufacturing
                 mean it tends to be used by training providers serving industrial and technical
@@ -248,7 +248,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Level 2 stage (Year 1/2):</strong> Foundation electrical theory,
                 installation methods, basic wiring, health and safety, working practices, and
@@ -257,7 +257,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Level 3 stage (Year 2/3):</strong> Advanced electrical theory,
                 inspection and testing, fault diagnosis, electrical system design including
@@ -266,7 +266,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Guided learning hours:</strong> Comparable to the C&G 2365 — typically
                 600 to 700 guided learning hours for the Level 3 Diploma stage. Actual study
@@ -371,7 +371,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-6 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <p><strong>JIB ECS Gold Card acceptance:</strong></p>
                 <p className="mt-1">
@@ -382,7 +382,7 @@ const sections = [
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <p><strong>Competent person scheme acceptance:</strong></p>
                 <p className="mt-1">
@@ -393,7 +393,7 @@ const sections = [
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <p><strong>Brand recognition:</strong></p>
                 <p className="mt-1">
@@ -406,7 +406,7 @@ const sections = [
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <p><strong>Progression to further study:</strong></p>
                 <p className="mt-1">
@@ -418,7 +418,7 @@ const sections = [
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <p><strong>EPA provider:</strong></p>
                 <p className="mt-1">
@@ -448,7 +448,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Employer's training provider:</strong> Ask your employer which college
                 or training centre they use, and which awarding body that provider delivers.
@@ -458,7 +458,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sector considerations:</strong> If you are apprenticed to an employer
                 in engineering, manufacturing, defence, or aerospace, EAL may be the more natural
@@ -468,7 +468,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Quality of the provider:</strong> Whichever awarding body is used,
                 the quality of your college or training provider matters most. Ask about Ofsted
@@ -495,7 +495,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>JIB acceptance:</strong> JIB (Joint Industry Board), which sets the
                 industry standards for the electrotechnical sector, accepts EAL Level 3
@@ -504,7 +504,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large contractors:</strong> National electrical contractors and building
                 services engineering firms (Amey, Mitie, Wates, Kier, NG Bailey, etc.) employ
@@ -513,7 +513,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HNC/HND entry:</strong> Universities and further education colleges
                 offering HNC/HND programmes accept both C&G and EAL Level 3 electrical
@@ -590,7 +590,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <GraduationCap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">End-Point Assessment and JIB Gold Card</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -651,7 +651,7 @@ export default function EALLevel3GuidePage() {
       heroTitle={
         <>
           EAL Level 3 Electrical Installation:{' '}
-          <span className="text-yellow-400">EAL vs City & Guilds Guide</span>
+          <span className="text-elec-yellow">EAL vs City & Guilds Guide</span>
         </>
       }
       heroSubtitle="Everything you need to know about the EAL Level 3 Electrical Installation qualification — what EAL is, how the qualification compares to City & Guilds 2365, employer acceptance, assessment methods, and what comes next after qualifying."

@@ -1,6 +1,7 @@
 import { useCallback, useRef } from 'react';
 import { Capacitor } from '@capacitor/core';
 import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics';
+import { hapticsEnabled } from '@/lib/haptics';
 
 type HapticPattern = 'light' | 'medium' | 'heavy' | 'success' | 'warning' | 'error' | 'selection';
 
@@ -84,6 +85,8 @@ export function useHaptic(options: UseHapticOptions = {}): UseHapticReturn {
       const now = Date.now();
       if (now - lastTriggerRef.current < 50) return;
       lastTriggerRef.current = now;
+      // Settings → Preferences → Vibration (ELE-1805).
+      if (!hapticsEnabled()) return;
 
       if (isNative) {
         triggerNative(pattern).catch(() => {});

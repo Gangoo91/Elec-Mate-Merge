@@ -183,7 +183,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electricity at Work Regulations 1989 (Regulation 12)</strong> — requires
                 that adequate precautions shall be taken to prevent electrical equipment from
@@ -194,7 +194,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Health and Safety at Work etc. Act 1974 (Sections 2 and 3)</strong> — places
                 a general duty on employers to ensure the health, safety, and welfare of employees
@@ -203,7 +203,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Management of Health and Safety at Work Regulations 1999</strong> —
                 Regulation 3 requires{' '}
@@ -216,7 +216,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HSE Guidance Note GS 38</strong> — while primarily about test equipment, GS
                 38 is integral to the safe isolation and proving dead process that forms part of the
@@ -225,7 +225,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>
                   <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
@@ -263,8 +263,8 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-yellow-500/20 flex items-center justify-center shrink-0">
-                <span className="text-yellow-400 font-bold text-sm">1</span>
+              <div className="w-8 h-8 rounded-full bg-white/[0.06] flex items-center justify-center shrink-0">
+                <span className="text-elec-yellow font-bold text-sm">1</span>
               </div>
               <div>
                 <h4 className="font-bold text-white mb-1">Identify the Circuit</h4>
@@ -281,8 +281,8 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-yellow-500/20 flex items-center justify-center shrink-0">
-                <span className="text-yellow-400 font-bold text-sm">2</span>
+              <div className="w-8 h-8 rounded-full bg-white/[0.06] flex items-center justify-center shrink-0">
+                <span className="text-elec-yellow font-bold text-sm">2</span>
               </div>
               <div>
                 <h4 className="font-bold text-white mb-1">Notify All Affected Persons</h4>
@@ -299,8 +299,8 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-yellow-500/20 flex items-center justify-center shrink-0">
-                <span className="text-yellow-400 font-bold text-sm">3</span>
+              <div className="w-8 h-8 rounded-full bg-white/[0.06] flex items-center justify-center shrink-0">
+                <span className="text-elec-yellow font-bold text-sm">3</span>
               </div>
               <div>
                 <h4 className="font-bold text-white mb-1">Isolate the Circuit</h4>
@@ -317,8 +317,8 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-yellow-500/20 flex items-center justify-center shrink-0">
-                <span className="text-yellow-400 font-bold text-sm">4</span>
+              <div className="w-8 h-8 rounded-full bg-white/[0.06] flex items-center justify-center shrink-0">
+                <span className="text-elec-yellow font-bold text-sm">4</span>
               </div>
               <div>
                 <h4 className="font-bold text-white mb-1">Apply Lock Off Device</h4>
@@ -334,8 +334,8 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-yellow-500/20 flex items-center justify-center shrink-0">
-                <span className="text-yellow-400 font-bold text-sm">5</span>
+              <div className="w-8 h-8 rounded-full bg-white/[0.06] flex items-center justify-center shrink-0">
+                <span className="text-elec-yellow font-bold text-sm">5</span>
               </div>
               <div>
                 <h4 className="font-bold text-white mb-1">Attach Warning Tag</h4>
@@ -351,8 +351,8 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-yellow-500/20 flex items-center justify-center shrink-0">
-                <span className="text-yellow-400 font-bold text-sm">6</span>
+              <div className="w-8 h-8 rounded-full bg-white/[0.06] flex items-center justify-center shrink-0">
+                <span className="text-elec-yellow font-bold text-sm">6</span>
               </div>
               <div>
                 <h4 className="font-bold text-white mb-1">Prove Dead</h4>
@@ -373,8 +373,8 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-yellow-500/20 flex items-center justify-center shrink-0">
-                <span className="text-yellow-400 font-bold text-sm">7</span>
+              <div className="w-8 h-8 rounded-full bg-white/[0.06] flex items-center justify-center shrink-0">
+                <span className="text-elec-yellow font-bold text-sm">7</span>
               </div>
               <div>
                 <h4 className="font-bold text-white mb-1">Complete the Work</h4>
@@ -389,8 +389,8 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-yellow-500/20 flex items-center justify-center shrink-0">
-                <span className="text-yellow-400 font-bold text-sm">8</span>
+              <div className="w-8 h-8 rounded-full bg-white/[0.06] flex items-center justify-center shrink-0">
+                <span className="text-elec-yellow font-bold text-sm">8</span>
               </div>
               <div>
                 <h4 className="font-bold text-white mb-1">Remove Locks, Tags & Re-energise</h4>
@@ -427,7 +427,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCB lock off devices</strong> — clip over the MCB toggle in the OFF position
                 and accept a padlock through the hasp. Available in universal designs that fit most
@@ -437,7 +437,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fuse carrier lock off bags</strong> — for rewireable fuse boards, the fuse
                 carrier is removed and placed in a lockable bag or pouch that accepts a padlock.
@@ -446,7 +446,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCCB lock off devices</strong> — moulded case circuit breakers are larger
                 than MCBs and require dedicated lock off devices. These typically fit over the MCCB
@@ -455,7 +455,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Isolator switch lock off devices</strong> — for rotary isolators, handle-
                 operated switches, and main switches. These typically clamp around the handle or fit
@@ -464,7 +464,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Plug lock off devices</strong> — for locking off plug-connected equipment.
                 The plug is enclosed in a lockable box or pouch that prevents it from being
@@ -472,7 +472,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Personal padlocks</strong> — each electrician must have their own personal
                 padlock with a unique key. Padlocks should be non-conductive (nylon body) or
@@ -482,7 +482,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Tag className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Tag className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Warning tags</strong> — pre-printed "DANGER — DO NOT SWITCH ON" tags with
                 space for your name, date, circuit details, and contact information. Available in
@@ -518,7 +518,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-3 flex items-center gap-2">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 shrink-0" />
+            <CheckCircle2 className="w-5 h-5 text-elec-yellow shrink-0" />
             Individual Circuit Isolation
           </h4>
           <ul className="space-y-2 text-white text-sm">
@@ -536,7 +536,7 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-3 flex items-center gap-2">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 shrink-0" />
+            <CheckCircle2 className="w-5 h-5 text-elec-yellow shrink-0" />
             Full Board Isolation (Consumer Unit Change)
           </h4>
           <ul className="space-y-2 text-white text-sm">
@@ -596,7 +596,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Multi-lock hasp</strong> — a device that accepts multiple padlocks
                 (typically 4, 6, or 8). The hasp is fitted to the lock off device at the point of
@@ -607,7 +607,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Group lock box</strong> — for complex isolations involving multiple points
                 of isolation (e.g., a machine with several electrical, pneumatic, and hydraulic
@@ -619,7 +619,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Permit to work system</strong> — on commercial and industrial sites,
                 multi-lock LOTO is often managed through a formal permit to work (PTW) system. The
@@ -731,7 +731,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Brain className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Safe isolation method statements</strong> — step-by-step procedures tailored
                 to the specific installation, covering circuit identification, isolation points,
@@ -739,7 +739,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Brain className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>
                   <SEOInternalLink href="/guides/risk-assessment-electricians">
@@ -752,7 +752,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Brain className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Permit to work templates</strong> — for commercial and industrial work
                 requiring formal permits, the AI generates pre-filled permits with the correct
@@ -760,7 +760,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Brain className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Training and competence records</strong> — Elec-Mate's training courses
                 include{' '}
@@ -814,7 +814,7 @@ export default function LockOffLOTOPage() {
       heroTitle={
         <>
           Lock Off / LOTO Procedure:{' '}
-          <span className="text-yellow-400">The Complete Guide for Electricians</span>
+          <span className="text-elec-yellow">The Complete Guide for Electricians</span>
         </>
       }
       heroSubtitle="Lockout/tagout is the single most important procedure for preventing electrical fatalities. Step-by-step LOTO process, lock off device selection, distribution board isolation, multi-lock procedures, legal requirements, and common mistakes that cost lives."
@@ -825,7 +825,7 @@ export default function LockOffLOTOPage() {
       faqHeading="Frequently Asked Questions About Lock Off / LOTO for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Generate Safe Isolation Documentation in Minutes"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's AI Health and Safety agent to create LOTO-specific risk assessments, method statements, and RAMS packages. Describe the job, get a complete document. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate's AI Health and Safety agent to create LOTO-specific risk assessments, method statements, and RAMS packages. Describe the job, get a complete document. 7-day free trial, cancel anytime."
     />
   );
 }

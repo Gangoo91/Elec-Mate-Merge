@@ -186,7 +186,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DC isolator</strong> — £30 to £60 trade. A dedicated DC-rated isolator
                 switch mounted adjacent to the inverter. Must be rated for the maximum DC voltage
@@ -196,7 +196,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>AC isolator</strong> — £25 to £50 trade. A double-pole isolator switch
                 between the inverter AC output and the consumer unit. Must be accessible to the DNO
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Warning labels</strong> — dual supply warning labels are mandatory at the
                 consumer unit, meter position, and all isolator locations. These alert firefighters
@@ -233,7 +233,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Meter tails assessment</strong> — check the existing tails size and
                 condition. 25mm² tails are adequate for most domestic solar PV systems. If the tails
@@ -241,7 +241,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Upgrade cost</strong> — £100 to £250 for meter tails replacement. This
                 includes the cable (25mm² meter tails, approximately £8 to £12 per metre), the
@@ -250,7 +250,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Henley block</strong> — if the solar PV connection is made via a Henley
                 block (service connector block) on the meter tails rather than through the consumer
@@ -275,7 +275,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated RCBO</strong> — the solar PV circuit requires its own RCBO at the
                 consumer unit. Under BS 7671 Regulation 411.3.3, RCD protection with a rated
@@ -284,7 +284,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No spare ways</strong> — if the consumer unit has no spare ways, options
                 include replacing the consumer unit with a larger board (see our{' '}
@@ -296,7 +296,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable from inverter to consumer unit</strong> — typically 4mm² or 6mm² twin
                 and earth, depending on cable run length and circuit rating. Cost: £2 to £4 per
@@ -304,7 +304,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Total consumer unit connection cost</strong> — £100 to £250 including the
                 RCBO, cable, containment, and connection labour.
@@ -327,7 +327,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Panel frame earthing</strong> — each panel frame must be earthed. This is
                 typically achieved through the mounting rail system, which provides a continuous
@@ -336,7 +336,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mounting system bonding</strong> — the entire mounting rail system must be
                 bonded to the main earthing terminal. A 4mm² or 6mm² earth conductor (green/yellow)
@@ -344,7 +344,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SPD (surge protection)</strong> — surge protection on both the DC side
                 (between panels and inverter) and AC side (at the consumer unit) is strongly
@@ -354,7 +354,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing cost</strong> — £50 to £150 for the earth conductor, bonding clips,
                 connections, and labour.
@@ -378,7 +378,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Generation meter</strong> — £80 to £150 installed. A DIN-rail mounted kWh
                 meter installed between the inverter AC output and the consumer unit. Provides an
@@ -387,7 +387,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Export meter</strong> — if the customer does not have a smart meter, an
                 export meter may be needed to record electricity exported to the grid for SEG
@@ -413,7 +413,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Small system (up to 4 kW, existing tails adequate)</strong> — £500 to £900
                 total. DC isolator: £30 to £60. AC isolator: £25 to £50. Consumer unit connection
@@ -422,7 +422,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Medium system (4 to 8 kW, tails upgrade needed)</strong> — £800 to £1,300
                 total. As above plus meter tails upgrade (£100 to £250) and longer cable runs. AC
@@ -430,7 +430,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large system (8+ kW, consumer unit upgrade needed)</strong> — £1,200 to
                 £2,500+ total. May require consumer unit replacement (£750 to £1,200 additional),
@@ -461,7 +461,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCS installer certification</strong> — the installation must be carried out
                 by an MCS-certified installer. MCS certification requires specific training,
@@ -470,7 +470,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCS product certification</strong> — all major components (panels, inverter)
                 must be MCS-certified products. This ensures they meet the required performance and
@@ -478,7 +478,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>For electricians</strong> — if you want to carry out complete solar PV
                 installations (not just the electrical connection), you need MCS certification. This
@@ -546,7 +546,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SEG rates (2026)</strong> — export tariffs range from 3p to 15p per kWh
                 depending on the supplier and tariff type. Fixed-rate tariffs provide certainty;
@@ -555,7 +555,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Typical annual income</strong> — a 4 kW domestic system generating 3,400 kWh
                 per year and exporting approximately 50% earns £50 to £250 per year from SEG
@@ -565,7 +565,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Requirements</strong> — to receive SEG payments, the installation must be
                 MCS-certified and a smart meter must be installed to record export data. The
@@ -592,7 +592,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Survey the Existing Installation</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -640,7 +640,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify solar PV electrical work"
-          description="Join 1,600+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site EIC certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site EIC certification."
           icon={Wrench}
         />
       </>
@@ -665,7 +665,7 @@ export default function SolarPanelInstallationCostPage() {
       badgeIcon={PoundSterling}
       heroTitle={
         <>
-          Solar Panel Electrical Cost: <span className="text-yellow-400">UK Wiring Guide 2026</span>
+          Solar Panel Electrical Cost: <span className="text-elec-yellow">UK Wiring Guide 2026</span>
         </>
       }
       heroSubtitle="How much does the electrical work cost on a solar PV installation? This guide focuses on the electrician's scope — DC and AC isolators, meter tails, consumer unit connection, earthing, generation meters, and certification. Real costs for the electrical work that sits on top of the panel and inverter price."
@@ -676,7 +676,7 @@ export default function SolarPanelInstallationCostPage() {
       faqHeading="Frequently Asked Questions About Solar Panel Electrical Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Solar PV Electrical Work with Real Trade Pricing"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI-powered cost engineering. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI-powered cost engineering. 7-day free trial, cancel anytime."
     />
   );
 }

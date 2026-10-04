@@ -182,7 +182,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Isolation from household loads</strong> — a kettle, vacuum cleaner, or hair
                 dryer switching on elsewhere in the house cannot cause a voltage dip or RCD trip on
@@ -191,7 +191,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Adequate capacity</strong> — a modern home office can draw 500W to 1500W
                 continuously (desktop computer, monitors, printer, desk lamp, phone charger, heater
@@ -200,7 +200,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SPD protection</strong> — the dedicated circuit can have Surge Protective
                 Device (SPD) protection at the consumer unit, providing an additional layer of
@@ -233,7 +233,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Desk-height sockets (700mm)</strong> — install 2 to 3 double socket outlets
                 at approximately 700mm from floor level, aligned with the back edge of the desk.
@@ -242,7 +242,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Floor-level sockets</strong> — provide 1 to 2 double sockets at standard
                 height (300mm) for items stored under or beside the desk — UPS, paper shredder,
@@ -250,7 +250,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Plan around the desk</strong> — ask the customer where the desk will be
                 positioned before installing sockets. The socket cluster should be directly behind
@@ -258,7 +258,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minimum provision</strong> — 3 double sockets at desk height (6 positions)
                 plus 1 double at floor level. This accommodates: computer/laptop charger,
@@ -303,7 +303,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wifi className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Route</strong> — typically from the router position (living room, hallway,
                 or under the stairs) through the loft or under the floor to the office. Avoid
@@ -312,7 +312,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wifi className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Termination</strong> — wall-mounted RJ45 data plates at both ends. Use a
                 keystone jack module in a standard back box for a clean finish. Terminate to T568B
@@ -321,7 +321,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wifi className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Multiple runs</strong> — if the customer has two desks or wants a network
                 point for a NAS (Network Attached Storage) or IP phone, run two or three Cat6a
@@ -347,7 +347,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Usb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Usb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>USB-C PD (Power Delivery)</strong> — specify USB-C sockets that support
                 Power Delivery at 30W or higher. This is enough to charge a phone quickly and can
@@ -356,7 +356,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Usb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Usb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Combined socket plates</strong> — double socket outlets with integrated
                 USB-C ports are available from most accessory manufacturers. These fit in a standard
@@ -365,7 +365,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Usb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Usb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Positioning</strong> — install USB-C sockets at desk height alongside the
                 standard socket outlets. This places the charging point where the phone or tablet
@@ -389,7 +389,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tuneable white LED</strong> — fittings with adjustable colour temperature
                 (2700K to 5000K) allow the light to match the time of day and task. Cooler light
@@ -398,7 +398,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dimming</strong> — essential for a room with a screen. Full brightness
                 overhead lighting causes eye strain when working at a monitor. A dimmer allows the
@@ -406,7 +406,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Task lighting point</strong> — provide a switched socket or fused spur at
                 desk height for a desk lamp. A good desk lamp with adjustable brightness and colour
@@ -414,7 +414,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Video call lighting</strong> — for regular video conferencing, position a
                 light source in front of the user (behind the screen, not behind the user). A wall-
@@ -441,7 +441,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BatteryCharging className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BatteryCharging className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Desktop PC users</strong> — a 600VA to 1000VA line-interactive UPS provides
                 10 to 20 minutes of runtime for a desktop computer and monitor. This is enough to
@@ -449,7 +449,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BatteryCharging className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BatteryCharging className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Laptop users</strong> — the laptop battery provides natural UPS
                 functionality. A UPS is less critical but still useful for the monitor, router, and
@@ -457,7 +457,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BatteryCharging className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BatteryCharging className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SPD at the consumer unit</strong> — complement any plug-in UPS with a Type 2
                 Surge Protective Device (SPD) at the consumer unit on the office circuit. This
@@ -484,7 +484,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wifi className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Router on UPS</strong> — the simplest approach is to plug the broadband
                 router into the UPS alongside the computer. A typical router draws 10W to 20W,
@@ -493,7 +493,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wifi className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated router socket</strong> — if the router is not in the office, the
                 electrician can install a socket at the router position on the same dedicated office
@@ -502,7 +502,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wifi className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mobile hotspot fallback</strong> — for truly business-critical connectivity,
                 advise the customer to have a 4G/5G mobile hotspot or phone tethering as a backup.
@@ -527,7 +527,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New circuit from consumer unit</strong> — an{' '}
                 <SEOInternalLink href="/eic-certificate">
@@ -542,7 +542,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional sockets on existing circuit</strong> — if the work is limited to
                 adding sockets to an existing circuit (no consumer unit work), a Minor Works
@@ -551,7 +551,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Data cabling</strong> — data cabling is not covered by BS 7671 (it is extra-
                 low voltage), but it should be tested with a cable tester to verify all 8 wires are
@@ -617,28 +617,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Basic upgrade</strong> — 2 additional double sockets at desk height on
                 existing circuit: £200 to £400.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard setup</strong> — dedicated 20A circuit, 3 doubles at desk height
                 with USB-C, 1 double at floor level, single Cat6a data run: £600 to £900.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Comprehensive setup</strong> — dedicated circuit, 4+ doubles with USB-C,
                 multiple Cat6a runs, smart dimmable lighting, SPD at consumer unit: £900 to £1,500.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Add-ons</strong> — Cat6a data run (per point): £80 to £150. USB-C PD socket
                 upgrade (per double): £15 to £30 premium over standard. Smart dimmer switch: £30 to
@@ -664,7 +664,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Quick Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -692,7 +692,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify home office electrical work"
-          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting and on-site certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for professional quoting and on-site certification."
           icon={Monitor}
         />
       </>
@@ -718,7 +718,7 @@ export default function HomeOfficeElectricalPage() {
       heroTitle={
         <>
           Home Office Electrical Setup:{' '}
-          <span className="text-yellow-400">Wiring and Power Guide for UK Electricians</span>
+          <span className="text-elec-yellow">Wiring and Power Guide for UK Electricians</span>
         </>
       }
       heroSubtitle="Everything you need to know about home office electrical installations — dedicated circuits, desk-height sockets, Cat6a data cabling, USB-C charging, smart lighting, UPS, and broadband backup power. Realistic 2026 UK pricing from £200 to £1,500."
@@ -729,7 +729,7 @@ export default function HomeOfficeElectricalPage() {
       faqHeading="Frequently Asked Questions About Home Office Electrical Setup"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Home Office Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for professional quoting and on-site certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for professional quoting and on-site certification. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -201,7 +201,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CircuitBoard className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CT clamp communication error.</strong> The Zappi cannot read the CT clamp
                 data. Check the CT clamp connection at the charger and at the meter tails. This
@@ -210,7 +210,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Waiting for EV / Pilot fault.</strong> The charger is not detecting a valid
                 signal from the vehicle. Try unplugging and re-inserting the charging cable firmly.
@@ -254,7 +254,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CircuitBoard className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Offline in app.</strong> The charger has lost its connection to Pod Point
                 servers. This is a communication issue, not a safety fault. The charger may still
@@ -262,7 +262,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Charge session ending prematurely.</strong> If the charger stops before the
                 vehicle is fully charged, check whether the vehicle's onboard charge timer or limit
@@ -304,7 +304,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CircuitBoard className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Connection error in Konnect+ app.</strong> The charger cannot reach
                 Andersen's servers. Check Wi-Fi or 4G connectivity. The charger will still function
@@ -312,7 +312,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PlugZap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PlugZap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Vehicle not charging / pilot error.</strong> The charger cannot establish
                 communication with the vehicle. Try re-seating the cable connector. Clean the
@@ -347,21 +347,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type AC RCD</strong> — detects sinusoidal AC fault currents only. Not
                 suitable for EV charging. May trip erratically or fail to trip when needed.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type A RCD</strong> — detects sinusoidal AC and pulsating DC fault currents.
                 The minimum requirement under Regulation 722.531.3.101 for EV circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type B RCD</strong> — detects AC, pulsating DC, and smooth DC fault
                 currents. Required by some charger manufacturers, particularly for three-phase
@@ -446,7 +446,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Charger current limit set too high</strong> — a 7kW charger drawing 32A on a
                 circuit with 6mm cable and a 32A MCB is at its absolute maximum. The charger should
@@ -454,7 +454,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Shared circuit</strong> — if the EV charger does not have a dedicated
                 circuit and shares with other loads, the combined current may exceed the protective
@@ -462,7 +462,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Supply voltage variation</strong> — a low supply voltage causes the charger
                 to draw more current to deliver the same power. On properties with long service
@@ -539,7 +539,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Arrange at convenience</strong> — intermittent RCD tripping (once a week or
                 less), charger charging at a lower rate than expected, intermittent communication
@@ -577,7 +577,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Search className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">1. Verify RCD Type</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -591,7 +591,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">2. Test Fixed Wiring</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -606,7 +606,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">3. Check Installation Compliance</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -647,7 +647,7 @@ export default function EVChargerErrorCodesPage() {
       badgeIcon={Car}
       heroTitle={
         <>
-          EV Charger Error Codes: <span className="text-yellow-400">What They Mean</span>
+          EV Charger Error Codes: <span className="text-elec-yellow">What They Mean</span>
         </>
       }
       heroSubtitle="Your EV charger is showing an error. This guide covers the most common fault codes from Zappi, Pod Point, and Andersen chargers — including RCD trips, earth faults, overcurrent, and communication errors — and tells you what to do next."
@@ -658,7 +658,7 @@ export default function EVChargerErrorCodesPage() {
       faqHeading="Frequently Asked Questions About EV Charger Errors"
       relatedPages={relatedPages}
       ctaHeading="Diagnose and Document EV Charger Faults on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI fault diagnosis, EV charger testing documentation, and professional certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for AI fault diagnosis, EV charger testing documentation, and professional certificates. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -384,15 +384,15 @@ export default function GuideTemplate({
             </a>
           }
         />
-        <p className="mt-3 text-[11.5px] text-white/60">
-          Free for 7 days · No charge until day 8 · Cancel anytime · Used by 1,600+ UK electricians
+        <p className="mt-3 text-[11.5px] text-white">
+          Free for 7 days · No charge until day 8 · Cancel anytime · Used by 2,100+ UK electricians
         </p>
 
         <div className="mt-6">
           <SEOReadingMeta readingTime={readingTime} dateUpdated={dateModified} />
         </div>
 
-        <p className="mt-3 text-[11.5px] text-white/55 leading-relaxed">
+        <p className="mt-3 text-[11.5px] text-white leading-relaxed">
           Written and reviewed by Andrew Moore, founder of Elec-Mate, against BS 7671:2018+A4:2026,
           IET Guidance Note 3 and the IET On-Site Guide.
         </p>

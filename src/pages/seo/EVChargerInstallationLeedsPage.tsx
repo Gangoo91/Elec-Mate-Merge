@@ -189,7 +189,7 @@ const sections = [
           </h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Simple installation (new-build or modern semi, short cable run)</strong> —
                 £700 to £1,000. Consumer unit near the parking, existing board has spare capacity.
@@ -197,7 +197,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard installation (inter-war semi or 1960s terrace)</strong> — £900 to
                 £1,200. Cable run of 8 to 12 metres, possible earthing works. Most common Leeds
@@ -205,10 +205,10 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Complex installation (long cable run, board upgrade, earth rod)</strong> —
-                £1,200 to £1,600+. Older properties in Headingley, Hyde Park, Meanwood, or Beeston
+                £1,200 to £2,100+. Older properties in Headingley, Hyde Park, Meanwood, or Beeston
                 where the consumer unit is remote from the parking and the board needs upgrading.
               </span>
             </li>
@@ -304,7 +304,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Schedule charging during off-peak hours</strong> — smart chargers can be
                 programmed to charge overnight when electricity unit rates are lowest. Leeds
@@ -313,7 +313,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Connect to the internet</strong> — via Wi-Fi or 4G for remote monitoring,
                 scheduling, and firmware updates. The installer will set up the Wi-Fi connection
@@ -321,7 +321,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Randomise start time</strong> — to reduce grid demand peaks, smart chargers
                 default to a randomised delay on plug-in. This can be overridden by the user via the
@@ -329,7 +329,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Measure energy consumption</strong> — smart chargers record energy delivered
                 per session, which is useful for HMRC business mileage claims if the vehicle is used
@@ -360,7 +360,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated circuit (Section 722)</strong> — each EV charger must have its own
                 dedicated final circuit from the consumer unit. Sharing circuits with other loads is
@@ -369,7 +369,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection (Section 722)</strong> — the EV circuit requires appropriate
                 RCD protection in accordance with Section 722. Where the charger can produce DC
@@ -379,7 +379,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing (Regulation 722.411.4.1)</strong> — on PME supplies (the majority
                 of Leeds properties), additional earthing measures are required for outdoor charging
@@ -388,7 +388,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP rating for outdoor units (Regulation 712.512.102)</strong> — enclosures
                 for electrical equipment installed outdoors must have a minimum degree of protection
@@ -397,7 +397,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Load curtailment (Regulation 722.311.201)</strong> — where the EV charger
                 load could exceed the available supply capacity, load curtailment (automatic or
@@ -407,7 +407,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable sizing</strong> — use the{' '}
                 <SEOInternalLink href="/tools/cable-sizing-calculator">
@@ -436,7 +436,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98 notification (standard domestic 7kW)</strong> — for single-phase
                 chargers up to 3.68kW per phase (16A), submit a G98 notification via the NPG online
@@ -445,7 +445,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G99 application (22kW three-phase or multiple units)</strong> — requires
                 prior approval from NPG. Allow 4 to 10 weeks. NPG will assess network capacity in
@@ -453,7 +453,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Installer responsibility</strong> — the installing electrician submits the
                 DNO notification, not the homeowner. Confirm this is included in your quote.
@@ -477,7 +477,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>OZEV EV chargepoint grant</strong> — up to £350 (75% of eligible
                 installation cost) for flat owners and tenants. Not available to homeowners in
@@ -486,7 +486,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Workplace Charging Scheme</strong> — Leeds businesses can claim up to £350
                 per socket (up to 40 sockets) for workplace EV charger installations. Administered
@@ -494,7 +494,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Leeds Clean Air Zone</strong> — Leeds operates a Clean Air Zone in the city
                 centre. Zero-emission vehicles are exempt from any charges that apply to
@@ -520,7 +520,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Pricing Leeds Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -560,7 +560,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify Leeds EV installations"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification."
           icon={Car}
         />
       </>
@@ -586,7 +586,7 @@ export default function EVChargerInstallationLeedsPage() {
       heroTitle={
         <>
           EV Charger Installation Leeds:{' '}
-          <span className="text-yellow-400">Costs, Grants, and DNO 2026</span>
+          <span className="text-elec-yellow">Costs, Grants, and DNO 2026</span>
         </>
       }
       heroSubtitle="Local costs for EV charger installation across Leeds, Northern Powergrid DNO notification, OZEV grant eligibility, 7kW vs 22kW charger options, smart charger requirements, and Section 722 compliance."
@@ -597,7 +597,7 @@ export default function EVChargerInstallationLeedsPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in Leeds"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify EV Charger Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

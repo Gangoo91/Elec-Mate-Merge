@@ -242,7 +242,7 @@ const sections = [
         <div className={cardCn}>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <span className="text-yellow-400 font-bold mt-0.5 shrink-0 w-6">(a)</span>
+              <span className="text-elec-yellow font-bold mt-0.5 shrink-0 w-6">(a)</span>
               <span>
                 <strong>Avoid danger and minimise inconvenience</strong> in the event of a fault. A
                 single circuit feeding the whole installation is not acceptable — a fault must not
@@ -250,7 +250,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="text-yellow-400 font-bold mt-0.5 shrink-0 w-6">(b)</span>
+              <span className="text-elec-yellow font-bold mt-0.5 shrink-0 w-6">(b)</span>
               <span>
                 <strong>Facilitate safe inspection, testing and maintenance</strong> (see also
                 Chapter 46 and Section 537). Dividing the installation lets individual circuits be
@@ -258,7 +258,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="text-yellow-400 font-bold mt-0.5 shrink-0 w-6">(c)</span>
+              <span className="text-elec-yellow font-bold mt-0.5 shrink-0 w-6">(c)</span>
               <span>
                 <strong>
                   Take account of hazards arising from the failure of a single circuit
@@ -269,7 +269,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="text-yellow-400 font-bold mt-0.5 shrink-0 w-6">(d)</span>
+              <span className="text-elec-yellow font-bold mt-0.5 shrink-0 w-6">(d)</span>
               <span>
                 <strong>Reduce the possibility of unwanted tripping of RCDs</strong> due to
                 excessive protective conductor (PE) currents not due to a fault. This drives the
@@ -277,7 +277,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="text-yellow-400 font-bold mt-0.5 shrink-0 w-6">(e)</span>
+              <span className="text-elec-yellow font-bold mt-0.5 shrink-0 w-6">(e)</span>
               <span>
                 <strong>Mitigate the effects of electromagnetic disturbances</strong> (see also
                 Chapter 44). Circuits supplying sensitive equipment (data and communications) are
@@ -285,7 +285,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="text-yellow-400 font-bold mt-0.5 shrink-0 w-6">(f)</span>
+              <span className="text-elec-yellow font-bold mt-0.5 shrink-0 w-6">(f)</span>
               <span>
                 <strong>
                   Prevent the indirect energising of a circuit intended to be isolated
@@ -312,7 +312,7 @@ const sections = [
         <div className={cardCn}>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <span className="text-yellow-400 font-bold mt-0.5 shrink-0 whitespace-nowrap">
+              <span className="text-elec-yellow font-bold mt-0.5 shrink-0 whitespace-nowrap">
                 314.2
               </span>
               <span>
@@ -323,7 +323,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="text-yellow-400 font-bold mt-0.5 shrink-0 whitespace-nowrap">
+              <span className="text-elec-yellow font-bold mt-0.5 shrink-0 whitespace-nowrap">
                 314.3
               </span>
               <span>
@@ -334,7 +334,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="text-yellow-400 font-bold mt-0.5 shrink-0 whitespace-nowrap">
+              <span className="text-elec-yellow font-bold mt-0.5 shrink-0 whitespace-nowrap">
                 314.4
               </span>
               <span>
@@ -838,7 +838,7 @@ export default function Regulation314CircuitDivisionPage() {
       heroTitle={
         <>
           Regulation 314:{' '}
-          <span className="text-yellow-400">Division of Installation Into Circuits</span>
+          <span className="text-elec-yellow">Division of Installation Into Circuits</span>
         </>
       }
       heroSubtitle="Every installation must be divided into circuits to avoid danger and minimise inconvenience. This guide covers the regulatory requirements, ring vs radial decisions, circuit separation, maximum demand, and practical circuit schedules for domestic and commercial installations."
@@ -849,7 +849,7 @@ export default function Regulation314CircuitDivisionPage() {
       faqHeading="Frequently Asked Questions About Circuit Division and Design"
       relatedPages={relatedPages}
       ctaHeading="Design Circuit Schedules and Size Cables on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI-assisted circuit design, cable sizing, and on-site EIC certificates with professional schedules. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for AI-assisted circuit design, cable sizing, and on-site EIC certificates with professional schedules. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -166,14 +166,14 @@ export default function EarthLoopImpedanceCalculatorPage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
-        <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-elec-yellow text-sm font-medium mb-6">
             Part of 70 Electrical Calculators
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             Earth Loop Impedance Calculator
-            <span className="block text-yellow-400 mt-1">Zs to BS 7671</span>
+            <span className="block text-elec-yellow mt-1">Zs to BS 7671</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             Calculate earth fault loop impedance (Zs) using Ze + R1+R2. Instantly check compliance
@@ -189,7 +189,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
             </Link>
             <a
               href="#how-it-works"
-              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-yellow-500/40 touch-manipulation transition-colors"
+              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-white/[0.1] touch-manipulation transition-colors"
             >
               See How It Works
             </a>
@@ -201,16 +201,16 @@ export default function EarthLoopImpedanceCalculatorPage() {
       <section className="px-5 pb-4">
         <div className="max-w-4xl mx-auto p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
           <p className="text-white leading-relaxed">
-            <strong className="text-yellow-400">What is Zs?</strong> Zs is the total earth fault
+            <strong className="text-elec-yellow">What is Zs?</strong> Zs is the total earth fault
             loop impedance — the complete impedance of the fault current path from the point of
             fault, through the circuit protective conductor (CPC), back to the supply transformer
             and return via the line conductor. It is calculated using the formula{' '}
-            <strong className="text-yellow-400">Zs = Ze + (R1 + R2)</strong>, where Ze is the
+            <strong className="text-elec-yellow">Zs = Ze + (R1 + R2)</strong>, where Ze is the
             external impedance supplied by the network and R1 + R2 is the combined resistance of the
             line conductor and CPC within the installation. To verify BS 7671 compliance, the
             corrected Zs (adjusted to conductor operating temperature) must not exceed the maximum
             values in{' '}
-            <strong className="text-yellow-400">BS 7671:2018+A4:2026 Tables 41.2–41.4</strong> for
+            <strong className="text-elec-yellow">BS 7671:2018+A4:2026 Tables 41.2–41.4</strong> for
             the protective device fitted — confirming that automatic disconnection of supply will
             operate within the required disconnection time (GN3 9th Ed, Chapter 8).
           </p>
@@ -304,11 +304,11 @@ export default function EarthLoopImpedanceCalculatorPage() {
             <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] my-6">
               <ol className="space-y-3 text-white">
                 <li className="flex items-start gap-3">
-                  <span className="w-7 h-7 rounded-lg bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center text-yellow-400 font-bold text-sm flex-shrink-0">
+                  <span className="w-7 h-7 rounded-lg bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-elec-yellow font-bold text-sm flex-shrink-0">
                     1
                   </span>
                   <span>
-                    <strong className="text-yellow-400">
+                    <strong className="text-elec-yellow">
                       Supply transformer secondary winding
                     </strong>{' '}
                     — the source of the supply voltage. This has a very low impedance, typically a
@@ -316,11 +316,11 @@ export default function EarthLoopImpedanceCalculatorPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="w-7 h-7 rounded-lg bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center text-yellow-400 font-bold text-sm flex-shrink-0">
+                  <span className="w-7 h-7 rounded-lg bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-elec-yellow font-bold text-sm flex-shrink-0">
                     2
                   </span>
                   <span>
-                    <strong className="text-yellow-400">
+                    <strong className="text-elec-yellow">
                       Line conductor from transformer to the fault
                     </strong>{' '}
                     — the distributor's supply cable (line) from the transformer to the origin of
@@ -329,31 +329,31 @@ export default function EarthLoopImpedanceCalculatorPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="w-7 h-7 rounded-lg bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center text-yellow-400 font-bold text-sm flex-shrink-0">
+                  <span className="w-7 h-7 rounded-lg bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-elec-yellow font-bold text-sm flex-shrink-0">
                     3
                   </span>
                   <span>
-                    <strong className="text-yellow-400">The fault itself</strong> — the point where
+                    <strong className="text-elec-yellow">The fault itself</strong> — the point where
                     the line conductor contacts the earthed enclosure. This is assumed to have
                     negligible impedance in the calculation.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="w-7 h-7 rounded-lg bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center text-yellow-400 font-bold text-sm flex-shrink-0">
+                  <span className="w-7 h-7 rounded-lg bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-elec-yellow font-bold text-sm flex-shrink-0">
                     4
                   </span>
                   <span>
-                    <strong className="text-yellow-400">Circuit protective conductor (CPC)</strong>{' '}
+                    <strong className="text-elec-yellow">Circuit protective conductor (CPC)</strong>{' '}
                     — from the fault point back to the main earthing terminal of the installation.
                     This is the R2 component.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="w-7 h-7 rounded-lg bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center text-yellow-400 font-bold text-sm flex-shrink-0">
+                  <span className="w-7 h-7 rounded-lg bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-elec-yellow font-bold text-sm flex-shrink-0">
                     5
                   </span>
                   <span>
-                    <strong className="text-yellow-400">Return path to the transformer</strong> —
+                    <strong className="text-elec-yellow">Return path to the transformer</strong> —
                     from the installation's main earthing terminal back to the star point of the
                     supply transformer. For TN-S systems this is the cable sheath; for TN-C-S (PME)
                     this is the combined neutral/earth (PEN) conductor; for TT systems this is the
@@ -384,24 +384,24 @@ export default function EarthLoopImpedanceCalculatorPage() {
           <div className="space-y-4 text-white leading-relaxed">
             <p>The fundamental formula for earth fault loop impedance is straightforward:</p>
             <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center my-6">
-              <p className="text-xl sm:text-2xl font-mono font-bold text-yellow-400">
+              <p className="text-xl sm:text-2xl font-mono font-bold text-elec-yellow">
                 Zs = Ze + (R1 + R2)
               </p>
               <div className="mt-4 text-left max-w-md mx-auto space-y-1 text-sm text-white">
                 <p>
-                  <strong className="text-yellow-400">Zs</strong> = total earth fault loop impedance
+                  <strong className="text-elec-yellow">Zs</strong> = total earth fault loop impedance
                   in ohms
                 </p>
                 <p>
-                  <strong className="text-yellow-400">Ze</strong> = external earth fault loop
+                  <strong className="text-elec-yellow">Ze</strong> = external earth fault loop
                   impedance in ohms
                 </p>
                 <p>
-                  <strong className="text-yellow-400">R1</strong> = resistance of the line conductor
+                  <strong className="text-elec-yellow">R1</strong> = resistance of the line conductor
                   from origin to fault point
                 </p>
                 <p>
-                  <strong className="text-yellow-400">R2</strong> = resistance of the CPC from
+                  <strong className="text-elec-yellow">R2</strong> = resistance of the CPC from
                   origin to fault point
                 </p>
               </div>
@@ -409,7 +409,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
 
             {/* Worked Example 1 */}
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10 my-6">
-              <h3 className="font-bold text-yellow-400 text-lg mb-3">
+              <h3 className="font-bold text-elec-yellow text-lg mb-3">
                 Example 1: Domestic Ring Final Circuit
               </h3>
               <div className="space-y-2 text-white leading-relaxed text-sm">
@@ -420,15 +420,15 @@ export default function EarthLoopImpedanceCalculatorPage() {
                 </p>
                 <p className="font-mono text-white">
                   Zs at ambient = 0.25 + 0.72 ={' '}
-                  <strong className="text-yellow-400">0.97 ohms</strong>
+                  <strong className="text-elec-yellow">0.97 ohms</strong>
                 </p>
                 <p className="font-mono text-white">
                   Zs corrected = 0.97 x 1.20 ={' '}
-                  <strong className="text-yellow-400">1.16 ohms</strong>
+                  <strong className="text-elec-yellow">1.16 ohms</strong>
                 </p>
                 <p>
                   From BS 7671 Table 41.2, the maximum Zs for a 32 A Type B MCB (0.4 s
-                  disconnection) is <strong className="text-yellow-400">1.37 ohms</strong>.
+                  disconnection) is <strong className="text-elec-yellow">1.37 ohms</strong>.
                 </p>
                 <p>
                   Result: <strong className="text-green-400">PASS</strong> — 1.16 ohms is within the
@@ -439,7 +439,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
 
             {/* Worked Example 2 */}
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10 my-6">
-              <h3 className="font-bold text-yellow-400 text-lg mb-3">
+              <h3 className="font-bold text-elec-yellow text-lg mb-3">
                 Example 2: Lighting Circuit on TN-S Supply
               </h3>
               <div className="space-y-2 text-white leading-relaxed text-sm">
@@ -450,15 +450,15 @@ export default function EarthLoopImpedanceCalculatorPage() {
                 </p>
                 <p className="font-mono text-white">
                   Zs at ambient = 0.62 + 1.85 ={' '}
-                  <strong className="text-yellow-400">2.47 ohms</strong>
+                  <strong className="text-elec-yellow">2.47 ohms</strong>
                 </p>
                 <p className="font-mono text-white">
                   Zs corrected = 2.47 x 1.20 ={' '}
-                  <strong className="text-yellow-400">2.96 ohms</strong>
+                  <strong className="text-elec-yellow">2.96 ohms</strong>
                 </p>
                 <p>
                   From BS 7671 Table 41.2, the maximum Zs for a 6 A Type B MCB (0.4 s disconnection)
-                  is <strong className="text-yellow-400">7.28 ohms</strong>.
+                  is <strong className="text-elec-yellow">7.28 ohms</strong>.
                 </p>
                 <p>
                   Result: <strong className="text-green-400">PASS</strong> — 2.96 ohms is well
@@ -469,7 +469,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
 
             {/* Worked Example 3 */}
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10 my-6">
-              <h3 className="font-bold text-yellow-400 text-lg mb-3">
+              <h3 className="font-bold text-elec-yellow text-lg mb-3">
                 Example 3: Long Radial Circuit — Borderline Case
               </h3>
               <div className="space-y-2 text-white leading-relaxed text-sm">
@@ -481,15 +481,15 @@ export default function EarthLoopImpedanceCalculatorPage() {
                 </p>
                 <p className="font-mono text-white">
                   Zs at ambient = 0.72 + 1.22 ={' '}
-                  <strong className="text-yellow-400">1.94 ohms</strong>
+                  <strong className="text-elec-yellow">1.94 ohms</strong>
                 </p>
                 <p className="font-mono text-white">
                   Zs corrected = 1.94 x 1.20 ={' '}
-                  <strong className="text-yellow-400">2.33 ohms</strong>
+                  <strong className="text-elec-yellow">2.33 ohms</strong>
                 </p>
                 <p>
                   From BS 7671 Table 41.2, the maximum Zs for a 20 A Type B MCB (0.4 s
-                  disconnection) is <strong className="text-yellow-400">2.19 ohms</strong>.
+                  disconnection) is <strong className="text-elec-yellow">2.19 ohms</strong>.
                 </p>
                 <p>
                   Result: <strong className="text-red-400">FAIL</strong> — 2.33 ohms exceeds the
@@ -582,15 +582,15 @@ export default function EarthLoopImpedanceCalculatorPage() {
 
           {/* Type B Table */}
           <div className="mt-8 mb-6">
-            <h3 className="font-bold text-yellow-400 text-lg mb-4">
+            <h3 className="font-bold text-elec-yellow text-lg mb-4">
               Table 41.2 — Type B MCBs (0.4 s disconnection)
             </h3>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden">
               <div className="grid grid-cols-2 gap-px bg-white/10">
-                <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+                <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                   MCB Rating (A)
                 </div>
-                <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+                <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                   Max Zs (ohms)
                 </div>
               </div>
@@ -615,15 +615,15 @@ export default function EarthLoopImpedanceCalculatorPage() {
 
           {/* Type C Table */}
           <div className="mb-6">
-            <h3 className="font-bold text-yellow-400 text-lg mb-4">
+            <h3 className="font-bold text-elec-yellow text-lg mb-4">
               Table 41.3 — Type C MCBs (0.4 s disconnection)
             </h3>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden">
               <div className="grid grid-cols-2 gap-px bg-white/10">
-                <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+                <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                   MCB Rating (A)
                 </div>
-                <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+                <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                   Max Zs (ohms)
                 </div>
               </div>
@@ -648,15 +648,15 @@ export default function EarthLoopImpedanceCalculatorPage() {
 
           {/* Type D Table */}
           <div className="mb-6">
-            <h3 className="font-bold text-yellow-400 text-lg mb-4">
+            <h3 className="font-bold text-elec-yellow text-lg mb-4">
               Table 41.3(c) — Type D MCBs (0.4 s disconnection)
             </h3>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden">
               <div className="grid grid-cols-2 gap-px bg-white/10">
-                <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+                <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                   MCB Rating (A)
                 </div>
-                <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+                <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                   Max Zs (ohms)
                 </div>
               </div>
@@ -681,9 +681,9 @@ export default function EarthLoopImpedanceCalculatorPage() {
 
           <p className="text-white text-sm leading-relaxed">
             These values are from{' '}
-            <strong className="text-yellow-400">BS 7671:2018+A4:2026 Tables 41.2–41.4</strong> and
+            <strong className="text-elec-yellow">BS 7671:2018+A4:2026 Tables 41.2–41.4</strong> and
             represent the maximum Zs at conductor operating temperature. Cross-referenced against{' '}
-            <strong className="text-yellow-400">
+            <strong className="text-elec-yellow">
               GN3 9th Ed (2022, incorporating A4) Tables B1–B6
             </strong>
             , which present maximum Zs values at a reference temperature of 10 °C and provide the
@@ -717,16 +717,16 @@ export default function EarthLoopImpedanceCalculatorPage() {
               loop impedance for an RCD-protected circuit is calculated from the formula:
             </p>
             <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center my-6">
-              <p className="text-xl sm:text-2xl font-mono font-bold text-yellow-400">
+              <p className="text-xl sm:text-2xl font-mono font-bold text-elec-yellow">
                 Zs = 50 / I<sub>delta n</sub>
               </p>
               <div className="mt-4 text-left max-w-md mx-auto space-y-1 text-sm text-white">
                 <p>
-                  <strong className="text-yellow-400">50</strong> = maximum touch voltage in volts
+                  <strong className="text-elec-yellow">50</strong> = maximum touch voltage in volts
                   (from BS 7671 Regulation 411.3.2.1)
                 </p>
                 <p>
-                  <strong className="text-yellow-400">
+                  <strong className="text-elec-yellow">
                     I<sub>delta n</sub>
                   </strong>{' '}
                   = rated residual operating current of the RCD in amperes
@@ -735,9 +735,9 @@ export default function EarthLoopImpedanceCalculatorPage() {
             </div>
             <p>
               For a 30 mA (0.03 A) RCD: Zs = 50 / 0.03 ={' '}
-              <strong className="text-yellow-400">1667 ohms</strong>. For a 100 mA (0.10 A) RCD: Zs
-              = 50 / 0.10 = <strong className="text-yellow-400">500 ohms</strong>. For a 300 mA
-              (0.30 A) RCD: Zs = 50 / 0.30 = <strong className="text-yellow-400">167 ohms</strong>.
+              <strong className="text-elec-yellow">1667 ohms</strong>. For a 100 mA (0.10 A) RCD: Zs
+              = 50 / 0.10 = <strong className="text-elec-yellow">500 ohms</strong>. For a 300 mA
+              (0.30 A) RCD: Zs = 50 / 0.30 = <strong className="text-elec-yellow">167 ohms</strong>.
             </p>
             <p>
               The 1667 ohm limit for 30 mA RCDs is so generous that virtually any circuit within a
@@ -754,7 +754,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
               OCPD limit, flagging any discrepancies.
             </p>
             <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10 mt-4">
-              <h3 className="font-bold text-yellow-400 text-lg mb-2">
+              <h3 className="font-bold text-elec-yellow text-lg mb-2">
                 TT Systems — Earth Electrode Resistance (Ra)
               </h3>
               <p className="text-white text-sm leading-relaxed">
@@ -797,7 +797,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
           <div className="space-y-4 text-white leading-relaxed">
             <p>
               Alongside Zs, BS 7671 Regulation 643.7.3.201 requires that the{' '}
-              <strong className="text-yellow-400">
+              <strong className="text-elec-yellow">
                 prospective short-circuit current and prospective earth fault current
               </strong>{' '}
               shall be measured, calculated, or determined at the origin of the installation and at
@@ -824,7 +824,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
                 line-to-earth voltage (230 V). Prospective short-circuit current (line-to-line) uses
                 the line-to-line voltage (400 V) and the relevant loop impedance. For typical TN-C-S
                 supplies with Ze of 0.35 ohms, Ipf at the origin is approximately 230 ÷ 0.35 ≈{' '}
-                <strong className="text-yellow-400">657 A</strong> — well within the 6 kA breaking
+                <strong className="text-elec-yellow">657 A</strong> — well within the 6 kA breaking
                 capacity of standard domestic MCBs. On installations with very low Ze (close to a
                 substation), Ipf can be significantly higher.
               </p>
@@ -845,7 +845,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-            <h2 className="text-xl sm:text-2xl font-bold text-yellow-400 mb-4">
+            <h2 className="text-xl sm:text-2xl font-bold text-elec-yellow mb-4">
               BS 7671 A4:2026 — Key Changes for Zs Planning
             </h2>
             <div className="space-y-4 text-white leading-relaxed text-sm">
@@ -894,7 +894,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              <strong className="text-yellow-400">Measuring Ze:</strong> The external earth fault
+              <strong className="text-elec-yellow">Measuring Ze:</strong> The external earth fault
               loop impedance is measured at the origin of the installation. Disconnect the main
               earthing conductor from the earthing terminal (this isolates the installation's earth
               from the supply earth). Connect your loop impedance tester between the incoming line
@@ -904,7 +904,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
               resistance of the earth electrode and can be 20 ohms or more.
             </p>
             <p>
-              <strong className="text-yellow-400">Measuring R1+R2:</strong> The resistance of the
+              <strong className="text-elec-yellow">Measuring R1+R2:</strong> The resistance of the
               line conductor and CPC combined is measured using the long lead method (also called
               the wandering lead method). At the distribution board, temporarily link the line and
               CPC of the circuit together. Then, using a low-resistance ohmmeter, measure the
@@ -945,7 +945,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex-shrink-0">
-                  <span className="font-bold text-yellow-400">{index + 1}</span>
+                  <span className="font-bold text-elec-yellow">{index + 1}</span>
                 </div>
                 <div>
                   <h3 className="font-bold text-white text-lg mb-1">{step.name}</h3>
@@ -1052,7 +1052,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
 
       <SEOCTASection
         heading="Calculate Zs in Seconds on Site"
-        subheading="Join 1,600+ UK electricians using Elec-Mate for on-site calculations. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians using Elec-Mate for on-site calculations. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

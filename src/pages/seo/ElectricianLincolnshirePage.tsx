@@ -127,35 +127,35 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lincoln</strong> — county city, cathedral quarter, and surrounding villages
                 including Sleaford, Gainsborough, and Market Rasen
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Grimsby &amp; Cleethorpes</strong> — port town, fish processing industry,
                 and the Humber Estuary energy corridor
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Scunthorpe</strong> — steelworks town in North Lincolnshire, with extensive
                 industrial electrical demand
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Grantham &amp; Stamford</strong> — south Lincolnshire towns on the A1
                 corridor with significant new housing development
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Boston, Skegness, Spalding</strong> — agricultural heartland, coastal
                 holiday parks, and Lincolnshire&apos;s bulb-growing area
@@ -187,7 +187,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>National Grid Electricity Distribution (East Midlands)</strong>— covers all
                 of Lincolnshire. Power cuts emergency line: 0800 678 3105. New connections:
@@ -195,7 +195,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Coastal exposure</strong> — the Lincolnshire coast suffers from salt-spray
                 corrosion which accelerates degradation of outdoor electrical equipment. IP56
@@ -221,7 +221,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HV substation maintenance</strong> — 132kV, 33kV, and 11kV switchgear
                 servicing, protection relay testing and calibration, and power transformer
@@ -229,7 +229,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Motor drives and control gear</strong> — rolling mill drives, fan motors,
                 and pump sets require LV panel maintenance, drive fault finding, and motor control
@@ -237,7 +237,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ATEX hazardous areas</strong> — coke oven gas, blast furnace gas, and dust
                 zones require ATEX/Ex certified equipment and qualified installation in accordance
@@ -267,7 +267,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Section 705 — agricultural premises</strong> — mandates IP44 minimum for
                 accessories in agricultural areas, equipotential bonding in livestock zones, and SWA
@@ -275,7 +275,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Grain drying and cold stores</strong> — three-phase 400V supplies for dryer
                 motors (typically 11kW to 45kW), star-delta starters or VFDs, and cold store
@@ -283,7 +283,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Glasshouse and polytunnel electrical</strong> — high-humidity environments
                 require IP65 rated wiring systems and accessories. Horticultural lighting
@@ -310,7 +310,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Security clearance</strong> — all civilian contractors at RAF stations
                 require a minimum BPSS (Baseline Personnel Security Standard) check, with SC
@@ -319,7 +319,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MoD specifications</strong> — electrical installations at MoD sites must
                 comply with Defence Standard 59-411 (Electromagnetic Compatibility) and Defence
@@ -344,7 +344,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671 Section 708</strong> — each touring pitch must have an individually
                 protected 16A or 32A IP55 socket (CEE blue form). All pitch supplies must be 30mA
@@ -352,7 +352,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Coastal corrosion</strong> — stainless steel or hot-dip galvanised fittings
                 are recommended for external electrical enclosures on the Lincolnshire coast, where
@@ -360,7 +360,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR frequency</strong> — holiday parks should have an EICR every 3 years.
                 The site licence conditions from the local authority may require more frequent
@@ -395,7 +395,7 @@ export default function ElectricianLincolnshirePage() {
       heroTitle={
         <>
           Electrician Lincolnshire{' '}
-          <span className="text-yellow-400">— Find Registered Electricians</span>
+          <span className="text-elec-yellow">— Find Registered Electricians</span>
         </>
       }
       heroSubtitle="Registered electricians across Lincolnshire covering Lincoln, Grimsby, Scunthorpe, Grantham, Boston, Skegness, Spalding, and rural agricultural properties. All work certified to BS 7671."

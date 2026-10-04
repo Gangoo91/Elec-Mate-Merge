@@ -149,7 +149,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>How 110V CTE works:</strong> A step-down transformer reduces the incoming
                 230V supply to 110V. The secondary winding has a centre tap connected to earth. This
@@ -158,7 +158,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Why it matters:</strong> On a construction site, conditions are wet, dusty,
                 and physically demanding. Workers are often in contact with earthed metal
@@ -168,7 +168,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Yellow plugs and sockets:</strong> 110V equipment uses yellow BS 4343 (IEC
                 60309) plugs and sockets. The pin configuration prevents 110V equipment from being
@@ -181,27 +181,27 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-1">
             Site Plug and Socket Colour Coding (BS EN 60309 / BS 4343)
           </h3>
-          <p className="text-white/60 text-sm mb-4">
+          <p className="text-white text-sm mb-4">
             Each voltage has a dedicated colour and pin position so equipment physically cannot be
             connected to the wrong supply. On a UK construction site you should see predominantly
             yellow.
           </p>
           <div className="space-y-3">
-            <div className="flex items-center justify-between p-4 rounded-xl bg-yellow-900/30 border border-yellow-700/40">
+            <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.06] border border-yellow-700/40">
               <span className="text-white font-bold">110V single-phase (site tools)</span>
-              <span className="text-yellow-400 font-bold">Yellow</span>
+              <span className="text-elec-yellow font-bold">Yellow</span>
             </div>
             <div className="flex items-center justify-between p-4 rounded-xl bg-blue-900/30 border border-blue-700/40">
               <span className="text-white font-bold">230V single-phase</span>
-              <span className="text-yellow-400 font-bold">Blue</span>
+              <span className="text-elec-yellow font-bold">Blue</span>
             </div>
             <div className="flex items-center justify-between p-4 rounded-xl bg-red-900/30 border border-red-700/40">
               <span className="text-white font-bold">400V three-phase</span>
-              <span className="text-yellow-400 font-bold">Red</span>
+              <span className="text-elec-yellow font-bold">Red</span>
             </div>
             <div className="flex items-center justify-between p-4 rounded-xl bg-purple-900/30 border border-purple-700/40">
               <span className="text-white font-bold">25V / 50V extra-low voltage</span>
-              <span className="text-yellow-400 font-bold">Violet / White</span>
+              <span className="text-elec-yellow font-bold">Violet / White</span>
             </div>
           </div>
         </div>
@@ -228,7 +228,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>User checks before every use:</strong> Before plugging in any tool, check
                 the cable for cuts, abrasion, or kinks; check the plug for cracks or damage; check
@@ -238,7 +238,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Formal inspection and testing:</strong> All portable equipment on site
                 should be formally inspected and{' '}
@@ -248,7 +248,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Extension leads:</strong> Only use industrial-grade extension leads with
                 yellow 110V connectors on site. Domestic-style cable reels and extension leads
@@ -257,7 +257,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Transformers:</strong> Site transformers (110V step-down) should be
                 inspected regularly for damage, overheating, and oil leaks (for oil-filled types).
@@ -291,7 +291,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Temporary supply design:</strong> The temporary installation should have a
                 main distribution board with adequate protection (MCBs/RCBOs, RCD protection, main
@@ -301,7 +301,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing:</strong> The temporary installation must have an effective
                 earthing system. On sites supplied by the DNO (Distribution Network Operator), the
@@ -311,7 +311,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection:</strong> All socket outlets on the temporary supply must
                 have 30mA RCD protection. This is in addition to the reduced voltage (110V)
@@ -321,7 +321,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Protection hierarchy for hand-held equipment (Reg 704.410.3.10):</strong>{' '}
                 Every circuit supplying socket-outlets or hand-held equipment rated up to 32 A must
@@ -339,35 +339,35 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-1">
             Four Permitted Protection Methods (Reg 704.410.3.10)
           </h3>
-          <p className="text-white/60 text-sm mb-4">
+          <p className="text-white text-sm mb-4">
             Any circuit feeding a socket-outlet or hand-held equipment rated up to and including 32 A
             must use one of these four methods.
           </p>
           <div className="grid sm:grid-cols-2 gap-4">
-            <div className="p-4 rounded-xl bg-yellow-900/30 border border-yellow-700/40">
-              <p className="text-yellow-400 font-bold mb-1">(a) Reduced low voltage</p>
-              <p className="text-white/80 text-sm">
+            <div className="p-4 rounded-xl bg-white/[0.06] border border-yellow-700/40">
+              <p className="text-elec-yellow font-bold mb-1">(a) Reduced low voltage</p>
+              <p className="text-white text-sm">
                 110V CTE per Reg 411.8 — the industry-standard yellow site transformer. Strongly
                 preferred for hand tools.
               </p>
             </div>
             <div className="p-4 rounded-xl bg-blue-900/30 border border-blue-700/40">
-              <p className="text-yellow-400 font-bold mb-1">(b) ADS + 30mA RCD</p>
-              <p className="text-white/80 text-sm">
+              <p className="text-elec-yellow font-bold mb-1">(b) ADS + 30mA RCD</p>
+              <p className="text-white text-sm">
                 Automatic disconnection of supply (Section 411) with additional protection by an RCD
                 meeting Reg 415.1.1 (≤30 mA).
               </p>
             </div>
             <div className="p-4 rounded-xl bg-green-900/30 border border-green-700/40">
-              <p className="text-yellow-400 font-bold mb-1">(c) Electrical separation</p>
-              <p className="text-white/80 text-sm">
+              <p className="text-elec-yellow font-bold mb-1">(c) Electrical separation</p>
+              <p className="text-white text-sm">
                 Section 413 — each socket-outlet or item of equipment fed by an individual
                 transformer or separate transformer winding.
               </p>
             </div>
             <div className="p-4 rounded-xl bg-purple-900/30 border border-purple-700/40">
-              <p className="text-yellow-400 font-bold mb-1">(d) SELV or PELV</p>
-              <p className="text-white/80 text-sm">
+              <p className="text-elec-yellow font-bold mb-1">(d) SELV or PELV</p>
+              <p className="text-white text-sm">
                 Section 414 — separated or protected extra-low voltage. Strongly preferred for
                 handlamps in confined or damp locations.
               </p>
@@ -406,7 +406,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>User visual check (before every use):</strong> Check the plug for damage;
                 check the cable for cuts, kinks, or joints; check the tool body for cracks or
@@ -415,7 +415,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Formal visual inspection (weekly to monthly):</strong> A more detailed check
                 by a competent person, recorded in the site equipment register. Includes checking
@@ -424,7 +424,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Combined inspection and test (PAT test):</strong> Carried out at intervals
                 recommended by HSE guidance — typically every 3 months for 110V construction site
@@ -439,27 +439,27 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-1">
             Suggested Inspection and Test Intervals
           </h3>
-          <p className="text-white/60 text-sm mb-4">
+          <p className="text-white text-sm mb-4">
             The HSE sets no legally fixed intervals — these are the indicative frequencies from HSE
             guidance (INDG236) for the harsh construction environment. Always risk-assess for your
             own site.
           </p>
           <div className="space-y-3">
-            <div className="flex items-center justify-between p-4 rounded-xl bg-yellow-900/30 border border-yellow-700/40">
+            <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.06] border border-yellow-700/40">
               <span className="text-white font-bold">110V portable site tools</span>
-              <span className="text-yellow-400 font-bold">User check + test every 3 months</span>
+              <span className="text-elec-yellow font-bold">User check + test every 3 months</span>
             </div>
             <div className="flex items-center justify-between p-4 rounded-xl bg-orange-900/30 border border-orange-700/40">
               <span className="text-white font-bold">230V portable equipment (where justified)</span>
-              <span className="text-yellow-400 font-bold">Test monthly</span>
+              <span className="text-elec-yellow font-bold">Test monthly</span>
             </div>
             <div className="flex items-center justify-between p-4 rounded-xl bg-blue-900/30 border border-blue-700/40">
               <span className="text-white font-bold">110V / 230V extension leads &amp; RCD adaptors</span>
-              <span className="text-yellow-400 font-bold">Test monthly to 3-monthly</span>
+              <span className="text-elec-yellow font-bold">Test monthly to 3-monthly</span>
             </div>
             <div className="flex items-center justify-between p-4 rounded-xl bg-green-900/30 border border-green-700/40">
               <span className="text-white font-bold">Site office IT &amp; similar equipment</span>
-              <span className="text-yellow-400 font-bold">Test every 12 months</span>
+              <span className="text-elec-yellow font-bold">Test every 12 months</span>
             </div>
           </div>
         </div>
@@ -486,7 +486,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>When a PTW is required:</strong> Any work on or near live electrical
                 equipment; any work that requires isolation of circuits or systems; any work in
@@ -495,7 +495,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Who issues the permit:</strong> The permit must be issued by a person with
                 sufficient authority and competence — typically the site electrical supervisor or
@@ -504,7 +504,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What the permit covers:</strong> The exact scope of work, the circuits or
                 equipment to be worked on, the isolation and safety measures (lock-off, proving
@@ -545,7 +545,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Route cables overhead where possible.</strong> BS 7671 Reg 704.522.8.101
                 requires that cables are not run across site roads or walkways, and where this is
@@ -557,7 +557,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Protect ground-level cables.</strong> Where cables must run at ground level,
                 use heavy-duty cable covers (yellow cable ramps) rated for the expected traffic.
@@ -565,7 +565,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use SWA or armoured cable</strong> for all permanent and semi-permanent site
                 distribution cables. Flexible trailing cables should only be used for temporary
@@ -573,7 +573,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Keep cables away from water.</strong> Route cables away from areas prone to
                 flooding, standing water, or water runoff. All connections and junction boxes must
@@ -677,7 +677,7 @@ export default function ElectricalSafetyOnSitePage() {
       heroTitle={
         <>
           Electrical Safety on Site:{' '}
-          <span className="text-yellow-400">The Construction Guide Every Sparky Needs</span>
+          <span className="text-elec-yellow">The Construction Guide Every Sparky Needs</span>
         </>
       }
       heroSubtitle="Construction sites are one of the most electrically hazardous working environments in the UK. 110V reduced voltage systems, PAT testing, temporary supplies, permit to work procedures, and proper cable routing are not optional extras — they are the minimum standards that keep people alive."

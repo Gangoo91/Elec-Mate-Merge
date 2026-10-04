@@ -43,10 +43,10 @@ const checks = [
     question:
       "You're carrying out a CU change in a domestic property. The main earthing terminal is in the meter cupboard, separate from the CU. The original installer put a 'Safety Electrical Connection — Do Not Remove' label on the CU only. Is that compliant with BS 7671 514.13.1, and what should you do?",
     options: [
-      "Shorter cycles than the standard for the parent property type because the elevated risk in special locations justifies more frequent inspection. EV charge points are commonly inspected annually by the EV-charging-equipment manufacturer's recommendation; swimming pools annually for plant room; agricultural premises every 3 years given the harsh environment; caravans and marinas have their own GN3 Chapter 66 frequencies.",
-      "No. Reg 514.13.1 requires the warning notice 'in a visible position at or near the point of connection of every earthing conductor to an earth electrode' AND at every bonding-conductor connection AND at the main earthing terminal where it's separate from the main switchgear. Each location needs its own notice. The fix on this job: fit a fresh BS 951-style notice at the main earthing terminal in the meter cupboard, and keep one at every bonding clamp (gas, water).",
-      'EAWR is the underlying statutory law (criminal liability for the duty-holder) — Reg 4(2) requires that systems be maintained in a condition that prevents danger. BS 7671 Part 6 is the technical inspection and testing standard you apply to evidence that maintenance, and GN3 (IET Guidance Note 3) is the practical companion telling you how to do it.',
-      "Most electrical firms apply 15-30% markup on materials — covers handling, ordering admin, storage, working capital tied up in stock, and the value-added service of selecting the right materials. Some firms quote materials at trade price + markup; others at retail price (which already builds in markup vs trade price). Always be transparent with customers about which model you're using; they understand markup as the standard model.",
+      'Yes — one notice at the consumer unit covers the whole earthing arrangement.',
+      'No — Reg 514.13.1 needs the notice at the main earthing terminal where it is separate from the main switchgear, and at every bonding connection. Fit one at the MET and at each bonding clamp.',
+      'Yes — the notice is only required on TT installations with an earth electrode.',
+      'No — but the fix is to move the MET into the consumer unit so one label covers it.',
     ],
     correctIndex: 1,
     explanation:
@@ -57,10 +57,10 @@ const checks = [
     question:
       "You're inspecting a property that has solar PV with battery storage feeding back through an inverter to the CU. The CU has a normal main switch but no notice indicating multiple supplies. What does BS 7671 require, and why does it matter?",
     options: [
-      'To indicate that a device (e.g. a fuse, switch or MCB) only interrupts the line conductor, not the neutral. Important for any future electrician working on the circuit — the neutral may still be live relative to earth even with the device open, so isolation procedures (lock-off, prove dead) must take account of the single-pole nature.',
-      "Because EAWR is the trade-specific instrument made under HASAWA's enabling powers (s.15) — but HASAWA's general duties (s.2, s.3, s.7) sit underneath the EAWR breach as the broader safe-system / personal-duty obligations. Charging both gives the prosecution two routes to conviction and lets the court assess culpability across both the specific technical reg AND the broader systems-of-work failure.",
-      "A warning notice indicating the presence of additional/alternative supplies is required at or adjacent to the consumer unit. The customer (or any future electrician) needs to know that opening the main switch DOESN'T isolate everything — the PV inverter and battery storage can still energise the bus-bar from the load side. The BS 7671 514 series covers this and the IET Code of Practice for Solar PV adds layout guidance for the notice.",
-      'When the worker may be exposed to a risk to their health or safety while at work, EXCEPT where and to the extent that the risk has been or will be adequately controlled by other means which are equally or more effective. The 2022 amendment also extended the duty to cover limb (b) workers (some categories of casual / gig workers) as well as employees.',
+      'Nothing — the inverter has its own label, so no notice is needed at the CU.',
+      'Only a notice on the inverter telling the customer the PV output in kW.',
+      "Warning notices for alternative or additional supplies (Reg 514.15.1) — at the origin, the meter position if remote, the board the sources connect to, and every point of isolation — because the main switch alone won't isolate everything.",
+      'A notice is only required if the battery is larger than 10 kWh.',
     ],
     correctIndex: 2,
     explanation:
@@ -71,10 +71,10 @@ const checks = [
     question:
       'After a domestic CU change you fit individual circuit labels but no overall schematic inside the CU door. Is that enough?',
     options: [
-      "Read the RAMS for the job before you start so you understand the planned controls. Attend the toolbox talks and sign the register. Operate within the scope of any permit-to-work — never extend the work beyond what the permit authorises. Flag anything you see on site that doesn't match the RAMS. HASAWA s.7 makes all of this a personal duty.",
-      "Minor Works Certificate (MWC). Replacement of an existing protective device on an existing circuit, no extension to the installation, no new circuits — that's the textbook MWC scope under BS 7671 Part 6 644. The MWC records the work done, the test results on the affected circuit (continuity of CPC, IR, polarity, R1+R2, Zs, RCD trip-time), the Designer / Constructor / Inspector signature, and the BS 7671 edition you've tested to (BS 7671:2018+A4:2026 in 2026). EIC is for new circuits or significant additions; EICR is for the periodic inspection report, not for rectification.",
+      'Yes — circuit labels on each device fully satisfy Reg 514.9.1 in every case.',
+      'Yes — a schematic is only required on three-phase boards.',
       "Not really. BS 7671 Reg 514.9.1 requires a diagram, chart or table indicating the type and composition of each circuit, the method of protection, and the information needed to identify protective devices. Even with the simplified domestic exception, a schematic / circuit list inside the CU door is best practice — it gives any future electrician (or customer) a map of the install. Without it the apprentice's circuit labels are isolated facts; the schematic is the map.",
-      "An MFT (Multifunction Tester) is the dedicated installation-test instrument that combines continuity (R1+R2 / R2), insulation resistance, loop impedance (Zs / Ze / PFC), RCD operating time and trip current, and (on most models) earth-electrode resistance into a single unit. Standard apprentice-grade kit: Megger MFT1741+, Fluke 1664FC, Kewtech KT64+, Martindale ET4500. All do the BS 7671 Chapter 61–62 sequence; brand choice depends on the firm's preference.",
+      'No — but the only requirement is a photograph of the board left with the customer.',
     ],
     correctIndex: 2,
     explanation:
@@ -90,10 +90,10 @@ const quizQuestions = [
     question:
       "Which BS 7671 regulation requires the 'Safety Electrical Connection — Do Not Remove' notice at the main earthing terminal and at every bonding-conductor connection?",
     options: [
-      'Reg 411.3.1.2 — the requirement to install main protective bonding to extraneous-conductive-parts. This sets out where the gas, water and structural-steel bonds must connect to the main earthing terminal, but it is the bonding-arrangement rule, not the rule that mandates the warning notice on those connections.',
+      'Reg 411.3.1.2 — the requirement for main protective bonding, which also sets out where the notices go.',
       "Reg 514.13.1 — 'A warning notice clearly and durably marked with the words Safety Electrical Connection — Do Not Remove shall be securely fixed in a visible position at or near (a) the point of connection of every earthing conductor to an earth electrode, and (b) the point of connection of every bonding conductor to an extraneous-conductive-part, and (c) the main earthing terminal, where separate from main switchgear.'",
-      'Reg 514.9.1 — the requirement to provide a diagram, chart or table indicating each circuit and the devices for protection, isolation and switching. This is the schematic / circuit-list rule for the consumer unit, not the rule covering the earthing and bonding warning notices.',
-      'Reg 514.12.2 — the requirement for a notice telling the user to test any RCD periodically by pressing the test button. This is a user-instruction label, but it concerns RCD testing rather than the protection of earthing and bonding connections.',
+      'Reg 514.9.1 — the requirement for circuit charts, which includes earthing notices.',
+      'Reg 514.12.2 — the RCD test notice, which also covers earthing connections.',
     ],
     correctAnswer: 1,
     explanation:
@@ -103,10 +103,10 @@ const quizQuestions = [
     id: 2,
     question: "Why does BS 7671 treat warning notices as 'communication' rather than just labels?",
     options: [
-      'Significant. A south-facing roof at 30-40° pitch is the optimal UK orientation, posting 100% of reference yield. East-facing or west-facing roofs typically produce 80-85% of optimal. North-facing produces 50-65% (still positive but with much longer payback). Steeper pitches favour winter performance; shallower pitches favour summer performance. Flat roofs get an A-frame mount to set a target pitch and azimuth. The MCS Yield Calculator handles all of this — produces the kWh figure for the SAP and the customer handover.',
-      'Yes — UK FE colleges and training providers consistently report difficulty recruiting industry-experienced electrical lecturers and assessors. The pay is below skilled-trade rates but the lifestyle (term-time hours, holidays, pension) appeals to mid-career and later-career electricians. Apprenticeship Standards expansion has increased demand for assessors. Many regions have unfilled posts at any given time.',
-      "Because the install is a long-lived asset that will outlast the original installer's involvement. Notices communicate critical information — main earth location, RCD test interval, mixed supplies, isolator function — to whoever interacts with the install in future, including the customer in an emergency, the next electrician on a fault visit, and the EICR engineer in five years' time. The labels are how the install talks to people when the original installer isn't there.",
-      "Whenever a cable / conduit / fitting penetrates a fire-rated wall or floor. Standard locations: party walls between dwellings; compartment walls in HMOs / commercial buildings; floors between flats; ducts and risers; protected escape stairwells. Fire-stopping products: intumescent sealant (Hilti CP 606, Promat PROMASEAL), fire-rated batts (Rockwool Firepro), fire collars on conduit / pipe penetrations. The fire rating of the seal must match or exceed the wall / floor rating (typically 30 / 60 / 90 / 120 minutes). Documented on the job sheet; updated on building's fire-safety log.",
+      'Because notices replace the need for a certificate on small jobs.',
+      'Because the DNO reads them when it changes the meter.',
+      "Because the installation outlives the installer — notices tell the customer, the next electrician and the inspector what they need to know when you aren't there.",
+      "They don't — notices are optional and purely cosmetic.",
     ],
     correctAnswer: 2,
     explanation:
@@ -116,10 +116,10 @@ const quizQuestions = [
     id: 3,
     question: 'What does the RCD test notice (Reg 514.12.2 area) typically tell the user?',
     options: [
-      "Because the labels are mainly there to satisfy the EICR inspector at the next periodic — they are a box-ticking requirement for the report rather than something anyone uses day to day. Once the install passes its first inspection the labels have done their job and their ongoing legibility doesn't really matter.",
-      "The JIB Apprentice Grading scheme tracks an apprentice's progress through training and uses recorded competence (often drawn from the diary, portfolio and review forms) to support grade progression. JIB grades are tied to industry-standard pay rates under the JIB Working Rules; progressing through the grades requires evidence, and the diary is part of the evidence chain.",
-      'Employees must take reasonable care for the safety of themselves and others, cooperate with the responsible person, and inform the employer of any situation they consider a serious and immediate danger or any shortcomings in fire safety arrangements',
-      "That the installation incorporates an RCD, that the user should test it quarterly (or six-monthly per the older guidance) by pressing the test button, that the RCD should trip when tested, and that if it doesn't trip the user should call a competent electrician immediately. Maintains the protection by catching RCD failure before it matters.",
+      'To test it daily by switching the main switch off and on.',
+      'That it never needs testing because modern RCDs test themselves.',
+      'To test it monthly by unplugging every appliance on the circuit.',
+      "That the installation is protected by a device that switches off if a fault develops, to test it six-monthly using the test button, then switch it back on — and to seek expert advice if it doesn't operate.",
     ],
     correctAnswer: 3,
     explanation:
@@ -130,10 +130,10 @@ const quizQuestions = [
     question:
       "On a domestic CU change, what's the minimum BS 7671-compliant label set you should leave behind?",
     options: [
-      'Main earthing terminal notice (514.13.1), bonding-clamp notices on gas and water bonds (514.13.1), RCD test notice (in the 514 series), single-line diagram or circuit list inside the CU door (514.9.1), individual circuit identification on each MCB/RCBO, isolator labelling, and a warning notice for any additional or alternative supply (PV, battery, generator) where applicable.',
-      'Re-evaluation. Heat pumps run for longer (longer plateau, less peaky), EV chargers concentrate demand in specific hours (often peak time without smart control), batteries can shift demand. The combined effect is to flatten and broaden peaks but raise sustained demand. Traditional dwelling diversity may understate.',
-      'Compressed into the EIC trio + customer handover pack: design notes (Zs calculations, RCBO selection, earthing review) typically held in the contractor file but not always issued separately to the customer; EIC + Schedules + manuals consolidated into the customer pack; verbal walk-through handles the operational handover.',
-      'Per BS 8599-1 (small kit): guidance leaflet, medium dressings (4), large dressings (1), triangular bandages (2), safety pins (6), eye pads (2), adhesive plasters (40), assorted plasters (10), conforming bandages (3), microporous tape (1), disposable gloves (6 pairs), face shield (1), foil blanket (1), cleansing wipes (10), burn gel sachets (2), shears (1).',
+      "The 'Safety Electrical Connection' notices at the MET and bonding clamps, the RCD test notice, the circuit chart (Reg 514.9.1), circuit identification, the periodic-inspection notice, and alternative-supply notices where relevant.",
+      "Only a sticker on the CU lid with the installer's phone number.",
+      'Only the circuit labels on each RCBO — every other notice is optional.',
+      'Only the warning notices required by the DNO at the meter.',
     ],
     correctAnswer: 0,
     explanation:
@@ -141,26 +141,26 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question: "What's the purpose of a single-pole device labelling requirement (Reg 514.16.1)?",
+    question: 'What does BS 7671 Reg 514.16.1 require?',
     options: [
-      "All design information, including drawings, calculations, schedules, RFIs, change orders, as-installed records and operations and maintenance documentation — kept current throughout the building's life and accessible to the dutyholders for the building.",
-      'To indicate that a device (e.g. a fuse, switch or MCB) only interrupts the line conductor, not the neutral. Important for any future electrician working on the circuit — the neutral may still be live relative to earth even with the device open, so isolation procedures (lock-off, prove dead) must take account of the single-pole nature.',
-      "TULRCA 1992 is the consolidating UK statute on trade union law and collective labour relations. It covers the right to join (and not join) a union, protection from anti-union discrimination, recognition for collective bargaining, industrial action ballot requirements, picketing rules, and union internal governance. It's the foundational statute that protects union members.",
-      'BS EN 61009-1 RCBO 32 A Type B 6 kA Icn 30 mA Type B (or Type A plus charger internal RDC-DD per IEC 62752 to comply with Reg 722.531.3.101); plus Reg 722.411.4.1 O-PEN protection (charger with built-in O-PEN protection or earth-electrode arrangement); plus Reg 421.1.7 AFDD discussion with customer (typically declined on dedicated EV with fixed flex).',
+      'Reg 514.16.1 requires every single-pole device to carry a label saying the neutral is not switched.',
+      'Reg 514.16.1 requires an information notice at or near the distribution board where SPDs are installed (with an exception for domestic premises where the SPD is recorded on the certificate or report).',
+      'Reg 514.16.1 requires a notice giving the RCD test interval at every distribution board.',
+      'Reg 514.16.1 requires a notice at every bonding clamp.',
     ],
     correctAnswer: 1,
     explanation:
-      "Single-pole devices (most domestic MCBs/RCBOs) only break the line conductor — the neutral remains connected through the bus-bar. For an electrician arriving to work on the circuit later, this matters because: (1) the neutral can still carry current from other circuits sharing the supply, and (2) under fault conditions or with a wandering neutral, the neutral can rise to dangerous voltage relative to earth. The label is the comms channel that tells the next person what they're dealing with.",
+      'Reg 514.16.1 is the SPD notice: "The presence of SPDs in an installation shall be indicated by an information notice at or near the relevant distribution board(s)." Domestic premises are excepted where the SPD is recorded on the certificate or condition report given to the person ordering the work. It is not a single-pole device label — the rule that single-pole devices go in the line conductor only is Reg 132.14.1.',
   },
   {
     id: 6,
     question:
       'What should the warning notice for additional or alternative supplies (Reg 514.15 area) make clear?',
     options: [
-      'Pre-construction information (PC info from client/principal designer) → construction phase plan (principal contractor) → RAMS for each work package (contractor) → toolbox talks each shift (supervisor) → permit-to-work for specific high-risk activities (issued before, closed after). Each layer references the one above it. After an incident the inspector traces backwards from the incident to find the gap.',
-      "The policy covers claims notified during the policy period, regardless of when the underlying work was done. Distinct from 'occurrence' basis (covers events during policy period regardless of when claim made). Claims-made is standard for PI; means you need continuous cover (or run-off cover after ceasing) to protect against late-emerging claims.",
-      'That the installation has more than one source of supply (mains plus PV, battery, generator, etc.), that opening the main switch does NOT isolate the entire installation, what additional isolation is needed, and where each isolation point is located. Critical for anyone working on the system because back-feed from PV/battery can energise the install with the main switch open.',
-      'Depositing controlled waste, or knowingly permitting the deposit of controlled waste, in or on land without an environmental permit; treating, keeping or disposing of controlled waste without a permit; treating, keeping or disposing of controlled waste in a manner likely to cause pollution of the environment or harm to human health. Fly-tipping is the headline s.33 offence.',
+      'Only the kW rating of the PV array.',
+      'Only the name of the installer of the PV system.',
+      "That there is more than one source of supply, that the main switch alone won't isolate everything, and where each point of isolation is.",
+      'That the installation must not be worked on at all.',
     ],
     correctAnswer: 2,
     explanation:
@@ -171,10 +171,10 @@ const quizQuestions = [
     question:
       'What does the regulation require for the durability and legibility of warning notices?',
     options: [
-      "Reg 13 places a duty on the principal contractor to plan, manage, monitor and co-ordinate the construction phase, and to ensure suitable site induction. Reg 4(2) puts a duty on the client and Reg 9 puts a duty on the principal designer to provide pre-construction information. The information must be in a form that can be understood by those who need to use it — that's a written, structured, accessible duty, not a verbal handover at the gate.",
-      'The regulation only requires notices to be present at the time of the initial verification — there is no durability standard, so a hand-written label or a marker-pen note is acceptable provided it can be read on the day the EIC is signed. Later fading is the responsibility of the property owner, not the installer.',
-      "The policy covers claims notified during the policy period, regardless of when the underlying work was done. Distinct from 'occurrence' basis (covers events during policy period regardless of when claim made). Claims-made is standard for PI; means you need continuous cover (or run-off cover after ceasing) to protect against late-emerging claims.",
-      "Notices must be 'clearly and durably marked' (Reg 514.13.1) and 'shall be securely fixed in a visible position'. The practical interpretation: typed/printed labels on durable substrate (BS 951 plates for earthing, laminated card for inside-CU notices), securely fixed (screwed, riveted, or industrial adhesive), readable from a normal stand-back distance. Hand-written sticky labels degrade fast and aren't compliant.",
+      'Any form is acceptable, including hand-written notes, as long as they are there on the day.',
+      'They must be engraved metal plates in every case.',
+      'They only need to last until the next periodic inspection.',
+      'They must be clearly and durably marked and securely fixed in a visible position — printed on durable material, not hand-written stickers.',
     ],
     correctAnswer: 3,
     explanation:
@@ -186,9 +186,9 @@ const quizQuestions = [
       'On an EICR, what code is typically applied to a missing main-earth warning notice (Reg 514.13.1) and what code to a missing schematic (Reg 514.9.1)?',
     options: [
       "A missing 514.13.1 main-earth notice is typically C3 (improvement recommended) where the earthing connection itself is sound, but can escalate to C2 (potentially dangerous) where the connection is at risk of being disturbed. A missing 514.9.1 schematic is normally C3. Codes depend on the specific install context and the inspector's professional judgement — these are typical not absolute.",
-      "The 'workmanship' standard and 'manufacturers' instructions' obligation. So a faulty cable joint that's electrically OK at the moment of test but executed with poor workmanship breaches 134.1.1, AND ignoring an SPD lead-length spec or a CU manufacturer's torque setting also breaches 134.1.1. This is the regulation a scheme inspector quotes when they're calling out poor workmanship without it being a specific technical-test failure.",
-      'Apprenticeship standards (gov.uk) require evidence of at least 20% of the apprenticeship being off-the-job training. The log records day-release at college, online courses, structured study time, shadowing in unfamiliar areas, and any other learning activity outside normal productive work. Without it, the apprenticeship may not meet the standards required for the End-Point Assessment to be funded and certified.',
-      'Ze source (Form 1 cited or BS 7671 assumed maximum cited); cable type, line CSA and cpc CSA; route length; OSG Table I1 mΩ/m at 20 degrees C cited; temperature factor applied (1.20 for 70-deg PVC, 1.28 for 90-deg thermosetting) cited; calculated cold (R1 + R2); calculated hot (R1 + R2); Ze + hot (R1 + R2) = design Zs; Table 41.3 max Zs cited (A4:2026 edition) for the device fitted; calculated margin; verification target (0.8 × Table 41.3 max for measured cold Zs).',
+      'Both are always C1 — any missing notice is an immediate danger.',
+      'Neither is coded — notices are outside the scope of an EICR.',
+      'Both are always C2, regardless of the condition of the connections.',
     ],
     correctAnswer: 0,
     explanation:
@@ -272,7 +272,7 @@ export default function Sub4() {
 
         <LearningOutcomes
           outcomes={[
-            'Identify the BS 7671 regulations that mandate warning notices and labels (Section 514, particularly 514.9.1, 514.13.1, 514.13.2, 514.15, 514.16.1).',
+            'Identify the BS 7671 regulations that mandate warning notices and labels (Section 514, particularly 514.9.1, 514.12.2, 514.13.1, 514.15.1, 514.16.1).',
             "State the verbatim wording required by Reg 514.13.1 for the main earth and bonding-clamp warning notice ('Safety Electrical Connection — Do Not Remove').",
             'List the minimum BS 7671-compliant label set for a domestic CU change.',
             "Recognise the durability requirement (BS 951 plates for earthing/bonding, laminated for schematics) and what doesn't meet it (hand-written sticky labels).",
@@ -392,19 +392,19 @@ export default function Sub4() {
         <SectionRule />
 
         <ConceptBlock
-          title="514.16.1 — single-pole device labelling and SPD presence"
-          plainEnglish="Single-pole devices (the typical domestic MCB or RCBO) only break the line conductor — the neutral remains connected through the bus-bar. Where this isn't obvious, a label is required so any future electrician knows that opening the device doesn't isolate the neutral. The same regulation area requires labelling for the presence of Surge Protective Devices (SPDs), with an exception for domestic premises."
-          onSite="In modern domestic CUs the single-pole nature of MCBs/RCBOs is usually self-evident from the layout. The SPD-presence label is more often needed because SPDs have become standard in newer installs and a future electrician needs to know to check / replace them as part of any maintenance. Many manufacturers ship CUs with the SPD label already in the front panel."
+          title="514.16.1 — notice of SPDs"
+          plainEnglish="Where SPDs are installed, an information notice at or near the distribution board must say so. In domestic premises the notice can be left off where the SPD is recorded on the certificate or condition report given to the person who ordered the work."
+          onSite="SPDs have become standard in newer installs, and the next electrician needs to know one is there so they can check it and disconnect it before insulation testing. Many manufacturers ship CUs with an SPD label already in the front panel."
         >
-          <p>What 514.16 covers:</p>
+          <p>Related rules that are often confused with it:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>Identification of single-pole devices in the line conductor (514.16.1).</li>
             <li>
-              Indication of SPDs present in the installation (with an exception for domestic).
+              Single-pole fuses, switches and circuit-breakers go in the line conductor only (Reg
+              132.14.1) — a design and installation rule, not a labelling one.
             </li>
             <li>
-              Practical implication for the next electrician — single-pole devices need isolation
-              procedures that account for the live neutral.
+              Alternative or additional supplies such as PV or batteries need their own warning
+              notices (Reg 514.15.1).
             </li>
           </ul>
         </ConceptBlock>
@@ -501,27 +501,17 @@ export default function Sub4() {
         />
 
         <RegsCallout
-          source="BS 7671:2018+A2:2022 — Reg 514.16.1 (paraphrased)"
-          clause={
-            <>
-              Paraphrased: A label shall be provided to indicate the presence of Surge Protective
-              Devices (SPDs) in the installation. An exception applies to domestic (household)
-              premises or similar. The labelling requirement supports future identification,
-              maintenance and replacement of the SPDs by competent persons.
-            </>
-          }
+          source="BS 7671:2018+A4:2026 — Reg 514.16.1"
+          clause="The presence of SPDs in an installation shall be indicated by an information notice at or near the relevant distribution board(s). The requirements of this regulation need not be applied for domestic (household) premises or similar installations where the information is recorded on the appropriate certification for initial verification, or an Electrical Installation Condition Report, complete with the guidance for recipients as detailed in Appendix 6, and issued to the person ordering the work."
           meaning={
             <>
-              Reg 514.16.1 brings SPDs into the visible-label regime. The domestic exception
-              reflects the fact that domestic CUs are typically opened only by competent
-              electricians who can identify the SPD by sight, but commercial and industrial installs
-              benefit from explicit labelling because the install may be larger, harder to navigate,
-              and operated by a wider range of people. The wider 514.16 area also covers single-pole
-              device identification &mdash; a practical safety label that tells the next electrician
-              the neutral may still be live with the device open.
+              Reg 514.16.1 (added by A2:2022) brings SPDs into the notice regime. In a dwelling the
+              certificate can carry the information instead; on commercial and industrial
+              installations the notice goes at or near the board, because the installation may be
+              larger and worked on by more people.
             </>
           }
-          cite="Source: BS 7671:2018+A2:2022, Reg 514.16.1 — paraphrased; refer to the Wiring Regulations for full wording."
+          cite="Source: BS 7671:2018+A4:2026, Regulation 514.16.1."
         />
 
         <InlineCheck

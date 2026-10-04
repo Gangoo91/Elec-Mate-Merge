@@ -179,7 +179,7 @@ const sections = [
           </h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Simple installation (detached/semi, driveway)</strong> — £800 to £1,100.
                 Charger near consumer unit, short cable run, existing board has spare capacity.
@@ -187,7 +187,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard installation (terraced house, medium cable run)</strong> — £1,100
                 to £1,400. Cable run of 10 to 15 metres through the property, possible board
@@ -195,7 +195,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Complex installation (long run, board upgrade, earthing)</strong> — £1,400
                 to £1,800+. Cable run of 15 to 25 metres, consumer unit replacement, earth rod
@@ -220,7 +220,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Victorian and Edwardian terraces</strong> — the most common property type in
                 inner Manchester. Consumer units are typically at the rear (kitchen or
@@ -230,7 +230,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Back-to-back terraces</strong> — some areas of East Manchester still have
                 back-to-back or through terraces with no rear access. These can be particularly
@@ -239,7 +239,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Converted mills and apartments</strong> — Manchester's Ancoats, Northern
                 Quarter, and Castlefield areas have many converted industrial buildings now used as
@@ -249,7 +249,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>On-street parking</strong> — many inner Manchester terraces have no
                 off-street parking. Running a cable across the pavement to charge from a lamp-post
@@ -278,7 +278,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated circuit (Regulation 722.533.101)</strong> — each EV charger
                 requires its own dedicated circuit from the consumer unit. Many Manchester terraces
@@ -286,7 +286,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection (Regulation 722.531.3.101)</strong> — the EV circuit must have
                 appropriate RCD protection. Where the charger can produce DC residual currents, a
@@ -295,7 +295,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing (Regulation 722.411.4.1)</strong> — particular attention is needed
                 for earthing arrangements on PME supplies. Most Manchester properties are on PME,
@@ -303,7 +303,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable sizing</strong> — use the{' '}
                 <SEOInternalLink href="/tools/cable-sizing-calculator">
@@ -365,7 +365,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98 notification</strong> — for standard 7kW single-phase chargers, submit a
                 G98 notification via the ENW online portal. This is a notification, not an
@@ -373,7 +373,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G99 application</strong> — for three-phase chargers or commercial
                 multi-point installations, G99 requires prior approval from ENW. Allow 4 to 10
@@ -398,14 +398,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV chargepoint grant (national)</strong> — available to flat owners and
                 tenants only. Covers up to 75% of installation cost, capped at £350.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>GM Electric Vehicle Charging Strategy</strong> — the Greater Manchester
                 Combined Authority (GMCA) is rolling out public charging infrastructure including
@@ -414,7 +414,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Workplace Charging Scheme</strong> — Manchester businesses can claim up to
                 £350 per socket (up to 40 sockets) for workplace charger installations.
@@ -438,7 +438,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Pricing Manchester Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -467,7 +467,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify Manchester EV installations"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. 7-day free trial, cancel anytime."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. 7-day free trial, cancel anytime."
           icon={Car}
         />
       </>
@@ -493,7 +493,7 @@ export default function EVChargerInstallationManchesterPage() {
       heroTitle={
         <>
           EV Charger Installation Manchester:{' '}
-          <span className="text-yellow-400">Costs, DNO, and Grants 2026</span>
+          <span className="text-elec-yellow">Costs, DNO, and Grants 2026</span>
         </>
       }
       heroSubtitle="Local costs for EV charger installation across Greater Manchester, Electricity North West DNO notification, local grants, terraced house cable routing challenges, and Section 722 compliance."
@@ -504,7 +504,7 @@ export default function EVChargerInstallationManchesterPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in Manchester"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify EV Charger Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

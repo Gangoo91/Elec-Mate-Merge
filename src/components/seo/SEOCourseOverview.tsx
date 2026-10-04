@@ -31,11 +31,11 @@ export function SEOCourseOverview({
       <div className="grid gap-4 sm:grid-cols-2">
         {facts.map((fact) => (
           <div key={fact.label} className="flex items-start gap-3">
-            <div className="w-9 h-9 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center shrink-0">
-              <fact.icon className="w-4 h-4 text-yellow-400" />
+            <div className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.1] flex items-center justify-center shrink-0">
+              <fact.icon className="w-4 h-4 text-elec-yellow" />
             </div>
             <div>
-              <div className="text-xs font-medium text-yellow-400 uppercase tracking-wider">
+              <div className="text-xs font-medium text-elec-yellow uppercase tracking-wider">
                 {fact.label}
               </div>
               <div className="text-sm text-white mt-0.5">{fact.value}</div>

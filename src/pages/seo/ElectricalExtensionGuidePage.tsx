@@ -45,7 +45,7 @@ export default function ElectricalExtensionGuidePage() {
         <>
           House Extension Electrics
           <br />
-          <span className="text-yellow-400">Wiring & Regulations Guide</span>
+          <span className="text-elec-yellow">Wiring & Regulations Guide</span>
         </>
       }
       heroSubtitle="Wiring a house extension involves designing new circuits, connecting to the existing distribution board (or installing a sub-main), coordinating with the building project timeline, and ensuring compliance with Part P and BS 7671. This guide covers every aspect of extension electrics — from initial planning through to testing and certification."
@@ -73,7 +73,7 @@ export default function ElectricalExtensionGuidePage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Brain className="w-5 h-5 text-yellow-400" />
+                    <Brain className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">
                       Start With the Homeowner's Requirements
                     </h3>
@@ -95,7 +95,7 @@ export default function ElectricalExtensionGuidePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Cable className="w-5 h-5 text-yellow-400" />
+                    <Cable className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">
                       Assess the Existing Installation
                     </h3>
@@ -113,7 +113,7 @@ export default function ElectricalExtensionGuidePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <ClipboardCheck className="w-5 h-5 text-yellow-400" />
+                    <ClipboardCheck className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Coordinate With the Builder</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -147,18 +147,18 @@ export default function ElectricalExtensionGuidePage() {
                 <h3 className="font-bold text-white text-lg mb-4">Standard Extension Circuits</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Lighting circuit</strong> — 1.0mm² or
+                      <strong className="text-elec-yellow">Lighting circuit</strong> — 1.0mm² or
                       1.5mm² twin-and-earth, protected by a 6A RCBO. One circuit typically serves
                       the entire extension unless there are more than 10-12 lighting points.
                       Consider separate circuits for the extension and any new external lighting.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Ring final or radial socket circuit
                       </strong>{' '}
                       — 2.5mm² twin-and-earth for a ring final (32A RCBO) or a radial circuit (20A
@@ -167,9 +167,9 @@ export default function ElectricalExtensionGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Cooker circuit</strong> — 6.0mm²
+                      <strong className="text-elec-yellow">Cooker circuit</strong> — 6.0mm²
                       twin-and-earth, 32A RCBO, if the extension includes a kitchen with an electric
                       cooker or hob. Use{' '}
                       <SEOInternalLink href="/tools/cable-sizing-calculator">
@@ -179,18 +179,18 @@ export default function ElectricalExtensionGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Underfloor heating circuit</strong> — If
+                      <strong className="text-elec-yellow">Underfloor heating circuit</strong> — If
                       electric underfloor heating is specified, this typically requires a dedicated
                       radial circuit sized for the heating mat's current draw. The thermostat is
                       wired between the circuit and the heating mat.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">External circuits</strong> — Garden
+                      <strong className="text-elec-yellow">External circuits</strong> — Garden
                       lighting, external sockets, security lighting, and patio heaters may each
                       require dedicated circuits depending on the load and cable run.
                     </span>
@@ -218,7 +218,7 @@ export default function ElectricalExtensionGuidePage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Zap className="w-5 h-5 text-yellow-400" />
+                    <Zap className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">
                       Option 1: Add to Existing Consumer Unit
                     </h3>
@@ -239,7 +239,7 @@ export default function ElectricalExtensionGuidePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <ShieldCheck className="w-5 h-5 text-yellow-400" />
+                    <ShieldCheck className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">
                       Option 2: Install a Sub-Distribution Board
                     </h3>
@@ -257,7 +257,7 @@ export default function ElectricalExtensionGuidePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">What Not to Do</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -287,9 +287,9 @@ export default function ElectricalExtensionGuidePage() {
                 <h3 className="font-bold text-white text-lg mb-4">Common Lighting Arrangements</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Recessed downlights</strong> — The most
+                      <strong className="text-elec-yellow">Recessed downlights</strong> — The most
                       common choice for kitchen and living room extensions. Typically 5W-10W LED
                       GU10 or integrated LED fittings. Space at 60-90cm centres for even coverage.
                       Consider fire-rated downlight cans where the ceiling is a fire barrier (e.g.,
@@ -297,35 +297,35 @@ export default function ElectricalExtensionGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Pendant lighting</strong> — Over kitchen
+                      <strong className="text-elec-yellow">Pendant lighting</strong> — Over kitchen
                       islands, dining tables, and feature areas. Allow for separate switching from
                       the main ceiling lights so the homeowner can create different lighting scenes.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Under-cabinet lighting</strong> — LED
+                      <strong className="text-elec-yellow">Under-cabinet lighting</strong> — LED
                       strip or puck lights under kitchen wall units for worktop task lighting. These
                       can be on the main lighting circuit or on a separate switched fused connection
                       unit.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">External soffit lighting</strong> —
+                      <strong className="text-elec-yellow">External soffit lighting</strong> —
                       Recessed or surface-mounted LED fittings in the extension's soffit or fascia.
                       Provides ambience for outdoor entertaining and security lighting. Must be
                       rated for outdoor use (IP44 minimum).
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Dimming</strong> — Many homeowners want
+                      <strong className="text-elec-yellow">Dimming</strong> — Many homeowners want
                       dimmable lighting in extensions. Ensure LED-compatible dimmers are specified —
                       trailing-edge dimmers for LED, not leading-edge dimmers designed for halogen.
                       Check the LED manufacturer's dimmer compatibility list.
@@ -356,7 +356,7 @@ export default function ElectricalExtensionGuidePage() {
               </p>
               <div className="space-y-3 mt-4">
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     1
                   </span>
                   <div>
@@ -371,7 +371,7 @@ export default function ElectricalExtensionGuidePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     2
                   </span>
                   <div>
@@ -385,7 +385,7 @@ export default function ElectricalExtensionGuidePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     3
                   </span>
                   <div>
@@ -420,35 +420,35 @@ export default function ElectricalExtensionGuidePage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">30mA RCD protection</strong> — All outdoor
+                      <strong className="text-elec-yellow">30mA RCD protection</strong> — All outdoor
                       circuits must be protected by a 30mA RCD. With RCBO boards, this is automatic.
                       On dual-RCD boards, ensure external circuits are on an RCD-protected side.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Cable type</strong> — Cables buried in the
+                      <strong className="text-elec-yellow">Cable type</strong> — Cables buried in the
                       ground must be SWA (steel wire armoured) cable or standard cable in suitable
                       conduit. SWA cable must be buried at a minimum depth of 500mm (or deeper if
                       subject to vehicle traffic). Mark the route with warning tape above the cable.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">IP rating</strong> — External accessories
+                      <strong className="text-elec-yellow">IP rating</strong> — External accessories
                       must have a suitable IP rating. IP44 minimum for sheltered locations, IP65 or
                       IP66 for exposed locations. Outdoor socket outlets should be IP66 rated with a
                       weatherproof enclosure.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Part P notification</strong> — New outdoor
+                      <strong className="text-elec-yellow">Part P notification</strong> — New outdoor
                       circuits are notifiable under{' '}
                       <SEOInternalLink href="/part-p-building-regulations">
                         Part P
@@ -484,7 +484,7 @@ export default function ElectricalExtensionGuidePage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <ShieldCheck className="w-5 h-5 text-yellow-400" />
+                    <ShieldCheck className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">
                       Route 1: Competent Person Scheme
                     </h3>
@@ -500,7 +500,7 @@ export default function ElectricalExtensionGuidePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <FileText className="w-5 h-5 text-yellow-400" />
+                    <FileText className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">
                       Route 2: Building Control Notification
                     </h3>

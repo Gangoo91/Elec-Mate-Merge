@@ -56,8 +56,8 @@ export default function FlukeVsMeggerPage() {
       badgeIcon={Scale}
       heroTitle={
         <>
-          <span className="text-yellow-400">Fluke</span> vs{' '}
-          <span className="text-yellow-400">Megger</span>
+          <span className="text-elec-yellow">Fluke</span> vs{' '}
+          <span className="text-elec-yellow">Megger</span>
         </>
       }
       heroSubtitle="Head-to-head comparison of the Fluke 1664FC and Megger MFT1845 — the two most popular multifunction testers among UK electricians. Model specifications, accuracy, features, price, calibration costs, software, and user experience compared for 2026."
@@ -149,9 +149,9 @@ export default function FlukeVsMeggerPage() {
                 <h3 className="font-bold text-white text-lg mb-4">Key Specifications</h3>
                 <ul className="space-y-3 text-white leading-relaxed">
                   <li className="flex items-start gap-3">
-                    <Scale className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <Scale className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Fluke 1664FC:</strong> CAT IV 300V / CAT
+                      <strong className="text-elec-yellow">Fluke 1664FC:</strong> CAT IV 300V / CAT
                       III 600V. Insulation resistance 250V/500V/1000V. Loop impedance 0.01 to 2000
                       ohms. RCD testing at 1x, 2x, 5x In plus ramp test. Bluetooth to Fluke Connect
                       app. Monochrome display. 1,000-result memory. Weight approximately 1.2 kg.
@@ -159,9 +159,9 @@ export default function FlukeVsMeggerPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Scale className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <Scale className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Megger MFT1845:</strong> CAT IV 300V / CAT
+                      <strong className="text-elec-yellow">Megger MFT1845:</strong> CAT IV 300V / CAT
                       III 600V. Insulation resistance 250V/500V/1000V. Loop impedance 0.01 to 2000
                       ohms. RCD testing at 1/2x, 1x, 2x, 5x In plus ramp test. Bluetooth to Megger
                       Link app. Colour display. 2,000-result memory. Weight approximately 1.3 kg.
@@ -195,11 +195,11 @@ export default function FlukeVsMeggerPage() {
               <div className="space-y-4">
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-start gap-3">
-                    <Bluetooth className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Bluetooth className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <div>
                       <h3 className="font-bold text-white mb-1">Connectivity</h3>
                       <p className="text-white text-sm leading-relaxed">
-                        <strong className="text-yellow-400">Both have Bluetooth.</strong> The Fluke
+                        <strong className="text-elec-yellow">Both have Bluetooth.</strong> The Fluke
                         1664FC connects to the Fluke Connect app; the Megger MFT1845 connects to the
                         Megger Link app. Both allow wireless transfer of test results to your phone
                         or tablet. The Megger MFT1741 (mid-range) uses USB cable only. Neither app
@@ -215,11 +215,11 @@ export default function FlukeVsMeggerPage() {
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-start gap-3">
-                    <MonitorSmartphone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <MonitorSmartphone className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <div>
                       <h3 className="font-bold text-white mb-1">Display</h3>
                       <p className="text-white text-sm leading-relaxed">
-                        <strong className="text-yellow-400">Megger wins.</strong> The MFT1845 has a
+                        <strong className="text-elec-yellow">Megger wins.</strong> The MFT1845 has a
                         full-colour LCD display that is significantly easier to read in all lighting
                         conditions, especially direct sunlight on site. The Fluke 1664FC has a
                         high-contrast monochrome display — perfectly functional, but the colour
@@ -231,11 +231,11 @@ export default function FlukeVsMeggerPage() {
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-start gap-3">
-                    <Timer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Timer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <div>
                       <h3 className="font-bold text-white mb-1">Testing Speed</h3>
                       <p className="text-white text-sm leading-relaxed">
-                        <strong className="text-yellow-400">Megger wins.</strong> The MFT1845 is
+                        <strong className="text-elec-yellow">Megger wins.</strong> The MFT1845 is
                         generally faster at loop impedance and RCD tests than the Fluke 1664FC. On a
                         full <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>{' '}
                         with 20+ circuits, the cumulative time difference adds up. Megger
@@ -247,11 +247,11 @@ export default function FlukeVsMeggerPage() {
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-start gap-3">
-                    <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <div>
                       <h3 className="font-bold text-white mb-1">Build Quality and Durability</h3>
                       <p className="text-white text-sm leading-relaxed">
-                        <strong className="text-yellow-400">Fluke wins (marginally).</strong> Both
+                        <strong className="text-elec-yellow">Fluke wins (marginally).</strong> Both
                         instruments are rated IP54 and designed for professional site use. The Fluke
                         1664FC is rated for a 1-metre drop onto concrete — the highest in its class.
                         Fluke instruments are renowned for surviving extreme conditions. The Megger
@@ -264,11 +264,11 @@ export default function FlukeVsMeggerPage() {
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-start gap-3">
-                    <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <div>
                       <h3 className="font-bold text-white mb-1">Battery Life</h3>
                       <p className="text-white text-sm leading-relaxed">
-                        <strong className="text-yellow-400">Comparable.</strong> Both instruments
+                        <strong className="text-elec-yellow">Comparable.</strong> Both instruments
                         use standard AA batteries and provide a full day of heavy testing on a fresh
                         set. The Fluke 1664FC uses 6x AA; the Megger MFT1845 uses 6x AA. Bluetooth
                         on both instruments reduces battery life slightly if left on continuously —
@@ -279,11 +279,11 @@ export default function FlukeVsMeggerPage() {
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-start gap-3">
-                    <Cpu className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Cpu className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <div>
                       <h3 className="font-bold text-white mb-1">Data Storage</h3>
                       <p className="text-white text-sm leading-relaxed">
-                        <strong className="text-yellow-400">Megger wins.</strong> The MFT1845 stores
+                        <strong className="text-elec-yellow">Megger wins.</strong> The MFT1845 stores
                         up to 2,000 test results in onboard memory, compared to 1,000 on the Fluke
                         1664FC. Both allow downloading stored results to a PC or phone app. For
                         electricians carrying out multiple inspections before downloading data, the
@@ -314,24 +314,24 @@ export default function FlukeVsMeggerPage() {
                 </h3>
                 <ul className="space-y-3 text-white leading-relaxed">
                   <li className="flex items-start gap-3">
-                    <PoundSterling className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <PoundSterling className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Fluke 1664FC:</strong> Instrument only
+                      <strong className="text-elec-yellow">Fluke 1664FC:</strong> Instrument only
                       approximately £1,100 to £1,200. Full kit (with clamp meter, voltage indicator,
                       proving unit, leads, case) approximately £1,300 to £1,400.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <PoundSterling className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <PoundSterling className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Megger MFT1845:</strong> Instrument only
+                      <strong className="text-elec-yellow">Megger MFT1845:</strong> Instrument only
                       approximately £1,200 to £1,350. Full kit approximately £1,400 to £1,600.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <PoundSterling className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <PoundSterling className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Megger MFT1741 (mid-range):</strong>{' '}
+                      <strong className="text-elec-yellow">Megger MFT1741 (mid-range):</strong>{' '}
                       Instrument only approximately £750 to £900. Full kit approximately £900 to
                       £1,200. Best value option if you do not need Bluetooth or colour display.
                     </span>
@@ -374,26 +374,26 @@ export default function FlukeVsMeggerPage() {
                 <h3 className="font-bold text-white text-lg mb-4">Calibration Comparison</h3>
                 <ul className="space-y-3 text-white leading-relaxed">
                   <li className="flex items-start gap-3">
-                    <PoundSterling className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <PoundSterling className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Fluke calibration:</strong> Fluke UK
+                      <strong className="text-elec-yellow">Fluke calibration:</strong> Fluke UK
                       (Norwich) or authorised partners. Approximately £90 to £130. Turnaround 5 to
                       10 working days. Loan instruments available on request.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <PoundSterling className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <PoundSterling className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Megger calibration:</strong> Megger UK
+                      <strong className="text-elec-yellow">Megger calibration:</strong> Megger UK
                       (Dover) or authorised service centres. Approximately £80 to £120. Turnaround 5
                       to 10 working days. Loan instruments available. Megger has more UK service
                       points than Fluke.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <PoundSterling className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <PoundSterling className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Third-party calibration:</strong> Any
+                      <strong className="text-elec-yellow">Third-party calibration:</strong> Any
                       UKAS-accredited lab can calibrate either brand. Prices typically £80 to £130.
                       Convenient if you have multiple instruments from different manufacturers — one
                       lab, one shipment, one invoice.
@@ -660,7 +660,7 @@ export default function FlukeVsMeggerPage() {
         },
       ]}
       ctaHeading="Works with any MFT — auto-validates every reading"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site testing and certification. Enter results from any instrument brand and get instant BS 7671 validation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site testing and certification. Enter results from any instrument brand and get instant BS 7671 validation. 7-day free trial, cancel anytime."
       comparePath="/guides/fluke-vs-megger"
     />
   );

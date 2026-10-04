@@ -44,7 +44,7 @@ export default function ConsumerUnitChangePage() {
         <>
           Consumer Unit Change UK
           <br />
-          <span className="text-yellow-400">Cost, Regulations & Complete Guide</span>
+          <span className="text-elec-yellow">Cost, Regulations & Complete Guide</span>
         </>
       }
       heroSubtitle="Replacing a consumer unit is one of the most common — and most regulated — jobs in domestic electrical work. This guide covers everything: when replacement is needed, current regulations, Part P requirements, typical costs, and what the job involves from start to finish."
@@ -71,7 +71,7 @@ export default function ConsumerUnitChangePage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Old Rewirable Fuse Board</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -86,7 +86,7 @@ export default function ConsumerUnitChangePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <ShieldCheck className="w-5 h-5 text-yellow-400" />
+                    <ShieldCheck className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">No RCD Protection</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -102,7 +102,7 @@ export default function ConsumerUnitChangePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Zap className="w-5 h-5 text-yellow-400" />
+                    <Zap className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Additional Circuits Needed</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -119,7 +119,7 @@ export default function ConsumerUnitChangePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Physical Damage or Overheating</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -135,7 +135,7 @@ export default function ConsumerUnitChangePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Clock className="w-5 h-5 text-yellow-400" />
+                    <Clock className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">
                       Plastic Enclosure (Pre-2016 Board)
                     </h3>
@@ -167,9 +167,9 @@ export default function ConsumerUnitChangePage() {
                 <h3 className="font-bold text-white text-lg mb-4">Key Regulatory Requirements</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Metal enclosure (Regulation 421.1.201)
                       </strong>{' '}
                       — The consumer unit must comply with BS EN 61439-3 and be manufactured from
@@ -177,9 +177,9 @@ export default function ConsumerUnitChangePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         30 mA RCD protection for all circuits including lighting (Regulations
                         411.3.3, 411.3.4)
                       </strong>{' '}
@@ -192,9 +192,9 @@ export default function ConsumerUnitChangePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Type A RCDs minimum; Type B where required (BS 7671 Section 531, OSG Reg
                         3.6.4.5)
                       </strong>{' '}
@@ -207,18 +207,18 @@ export default function ConsumerUnitChangePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">SPD provision (Section 443)</strong> — A
+                      <strong className="text-elec-yellow">SPD provision (Section 443)</strong> — A
                       risk assessment for surge protection is required. In most domestic
                       installations, a Type 2 SPD should be fitted within or adjacent to the
                       consumer unit.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Bidirectional devices (BS 7671:2018+A4:2026, Section 530)
                       </strong>{' '}
                       — Introduced by Amendment 4 (A4:2026). Where the installation includes battery
@@ -227,9 +227,9 @@ export default function ConsumerUnitChangePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Circuit labelling (Regulation 514.9.1)
                       </strong>{' '}
                       — Every circuit must be identified with a durable label at the consumer unit.
@@ -269,7 +269,7 @@ export default function ConsumerUnitChangePage() {
               <p>There are two routes to compliance with Part P:</p>
               <div className="grid sm:grid-cols-2 gap-4 my-6">
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-3">
+                  <h3 className="font-bold text-elec-yellow text-lg mb-3">
                     Route 1: Competent Person Scheme
                   </h3>
                   <p className="text-white text-sm leading-relaxed">
@@ -365,21 +365,21 @@ export default function ConsumerUnitChangePage() {
                       <h4 className="font-bold text-white">Basic split-load replacement</h4>
                       <p className="text-white text-sm">6-8 ways, dual RCD, standard circuits</p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-lg">£500 - £700</span>
+                    <span className="font-bold text-elec-yellow text-lg">£500 - £700</span>
                   </div>
                   <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                     <div>
                       <h4 className="font-bold text-white">Full RCBO board</h4>
                       <p className="text-white text-sm">10-14 ways, individual RCBOs, SPD</p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-lg">£700 - £1,000</span>
+                    <span className="font-bold text-elec-yellow text-lg">£700 - £1,000</span>
                   </div>
                   <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
                     <div>
                       <h4 className="font-bold text-white">RCBO board with AFDDs</h4>
                       <p className="text-white text-sm">12-16 ways, AFDDs on bedroom circuits</p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-lg">£900 - £1,200</span>
+                    <span className="font-bold text-elec-yellow text-lg">£900 - £1,200</span>
                   </div>
                   <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
                     <div>
@@ -388,7 +388,7 @@ export default function ConsumerUnitChangePage() {
                         New tails, meter tails upgrade, earth rod
                       </p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-lg">£100 - £300 extra</span>
+                    <span className="font-bold text-elec-yellow text-lg">£100 - £300 extra</span>
                   </div>
                 </div>
               </div>
@@ -419,7 +419,7 @@ export default function ConsumerUnitChangePage() {
               </p>
               <div className="space-y-3 mt-4">
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     1
                   </span>
                   <div>
@@ -434,7 +434,7 @@ export default function ConsumerUnitChangePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     2
                   </span>
                   <div>
@@ -448,7 +448,7 @@ export default function ConsumerUnitChangePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     3
                   </span>
                   <div>
@@ -460,7 +460,7 @@ export default function ConsumerUnitChangePage() {
                       and bonding connections are made up.
                     </p>
                     <p className="text-white text-sm leading-relaxed mt-2">
-                      <strong className="text-yellow-400">Torque tightening is essential.</strong>{' '}
+                      <strong className="text-elec-yellow">Torque tightening is essential.</strong>{' '}
                       Every terminal — main switch clamp, RCBO/MCB screw terminals, neutral bar
                       connections, and earth connections — must be tightened to the manufacturer's
                       specified torque value. Under-torqued terminations are the leading cause of
@@ -471,7 +471,7 @@ export default function ConsumerUnitChangePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     4
                   </span>
                   <div>
@@ -489,7 +489,7 @@ export default function ConsumerUnitChangePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     5
                   </span>
                   <div>

@@ -229,7 +229,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Safety isolating transformer</strong> — the SELV circuit is supplied via a
                 safety isolating transformer (to BS EN 61558-2-6) installed outside Zones 0 and 1.
@@ -239,7 +239,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wiring the SELV circuit</strong> — SELV wiring must be physically or
                 electrically separated from other circuits (no shared conduit or trunking with 230V
@@ -248,7 +248,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>LED pool luminaires</strong> — modern pool lights are LED, consuming 10 to
                 35W each. A 12V AC SELV system typically uses a 100VA or 150VA transformer to supply
@@ -325,7 +325,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type AC RCD</strong> — detects sinusoidal AC fault currents only. Not
                 suitable for variable speed pump drives or electronic pool equipment that can
@@ -334,7 +334,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type A RCD (recommended)</strong> — detects both sinusoidal AC and pulsed DC
                 residual currents. Suitable for all pool equipment including variable speed pump
@@ -343,7 +343,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type F RCD</strong> — detects AC, pulsed DC, and high-frequency residual
                 currents. Recommended where the pool uses inverter-driven pumps or multi-phase
@@ -368,7 +368,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Filtration pump circuit</strong> — a single-phase filtration pump for a
                 domestic pool (6m × 3m, 40,000 litres) is typically 0.75kW to 1.5kW, requiring a 10A
@@ -378,7 +378,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pool heat pump circuit</strong> — an air-source heat pump for pool heating
                 (6kW to 12kW output, COP 5 to 6) has a compressor input of 1kW to 2.5kW single-
@@ -388,7 +388,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pool control panel</strong> — most pool systems include an automated control
                 panel managing the pump programme, heating, chemical dosing, and lighting. The
@@ -416,7 +416,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Basic installation (filtration pump, SELV lighting, bonding)</strong> —
                 £2,500 to £4,000. Single pump circuit, SELV transformer and 4 underwater luminaires,
@@ -424,7 +424,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full installation (heat pump, controls, pool house)</strong> — £4,000 to
                 £8,000. All of the above plus a heat pump circuit, automated control panel circuit,
@@ -432,7 +432,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Indoor pool or commercial pool</strong> — £8,000 to £20,000+. Full Section
                 702 compliance, HVAC controls integration, automated cover motor, emergency stop
@@ -462,7 +462,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Pre-construction Coordination</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -520,7 +520,7 @@ export default function SwimmingPoolElectricalCostPage() {
       heroTitle={
         <>
           Swimming Pool Electrical Installation:{' '}
-          <span className="text-yellow-400">BS 7671 Section 702 Guide</span>
+          <span className="text-elec-yellow">BS 7671 Section 702 Guide</span>
         </>
       }
       heroSubtitle="Swimming pool electrical installations are governed by BS 7671 Section 702. This guide covers zones 0, 1 and 2, SELV lighting, supplementary bonding, RCD protection types, filtration and heat pump circuits, and typical installation costs."

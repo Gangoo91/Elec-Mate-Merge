@@ -148,7 +148,7 @@ export const TEST_SEQUENCE: LearningStep[] = [
     purpose: 'Proves the RCD trips fast enough to protect against electric shock',
     instrument: 'RCD tester — 1× and 5× IΔn, both polarities',
     expect:
-      'No trip at half rated current, and within 300 ms at rated current — the BS 7671 criterion since Amendment 4 deleted Table 3A. The 40 ms at five times rated current is the BS EN 61008/61009 product-standard figure, still useful for fault finding. Tested on both polarities.',
+      'No trip at half rated current, and within 300 ms at rated current — the BS 7671 criterion since Amendment 2 (2022) deleted Table 3A. The 40 ms at five times rated current is the BS EN 61008/61009 product-standard figure, still useful for fault finding. Tested on both polarities.',
     watchOut:
       'Testing one polarity only, or accepting the integral test button as evidence — it proves the mechanism moves, not that it trips fast enough.',
   },
@@ -225,7 +225,7 @@ export const REFERENCE_TABLES: ReferenceTable[] = [
       { label: '½× IΔn', value: 'Must not trip' },
       { label: '1× IΔn (general)', value: '≤ 300 ms' },
       { label: '1× IΔn (Type S)', value: '130–500 ms' },
-      { label: '5× IΔn', value: 'Not required — deleted at A4:2026' },
+      { label: '5× IΔn', value: 'Not required — deleted at A2:2022' },
     ],
     keywords: ['rcd', 'rcbo', 'residual', 'trip', 'ramp', '30ma'],
   },
@@ -245,20 +245,21 @@ export const REFERENCE_TABLES: ReferenceTable[] = [
     // and final circuits up to 32 A supplying only fixed equipment. A bare
     // "final ≤ 63 A" label is wrong for a fixed-equipment circuit.
     //
-    // The TT final-circuit row is deliberately absent. The hub previously
-    // printed "TT (230V) 0.2s"; that figure could not be sourced — every 0.2 s
-    // entry for Table 41.1 in our BS 7671 data belongs to DC systems, not
-    // 230 V AC. Rather than reprint a number this reference cannot stand
-    // behind, it is left out until it is read off Table 41.1 directly.
+    // Read off the printed BS 7671:2018+A4:2026, Table 41.1 (p. 71) and Regs
+    // 411.3.2.3 / 411.3.2.4, on 4 Oct 2026. The TT 0.2 s row was once removed
+    // because the RAG's Table 41.1 rows said otherwise — those rows are
+    // scrambled (one gives TT AC at 230 V as 0.4 s) and must not be trusted.
+    // TT distribution is 1 s, not 5 s: 5 s is the TN figure.
     key: 'disconnection',
     title: 'Disconnection times',
-    source: 'BS 7671 Table 41.1 · Reg 411.3.2.2 · 230 V AC',
+    source: 'BS 7671 Table 41.1 · Regs 411.3.2.2–411.3.2.4 · 230 V AC',
     rows: [
       { label: 'TN — socket ≤ 63 A', value: '0.4 s' },
       { label: 'TN — fixed ≤ 32 A', value: '0.4 s' },
+      { label: 'TT — final (Table 41.1 scope)', value: '0.2 s' },
       { label: 'TN — distribution', value: '5 s' },
-      { label: 'TT — distribution', value: '5 s' },
+      { label: 'TT — distribution', value: '1 s' },
     ],
-    keywords: ['disconnection', 'ads', 'tn-s', 'tn-c-s', 'tt', '0.4', '5s'],
+    keywords: ['disconnection', 'ads', 'tn-s', 'tn-c-s', 'tt', '0.4', '0.2', '5s', '1s'],
   },
 ];

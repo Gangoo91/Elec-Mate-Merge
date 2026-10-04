@@ -169,35 +169,35 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Completion certificate</strong> — issued on completion of a new emergency
                 lighting installation, confirming compliance with BS 5266-1.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Verification certificate</strong> — an independent confirmation of
                 compliance for complex or high-risk installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Monthly test records</strong> — documenting the results of functional tests
                 carried out every month.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Annual test records</strong> — documenting the results of full-duration
                 discharge tests carried out annually.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire safety logbook</strong> — the central record keeping all emergency
                 lighting documentation for the premises.
@@ -226,35 +226,35 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Premises details — name, address, floor areas, number of storeys, and the normal
                 occupancy of the building.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 System type — maintained, non-maintained, or sustained, and whether it is a central
                 battery system or self-contained luminaires.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Rated duration — the period for which the system is designed to operate on battery
                 power (typically 1 hour or 3 hours).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Schedule of luminaires — location, type, wattage, and luminaire reference for every
                 emergency luminaire in the installation.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Commissioning test results — confirmation that every luminaire illuminated correctly
                 on battery power and that illumination levels on escape routes met the minimum 1 lux
@@ -296,21 +296,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Large commercial buildings with complex escape routes where incorrect luminaire
                 positioning could endanger life.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Buildings with sleeping accommodation (hotels, care homes, hospitals) where
                 occupants may be unfamiliar with the escape routes.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 High-risk premises where the{' '}
                 <SEOInternalLink href="/guides/fire-alarm-certificate-requirements">
@@ -345,28 +345,28 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">Monthly Test Procedure</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Simulate a mains supply failure to each emergency luminaire — either by using the
                 test button on self-contained luminaires or by switching off the supply circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Confirm each luminaire illuminates on battery power. The test only needs to run long
                 enough to verify operation — typically a few seconds.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Record the result for each luminaire — pass, fail, or not tested (with reason).
                 Record any luminaires with dim output, flickering, or complete failure.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Restore mains power and confirm all luminaires return to normal standby mode (for
                 non-maintained types) or normal illumination (for maintained types).
@@ -407,7 +407,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Annual Test Requirements</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full-duration discharge</strong> — the mains supply to all emergency
                 luminaires is switched off and the system runs on battery power for the full rated
@@ -415,7 +415,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Luminaire check at end of duration</strong> — at the end of the rated
                 period, every luminaire is checked to confirm it is still illuminated. Any luminaire
@@ -423,7 +423,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Recharge time</strong> — after the test, mains power is restored and the
                 system should be left to recharge for at least 24 hours before the building is
@@ -431,7 +431,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Results recording</strong> — every luminaire must be individually recorded
                 as pass or fail, with failed luminaires requiring battery replacement or unit
@@ -464,7 +464,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Self-Test Systems</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Self-test luminaires automatically execute short functional tests and full-duration
                 discharge tests on a configured schedule, logging results internally without
@@ -472,7 +472,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 BS EN 50172:2004 recognises automatic testing facilities as an acceptable means of
                 meeting the routine inspection requirements, provided scheduled tests execute as
@@ -480,7 +480,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 The competent person must periodically download and review the automatic test log,
                 confirm tests have run at the correct intervals, and cross-check a sample of
@@ -493,7 +493,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">DALI Addressable Systems</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 DALI systems address each emergency luminaire individually, allowing test results,
                 fault conditions, and battery status to be logged centrally via a gateway or
@@ -501,7 +501,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Monthly functional testing via a DALI controller generates a per-luminaire pass/fail
                 log automatically, meeting BS 5266-1 Clause 12.3 recording requirements without a
@@ -509,7 +509,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Certification records for DALI-controlled installations should include the system
                 configuration, DALI address schedule, and exported test logs, which form part of the
@@ -543,42 +543,42 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Logbook Contents</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Completion certificate and as-installed drawings showing luminaire positions and
                 circuit details.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Schedule of luminaires with reference numbers, types, locations, and battery details
                 for each unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Monthly test records showing the date, tester, and pass/fail result for each
                 luminaire.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Annual full-duration discharge test records showing the date, duration, and
                 pass/fail result for each luminaire.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Defect records and remedial actions — any luminaires that failed testing, the date
                 the defect was reported, and the date it was rectified.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Modification records — any changes to the installation, including luminaires added,
                 relocated, or removed.
@@ -664,7 +664,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">Legal Framework</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire Safety Order 2005</strong> — requires the Responsible Person to ensure
                 emergency escape lighting is provided and maintained. Records of maintenance must be
@@ -672,7 +672,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Building Regulations Approved Document B</strong> — requires emergency
                 lighting in new buildings and material alterations, referencing BS 5266-1 as the
@@ -680,21 +680,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Workplace (Health, Safety and Welfare) Regulations 1992</strong> — requires
                 adequate emergency lighting in workplaces.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Housing Act 2004</strong> — for HMOs, emergency lighting is typically a
                 condition of the HMO licence, with specific requirements set by the local authority.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671 Regulation 560.9</strong> — requires emergency lighting systems to
                 comply with BS 5266-1, BS EN 1838 (lighting application performance standard), and
@@ -739,7 +739,7 @@ export default function EmergencyLightingCertificateGuidePage() {
       badgeIcon={Lightbulb}
       heroTitle={
         <>
-          Emergency Lighting Certificate Guide: <span className="text-yellow-400">BS 5266 UK</span>
+          Emergency Lighting Certificate Guide: <span className="text-elec-yellow">BS 5266 UK</span>
         </>
       }
       heroSubtitle="BS 5266-1 requires completion certificates, monthly functional test records, and annual full-duration discharge test records for every emergency lighting installation. This guide explains what each document must contain, who is responsible, and how to keep compliant records."

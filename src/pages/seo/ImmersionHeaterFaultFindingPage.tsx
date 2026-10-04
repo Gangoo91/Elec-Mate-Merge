@@ -132,7 +132,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ThermometerSun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ThermometerSun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Heating element</strong> — a resistance wire enclosed in a copper or
                 titanium sheath, immersed directly in the water. Elements are rated 3kW for domestic
@@ -140,7 +140,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ThermometerSun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ThermometerSun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Thermostat</strong> — a bimetal strip or electronic sensor that cuts power
                 when the water reaches the set temperature (typically 60°C). The thermostat is
@@ -149,7 +149,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ThermometerSun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ThermometerSun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Thermal cut-out (TCO)</strong> — a secondary safety device that disconnects
                 the heater if the water overheats above approximately 85°C to 90°C. Unlike the
@@ -158,7 +158,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ThermometerSun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ThermometerSun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sacrificial anode</strong> — a magnesium or aluminium rod fitted in the
                 cylinder to protect the copper or steel tank from corrosion by sacrificing itself.
@@ -202,7 +202,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ol className="space-y-4 text-white list-none">
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center text-yellow-400 text-sm font-bold">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-elec-yellow text-sm font-bold">
                 1
               </span>
               <span>
@@ -211,7 +211,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center text-yellow-400 text-sm font-bold">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-elec-yellow text-sm font-bold">
                 2
               </span>
               <span>
@@ -221,7 +221,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center text-yellow-400 text-sm font-bold">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-elec-yellow text-sm font-bold">
                 3
               </span>
               <span>
@@ -231,7 +231,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center text-yellow-400 text-sm font-bold">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-elec-yellow text-sm font-bold">
                 4
               </span>
               <span>
@@ -261,7 +261,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Thermostat fails open (no heat)</strong> — the thermostat cuts out and does
                 not reset. The element receives no power. The symptom is cold water despite the
@@ -272,7 +272,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Thermostat fails closed (overheating)</strong> — the thermostat does not cut
                 out when the water reaches temperature. The water overheats and the TCO trips. The
@@ -281,7 +281,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Incorrect temperature setting</strong> — the thermostat dial may have been
                 inadvertently turned down. Check the temperature setting on the thermostat — it
@@ -314,7 +314,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing the element</strong> — after safe isolation, disconnect the element
                 wires at the heater head. Using a multifunction tester set to insulation resistance
@@ -324,7 +324,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Element continuity</strong> — measure resistance between the two element
                 terminals. A 3kW, 230V element has a resistance of approximately 17.6 ohms (R = V²/P
@@ -333,7 +333,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Element replacement procedure</strong> — the cylinder must be fully drained
                 before the element can be removed. This involves isolating the cold water supply,
@@ -415,7 +415,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Loose terminal connections</strong> — the heater head terminals can work
                 loose over time due to thermal cycling. A loose neutral connection causes the
@@ -425,7 +425,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Overheated cable</strong> — if the element has been running with a loose
                 connection or the heater has been overloaded, the cable insulation at the heater
@@ -434,7 +434,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Faulty double-pole switch</strong> — the DP switch can fail internally,
                 particularly older rocker-style switches. Test voltage at the switch output
@@ -443,7 +443,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tripped RCD or MCB</strong> — always check the consumer unit first. An
                 immersion heater circuit protected by a 16A MCB should not trip under normal
@@ -469,14 +469,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Thermostat replacement</strong> — £50 to £105 all-in. Parts £10 to £25,
                 labour £40 to £80. No cylinder draining required. Most cost-effective first repair.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Element replacement (copper)</strong> — £80 to £150 all-in. Element £15 to
                 £40, labour £60 to £110. Cylinder draining adds 30 to 60 minutes. If the anode is
@@ -484,7 +484,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Element replacement (titanium or incoloy)</strong> — £120 to £200 all-in.
                 Titanium elements cost £40 to £80 but last significantly longer in hard water areas.
@@ -492,7 +492,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full cylinder replacement</strong> — £400 to £800 fitted for a vented copper
                 cylinder. Unvented cylinders cost £800 to £1,500 installed due to the additional
@@ -502,7 +502,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wiring repairs</strong> — replacing a faulty DP switch costs £40 to £80.
                 Replacing a metre of cable at the heater head costs £50 to £100. A full circuit
@@ -535,7 +535,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Issue a Minor Works Certificate</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -569,7 +569,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete certificates and quotes on site with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site Minor Works certificates, EICRs, and instant quoting. No evening paperwork. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site Minor Works certificates, EICRs, and instant quoting. No evening paperwork. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -594,7 +594,7 @@ export default function ImmersionHeaterFaultFindingPage() {
       badgeIcon={Wrench}
       heroTitle={
         <>
-          Immersion Heater Not Working: <span className="text-yellow-400">Fault Finding Guide</span>
+          Immersion Heater Not Working: <span className="text-elec-yellow">Fault Finding Guide</span>
         </>
       }
       heroSubtitle="Step-by-step fault finding for immersion heaters that are not heating, tripping the RCD, or overheating. Covers thermostat failure, element burn-out, sacrificial anode checks, wiring faults, safe isolation, and repair costs for 2026."
@@ -605,7 +605,7 @@ export default function ImmersionHeaterFaultFindingPage() {
       faqHeading="Frequently Asked Questions — Immersion Heater Faults"
       relatedPages={relatedPages}
       ctaHeading="Complete Electrical Certificates On Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for Minor Works certificates, EICRs, and on-site quoting. No evening paperwork. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for Minor Works certificates, EICRs, and on-site quoting. No evening paperwork. 7-day free trial, cancel anytime."
     />
   );
 }

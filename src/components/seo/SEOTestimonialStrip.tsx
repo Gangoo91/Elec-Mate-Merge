@@ -15,7 +15,7 @@ export function SEOTestimonialStrip() {
         <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
           Trusted by electricians across the UK
         </h2>
-        <p className="text-white text-sm">Real feedback from real sparks</p>
+        <p className="text-white text-sm">Real feedback from electricians and apprentices</p>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-3">
@@ -25,12 +25,12 @@ export function SEOTestimonialStrip() {
             className="relative rounded-2xl bg-white/[0.04] border border-white/[0.08] p-5 flex flex-col"
           >
             {/* Quote mark */}
-            <Quote className="w-5 h-5 text-yellow-400/30 mb-3" />
+            <Quote className="w-5 h-5 text-elec-yellow/30 mb-3" />
 
             {/* Stars */}
             <div className="flex items-center gap-0.5 mb-3">
               {Array.from({ length: t.stars }).map((_, j) => (
-                <Star key={j} className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
+                <Star key={j} className="w-3.5 h-3.5 fill-yellow-400 text-elec-yellow" />
               ))}
             </div>
 

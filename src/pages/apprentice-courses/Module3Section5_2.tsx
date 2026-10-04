@@ -91,7 +91,7 @@ const quizQuestions = [
       'No protection',
       'Protection against dust',
       'Not tested for solids',
-      'Protection against fire',
+      'Protection against impact',
     ],
     correctAnswer: 2,
     explanation:
@@ -116,7 +116,7 @@ const quizQuestions = [
     options: [
       'The environmental exposure conditions',
       'The power factor of the load',
-      'The colour of the enclosure',
+      "The circuit's design current",
       'The fixing centres of the back box',
     ],
     correctAnswer: 0,
@@ -146,12 +146,12 @@ const quickCheckQuestions = [
     options: [
       'IP65',
       'IP54',
-      'IP64',
+      'IP44',
       'IP55',
     ],
     correctIndex: 0,
     explanation:
-      "IP65 (and IP66) are considered dust tight with the first digit '6' indicating complete dust exclusion.",
+      'The first digit 6 means dust tight, so IP65 is. IP54 and IP55 are dust protected (5), not dust tight, and IP44 gives protection only against solid objects over 1 mm.',
   },
   {
     id: 'outdoor-rating',
@@ -162,9 +162,9 @@ const quickCheckQuestions = [
       'IP54',
       'IP65',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
-      'IP65 is the minimum recommended rating for outdoor sockets, providing dust tight and water jet protection.',
+      'IP44 (protected against solid objects over 1 mm and splashing water) is the minimum usually specified for an outdoor socket-outlet. Exposed or wash-down locations call for more, such as IP65 or IP66, and the socket must still have 30 mA RCD protection.',
   },
 ];
 

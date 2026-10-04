@@ -22,16 +22,16 @@ const quizQuestions = [
   {
     id: 1,
     question:
-      'Which regulation edition introduced the requirement for non-combustible cable supports in escape routes?',
+      'Since BS 7671:2018, where must cables be supported so they will not collapse prematurely in a fire?',
     options: [
-      '16th Edition',
-      '18th Edition',
-      '17th Edition',
-      'BS 6004',
+      'Along escape routes, but nowhere else',
+      'Throughout the installation',
+      'In buildings of three storeys or more',
+      'On fire alarm and emergency lighting circuits',
     ],
     correctAnswer: 1,
     explanation:
-      'The 18th Edition of BS 7671 introduced the requirement for non-combustible cable supports in escape routes to prevent premature collapse during fires.',
+      'BS 7671:2018 extended the requirement from escape routes to the whole installation: wiring systems must be supported so they will not fail prematurely in a fire, wherever they run. Plastic clips alone are not enough anywhere.',
   },
   {
     id: 2,
@@ -64,7 +64,7 @@ const quizQuestions = [
     question: 'Name one advantage of proper cable support.',
     options: [
       'Prevents sagging and maintains safety',
-      'Reduces cable costs',
+      'Allows a smaller cpc to be used',
       'Eliminates need for RCD protection',
       'Increases cable current rating',
     ],
@@ -77,13 +77,13 @@ const quizQuestions = [
     question: 'How often should horizontal T&E runs be clipped?',
     options: [
       'Every 100 mm',
-      'Every 300-400 mm',
+      'Every 250-300 mm, depending on cable size',
       'Every 2 m',
       'Every 1 m',
     ],
     correctAnswer: 1,
     explanation:
-      'Horizontal T&E runs should typically be clipped every 300-400 mm according to BS 7671 and manufacturer recommendations.',
+      'On-Site Guide Table D1: non-armoured sheathed cable is clipped at no more than 250 mm horizontally if under 9 mm across, and 300 mm if 9–15 mm across. Vertical runs can go to 400 mm.',
   },
   {
     id: 6,
@@ -116,9 +116,9 @@ const quizQuestions = [
     question: 'Give one method of protecting cables from sharp edges.',
     options: [
       'Fit grommets or bushes',
-      'Increase cable spacing',
-      'Use thicker cables',
-      'Use lower voltages',
+      'Wrap the cable in insulation tape',
+      'Use a cable with a larger cpc',
+      'Pull the cable tight against the edge',
     ],
     correctAnswer: 0,
     explanation:
@@ -132,9 +132,9 @@ const quickCheckQuestions = [
     id: 'support-fire',
     question: 'Why must cables in escape routes be supported with non-combustible fixings?',
     options: [
-      'To reduce installation costs',
+      'So the cables keep their current rating in a fire',
       'To meet manufacturer warranties',
-      'To improve electrical performance',
+      'So the circuit stays energised during a fire',
       'To prevent premature collapse during fires',
     ],
     correctIndex: 3,
@@ -158,9 +158,9 @@ const quickCheckQuestions = [
     id: 'over-tightening',
     question: 'Give one consequence of over-tightening a cable clip.',
     options: [
-      'Better weather resistance',
-      'Reduced installation time',
-      'Improved cable performance',
+      'A higher current rating for the cable',
+      'Reduced voltage drop',
+      'Lower earth fault loop impedance',
       'Damage to cable insulation',
     ],
     correctIndex: 3,

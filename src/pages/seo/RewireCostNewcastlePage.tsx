@@ -153,25 +153,25 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>2-bed terraced house:</strong> £2,000–£3,200 (3–5 days)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>3-bed semi-detached:</strong> £3,000–£4,800 (4–7 days)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>4-bed detached:</strong> £4,200–£7,000 (6–9 days)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Large period property (5-bed+):</strong> £7,000–£11,000+ (9–14 days)
               </span>
@@ -207,7 +207,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Victorian terraces and semis (1870s–1910s):</strong> Heaton, Fenham, Walker,
                 Byker, Elswick, and Scotswood. Brick with lath-and-plaster interiors. Many have had
@@ -217,7 +217,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Edwardian villas and semis (1900s–1920s):</strong> Jesmond, Gosforth,
                 Sandyford, and South Gosforth. Larger properties with accessible loft spaces. Many
@@ -226,7 +226,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inter-war semis and bungalows (1920s–1940s):</strong> Denton Burn, Benwell,
                 Westerhope, and Kingston Park. Cavity brick construction with accessible lofts. Many
@@ -235,7 +235,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Post-war council estates (1950s–1970s):</strong> Kenton, Newbiggin Hall,
                 Blakelaw, and Walker. Plasterboard or concrete panel construction — the most
@@ -244,7 +244,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Converted flats (Jesmond and Heaton):</strong> Victorian houses subdivided
                 into flats, particularly prevalent in Jesmond and Heaton. Quality of electrical
@@ -364,35 +364,35 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New consumer unit</strong> — metal enclosure with RCBOs or dual-RCD
                 arrangement, surge protection device (SPD), and main switch.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>All circuit cables</strong> — twin and earth for ring finals, radials,
                 lighting circuits, cooker, shower, and immersion heater circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Accessories</strong> — sockets, switches, ceiling roses, and fused
                 connection units. Standard white plastic included; upgraded finishes extra.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing and bonding</strong> — main earth conductor, main bonding to gas,
                 water, and oil pipework.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing and certification</strong> — initial verification testing, EIC, and
                 Part P notification.
@@ -450,7 +450,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wall chasing creates dust and noise</strong> — cutting channels in
                 lath-and-plaster or brick generates significant dust. Cover furniture and seal off
@@ -458,7 +458,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Power is off during first fix</strong> — the electricity supply is isolated
                 while new circuits are installed. Many residents stay elsewhere during the first fix
@@ -466,7 +466,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Replastering is a separate cost</strong> — after chases are filled, a
                 plasterer reinstates the wall surfaces. Budget £300 to £800 for a Victorian
@@ -474,7 +474,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Decoration follows plastering</strong> — once the plaster has dried
                 (typically 2 to 4 weeks for new plaster), the walls can be painted. Budget for this
@@ -498,7 +498,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Verify NICEIC, NAPIT, or ELECSA registration</strong> — search by Newcastle
                 or Tyne and Wear postcode on the scheme's online register. Non-negotiable for Part P
@@ -506,7 +506,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ask about local terrace and semi experience</strong> — rewiring a Heaton or
                 Fenham Victorian terrace differs from a Ponteland modern detached. Ask for
@@ -514,21 +514,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Get at least three comparable quotes</strong> — ensure each specifies
                 consumer unit type, number of circuits, and whether making good is included.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Confirm minimum £2 million public liability insurance</strong> — ask for a
                 copy of the certificate before work starts.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check EIC and Part P notification are included</strong> — mandatory for all
                 rewires in England. If absent from the quote, the quote is incomplete.
@@ -564,7 +564,7 @@ export default function RewireCostNewcastlePage() {
       heroTitle={
         <>
           House Rewire Cost Newcastle:{' '}
-          <span className="text-yellow-400">2025 North East Price Guide</span>
+          <span className="text-elec-yellow">2025 North East Price Guide</span>
         </>
       }
       heroSubtitle="Newcastle rewire costs in 2025 — one of England's most competitive cities for electrical work. Real prices from Victorian terraces in Heaton and Fenham to modern detached houses in Ponteland and Cramlington."
@@ -575,7 +575,7 @@ export default function RewireCostNewcastlePage() {
       faqHeading="Frequently Asked Questions About Rewire Costs in Newcastle"
       relatedPages={relatedPages}
       ctaHeading="Quote Newcastle Rewires with Real Trade Pricing"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI-powered rewire quoting, on-site EIC certificates, and project management. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for AI-powered rewire quoting, on-site EIC certificates, and project management. 7-day free trial."
     />
   );
 }

@@ -172,7 +172,7 @@ const sections = [
         </p>
         <div className="space-y-3 my-6">
           <div className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <Zap className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
+            <Zap className="w-5 h-5 text-elec-yellow shrink-0 mt-0.5" />
             <div>
               <h3 className="font-bold text-white text-base mb-1">Independent Circuit Wiring</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -339,7 +339,7 @@ const sections = [
         </p>
         <div className="space-y-3 my-6">
           <div className="flex items-start gap-3 p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-            <Zap className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
+            <Zap className="w-5 h-5 text-elec-yellow shrink-0 mt-0.5" />
             <div>
               <h3 className="font-bold text-white text-base mb-1">Lighting Circuits</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -548,7 +548,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FolderOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FolderOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Portfolio criteria coverage:</strong> Your portfolio should have evidence
                 against at least half of the apprenticeship standard criteria. Review which criteria
@@ -586,7 +586,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <GraduationCap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">46+ Training Courses</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -665,7 +665,7 @@ export default function Year2ApprenticeGuidePage() {
       heroTitle={
         <>
           Year 2 Electrical Apprentice:{' '}
-          <span className="text-yellow-400">Skills and Progression</span>
+          <span className="text-elec-yellow">Skills and Progression</span>
         </>
       }
       heroSubtitle="Year 2 is when your apprenticeship shifts gear. More responsibility on site, introduction to electrical testing, Level 3 theory, and the start of AM2 preparation. This guide covers everything you need to know to make the most of your second year."

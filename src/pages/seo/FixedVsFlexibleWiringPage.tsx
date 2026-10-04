@@ -290,7 +290,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Luminaire flexible pendants</strong> (Regulation 559.5.1) — the final
                 connection of a suspended luminaire using a ceiling rose and flexible pendant. The
@@ -298,7 +298,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Final connection of appliances</strong> — the flex connecting an appliance
                 to its fused connection unit or socket outlet. Must be appropriate flex type for the
@@ -306,7 +306,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Where flexibility is required during use</strong> — for equipment that must
                 be moved for use (portable tools, portable appliances). The flex must be adequately
@@ -314,7 +314,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>In premises managed as flexible</strong> — temporary electrical
                 installations at events, exhibitions, and construction sites where flexible wiring
@@ -339,7 +339,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Strain relief:</strong> The flex must be anchored at the entry to every
                 termination — plug, ceiling rose, fused connection unit, or appliance. Anchor
@@ -348,7 +348,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Correct polarity:</strong> At a BS 1363 plug, the brown (live) conductor
                 connects to the L (live) terminal; the blue (neutral) to N; the green/yellow (earth)
@@ -356,7 +356,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sheath condition:</strong> The outer sheath must be undamaged and extend
                 inside the termination enclosure — the sheath is gripped by the strain relief, not
@@ -402,14 +402,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 At ceiling roses: verify the correct flex is used (3-core with earth where
                 required), adequate strain relief, and no overloading of the ceiling rose terminals.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 At fused connection units: verify the correct fuse rating for the connected flex and
                 appliance, adequate strain relief on the flex entry, and that the flex is
@@ -417,7 +417,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 In ceiling voids and under floors: check for flex used as an extension of fixed
                 wiring — a common defect in older installations where a DIY extension was added
@@ -478,7 +478,7 @@ export default function FixedVsFlexibleWiringPage() {
       heroTitle={
         <>
           Fixed Wiring vs Flexible Wiring:{' '}
-          <span className="text-yellow-400">
+          <span className="text-elec-yellow">
             BS 7671 Standards, Current Ratings and When to Use Each
           </span>
         </>

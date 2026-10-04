@@ -14,6 +14,7 @@
 import { supabase } from '@/integrations/supabase/client';
 import { storageGetJSONSync, storageSetSync, storageRemoveSync } from '@/utils/storage';
 import { captureError, addBreadcrumb } from '@/lib/sentry';
+import { hasMarketingConsent } from '@/lib/marketing-pixels';
 
 const ATTRIBUTION_KEY = 'elec-mate-attribution';
 
@@ -61,6 +62,17 @@ export function captureAttribution(): AttributionData | null {
   const hasExisting = Object.keys(existing).length > 0;
 
   const params = readParams(window.location.search);
+  // Ad click IDs identify a person to Google/Meta, so they're only stored with
+  // marketing consent (ELE-1812). Until then they wait in memory; if the
+  // visitor accepts in the cookie banner during this visit, they're kept.
+  if (!hasMarketingConsent()) {
+    if (params.gclid || params.fbclid) {
+      pendingClickIds = { gclid: params.gclid, fbclid: params.fbclid };
+      armConsentListener();
+    }
+    delete params.gclid;
+    delete params.fbclid;
+  }
   const hasNewParams = Object.keys(params).length > 0;
 
   // First-touch: only write if nothing stored yet OR if the new visit has UTMs and the existing record has none
@@ -82,6 +94,20 @@ export function captureAttribution(): AttributionData | null {
 
   storageSetSync(ATTRIBUTION_KEY, JSON.stringify(attribution));
   return attribution;
+}
+
+let pendingClickIds: Pick<AttributionData, 'gclid' | 'fbclid'> | null = null;
+let consentListenerArmed = false;
+function armConsentListener() {
+  if (consentListenerArmed || typeof window === 'undefined') return;
+  consentListenerArmed = true;
+  window.addEventListener('cookieConsentUpdated', (e: Event) => {
+    const prefs = (e as CustomEvent<{ marketing?: boolean }>).detail;
+    if (!prefs?.marketing || !pendingClickIds) return;
+    const stored = storageGetJSONSync<AttributionData>(ATTRIBUTION_KEY, {} as AttributionData);
+    storageSetSync(ATTRIBUTION_KEY, JSON.stringify({ ...stored, ...pendingClickIds }));
+    pendingClickIds = null;
+  });
 }
 
 export function getStoredAttribution(): AttributionData {
@@ -152,6 +178,9 @@ export async function fireServerCapi(event: {
   content_name?: string;
   action_source?: 'website' | 'app' | 'system_generated';
 }): Promise<void> {
+  // Only with the visitor's marketing consent (cookie banner / in-app privacy
+  // prompt). Sends hashed identifiers to Meta, so it's tracking — ELE-1812.
+  if (!hasMarketingConsent()) return;
   // Auto-attach Facebook click/browser cookies — critical for Meta attribution
   // quality. Without these, server CAPI events can't link back to ad clicks.
   const { fbc, fbp } = readFbCookies();
@@ -159,6 +188,7 @@ export async function fireServerCapi(event: {
   try {
     const { error } = await supabase.functions.invoke('meta-capi', {
       body: {
+        ad_tracking_consent: true,
         event_name: event.event_name,
         event_id: event.event_id,
         action_source: event.action_source || 'website',

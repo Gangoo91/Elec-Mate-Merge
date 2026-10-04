@@ -28,7 +28,7 @@ const sections = [
           showCategoryHeadings={false}
           showImageObjectSchema={true}
         />
-        <p className="text-sm text-white/70 mt-4">
+        <p className="text-sm text-white mt-4">
           Right-click the symbol above to save the SVG, or use the{' '}
           <SEOInternalLink href="/ai-diagram-builder">AI Diagram Builder</SEOInternalLink> to drop
           it into a working drawing.
@@ -135,7 +135,7 @@ export default function EmergencyStopSymbolPage() {
       heroTitle={
         <>
           Emergency Stop (E-Stop) Symbol{' '}
-          <span className="text-yellow-400">IEC 60617 reference</span>
+          <span className="text-elec-yellow">IEC 60617 reference</span>
         </>
       }
       heroSubtitle="Emergency stop button electrical symbol IEC 60617 — what it represents, where it appears in UK electrical drawings, and how it relates to the rest of the symbol library."

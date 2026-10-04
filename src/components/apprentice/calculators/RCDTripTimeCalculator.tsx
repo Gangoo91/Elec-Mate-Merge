@@ -60,22 +60,22 @@ const rcdRatingOptions = [
 
 const testCurrentOptions = [
   { value: '1x', label: '1× Rated Current — A4:2026 Verification Test' },
-  { value: '5x', label: '5× Rated Current — Legacy (pre-A4) Reference' },
+  { value: '5x', label: '5× Rated Current — Legacy (pre-A2) Reference' },
 ];
 
 const getTestDescription = (rating: string, current: string) => {
   const descriptions: Record<string, Record<string, string>> = {
     '30mA': {
       '1x': 'Testing at 30mA (1×IΔn) — A4:2026 single verification test',
-      '5x': 'Testing at 150mA (5×IΔn) — legacy figure, no longer required under A4:2026',
+      '5x': 'Testing at 150mA (5×IΔn) — legacy figure, no longer required since A2:2022',
     },
     '100mA': {
       '1x': 'Testing at 100mA (1×IΔn) — A4:2026 single verification test',
-      '5x': 'Testing at 500mA (5×IΔn) — legacy figure, no longer required under A4:2026',
+      '5x': 'Testing at 500mA (5×IΔn) — legacy figure, no longer required since A2:2022',
     },
     '300mA': {
       '1x': 'Testing at 300mA (1×IΔn) — A4:2026 single verification test',
-      '5x': 'Testing at 1500mA (5×IΔn) — legacy figure, no longer required under A4:2026',
+      '5x': 'Testing at 1500mA (5×IΔn) — legacy figure, no longer required since A2:2022',
     },
   };
   return descriptions[rating]?.[current] || '';
@@ -117,7 +117,7 @@ const RCDTripTimeCalculator = ({ onResult }: CalculatorResultReporter = {}) => {
             ]
           : []),
       ],
-      // Reg 643.7.1 only. A4:2026 DELETED Table 3A, so citing it would send
+      // Reg 643.7.1 only. A2:2022 DELETED Table 3A, so citing it would send
       // the reader to a table that no longer exists in the edition named.
       basis: 'BS 7671:2018+A4:2026 Reg 643.7.1 \u2014 300 ms general, 130\u2013500 ms Type S',
     });
@@ -450,21 +450,21 @@ const RCDTripTimeCalculator = ({ onResult }: CalculatorResultReporter = {}) => {
                       description:
                         result.testCurrent === '1x'
                           ? `Under BS 7671:2018+A4:2026, RCD effectiveness is verified by a single test at the rated residual operating current (1×IΔn = ${result.rating}). This is the current verification test.`
-                          : `The 5× rated current test was deleted in A4:2026 (along with Appendix 3 Table 3A). The figures below are retained only as a legacy reference for pre-A4 records.`,
+                          : `The 5× rated current test was deleted in A2:2022 (along with Appendix 3 Table 3A). The figures below are retained only as a legacy reference for pre-A2 records.`,
                     },
                     {
                       label: 'Maximum disconnection time',
                       formula:
                         result.testCurrent === '1x'
                           ? `A4:2026 Reg 643.8 NOTE → 1×IΔn at ${result.rating}`
-                          : `Legacy (pre-A4) Table 3A → 5×IΔn at ${result.rating}`,
+                          : `Legacy (pre-A2) Table 3A → 5×IΔn at ${result.rating}`,
                       value: `${result.maxTripTime}ms maximum`,
                       description:
                         result.testCurrent === '1x'
                           ? 'Under A4:2026 a general (non-delay) RCD must disconnect within 300ms at 1×IΔn (Reg 643.8 NOTE), regardless of rating. In practice devices often operate far faster.'
                           : result.rating === '300mA'
-                            ? 'Legacy reference only: the old 5×IΔn test allowed 150ms for 300mA RCDs. This test is no longer required under A4:2026.'
-                            : 'Legacy reference only: the old 5×IΔn test required 40ms for 30/100mA RCDs. This test and Table 3A were deleted in A4:2026.',
+                            ? 'Legacy reference only: the old 5×IΔn test allowed 150ms for 300mA RCDs. This test is no longer required since A2:2022.'
+                            : 'Legacy reference only: the old 5×IΔn test required 40ms for 30/100mA RCDs. This test and Table 3A were deleted in A2:2022.',
                     },
                     ...(result.actualTripTime !== undefined
                       ? [
@@ -548,7 +548,7 @@ const RCDTripTimeCalculator = ({ onResult }: CalculatorResultReporter = {}) => {
                               className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
                               style={{ backgroundColor: config.gradientFrom }}
                             />
-                            5× IΔn test (legacy, pre-A4): formerly 40ms (30/100mA) or 150ms (300mA)
+                            5× IΔn test (legacy, pre-A2): formerly 40ms (30/100mA) or 150ms (300mA)
                             — no longer required under A4:2026, retained here only as a reference
                           </li>
                         </ul>
@@ -591,7 +591,7 @@ const RCDTripTimeCalculator = ({ onResult }: CalculatorResultReporter = {}) => {
                               className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
                               style={{ backgroundColor: config.gradientFrom }}
                             />
-                            Legacy 5× IΔn test (not required under A4:2026) — only if recording for
+                            Legacy 5× IΔn test (not required since A2:2022) — only if recording for
                             pre-A4 reference
                           </li>
                           <li className="flex items-start gap-2 text-sm text-white">

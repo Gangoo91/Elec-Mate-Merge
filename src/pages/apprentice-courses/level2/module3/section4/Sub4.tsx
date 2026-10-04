@@ -51,14 +51,14 @@ const checks = [
     question:
       'Why does industry use a 1667 Ω resistance threshold to decide whether a metalwork part is extraneous and needs main bonding?',
     options: [
-      'Because 1667 Ω is the maximum permitted electrode resistance for any TT installation under Table 41.5.',
+      'Because 1667 Ω is the maximum Ze a DNO may declare for a TN-C-S supply.',
       'Because below 1667 Ω the part can no longer introduce a potential, so bonding becomes unnecessary.',
       'Because 1667 Ω is the standard insulation-resistance minimum the regs require for new circuits.',
-      'It is the resistance at which 230 V drives the 50 V touch-voltage limit through a 30 mA RCD: 50 ÷ 0.030 = 1667 Ω.',
+      'It is 50 V ÷ 0.030 A — the same figure as the Table 41.5 limit for a 30 mA RCD. Below it, enough current can flow through the part to hold a dangerous touch voltage on it.',
     ],
     correctIndex: 3,
     explanation:
-      '1667 Ω is the resistance at which a 230 V potential drives just under the 30 mA RCD threshold to earth (specifically derived from BS 7671 Reg 411.5.3 / Table 41.5: 50 V ÷ 0.030 A = 1667 Ω, the maximum Zs for a 30 mA RCD). Industry uses it as the test threshold: below 1667 Ω the metal could carry enough current to be hazardous and must be treated as extraneous; above it, no.',
+      '1667 Ω is 50 V ÷ 0.030 A — the Table 41.5 maximum for a 30 mA RCD. It is used as a rule-of-thumb threshold: below 1667 Ω a metal part can carry enough current to hold a dangerous touch voltage, so it is treated as extraneous and main-bonded.',
   },
   {
     id: 'm3-s4-sub4-plastic-pipe',
@@ -163,7 +163,7 @@ const quizQuestions = [
   {
     id: 7,
     question:
-      'On a TT installation with the test: phase-to-earth at the gas service reads 60 Ω. Is the part extraneous, and what bonding action follows?',
+      'On a TT installation, the resistance between the incoming gas service and the MET reads 60 Ω. Is the part extraneous, and what bonding action follows?',
     options: [
       '60 Ω is above the threshold → not extraneous → leave the gas pipe unbonded.',
       '60 Ω matches the TT electrode resistance → no bonding needed, the rod does the job.',

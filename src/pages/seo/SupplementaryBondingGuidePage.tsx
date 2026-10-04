@@ -197,7 +197,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 415.2 (General):</strong> Supplementary bonding must be provided
                 where the conditions for automatic disconnection of supply cannot be met. The
@@ -208,7 +208,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 701.415.2 (Bathrooms):</strong> Supplementary bonding is required
                 in bathrooms connecting all extraneous-conductive-parts and exposed-conductive-parts
@@ -218,7 +218,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 544.2 (Conductor sizing):</strong> Supplementary bonding
                 conductors between two extraneous-conductive-parts must have a cross-section of at
@@ -248,7 +248,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bathrooms where the omission conditions are not met.</strong> If any circuit
                 serving the bathroom does not have 30 mA RCD protection — for example, if the
@@ -258,7 +258,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bathrooms where main bonding is absent or defective.</strong> If the water
                 or gas service is not bonded to the main earthing terminal (or the bonding is
@@ -267,7 +267,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Locations where disconnection times cannot be achieved.</strong> If the
                 earth fault loop impedance on a circuit is too high to achieve the required
@@ -277,7 +277,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Special installations.</strong> Swimming pools (Section 702), saunas
                 (Section 703), and other special locations may require supplementary bonding
@@ -371,7 +371,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Droplets className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Modern Installation (RCBO Board)</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -443,7 +443,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Between two extraneous-conductive-parts:</strong> 4 mm copper minimum if not
                 mechanically protected, 2.5 mm copper if mechanically protected (run in conduit,
@@ -452,7 +452,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>
                   Between an exposed-conductive-part and an extraneous-conductive-part:
@@ -552,7 +552,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Continuity test.</strong> Using a low-resistance ohmmeter, measure the
                 resistance between each pair of bonded parts. Place one probe on a bonded pipe and
@@ -562,7 +562,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Visual inspection.</strong> Check all bonding clamps for security and
                 corrosion. Verify that safety labels are present and legible. Check that the bonding
@@ -571,7 +571,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Verification formula.</strong> The resistance between bonded parts should
                 satisfy: R less than or equal to 50V / Ia, where Ia is the operating current of the
@@ -618,7 +618,7 @@ export default function SupplementaryBondingGuidePage() {
       heroTitle={
         <>
           Supplementary Bonding:{' '}
-          <span className="text-yellow-400">When Is It Required and When Can It Be Omitted?</span>
+          <span className="text-elec-yellow">When Is It Required and When Can It Be Omitted?</span>
         </>
       }
       heroSubtitle="Supplementary bonding in bathrooms is one of the most misunderstood topics in BS 7671. This guide explains Regulation 415.2, the three conditions for omission, 4 mm conductor requirements, and how to test bonding correctly."

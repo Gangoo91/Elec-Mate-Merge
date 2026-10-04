@@ -1,38 +1,31 @@
 /**
- * ReferralRaceCard — the Referral Race promo, shown at the top of the main,
- * electrician and apprentice dashboards.
+ * ReferralRaceCard — the October 2026 referral push, shown at the top of the
+ * main, electrician and apprentice dashboards.
  *
- * Not gated on account age: the existing <BringAMate> block only rendered in a
- * user's first 7 days, which is why almost nobody has ever seen a referral
- * prompt. This one runs for everyone, for the whole campaign window, and
- * disappears on its own afterwards.
+ * Mechanic (Andrew, 4 Oct 2026, and the email that went to 298 paying
+ * electricians the same day): share your link, you are in the £100 draw at the
+ * end of the month. A friend who subscribes is a free month for both of you.
+ * It is a DRAW, not a race — the card and the email must say the same thing.
  *
- * August 2026 ran this same card and produced 12 referrals in the month —
- * a third of every referral the product has ever had.
+ * The card does the whole job inline: the person's own link, a copy button and
+ * a WhatsApp button. Nobody should have to go looking for their link.
  *
- * 🔴 Dismissal is deliberately TEMPORARY. August's card could not be closed at
- * all; this one can, but it returns after a week. A permanent dismissal would
- * quietly undo the campaign — most people tap the X on their first visit, and
- * the race would then run to a fraction of the audience while still promising
- * a £100 prize.
+ * Dismissal is deliberately TEMPORARY (returns after a week). A permanent
+ * dismissal would quietly undo the campaign on first sight.
  *
- * Opens the existing <ReferralShareSheet>, so the code / link / QR / reward
- * plumbing is unchanged.
+ * Full card the first visit, slim strip after (Andrew, 4 Oct 2026). On a phone
+ * the full card is ~400px — most of the first screen — and it sat above the
+ * home layout people had just customised ("diary first" landed halfway down).
+ * The strip keeps the draw in view; one tap opens the full card.
  */
 import { useState } from 'react';
-import { ArrowRight, X } from 'lucide-react';
+import { X } from 'lucide-react';
 import ReferralShareSheet from '@/components/referrals/ReferralShareSheet';
+import { useReferralShare } from '@/hooks/useReferralShare';
 import { storageGetSync, storageSetSync } from '@/utils/storage';
+import { cn } from '@/lib/utils';
 
-/**
- * Campaign window — inclusive of both days, local time.
- *
- * The race runs from the day it goes live until the end of October, and every
- * referral inside that window counts toward the £100. Deliberately NOT "just
- * October": the card is up now, so anyone who refers this week must be in the
- * running. Promising a prize for a month that hasn't started, on a card people
- * can already act on, is how you end up arguing about it in November.
- */
+/** Campaign window — inclusive of both days, local time. */
 const RACE_START = new Date('2026-09-27T00:00:00');
 const RACE_END = new Date('2026-10-31T23:59:59');
 
@@ -44,11 +37,6 @@ function isReferralRaceLive(now: Date = new Date()): boolean {
   return now >= RACE_START && now <= RACE_END;
 }
 
-/**
- * Reads the stored dismissal. The value is the epoch ms at which the card is
- * allowed back. Anything unparseable is treated as "not dismissed" rather than
- * hiding the card forever on a bad write.
- */
 function isCurrentlyDismissed(now: number = Date.now()): boolean {
   const raw = storageGetSync(DISMISS_KEY);
   if (!raw) return false;
@@ -56,9 +44,42 @@ function isCurrentlyDismissed(now: number = Date.now()): boolean {
   return Number.isFinite(showAgainAt) && now < showAgainAt;
 }
 
+/** Per-device: when this campaign's full card was first shown. */
+const SEEN_KEY = 'elec-mate-referral-race-seen-2026-10';
+/** Per-tab: keep the full card for the rest of the session it was first seen in. */
+const FULL_THIS_SESSION_KEY = 'elec-mate-referral-race-full-session';
+
+/**
+ * Full on first sight (and for the rest of that session), compact after.
+ * Storage can throw in private mode — then it behaves as first sight, which is
+ * the safe direction for a campaign.
+ */
+function startsCompact(): boolean {
+  try {
+    if (!storageGetSync(SEEN_KEY)) {
+      storageSetSync(SEEN_KEY, String(Date.now()));
+      window.sessionStorage.setItem(FULL_THIS_SESSION_KEY, '1');
+      return false;
+    }
+    return window.sessionStorage.getItem(FULL_THIS_SESSION_KEY) !== '1';
+  } catch {
+    return false;
+  }
+}
+
+/** The link without the scheme, which is what people recognise and what fits on a phone. */
+function displayUrl(url: string | null): string {
+  return (url ?? '').replace(/^https?:\/\/(www\.)?/, '');
+}
+
 export function ReferralRaceCard() {
-  const [shareOpen, setShareOpen] = useState(false);
+  const [sheetOpen, setSheetOpen] = useState(false);
   const [dismissed, setDismissed] = useState(() => isCurrentlyDismissed());
+  const [copied, setCopied] = useState(false);
+  const [compact, setCompact] = useState(startsCompact);
+  const { referralUrl, isLoading, copyLink, shareViaWhatsApp } = useReferralShare({
+    context: 'referral_draw_october',
+  });
 
   if (!isReferralRaceLive()) return null;
   if (dismissed) return null;
@@ -68,86 +89,134 @@ export function ReferralRaceCard() {
     setDismissed(true);
   };
 
+  if (compact) {
+    const daysLeft = Math.max(1, Math.ceil((RACE_END.getTime() - Date.now()) / 86_400_000));
+    return (
+      // A div, not a button: the Share button inside it is its own control, and
+      // a button inside a button is invalid. The expand target is the whole
+      // text area, which is a button of its own.
+      <div className="-mx-4 mb-4 flex items-center gap-3 rounded-none border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] py-3 pl-4 pr-3 sm:mx-0 sm:rounded-2xl sm:border-x">
+        <button
+          type="button"
+          onClick={() => setCompact(false)}
+          aria-label="£100 October draw — open for your link and more ways to share"
+          className="flex min-h-[56px] min-w-0 flex-1 touch-manipulation items-center gap-3 text-left"
+        >
+          <span className="shrink-0 text-[26px] font-extrabold leading-none tracking-[-0.03em] text-elec-yellow [font-variant-numeric:tabular-nums]">
+            £100
+          </span>
+          <span className="min-w-0">
+            <span className="block text-[14.5px] font-semibold leading-snug text-white">
+              October draw — share your link and you're in
+            </span>
+            <span className="mt-0.5 block text-[12.5px] leading-snug text-white">
+              They get a month free · {daysLeft === 1 ? 'last day' : `${daysLeft} days left`}
+            </span>
+          </span>
+        </button>
+        <button
+          type="button"
+          onClick={shareViaWhatsApp}
+          disabled={isLoading}
+          className="h-11 shrink-0 touch-manipulation rounded-xl bg-elec-yellow px-4 text-[14px] font-bold text-black transition-opacity active:opacity-90 disabled:opacity-40"
+        >
+          Share
+        </button>
+      </div>
+    );
+  }
+
+  const handleCopy = async () => {
+    await copyLink();
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <>
       <section
-        className="relative -mx-4 mb-4 rounded-none border-y border-elec-yellow/25 bg-gradient-to-br from-elec-yellow/[0.11] via-white/[0.04] to-transparent p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5"
         aria-labelledby="referral-race-heading"
+        className="relative -mx-4 mb-4 rounded-none border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-6"
       >
-        {/* 44px target, kept clear of the heading's right edge on mobile. */}
         <button
           type="button"
           onClick={handleDismiss}
           aria-label="Hide this for a week"
-          className="absolute right-2 top-2 flex h-11 w-11 touch-manipulation items-center justify-center rounded-xl text-white/70 transition-colors hover:bg-white/[0.08] hover:text-white"
+          className="absolute right-2 top-2 flex h-11 w-11 touch-manipulation items-center justify-center rounded-xl text-white transition-colors hover:bg-white/[0.08]"
         >
           <X className="h-4 w-4" />
         </button>
 
-        {/* Single column on phones; splits into message + action from lg up.
-            Stacked full-width on a 1,100px dashboard left the right 60% of the
-            card empty and stretched a one-line panel across the whole width,
-            which read as a layout bug rather than a promo. */}
-        <div className="lg:flex lg:items-center lg:gap-10">
-          <div className="min-w-0 lg:flex-1">
-            <p className="pr-12 text-[10px] font-semibold uppercase tracking-[0.14em] text-elec-yellow lg:pr-0">
-              {/* "Ends 31 Oct", not "31 October": with the padding that keeps
-                  this clear of the close button, the long form wrapped onto a
-                  second line at 320px. The headline underneath carries the
-                  full date anyway. */}
-              Referral Race · ends 31 Oct
+        <div className="lg:grid lg:grid-cols-[1fr_minmax(0,460px)] lg:items-center lg:gap-10">
+          {/* The ask */}
+          <div className="min-w-0">
+            <p className="pr-12 text-[11px] font-semibold uppercase tracking-[0.16em] text-elec-yellow lg:pr-0">
+              October · £100 draw
             </p>
-
-            {/* The £100 is the hook, so it leads and it is part of the heading
-                rather than a decorative numeral floated to the right. The old
-                layout hid it below `xs:` to stop the headline wrapping, which
-                meant the one number that sells this vanished on the narrowest
-                phones — exactly the devices most of these users are on. */}
             <h2 id="referral-race-heading" className="mt-2">
-              <span className="block text-[42px] font-extrabold leading-none tracking-[-0.03em] text-elec-yellow [font-variant-numeric:tabular-nums] sm:text-[52px]">
+              <span className="block text-[44px] font-extrabold leading-none tracking-[-0.035em] text-elec-yellow [font-variant-numeric:tabular-nums] sm:text-[56px]">
                 £100
               </span>
-              <span className="mt-1.5 block text-[17px] font-bold leading-tight tracking-tight text-white sm:text-[19px]">
-                to whoever refers the most by 31 October.
+              <span className="mt-2 block text-[17px] font-bold leading-tight tracking-tight text-white sm:text-[20px]">
+                Share your link with one electrician and you're in the draw.
               </span>
             </h2>
-
-            <p className="mt-3 max-w-[54ch] text-[13px] leading-snug text-white">
-              And every mate who subscribes is{' '}
-              <span className="font-semibold">a free month for both of you</span> — win or not.
+            <p className="mt-3 max-w-[52ch] text-[14px] leading-snug text-white">
+              They get their first month free. When they stay, so do you. Winner picked at random
+              on 31 October from everyone who shared.
             </p>
           </div>
 
-          {/* Action column. Capped so the one-line panel never stretches. */}
-          <div className="mt-4 lg:mt-0 lg:w-[320px] lg:shrink-0">
-            {/* £100 on its own reads as a lottery. A real, named, low number
-                tells people it is winnable — last month it took four.
-                Beatable is more motivating than big. */}
-            <div className="rounded-xl border border-white/[0.14] bg-black/25 px-3.5 py-2.5">
-              <p className="text-[13px] leading-snug text-white">
-                Last month's winner took it with{' '}
-                <span className="font-semibold text-elec-yellow">4 sign-ups</span>. That's the bar.
-              </p>
+          {/* The link and the two ways to send it */}
+          <div className="mt-5 lg:mt-0">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white">
+              Your link
+            </p>
+            <div className="mt-2 flex h-12 items-center rounded-xl border border-white/[0.14] bg-black/30 px-4">
+              <span
+                className={cn(
+                  'min-w-0 flex-1 truncate font-mono text-[14px] text-white',
+                  isLoading && 'opacity-40'
+                )}
+              >
+                {isLoading ? 'Loading your link…' : displayUrl(referralUrl)}
+              </span>
             </div>
-
+            <div className="mt-3 grid grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={shareViaWhatsApp}
+                disabled={isLoading}
+                className="inline-flex h-12 touch-manipulation items-center justify-center rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-opacity hover:opacity-90 disabled:opacity-40"
+              >
+                Send on WhatsApp
+              </button>
+              <button
+                type="button"
+                onClick={handleCopy}
+                disabled={isLoading}
+                className="inline-flex h-12 touch-manipulation items-center justify-center rounded-xl border border-white/[0.18] bg-white/[0.06] text-[15px] font-semibold text-white transition-colors hover:border-elec-yellow/60 disabled:opacity-40"
+              >
+                {copied ? 'Copied' : 'Copy link'}
+              </button>
+            </div>
             <button
               type="button"
-              onClick={() => setShareOpen(true)}
-              className="mt-3 inline-flex h-11 w-full touch-manipulation items-center justify-center gap-1.5 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-opacity hover:opacity-90"
+              onClick={() => setSheetOpen(true)}
+              className="mt-3 h-11 w-full touch-manipulation text-[13px] font-medium text-white underline underline-offset-4 hover:text-elec-yellow"
             >
-              Get your link
-              <ArrowRight className="h-4 w-4" />
+              QR code and other ways to share
             </button>
           </div>
         </div>
       </section>
 
       <ReferralShareSheet
-        open={shareOpen}
-        onOpenChange={setShareOpen}
-        headline="Refer your mates — £100 cash for the winner"
-        subline="Last month's winner took it with 4 sign-ups. Every mate who subscribes is a free month for both of you. Race ends 31 October."
-        context="referral_race_october"
+        open={sheetOpen}
+        onOpenChange={setSheetOpen}
+        headline="Share Elec-Mate, you're in the £100 draw"
+        subline="Every share this month is an entry. A friend who subscribes is a free month for both of you. Draw on 31 October."
+        context="referral_draw_october"
       />
     </>
   );

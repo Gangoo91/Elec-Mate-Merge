@@ -180,7 +180,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Scope</strong> — applies to all assured shorthold tenancies, assured
                 tenancies, and regulated tenancies in the Stoke-on-Trent city council area. Social
@@ -189,7 +189,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Frequency</strong> — an EICR must be obtained before each new tenancy and
                 renewed at least every five years. Earlier reinspection may be recommended on the
@@ -197,7 +197,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Distribution</strong> — landlords must provide a copy to existing tenants
                 within 28 days, to new tenants before they move in, and to the council within seven
@@ -205,7 +205,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Enforcement</strong> — Stoke-on-Trent City Council can issue civil penalties
                 of up to £30,000 per breach. Each individual failure (no EICR, failure to provide
@@ -229,7 +229,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Obtain a valid EICR</strong> from a qualified and competent electrician
                 before beginning a new tenancy and at least every five years. Retain copies of all
@@ -237,7 +237,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Provide copies promptly</strong> — to existing tenants within 28 days of the
                 inspection, to new tenants before they occupy the property, and to Stoke-on-Trent
@@ -245,7 +245,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Complete remedial work within 28 days</strong> if the EICR is
                 Unsatisfactory. C1 (danger present) items may require immediate disconnection and
@@ -253,7 +253,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Obtain and distribute written confirmation</strong> — once remedial work is
                 complete, obtain written confirmation from the electrician and provide copies to the
@@ -336,7 +336,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>28 days from the inspection date</strong> — all remedial work must be
                 completed within 28 days of the EICR. The clock starts from the date of the
@@ -344,7 +344,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C1 — immediate action</strong> — danger-present observations may lead the
                 inspector to recommend immediate disconnection of the affected circuit or item.
@@ -352,7 +352,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Written confirmation of completion</strong> — once remedial work is done,
                 the landlord must obtain written confirmation from the competent electrician and
@@ -361,7 +361,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Failure to complete is a separate breach</strong> — missing the 28-day
                 deadline is an independent breach of the regulations, carrying its own potential
@@ -386,14 +386,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>One-bedroom flat</strong> — £100 to £160. Typically 3 to 4 circuits.
                 Inspection usually completed in two to three hours.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Two-bedroom terraced house</strong> — £120 to £200. The most common property
                 type in Stoke-on-Trent's private rented sector. Older properties may take longer due
@@ -401,7 +401,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom house</strong> — £180 to £300. Victorian terraces in Longton,
                 Burslem, and Tunstall can present more complex installations requiring additional
@@ -409,7 +409,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HMO / large property</strong> — £250 to £450 or more. Multiple consumer
                 units, fire alarm systems, and emergency lighting extend the inspection scope and
@@ -439,7 +439,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use official scheme registers</strong> — search the NICEIC, NAPIT, or ELECSA
                 online registers for electricians operating in the Stoke-on-Trent area. Registration
@@ -448,7 +448,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check qualifications</strong> — the inspector should hold City and Guilds
                 2391 (Inspection and Testing) or the equivalent Level 3 Award in Inspection and
@@ -457,7 +457,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Calibrated instruments</strong> — insulation resistance, earth fault loop
                 impedance, and RCD testing require calibrated multifunction testers. Ask whether the
@@ -465,7 +465,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Avoid unusually low prices</strong> — an EICR priced well below the local
                 market rate may indicate rushed testing or inadequate inspection. The savings are
@@ -492,7 +492,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete EICRs On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -529,7 +529,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more EICR work across Stoke-on-Trent with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -555,7 +555,7 @@ export default function EICRStokeOnTrentPage() {
       heroTitle={
         <>
           EICR Stoke-on-Trent:{' '}
-          <span className="text-yellow-400">Electrical Inspection & Landlord Compliance</span>
+          <span className="text-elec-yellow">Electrical Inspection & Landlord Compliance</span>
         </>
       }
       heroSubtitle="Everything landlords and electricians need to know about Electrical Installation Condition Reports in Stoke-on-Trent — legal requirements, costs in the six towns, common findings in older terraced properties, and how to find a qualified inspector."
@@ -566,7 +566,7 @@ export default function EICRStokeOnTrentPage() {
       faqHeading="Frequently Asked Questions About EICRs in Stoke-on-Trent"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs On Your Phone — Any Location Across Stoke-on-Trent"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

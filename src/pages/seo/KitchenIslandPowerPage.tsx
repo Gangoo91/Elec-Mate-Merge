@@ -264,7 +264,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fused spur from ring final circuit</strong> — a fused connection unit (13A
                 fuse) on the existing kitchen ring supplies the island sockets. This is the simplest
@@ -273,7 +273,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New radial circuit</strong> — a dedicated 20A radial circuit from the
                 consumer unit to the island sockets. This provides more capacity and is the better
@@ -282,7 +282,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Extension of ring final circuit</strong> — if the ring routes conveniently
                 past the island position, the ring can be extended to include sockets on the island.
@@ -392,21 +392,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 New dedicated circuit (hob or sockets): full initial verification — continuity,
                 insulation resistance, polarity, Zs, RCD. Issue an EIC.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Fused spur from existing ring: test the new spur — continuity, insulation
                 resistance, polarity, Zs at the new socket. Issue a Minor Works Certificate.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 If both a new hob circuit and new socket circuit are installed, a single EIC
                 covering both circuits is appropriate.
@@ -471,7 +471,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Coordinate with the Kitchen Fitter</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -501,7 +501,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify kitchen island electrical work"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. 7-day free trial."
           icon={UtensilsCrossed}
         />
       </>
@@ -527,7 +527,7 @@ export default function KitchenIslandPowerPage() {
       heroTitle={
         <>
           Kitchen Island Power Supply:{' '}
-          <span className="text-yellow-400">Floor Box, Hob Circuits, and Socket Options</span>
+          <span className="text-elec-yellow">Floor Box, Hob Circuits, and Socket Options</span>
         </>
       }
       heroSubtitle="Getting power to a kitchen island means planning the cable route before the floor goes down. This guide covers floor boxes, island pillars, induction hob circuits, socket supplies, and realistic pricing."
@@ -538,7 +538,7 @@ export default function KitchenIslandPowerPage() {
       faqHeading="Frequently Asked Questions About Kitchen Island Power Supply"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Certify Kitchen Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

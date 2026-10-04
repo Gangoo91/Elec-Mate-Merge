@@ -217,21 +217,21 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-3">Fixed Wiring Colour Codes</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New (post-2006) twin-and-earth:</strong> Brown (line) / Blue (neutral) /
                 Green-Yellow (earth)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Old (pre-2006) twin-and-earth:</strong> Red (line) / Black (neutral) /
                 Green-Yellow (earth)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New 3-core-and-earth (strappers):</strong> Brown, Black, Grey — all three
                 coloured cores used as line conductors in a switching circuit. Black and grey must
@@ -239,7 +239,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Old 3-core-and-earth (strappers):</strong> Red, Yellow, Blue. In a switching
                 circuit, all three are used as line conductors — yellow and blue must be
@@ -251,7 +251,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mixing old and new wiring:</strong> where new cable is added to an existing
                 old installation, a label must be fixed at the consumer unit and at the point of
@@ -260,7 +260,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Switch cable black cores:</strong> in old wiring, the black core of a switch
                 drop cable is used as the switch return wire — it carries line voltage. This black
@@ -286,7 +286,7 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-3">Method 1 — Loop at Ceiling Rose</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Supply (line and neutral) looped at the ceiling rose. Switch drop runs from the
                 ceiling rose to switch 1. Strapper cable (3-core-and-earth) runs from switch 1 to
@@ -295,7 +295,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Common approach in older houses where wiring was run from fitting to switch. The
                 neutral does not visit the switch boxes — only the line-side conductors are at the
@@ -308,7 +308,7 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-3">Method 2 — Loop at Switch</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Supply cable (twin-and-earth) runs to switch 1 first. Line connects to common of
                 switch 1. Neutral loops through the switch box (not connected to the switch) and
@@ -317,7 +317,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 More common in modern wiring where cables are run to the switch positions. Requires
                 care to identify the neutral in the switch box — it must be sleeved blue and not
@@ -342,7 +342,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Intermediate switch terminals:</strong> four terminals in two pairs. L1 in
                 and L1 out on one side; L2 in and L2 out on the other. The switch crosses or passes
@@ -350,7 +350,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable routing:</strong> run 3-core-and-earth from two-way switch 1 to the
                 intermediate switch (connect to one pair of terminals). Run another 3-core-and-earth
@@ -359,7 +359,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional intermediates:</strong> for four control points, add a second
                 intermediate switch in series between the first intermediate and the second two-way
@@ -389,7 +389,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Connecting strappers to the wrong terminals</strong> — connecting both
                 strappers from L1 of switch 1 to L1 and L2 of switch 2 (rather than L1 to L1 and L2
@@ -398,7 +398,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Un-sleeved switch return blacks</strong> — old switch drop cables have a
                 black core used as a line conductor (switch return). Leaving this core without brown
@@ -407,7 +407,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Using a one-way switch in a two-way circuit</strong> — a common error when
                 replacing a faulty switch. A one-way switch connected in a two-way circuit results
@@ -416,7 +416,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Neutral in the switch box connected to a switch terminal</strong> — in
                 loop-at-switch wiring, the neutral passes through the switch box without connecting
@@ -442,7 +442,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Strapper conductors (3-core-and-earth):</strong> all coloured cores in a
                 strapper cable carry line voltage in a switching circuit. In new cable
@@ -452,7 +452,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Switch return conductors (twin-and-earth):</strong> the blue (new) or black
                 (old) core used as a switch return wire (line conductor) must be sleeved brown at
@@ -460,7 +460,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mixed wiring label:</strong> where old and new cable colours are present in
                 the same installation, a label must be fitted per Regulation 514.14.1 at the origin
@@ -500,14 +500,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <SEOAppBridge href="/minor-works-certificate" label="Minor Works Certificate" /> — issue
                 an MWC for two-way or intermediate switch additions to existing circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <SEOAppBridge href="/tools/eicr-certificate" label="EICR Certificate" /> — record
                 un-sleeved cores or incorrect conductor identification found when inspecting old
@@ -538,7 +538,7 @@ export default function TwoWaySwitchWiringPage() {
       badgeIcon={Zap}
       heroTitle={
         <>
-          Two-Way Switch Wiring <span className="text-yellow-400">— Complete UK Guide</span>
+          Two-Way Switch Wiring <span className="text-elec-yellow">— Complete UK Guide</span>
         </>
       }
       heroSubtitle="A practical guide to two-way and intermediate switch wiring for UK electricians: colour codes, strapper cables, intermediate switches for three-point control, common mistakes, and BS 7671 conductor identification."

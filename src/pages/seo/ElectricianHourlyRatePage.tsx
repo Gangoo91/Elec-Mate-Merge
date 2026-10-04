@@ -194,7 +194,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>London (inner)</strong> — £70 to £90 per hour. Central London rates reflect
                 the congestion charge, ULEZ costs (up to £12.50/day), parking charges, high cost of
@@ -203,7 +203,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>London (outer) and South East</strong> — £55 to £75 per hour. Areas
                 including Kent, Essex, Surrey, and the Home Counties. Lower operating costs than
@@ -211,7 +211,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>South West</strong> — £50 to £70 per hour. Bristol, Bath, Exeter, and the
                 wider South West. Strong demand in coastal areas and from second-home owners.
@@ -219,7 +219,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Midlands</strong> — £45 to £65 per hour. Birmingham, Nottingham, Leicester,
                 Derby. Strong commercial and industrial sector. Domestic rates towards the lower end
@@ -227,7 +227,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>North of England</strong> — £40 to £60 per hour. Manchester, Leeds,
                 Sheffield, Newcastle. Rate variation is significant — Manchester city centre rates
@@ -236,7 +236,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Scotland</strong> — £45 to £65 per hour. Edinburgh and Glasgow at the higher
                 end; rural Highlands and Islands at or below the lower end. The oil and gas sector
@@ -244,7 +244,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wales and Northern Ireland</strong> — £38 to £55 per hour. Lower average
                 rates reflecting lower average incomes. Cardiff and Belfast city centres trend
@@ -269,7 +269,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sole trader rates</strong> — typically £45 to £75/hr. Lower overheads than a
                 company (no employer&apos;s NI on employees, smaller office costs, no management
@@ -278,7 +278,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Small electrical company (1–5 electricians)</strong> — typically £55 to
                 £80/hr. Higher overhead structure: employer&apos;s NI contributions, office
@@ -287,7 +287,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Medium to large contractor</strong> — typically £75 to £120/hr (often quoted
                 as a day rate for planned works). High overhead, project management, dedicated
@@ -296,7 +296,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Labour-only subcontract rate</strong> — £28 to £50/hr (labour only, no
                 materials, no certification). This is what a qualified electrician receives when
@@ -322,7 +322,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Typical domestic callout charge</strong> — £50 to £100, covering travel and
                 the first 30 to 60 minutes on site. Clearly communicate to the client that this is
@@ -331,7 +331,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minimum charge</strong> — set a minimum charge of 1 to 2 hours for any
                 visit. A 20-minute job still costs you travel time and vehicle running costs. A £35
@@ -339,7 +339,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Travel time</strong> — charging for travel time is standard practice. Many
                 electricians charge 50% of their standard rate for travel beyond a set radius (e.g.,
@@ -365,7 +365,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Evening and weekend (out of hours)</strong> — 1.5x standard rate. A standard
                 rate of £55/hr becomes £82.50/hr. Most electricians define &quot;out of hours&quot;
@@ -373,7 +373,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sunday and bank holiday emergency</strong> — 2x standard rate. A standard
                 rate of £55/hr becomes £110/hr. Bank holiday callouts often attract an additional
@@ -381,7 +381,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minimum emergency call charge</strong> — typically 2 hours at the emergency
                 rate. Attending a job that takes 30 minutes at midnight costs you the same in
@@ -390,7 +390,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Communicate rates clearly upfront</strong> — state your emergency rates
                 clearly when the client calls, before you attend. A client who agrees to your
@@ -417,7 +417,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Van (fuel, insurance, maintenance, depreciation)</strong> — £7,000 to
                 £14,000 per year. A modern transit-style van costs £5,000 to £8,000/year in
@@ -427,7 +427,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tools and test equipment</strong> — £1,000 to £3,500 per year. Multifunction
                 testers, insulation resistance testers, clamp meters, hand tools, and consumables. A
@@ -436,7 +436,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Public liability insurance</strong> — £400 to £900/year for £5m public
                 liability cover. Essential for any client-facing work. See the{' '}
@@ -447,14 +447,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC or NAPIT registration</strong> — £400 to £800/year depending on
                 scheme tier and business size. Required to self-certify notifiable work.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Software, phone, accounting</strong> — £800 to £2,000/year. Elec-Mate
                 (certificates and quoting), accounting software, phone contract, and accountancy
@@ -485,7 +485,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fixed price — use for installation work</strong> — consumer unit
                 replacements, new circuits, rewires, and appliance installations are all well-suited
@@ -495,7 +495,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hourly rate — use for fault-finding and investigation</strong> — when you do
                 not know what you will find, quote an hourly rate with an estimated maximum.
@@ -504,7 +504,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Materials mark-up</strong> — charge materials at trade price plus 15 to 25
                 per cent. This compensates for the time spent sourcing, ordering, and carrying
@@ -514,7 +514,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Always confirm in writing</strong> — a written quote protects both parties.
                 Use the{' '}
@@ -542,7 +542,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <PoundSterling className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Quote on Site, Win More Work</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -577,7 +577,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, invoice, and certify — all from your phone"
-          description="Join 1,600+ UK electricians using Elec-Mate to produce professional quotes, certificates, and invoices on site. Stop losing jobs to slower competitors."
+          description="Join 2,100+ UK electricians using Elec-Mate to produce professional quotes, certificates, and invoices on site. Stop losing jobs to slower competitors."
           icon={Zap}
         />
       </>
@@ -603,7 +603,7 @@ export default function ElectricianHourlyRatePage() {
       heroTitle={
         <>
           Electrician Hourly Rate UK 2026:{' '}
-          <span className="text-yellow-400">Regional Rates, Callouts and How to Price Jobs</span>
+          <span className="text-elec-yellow">Regional Rates, Callouts and How to Price Jobs</span>
         </>
       }
       heroSubtitle="Electrician hourly rates vary significantly across the UK in 2026. This guide covers what electricians charge by region (London £65–£90/hr, Midlands/North £40–£60/hr), how sole trader rates compare to larger firms, callout charge structures, emergency and out-of-hours premiums (1.5x–2x), overhead calculations, and how to price electrical jobs confidently."
@@ -614,7 +614,7 @@ export default function ElectricianHourlyRatePage() {
       faqHeading="Frequently Asked Questions About Electrician Hourly Rates"
       relatedPages={relatedPages}
       ctaHeading="Quote and Invoice Like a Professional with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to produce professional quotes, certificates, and invoices on site. 7-day free trial, no charge until day 8."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to produce professional quotes, certificates, and invoices on site. 7-day free trial, no charge until day 8."
     />
   );
 }

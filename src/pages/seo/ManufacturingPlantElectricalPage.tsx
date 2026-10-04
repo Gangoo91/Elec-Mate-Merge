@@ -190,7 +190,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Direct on-line (DOL) starters:</strong> Suitable for small motors (up to
                 approximately 7.5 kW) where the supply can accept the starting current surge
@@ -200,7 +200,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Soft starters:</strong> Electronic soft starters ramp up the voltage applied
                 to the motor during starting, reducing the starting current to typically 2.5 to 4
@@ -210,7 +210,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Variable Frequency Drives (VFDs):</strong> VFDs (also called variable speed
                 drives, inverters, or frequency converters) control motor speed by varying the
@@ -221,7 +221,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>VFD wiring:</strong> The VFD output to the motor must use screened cable
                 (typically SY or CY type) with the screen earthed at both the VFD and motor
@@ -415,7 +415,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Harmonic distortion:</strong> Six-pulse VFDs (the most common type) generate
                 characteristic 5th, 7th, 11th, and 13th harmonic currents. These can reach 30 to 40
@@ -425,7 +425,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Harmonic mitigation:</strong> Mitigation options include: passive harmonic
                 filters (tuned LC filters connected at the MCC); active harmonic filters (inject
@@ -435,7 +435,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Voltage fluctuations:</strong> Large motor starts, spot welders, and
                 induction heaters cause rapid voltage fluctuations that can cause light flicker and
@@ -462,7 +462,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Supply disconnector:</strong> Every machine must have a main supply
                 disconnector that can safely isolate all incoming power from the machine. The
@@ -472,7 +472,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Control voltage:</strong> BS EN 60204-1 recommends that control circuits use
                 a control supply voltage not exceeding 120V AC or 60V DC to limit the risk of
@@ -481,7 +481,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wiring identification:</strong> All conductors in a machine control panel
                 must be identified with unique ferrule numbers at both ends. BS EN 60204-1
@@ -491,7 +491,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Technical documentation:</strong> BS EN 60204-1 requires that each machine
                 is supplied with complete electrical documentation including circuit diagrams, PLC
@@ -518,7 +518,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth fault loop impedance:</strong> The earth fault loop impedance must be
                 low enough to ensure that in the event of a line-to-earth fault, the overcurrent
@@ -532,7 +532,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Protective conductors:</strong> All manufacturing plant and machine frames
                 must be connected to the earthing system by suitably sized protective conductors.
@@ -542,7 +542,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>High-frequency earthing:</strong> VFDs and other switching equipment
                 generate high-frequency currents in the earthing system. At these frequencies, the
@@ -570,7 +570,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <AlertTriangle className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Lockout/Tagout Procedures</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -603,7 +603,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage manufacturing plant electrical projects with"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site certification, quoting, and project management."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site certification, quoting, and project management."
           icon={FileCheck2}
         />
       </>
@@ -629,7 +629,7 @@ export default function ManufacturingPlantElectricalPage() {
       heroTitle={
         <>
           Manufacturing Plant Electrical Installation:{' '}
-          <span className="text-yellow-400">Industrial Electrical UK Guide</span>
+          <span className="text-elec-yellow">Industrial Electrical UK Guide</span>
         </>
       }
       heroSubtitle="The complete technical guide to manufacturing plant electrical installation — covering motor starters, VFDs, PLC integration, emergency stop systems, safety interlocks, power quality management, BS EN 60204-1 machine electrical requirements, and Electricity at Work Regulations 1989 compliance."
@@ -640,7 +640,7 @@ export default function ManufacturingPlantElectricalPage() {
       faqHeading="Frequently Asked Questions — Manufacturing Plant Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Manage Your Manufacturing Electrical Projects with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site certification, quoting, and project management in manufacturing environments. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site certification, quoting, and project management in manufacturing environments. 7-day free trial, cancel anytime."
     />
   );
 }

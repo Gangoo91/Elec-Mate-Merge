@@ -171,24 +171,24 @@ const sections = [
         </p>
         <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10 my-4">
           <p className="text-white font-mono text-sm">
-            Table 4D2<strong className="text-yellow-400">A</strong> &nbsp;/&nbsp; Table 4D2
-            <strong className="text-yellow-400">B</strong>
+            Table 4D2<strong className="text-elec-yellow">A</strong> &nbsp;/&nbsp; Table 4D2
+            <strong className="text-elec-yellow">B</strong>
           </p>
           <p className="text-white text-xs mt-2">
             The suffix is what matters most day to day:{' '}
-            <strong className="text-yellow-400">A</strong> = current-carrying capacity (amps),{' '}
-            <strong className="text-yellow-400">B</strong> = voltage drop (mV/A/m). The letter group
+            <strong className="text-elec-yellow">A</strong> = current-carrying capacity (amps),{' '}
+            <strong className="text-elec-yellow">B</strong> = voltage drop (mV/A/m). The letter group
             gives the insulation and conductor material, and the number gives the construction — so
             4D2A and 4D2B are the capacity and volt-drop tables for the same cable.
           </p>
         </div>
         <p>
           The single most important point: you do not have to guess. Appendix 4 opens with{' '}
-          <strong className="text-yellow-400">Table 4A3</strong>, which lists every cable
+          <strong className="text-elec-yellow">Table 4A3</strong>, which lists every cable
           construction against the table that gives its current rating. Read the series letter as
-          the insulation and conductor material — <strong className="text-yellow-400">4D</strong> is
+          the insulation and conductor material — <strong className="text-elec-yellow">4D</strong> is
           70&deg;C thermoplastic (PVC) with copper conductors,{' '}
-          <strong className="text-yellow-400">4E</strong> is 90&deg;C thermosetting (XLPE/LSF) with
+          <strong className="text-elec-yellow">4E</strong> is 90&deg;C thermosetting (XLPE/LSF) with
           copper conductors — and the number as the construction within that series.
         </p>
         {/* grounded: printed BS 7671:2018+A4:2026 Appendix 4 Table 4A3 and the Appendix 4 table index (pp. 476–516): 4D1 single-core non-armoured / 4D2 multicore non-armoured / 4D3 single-core armoured / 4D4 multicore armoured / 4D5 flat cable with protective conductor, all 70 °C thermoplastic copper; 4E1–4E4 the same constructions at 90 °C thermosetting; 4F flexible; 4G mineral insulated; 4H aluminium 70 °C; 4J aluminium 90 °C. */}
@@ -196,33 +196,33 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">The tables you will actually use</h3>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li>
-              <strong className="text-yellow-400">Table 4D1A</strong> — single-core 70&deg;C
+              <strong className="text-elec-yellow">Table 4D1A</strong> — single-core 70&deg;C
               thermoplastic (PVC) cables, non-armoured, with or without sheath. This is the table
               for singles in conduit or trunking, not for twin and earth.
             </li>
             <li>
-              <strong className="text-yellow-400">Table 4D2A</strong> — multicore 70&deg;C
+              <strong className="text-elec-yellow">Table 4D2A</strong> — multicore 70&deg;C
               thermoplastic insulated and sheathed cables, non-armoured.
             </li>
             <li>
-              <strong className="text-yellow-400">Table 4D5</strong> — 70&deg;C thermoplastic
+              <strong className="text-elec-yellow">Table 4D5</strong> — 70&deg;C thermoplastic
               insulated and sheathed flat cable with protective conductor. This is the twin and
               earth table, and it is the one the On-Site Guide sends you to for T&amp;E in contact
               with thermal insulation.
             </li>
             <li>
-              <strong className="text-yellow-400">Table 4D4A / 4E4A</strong> — multicore armoured
+              <strong className="text-elec-yellow">Table 4D4A / 4E4A</strong> — multicore armoured
               (SWA): 4D4A for 70&deg;C thermoplastic, 4E4A for 90&deg;C thermosetting.
             </li>
             <li>
-              <strong className="text-yellow-400">Table 4E series</strong> — 90&deg;C thermosetting
+              <strong className="text-elec-yellow">Table 4E series</strong> — 90&deg;C thermosetting
               (XLPE/LSF) copper cables: 4E1A single-core, 4E2A multicore, 4E3A single-core armoured,
               4E4A multicore armoured.
             </li>
             <li>
-              <strong className="text-yellow-400">Table 4F</strong> — flexible cables and cords;{' '}
-              <strong className="text-yellow-400">4G</strong> — mineral insulated (MICC);{' '}
-              <strong className="text-yellow-400">4H / 4J</strong> — aluminium conductors (70&deg;C
+              <strong className="text-elec-yellow">Table 4F</strong> — flexible cables and cords;{' '}
+              <strong className="text-elec-yellow">4G</strong> — mineral insulated (MICC);{' '}
+              <strong className="text-elec-yellow">4H / 4J</strong> — aluminium conductors (70&deg;C
               and 90&deg;C thermoplastic respectively).
             </li>
           </ul>
@@ -238,11 +238,11 @@ const sections = [
         <p>
           This is what most electricians come to Appendix 4 for: the current-carrying capacity (Iz)
           of a cable. Before you read a number, fix two things — the{' '}
-          <strong className="text-yellow-400">table</strong> (from Table 4A3, by construction and
-          insulation) and the <strong className="text-yellow-400">column</strong> (your reference
+          <strong className="text-elec-yellow">table</strong> (from Table 4A3, by construction and
+          insulation) and the <strong className="text-elec-yellow">column</strong> (your reference
           method). For flat twin and earth the table is{' '}
-          <strong className="text-yellow-400">Table 4D5</strong>; for 90&deg;C thermosetting
-          multicore it is <strong className="text-yellow-400">Table 4E2A</strong>. The indicative
+          <strong className="text-elec-yellow">Table 4D5</strong>; for 90&deg;C thermosetting
+          multicore it is <strong className="text-elec-yellow">Table 4E2A</strong>. The indicative
           figures below are for two loaded conductors clipped direct at the standard reference
           conditions — 30&deg;C ambient, single circuit, no grouping and no thermal insulation.
           Always read the actual value off the printed table for your exact construction and
@@ -256,7 +256,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-1">
             Indicative Iz (A) — clipped direct, two loaded conductors
           </h3>
-          <p className="text-white/70 text-xs mb-4">
+          <p className="text-white text-xs mb-4">
             70&deg;C thermoplastic (PVC) vs 90&deg;C thermosetting (XLPE/LSF), same conductor size.
             Confirm against the printed table for your construction.
           </p>
@@ -288,16 +288,16 @@ const sections = [
                 <div className="p-2 rounded bg-white/[0.04] text-center text-white">
                   {size}mm&sup2;
                 </div>
-                <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+                <div className="p-2 rounded bg-white/[0.04] text-center text-elec-yellow font-bold">
                   {pvc}
                 </div>
-                <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+                <div className="p-2 rounded bg-white/[0.04] text-center text-elec-yellow font-bold">
                   {xlpe}
                 </div>
               </Fragment>
             ))}
           </div>
-          <p className="text-white/70 text-xs mt-4">
+          <p className="text-white text-xs mt-4">
             Indicative only — read the tabulated figure from BS 7671:2018+A4:2026 Appendix 4 for
             your construction (Table 4A3 tells you which table) and your reference method. Iz is the
             tabulated capacity before correction factors — always compare against the required It
@@ -331,17 +331,17 @@ const sections = [
           A cable&apos;s current-carrying capacity depends as much on how it is installed as on its
           size — the same 2.5mm&sup2; T&amp;E carries very different currents clipped to a wall
           versus buried in loft insulation. BS 7671 calls the installation arrangement the{' '}
-          <strong className="text-yellow-400">reference method</strong>, and it sets which column of
+          <strong className="text-elec-yellow">reference method</strong>, and it sets which column of
           the Appendix 4 table you read.
         </p>
         {/* grounded: printed BS 7671:2018+A4:2026 Chapter 52 — Reg 521.1 (installation method per Table 4A1), Reg 521.2/521.3 (situation per Table 4A2, which gives the reference method). Reg 521.201 is prefabricated wiring systems to BS 8488, NOT installation method. */}
         <p>
           Regulation 521.1 of BS 7671:2018+A4:2026 requires the installation method of a wiring
           system, in relation to the type of conductor or cable used, to be in accordance with{' '}
-          <strong className="text-yellow-400">Table 4A1</strong> of Appendix 4, provided external
+          <strong className="text-elec-yellow">Table 4A1</strong> of Appendix 4, provided external
           influences are taken into account under Section 522. Regulation 521.2 then requires the
           installation method in relation to the situation to be in accordance with{' '}
-          <strong className="text-yellow-400">Table 4A2</strong>, which is where each numbered
+          <strong className="text-elec-yellow">Table 4A2</strong>, which is where each numbered
           installation method is illustrated and mapped to its reference method. The two methods you
           will meet most often are:
         </p>
@@ -402,28 +402,28 @@ const sections = [
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
               <span>
-                <strong className="text-yellow-400">Table 4D1A</strong> — single-core 70&deg;C
+                <strong className="text-elec-yellow">Table 4D1A</strong> — single-core 70&deg;C
                 thermoplastic (PVC) cables, non-armoured, with or without sheath, copper conductors.
                 The table for singles drawn into conduit or trunking.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <span>
-                <strong className="text-yellow-400">Table 4D2A</strong> — multicore 70&deg;C
+                <strong className="text-elec-yellow">Table 4D2A</strong> — multicore 70&deg;C
                 thermoplastic insulated and thermoplastic sheathed cables, non-armoured, copper
                 conductors.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <span>
-                <strong className="text-yellow-400">Table 4D3A / 4D4A</strong> — armoured 70&deg;C
+                <strong className="text-elec-yellow">Table 4D3A / 4D4A</strong> — armoured 70&deg;C
                 thermoplastic cables: 4D3A single-core (non-magnetic armour), 4D4A multicore
                 armoured.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <span>
-                <strong className="text-yellow-400">Table 4D5</strong> — 70&deg;C thermoplastic
+                <strong className="text-elec-yellow">Table 4D5</strong> — 70&deg;C thermoplastic
                 insulated and sheathed flat cable with protective conductor: standard flat twin and
                 earth. As well as the ordinary reference-method columns it carries Installation
                 Methods 100 to 103 for cable above an insulated ceiling or in an insulated stud
@@ -502,7 +502,7 @@ const sections = [
               <p className="text-white text-xs mt-1">4E series</p>
             </div>
             <div className="p-3 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center">
-              <p className="text-yellow-400 font-bold">2.5</p>
+              <p className="text-elec-yellow font-bold">2.5</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white font-bold">24</p>
@@ -511,7 +511,7 @@ const sections = [
               <p className="text-white font-bold">30</p>
             </div>
             <div className="p-3 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center">
-              <p className="text-yellow-400 font-bold">4.0</p>
+              <p className="text-elec-yellow font-bold">4.0</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white font-bold">32</p>
@@ -520,7 +520,7 @@ const sections = [
               <p className="text-white font-bold">40</p>
             </div>
             <div className="p-3 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center">
-              <p className="text-yellow-400 font-bold">6.0</p>
+              <p className="text-elec-yellow font-bold">6.0</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white font-bold">41</p>
@@ -619,7 +619,7 @@ const sections = [
                 <h3 className="font-bold text-white mb-1">Twin and Earth (T&amp;E)</h3>
                 <p className="text-white text-sm leading-relaxed">
                   The standard domestic cable. Flat profile with line, neutral, and CPC. Use
-                  <strong className="text-yellow-400"> Table 4D5</strong> — &ldquo;70&deg;C
+                  <strong className="text-elec-yellow"> Table 4D5</strong> — &ldquo;70&deg;C
                   thermoplastic insulated and sheathed flat cable with protective conductor&rdquo;.
                   That is the only table in Appendix 4 written specifically for flat T&amp;E, and it
                   is the one Table 4A3 and the On-Site Guide both point you to. Available in 1.0,
@@ -637,7 +637,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Single-core PVC-insulated cables drawn into conduit or trunking. Standard in
                   commercial and industrial work. This is what{' '}
-                  <strong className="text-yellow-400">Table 4D1A</strong> is for — single-core
+                  <strong className="text-elec-yellow">Table 4D1A</strong> is for — single-core
                   70&deg;C thermoplastic cables, non-armoured, with or without sheath. Pick the
                   column for your reference method (Method A for conduit in a thermally insulating
                   wall, Method B for conduit or trunking on a wall, and so on) and for the number of
@@ -654,9 +654,9 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Multicore armoured cable with mechanical protection from the steel wire armouring.
                   Pick the table by insulation:{' '}
-                  <strong className="text-yellow-400">Table 4D4A</strong> for multicore armoured
+                  <strong className="text-elec-yellow">Table 4D4A</strong> for multicore armoured
                   70&deg;C thermoplastic, and{' '}
-                  <strong className="text-yellow-400">Table 4E4A</strong> for multicore armoured
+                  <strong className="text-elec-yellow">Table 4E4A</strong> for multicore armoured
                   90&deg;C thermosetting — 4E4A is the one for the XLPE/SWA normally specified in
                   the UK. Standard for underground burial, external runs, and submain distribution.
                   When buried, apply the Cs soil thermal resistivity factor (Table 4B3) and the Cd
@@ -673,7 +673,7 @@ const sections = [
                 <h3 className="font-bold text-white mb-1">Flexible Cables</h3>
                 <p className="text-white text-sm leading-relaxed">
                   Flexible cables for appliance connections and temporary installations. Use the
-                  <strong className="text-yellow-400"> 4F series</strong> tables — 4F1A for 60&deg;C
+                  <strong className="text-elec-yellow"> 4F series</strong> tables — 4F1A for 60&deg;C
                   thermosetting insulated flexible cables, 4F2A for 90&deg;C and 180&deg;C
                   thermosetting, and 4F3A for flexible cables generally (Regulation 559.5.2 points
                   to 4F3A for flexible cord to luminaires). Flexible cables have different
@@ -802,37 +802,37 @@ const sections = [
               Typical use
             </div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">1.0mm&sup2;</div>
-            <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+            <div className="p-2 rounded bg-white/[0.04] text-center text-elec-yellow font-bold">
               16
             </div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">Lighting</div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">1.5mm&sup2;</div>
-            <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+            <div className="p-2 rounded bg-white/[0.04] text-center text-elec-yellow font-bold">
               20
             </div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">Lighting</div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">2.5mm&sup2;</div>
-            <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+            <div className="p-2 rounded bg-white/[0.04] text-center text-elec-yellow font-bold">
               30
             </div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">Ring circuit</div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">4.0mm&sup2;</div>
-            <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+            <div className="p-2 rounded bg-white/[0.04] text-center text-elec-yellow font-bold">
               40
             </div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">Immersion</div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">6.0mm&sup2;</div>
-            <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+            <div className="p-2 rounded bg-white/[0.04] text-center text-elec-yellow font-bold">
               51
             </div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">Cooker/shower</div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">10mm&sup2;</div>
-            <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+            <div className="p-2 rounded bg-white/[0.04] text-center text-elec-yellow font-bold">
               70
             </div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">Large cooker</div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">16mm&sup2;</div>
-            <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+            <div className="p-2 rounded bg-white/[0.04] text-center text-elec-yellow font-bold">
               94
             </div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">Sub-main</div>
@@ -921,7 +921,7 @@ export default function AppendixFourTablesPage() {
       heroTitle={
         <>
           BS 7671 Appendix 4 Tables{' '}
-          <span className="text-yellow-400">Current Carrying Capacity</span>
+          <span className="text-elec-yellow">Current Carrying Capacity</span>
         </>
       }
       heroSubtitle="The complete guide to BS 7671 Appendix 4. Find the right table from Table 4A3 — 4D1A for single-core PVC, 4D2A for multicore PVC, 4D5 for flat twin and earth, the 4E series for 90°C thermosetting — then choose the right reference method column, apply correction factors, and check voltage drop, all to BS 7671:2018+A4:2026."
@@ -939,7 +939,7 @@ export default function AppendixFourTablesPage() {
       relatedPages={relatedPages}
       heroCtaLabel="Size cables on site with Appendix 4 built in"
       ctaHeading="Every Appendix 4 table, always in your pocket"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for instant cable sizing with every BS 7671 table built in. 70+ calculators, 19 certificate types — all BS 7671:2018+A4:2026. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for instant cable sizing with every BS 7671 table built in. 70+ calculators, 19 certificate types — all BS 7671:2018+A4:2026. 7-day free trial, cancel anytime."
     />
   );
 }

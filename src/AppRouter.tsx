@@ -32,6 +32,7 @@ const Settings = lazyWithRetry(() => import('@/pages/Settings'));
 const Subscriptions = lazyWithRetry(() => import('@/pages/Subscriptions'));
 const PaymentSuccess = lazyWithRetry(() => import('@/pages/PaymentSuccess'));
 const InvoicePaymentSuccess = lazyWithRetry(() => import('@/pages/InvoicePaymentSuccess'));
+const InvoicePay = lazyWithRetry(() => import('@/pages/InvoicePay'));
 const NotFound = lazyWithRetry(() => import('@/pages/NotFound'));
 const MentalHealthHub = lazyWithRetry(() => import('@/pages/MentalHealthHub'));
 const RightsAndPay = lazyWithRetry(() => import('@/pages/apprentice/RightsAndPay'));
@@ -132,6 +133,7 @@ const AdminDocumentReview = lazyWithRetry(() => import('@/pages/Admin/AdminDocum
 const AdminFounders = lazyWithRetry(() => import('@/pages/Admin/AdminFounders'));
 const AdminTrials = lazyWithRetry(() => import('@/pages/Admin/AdminTrials'));
 const AdminRetention = lazyWithRetry(() => import('@/pages/Admin/AdminRetention'));
+const AdminCertificateInsights = lazyWithRetry(() => import('@/pages/Admin/AdminCertificateInsights'));
 const AdminWinback = lazyWithRetry(() => import('@/pages/Admin/AdminWinback'));
 const AdminIncompleteSignup = lazyWithRetry(() => import('@/pages/Admin/AdminIncompleteSignup'));
 const AdminApprenticeCampaigns = lazyWithRetry(
@@ -188,6 +190,9 @@ const OperationalSettingsPage = lazyWithRetry(
 const ElecIdPage = lazyWithRetry(() => import('@/pages/ElecIdPage'));
 const PrivacyPolicy = lazyWithRetry(() => import('@/pages/legal/PrivacyPolicy'));
 const TermsOfService = lazyWithRetry(() => import('@/pages/legal/TermsOfService'));
+const Subprocessors = lazyWithRetry(() => import('@/pages/legal/Subprocessors'));
+const BusinessTerms = lazyWithRetry(() => import('@/pages/legal/BusinessTerms'));
+const AccountDeletion = lazyWithRetry(() => import('@/pages/legal/AccountDeletion'));
 const CookiePolicy = lazyWithRetry(() => import('@/pages/legal/CookiePolicy'));
 const AcceptableUse = lazyWithRetry(() => import('@/pages/legal/AcceptableUse'));
 const DataProcessingAgreement = lazyWithRetry(
@@ -582,6 +587,30 @@ const AppRouter = () => {
             }
           />
           <Route
+            path="/business-terms"
+            element={
+              <LazyRoute>
+                <BusinessTerms />
+              </LazyRoute>
+            }
+          />
+          <Route
+            path="/subprocessors"
+            element={
+              <LazyRoute>
+                <Subprocessors />
+              </LazyRoute>
+            }
+          />
+          <Route
+            path="/account-deletion"
+            element={
+              <LazyRoute>
+                <AccountDeletion />
+              </LazyRoute>
+            }
+          />
+          <Route
             path="/dpa"
             element={
               <LazyRoute>
@@ -875,6 +904,15 @@ const AppRouter = () => {
             element={
               <LazyRoute>
                 <InvoicePaymentSuccess />
+              </LazyRoute>
+            }
+          />
+          {/* ELE-1705 — the permanent Pay now link in invoice emails and PDFs. */}
+          <Route
+            path="/pay/:invoiceId"
+            element={
+              <LazyRoute>
+                <InvoicePay />
               </LazyRoute>
             }
           />
@@ -1909,6 +1947,14 @@ const AppRouter = () => {
                 element={
                   <LazyRoute>
                     <AdminRetention />
+                  </LazyRoute>
+                }
+              />
+              <Route
+                path="certificate-insights"
+                element={
+                  <LazyRoute>
+                    <AdminCertificateInsights />
                   </LazyRoute>
                 }
               />

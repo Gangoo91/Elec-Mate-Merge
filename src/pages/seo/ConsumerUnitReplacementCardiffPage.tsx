@@ -258,7 +258,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dual-RCD consumer unit</strong> — circuits are split across two groups, each
                 protected by a 30mA RCD. The limitation is that a fault on any circuit in a group
@@ -267,7 +267,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>All-RCBO consumer unit</strong> — each circuit has its own RCBO, combining
                 MCB and 30mA RCD protection. A fault on one circuit trips only that circuit.
@@ -276,7 +276,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Nuisance tripping in Cathays and Roath terraces</strong> — older wiring in
                 Cardiff terraces can cause nuisance RCD tripping due to deteriorated cable
@@ -325,7 +325,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cardiff selective licensing</strong> — Cardiff Council operates selective
                 licensing for private rented properties in certain areas of the city. A valid EICR
@@ -334,7 +334,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rent Smart Wales</strong> — landlords renting properties in Wales must be
                 registered with Rent Smart Wales. Electrical safety compliance is part of the
@@ -407,28 +407,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Small flat or terrace (1–2 bed)</strong> — £380 to £530. Very common in
                 Cathays, Roath, Canton, and Pontcanna. Typically 6 to 10 circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom semi or terrace</strong> — £480 to £680. The most common
                 Cardiff property type. Up to 12 circuits, full testing included.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Larger detached property</strong> — £630 to £900. Common in Whitchurch,
                 Llandaff, Pontprennau, and Radyr. More ways required, potentially RCBO arrangement.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional work</strong> — earthing upgrades, main bonding, smoke alarm
                 installation, or meter tails replacement can add £100 to £400. Cardiff Bay
@@ -459,7 +459,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cathays and Roath student terraces</strong> — high density of student lets
                 with older wiring in Victorian and Edwardian terraces. Consumer unit upgrades are
@@ -468,7 +468,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cardiff Bay waterfront developments</strong> — modern apartment blocks in
                 Butetown and Cardiff Bay typically have more modern electrical installations, but
@@ -478,7 +478,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rural Vale of Glamorgan fringe</strong> — properties on the Cardiff fringe
                 in areas such as Dinas Powys, Penarth, or Barry may use TT earthing with an earth
@@ -488,7 +488,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Welsh language considerations</strong> — while electrical certification
                 documents are provided in English, many Cardiff electricians are Welsh speakers. If
@@ -517,7 +517,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Paperless EICs Across South Wales</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -552,7 +552,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Cardiff electrical business with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting."
           icon={FileCheck2}
         />
       </>
@@ -578,7 +578,7 @@ export default function ConsumerUnitReplacementCardiffPage() {
       heroTitle={
         <>
           Consumer Unit Replacement Cardiff:{' '}
-          <span className="text-yellow-400">Fuse Box Guide Wales 2026</span>
+          <span className="text-elec-yellow">Fuse Box Guide Wales 2026</span>
         </>
       }
       heroSubtitle="Everything Cardiff homeowners and landlords need to know about consumer unit replacement — the metal enclosure requirement, Welsh building regulations, RCD protection, costs of £400 to £750, Rent Smart Wales obligations, and how to find a qualified NICEIC or NAPIT registered electrician in South Wales."
@@ -589,7 +589,7 @@ export default function ConsumerUnitReplacementCardiffPage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Replacement in Cardiff"
       relatedPages={relatedPages}
       ctaHeading="Complete Consumer Unit Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion with instant PDF export and schedule of test results. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion with instant PDF export and schedule of test results. 7-day free trial, cancel anytime."
     />
   );
 }

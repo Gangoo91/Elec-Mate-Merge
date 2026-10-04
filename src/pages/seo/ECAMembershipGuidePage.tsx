@@ -197,7 +197,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Phone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Phone className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>24/7 technical helpline</strong> — access to qualified electrical engineers
                 who can answer technical queries about BS 7671, circuit design, test procedures, and
@@ -207,7 +207,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Legal and commercial helpline</strong> — access to legal advisers
                 specialising in construction and electrical contractor law. Covers contract
@@ -217,7 +217,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671 guidance and updates</strong> — ECA members receive early
                 notification of wiring regulations amendments and guidance on their practical
@@ -226,7 +226,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Contract documents and templates</strong> — ECA model forms of contract,
                 subcontract agreements, and variation order templates. These are designed
@@ -235,7 +235,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Health and safety resources</strong> — RAMS templates, risk assessment
                 tools, toolbox talk materials, and guidance on CDM regulations. Particularly
@@ -244,7 +244,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Preferential insurance rates</strong> — ECA has partnerships with insurance
                 providers offering preferential rates on public liability, employers' liability,
@@ -269,7 +269,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard membership</strong> — requires that the business is engaged in
                 electrical contracting or related engineering services. You must carry appropriate
@@ -278,7 +278,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ECA Approved Contractor</strong> — requires an assessment of the business's
                 work quality, technical systems, and management processes. The responsible person
@@ -288,7 +288,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insurance requirements</strong> — all ECA members must hold current
                 employers' liability insurance (if employing staff) and public liability insurance.
@@ -314,7 +314,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sole trader / micro business (under £100k turnover)</strong> — approximately
                 £300–£500/year. Full access to technical and legal helplines, model contracts, and
@@ -322,7 +322,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Small business (£100k–£500k turnover)</strong> — approximately
                 £500–£800/year. Same benefits as above with additional resources for growing
@@ -330,7 +330,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Medium business (£500k–£2 million turnover)</strong> — approximately
                 £800–£1,500/year. Access to ECA business development resources and sector specialist
@@ -338,7 +338,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large contractors (over £2 million turnover)</strong> — fees are
                 individually negotiated based on turnover and number of registered operatives. Major
@@ -411,7 +411,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ECA (England, Wales, NI)</strong> — trade association. Represents
                 contractors' interests, provides support services, lobbies government. Not primarily
@@ -420,7 +420,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SELECT (Scotland)</strong> — the Scottish equivalent trade association. Does
                 include a{' '}
@@ -433,7 +433,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC and NAPIT</strong> — primarily competent person schemes for Part P
                 self-certification. Less focused on trade body lobbying and commercial support. Many
@@ -553,7 +553,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Certificate management for ECA members"
-          description="Join 1,600+ UK electricians using Elec-Mate to complete EICRs, Minor Works Certificates, and Electrical Installation Certificates on site."
+          description="Join 2,100+ UK electricians using Elec-Mate to complete EICRs, Minor Works Certificates, and Electrical Installation Certificates on site."
           icon={FileCheck2}
         />
       </>
@@ -579,7 +579,7 @@ export default function ECAMembershipGuidePage() {
       heroTitle={
         <>
           ECA Membership Guide:{' '}
-          <span className="text-yellow-400">Electrical Contractors Association UK</span>
+          <span className="text-elec-yellow">Electrical Contractors Association UK</span>
         </>
       }
       heroSubtitle="Everything UK electricians need to know about ECA membership — what it gives you, eligibility requirements, cost tiers by company size, the difference between ECA member and Approved Contractor, and how ECA compares to SELECT and NICEIC."

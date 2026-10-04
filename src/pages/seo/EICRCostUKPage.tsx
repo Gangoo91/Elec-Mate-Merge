@@ -217,7 +217,7 @@ const sections = [
             <div key={row.test} className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
               <div className="flex items-center justify-between gap-2 mb-1">
                 <h4 className="font-bold text-white text-sm">{row.test}</h4>
-                <span className="text-xs font-semibold text-yellow-400 shrink-0">{row.reg}</span>
+                <span className="text-xs font-semibold text-elec-yellow shrink-0">{row.reg}</span>
               </div>
               <p className="text-white text-sm leading-relaxed">{row.note}</p>
             </div>
@@ -239,13 +239,13 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6">
             <div className="flex items-center gap-3 mb-4">
-              <Home className="w-6 h-6 text-yellow-400" />
+              <Home className="w-6 h-6 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">1-Bedroom Flat</h3>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4">
               <div>
                 <div className="text-sm text-white mb-1">Price Range</div>
-                <div className="text-xl font-bold text-yellow-400">£120 — £180</div>
+                <div className="text-xl font-bold text-elec-yellow">£120 — £180</div>
               </div>
               <div>
                 <div className="text-sm text-white mb-1">Typical Circuits</div>
@@ -272,13 +272,13 @@ const sections = [
 
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6">
             <div className="flex items-center gap-3 mb-4">
-              <Home className="w-6 h-6 text-yellow-400" />
+              <Home className="w-6 h-6 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">2 to 3-Bedroom House</h3>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4">
               <div>
                 <div className="text-sm text-white mb-1">Price Range</div>
-                <div className="text-xl font-bold text-yellow-400">£180 — £280</div>
+                <div className="text-xl font-bold text-elec-yellow">£180 — £280</div>
               </div>
               <div>
                 <div className="text-sm text-white mb-1">Typical Circuits</div>
@@ -305,13 +305,13 @@ const sections = [
 
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6">
             <div className="flex items-center gap-3 mb-4">
-              <Home className="w-6 h-6 text-yellow-400" />
+              <Home className="w-6 h-6 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">4 to 5-Bedroom House</h3>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4">
               <div>
                 <div className="text-sm text-white mb-1">Price Range</div>
-                <div className="text-xl font-bold text-yellow-400">£280 — £400</div>
+                <div className="text-xl font-bold text-elec-yellow">£280 — £400</div>
               </div>
               <div>
                 <div className="text-sm text-white mb-1">Typical Circuits</div>
@@ -338,13 +338,13 @@ const sections = [
 
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6">
             <div className="flex items-center gap-3 mb-4">
-              <Building2 className="w-6 h-6 text-yellow-400" />
+              <Building2 className="w-6 h-6 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">HMO (House in Multiple Occupation)</h3>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4">
               <div>
                 <div className="text-sm text-white mb-1">Price Range</div>
-                <div className="text-xl font-bold text-yellow-400">£250 — £450+</div>
+                <div className="text-xl font-bold text-elec-yellow">£250 — £450+</div>
               </div>
               <div>
                 <div className="text-sm text-white mb-1">Typical Circuits</div>
@@ -371,13 +371,13 @@ const sections = [
 
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6">
             <div className="flex items-center gap-3 mb-4">
-              <Building2 className="w-6 h-6 text-yellow-400" />
+              <Building2 className="w-6 h-6 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Commercial Premises</h3>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4">
               <div>
                 <div className="text-sm text-white mb-1">Price Range</div>
-                <div className="text-xl font-bold text-yellow-400">£250 — £2,000+</div>
+                <div className="text-xl font-bold text-elec-yellow">£250 — £2,000+</div>
               </div>
               <div>
                 <div className="text-sm text-white mb-1">Typical Circuits</div>
@@ -453,7 +453,7 @@ const sections = [
               className="rounded-2xl bg-white/[0.04] border border-white/10 p-5"
             >
               <div className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <div>
                   <h4 className="font-bold text-white mb-1">{factor.title}</h4>
                   <p className="text-white text-sm leading-relaxed">{factor.description}</p>
@@ -521,7 +521,7 @@ const sections = [
             <Link
               key={city.slug}
               to={`/guides/eicr-cost-${city.slug}`}
-              className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5 text-sm text-white hover:border-white/[0.14] hover:text-yellow-300 transition-colors touch-manipulation"
+              className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5 text-sm text-white hover:border-white/[0.14] hover:text-elec-yellow transition-colors touch-manipulation"
             >
               EICR cost in {city.name}
             </Link>
@@ -561,7 +561,7 @@ const sections = [
               'Admin time (quoting, invoicing, chasing payments, bookkeeping)',
             ].map((item) => (
               <li key={item} className="flex items-start gap-2">
-                <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>{item}</span>
               </li>
             ))}
@@ -627,7 +627,7 @@ const sections = [
               <thead>
                 <tr className="border-b border-white/10">
                   <th className="p-4 text-sm font-semibold text-white">Remedial Work</th>
-                  <th className="p-4 text-sm font-semibold text-yellow-400 text-right">
+                  <th className="p-4 text-sm font-semibold text-elec-yellow text-right">
                     Typical Price
                   </th>
                 </tr>
@@ -660,7 +660,7 @@ const sections = [
                 ].map((row, i) => (
                   <tr key={row.work} className={i < 10 ? 'border-b border-white/5' : ''}>
                     <td className="p-4 text-sm text-white">{row.work}</td>
-                    <td className="p-4 text-sm text-yellow-400 font-semibold text-right">
+                    <td className="p-4 text-sm text-elec-yellow font-semibold text-right">
                       {row.price}
                     </td>
                   </tr>
@@ -696,7 +696,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete everything on site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -711,7 +711,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Win the remedial work</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -726,7 +726,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Build landlord and agent relationships
@@ -743,7 +743,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Track profitability per job</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -771,7 +771,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Mandatory RCD protection on domestic lighting circuits (Reg 411.3.4)
@@ -790,7 +790,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   AFDDs recommended in HMOs and higher-risk premises (Reg 421.1.7)
@@ -817,7 +817,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   New Schedule of Inspections columns for AFDD and SPD
@@ -849,7 +849,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Camera className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI Board Scanner</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -903,7 +903,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Send className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Send className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Send and Invoice from Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -923,7 +923,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Start earning more from every EICR"
-          description="Join 1,600+ UK electricians completing EICR certificates, generating remedial quotes, and sending invoices — all from their phones, all on site."
+          description="Join 2,100+ UK electricians completing EICR certificates, generating remedial quotes, and sending invoices — all from their phones, all on site."
           icon={PoundSterling}
         />
       </>
@@ -956,7 +956,7 @@ export default function EICRCostUKPage() {
       heroTitle={
         <>
           EICR Cost UK 2026:{' '}
-          <span className="text-yellow-400">Prices by Property Type & Region</span>
+          <span className="text-elec-yellow">Prices by Property Type & Region</span>
         </>
       }
       heroSubtitle="Whether you are a landlord budgeting for a condition report or an electrician working out what to charge, this guide covers real 2026 EICR prices by property type, city-by-city regional pricing, the factors that move the price, and how remedial work is charged on top."
@@ -967,7 +967,7 @@ export default function EICRCostUKPage() {
       faqHeading="Frequently Asked Questions About EICR Pricing"
       relatedPages={relatedPages}
       ctaHeading="Turn every EICR into a fully-invoiced job"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to complete EICR certificates, generate remedial quotes, and send invoices — all from site. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to complete EICR certificates, generate remedial quotes, and send invoices — all from site. 7-day free trial, cancel anytime."
     />
   );
 }

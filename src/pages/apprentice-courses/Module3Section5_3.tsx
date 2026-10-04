@@ -31,8 +31,8 @@ const quizQuestions = [
     options: [
       'Makes it more flexible and durable',
       'Makes it brittle and cracked',
-      'Increases the insulation thickness',
-      'Improves its current-carrying capacity',
+      "Lowers the cable's voltage rating",
+      'Causes the conductor to oxidise',
     ],
     correctAnswer: 1,
     explanation:
@@ -82,7 +82,7 @@ const quizQuestions = [
     question: 'Name one protective measure against mechanical damage to cables.',
     options: [
       'Install the cables in steel conduit or use SWA',
-      'Increase the supply voltage to the circuit',
+      'Use a cable with a larger cpc',
       'Reduce the number of conductors in the cable',
       'Connect the circuit through an isolating transformer',
     ],
@@ -138,7 +138,7 @@ const quickCheckQuestions = [
     question: 'How does UV radiation damage electrical cable insulation?',
     options: [
       'It breaks down polymer chains, causing brittleness',
-      'It makes the cable conduct electricity better',
+      'It dries out the copper conductor',
       'It increases the flexibility of the sheath',
       'It improves the weather resistance of the cable',
     ],
@@ -151,7 +151,7 @@ const quickCheckQuestions = [
     question: 'Give one way to protect cables from high temperature environments.',
     options: [
       'Apply derating factors and ensure adequate ventilation',
-      'Increase the supply voltage to compensate',
+      'Use a smaller protective device only',
       'Reduce the number of fixings along the run',
       'Connect the cable through an RCD',
     ],

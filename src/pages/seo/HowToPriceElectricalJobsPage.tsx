@@ -39,7 +39,7 @@ export default function HowToPriceElectricalJobsPage() {
       badgeIcon={PoundSterling}
       heroTitle={
         <>
-          How to <span className="text-yellow-400">Price Electrical Jobs</span> UK — The 2026
+          How to <span className="text-elec-yellow">Price Electrical Jobs</span> UK — The 2026
           Pricing Guide
         </>
       }
@@ -313,10 +313,10 @@ export default function HowToPriceElectricalJobsPage() {
               </p>
 
               <div className="my-6 rounded-lg border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4">
-                <p className="font-semibold text-yellow-300 mb-2">
+                <p className="font-semibold text-elec-yellow mb-2">
                   BS 7671:2018+A4:2026 — Pricing Impact
                 </p>
-                <p className="text-white/90 text-sm">
+                <p className="text-white text-sm">
                   The 2026 amendments to BS 7671 can affect the scope and cost of consumer unit and
                   EV charger quotes. Regulation 421.1.7 recommends arc fault detection devices
                   (AFDDs) in AC final circuits to mitigate fire risk from arc faults — each AFDD
@@ -334,7 +334,7 @@ export default function HowToPriceElectricalJobsPage() {
                 <p className="font-semibold text-blue-300 mb-2">
                   Part P — Building Control Notification
                 </p>
-                <p className="text-white/90 text-sm">
+                <p className="text-white text-sm">
                   Consumer unit changes, new circuits in kitchens or bathrooms, and full rewires are
                   notifiable under Building Regulations Part P. As the On-Site Guide (9th Ed, A4)
                   notes: "All electrical work within dwellings, of which some is notifiable." If you

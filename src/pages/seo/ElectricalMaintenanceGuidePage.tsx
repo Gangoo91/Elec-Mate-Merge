@@ -222,7 +222,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Calendar className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calendar className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Monthly:</strong> Visual inspections of distribution boards (signs of
                 overheating, loose connections, tripped devices), check emergency lighting
@@ -230,7 +230,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calendar className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calendar className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Quarterly:</strong> Full functional test of emergency lighting (3-hour
                 duration test annually, brief functional test quarterly), RCD test button operation,
@@ -238,7 +238,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calendar className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calendar className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Six-monthly:</strong> PAT testing of portable appliances in high-risk
                 environments (construction, workshops), check and clean ventilation on electrical
@@ -246,7 +246,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calendar className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calendar className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Annually:</strong> Full emergency lighting duration test and certificate,
                 fire alarm system maintenance and certificate, PAT testing for office equipment,
@@ -254,7 +254,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calendar className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calendar className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Every 3 to 5 years:</strong> Full periodic inspection and testing (
                 <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>) of the fixed
@@ -286,45 +286,45 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Domestic premises:</strong> Every 10 years (or on change of occupancy). For
                 rented properties, every 5 years under the 2020 Regulations.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial offices and shops:</strong> Every 5 years.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Industrial installations:</strong> Every 3 years.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Educational establishments (schools, colleges):</strong> Every 5 years.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hospitals and medical locations:</strong> Every 5 years (with more frequent
                 testing of critical circuits).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Places of public entertainment:</strong> Annually.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Construction site installations:</strong> Every 3 months.
               </span>
@@ -357,7 +357,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR reports</strong> — the periodic inspection record for the fixed
                 installation. Must be completed to the BS 7671 model form and signed by a qualified
@@ -365,14 +365,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EIC and Minor Works certificates</strong> — issued for any new work,
                 alterations, or additions to the installation during maintenance visits.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maintenance log</strong> — a chronological record of every maintenance
                 visit, including the date, work carried out, findings, and the name of the
@@ -380,21 +380,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency lighting test records</strong> — monthly functional tests and
                 annual duration tests, with results recorded and any failures actioned.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire alarm maintenance records</strong> — quarterly servicing and annual
                 maintenance certificates as required by BS 5839-1.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PAT testing records</strong> — register of portable appliances, test
                 results, and pass/fail status.
@@ -424,7 +424,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electricity at Work Regulations 1989</strong> — the primary legislation.
                 Regulation 4(2) requires that electrical systems are maintained to prevent danger.
@@ -432,7 +432,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Health and Safety at Work Act 1974</strong> — the overarching duty on
                 employers to ensure the health and safety of employees and others who may be
@@ -440,14 +440,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671 (IET Wiring Regulations)</strong> — the technical standard for
                 electrical installations. Chapter 62 covers periodic inspection and testing.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>
                   Electrical Safety Standards in the Private Rented Sector (England) Regulations
@@ -461,7 +461,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulatory Reform (Fire Safety) Order 2005</strong> — the responsible person
                 must maintain electrical systems as part of fire risk management, including
@@ -490,28 +490,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Distribution board inspection</strong> — check for signs of overheating,
                 verify connections are tight, confirm labelling is accurate, check RCD operation.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Thermographic survey</strong> — use thermal imaging to identify hot spots on
                 connections, busbars, and cables that indicate loose connections or overloading.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency lighting testing</strong> — monthly functional tests (brief
                 operation on battery) and annual 3-hour duration tests as required by BS 5266-1.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire alarm servicing</strong> — quarterly inspections and testing as
                 required by BS 5839-1, including detector cleaning, battery checks, and zone
@@ -519,14 +519,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lamp and fitting replacement</strong> — replacing failed lamps, repairing
                 damaged fittings, upgrading to LED where practical.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing and bonding checks</strong> — visual inspection and testing of main
                 and supplementary bonding, earth continuity, and electrode condition.
@@ -555,7 +555,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Professional reporting.</strong> Building owners and facilities managers
                 judge your competence by the quality of your reports. A well-structured EICR, clear
@@ -563,7 +563,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Clear pricing.</strong> Quote a fixed annual price for PPM visits with
                 clearly defined scope. Price reactive call-outs separately with transparent hourly
@@ -572,7 +572,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Proactive communication.</strong> Send reminders before scheduled visits,
                 provide summary reports after each visit, and flag upcoming requirements (EICR due,
@@ -580,7 +580,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Compliance expertise.</strong> Building owners want an electrician who
                 understands the regulatory landscape and keeps them compliant. Knowing the relevant
@@ -617,7 +617,7 @@ export default function ElectricalMaintenanceGuidePage() {
       heroTitle={
         <>
           Electrical Maintenance:{' '}
-          <span className="text-yellow-400">Planned, Reactive, and Everything Between</span>
+          <span className="text-elec-yellow">Planned, Reactive, and Everything Between</span>
         </>
       }
       heroSubtitle="Effective electrical maintenance prevents failures, demonstrates compliance, and saves money. This guide covers PPM vs reactive approaches, BS 7671 testing intervals, documentation requirements, and how to build a profitable maintenance business."
@@ -628,7 +628,7 @@ export default function ElectricalMaintenanceGuidePage() {
       faqHeading="Frequently Asked Questions About Electrical Maintenance"
       relatedPages={relatedPages}
       ctaHeading="Manage Maintenance Work From Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for digital certificates, professional reporting, and efficient job management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for digital certificates, professional reporting, and efficient job management. 7-day free trial, cancel anytime."
     />
   );
 }

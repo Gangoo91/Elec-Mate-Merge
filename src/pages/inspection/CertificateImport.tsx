@@ -1131,6 +1131,25 @@ function ImportProgressPanel({
 }
 
 /* ── ELE-1657 — paper → form shape for the emergency lighting certificate ── */
+/** Free-text premises description → the EL form's premises-type option, or '' when nothing fits. */
+function matchEmergencyLightingPremisesType(text: string): string {
+  const t = text.toLowerCase();
+  // Word-bounded on purpose: "storey" is not "store", "public" is not "pub".
+  const rules: [RegExp, string][] = [
+    [/\b(hospital|clinic|surgery|dental|care home|nursing|medical|gp practice|health ?centre)\b/, 'healthcare'],
+    [/\b(hotel|hostel|b&b|bed and breakfast|guest ?house|hospitality|holiday)\b/, 'hotel'],
+    [/\b(school|college|nursery|university|academy|educational|campus)\b/, 'educational'],
+    [/\b(flats?|apartments?|hmo|residential|communal|housing|sheltered|student accommodation)\b/, 'residential-communal'],
+    [/\b(warehouse|distribution centre|self[- ]storage)\b/, 'warehouse'],
+    [/\b(theatre|cinema|pub|public house|bar|club|leisure|gym|entertainment|restaurant|venue)\b/, 'entertainment'],
+    [/\b(shop|retail|store|supermarket|showroom)\b/, 'retail'],
+    [/\b(factory|industrial|workshop|plant|manufacturing)\b/, 'industrial'],
+    [/\b(office|offices|commercial|business)\b/, 'office'],
+  ];
+  for (const [re, value] of rules) if (re.test(t)) return value;
+  return '';
+}
+
 function emergencyLightingDraftFields(values: Record<string, string>): Record<string, unknown> {
   const num = (v: string | undefined) => {
     const n = parseInt((v || '').replace(/[^0-9]/g, ''), 10);
@@ -1138,6 +1157,17 @@ function emergencyLightingDraftFields(values: Record<string, string>): Record<st
   };
   const sys = (values.systemType || '').toLowerCase();
   const out: Record<string, unknown> = {};
+  // The paper says "three-storey office building"; the form's premises type is
+  // a select. Land on the matching option and keep the sentence as the extent
+  // text, so nothing the reader found is thrown away (2 Oct 2026 test run).
+  const premisesText = (values.premisesType || '').trim();
+  if (premisesText) {
+    const matched = matchEmergencyLightingPremisesType(premisesText);
+    if (matched) {
+      out.premisesType = matched;
+      if (!values.extentOfInstallation) out.extentOfInstallation = premisesText;
+    }
+  }
   // The shared identity block asks for an installation address; the EL form calls it the premises address.
   if (!values.premisesAddress && values.installationAddress) out.premisesAddress = values.installationAddress;
   const lum = num(values.luminaireCount);
@@ -1149,12 +1179,23 @@ function emergencyLightingDraftFields(values: Record<string, string>): Record<st
     out.centralBatterySystem = /central/.test(sys);
   }
   const minutes = num(values.testDurationMinutes);
-  const passed = /pass|satisf|yes|ok|all/.test((values.durationTestResult || '').toLowerCase());
+  const resultText = (values.durationTestResult || '').toLowerCase();
+  const passed = /pass|satisf|yes|ok|all/.test(resultText);
+  // "PASS — 46 of 48 remained lit, two failed" is a pass with failures, and the
+  // form's tick is "all luminaires operational", not "test passed". A short
+  // count or any mention of a failure keeps that tick off (caught on the first
+  // document run, 2 Oct 2026).
+  const ratio = resultText.match(/(\d+)\s*(?:of|\/)\s*(\d+)/);
+  const shortCount = !!ratio && Number(ratio[1]) < Number(ratio[2]);
+  const mentionsFailure =
+    /\b(failed|failure|did not (?:remain|illuminate|light)|not all|defect)/.test(resultText) &&
+    !/\bno (?:failures?|faults?|defects?)\b/.test(resultText);
+  const allOperational = passed && !shortCount && !mentionsFailure;
   if (minutes !== undefined || values.durationTestResult) {
     out.annualDurationTest = {
       date: values.testDate || '',
       duration: minutes ?? 180,
-      allLuminairesOperational: passed,
+      allLuminairesOperational: allOperational,
       batteryCondition: '',
       faultsFound: values.defectsFoundText || '',
       actionTaken: '',

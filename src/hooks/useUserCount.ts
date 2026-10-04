@@ -19,10 +19,10 @@ type UseUserCountOptions = {
  * without the RPC, logged-out visitors to the landing page would silently
  * see the `initial` fallback forever.
  *
- * The default is deliberately conservative (`700+`) so that if the fetch
+ * The default is deliberately conservative (`2,100+`, checked 4 Oct 2026 against 2,193 profiles) so that if the fetch
  * fails we UNDER-report rather than over-claim.
  */
-export const useUserCount = ({ realtime = true, initial = '700+' }: UseUserCountOptions = {}) => {
+export const useUserCount = ({ realtime = true, initial = '2,100+' }: UseUserCountOptions = {}) => {
   const [userCount, setUserCount] = useState(initial);
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export const useUserCount = ({ realtime = true, initial = '700+' }: UseUserCount
       const count = typeof data === 'number' ? data : Number(data);
       if (Number.isFinite(count) && count > 0) {
         const rounded = Math.floor(count / 10) * 10;
-        setUserCount(`${rounded}+`);
+        setUserCount(`${rounded.toLocaleString('en-GB')}+`);
       }
     };
 

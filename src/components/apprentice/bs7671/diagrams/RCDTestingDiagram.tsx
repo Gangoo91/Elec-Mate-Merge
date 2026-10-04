@@ -90,7 +90,7 @@ const RCDTestingDiagram = ({ systemType }: RCDTestingDiagramProps) => {
               {[
                 'Press the integral test button',
                 'Functional check only',
-                'The 5×IΔn test was deleted at A4:2026 (Table 3A withdrawn)',
+                'The 5×IΔn test was deleted at A2:2022 (Table 3A withdrawn)',
               ].map((item, i) => (
                 <li
                   key={i}

@@ -368,30 +368,30 @@ const sections = [
         </p>
         <div className="grid sm:grid-cols-2 gap-4 my-6">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
-            <h3 className="font-bold text-yellow-400 text-lg mb-3">Notifiable Work</h3>
+            <h3 className="font-bold text-elec-yellow text-lg mb-3">Notifiable Work</h3>
             <p className="text-white text-sm leading-relaxed mb-3">
               Requires either self-certification via a competent person scheme or notification to
               building control before starting work.
             </p>
             <ul className="space-y-2 text-white text-sm">
               <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>Installation of a new circuit (always EIC)</span>
               </li>
               <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>Consumer unit replacement (always EIC — Reg 644.4.201)</span>
               </li>
               <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>Any electrical work in a bathroom or shower room</span>
               </li>
               <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>Work associated with a new extension or loft conversion</span>
               </li>
               <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>New outdoor circuits or outbuilding supplies</span>
               </li>
             </ul>
@@ -448,7 +448,7 @@ const sections = [
         <div className="space-y-4 my-6">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Issuing Minor Works for a new circuit</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -463,7 +463,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">
                   Issuing an EIC for a simple socket addition
@@ -480,7 +480,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Not issuing any certificate at all</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -496,7 +496,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">
                   Using an EICR to certify your own work
@@ -630,7 +630,7 @@ export default function MinorWorksVsEICPage() {
       badgeIcon={BookOpen}
       heroTitle={
         <>
-          Minor Works vs EIC — <span className="text-yellow-400">Which Certificate Do I Need?</span>
+          Minor Works vs EIC — <span className="text-elec-yellow">Which Certificate Do I Need?</span>
         </>
       }
       heroSubtitle="New circuit? EIC. Alteration to an existing circuit? Minor Works. Consumer unit replacement? Always EIC — the regulation is unambiguous. This guide covers the straightforward cases, the genuine grey areas (circuit splitting, bathroom work), and the practical examples that help you get it right every time."
@@ -646,7 +646,7 @@ export default function MinorWorksVsEICPage() {
       faqHeading="Frequently Asked Questions About Minor Works vs EIC"
       relatedPages={relatedPages}
       ctaHeading="Right certificate, every time"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site certification. Minor Works, EIC, EICR, and 5 more certificate types. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site certification. Minor Works, EIC, EICR, and 5 more certificate types. 7-day free trial."
     />
   );
 }

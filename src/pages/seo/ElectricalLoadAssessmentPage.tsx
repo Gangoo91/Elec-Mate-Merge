@@ -42,7 +42,7 @@ export default function ElectricalLoadAssessmentPage() {
       badgeIcon={Calculator}
       heroTitle={
         <>
-          Electrical Load Assessment: <span className="text-yellow-400">Maximum Demand Guide</span>
+          Electrical Load Assessment: <span className="text-elec-yellow">Maximum Demand Guide</span>
         </>
       }
       heroSubtitle="Getting the load assessment right prevents nuisance tripping, supply overloads, and costly upgrades. This guide explains when a load assessment is required, how to calculate maximum demand with diversity factors, when to notify the DNO, and the common triggers that mean a supply upgrade is unavoidable."
@@ -104,7 +104,7 @@ export default function ElectricalLoadAssessmentPage() {
               <div className="space-y-4 mt-6">
                 <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
                   <div className="flex items-center gap-2 mb-3">
-                    <Car className="w-5 h-5 text-yellow-400" />
+                    <Car className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">EV Charger Installation</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -120,7 +120,7 @@ export default function ElectricalLoadAssessmentPage() {
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-center gap-2 mb-3">
-                    <Building2 className="w-5 h-5 text-yellow-400" />
+                    <Building2 className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Extensions and Conversions</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -133,7 +133,7 @@ export default function ElectricalLoadAssessmentPage() {
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-center gap-2 mb-3">
-                    <Plug className="w-5 h-5 text-yellow-400" />
+                    <Plug className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">New Connections</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -145,7 +145,7 @@ export default function ElectricalLoadAssessmentPage() {
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-center gap-2 mb-3">
-                    <Zap className="w-5 h-5 text-yellow-400" />
+                    <Zap className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Full Rewires</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -311,35 +311,35 @@ export default function ElectricalLoadAssessmentPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       The assessed maximum demand exceeds or is likely to exceed the rating of the
                       existing service fuse
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       You are installing an EV charger (most DNOs have a specific notification
                       process)
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>You are installing a heat pump or other large continuous load</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>The property is converting from single-phase to three-phase supply</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       You are installing solar PV or battery storage systems that export to the grid
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       A new supply connection is required for a new build or major renovation
                     </span>
@@ -375,7 +375,7 @@ export default function ElectricalLoadAssessmentPage() {
               <div className="grid gap-4 sm:grid-cols-2 mt-6">
                 <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
                   <div className="flex items-center gap-2 mb-3">
-                    <Car className="w-5 h-5 text-yellow-400" />
+                    <Car className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">EV Chargers</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -388,7 +388,7 @@ export default function ElectricalLoadAssessmentPage() {
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-center gap-2 mb-3">
-                    <TrendingUp className="w-5 h-5 text-yellow-400" />
+                    <TrendingUp className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Heat Pumps</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -429,9 +429,9 @@ export default function ElectricalLoadAssessmentPage() {
                 <h3 className="font-bold text-white text-lg mb-4">Common Upgrade Triggers</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Fuse upgrade (60 A to 80 A or 100 A)
                       </strong>{' '}
                       — The DNO can often upgrade the service fuse without replacing the service
@@ -440,18 +440,18 @@ export default function ElectricalLoadAssessmentPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Service cable upgrade</strong> — If the
+                      <strong className="text-elec-yellow">Service cable upgrade</strong> — If the
                       existing service cable cannot support the higher fuse rating, the DNO must
                       replace it. This involves excavation and is significantly more expensive,
                       often £500-£2,000+ depending on the length and route.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Single-phase to three-phase conversion
                       </strong>{' '}
                       — Required when the single-phase supply cannot provide enough capacity even at
@@ -461,9 +461,9 @@ export default function ElectricalLoadAssessmentPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">New main tails</strong> — If the existing
+                      <strong className="text-elec-yellow">New main tails</strong> — If the existing
                       meter tails are undersized (commonly 16 mm or 25 mm in older installations),
                       they must be upgraded to match the supply capacity. This is the electrician's
                       responsibility, not the DNO's. Typically 25 mm for 80 A or 35 mm for 100 A.
@@ -591,7 +591,7 @@ export default function ElectricalLoadAssessmentPage() {
         },
       ]}
       ctaHeading="Calculate Maximum Demand in Under a Minute"
-      ctaSubheading="BS 7671 diversity factors applied automatically, instant supply adequacy check, and DNO notification triggers flagged. Join 1,600+ UK electricians using Elec-Mate for fast, accurate load assessments. 7-day free trial."
+      ctaSubheading="BS 7671 diversity factors applied automatically, instant supply adequacy check, and DNO notification triggers flagged. Join 2,100+ UK electricians using Elec-Mate for fast, accurate load assessments. 7-day free trial."
     />
   );
 }

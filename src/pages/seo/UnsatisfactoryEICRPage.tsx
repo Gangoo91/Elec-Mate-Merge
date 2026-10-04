@@ -193,7 +193,7 @@ const sections = [
         </p>
         <div className="space-y-4 my-6">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <h3 className="font-bold text-yellow-400 text-lg mb-2">28-Day Remedial Deadline</h3>
+            <h3 className="font-bold text-elec-yellow text-lg mb-2">28-Day Remedial Deadline</h3>
             <p className="text-white text-sm leading-relaxed">
               The landlord must ensure that all remedial work identified by C1 or C2 observations is
               completed within 28 days of the date of the inspection. If the inspector specifies a
@@ -202,7 +202,7 @@ const sections = [
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <h3 className="font-bold text-yellow-400 text-lg mb-2">
+            <h3 className="font-bold text-elec-yellow text-lg mb-2">
               Written Confirmation Required
             </h3>
             <p className="text-white text-sm leading-relaxed">
@@ -213,7 +213,7 @@ const sections = [
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <h3 className="font-bold text-yellow-400 text-lg mb-2">
+            <h3 className="font-bold text-elec-yellow text-lg mb-2">
               Notification to Tenants and Local Authority
             </h3>
             <p className="text-white text-sm leading-relaxed">
@@ -301,7 +301,7 @@ const sections = [
         <div className="space-y-4 my-6">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Be factual, not apologetic</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -316,7 +316,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Explain the legal position</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -331,7 +331,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Offer the solution at the same time</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -453,7 +453,7 @@ const sections = [
         <div className="space-y-4 my-6">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
-              <ShieldAlert className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldAlert className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Auto Overall Assessment</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -466,7 +466,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
-              <Brain className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Defect Code AI</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -479,7 +479,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
-              <Receipt className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Receipt className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Remedial Works Estimator</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -515,7 +515,7 @@ export default function UnsatisfactoryEICRPage() {
       badgeIcon={AlertTriangle}
       heroTitle={
         <>
-          Unsatisfactory EICR — <span className="text-yellow-400">What Happens Next?</span>
+          Unsatisfactory EICR — <span className="text-elec-yellow">What Happens Next?</span>
         </>
       }
       heroSubtitle="A single C1 or C2 observation makes the entire EICR Unsatisfactory. That triggers a legal chain for landlords — 28-day remedial deadline, potential fines of up to 30,000 pounds, and insurance complications. This guide covers what the electrician needs to do, how to handle the client conversation, and how to turn the remedial work into revenue."
@@ -526,7 +526,7 @@ export default function UnsatisfactoryEICRPage() {
       faqHeading="Frequently Asked Questions About Unsatisfactory EICRs"
       relatedPages={relatedPages}
       ctaHeading="Turn defects into quotes on site"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EICR certificates with auto assessment, defect code AI, and remedial estimator. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for EICR certificates with auto assessment, defect code AI, and remedial estimator. 7-day free trial."
     />
   );
 }

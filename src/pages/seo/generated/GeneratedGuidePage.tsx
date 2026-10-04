@@ -215,14 +215,14 @@ function getToneClasses(tone: BlockTone) {
     case 'pricing':
       return {
         box: 'bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-white/[0.14]',
-        title: 'text-yellow-300',
-        icon: 'text-yellow-400',
+        title: 'text-elec-yellow',
+        icon: 'text-elec-yellow',
       };
     default:
       return {
         box: 'bg-white/[0.04] border-white/10',
         title: 'text-white',
-        icon: 'text-yellow-400',
+        icon: 'text-elec-yellow',
       };
   }
 }
@@ -296,7 +296,7 @@ function renderHeroTitle(config: GeneratedGuideConfig) {
       {config.heroHighlight ? (
         <>
           {' '}
-          <span className="text-yellow-400">{config.heroHighlight}</span>
+          <span className="text-elec-yellow">{config.heroHighlight}</span>
         </>
       ) : null}
       {config.heroSuffix ? <> {config.heroSuffix}</> : null}

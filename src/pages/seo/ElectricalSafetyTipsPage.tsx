@@ -179,7 +179,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tip 1: Do not overload sockets.</strong> A single 13A socket can safely
                 supply up to 3kW. Using a multi-way adaptor (the cube type that plugs directly into
@@ -189,7 +189,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tip 2: Never daisy-chain extension leads.</strong> Plugging one extension
                 lead into another creates excessive cable length, increases resistance, and
@@ -198,7 +198,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tip 3: Replace damaged plugs and cables immediately.</strong> A plug with a
                 cracked casing, exposed terminals, or a damaged cord grip is dangerous. A cable with
@@ -207,7 +207,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tip 4: Pull the plug, not the cable.</strong> Yanking a cable to remove a
                 plug from a socket strains the cord grip and can pull the conductors away from the
@@ -237,7 +237,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <div className="flex items-start gap-4">
-            <Shield className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+            <Shield className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-1">Tip 5: Test your RCDs every 3 months</h4>
               <p className="text-white text-sm leading-relaxed">
@@ -270,7 +270,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tip 6: Do not run cables under carpets or rugs.</strong> Cables under floor
                 coverings can be damaged by foot traffic and furniture without you noticing. The
@@ -279,7 +279,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tip 7: Check cables for damage regularly.</strong> Look for cuts, kinks,
                 fraying, and heat discolouration on appliance cables. Pay particular attention to
@@ -288,7 +288,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tip 8: Know where cables are before drilling.</strong> Before drilling into
                 walls, check for hidden cables using a cable detector. Cables typically run
@@ -315,7 +315,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tip 9: Keep electrical appliances away from water.</strong> Never use a
                 hairdryer, phone charger, or any mains-powered device near a bath, shower, or basin
@@ -324,7 +324,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tip 10: Bathroom sockets must be shaver sockets only.</strong> Standard 13A
                 sockets are not permitted within a bathroom (except in zone 3 areas under specific
@@ -334,7 +334,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tip 11: Do not dry clothes on electric heaters.</strong> Draping wet
                 clothing over convector heaters, fan heaters, or storage heaters is a fire risk. The
@@ -354,7 +354,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Baby className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Baby className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tip 12: You do not need socket covers.</strong> Contrary to popular belief,
                 plastic socket covers (plug-in blanking plates) can actually make sockets less safe.
@@ -366,7 +366,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Baby className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Baby className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tip 13: Teach children about electrical safety early.</strong> Explain that
                 electricity is not a toy, that they should never push anything into a socket, and
@@ -387,7 +387,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tip 14: Use RCD protection for all outdoor equipment.</strong> Lawnmowers,
                 hedge trimmers, pressure washers, and any other outdoor electrical equipment must be
@@ -397,7 +397,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tip 15: All outdoor electrical work must be done by a professional.</strong>{' '}
                 Under{' '}
@@ -487,13 +487,13 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Every 3 months:</strong> Test your RCDs using the test button.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Every year:</strong> Visual check of all sockets, switches, and cables for
                 damage or discolouration. Check that no extension leads are being used as permanent
@@ -501,7 +501,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Every 5 years (rented property):</strong> A full{' '}
                 <SEOInternalLink href="/guides/eicr-for-landlords">EICR</SEOInternalLink> by a
@@ -509,7 +509,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Every 10 years (owner-occupied):</strong> A full EICR by a qualified
                 electrician. This is recommended (not legally required for homeowners) but is
@@ -517,7 +517,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Before buying a property:</strong> Commission an EICR as part of the
                 conveyancing process. This identifies any electrical defects that could cost
@@ -543,7 +543,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI Board Scanner</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -599,7 +599,7 @@ export default function ElectricalSafetyTipsPage() {
       heroTitle={
         <>
           Electrical Safety Tips:{' '}
-          <span className="text-yellow-400">15 Things Every Homeowner Should Know</span>
+          <span className="text-elec-yellow">15 Things Every Homeowner Should Know</span>
         </>
       }
       heroSubtitle="Electrical faults cause around 14,000 house fires in the UK every year. Most are preventable. This guide covers 15 essential safety tips — from testing your RCDs to knowing the warning signs of a dangerous fault."

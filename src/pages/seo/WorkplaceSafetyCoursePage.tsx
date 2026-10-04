@@ -337,7 +337,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Solvents and degreasers</strong> used for cleaning electrical contacts and
                 equipment. Many contain volatile organic compounds (VOCs) that can cause headaches,
@@ -345,7 +345,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable lubricants and pulling compounds</strong> used during cable
                 installation. Some contain skin sensitisers — wear gloves and wash hands thoroughly
@@ -353,7 +353,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Silicone sealants and adhesives</strong> used for sealing cable entries and
                 fixing equipment. Some release acetic acid vapour during curing — ensure adequate
@@ -361,7 +361,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Asbestos</strong> — electricians working in buildings built before 2000 may
                 encounter asbestos in insulation board, textured coatings, floor tiles, and pipe
@@ -373,7 +373,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dust</strong> from drilling, chasing, and cutting. Construction dust
                 (especially silica dust from masonry) can cause serious respiratory disease. Use
@@ -527,7 +527,7 @@ export default function WorkplaceSafetyCoursePage() {
       heroTitle={
         <>
           Workplace Safety:{' '}
-          <span className="text-yellow-400">Health and Safety for Electricians</span>
+          <span className="text-elec-yellow">Health and Safety for Electricians</span>
         </>
       }
       heroSubtitle="Master the essential workplace safety knowledge every electrician needs. HASAWA, risk assessment, manual handling, COSHH, fire safety, first aid, PPE, and electrical safety. 8 modules with video content, interactive quizzes, and AI tutor."
@@ -545,7 +545,7 @@ export default function WorkplaceSafetyCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Make safety second nature"
-      ctaSubheading="Join 1,600+ UK electricians studying smarter with Elec-Mate. Comprehensive safety modules, AI RAMS generator, and an AI tutor for any health and safety question. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians studying smarter with Elec-Mate. Comprehensive safety modules, AI RAMS generator, and an AI tutor for any health and safety question. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/workplace-safety-course"
     />

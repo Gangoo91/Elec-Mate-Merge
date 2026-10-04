@@ -178,7 +178,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <LayoutGrid className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <LayoutGrid className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>300–500 W</strong> — suitable for small bedrooms (up to 6 m²), bathrooms,
                 and hallways. Physical size approximately 60 × 60 cm to 60 × 90 cm. Can typically be
@@ -186,7 +186,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <LayoutGrid className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <LayoutGrid className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>600–900 W</strong> — suitable for average bedrooms (8–12 m²) and smaller
                 living rooms in well-insulated properties. Physical size approximately 60 × 120 cm.
@@ -194,7 +194,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <LayoutGrid className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <LayoutGrid className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1,000–1,400 W</strong> — typical living room or open-plan kitchen/dining
                 specification (15–20 m²). Physical size 60 × 150 cm to 90 × 120 cm. May require
@@ -202,7 +202,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <LayoutGrid className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <LayoutGrid className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1,600–1,800 W</strong> — large rooms, open-plan spaces, conservatories, and
                 workshops (25–30 m²). Physical size 90 × 150 cm to 120 × 120 cm. Dedicated radial
@@ -232,7 +232,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Plug-in (13 A socket)</strong> — panels up to approximately 1,200 W are
                 available with a standard 13 A plug. Suitable for temporary or portable use. For
@@ -242,7 +242,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fused connection unit (FCU)</strong> — for permanent wiring of panels up to
                 2 kW onto an existing ring main or radial circuit. The FCU is wired from the nearest
@@ -252,7 +252,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated radial circuit</strong> — required for panels above 2 kW, for
                 installations in zones where the existing ring main is at or near full load, and for
@@ -261,7 +261,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part P compliance</strong> — any fixed wiring of infrared panels (fused
                 connection unit or dedicated circuit) is notifiable work under Part P of the
@@ -339,7 +339,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Individual panel control</strong> — each panel controlled by its own
                 thermostat provides perfect zone control. A bedroom panel can be set to 17°C while a
@@ -347,7 +347,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Multi-zone smart systems</strong> — platforms like Drayton Wiser, Honeywell
                 Evohome, and tado° support multiple independent zones on a single app. Each zone has
@@ -356,7 +356,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Open window detection</strong> — smart thermostats with open window
                 detection (tado°, Wiser) reduce or eliminate heating when a window is opened,
@@ -381,7 +381,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <LayoutGrid className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <LayoutGrid className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wall mounting</strong> — positioned high on the wall (1.9–2.1 m) directing
                 radiant energy across the room. Best where occupants are mobile (hallways, kitchens)
@@ -391,7 +391,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <LayoutGrid className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <LayoutGrid className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ceiling mounting</strong> — provides the largest effective coverage area
                 from a single panel. Best for rooms where occupants are stationary (home offices,
@@ -401,7 +401,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <LayoutGrid className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <LayoutGrid className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Structural considerations</strong> — ceiling-mounted panels must be fixed to
                 structural joists or adequately rated plasterboard fixings rated for the panel
@@ -428,7 +428,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Panel supply only</strong> — 300 W panel: £80–£150; 600 W: £130–£220; 900 W:
                 £180–£280; 1,200 W: £220–£350; 1,800 W: £320–£500. Premium brands (Herschel,
@@ -436,7 +436,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Installation per panel (existing circuit)</strong> — £100–£200 per panel to
                 supply, fix, wire to FCU or existing circuit, and test. More for ceiling mounting
@@ -444,14 +444,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Installation per panel (new circuit)</strong> — £200–£400 per panel when a
                 new dedicated radial circuit is required from the consumer unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Whole-house infrared system (3-bedroom, 6 panels)</strong> — £3,000–£6,500
                 installed, including panels, wiring, thermostats, and consumer unit additions if
@@ -529,7 +529,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Certify On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -564,7 +564,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage infrared heating installations with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for Minor Works Certificates, EIC certificates, and professional multi-room heating quotes."
+          description="Join 2,100+ UK electricians using Elec-Mate for Minor Works Certificates, EIC certificates, and professional multi-room heating quotes."
           icon={Zap}
         />
       </>
@@ -590,7 +590,7 @@ export default function InfraredHeatingInstallationPage() {
       heroTitle={
         <>
           Infrared Heating Installation UK:{' '}
-          <span className="text-yellow-400">Infrared Panel Heater Guide</span>
+          <span className="text-elec-yellow">Infrared Panel Heater Guide</span>
         </>
       }
       heroSubtitle="A complete guide to infrared heating installation in the UK — how radiant heat differs from convection, panel sizes and power ratings from 300 W to 1,800 W, dedicated circuit requirements, thermostat and zone control options, ceiling versus wall mounting, 2025 installation costs, and comparison with traditional heating."
@@ -601,7 +601,7 @@ export default function InfraredHeatingInstallationPage() {
       faqHeading="Frequently Asked Questions About Infrared Heating Installation"
       relatedPages={relatedPages}
       ctaHeading="Certificate Infrared Heating Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for Minor Works Certificates, EIC certificates, and professional heating system quotes. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for Minor Works Certificates, EIC certificates, and professional heating system quotes. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -205,7 +205,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mandatory licensing — 5+ occupants</strong> — a student house with five or
                 more students from two or more households is subject to mandatory HMO licensing. A
@@ -215,7 +215,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional licensing — 3-4 occupants</strong> — many councils in university
                 cities operate additional HMO licensing schemes that cover smaller properties with
@@ -225,7 +225,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire detection to BS 5839-6</strong> — HMO student houses require
                 interlinked mains-powered smoke detectors on all escape routes (hallways, landings,
@@ -235,7 +235,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency lighting to BS 5266-1</strong> — three-storey or larger student
                 HMOs commonly require emergency lighting in communal areas and escape routes. This
@@ -330,7 +330,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Total load limit — 13A per socket</strong> — a single UK socket outlet is
                 rated at 13A (approximately 3,000W). Exceeding this through adaptor plugs or
@@ -340,7 +340,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Never daisy-chain</strong> — connecting extension leads in series increases
                 resistance in the circuit and the total load, which can cause overheating of the
@@ -349,7 +349,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Safe extension lead use</strong> — use a single multi-socket extension lead
                 plugged directly into the wall. Choose a lead with surge protection and individually
@@ -358,7 +358,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Report insufficient sockets to your landlord</strong> — if your room or
                 shared areas have too few socket outlets, ask your landlord to install additional
@@ -437,7 +437,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check the consumer unit</strong> — locate the consumer unit (fuse board).
                 Check it has a label showing when the last EICR was carried out (if the landlord
@@ -446,7 +446,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inspect sockets and switches</strong> — look for cracked faceplates, scorch
                 marks, loose fixings, or sockets that are not flush with the wall. These are
@@ -454,7 +454,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test smoke alarms</strong> — press the test button on every smoke alarm in
                 the property. A functioning alarm will sound. If any alarm does not sound, replace
@@ -463,7 +463,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check your own appliances</strong> — inspect the cables and plugs of all
                 appliances you bring to the property. Discard and replace any appliance with a
@@ -489,7 +489,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BellRing className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BellRing className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Report in writing immediately</strong> — email or text the landlord or
                 letting agent as soon as you identify a fault. Include a description of the problem,
@@ -497,7 +497,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BellRing className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BellRing className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dangerous faults — do not use the circuit</strong> — if you see or smell
                 burning, hear crackling from a socket or switch, or an RCD trips repeatedly, stop
@@ -506,7 +506,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BellRing className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BellRing className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Landlord failing to act — escalate to the council</strong> — if the landlord
                 does not respond to a written report of an electrical fault within a reasonable time
@@ -517,7 +517,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BellRing className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BellRing className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>University support</strong> — most universities have a student accommodation
                 team or students' union housing advisor who can provide guidance on reporting
@@ -544,7 +544,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulatory Reform (Fire Safety) Order 2005</strong> — university halls of
                 residence are non-domestic premises and are subject to the Regulatory Reform (Fire
@@ -554,7 +554,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Universities UK code of practice</strong> — most UK universities follow the
                 Universities UK Code of Practice for the Management of Student Housing, which sets
@@ -564,7 +564,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Private PBSA operators</strong> — privately operated PBSA (student
                 accommodation companies) must also comply with the Regulatory Reform (Fire Safety)
@@ -591,7 +591,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete Student House EICRs On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -652,7 +652,7 @@ export default function StudentHouseElectricalPage() {
       heroTitle={
         <>
           Student House Electrical Safety UK:{' '}
-          <span className="text-yellow-400">Guide for Landlords & Students 2026</span>
+          <span className="text-elec-yellow">Guide for Landlords & Students 2026</span>
         </>
       }
       heroSubtitle="Student houses are subject to the same EICR requirements as all private rental properties — and most qualify as HMOs with additional fire safety obligations. This guide covers landlord legal obligations, HMO licensing, the most common electrical hazards in student accommodation, and what students can do to stay safe."
@@ -663,7 +663,7 @@ export default function StudentHouseElectricalPage() {
       faqHeading="Frequently Asked Questions About Student House Electrical Safety"
       relatedPages={relatedPages}
       ctaHeading="Complete Student Property EICRs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

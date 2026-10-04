@@ -140,7 +140,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1 — Establish annual consumption:</strong> Check the customer's
                 electricity bills. A typical UK three-bedroom home uses 3,500 kWh/year; a
@@ -149,7 +149,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2 — Apply UK yield factor:</strong> In the UK, 1 kWp of south-facing
                 panels at 35° tilt generates approximately 850–950 kWh/year in southern England and
@@ -158,7 +158,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 3 — Check roof area:</strong> A 400 Wp panel is approximately 1.7 m². A
                 4 kWp system requires 10 panels and approximately 17 m² of usable roof area. Exclude
@@ -167,7 +167,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 4 — Consider self-consumption:</strong> Larger systems export more and
                 self-consume proportionally less. For a home without battery storage, a system sized
@@ -198,7 +198,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maximum string voltage:</strong> Multiply the panel Voc by the number of
                 panels, then apply a temperature correction for UK winter conditions. Use a
@@ -209,7 +209,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MPPT window:</strong> Multiply the panel Vmp by the number of panels and
                 check that the resulting voltage falls within the inverter's MPPT (Maximum Power
@@ -219,7 +219,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Shading and orientation:</strong> Panels on the same string must be on the
                 same roof plane with the same orientation and tilt. Mixing south-facing and
@@ -229,7 +229,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>String fusing:</strong> BS 7671 Section 712 requires consideration of
                 reverse current protection. Where more than two strings are connected in parallel,
@@ -464,7 +464,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Design assessment:</strong> The installer must carry out a formal design
                 assessment documenting system size, panel and inverter specifications, string
@@ -473,7 +473,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Shading analysis:</strong> Horizon shading, near shading (chimneys, dormer
                 windows, trees), and self-shading must all be assessed. Where shading losses exceed
@@ -482,7 +482,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCS Product Directory:</strong> All panels, inverters, and batteries must be
                 listed on the MCS Product Directory to be used in an MCS-certified installation.
@@ -491,7 +491,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Installation certificate:</strong> On completion, the installer must issue
                 an MCS Installation Certificate (MIC) and Handover Pack to the customer. The MIC is
@@ -516,7 +516,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Certificate solar PV installations with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for electrical certification. Complete MCS installation certificates, EICRs…"
+          description="Join 2,100+ UK electricians using Elec-Mate for electrical certification. Complete MCS installation certificates, EICRs…"
           icon={Sun}
         />
       </>
@@ -541,7 +541,7 @@ export default function SolarPVSystemDesignPage() {
       badgeIcon={Sun}
       heroTitle={
         <>
-          Solar PV System Design UK: <span className="text-yellow-400">Complete Design Guide</span>
+          Solar PV System Design UK: <span className="text-elec-yellow">Complete Design Guide</span>
         </>
       }
       heroSubtitle="Everything you need to design a solar PV system in the UK — from kWp sizing and string design to inverter selection, DC cable sizing, G99/G98 DNO notification, and MCS 001 compliance."
@@ -552,7 +552,7 @@ export default function SolarPVSystemDesignPage() {
       faqHeading="Frequently Asked Questions About Solar PV System Design"
       relatedPages={relatedPages}
       ctaHeading="Manage Solar PV Installations with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for certification, quoting, and job management. Complete MCS documentation on your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for certification, quoting, and job management. Complete MCS documentation on your phone. 7-day free trial, cancel anytime."
     />
   );
 }

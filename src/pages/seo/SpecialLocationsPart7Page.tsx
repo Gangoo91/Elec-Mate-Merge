@@ -404,7 +404,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Circuits supplying socket-outlets up to 32 A</strong> — and any other
                 circuit supplying hand-held equipment up to 32 A — must be protected by one of four
@@ -417,7 +417,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>110 V centre-tapped earth (CTE)</strong> is strongly preferred for portable
                 handlamps, portable hand tools and local lighting up to 2 kW on UK construction
@@ -427,7 +427,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Distribution assemblies</strong> — all assemblies for the distribution of
                 electricity on construction and demolition sites must comply with BS EN 61439-4
@@ -439,7 +439,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regular inspection and testing</strong> is required throughout the duration
                 of the construction project. The frequency must be appropriate to the risks and
@@ -708,7 +708,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit protection (Reg 711.410.3.101)</strong> — all final circuits for
                 lighting, and all final circuits rated up to 32 A supplying socket-outlets or
@@ -722,14 +722,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cables must be routed to avoid trip hazards</strong> and mechanical damage.
                 Where cables cross walkways, cable ramps or overhead routing must be used.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>An inspection and test must be carried out</strong> on site in accordance
                 with Chapter 64 after each assembly on site (Reg 711.6). The results must be
@@ -760,7 +760,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DC isolation</strong> — a DC isolator must be installed between the PV array
                 and the inverter, accessible for maintenance and clearly labelled. The isolator must
@@ -768,7 +768,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Warning labels</strong> — an instruction notice indicating the presence of a
                 PV system must be fixed at the origin of the installation, at the metering position
@@ -780,7 +780,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable selection and protection</strong> — equipment on the DC side up to the
                 inverter's DC connection means must be Class II or equivalent insulation (Reg
@@ -793,7 +793,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>String protection</strong> — string overcurrent protection is only required
                 in an array with <em>more than two</em> strings in parallel, and then only where the
@@ -806,7 +806,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Grid connection</strong> — the inverter must comply with G98 (up to 16 A per
                 phase) or G99 (larger installations) for connection to the distribution network.
@@ -856,7 +856,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Brain className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI Regulations Lookup</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -926,7 +926,7 @@ export default function SpecialLocationsPart7Page() {
       heroTitle={
         <>
           Special Locations Part 7:{' '}
-          <span className="text-yellow-400">Every Section Explained for UK Electricians</span>
+          <span className="text-elec-yellow">Every Section Explained for UK Electricians</span>
         </>
       }
       heroSubtitle="Part 7 of BS 7671:2018+A4:2026 contains supplementary regulations for locations where the risk of electric shock is increased. Bathrooms, swimming pools, saunas, construction sites, agricultural premises, caravan parks, marinas, exhibitions, and solar PV installations all have specific requirements. This guide covers every section."

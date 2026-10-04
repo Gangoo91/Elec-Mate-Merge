@@ -172,15 +172,15 @@ export default function TestingSequenceGuidePage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
-        <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-elec-yellow text-sm font-medium mb-6">
             <BookOpen className="w-4 h-4" />
             IET Guidance Note 3 (9th Edition)
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             Electrical Testing Sequence
-            <span className="block text-yellow-400 mt-1">The GN3 Order Explained</span>
+            <span className="block text-elec-yellow mt-1">The GN3 Order Explained</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             The complete guide to the correct testing sequence from IET Guidance Note 3. Why the
@@ -197,7 +197,7 @@ export default function TestingSequenceGuidePage() {
             </Link>
             <a
               href="#testing-sequence"
-              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-yellow-500/40 touch-manipulation transition-colors"
+              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-white/[0.1] touch-manipulation transition-colors"
             >
               See the Sequence
               <ArrowDown className="w-4 h-4 ml-1" />
@@ -232,14 +232,14 @@ export default function TestingSequenceGuidePage() {
           <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
             The Testing Sequence at a Glance — 8 Steps in Order
           </h2>
-          <p className="text-white/70 text-sm mb-5">
+          <p className="text-white text-sm mb-5">
             Dead tests first (steps 1–4), then live tests (steps 6–8). BS 7671 reference shown
             against each test.
           </p>
           <div className="overflow-hidden rounded-2xl border border-white/10">
             <table className="w-full text-left text-sm">
               <thead>
-                <tr className="bg-white/[0.06] text-white/80">
+                <tr className="bg-white/[0.06] text-white">
                   <th className="px-3 py-3 font-semibold w-8">#</th>
                   <th className="px-3 py-3 font-semibold">Test</th>
                   <th className="px-3 py-3 font-semibold hidden sm:table-cell">Dead / Live</th>
@@ -258,10 +258,10 @@ export default function TestingSequenceGuidePage() {
                   ['8', 'Functional testing (incl. RCDs)', 'Live', '643.8 / 643.10'],
                 ].map(([n, test, mode, reg]) => (
                   <tr key={n} className="text-white">
-                    <td className="px-3 py-3 font-bold text-yellow-400">{n}</td>
+                    <td className="px-3 py-3 font-bold text-elec-yellow">{n}</td>
                     <td className="px-3 py-3 font-medium">
                       {test}
-                      <span className="block sm:hidden text-white/50 text-xs mt-0.5">
+                      <span className="block sm:hidden text-white text-xs mt-0.5">
                         {mode} · Reg {reg}
                       </span>
                     </td>
@@ -276,13 +276,13 @@ export default function TestingSequenceGuidePage() {
                         {mode}
                       </span>
                     </td>
-                    <td className="px-3 py-3 hidden sm:table-cell font-mono text-white/70">{reg}</td>
+                    <td className="px-3 py-3 hidden sm:table-cell font-mono text-white">{reg}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          <p className="text-white/60 text-xs mt-3">
+          <p className="text-white text-xs mt-3">
             Regulation numbers are from BS 7671:2018+A4:2026, Part 6, Chapter 64. The continuity
             test (Reg 643.2) must be carried out before the loop impedance measurement (Reg
             643.7.3).
@@ -295,7 +295,7 @@ export default function TestingSequenceGuidePage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <ListOrdered className="w-5 h-5 text-yellow-400" />
+              <ListOrdered className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Why the Testing Order Matters
@@ -343,7 +343,7 @@ export default function TestingSequenceGuidePage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               The Testing Sequence in Order
@@ -354,20 +354,20 @@ export default function TestingSequenceGuidePage() {
           <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-4">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex-shrink-0">
-                <span className="font-bold text-yellow-400">1</span>
+                <span className="font-bold text-elec-yellow">1</span>
               </div>
               <h3 className="font-bold text-white text-xl">Continuity of Protective Conductors</h3>
             </div>
             <div className="space-y-3 text-white text-sm leading-relaxed pl-13">
               <p>
-                <strong className="text-yellow-400">What it proves:</strong> That the circuit
+                <strong className="text-elec-yellow">What it proves:</strong> That the circuit
                 protective conductor (CPC) — the earth wire — is continuous from the distribution
                 board to the furthest point of every circuit. This confirms that in the event of an
                 earth fault, there is a complete low-impedance path for fault current to flow back
                 to the source, allowing the protective device to operate.
               </p>
               <p>
-                <strong className="text-yellow-400">Method:</strong> Using a low-reading ohmmeter
+                <strong className="text-elec-yellow">Method:</strong> Using a low-reading ohmmeter
                 (the continuity function on a multifunction tester), measure the resistance between
                 the earth terminal at the distribution board and the earth terminal at each point on
                 the circuit. For radial circuits, the measurement is made at the last accessory. For
@@ -375,7 +375,7 @@ export default function TestingSequenceGuidePage() {
                 the circuit de-energised and all loads disconnected.
               </p>
               <p>
-                <strong className="text-yellow-400">Pass/fail:</strong> The measured resistance must
+                <strong className="text-elec-yellow">Pass/fail:</strong> The measured resistance must
                 be consistent with the expected value based on the cable length, conductor size, and
                 conductor material. There is no single pass/fail value — the reading must make sense
                 for the circuit. A reading of infinity (open circuit) indicates a break in the CPC.
@@ -388,7 +388,7 @@ export default function TestingSequenceGuidePage() {
                 for the full method.
               </p>
               <p>
-                <strong className="text-yellow-400">Why it is first:</strong> The earth path must be
+                <strong className="text-elec-yellow">Why it is first:</strong> The earth path must be
                 confirmed before any other test because the earth path is the primary safety
                 mechanism. If the earth path is broken, the installation is immediately dangerous.
               </p>
@@ -399,7 +399,7 @@ export default function TestingSequenceGuidePage() {
           <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-4">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex-shrink-0">
-                <span className="font-bold text-yellow-400">2</span>
+                <span className="font-bold text-elec-yellow">2</span>
               </div>
               <h3 className="font-bold text-white text-xl">
                 Continuity of Ring Final Circuit Conductors
@@ -407,7 +407,7 @@ export default function TestingSequenceGuidePage() {
             </div>
             <div className="space-y-3 text-white text-sm leading-relaxed pl-13">
               <p>
-                <strong className="text-yellow-400">What it proves:</strong> That the ring final
+                <strong className="text-elec-yellow">What it proves:</strong> That the ring final
                 circuit is a complete ring — that is, all three conductors (line, neutral, and CPC)
                 leave the distribution board, travel around the ring, and return to the distribution
                 board without any breaks. It also identifies any cross-connections (interconnections
@@ -415,7 +415,7 @@ export default function TestingSequenceGuidePage() {
                 the ring is correctly wired.
               </p>
               <p>
-                <strong className="text-yellow-400">Method:</strong> The three-step method: (1)
+                <strong className="text-elec-yellow">Method:</strong> The three-step method: (1)
                 Measure end-to-end resistance of each conductor (r1, rn, r2). (2) Cross-connect line
                 and neutral at one end, measure at each socket — readings should form a consistent
                 pattern with a maximum of approximately (r1+rn)/4. (3) Cross-connect line and CPC at
@@ -423,13 +423,13 @@ export default function TestingSequenceGuidePage() {
                 furthest point. Anomalous readings indicate breaks, cross-connections, or spurs.
               </p>
               <p>
-                <strong className="text-yellow-400">Pass/fail:</strong> r1 and rn should be
+                <strong className="text-elec-yellow">Pass/fail:</strong> r1 and rn should be
                 approximately equal (same conductor size). r2 may differ if the CPC is a different
                 size. Cross-connected readings should follow a predictable pattern. Any readings
                 that deviate significantly from the expected pattern require investigation.
               </p>
               <p>
-                <strong className="text-yellow-400">Why it is second:</strong> Ring circuit testing
+                <strong className="text-elec-yellow">Why it is second:</strong> Ring circuit testing
                 is an extension of protective conductor continuity testing and is still a dead test.
                 It must be completed before insulation resistance testing because a break in the
                 ring could be masked by insulation that appears satisfactory when tested from one
@@ -442,13 +442,13 @@ export default function TestingSequenceGuidePage() {
           <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-4">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex-shrink-0">
-                <span className="font-bold text-yellow-400">3</span>
+                <span className="font-bold text-elec-yellow">3</span>
               </div>
               <h3 className="font-bold text-white text-xl">Insulation Resistance</h3>
             </div>
             <div className="space-y-3 text-white text-sm leading-relaxed pl-13">
               <p>
-                <strong className="text-yellow-400">What it proves:</strong> That the insulation
+                <strong className="text-elec-yellow">What it proves:</strong> That the insulation
                 between live conductors and between live conductors and earth is in good condition
                 and can withstand the normal operating voltage without allowing leakage current to
                 flow. Poor insulation can cause earth leakage (tripping RCDs), short circuits
@@ -456,7 +456,7 @@ export default function TestingSequenceGuidePage() {
                 through damp or damaged insulation.
               </p>
               <p>
-                <strong className="text-yellow-400">Method:</strong> Using an insulation resistance
+                <strong className="text-elec-yellow">Method:</strong> Using an insulation resistance
                 tester set to 500V DC (for circuits up to 500V), measure the insulation resistance
                 between all live conductors connected together and earth (Line+Neutral to Earth),
                 and between live conductors (Line to Neutral). All switches should be closed (ON
@@ -465,7 +465,7 @@ export default function TestingSequenceGuidePage() {
                 500V test voltage.
               </p>
               <p>
-                <strong className="text-yellow-400">Pass/fail (BS 7671 Table 64):</strong> The
+                <strong className="text-elec-yellow">Pass/fail (BS 7671 Table 64):</strong> The
                 minimum acceptable values depend on the circuit nominal voltage. A healthy circuit
                 in good condition will normally read far higher than the minimum — 50 MΩ to 200+ MΩ
                 is common on new work. Readings just above the minimum (for example 1–2 MΩ) pass
@@ -475,7 +475,7 @@ export default function TestingSequenceGuidePage() {
               <div className="my-4 overflow-hidden rounded-xl border border-white/10">
                 <table className="w-full text-left text-xs sm:text-sm">
                   <thead>
-                    <tr className="bg-white/[0.06] text-white/80">
+                    <tr className="bg-white/[0.06] text-white">
                       <th className="px-3 py-2 font-semibold">Circuit nominal voltage</th>
                       <th className="px-3 py-2 font-semibold">Test voltage (DC)</th>
                       <th className="px-3 py-2 font-semibold">Minimum IR</th>
@@ -485,22 +485,22 @@ export default function TestingSequenceGuidePage() {
                     <tr>
                       <td className="px-3 py-2">SELV and PELV</td>
                       <td className="px-3 py-2 font-mono">250 V</td>
-                      <td className="px-3 py-2 font-mono text-yellow-300">0.5 MΩ</td>
+                      <td className="px-3 py-2 font-mono text-elec-yellow">0.5 MΩ</td>
                     </tr>
                     <tr>
                       <td className="px-3 py-2">Up to and including 500 V (excl. SELV/PELV)</td>
                       <td className="px-3 py-2 font-mono">500 V</td>
-                      <td className="px-3 py-2 font-mono text-yellow-300">1.0 MΩ</td>
+                      <td className="px-3 py-2 font-mono text-elec-yellow">1.0 MΩ</td>
                     </tr>
                     <tr>
                       <td className="px-3 py-2">Above 500 V</td>
                       <td className="px-3 py-2 font-mono">1000 V</td>
-                      <td className="px-3 py-2 font-mono text-yellow-300">1.0 MΩ</td>
+                      <td className="px-3 py-2 font-mono text-elec-yellow">1.0 MΩ</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-              <p className="text-white/60 text-xs">
+              <p className="text-white text-xs">
                 Values per BS 7671 Table 64 (Part 6, Chapter 64). Standard 230 V and 400 V
                 installations fall in the second row. See the{' '}
                 <SEOInternalLink href="/guides/insulation-resistance-minimum-values">
@@ -509,7 +509,7 @@ export default function TestingSequenceGuidePage() {
                 for worked examples.
               </p>
               <p>
-                <strong className="text-yellow-400">Why it is third:</strong> Insulation resistance
+                <strong className="text-elec-yellow">Why it is third:</strong> Insulation resistance
                 must be verified before any live tests are carried out. If insulation is compromised
                 and you energise the circuit, fault current will flow — potentially damaging
                 equipment, tripping devices unexpectedly, or creating a shock hazard. The 500V DC
@@ -523,13 +523,13 @@ export default function TestingSequenceGuidePage() {
           <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10 mb-4">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex-shrink-0">
-                <span className="font-bold text-yellow-400">4</span>
+                <span className="font-bold text-elec-yellow">4</span>
               </div>
               <h3 className="font-bold text-white text-xl">Polarity</h3>
             </div>
             <div className="space-y-3 text-white text-sm leading-relaxed pl-13">
               <p>
-                <strong className="text-yellow-400">What it proves:</strong> That all single-pole
+                <strong className="text-elec-yellow">What it proves:</strong> That all single-pole
                 switching devices (light switches, MCBs, fuse carriers) are connected in the line
                 conductor only, that socket outlets are correctly wired (line to the right terminal,
                 neutral to the left, earth to the top), and that the centre contact of Edison-screw
@@ -538,7 +538,7 @@ export default function TestingSequenceGuidePage() {
                 in the neutral rather than the line.
               </p>
               <p>
-                <strong className="text-yellow-400">Method:</strong> Polarity is largely verified as
+                <strong className="text-elec-yellow">Method:</strong> Polarity is largely verified as
                 part of the continuity tests — by measuring the continuity between specific
                 conductors, you confirm which conductor is connected to which terminal. It is also
                 confirmed by visual inspection (checking wiring at accessories) and, on energised
@@ -546,13 +546,13 @@ export default function TestingSequenceGuidePage() {
                 the neutral terminal is at earth potential.
               </p>
               <p>
-                <strong className="text-yellow-400">Pass/fail:</strong> All single-pole devices must
+                <strong className="text-elec-yellow">Pass/fail:</strong> All single-pole devices must
                 be in the line conductor. All socket outlets must have correct L-N-E connections.
                 All Edison-screw lampholders must have line to centre contact. Any incorrect
                 polarity is a failure that must be corrected.
               </p>
               <p>
-                <strong className="text-yellow-400">Why it is fourth:</strong> Polarity verification
+                <strong className="text-elec-yellow">Why it is fourth:</strong> Polarity verification
                 bridges the dead tests and the live tests. Much of the polarity confirmation comes
                 from the continuity tests already completed, but final verification may require
                 energising the circuit briefly — which is safe to do because insulation resistance
@@ -565,13 +565,13 @@ export default function TestingSequenceGuidePage() {
           <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10 mb-4">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex-shrink-0">
-                <span className="font-bold text-yellow-400">5</span>
+                <span className="font-bold text-elec-yellow">5</span>
               </div>
               <h3 className="font-bold text-white text-xl">Earth Electrode Resistance</h3>
             </div>
             <div className="space-y-3 text-white text-sm leading-relaxed pl-13">
               <p>
-                <strong className="text-yellow-400">What it proves:</strong> That the resistance of
+                <strong className="text-elec-yellow">What it proves:</strong> That the resistance of
                 the earth electrode (on TT systems) or the earth path is low enough to allow
                 sufficient fault current to flow for the protective device to operate. On TT
                 systems, where the installation relies on its own earth electrode rather than the
@@ -579,7 +579,7 @@ export default function TestingSequenceGuidePage() {
                 connection to the general mass of earth.
               </p>
               <p>
-                <strong className="text-yellow-400">Method:</strong> The earth electrode resistance
+                <strong className="text-elec-yellow">Method:</strong> The earth electrode resistance
                 can be measured using the dedicated earth electrode resistance function on an MFT or
                 a dedicated earth electrode resistance tester using the fall-of-potential method.
                 Alternatively, a working value can be obtained from the loop impedance test — the
@@ -590,7 +590,7 @@ export default function TestingSequenceGuidePage() {
                 company.
               </p>
               <p>
-                <strong className="text-yellow-400">Pass/fail:</strong> Under BS 7671 Reg 411.5.3,
+                <strong className="text-elec-yellow">Pass/fail:</strong> Under BS 7671 Reg 411.5.3,
                 where an RCD provides fault protection on a TT system the condition Ra × IΔn ≤ 50 V
                 must be met (Ra being the sum of the earth electrode resistance and the protective
                 conductor connecting it to the exposed-conductive-parts). The requirement is deemed
@@ -601,7 +601,7 @@ export default function TestingSequenceGuidePage() {
               <div className="my-4 overflow-hidden rounded-xl border border-white/10">
                 <table className="w-full text-left text-xs sm:text-sm">
                   <thead>
-                    <tr className="bg-white/[0.06] text-white/80">
+                    <tr className="bg-white/[0.06] text-white">
                       <th className="px-3 py-2 font-semibold">RCD rated IΔn</th>
                       <th className="px-3 py-2 font-semibold">Max Zs (Table 41.5)</th>
                     </tr>
@@ -615,13 +615,13 @@ export default function TestingSequenceGuidePage() {
                     ].map(([i, z]) => (
                       <tr key={i}>
                         <td className="px-3 py-2 font-mono">{i}</td>
-                        <td className="px-3 py-2 font-mono text-yellow-300">{z}</td>
+                        <td className="px-3 py-2 font-mono text-elec-yellow">{z}</td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
-              <p className="text-white/60 text-xs">
+              <p className="text-white text-xs">
                 BS 7671 Table 41.5 — maximum earth fault loop impedance for non-delayed and ‘S’ type
                 RCDs at Uo of 230 V. See the{' '}
                 <SEOInternalLink href="/guides/earth-electrode-testing">
@@ -630,7 +630,7 @@ export default function TestingSequenceGuidePage() {
                 for the fall-of-potential method.
               </p>
               <p>
-                <strong className="text-yellow-400">Why it is fifth:</strong> Earth electrode
+                <strong className="text-elec-yellow">Why it is fifth:</strong> Earth electrode
                 resistance is the final dead test (or can be measured live). It must be confirmed
                 before energising the installation for live tests on TT systems because the earth
                 electrode is the sole means of earthing — if it is inadequate, energising could
@@ -643,13 +643,13 @@ export default function TestingSequenceGuidePage() {
           <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-4">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex-shrink-0">
-                <span className="font-bold text-yellow-400">6</span>
+                <span className="font-bold text-elec-yellow">6</span>
               </div>
               <h3 className="font-bold text-white text-xl">Earth Fault Loop Impedance</h3>
             </div>
             <div className="space-y-3 text-white text-sm leading-relaxed pl-13">
               <p>
-                <strong className="text-yellow-400">What it proves:</strong> That the total
+                <strong className="text-elec-yellow">What it proves:</strong> That the total
                 impedance of the earth fault loop (from the point of the fault, through the CPC,
                 through the main earthing terminal, through the external earth path back to the
                 transformer, and through the transformer winding back to the point of the fault) is
@@ -658,7 +658,7 @@ export default function TestingSequenceGuidePage() {
                 verification.
               </p>
               <p>
-                <strong className="text-yellow-400">Method:</strong> Using a loop impedance tester
+                <strong className="text-elec-yellow">Method:</strong> Using a loop impedance tester
                 (the Zs function on a multifunction tester), connect to the circuit at the furthest
                 point from the distribution board (the point with the highest expected impedance).
                 The instrument applies a brief test current and measures the voltage drop to
@@ -668,7 +668,7 @@ export default function TestingSequenceGuidePage() {
                 the main earthing conductor disconnected from the main earthing terminal.
               </p>
               <p>
-                <strong className="text-yellow-400">Pass/fail:</strong> The measured Zs must not
+                <strong className="text-elec-yellow">Pass/fail:</strong> The measured Zs must not
                 exceed the maximum value tabulated in BS 7671 for the type and rating of the
                 protective device. The table below gives the BS 7671 Table 41.3 maxima for common
                 Type B circuit-breakers (and the overcurrent characteristics of equivalent RCBOs) at
@@ -677,7 +677,7 @@ export default function TestingSequenceGuidePage() {
               <div className="my-4 overflow-hidden rounded-xl border border-white/10">
                 <table className="w-full text-left text-xs sm:text-sm">
                   <thead>
-                    <tr className="bg-white/[0.06] text-white/80">
+                    <tr className="bg-white/[0.06] text-white">
                       <th className="px-3 py-2 font-semibold">Type B device</th>
                       <th className="px-3 py-2 font-semibold">Max Zs (Table 41.3)</th>
                       <th className="px-3 py-2 font-semibold hidden sm:table-cell">
@@ -695,8 +695,8 @@ export default function TestingSequenceGuidePage() {
                     ].map(([d, z, r]) => (
                       <tr key={d}>
                         <td className="px-3 py-2 font-mono">{d}</td>
-                        <td className="px-3 py-2 font-mono text-yellow-300">{z}</td>
-                        <td className="px-3 py-2 font-mono text-white/70 hidden sm:table-cell">
+                        <td className="px-3 py-2 font-mono text-elec-yellow">{z}</td>
+                        <td className="px-3 py-2 font-mono text-white hidden sm:table-cell">
                           {r}
                         </td>
                       </tr>
@@ -704,7 +704,7 @@ export default function TestingSequenceGuidePage() {
                   </tbody>
                 </table>
               </div>
-              <p className="text-white/60 text-xs">
+              <p className="text-white text-xs">
                 BS 7671 Table 41.3(a) — maximum Zs for Type B circuit-breakers to BS EN 60898 at the
                 0.4 s disconnection time. See the{' '}
                 <SEOInternalLink href="/guides/maximum-zs-values-bs-7671">
@@ -713,7 +713,7 @@ export default function TestingSequenceGuidePage() {
                 for Type C, Type D and fuse tables.
               </p>
               <p>
-                <strong className="text-yellow-400">The 0.8 rule:</strong> The tabulated maxima are
+                <strong className="text-elec-yellow">The 0.8 rule:</strong> The tabulated maxima are
                 referenced to the conductor at its normal operating temperature, but site
                 measurements are taken with cold conductors. A common, conservative on-site practice
                 is therefore to apply a 0.8 factor — the measured Zs should not exceed roughly 80% of
@@ -727,7 +727,7 @@ export default function TestingSequenceGuidePage() {
                 to work through Zs = Ze + (R1 + R2).
               </p>
               <p>
-                <strong className="text-yellow-400">Why it is sixth:</strong> This is a live test —
+                <strong className="text-elec-yellow">Why it is sixth:</strong> This is a live test —
                 the circuit must be energised. It can only be performed safely after continuity
                 (confirming the earth path exists), insulation resistance (confirming there are no
                 faults), polarity (confirming the circuit is correctly wired), and earth electrode
@@ -740,13 +740,13 @@ export default function TestingSequenceGuidePage() {
           <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10 mb-4">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex-shrink-0">
-                <span className="font-bold text-yellow-400">7</span>
+                <span className="font-bold text-elec-yellow">7</span>
               </div>
               <h3 className="font-bold text-white text-xl">Prospective Fault Current</h3>
             </div>
             <div className="space-y-3 text-white text-sm leading-relaxed pl-13">
               <p>
-                <strong className="text-yellow-400">What it proves:</strong> That the maximum fault
+                <strong className="text-elec-yellow">What it proves:</strong> That the maximum fault
                 current that could flow under a short-circuit or earth fault condition does not
                 exceed the rated breaking capacity (kA rating) of the protective devices installed.
                 If the prospective fault current exceeds the device rating, the device may not be
@@ -754,7 +754,7 @@ export default function TestingSequenceGuidePage() {
                 catch fire.
               </p>
               <p>
-                <strong className="text-yellow-400">Method:</strong> Prospective fault current (Ipf)
+                <strong className="text-elec-yellow">Method:</strong> Prospective fault current (Ipf)
                 is measured or calculated at the origin of the installation (typically at the
                 consumer unit). Many multifunction testers calculate Ipf automatically from the loop
                 impedance measurement. Ipf is derived from the supply voltage divided by the loop
@@ -763,7 +763,7 @@ export default function TestingSequenceGuidePage() {
                 is the one that must not exceed the device breaking capacity.
               </p>
               <p>
-                <strong className="text-yellow-400">Pass/fail:</strong> The measured Ipf must not
+                <strong className="text-elec-yellow">Pass/fail:</strong> The measured Ipf must not
                 exceed the rated short-circuit capacity of every protective device through which it
                 could flow. Common breaking capacities for MCBs/RCBOs to BS EN 60898 / BS EN 61009
                 are shown below; if the measured Ipf exceeds the device rating, a device with a
@@ -780,12 +780,12 @@ export default function TestingSequenceGuidePage() {
                     key={kA}
                     className="rounded-xl bg-white/[0.04] border border-white/10 p-3 text-center"
                   >
-                    <div className="text-yellow-300 font-bold text-lg">{kA}</div>
-                    <div className="text-white/70 text-xs mt-1 leading-snug">{use}</div>
+                    <div className="text-elec-yellow font-bold text-lg">{kA}</div>
+                    <div className="text-white text-xs mt-1 leading-snug">{use}</div>
                   </div>
                 ))}
               </div>
-              <p className="text-white/60 text-xs">
+              <p className="text-white text-xs">
                 Figures are typical device ratings, not BS 7671 limits — always confirm the breaking
                 capacity marked on the actual device. See the{' '}
                 <SEOInternalLink href="/guides/prospective-fault-current-explained">
@@ -794,7 +794,7 @@ export default function TestingSequenceGuidePage() {
                 for how Ipf is determined (BS 7671 Reg 643.7.3.201, Appendix 14).
               </p>
               <p>
-                <strong className="text-yellow-400">Why it is seventh:</strong> It follows naturally
+                <strong className="text-elec-yellow">Why it is seventh:</strong> It follows naturally
                 from the loop impedance test — in many cases, the Ipf is calculated from the same
                 measurements. It is a live test and requires the circuit to be energised.
               </p>
@@ -805,13 +805,13 @@ export default function TestingSequenceGuidePage() {
           <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex-shrink-0">
-                <span className="font-bold text-yellow-400">8</span>
+                <span className="font-bold text-elec-yellow">8</span>
               </div>
               <h3 className="font-bold text-white text-xl">Functional Testing</h3>
             </div>
             <div className="space-y-3 text-white text-sm leading-relaxed pl-13">
               <p>
-                <strong className="text-yellow-400">What it proves:</strong> That all assemblies,
+                <strong className="text-elec-yellow">What it proves:</strong> That all assemblies,
                 switchgear, controlgear, interlocks, controls, and RCDs function correctly as
                 intended. This includes verifying that every RCD in the installation (RCCBs, RCBOs,
                 and socket-outlet RCDs) operates correctly — tripping at the correct current and
@@ -819,7 +819,7 @@ export default function TestingSequenceGuidePage() {
                 and interlocking arrangements operate as designed.
               </p>
               <p>
-                <strong className="text-yellow-400">RCD testing method:</strong> For each RCD,
+                <strong className="text-elec-yellow">RCD testing method:</strong> For each RCD,
                 carry out the push-button test (mechanical function check) followed by the
                 instrument tests on both positive and negative half-cycles, recording the worst-case
                 (longest) trip time for each step. The table below sets out the test multiples and
@@ -828,7 +828,7 @@ export default function TestingSequenceGuidePage() {
               <div className="my-4 overflow-hidden rounded-xl border border-white/10">
                 <table className="w-full text-left text-xs sm:text-sm">
                   <thead>
-                    <tr className="bg-white/[0.06] text-white/80">
+                    <tr className="bg-white/[0.06] text-white">
                       <th className="px-3 py-2 font-semibold">Test current</th>
                       <th className="px-3 py-2 font-semibold">General (non-delay)</th>
                       <th className="px-3 py-2 font-semibold">Type S (time-delayed)</th>
@@ -853,7 +853,7 @@ export default function TestingSequenceGuidePage() {
                   </tbody>
                 </table>
               </div>
-              <p className="text-white/60 text-xs">
+              <p className="text-white text-xs">
                 BS 7671 Reg 643.8 deems effectiveness verified where a general non-delay RCD trips
                 within 300 ms (130–500 ms for ‘S’ type) at rated IΔn. The 0.5× and 5× multiples and
                 their limits derive from the RCD product standards (BS EN 61008-1 / 61009-1). See
@@ -862,14 +862,14 @@ export default function TestingSequenceGuidePage() {
                 the full procedure.
               </p>
               <p>
-                <strong className="text-yellow-400">Other functional tests:</strong> Verify correct
+                <strong className="text-elec-yellow">Other functional tests:</strong> Verify correct
                 operation of all isolators, switches, circuit breakers, fireman switches, emergency
                 stop buttons, time clocks, PIR sensors, dimmer switches, interlocking devices, and
                 any automation or BMS controls. All switchgear must operate smoothly and latch
                 correctly.
               </p>
               <p>
-                <strong className="text-yellow-400">A4:2026 additions:</strong> Under BS
+                <strong className="text-elec-yellow">A4:2026 additions:</strong> Under BS
                 7671:2018+A4:2026 Reg 421.1.7, Arc Fault Detection Devices (AFDDs) conforming to BS
                 EN 62606 are now <strong className="text-white">required</strong> for single-phase
                 AC final circuits supplying socket-outlets rated up to and including 32 A in high
@@ -880,7 +880,7 @@ export default function TestingSequenceGuidePage() {
                 and confirm the device trips and resets correctly.
               </p>
               <p>
-                <strong className="text-yellow-400">Pass/fail (RCDs):</strong> Amendment 4 deleted
+                <strong className="text-elec-yellow">Pass/fail (RCDs):</strong> Amendment 4 deleted
                 Table 3A of Appendix 3. Verification is now a single alternating current test at
                 IΔn, whatever the RCD type — a general (non-delay) device must operate within
                 300 ms, a Type S within 130-500 ms per BS EN 61008/61009. The ½x and 5x tests are
@@ -888,7 +888,7 @@ export default function TestingSequenceGuidePage() {
                 Failure requires investigation and may require device replacement.
               </p>
               <p>
-                <strong className="text-yellow-400">Why it is last:</strong> Functional testing is
+                <strong className="text-elec-yellow">Why it is last:</strong> Functional testing is
                 the final test because it requires the installation to be fully energised and
                 operating in its normal state. RCD testing draws a significant test current through
                 the earth path. All previous tests must have confirmed that the earth path is
@@ -908,14 +908,14 @@ export default function TestingSequenceGuidePage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <AlertTriangle className="w-5 h-5 text-yellow-400" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">Common Testing Mistakes</h2>
           </div>
           <div className="space-y-4">
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
               <div className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <Zap className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
                   <h3 className="font-bold text-white mb-1">Skipping the half-rated RCD test</h3>
                   <p className="text-white text-sm leading-relaxed">
@@ -929,7 +929,7 @@ export default function TestingSequenceGuidePage() {
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
               <div className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <Zap className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
                   <h3 className="font-bold text-white mb-1">
                     Testing loop impedance before insulation resistance
@@ -945,7 +945,7 @@ export default function TestingSequenceGuidePage() {
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
               <div className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <Zap className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
                   <h3 className="font-bold text-white mb-1">
                     Not disconnecting loads for insulation resistance testing
@@ -962,7 +962,7 @@ export default function TestingSequenceGuidePage() {
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
               <div className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <Zap className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
                   <h3 className="font-bold text-white mb-1">
                     Using an uncalibrated test instrument
@@ -979,7 +979,7 @@ export default function TestingSequenceGuidePage() {
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
               <div className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <Zap className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
                   <h3 className="font-bold text-white mb-1">
                     Not testing RCDs on both half-cycles
@@ -1003,7 +1003,7 @@ export default function TestingSequenceGuidePage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Gauge className="w-5 h-5 text-yellow-400" />
+              <Gauge className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Equipment Needed for the Full Test Sequence
@@ -1092,7 +1092,7 @@ export default function TestingSequenceGuidePage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <HelpCircle className="w-5 h-5 text-yellow-400" />
+              <HelpCircle className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Frequently Asked Questions
@@ -1105,7 +1105,7 @@ export default function TestingSequenceGuidePage() {
                 className="group p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-white/[0.14] transition-colors"
               >
                 <summary className="flex items-start gap-3 cursor-pointer touch-manipulation list-none [&::-webkit-details-marker]:hidden">
-                  <ChevronRight className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0 transition-transform group-open:rotate-90" />
+                  <ChevronRight className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0 transition-transform group-open:rotate-90" />
                   <h3 className="font-bold text-white text-lg">{faq.question}</h3>
                 </summary>
                 <div className="mt-3 pl-8">
@@ -1120,7 +1120,7 @@ export default function TestingSequenceGuidePage() {
       {/* CTA */}
       <SEOCTASection
         heading="Record Test Results Digitally"
-        subheading="Join 1,600+ UK electricians using Elec-Mate for on-site testing and certification. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians using Elec-Mate for on-site testing and certification. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

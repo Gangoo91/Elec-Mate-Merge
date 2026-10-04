@@ -332,7 +332,7 @@ const CommercialTestingGuide = () => {
           test: 'At 5 x In',
           requirement: 'No longer required',
           notes:
-            'BS 7671:2018+A4:2026 deleted the 5×IΔn test and Appendix 3 Table 3A — one AC test at IΔn verifies the device',
+            'BS 7671:2018+A2:2022 deleted the 5×IΔn test and Appendix 3 Table 3A — one AC test at IΔn verifies the device',
         },
         {
           test: 'At 1 x In (Type S)',

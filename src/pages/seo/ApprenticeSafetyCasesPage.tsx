@@ -541,7 +541,7 @@ export default function ApprenticeSafetyCasesPage() {
       badgeIcon={AlertTriangle}
       heroTitle={
         <>
-          Safety Cases for <span className="text-yellow-400">Electrical Apprentices</span>
+          Safety Cases for <span className="text-elec-yellow">Electrical Apprentices</span>
         </>
       }
       heroSubtitle="Real-world safety scenarios, near misses, and incident case studies for apprentice electricians. Learn from what went wrong so you can make sure it never happens to you. Safe isolation, PPE, hazard awareness, and incident reporting — all explained for beginners."

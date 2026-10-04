@@ -157,7 +157,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'A4:2026 changed Reg 643.8 so the only mandatory verification is an AC test at IΔn (Table 3A was removed). Ramp testing is not required for compliance, but GN3 Ch 4 Reg 4.6 still describes it because it is the only practical way to read the actual trip threshold — invaluable for selectivity, fault-finding, and detecting drift on periodic inspection.',
+      'A2:2022 changed Reg 643.8 so the only mandatory verification is an AC test at IΔn (Table 3A was removed). Ramp testing is not required for compliance, but GN3 Ch 4 Reg 4.6 still describes it because it is the only practical way to read the actual trip threshold — invaluable for selectivity, fault-finding, and detecting drift on periodic inspection.',
   },
   {
     id: 7,
@@ -260,7 +260,7 @@ const InspectionTestingModule6Section3 = () => {
 
         <ConceptBlock
           title="Reg 643.8 changed in A4:2026 — and where ramp testing now sits"
-          plainEnglish="A4:2026 redrafted Reg 643.8. Table 3A (the old time/current performance table) has been deleted. The single mandatory test for any RCD Type is now an alternating-current test at the rated residual operating current (IΔn). Ramp testing is not mandatory for compliance — but GN3 Ch 4 Reg 4.6 keeps it on the testing menu because it is the only test that gives you the actual trip threshold."
+          plainEnglish="A2:2022 redrafted Reg 643.8. Table 3A (the old time/current performance table) has been deleted. The single mandatory test for any RCD Type is now an alternating-current test at the rated residual operating current (IΔn). Ramp testing is not mandatory for compliance — but GN3 Ch 4 Reg 4.6 keeps it on the testing menu because it is the only test that gives you the actual trip threshold."
           onSite="Compliance test = AC at IΔn within the published trip times (300 ms for non-delay, 130–500 ms for Type S). Diagnostic test = ramp. Both have a place; only one is required to certify."
         >
           <p>
@@ -862,7 +862,7 @@ const InspectionTestingModule6Section3 = () => {
           points={[
             'Ramp test starts below 50 % of IΔn, ramps to 110 % of IΔn, records the trip current. Source: GN3 Ch 4 Reg 4.6.',
             'Acceptance band per BS EN 61008-1 / 61009-1: trip shall NOT happen below 50 % AND SHALL happen at or before 100 %. For 30 mA → 15–30 mA.',
-            'Reg 643.8 (A4:2026) made the AC at IΔn test the only mandatory effectiveness test — Table 3A is gone. Ramp is supplementary, not mandatory.',
+            'Reg 643.8 (A2:2022) made the AC at IΔn test the only mandatory effectiveness test — Table 3A is gone. Ramp is supplementary, not mandatory.',
             'Half-cycle test (0° / 180°) per GN3 Reg 2.31. Record the worst reading.',
             'Standing earth-leakage adds to the test current at the toroid. Either disconnect leaky loads or measure leakage with a clamp and add it to the displayed value.',
             'Type A / F / B — run the ramp on all the waveforms the device is rated for. AC pass alone does not prove the DC sensing path.',
@@ -876,7 +876,7 @@ const InspectionTestingModule6Section3 = () => {
             {
               question: 'Is ramp testing mandatory on every RCD during an EICR?',
               answer:
-                'No. Reg 643.8 (A4:2026) made the AC at IΔn test the only mandatory effectiveness test, regardless of RCD Type. Ramp testing is supplementary — used for diagnostics, discrimination verification, drift tracking, and Type B verification on power-electronic loads. That said, it is good practice on any periodic inspection because it gives you a numeric baseline; without it you only have pass/fail history.',
+                'No. Reg 643.8 (A2:2022) made the AC at IΔn test the only mandatory effectiveness test, regardless of RCD Type. Ramp testing is supplementary — used for diagnostics, discrimination verification, drift tracking, and Type B verification on power-electronic loads. That said, it is good practice on any periodic inspection because it gives you a numeric baseline; without it you only have pass/fail history.',
             },
             {
               question: 'Why does the acceptance band start at 50 % and not 0 %?',

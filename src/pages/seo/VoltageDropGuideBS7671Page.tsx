@@ -42,7 +42,7 @@ export default function VoltageDropGuideBS7671Page() {
       badgeIcon={TrendingDown}
       heroTitle={
         <>
-          Voltage Drop Limits <span className="text-yellow-400">BS 7671</span>
+          Voltage Drop Limits <span className="text-elec-yellow">BS 7671</span>
           <br />
           How to Calculate
         </>
@@ -114,22 +114,22 @@ export default function VoltageDropGuideBS7671Page() {
                       <tr className="border-b border-white/5">
                         <td className="py-3 pr-4 font-semibold">
                           <span className="flex items-center gap-2">
-                            <Lightbulb className="w-4 h-4 text-yellow-400" />
+                            <Lightbulb className="w-4 h-4 text-elec-yellow" />
                             Lighting
                           </span>
                         </td>
-                        <td className="py-3 pr-4 text-yellow-400 font-bold">3%</td>
+                        <td className="py-3 pr-4 text-elec-yellow font-bold">3%</td>
                         <td className="py-3 pr-4 font-bold">6.9V</td>
                         <td className="py-3 font-bold">12V</td>
                       </tr>
                       <tr>
                         <td className="py-3 pr-4 font-semibold">
                           <span className="flex items-center gap-2">
-                            <Zap className="w-4 h-4 text-yellow-400" />
+                            <Zap className="w-4 h-4 text-elec-yellow" />
                             All other circuits
                           </span>
                         </td>
-                        <td className="py-3 pr-4 text-yellow-400 font-bold">5%</td>
+                        <td className="py-3 pr-4 text-elec-yellow font-bold">5%</td>
                         <td className="py-3 pr-4 font-bold">11.5V</td>
                         <td className="py-3 font-bold">20V</td>
                       </tr>
@@ -146,7 +146,7 @@ export default function VoltageDropGuideBS7671Page() {
               </p>
               <div className="p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] my-4">
                 <p className="text-white text-sm leading-relaxed">
-                  <strong className="text-yellow-400">Important:</strong> The voltage drop values of
+                  <strong className="text-elec-yellow">Important:</strong> The voltage drop values of
                   6.9V and 11.5V assume a nominal supply voltage of 230V. The actual UK supply
                   voltage can vary between 216.2V and 253V (230V -6% / +10%). The voltage drop limit
                   applies at the nominal voltage, not the worst-case low voltage.
@@ -167,20 +167,20 @@ export default function VoltageDropGuideBS7671Page() {
                 </p>
                 <div className="space-y-2 text-white text-sm">
                   <p>
-                    <strong className="text-yellow-400">VD</strong> = Voltage drop in volts
+                    <strong className="text-elec-yellow">VD</strong> = Voltage drop in volts
                   </p>
                   <p>
-                    <strong className="text-yellow-400">mV/A/m</strong> = Millivolts per amp per
+                    <strong className="text-elec-yellow">mV/A/m</strong> = Millivolts per amp per
                     metre (from Appendix 4 tables)
                   </p>
                   <p>
-                    <strong className="text-yellow-400">
+                    <strong className="text-elec-yellow">
                       I<sub>b</sub>
                     </strong>{' '}
                     = Design current in amps (the actual load current)
                   </p>
                   <p>
-                    <strong className="text-yellow-400">L</strong> = One-way cable length in metres
+                    <strong className="text-elec-yellow">L</strong> = One-way cable length in metres
                     (route length, not straight-line distance)
                   </p>
                 </div>
@@ -211,7 +211,7 @@ export default function VoltageDropGuideBS7671Page() {
             <>
               <div className="space-y-6">
                 <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-4">
+                  <h3 className="font-bold text-elec-yellow text-lg mb-4">
                     Example 1: Domestic Ring Circuit
                   </h3>
                   <div className="space-y-2 text-white text-sm leading-relaxed">
@@ -240,7 +240,7 @@ export default function VoltageDropGuideBS7671Page() {
                     </p>
                     <p className="text-white text-sm mt-2">
                       11.25V is within the 5% limit (11.5V) — but only just.{' '}
-                      <span className="text-yellow-400 font-semibold">Marginal pass.</span>
+                      <span className="text-elec-yellow font-semibold">Marginal pass.</span>
                     </p>
                   </div>
                   <p className="text-white text-sm mt-3 leading-relaxed">
@@ -338,31 +338,31 @@ export default function VoltageDropGuideBS7671Page() {
                 <h3 className="font-bold text-white text-lg mb-4">Key Appendix 4 Tables</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Table 4D5A</strong> — Single-core and
+                      <strong className="text-elec-yellow">Table 4D5A</strong> — Single-core and
                       multicore 70C thermoplastic (PVC) insulated cables. The most commonly used
                       table for domestic T&E cable.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Table 4E4A</strong> — Single-core 90C
+                      <strong className="text-elec-yellow">Table 4E4A</strong> — Single-core 90C
                       thermosetting (XLPE/LSF) insulated cables in conduit or trunking.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Table 4D4A</strong> — Multicore armoured
+                      <strong className="text-elec-yellow">Table 4D4A</strong> — Multicore armoured
                       cables (SWA) with thermoplastic insulation.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Table 4J4A</strong> — Mineral-insulated
+                      <strong className="text-elec-yellow">Table 4J4A</strong> — Mineral-insulated
                       cables (MICC).
                     </span>
                   </li>
@@ -458,7 +458,7 @@ export default function VoltageDropGuideBS7671Page() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Long Cable Runs</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -476,7 +476,7 @@ export default function VoltageDropGuideBS7671Page() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Lightbulb className="w-5 h-5 text-yellow-400" />
+                    <Lightbulb className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Lighting Circuits</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -489,7 +489,7 @@ export default function VoltageDropGuideBS7671Page() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Zap className="w-5 h-5 text-yellow-400" />
+                    <Zap className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">High-Current Loads</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -503,7 +503,7 @@ export default function VoltageDropGuideBS7671Page() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Cable className="w-5 h-5 text-yellow-400" />
+                    <Cable className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Motor Loads</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -534,11 +534,11 @@ export default function VoltageDropGuideBS7671Page() {
                 </p>
                 <div className="space-y-2 text-white text-sm">
                   <p>
-                    <strong className="text-yellow-400">3% lighting limit:</strong> 400V x 0.03 =
+                    <strong className="text-elec-yellow">3% lighting limit:</strong> 400V x 0.03 =
                     12V
                   </p>
                   <p>
-                    <strong className="text-yellow-400">5% other limit:</strong> 400V x 0.05 = 20V
+                    <strong className="text-elec-yellow">5% other limit:</strong> 400V x 0.05 = 20V
                   </p>
                 </div>
               </div>

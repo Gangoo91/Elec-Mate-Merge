@@ -358,7 +358,7 @@ export const useAIDesigner = () => {
         if (invokeError.message?.includes('429')) {
           errorMessage = 'Too many requests. Please wait a moment and try again.';
         } else if (invokeError.message?.includes('402')) {
-          errorMessage = 'Payment required. Please add Lovable AI credits to continue.';
+          errorMessage = 'The AI service is busy right now. Please try again in a few minutes.';
         } else if (invokeError.message?.includes('No tool call')) {
           errorMessage = 'AI did not return a structured design. Please try again.';
         } else if (invokeError.message?.includes('non-2xx')) {

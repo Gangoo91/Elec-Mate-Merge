@@ -185,14 +185,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>60 multiple-choice questions</strong> — each question has four answer
                 options (A, B, C, D). Only one answer is correct.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>2 hours (120 minutes)</strong> — that is 2 minutes per question on average.
                 Some questions take 30 seconds (if you know the regulation number), others take 4 to
@@ -200,14 +200,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pass mark: 60%</strong> — you need at least 36 out of 60 correct. There is
                 no negative marking, so always answer every question.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Open book</strong> — you can take BS 7671 and the IET On-Site Guide into the
                 exam. More on this below.
@@ -280,7 +280,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Lightbulb className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Tab Your Book Before You Study</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -294,7 +294,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Lightbulb className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Do Mock Exams Under Timed Conditions</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -308,7 +308,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Lightbulb className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Learn the Appendix 4 Tables</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -326,7 +326,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Lightbulb className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Understand, Do Not Just Memorise</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -410,7 +410,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>6 to 8 weeks before:</strong> Buy BS 7671 and the On-Site Guide. Start
                 tabbing and familiarising yourself with the layout. Read through Parts 1, 2, and 3
@@ -418,7 +418,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>4 to 6 weeks before:</strong> Work through Parts 4, 5, and 6 in detail.
                 Practise Appendix 4 cable sizing calculations. If attending a classroom course, this
@@ -426,7 +426,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>2 to 4 weeks before:</strong> Start doing mock exams under timed conditions.
                 Review Part 7 (Special Locations). Refine your tabs based on which regulations you
@@ -434,7 +434,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Final week:</strong> Do at least two more timed mock exams. Focus on your
                 weakest areas. Make sure your tabs are secure and your highlighting is clear. Get a
@@ -582,7 +582,7 @@ export default function CityGuilds2382ExamGuidePage() {
       heroTitle={
         <>
           City & Guilds 2382 Exam Guide:{' '}
-          <span className="text-yellow-400">How to Pass the 18th Edition</span>
+          <span className="text-elec-yellow">How to Pass the 18th Edition</span>
         </>
       }
       heroSubtitle="Everything you need to know about the C&G 2382-22 exam — the 18th Edition Wiring Regulations qualification. Exam format, open book rules, proven study tips, common fail areas, and your next steps after passing."
@@ -593,7 +593,7 @@ export default function CityGuilds2382ExamGuidePage() {
       faqHeading="Frequently Asked Questions About the 2382 Exam"
       relatedPages={relatedPages}
       ctaHeading="Prepare for the 2382 with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for exam preparation, cable sizing practice, and career development. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for exam preparation, cable sizing practice, and career development. 7-day free trial, cancel anytime."
     />
   );
 }

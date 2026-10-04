@@ -41,6 +41,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics';
+import { hapticsEnabled } from '@/lib/haptics';
 import { MultimeterDisplay } from './MultimeterDisplay';
 import { CircuitPathDiagram } from './CircuitPathDiagram';
 import {
@@ -212,6 +213,7 @@ export function FaultFindingSimulator({ onSessionComplete }: FaultFindingSimulat
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const triggerHaptic = useCallback(async (style: ImpactStyle = ImpactStyle.Light) => {
+    if (!hapticsEnabled()) return;
     try {
       await Haptics.impact({ style });
     } catch {
@@ -220,6 +222,7 @@ export function FaultFindingSimulator({ onSessionComplete }: FaultFindingSimulat
   }, []);
 
   const triggerNotification = useCallback(async (type: NotificationType) => {
+    if (!hapticsEnabled()) return;
     try {
       await Haptics.notification({ type });
     } catch {

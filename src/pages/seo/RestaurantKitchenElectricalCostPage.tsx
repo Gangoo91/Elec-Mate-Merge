@@ -156,7 +156,7 @@ const sections = [
     heading: 'Restaurant Kitchen Electrical Overview',
     content: (
       <>
-        <p className="text-sm text-white/60 flex items-center gap-1.5 mb-4">
+        <p className="text-sm text-white flex items-center gap-1.5 mb-4">
           <ShieldCheck className="w-4 h-4 text-green-400 shrink-0" />
           Reviewed by a qualified electrician — BS&nbsp;7671:2018+A4:2026 compliant
         </p>
@@ -201,7 +201,7 @@ const sections = [
           <div className="overflow-x-auto -mx-2 px-2">
             <table className="w-full text-sm border-collapse">
               <thead>
-                <tr className="text-left text-white/60">
+                <tr className="text-left text-white">
                   <th className="py-2 pr-3 font-semibold">Equipment</th>
                   <th className="py-2 px-3 font-semibold">Load</th>
                   <th className="py-2 px-3 font-semibold">Supply</th>
@@ -211,33 +211,33 @@ const sections = [
               <tbody className="text-white">
                 <tr className="border-t border-white/10">
                   <td className="py-3 pr-3 font-bold">Combi oven (6 to 20 tray)</td>
-                  <td className="py-3 px-3 text-yellow-400 font-bold whitespace-nowrap">10–30 kW</td>
+                  <td className="py-3 px-3 text-elec-yellow font-bold whitespace-nowrap">10–30 kW</td>
                   <td className="py-3 px-3 whitespace-nowrap">3-phase</td>
-                  <td className="py-3 pl-3 text-white/80">Largest single load; dedicated circuit with adjacent isolator</td>
+                  <td className="py-3 pl-3 text-white">Largest single load; dedicated circuit with adjacent isolator</td>
                 </tr>
                 <tr className="border-t border-white/10">
                   <td className="py-3 pr-3 font-bold">Commercial dishwasher</td>
-                  <td className="py-3 px-3 text-yellow-400 font-bold whitespace-nowrap">8–20 kW</td>
+                  <td className="py-3 px-3 text-elec-yellow font-bold whitespace-nowrap">8–20 kW</td>
                   <td className="py-3 px-3 whitespace-nowrap">3-phase</td>
-                  <td className="py-3 pl-3 text-white/80">Pass-through/conveyor; under-counter types are 3–6 kW single-phase</td>
+                  <td className="py-3 pl-3 text-white">Pass-through/conveyor; under-counter types are 3–6 kW single-phase</td>
                 </tr>
                 <tr className="border-t border-white/10">
                   <td className="py-3 pr-3 font-bold">Walk-in cold room</td>
-                  <td className="py-3 px-3 text-yellow-400 font-bold whitespace-nowrap">2–8 kW</td>
+                  <td className="py-3 px-3 text-elec-yellow font-bold whitespace-nowrap">2–8 kW</td>
                   <td className="py-3 px-3 whitespace-nowrap">1 or 3-phase</td>
-                  <td className="py-3 pl-3 text-white/80">Compressor starting current 3–5× running current; dedicated circuit + isolator</td>
+                  <td className="py-3 pl-3 text-white">Compressor starting current 3–5× running current; dedicated circuit + isolator</td>
                 </tr>
                 <tr className="border-t border-white/10">
                   <td className="py-3 pr-3 font-bold">Extraction fan motor</td>
-                  <td className="py-3 px-3 text-yellow-400 font-bold whitespace-nowrap">1.5–7.5 kW</td>
+                  <td className="py-3 px-3 text-elec-yellow font-bold whitespace-nowrap">1.5–7.5 kW</td>
                   <td className="py-3 px-3 whitespace-nowrap">1 or 3-phase</td>
-                  <td className="py-3 pl-3 text-white/80">Interlocked with the gas supply (see extraction interlock)</td>
+                  <td className="py-3 pl-3 text-white">Interlocked with the gas supply (see extraction interlock)</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-        <div className="rounded-2xl bg-amber-900/30 border border-amber-700/40 p-5 my-4">
+        <div className="rounded-2xl bg-white/[0.06] border border-amber-700/40 p-5 my-4">
           <p className="text-white text-sm leading-relaxed m-0">
             <strong>Load threshold:</strong> a 63 A single-phase supply delivers roughly 14–15 kW.
             Once the diversified connected load of cooking, washing and refrigeration exceeds this,
@@ -348,7 +348,7 @@ const sections = [
           <div className="overflow-x-auto -mx-2 px-2">
             <table className="w-full text-sm border-collapse">
               <thead>
-                <tr className="text-left text-white/60">
+                <tr className="text-left text-white">
                   <th className="py-2 pr-3 font-semibold">Rating</th>
                   <th className="py-2 px-3 font-semibold">Solids (1st digit)</th>
                   <th className="py-2 px-3 font-semibold">Water (2nd digit)</th>
@@ -358,32 +358,32 @@ const sections = [
               <tbody className="text-white">
                 <tr className="border-t border-white/10">
                   <td className="py-3 pr-3 font-bold text-red-300">IP20</td>
-                  <td className="py-3 px-3 text-white/80">Objects &gt;12.5 mm (fingers)</td>
-                  <td className="py-3 px-3 text-white/80">No water protection</td>
-                  <td className="py-3 pl-3 text-white/80">Standard domestic accessories — not suitable for kitchens</td>
+                  <td className="py-3 px-3 text-white">Objects &gt;12.5 mm (fingers)</td>
+                  <td className="py-3 px-3 text-white">No water protection</td>
+                  <td className="py-3 pl-3 text-white">Standard domestic accessories — not suitable for kitchens</td>
                 </tr>
                 <tr className="border-t border-white/10">
                   <td className="py-3 pr-3 font-bold text-blue-300">IP44</td>
-                  <td className="py-3 px-3 text-white/80">Objects &gt;1 mm</td>
-                  <td className="py-3 px-3 text-white/80">Splashing water from any direction</td>
-                  <td className="py-3 pl-3 text-white/80">General cooking, prep and serving areas</td>
+                  <td className="py-3 px-3 text-white">Objects &gt;1 mm</td>
+                  <td className="py-3 px-3 text-white">Splashing water from any direction</td>
+                  <td className="py-3 pl-3 text-white">General cooking, prep and serving areas</td>
                 </tr>
                 <tr className="border-t border-white/10">
                   <td className="py-3 pr-3 font-bold text-blue-300">IP55</td>
-                  <td className="py-3 px-3 text-white/80">Dust-protected</td>
-                  <td className="py-3 px-3 text-white/80">Low-pressure water jets</td>
-                  <td className="py-3 pl-3 text-white/80">Isolators behind ranges; damp plant areas</td>
+                  <td className="py-3 px-3 text-white">Dust-protected</td>
+                  <td className="py-3 px-3 text-white">Low-pressure water jets</td>
+                  <td className="py-3 pl-3 text-white">Isolators behind ranges; damp plant areas</td>
                 </tr>
                 <tr className="border-t border-white/10">
                   <td className="py-3 pr-3 font-bold text-green-300">IP65</td>
-                  <td className="py-3 px-3 text-white/80">Dust-tight</td>
-                  <td className="py-3 px-3 text-white/80">Low-pressure water jets from any direction</td>
-                  <td className="py-3 pl-3 text-white/80">Pot wash, dishwasher stations, wash-down zones</td>
+                  <td className="py-3 px-3 text-white">Dust-tight</td>
+                  <td className="py-3 px-3 text-white">Low-pressure water jets from any direction</td>
+                  <td className="py-3 pl-3 text-white">Pot wash, dishwasher stations, wash-down zones</td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <p className="text-white/60 text-xs mt-4 mb-0">
+          <p className="text-white text-xs mt-4 mb-0">
             IP ratings are defined in BS EN 60529. The first digit is protection against solid
             objects; the second is protection against water.
           </p>
@@ -404,7 +404,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Local isolators</strong> — Every fixed appliance requires a local isolator
                 within 1 metre, clearly labelled. Rotary isolators (IP44 or IP65) cost £25 to £50
@@ -412,7 +412,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency gas shut-off</strong> — Large red mushroom-head button near the
                 main exit. Activates the gas solenoid valve to shut off gas to all appliances. Cost:
@@ -420,7 +420,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency electrical isolation</strong> — Optional but recommended. A
                 separate emergency button that disconnects all kitchen power circuits except
@@ -444,7 +444,7 @@ const sections = [
           <div className="overflow-x-auto -mx-2 px-2">
             <table className="w-full text-sm border-collapse">
               <thead>
-                <tr className="text-left text-white/60">
+                <tr className="text-left text-white">
                   <th className="py-2 pr-3 font-semibold">Kitchen</th>
                   <th className="py-2 px-3 font-semibold">Indicative cost</th>
                   <th className="py-2 px-3 font-semibold">Supply</th>
@@ -455,29 +455,29 @@ const sections = [
               <tbody className="text-white">
                 <tr className="border-t border-white/10">
                   <td className="py-3 pr-3 font-bold">Small cafe</td>
-                  <td className="py-3 px-3 text-yellow-400 font-bold whitespace-nowrap">£5,000–£7,000</td>
+                  <td className="py-3 px-3 text-elec-yellow font-bold whitespace-nowrap">£5,000–£7,000</td>
                   <td className="py-3 px-3 whitespace-nowrap">Single-phase</td>
                   <td className="py-3 px-3 whitespace-nowrap">3–5 days</td>
-                  <td className="py-3 pl-3 text-white/80">4–6 equipment connections, basic extraction interlock, IP44 accessories, emergency lighting, 8–10 sockets</td>
+                  <td className="py-3 pl-3 text-white">4–6 equipment connections, basic extraction interlock, IP44 accessories, emergency lighting, 8–10 sockets</td>
                 </tr>
                 <tr className="border-t border-white/10">
                   <td className="py-3 pr-3 font-bold">Medium restaurant</td>
-                  <td className="py-3 px-3 text-yellow-400 font-bold whitespace-nowrap">£8,000–£12,000</td>
+                  <td className="py-3 px-3 text-elec-yellow font-bold whitespace-nowrap">£8,000–£12,000</td>
                   <td className="py-3 px-3 whitespace-nowrap">3-phase</td>
                   <td className="py-3 px-3 whitespace-nowrap">1–2 weeks</td>
-                  <td className="py-3 pl-3 text-white/80">8–12 connections incl. combi oven + dishwasher, full extraction interlock, IP44/IP65, emergency stop, 15–20 sockets</td>
+                  <td className="py-3 pl-3 text-white">8–12 connections incl. combi oven + dishwasher, full extraction interlock, IP44/IP65, emergency stop, 15–20 sockets</td>
                 </tr>
                 <tr className="border-t border-white/10">
                   <td className="py-3 pr-3 font-bold">Large commercial</td>
-                  <td className="py-3 px-3 text-yellow-400 font-bold whitespace-nowrap">£12,000–£15,000+</td>
+                  <td className="py-3 px-3 text-elec-yellow font-bold whitespace-nowrap">£12,000–£15,000+</td>
                   <td className="py-3 px-3 whitespace-nowrap">3-phase + sub-boards</td>
                   <td className="py-3 px-3 whitespace-nowrap">2–3 weeks</td>
-                  <td className="py-3 pl-3 text-white/80">15+ connections, walk-in cold rooms, multi-zone interlock, full IP65, BMS integration, comprehensive emergency provisions</td>
+                  <td className="py-3 pl-3 text-white">15+ connections, walk-in cold rooms, multi-zone interlock, full IP65, BMS integration, comprehensive emergency provisions</td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <p className="text-white/60 text-xs mt-4 mb-0">
+          <p className="text-white text-xs mt-4 mb-0">
             Indicative 2026 UK market guidance — not a quote. Add £1,500–£5,000 if a DNO 3-phase
             supply upgrade is required.
           </p>
@@ -502,7 +502,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671:2018+A4:2026</strong> — The wiring regulations. RCD protection per
                 Regulation 411.3.3 applies to all socket outlets up to 32A. Equipment connections
@@ -510,7 +510,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Gas Safety (Installation and Use) Regulations 1998</strong> — Requires
                 extraction interlock for gas cooking appliances in commercial kitchens. The gas work
@@ -519,21 +519,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IGEM/UP/19</strong> — Design and application of interlock devices and
                 associated systems for gas supply to commercial catering establishments.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulatory Reform (Fire Safety) Order 2005</strong> — Requires emergency
                 lighting and fire alarm provisions in commercial kitchen premises.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 421.1.7 — Arc Fault Detection Devices (AFDDs)</strong> —
                 Redrafted in BS&nbsp;7671:2018+A4:2026. AFDDs are now a <em>requirement</em> for
@@ -548,7 +548,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 443.4.1 — Surge Protective Devices (SPDs)</strong> — Redrafted in
                 BS&nbsp;7671:2018+A4:2026. Protection against transient overvoltages must be provided
@@ -585,7 +585,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <UtensilsCrossed className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <UtensilsCrossed className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Get the Equipment Schedule Early</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -677,7 +677,7 @@ export default function RestaurantKitchenElectricalCostPage() {
       heroTitle={
         <>
           Restaurant Kitchen Electrical Cost:{' '}
-          <span className="text-yellow-400">UK Commercial Guide 2026</span>
+          <span className="text-elec-yellow">UK Commercial Guide 2026</span>
         </>
       }
       heroSubtitle="What does restaurant kitchen electrical installation cost? This guide covers 3-phase supply, extraction interlock systems, IP ratings, emergency stop provisions, and realistic pricing from £5,000 to £15,000 — for restaurant owners and electrical contractors."
@@ -693,7 +693,7 @@ export default function RestaurantKitchenElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Restaurant Kitchen Electrical Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Restaurant Kitchen Electrical with Equipment Schedules"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for commercial kitchen quoting with equipment schedules, interlock costing, and professional PDF output. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for commercial kitchen quoting with equipment schedules, interlock costing, and professional PDF output. 7-day free trial."
     />
   );
 }

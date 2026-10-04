@@ -166,7 +166,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Health and Safety at Work etc. Act 1974</strong> — places a general duty on
                 all employers and self-employed persons to ensure, so far as is reasonably
@@ -175,7 +175,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Management of Health and Safety at Work Regulations 1999</strong> — requires
                 risk assessments for all work activities. If you employ 5+ people, risk assessments
@@ -183,7 +183,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>
                   Employers&apos; Health and Safety Policy Statements (Exception) Regulations 1975
@@ -194,7 +194,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electricity at Work Regulations 1989</strong> — specific duties for anyone
                 working on or near electrical systems. Requires safe systems of work, competence,
@@ -435,27 +435,27 @@ const sections = [
           <div className="space-y-3 text-white text-sm">
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Sole trader, no employees</span>
-              <strong className="text-yellow-400">Not legally required (but recommended)</strong>
+              <strong className="text-elec-yellow">Not legally required (but recommended)</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>1 to 4 employees</span>
-              <strong className="text-yellow-400">Not legally required (but recommended)</strong>
+              <strong className="text-elec-yellow">Not legally required (but recommended)</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>5+ employees</span>
-              <strong className="text-yellow-400">Legally required</strong>
+              <strong className="text-elec-yellow">Legally required</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Working on commercial sites</span>
-              <strong className="text-yellow-400">Required by clients (contractual)</strong>
+              <strong className="text-elec-yellow">Required by clients (contractual)</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>SSIP accreditation (SafeContractor, CHAS)</span>
-              <strong className="text-yellow-400">Required for assessment</strong>
+              <strong className="text-elec-yellow">Required for assessment</strong>
             </div>
             <div className="flex justify-between pb-2">
               <span>Main contractor approved supplier list</span>
-              <strong className="text-yellow-400">Almost always required</strong>
+              <strong className="text-elec-yellow">Almost always required</strong>
             </div>
           </div>
         </div>
@@ -475,28 +475,28 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Annual review</strong> — read through, update, re-sign and re-date. SSIP
                 schemes check for evidence of annual review.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>After any accident or near miss</strong> — review the relevant procedures
                 and update if the incident reveals a gap.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>When you hire or change staff</strong> — update the organisation section
                 with new names and responsibilities.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>When legislation changes</strong> — check HSE updates and industry
                 bulletins. Your competent person scheme should alert you to relevant changes.
@@ -546,7 +546,7 @@ export default function HealthSafetyPolicyElectricianPage() {
       heroTitle={
         <>
           Health and Safety Policy for Electricians:{' '}
-          <span className="text-yellow-400">Template, Risk Assessments, and RAMS</span>
+          <span className="text-elec-yellow">Template, Risk Assessments, and RAMS</span>
         </>
       }
       heroSubtitle="A practical H&S policy template for electricians. Policy structure, risk assessment process, method statements, RAMS, and when a written policy is legally required (5+ employees)."
@@ -557,7 +557,7 @@ export default function HealthSafetyPolicyElectricianPage() {
       faqHeading="Frequently Asked Questions About Health and Safety Policies"
       relatedPages={relatedPages}
       ctaHeading="Generate RAMS in Minutes, Not Hours"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI-powered RAMS, certificates, and job management. Professional documentation that keeps you safe and wins you work. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for AI-powered RAMS, certificates, and job management. Professional documentation that keeps you safe and wins you work. 7-day free trial, cancel anytime."
     />
   );
 }

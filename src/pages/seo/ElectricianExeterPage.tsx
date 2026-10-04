@@ -188,7 +188,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person scheme registration</strong> — ask for their NICEIC, NAPIT,
                 ELECSA, or other scheme registration number. Search it online on the scheme
@@ -197,7 +197,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ECS card</strong> — the Electrotechnical Certification Scheme card confirms
                 the holder's qualifications and competence level. A gold ECS card indicates a
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Public liability insurance</strong> — ensure your electrician carries at
                 least £2 million public liability cover. For work in listed buildings or on
@@ -215,7 +215,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Recent references and reviews</strong> — ask for contact details of 2 to 3
                 recent Exeter customers, or check verified reviews on platforms like Checkatrade,
@@ -246,7 +246,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full rewire (3-bed Victorian/Edwardian house)</strong> — £4,800 to £7,500
                 including new consumer unit, all circuits, sockets, switches, lighting, testing, and
@@ -256,7 +256,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacement</strong> — £450 to £750 including supply
                 isolation, new 18th Edition compliant unit with RCBOs, testing, and Part P
@@ -264,7 +264,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR (Electrical Installation Condition Report)</strong> — £180 to £300 for
                 a flat, £260 to £400 for a house. Required every 5 years for rented properties.
@@ -273,14 +273,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional socket (from existing circuit)</strong> — £95 to £165 per single
                 socket, depending on cable run length and wall construction.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger installation</strong> — £700 to £1,300 for a 7kW home charger
                 including supply, installation, earthing, and Part P certification. New-build
@@ -289,7 +289,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency call-out</strong> — £120 to £200 for the first hour including
                 travel, plus £45 to £70 per additional hour. Weekend and bank holiday rates are
@@ -379,7 +379,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New connections and supply upgrades</strong> — if you need a new electricity
                 supply or want to upgrade from single-phase to three-phase (increasingly common for
@@ -389,7 +389,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Meter relocations</strong> — moving the electricity meter requires NGED to
                 disconnect and reconnect the supply. Your electrician installs the new meter tails;
@@ -398,7 +398,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98/G99 notification for generation and storage</strong> — if you are
                 installing solar PV, battery storage, or a generator, the electrician must notify
@@ -431,7 +431,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>The Cathedral Close</strong> — Exeter Cathedral and the surrounding Close is
                 one of the most architecturally significant areas in the South West. Properties here
@@ -443,7 +443,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Southernhay and the city centre</strong> — Southernhay's Georgian terraces
                 and the Princesshay area include listed buildings and conservation zone
@@ -453,7 +453,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Topsham conservation area</strong> — the historic port village of Topsham
                 (now part of Exeter) has a conservation area covering the waterfront and High
@@ -482,7 +482,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Leaf className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Leaf className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Air source heat pumps</strong> — demand for air source heat pump
                 installations is growing rapidly in Exeter, driven by the Boiler Upgrade Scheme
@@ -494,7 +494,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Leaf className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Leaf className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Solar PV and battery storage</strong> — the South West has some of the best
                 solar irradiation levels in England, and Exeter rooftops are increasingly fitted
@@ -505,7 +505,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Leaf className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Leaf className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charging</strong> — Exeter's position on the M5 corridor and the city's
                 growing population of electric vehicle owners mean strong demand for domestic EV
@@ -540,7 +540,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Leaf className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Leaf className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Eco-Retrofit Growth</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -572,7 +572,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Exeter electrical business from your phone"
-          description="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs…"
+          description="Join 2,100+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs…"
           icon={MapPin}
         />
       </>
@@ -599,7 +599,7 @@ export default function ElectricianExeterPage() {
       heroTitle={
         <>
           Electrician in Exeter:{' '}
-          <span className="text-yellow-400">Find Qualified Electricians in 2026</span>
+          <span className="text-elec-yellow">Find Qualified Electricians in 2026</span>
         </>
       }
       heroSubtitle="How to find a registered electrician in Exeter, what to expect on pricing, and the specific challenges of electrical work in a historic university city. Covers NGED connections, Part P compliance, heritage property rewiring, cathedral close conservation, eco-retrofit demand, flood risk areas, and student HMO compliance."
@@ -610,7 +610,7 @@ export default function ElectricianExeterPage() {
       faqHeading="Frequently Asked Questions About Electricians in Exeter"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Exeter and send instant PDFs to your customers. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Exeter and send instant PDFs to your customers. 7-day free trial."
     />
   );
 }

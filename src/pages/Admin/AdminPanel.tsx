@@ -22,6 +22,7 @@ const primaryNavItems: NavItem[] = [
   { name: 'Trials', path: '/admin/trials' },
   { name: 'Retention', path: '/admin/retention' },
   { name: 'Revenue', path: '/admin/revenue' },
+  { name: 'Certificate Insights', path: '/admin/certificate-insights' },
   { name: 'Messages', path: '/admin/user-messages' },
   { name: 'Peer Safety', path: '/admin/peer-safety' },
   { name: 'IET Knowledge', path: '/admin/iet-knowledge' },

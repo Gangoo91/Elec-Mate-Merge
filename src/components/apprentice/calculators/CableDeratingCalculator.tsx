@@ -198,10 +198,13 @@ const CableDeratingCalculator = () => {
    * Ca multiplies the tabulated Iz, so an over-stated Ca under-sizes the cable.
    */
   const TABLE_4B1: Record<string, Record<number, number>> = {
-    ts60: { 25: 1.02, 30: 1.0, 35: 0.91, 40: 0.82, 45: 0.71, 50: 0.58, 55: 0.41 },
+    // 25 °C cells checked against the IMAGE of the printed Table 4B1 on
+    // 2026-10-04: 60 °C thermosetting 1.04, 90 °C thermosetting 1.02. They had
+    // been swapped, which over-rated a 90 °C cable at 25 °C by 2%.
+    ts60: { 25: 1.04, 30: 1.0, 35: 0.91, 40: 0.82, 45: 0.71, 50: 0.58, 55: 0.41 },
     tp70: { 25: 1.03, 30: 1.0, 35: 0.94, 40: 0.87, 45: 0.79, 50: 0.71, 55: 0.61, 60: 0.5 },
     ts90: {
-      25: 1.04,
+      25: 1.02,
       30: 1.0,
       35: 0.96,
       40: 0.91,

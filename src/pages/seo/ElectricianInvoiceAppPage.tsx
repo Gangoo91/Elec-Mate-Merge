@@ -150,15 +150,15 @@ export default function ElectricianInvoiceAppPage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
-        <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-elec-yellow text-sm font-medium mb-6">
             <Zap className="w-4 h-4" />
             Part of the Complete Elec-Mate Platform
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             Electrician Invoice App
-            <span className="block text-yellow-400 mt-1">
+            <span className="block text-elec-yellow mt-1">
               Digital Invoicing and Payments for UK Electricians
             </span>
           </h1>
@@ -167,7 +167,7 @@ export default function ElectricianInvoiceAppPage() {
             everything to your accounts. Stop chasing payments manually — let Elec-Mate do it for
             you.
           </p>
-          <p className="text-base text-white/80 max-w-2xl mx-auto mb-8 leading-relaxed">
+          <p className="text-base text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             Elec-Mate&apos;s electrician invoice app is part of the complete platform for UK
             electricians — from £19.99/month with a 7-day free trial. Available on web, iOS, and
             Android, it combines digital invoicing with Stripe card payments, Xero and QuickBooks
@@ -183,7 +183,7 @@ export default function ElectricianInvoiceAppPage() {
             </Link>
             <a
               href="#why-digital"
-              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-yellow-500/40 touch-manipulation transition-colors"
+              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-white/[0.1] touch-manipulation transition-colors"
             >
               Why Go Digital
               <ArrowDown className="w-4 h-4 ml-1" />
@@ -207,7 +207,7 @@ export default function ElectricianInvoiceAppPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <FileText className="w-5 h-5 text-yellow-400" />
+              <FileText className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Why Digital Invoicing Matters for Electricians
@@ -231,7 +231,7 @@ export default function ElectricianInvoiceAppPage() {
               your details, and set up a payment).
             </p>
             <p>
-              <strong className="text-yellow-400">
+              <strong className="text-elec-yellow">
                 Digital invoicing fixes every part of this chain.
               </strong>{' '}
               The invoice is created in seconds (not hours), delivered instantly (not days),
@@ -256,7 +256,7 @@ export default function ElectricianInvoiceAppPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <CreditCard className="w-5 h-5 text-yellow-400" />
+              <CreditCard className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Stripe Payment Integration
@@ -270,7 +270,7 @@ export default function ElectricianInvoiceAppPage() {
               payment experience.
             </p>
             <p>
-              <strong className="text-yellow-400">How it works:</strong> When you create an invoice
+              <strong className="text-elec-yellow">How it works:</strong> When you create an invoice
               in Elec-Mate, a unique Stripe payment link is generated automatically. The client
               receives the invoice by email, with a prominent "Pay Now" button. Clicking the button
               takes them to a Stripe-hosted checkout page — fully PCI-DSS compliant and secured with
@@ -285,7 +285,7 @@ export default function ElectricianInvoiceAppPage() {
               cost for getting paid immediately instead of waiting 14 to 30 days.
             </p>
             <p>
-              <strong className="text-yellow-400">The payment is automatically reconciled</strong>{' '}
+              <strong className="text-elec-yellow">The payment is automatically reconciled</strong>{' '}
               in Elec-Mate — the invoice status changes from "Sent" to "Paid", and the payment
               record is synced to your Xero or QuickBooks account. No manual reconciliation, no
               checking bank statements, no matching payments to invoices. It just works.
@@ -305,7 +305,7 @@ export default function ElectricianInvoiceAppPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <BookOpen className="w-5 h-5 text-yellow-400" />
+              <BookOpen className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">Xero and QuickBooks Sync</h2>
           </div>
@@ -317,28 +317,28 @@ export default function ElectricianInvoiceAppPage() {
               accounting software — everything syncs automatically.
             </p>
             <p>
-              <strong className="text-yellow-400">Invoices:</strong> When you create and send an
+              <strong className="text-elec-yellow">Invoices:</strong> When you create and send an
               invoice in Elec-Mate, it appears in your Xero or QuickBooks account as a new sales
               invoice. The client name, address, line items, amounts, VAT, and payment terms are all
               transferred correctly. When the invoice is paid, the payment is recorded and
               reconciled against the invoice in your accounting software.
             </p>
             <p>
-              <strong className="text-yellow-400">Expenses:</strong> Material purchases, tool costs,
+              <strong className="text-elec-yellow">Expenses:</strong> Material purchases, tool costs,
               sub-contractor payments, and other expenses recorded in Elec-Mate are synced to your
               accounting software as purchase transactions. They are categorised correctly (cost of
               sales, overheads, etc.) and linked to the relevant job, giving you accurate
               profit-and-loss figures by job and by period.
             </p>
             <p>
-              <strong className="text-yellow-400">VAT:</strong> All VAT calculations are synced,
+              <strong className="text-elec-yellow">VAT:</strong> All VAT calculations are synced,
               whether you are on the standard VAT scheme, the flat-rate scheme, or the cash
               accounting scheme. Your quarterly VAT return can be prepared directly from your
               accounting software, with no manual adjustments needed for invoices created in
               Elec-Mate.
             </p>
             <p>
-              <strong className="text-yellow-400">Bank reconciliation:</strong> Stripe payments
+              <strong className="text-elec-yellow">Bank reconciliation:</strong> Stripe payments
               appear in your Xero or QuickBooks bank feed and are automatically matched to the
               corresponding invoice. Bank transfer payments are also matched if the bank feed
               detects them. The result is a set of accounts that is always up to date, always
@@ -353,7 +353,7 @@ export default function ElectricianInvoiceAppPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Shield className="w-5 h-5 text-yellow-400" />
+              <Shield className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               VAT Handling and CIS Compliance
@@ -361,7 +361,7 @@ export default function ElectricianInvoiceAppPage() {
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              <strong className="text-yellow-400">VAT:</strong> If you are VAT-registered (mandatory
+              <strong className="text-elec-yellow">VAT:</strong> If you are VAT-registered (mandatory
               once your turnover exceeds £90,000, voluntary below that), every invoice you issue
               must show the net amount, the VAT amount, and the gross total. Your VAT registration
               number must also be displayed. Elec-Mate handles all of this automatically — you set
@@ -377,7 +377,7 @@ export default function ElectricianInvoiceAppPage() {
               rates can change.
             </p>
             <p>
-              <strong className="text-yellow-400">CIS:</strong> The Construction Industry Scheme
+              <strong className="text-elec-yellow">CIS:</strong> The Construction Industry Scheme
               applies to electricians who work as subcontractors under a main contractor. The main
               contractor is required to deduct CIS tax from the subcontractor's invoice and pay it
               to HMRC. Elec-Mate produces CIS-compliant invoices that show the gross payment, the
@@ -400,7 +400,7 @@ export default function ElectricianInvoiceAppPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Clock className="w-5 h-5 text-yellow-400" />
+              <Clock className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Chasing Overdue Payments and Cash Flow Management
@@ -414,7 +414,7 @@ export default function ElectricianInvoiceAppPage() {
               phone call about an unpaid invoice again.
             </p>
             <p>
-              <strong className="text-yellow-400">Automatic reminders:</strong> You set your
+              <strong className="text-elec-yellow">Automatic reminders:</strong> You set your
               reminder schedule once — for example, a polite reminder on the due date, a follow-up 7
               days later, and a firmer reminder at 14 days. Elec-Mate sends the emails automatically
               on your behalf, branded with your company details, including a direct link to pay the
@@ -422,14 +422,14 @@ export default function ElectricianInvoiceAppPage() {
               tone and style.
             </p>
             <p>
-              <strong className="text-yellow-400">Overdue dashboard:</strong> The invoice dashboard
+              <strong className="text-elec-yellow">Overdue dashboard:</strong> The invoice dashboard
               shows all outstanding invoices sorted by age — current, 1 to 7 days overdue, 8 to 14
               days overdue, 15 to 30 days overdue, and 30+ days overdue. The total amount owed is
               displayed prominently, along with the average days to payment. This gives you a clear
               picture of your cash flow position at any moment.
             </p>
             <p>
-              <strong className="text-yellow-400">Cash flow forecasting:</strong> Based on your
+              <strong className="text-elec-yellow">Cash flow forecasting:</strong> Based on your
               outstanding invoices, upcoming jobs, and historical payment patterns, Elec-Mate can
               project your cash flow for the next 30, 60, and 90 days. This helps you plan major
               purchases (new van, new tools, stock), manage VAT and tax payments, and decide whether
@@ -451,7 +451,7 @@ export default function ElectricianInvoiceAppPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <TrendingUp className="w-5 h-5 text-yellow-400" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Expense Tracking and Job Profitability
@@ -495,7 +495,7 @@ export default function ElectricianInvoiceAppPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               What You Get with Elec-Mate
@@ -590,7 +590,7 @@ export default function ElectricianInvoiceAppPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <HelpCircle className="w-5 h-5 text-yellow-400" />
+              <HelpCircle className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Frequently Asked Questions
@@ -604,7 +604,7 @@ export default function ElectricianInvoiceAppPage() {
               >
                 <summary className="flex items-center justify-between p-4 min-h-[44px] touch-manipulation cursor-pointer text-white font-medium">
                   <span>{faq.question}</span>
-                  <ChevronDown className="w-5 h-5 text-yellow-400 group-open:rotate-180 transition-transform" />
+                  <ChevronDown className="w-5 h-5 text-elec-yellow group-open:rotate-180 transition-transform" />
                 </summary>
                 <div className="px-4 pb-4 text-white text-sm leading-relaxed">{faq.answer}</div>
               </details>

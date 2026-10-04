@@ -146,7 +146,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCBs</strong> — miniature circuit breakers protect each individual circuit.
                 They trip automatically and reset without needing a fuse wire replacement. Each
@@ -154,7 +154,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCDs</strong> — residual current devices detect earth fault current and
                 disconnect within milliseconds. Under Regulation 411.3.3 of{' '}
@@ -165,7 +165,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCBOs</strong> — a combined RCD and MCB in one device, giving each circuit
                 independent overcurrent and earth fault protection. An RCBO consumer unit is the
@@ -192,7 +192,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rewireable fuse boards</strong> — common in Hull terraced properties built
                 before the 1970s. These provide no RCD protection and are a known fire and electric
@@ -201,7 +201,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Early MCB boards without RCDs</strong> — 1980s and early 1990s MCB boards
                 frequently have no RCD protection on socket circuits, which is a C2 EICR observation
@@ -209,7 +209,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Student rental market</strong> — Hull has two universities and a large
                 student rental sector. HMO landlords are required to have a valid EICR as a
@@ -241,28 +241,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rewireable fuses</strong> — ceramic fuse carriers with wire fuses. No RCD
                 protection. Associated with wiring that is typically 30+ years old.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No RCD protection on socket circuits</strong> — if socket-outlet circuits
                 lack 30 mA RCD protection, this is a C2 observation under Regulation 411.3.3.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Plastic enclosure</strong> — non-compliant for any replacement since January
                 2016 under Regulation 421.1.201 of BS 7671.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Frequent tripping, buzzing, or burning smell</strong> — signs of
                 deteriorated components requiring urgent inspection.
@@ -323,21 +323,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1–2 bedroom terraced house or flat</strong> — £400 to £520. Common across
                 Hull's inner city HU1–HU5 postcodes. 8 to 12 circuits. Usually half a day.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3–4 bedroom semi or detached</strong> — £500 to £700. Most common in Hull's
                 outer suburbs. 12 to 18 circuits. Typically 4 to 8 hours on site.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HMO or larger property</strong> — £700 to £950+. Multiple circuits, fire
                 alarm system testing, and potentially multiple RCD sections. HMO landlords may need
@@ -345,7 +345,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What is included</strong> — metal consumer unit (specified make/model), all
                 labour, circuit reconnection, main bonding verification, full testing per BS 7671
@@ -420,7 +420,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Issue EICs On Site in Hull</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -453,7 +453,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Hull electrical business with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and professional certificate management."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and professional certificate management."
           icon={FileCheck2}
         />
       </>
@@ -479,7 +479,7 @@ export default function ConsumerUnitReplacementHullPage() {
       heroTitle={
         <>
           Consumer Unit Replacement Hull:{' '}
-          <span className="text-yellow-400">Fuse Box Upgrade Costs &amp; Regulations 2026</span>
+          <span className="text-elec-yellow">Fuse Box Upgrade Costs &amp; Regulations 2026</span>
         </>
       }
       heroSubtitle="Everything Hull homeowners and landlords need to know about consumer unit replacement — 2026 costs from £400 to £750, the mandatory metal enclosure rule, Part P Building Regulations, and older wiring in Hull's pre-war terraced housing stock."
@@ -490,7 +490,7 @@ export default function ConsumerUnitReplacementHullPage() {
       faqHeading="Frequently Asked Questions — Consumer Unit Replacement Hull"
       relatedPages={relatedPages}
       ctaHeading="Complete Consumer Unit Certificates On Site in Hull"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

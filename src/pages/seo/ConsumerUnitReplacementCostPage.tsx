@@ -205,7 +205,7 @@ const sections = [
           <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
             <table className="w-full text-left text-sm border-collapse">
               <thead>
-                <tr className="border-b border-white/15 text-white/60">
+                <tr className="border-b border-white/15 text-white">
                   <th className="py-2 pr-3 font-medium">Board</th>
                   <th className="py-2 pr-3 font-medium whitespace-nowrap">Trade price</th>
                   <th className="py-2 font-medium">Typical use</th>
@@ -214,28 +214,28 @@ const sections = [
               <tbody className="text-white">
                 <tr className="border-b border-white/10">
                   <td className="py-3 pr-3 font-semibold">6-way metal unit</td>
-                  <td className="py-3 pr-3 text-yellow-400 font-semibold whitespace-nowrap">£90–£120</td>
-                  <td className="py-3 text-white/80">Small flats or properties with few circuits.</td>
+                  <td className="py-3 pr-3 text-elec-yellow font-semibold whitespace-nowrap">£90–£120</td>
+                  <td className="py-3 text-white">Small flats or properties with few circuits.</td>
                 </tr>
                 <tr className="border-b border-white/10">
                   <td className="py-3 pr-3 font-semibold">10–12-way metal unit</td>
-                  <td className="py-3 pr-3 text-yellow-400 font-semibold whitespace-nowrap">£93–£130</td>
-                  <td className="py-3 text-white/80">Most common size for average homes with 8–10 circuits.</td>
+                  <td className="py-3 pr-3 text-elec-yellow font-semibold whitespace-nowrap">£93–£130</td>
+                  <td className="py-3 text-white">Most common size for average homes with 8–10 circuits.</td>
                 </tr>
                 <tr className="border-b border-white/10">
                   <td className="py-3 pr-3 font-semibold">14-way high-integrity with SPD</td>
-                  <td className="py-3 pr-3 text-yellow-400 font-semibold whitespace-nowrap">£630–£940</td>
-                  <td className="py-3 text-white/80">Pre-populated with protective devices; larger properties.</td>
+                  <td className="py-3 pr-3 text-elec-yellow font-semibold whitespace-nowrap">£630–£940</td>
+                  <td className="py-3 text-white">Pre-populated with protective devices; larger properties.</td>
                 </tr>
                 <tr>
                   <td className="py-3 pr-3 font-semibold">12-way, Type A RCBOs + SPD</td>
-                  <td className="py-3 pr-3 text-yellow-400 font-semibold whitespace-nowrap">£690–£935</td>
-                  <td className="py-3 text-white/80">Full individual circuit protection, premium fit-out.</td>
+                  <td className="py-3 pr-3 text-elec-yellow font-semibold whitespace-nowrap">£690–£935</td>
+                  <td className="py-3 text-white">Full individual circuit protection, premium fit-out.</td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <p className="text-white/50 text-xs mt-3">
+          <p className="text-white text-xs mt-3">
             Indicative wholesaler prices (Crabtree, Wylex, BG Electrical, Eaton, Dorman Smith) — for
             guidance only, not a quote. Prices vary by supplier, account and date.
           </p>
@@ -245,7 +245,7 @@ const sections = [
           <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
             <table className="w-full text-left text-sm border-collapse">
               <thead>
-                <tr className="border-b border-white/15 text-white/60">
+                <tr className="border-b border-white/15 text-white">
                   <th className="py-2 pr-3 font-medium">Component</th>
                   <th className="py-2 pr-3 font-medium whitespace-nowrap">Trade price</th>
                   <th className="py-2 font-medium">Notes</th>
@@ -254,28 +254,28 @@ const sections = [
               <tbody className="text-white">
                 <tr className="border-b border-white/10">
                   <td className="py-3 pr-3 font-semibold">MCB</td>
-                  <td className="py-3 pr-3 text-yellow-400 font-semibold whitespace-nowrap">£10–£15 ea</td>
-                  <td className="py-3 text-white/80">One per circuit on an unpopulated board.</td>
+                  <td className="py-3 pr-3 text-elec-yellow font-semibold whitespace-nowrap">£10–£15 ea</td>
+                  <td className="py-3 text-white">One per circuit on an unpopulated board.</td>
                 </tr>
                 <tr className="border-b border-white/10">
                   <td className="py-3 pr-3 font-semibold">RCBO (Type A)</td>
-                  <td className="py-3 pr-3 text-yellow-400 font-semibold whitespace-nowrap">£35–£55 ea</td>
-                  <td className="py-3 text-white/80">Detects AC and pulsating DC residual currents.</td>
+                  <td className="py-3 pr-3 text-elec-yellow font-semibold whitespace-nowrap">£35–£55 ea</td>
+                  <td className="py-3 text-white">Detects AC and pulsating DC residual currents.</td>
                 </tr>
                 <tr className="border-b border-white/10">
                   <td className="py-3 pr-3 font-semibold">SPD</td>
-                  <td className="py-3 pr-3 text-yellow-400 font-semibold whitespace-nowrap">£80–£150</td>
-                  <td className="py-3 text-white/80">Including the dedicated MCB for the SPD circuit.</td>
+                  <td className="py-3 pr-3 text-elec-yellow font-semibold whitespace-nowrap">£80–£150</td>
+                  <td className="py-3 text-white">Including the dedicated MCB for the SPD circuit.</td>
                 </tr>
                 <tr className="border-b border-white/10">
                   <td className="py-3 pr-3 font-semibold">AFDD (BS EN 62606)</td>
-                  <td className="py-3 pr-3 text-yellow-400 font-semibold whitespace-nowrap">£40–£70 ea</td>
-                  <td className="py-3 text-white/80">Required on socket circuits ≤32 A in HRRBs, HMOs, student accommodation and care homes; recommended elsewhere.</td>
+                  <td className="py-3 pr-3 text-elec-yellow font-semibold whitespace-nowrap">£40–£70 ea</td>
+                  <td className="py-3 text-white">Required on socket circuits ≤32 A in HRRBs, HMOs, student accommodation and care homes; recommended elsewhere.</td>
                 </tr>
                 <tr>
                   <td className="py-3 pr-3 font-semibold">Sundries</td>
-                  <td className="py-3 pr-3 text-yellow-400 font-semibold whitespace-nowrap">£20–£50</td>
-                  <td className="py-3 text-white/80">Cable tails, earth/neutral bars, labels, glands, fixings.</td>
+                  <td className="py-3 pr-3 text-elec-yellow font-semibold whitespace-nowrap">£20–£50</td>
+                  <td className="py-3 text-white">Cable tails, earth/neutral bars, labels, glands, fixings.</td>
                 </tr>
               </tbody>
             </table>
@@ -304,7 +304,7 @@ const sections = [
           <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
             <table className="w-full text-left text-sm border-collapse">
               <thead>
-                <tr className="border-b border-white/15 text-white/60">
+                <tr className="border-b border-white/15 text-white">
                   <th className="py-2 pr-3 font-medium">Device</th>
                   <th className="py-2 pr-3 font-medium">Protects against</th>
                   <th className="py-2 font-medium">On a fault…</th>
@@ -313,18 +313,18 @@ const sections = [
               <tbody className="text-white">
                 <tr className="border-b border-white/10">
                   <td className="py-3 pr-3 font-semibold">MCB</td>
-                  <td className="py-3 pr-3 text-white/80">Overload and short circuit (overcurrent) only</td>
-                  <td className="py-3 text-white/80">Trips that circuit on overcurrent; no earth-leakage protection.</td>
+                  <td className="py-3 pr-3 text-white">Overload and short circuit (overcurrent) only</td>
+                  <td className="py-3 text-white">Trips that circuit on overcurrent; no earth-leakage protection.</td>
                 </tr>
                 <tr className="border-b border-white/10">
                   <td className="py-3 pr-3 font-semibold">RCD</td>
-                  <td className="py-3 pr-3 text-white/80">Earth leakage (residual current) only</td>
-                  <td className="py-3 text-white/80">Trips and disconnects every circuit on its bank — often half the house.</td>
+                  <td className="py-3 pr-3 text-white">Earth leakage (residual current) only</td>
+                  <td className="py-3 text-white">Trips and disconnects every circuit on its bank — often half the house.</td>
                 </tr>
                 <tr className="bg-green-900/20">
                   <td className="py-3 pr-3 font-semibold">RCBO</td>
-                  <td className="py-3 pr-3 text-white/80">Both overcurrent <em>and</em> earth leakage, per circuit</td>
-                  <td className="py-3 text-white/80">Trips only the faulty circuit; the rest of the installation stays live.</td>
+                  <td className="py-3 pr-3 text-white">Both overcurrent <em>and</em> earth leakage, per circuit</td>
+                  <td className="py-3 text-white">Trips only the faulty circuit; the rest of the installation stays live.</td>
                 </tr>
               </tbody>
             </table>
@@ -408,7 +408,7 @@ const sections = [
           <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
             <table className="w-full text-left text-sm border-collapse">
               <thead>
-                <tr className="border-b border-white/15 text-white/60">
+                <tr className="border-b border-white/15 text-white">
                   <th className="py-2 pr-3 font-medium">Job type</th>
                   <th className="py-2 pr-3 font-medium whitespace-nowrap">Materials</th>
                   <th className="py-2 pr-3 font-medium whitespace-nowrap">Labour</th>
@@ -419,39 +419,39 @@ const sections = [
               <tbody className="text-white">
                 <tr className="border-b border-white/10">
                   <td className="py-3 pr-3 font-semibold">Basic 6-way, split-load RCDs</td>
-                  <td className="py-3 pr-3 text-white/80 whitespace-nowrap">£150–£250</td>
-                  <td className="py-3 pr-3 text-white/80 whitespace-nowrap">£250–£350</td>
-                  <td className="py-3 pr-3 text-white/80 whitespace-nowrap">£50–£80</td>
-                  <td className="py-3 text-yellow-400 font-semibold whitespace-nowrap">£450–£650</td>
+                  <td className="py-3 pr-3 text-white whitespace-nowrap">£150–£250</td>
+                  <td className="py-3 pr-3 text-white whitespace-nowrap">£250–£350</td>
+                  <td className="py-3 pr-3 text-white whitespace-nowrap">£50–£80</td>
+                  <td className="py-3 text-elec-yellow font-semibold whitespace-nowrap">£450–£650</td>
                 </tr>
                 <tr className="border-b border-white/10 bg-blue-900/30">
                   <td className="py-3 pr-3 font-semibold">
                     Standard 10-way, RCBOs + SPD
                     <span className="block text-xs text-blue-300 font-normal">Most common</span>
                   </td>
-                  <td className="py-3 pr-3 text-white/80 whitespace-nowrap">£350–£550</td>
-                  <td className="py-3 pr-3 text-white/80 whitespace-nowrap">£300–£500</td>
-                  <td className="py-3 pr-3 text-white/80 whitespace-nowrap">£50–£80</td>
-                  <td className="py-3 text-yellow-400 font-semibold whitespace-nowrap">£750–£1,200</td>
+                  <td className="py-3 pr-3 text-white whitespace-nowrap">£350–£550</td>
+                  <td className="py-3 pr-3 text-white whitespace-nowrap">£300–£500</td>
+                  <td className="py-3 pr-3 text-white whitespace-nowrap">£50–£80</td>
+                  <td className="py-3 text-elec-yellow font-semibold whitespace-nowrap">£750–£1,200</td>
                 </tr>
                 <tr className="border-b border-white/10">
                   <td className="py-3 pr-3 font-semibold">14–16-way high-integrity + SPD</td>
-                  <td className="py-3 pr-3 text-white/80 whitespace-nowrap">£650–£950</td>
-                  <td className="py-3 pr-3 text-white/80 whitespace-nowrap">£400–£650</td>
-                  <td className="py-3 pr-3 text-white/80 whitespace-nowrap">£50–£80</td>
-                  <td className="py-3 text-yellow-400 font-semibold whitespace-nowrap">£1,200–£1,800</td>
+                  <td className="py-3 pr-3 text-white whitespace-nowrap">£650–£950</td>
+                  <td className="py-3 pr-3 text-white whitespace-nowrap">£400–£650</td>
+                  <td className="py-3 pr-3 text-white whitespace-nowrap">£50–£80</td>
+                  <td className="py-3 text-elec-yellow font-semibold whitespace-nowrap">£1,200–£1,800</td>
                 </tr>
                 <tr>
                   <td className="py-3 pr-3 font-semibold">Three-phase consumer unit</td>
-                  <td className="py-3 pr-3 text-white/80 whitespace-nowrap">£800–£1,200</td>
-                  <td className="py-3 pr-3 text-white/80 whitespace-nowrap">£600–£900</td>
-                  <td className="py-3 pr-3 text-white/80 whitespace-nowrap">£50–£80</td>
-                  <td className="py-3 text-yellow-400 font-semibold whitespace-nowrap">£1,800–£2,500+</td>
+                  <td className="py-3 pr-3 text-white whitespace-nowrap">£800–£1,200</td>
+                  <td className="py-3 pr-3 text-white whitespace-nowrap">£600–£900</td>
+                  <td className="py-3 pr-3 text-white whitespace-nowrap">£50–£80</td>
+                  <td className="py-3 text-elec-yellow font-semibold whitespace-nowrap">£1,800–£2,500+</td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <p className="text-white/50 text-xs mt-3">
+          <p className="text-white text-xs mt-3">
             Indicative 2026 market guidance for England and Wales — not a quote. Standard 10-way
             suits homes with 8–10 circuits; large boards suit 12+ circuits with EV charger or solar
             PV; three-phase is for properties on a three-phase supply.
@@ -482,7 +482,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Number of circuits</strong> — more circuits mean a larger board, more
                 protective devices, and more testing time. A 6-circuit flat costs significantly less
@@ -490,7 +490,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type of protective devices</strong> — an all-RCBO board costs £150 to £300
                 more in materials than a split-load RCD arrangement, but provides superior fault
@@ -498,7 +498,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Condition of existing wiring</strong> — if the existing circuit cables are
                 too short to reach the new board, extensions or junction boxes may be needed. Cables
@@ -507,7 +507,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing and bonding</strong> — if the main earth conductor, bonding
                 conductors, or the earthing arrangement itself need upgrading, this is additional
@@ -516,7 +516,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Meter tail replacement</strong> — if the existing meter tails are
                 undersized, damaged, or use old ferrules, they should be replaced. Meter tails are
@@ -526,7 +526,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Location</strong> — London and South East prices are 15% to 30% higher than
                 the national average due to higher overheads and operating costs.
@@ -584,7 +584,7 @@ const sections = [
             <Link
               key={city.slug}
               to={`/guides/consumer-unit-replacement-cost-${city.slug}`}
-              className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5 text-sm text-white hover:border-white/[0.14] hover:text-yellow-300 transition-colors touch-manipulation"
+              className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5 text-sm text-white hover:border-white/[0.14] hover:text-elec-yellow transition-colors touch-manipulation"
             >
               CU replacement in {city.name}
             </Link>
@@ -719,7 +719,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person scheme registration</strong> — verify they are registered
                 with NICEIC, NAPIT, ELECSA, or equivalent. This is essential for Part P
@@ -727,7 +727,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Itemised quote</strong> — the quote should break down the cost into
                 materials (board, protective devices, SPD, sundries), labour, testing, Part P
@@ -736,7 +736,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EIC confirmation</strong> — confirm that the quote includes an Electrical
                 Installation Certificate and Part P notification. Some cheaper quotes exclude these
@@ -744,7 +744,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Public liability insurance</strong> — a minimum of £2 million public
                 liability insurance is standard for domestic electrical contractors.
@@ -773,7 +773,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI Cost Engineer</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -818,7 +818,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify CU replacements faster"
-          description="Join 1,600+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site EIC certification. Everything you need for consumer unit replacements."
+          description="Join 2,100+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site EIC certification. Everything you need for consumer unit replacements."
           icon={Wrench}
         />
       </>
@@ -851,7 +851,7 @@ export default function ConsumerUnitReplacementCostPage() {
       heroTitle={
         <>
           Consumer Unit Replacement Cost:{' '}
-          <span className="text-yellow-400">UK Price Guide 2026</span>
+          <span className="text-elec-yellow">UK Price Guide 2026</span>
         </>
       }
       heroSubtitle="How much does a consumer unit replacement really cost? This guide breaks down material costs from UK wholesalers, labour rates, Part P notification fees, and everything that affects the final price — whether you are a homeowner getting quotes or an electrician pricing the job."
@@ -862,7 +862,7 @@ export default function ConsumerUnitReplacementCostPage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Replacement Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Consumer Unit Replacements with Real Trade Pricing"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
     />
   );
 }

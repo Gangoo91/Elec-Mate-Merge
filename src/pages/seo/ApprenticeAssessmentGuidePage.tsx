@@ -144,7 +144,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BarChart3 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart3 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>On-programme assessment</strong> — continuous assessment throughout your
                 apprenticeship, managed by your training provider. This includes skills
@@ -152,7 +152,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Gateway</strong> — the checkpoint where you, your employer, and your
                 training provider agree you are ready for the final assessment. You must have
@@ -160,7 +160,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>End Point Assessment (EPA)</strong> — the final, independent assessment
                 carried out by an approved EPAO. This includes a synoptic project (practical
@@ -223,7 +223,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Progress reviews</strong> — regular meetings (usually every 8 to 12 weeks)
                 with your training provider and employer to review your progress, set targets, and
@@ -264,35 +264,35 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Level 3 Electrotechnical qualification</strong> — C&G 5357 or equivalent,
                 demonstrating the technical knowledge required by the standard.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>18th Edition qualification</strong> — C&G 2382 (IET Wiring Regulations, BS
                 7671:2018+A2:2022). This is a mandatory gateway requirement.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inspection and testing qualification</strong> — C&G 2391 or equivalent. You
                 must be able to inspect and test electrical installations to BS 7671 standards.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Functional skills</strong> — Level 2 in English and maths, unless you
                 already hold GCSEs at grade 4 (C) or above.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FolderOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FolderOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Completed portfolio</strong> — your portfolio must contain sufficient
                 evidence mapped to the knowledge, skills, and behaviours in the apprenticeship
@@ -300,7 +300,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Employer confirmation</strong> — your employer must sign off that you are
                 occupationally competent and ready for the EPA.
@@ -419,7 +419,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MessageSquare className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MessageSquare className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reflective practice</strong> — what you have learned from specific
                 experiences, what you would do differently, and how you plan to develop further
@@ -514,7 +514,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Brain className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">46+ Structured Courses</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -572,7 +572,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Brain className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI Tutor</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -607,7 +607,7 @@ export default function ApprenticeAssessmentGuidePage() {
       heroTitle={
         <>
           Apprentice Assessment Guide:{' '}
-          <span className="text-yellow-400">What to Expect at Every Stage</span>
+          <span className="text-elec-yellow">What to Expect at Every Stage</span>
         </>
       }
       heroSubtitle="Your electrical apprenticeship assessment has three stages: on-programme assessment, gateway, and End Point Assessment. This guide explains what happens at each stage, what you need to prepare, how grading works, and how Elec-Mate helps you achieve the best possible result."

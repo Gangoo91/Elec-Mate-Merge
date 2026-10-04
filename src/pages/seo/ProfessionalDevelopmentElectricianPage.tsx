@@ -181,7 +181,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC</strong> — requires a minimum of 35 hours of CPD per year for the
                 Qualified Supervisor. CPD records are reviewed at periodic assessments (typically
@@ -189,7 +189,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NAPIT</strong> — requires documented CPD as part of the membership renewal
                 process. Members must demonstrate ongoing learning relevant to their registered
@@ -197,14 +197,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ELECSA</strong> — requires CPD as a condition of registration. CPD
                 activities must be logged and evidence retained for assessment.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IET</strong> — recommends a minimum of 30 hours of CPD per year for members.
                 IET membership grades (MIET, FIET) require demonstrated commitment to professional
@@ -246,7 +246,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3 flex items-center gap-2">
-              <Lightbulb className="w-5 h-5 text-yellow-400" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow" />
               Solar PV and Battery Storage
             </h3>
             <p className="text-white text-sm leading-relaxed">
@@ -299,7 +299,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Calendar className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calendar className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ELEX Show</strong> — the leading trade show for electrical installers in the
                 UK. Free to attend, with live demonstrations, manufacturer stands, and CPD seminars.
@@ -307,7 +307,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calendar className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calendar className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IET Local Branch Meetings</strong> — regular evening meetings at IET
                 branches across the UK. Free for IET members. Topics range from regulation updates
@@ -316,7 +316,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calendar className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calendar className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Manufacturer Training Days</strong> — companies like Hager, Schneider
                 Electric, and Eaton regularly run free or low-cost training days at their centres.
@@ -325,7 +325,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calendar className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calendar className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Solar and Storage Live</strong> — the UK's leading renewable energy
                 exhibition. Essential if you are upskilling into solar PV, battery storage, or EV
@@ -355,7 +355,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IET (Institution of Engineering and Technology)</strong> — the professional
                 body that publishes BS 7671 and the associated guidance notes. Membership provides
@@ -364,7 +364,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ECA (Electrical Contractors' Association)</strong> — the trade association
                 for electrical contractors. Provides business support, legal advice, technical
@@ -373,7 +373,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SELECT (Scotland)</strong> — the trade association for the electrical
                 industry in Scotland. Equivalent to the ECA for Scotland, providing similar services
@@ -381,7 +381,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>JIB (Joint Industry Board)</strong> — administers the grading and employment
                 standards for the electrical contracting industry. Holds your ECS (Electrotechnical
@@ -474,7 +474,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Budget for CPD annually.</strong> Set aside a fixed amount each year for
                 training costs and lost earnings. Treat it as a business expense — because it is.
@@ -486,7 +486,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use online learning.</strong> Online courses let you study in the evenings
                 or on quieter days without losing a full day of work. Elec-Mate courses are
@@ -494,14 +494,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Attend free events.</strong> Manufacturer training days and trade shows like
                 ELEX are free to attend. Plan ahead and book into the CPD seminars.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Document on-the-job learning.</strong> Working on an unfamiliar installation
                 type, researching a regulation you have not applied before, or solving an unusual
@@ -525,7 +525,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <BookOpen className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Structured CPD Courses</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -591,7 +591,7 @@ export default function ProfessionalDevelopmentElectricianPage() {
       heroTitle={
         <>
           Professional Development for Electricians:{' '}
-          <span className="text-yellow-400">Your Complete CPD Guide</span>
+          <span className="text-elec-yellow">Your Complete CPD Guide</span>
         </>
       }
       heroSubtitle="CPD is not optional — it is a requirement for maintaining your competent person scheme registration and staying current with evolving regulations and technologies. This guide covers what counts as CPD, how many hours you need, upskilling options, and how to record everything properly."
@@ -602,7 +602,7 @@ export default function ProfessionalDevelopmentElectricianPage() {
       faqHeading="Frequently Asked Questions About Electrician CPD"
       relatedPages={relatedPages}
       ctaHeading="Manage Your CPD on Your Phone"
-      ctaSubheading="Structured courses, automatic hour tracking, and a professional CPD record for your scheme assessor. Join 1,600+ electricians doing CPD the easy way. 7-day free trial, cancel anytime."
+      ctaSubheading="Structured courses, automatic hour tracking, and a professional CPD record for your scheme assessor. Join 2,100+ electricians doing CPD the easy way. 7-day free trial, cancel anytime."
     />
   );
 }

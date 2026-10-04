@@ -155,7 +155,7 @@ const sections = [
           an apprentice is not charity -- it is a business strategy.
         </p>
         <p>
-          <strong className="text-yellow-400">The financial case is compelling.</strong> A
+          <strong className="text-elec-yellow">The financial case is compelling.</strong> A
           first-year apprentice costs approximately 15,000 to 18,000 pounds per year in wages and
           on-costs, with the government funding up to 95 percent of the training costs for non-levy
           employers. By the second year, the apprentice is making a productive contribution -- first
@@ -196,7 +196,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Apprenticeship Levy payers</strong> -- employers with an annual pay bill
                 over 3 million pounds pay 0.5 percent of their total pay bill into an Apprenticeship
@@ -207,7 +207,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Non-levy payers (most electrical contractors)</strong> -- the government
                 co-invests 95 percent of the training costs up to the funding band maximum. For a
@@ -217,7 +217,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Small employer exemption</strong> -- employers with fewer than 50 employees
                 who hire an apprentice aged 16 to 18 pay nothing towards the training costs. The
@@ -225,7 +225,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Incentive payments</strong> -- employers may be eligible for a 1,000 pound
                 incentive payment for hiring an apprentice aged 16 to 18. Additional incentives may
@@ -259,7 +259,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ofsted rating</strong> -- check the provider Ofsted inspection report. Look
                 for Good or Outstanding ratings. A Requires Improvement or Inadequate rating is a
@@ -267,7 +267,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pass rates and achievement rates</strong> -- ask the provider for their pass
                 rates on the Level 3 Electrotechnical qualification and the AM2 assessment. Compare
@@ -276,7 +276,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Facilities and equipment</strong> -- visit the provider and inspect their
                 workshops. They should have modern, well-maintained electrical installation
@@ -285,7 +285,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tutor experience</strong> -- the best tutors have significant industry
                 experience in addition to their teaching qualifications. Ask about the tutors
@@ -294,7 +294,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Employer engagement</strong> -- good providers maintain regular contact with
                 employers, provide progress reports, and involve employers in the training plan.
@@ -326,7 +326,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Year 1: Direct supervision</strong> -- the apprentice should work alongside
                 a qualified electrician at all times. Every task is an opportunity to teach: explain
@@ -336,7 +336,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Year 2: Guided practice</strong> -- the apprentice begins to carry out tasks
                 with reducing supervision. You assign specific tasks (first fix a room, pull cables
@@ -345,7 +345,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Year 3: General supervision</strong> -- the apprentice carries out most
                 tasks independently with periodic checking. You assign work, review completed tasks,
@@ -355,7 +355,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Year 4 and EPA preparation</strong> -- the apprentice is working at near
                 qualified level with oversight. Focus shifts to preparing for the AM2 assessment and
@@ -387,7 +387,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Domestic installations</strong> -- rewires, extensions, consumer unit
                 upgrades, additional circuits, socket and lighting installations. The bread and
@@ -395,7 +395,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial work</strong> -- if your business does commercial work, expose
                 the apprentice to trunking and conduit systems, three-phase installations,
@@ -403,7 +403,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing and inspection</strong> -- from the second year onwards, involve the
                 apprentice in testing. Show them how to use the multifunction tester, explain what
@@ -412,7 +412,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fault finding</strong> -- when faults arise on your jobs, use them as
                 teaching opportunities. Walk the apprentice through your diagnostic process: what
@@ -421,7 +421,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Documentation and administration</strong> -- teach the apprentice how to
                 complete certificates, write method statements, fill in permits to work, and
@@ -457,7 +457,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Knowledge test</strong> -- a written or online test covering electrical
                 science, BS 7671, health and safety, and installation practices. The apprentice must
@@ -467,7 +467,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Practical assessment</strong> -- a practical installation task carried out
                 under controlled conditions. The apprentice must demonstrate competence in
@@ -480,7 +480,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Professional discussion with portfolio</strong> -- a structured conversation
                 between the apprentice and the assessor, supported by a portfolio of evidence from
@@ -493,7 +493,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          <strong className="text-yellow-400">
+          <strong className="text-elec-yellow">
             Preparation should start well before the gateway date.
           </strong>{' '}
           The gateway is the point at which the employer and training provider agree that the
@@ -523,7 +523,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Apprenticeship agreement</strong> -- sign an apprenticeship agreement with
                 the apprentice (a legal document under the Apprenticeships, Skills, Children and
@@ -532,7 +532,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pay at least the minimum wage</strong> -- the Apprenticeship Minimum Wage
                 rate for the first year, then the age-related NMW rate from the second year. Many
@@ -540,7 +540,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>20 percent off-the-job training</strong> -- allow at least 20 percent of the
                 apprentice paid working hours for off-the-job training (college, e-learning,
@@ -549,7 +549,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Safe working environment</strong> -- provide appropriate PPE, ensure the
                 apprentice is inducted in health and safety procedures, and maintain a safe
@@ -558,7 +558,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Employment rights</strong> -- apprentices have the same employment rights as
                 other employees: holiday entitlement, sick pay, protection from discrimination, and
@@ -590,7 +590,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Using the apprentice as cheap labour</strong> -- an apprentice who spends
                 most of their time carrying materials, sweeping up, and making tea is not being
@@ -599,7 +599,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Not allowing college attendance</strong> -- preventing the apprentice from
                 attending college or e-learning sessions because "they are needed on the job" is a
@@ -608,7 +608,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inadequate supervision</strong> -- leaving the apprentice unsupervised on
                 site, particularly in the first two years, is both dangerous and a training failure.
@@ -617,7 +617,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No progression plan</strong> -- keeping the apprentice on the same basic
                 tasks without increasing responsibility. The apprentice should be given
@@ -625,7 +625,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Poor communication with the training provider</strong> -- not engaging with
                 the training provider, not attending progress reviews, and not responding to
@@ -658,7 +658,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <BookOpen className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Level 2 and Level 3 Study Modules</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -672,7 +672,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Award className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AM2 Preparation</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -687,7 +687,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Users className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Employer Progress Tracking</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -733,7 +733,7 @@ export default function ElectricalApprenticeshipEmployerPage() {
       heroTitle={
         <>
           Electrical Apprenticeship Employer Guide:{' '}
-          <span className="text-yellow-400">Hiring and Training</span>
+          <span className="text-elec-yellow">Hiring and Training</span>
         </>
       }
       heroSubtitle="Taking on an electrical apprentice is one of the best investments you can make in your business. This guide covers everything an employer needs to know: funding, the Apprenticeship Levy, training providers, supervision duties, EPA preparation, and how Elec-Mate supports apprentice learning."

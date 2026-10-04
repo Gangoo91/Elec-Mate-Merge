@@ -31,6 +31,8 @@ interface GenerateOptions {
   /** Optional single-AC drill — passes through to the streaming endpoint. */
   targetAcRef?: string;
   targetAcText?: string;
+  /** Stems this learner has recently been shown — the server steers away from them. */
+  avoidStems?: string[];
 }
 
 interface StreamMeta {
@@ -164,6 +166,7 @@ export function useEPAKnowledgeQuiz() {
             target_ac_text: options.targetAcText,
             difficulty: options.difficulty || 'mixed',
             question_count: options.questionCount || 5,
+            avoid_stems: options.avoidStems?.slice(0, 40),
           }),
         });
 

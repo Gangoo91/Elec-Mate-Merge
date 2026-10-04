@@ -180,7 +180,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person scheme registration</strong> — ask for their NICEIC, NAPIT,
                 or ELECSA registration number and verify it on the scheme provider's website. This
@@ -189,7 +189,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ECS card</strong> — the Electrotechnical Certification Scheme card confirms
                 the electrician's qualifications. A gold ECS card indicates a fully qualified
@@ -197,7 +197,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Public liability insurance</strong> — ensure at least £1 million cover,
                 ideally £2 million. Ask for a copy of the insurance certificate. This is
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Local reviews and references</strong> — check Google Business, Checkatrade,
                 and Trustpilot for reviews. Birmingham has active local community groups on Facebook
@@ -231,7 +231,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full rewire (3-bed semi-detached)</strong> — £4,500 to £7,000 including new
                 consumer unit, all circuits, sockets, switches, lighting, testing, and Part P
@@ -241,21 +241,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacement</strong> — £420 to £700 including supply
                 isolation, new 18th Edition compliant unit, testing, and Part P notification.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR</strong> — £150 to £280 depending on property size. A 2-bed flat or
                 house is typically £150 to £200; a larger 4-bed house is £220 to £280.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional socket</strong> — £80 to £150 per single socket from an existing
                 circuit. Properties with cavity walls and loft access are at the lower end;
@@ -263,7 +263,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger installation</strong> — £650 to £1,100 for a 7kW home charger
                 including supply, installation, earthing, and Part P certification. Birmingham
@@ -272,7 +272,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency call-out</strong> — £100 to £180 for the first hour including
                 travel, plus £40 to £60 per additional hour. Weekend and evening surcharges of 30%
@@ -363,7 +363,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New connections and upgrades</strong> — apply through NGED's website for new
                 electricity supplies, supply upgrades (single-phase to three-phase for heat pumps,
@@ -372,7 +372,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98/G99 notifications</strong> — your electrician must notify NGED when
                 installing solar PV, battery storage, or any generation equipment. G98 covers
@@ -381,7 +381,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Meter relocations</strong> — common in Birmingham kitchen extensions and
                 garage conversions. Your electrician installs the new meter tails and consumer unit;
@@ -496,7 +496,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Users className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Growth Areas</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -529,7 +529,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Birmingham electrical business"
-          description="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Complete EICRs and EICs on site…"
+          description="Join 2,100+ UK electricians using Elec-Mate for quoting, certification, and job management. Complete EICRs and EICs on site…"
           icon={MapPin}
         />
       </>
@@ -556,7 +556,7 @@ export default function ElectricianBirminghamPage() {
       heroTitle={
         <>
           Electrician in Birmingham:{' '}
-          <span className="text-yellow-400">Find Local Electricians in 2026</span>
+          <span className="text-elec-yellow">Find Local Electricians in 2026</span>
         </>
       }
       heroSubtitle="How to find a registered electrician in Birmingham, realistic local pricing, and the specific challenges of Birmingham property types. Covers NGED connections, HMO compliance in student areas, Part P, and the impact of HS2 and regeneration on the local market."
@@ -567,7 +567,7 @@ export default function ElectricianBirminghamPage() {
       faqHeading="Frequently Asked Questions About Electricians in Birmingham"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site and send instant PDFs to Birmingham landlords and letting agents. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site and send instant PDFs to Birmingham landlords and letting agents. 7-day free trial."
     />
   );
 }

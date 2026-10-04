@@ -253,5 +253,5 @@ export const poeStructuredCablingHubConfig: GeneratedGuideConfig = {
   ],
   ctaHeading: 'Quote PoE & Structured Cabling Jobs in Minutes',
   ctaSubheading:
-    'Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification on PoE and structured cabling installs. 7-day free trial, cancel anytime.',
+    'Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification on PoE and structured cabling installs. 7-day free trial, cancel anytime.',
 };

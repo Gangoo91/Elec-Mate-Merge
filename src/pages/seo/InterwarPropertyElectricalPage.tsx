@@ -142,7 +142,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Housing types</strong> — interwar housing is dominated by the semi-detached
                 house, particularly in London and the Home Counties, the Midlands, and the
@@ -153,7 +153,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Original electrical specification</strong> — interwar properties were
                 typically wired with rubber-insulated cables in a radial circuit arrangement. Round
@@ -163,7 +163,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Partial modernisation</strong> — many interwar properties have had some
                 electrical work carried out over the decades. Partial upgrades are common: a new
@@ -251,7 +251,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Incompatibility with modern appliances</strong> — 5A round pin sockets
                 cannot accept modern 13A square pin plugs. Properties with round pin sockets rely on
@@ -261,7 +261,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>15-amp sockets for larger appliances</strong> — some interwar properties
                 also have 15-amp round pin sockets on dedicated circuits for larger appliances such
@@ -270,7 +270,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Very few sockets</strong> — interwar properties typically have only 1 or 2
                 socket outlets per room, reflecting the small number of electrical appliances in use
@@ -297,7 +297,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cavity wall routing</strong> — most interwar external walls are cavity
                 construction (two skins of brick with an air gap). Cables can often be run through
@@ -307,7 +307,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Extensions and loft conversions</strong> — many interwar properties have had
                 rear kitchen extensions, garage conversions, and loft conversions added at various
@@ -317,7 +317,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Buried cables and unknown routes</strong> — decades of previous electrical
                 work may have left abandoned cables buried in walls, unknown junction boxes behind
@@ -327,7 +327,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Suspended timber floors</strong> — interwar properties commonly have
                 suspended timber ground floors, providing convenient underfloor cable routing for
@@ -406,7 +406,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Two-bedroom interwar terrace or semi</strong> — £2,800 to £4,500. Cavity
                 wall construction and accessible ceiling voids reduce cable routing difficulty.
@@ -414,7 +414,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom interwar semi-detached</strong> — £3,500 to £6,500. The most
                 common interwar property type. Extensions and loft conversions add to cost. Detached
@@ -422,7 +422,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Four-bedroom interwar detached</strong> — £5,500 to £9,000. Larger
                 footprint, more circuits, and often more complex layouts with garages and
@@ -430,7 +430,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Council-built interwar terrace</strong> — £2,500 to £4,000. Standardised
                 layouts and less ornate construction make these among the most straightforward
@@ -461,7 +461,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C2 — Deteriorated rubber insulation</strong> — insulation resistance
                 measurements below acceptable limits, or visible insulation cracking and
@@ -469,7 +469,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C2 — No RCD protection</strong> — absence of 30mA RCD protection on socket
                 circuits. A requirement under Regulation 411.3.3 of BS 7671. Without RCD protection,
@@ -477,7 +477,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C2 — Inadequate earthing</strong> — missing earth conductors on circuits,
                 inadequate main earthing terminal, or absent main equipotential bonding to gas and
@@ -485,7 +485,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C3 — Insufficient socket outlets</strong> — the original number of socket
                 outlets (often 1 or 2 per room) is insufficient for modern living. Recorded as a
@@ -513,7 +513,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Pre-Purchase EICRs — a Growing Market</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -549,7 +549,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your interwar property rewire business with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICRs, professional quoting, and job management."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EICRs, professional quoting, and job management."
           icon={FileCheck2}
         />
       </>
@@ -575,7 +575,7 @@ export default function InterwarPropertyElectricalPage() {
       heroTitle={
         <>
           1920s &amp; 1930s House Electrical Guide:{' '}
-          <span className="text-yellow-400">Interwar Property Rewiring</span>
+          <span className="text-elec-yellow">Interwar Property Rewiring</span>
         </>
       }
       heroSubtitle="Properties built between 1918 and 1939 contain rubber-insulated wiring that is now 85 to 108 years old, 5-amp round pin sockets, and fuse boards without RCD protection. This guide covers rubber insulation degradation, the specific hazards of interwar wiring, WWII-era property issues, and rewire costs of £2,800 to £9,000."
@@ -586,7 +586,7 @@ export default function InterwarPropertyElectricalPage() {
       faqHeading="Frequently Asked Questions About Interwar Property Electrical Installations"
       relatedPages={relatedPages}
       ctaHeading="Complete Interwar Property EICRs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

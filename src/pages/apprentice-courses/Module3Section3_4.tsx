@@ -39,7 +39,11 @@ const quickCheckQuestions = [
   {
     id: 'unsafe-power-tool',
     question: 'Name one sign that a power tool is unsafe to use.',
-    options: ['Clean exterior surface', 'Cracked casing or frayed cable', 'Recent purchase date'],
+    options: [
+      'Casing warm after long use',
+      'Cracked casing or frayed cable',
+      'Battery below half charge',
+    ],
     correctIndex: 1,
     explanation:
       'Cracked casings can expose internal wiring, while frayed cables present electric shock risks. Either condition makes the tool unsafe for use.',
@@ -48,7 +52,7 @@ const quickCheckQuestions = [
     id: 'calibration-importance',
     question: 'Why is calibration important for test equipment?',
     options: [
-      'To make it look professional',
+      "To extend the instrument's warranty",
       'To maintain accuracy and compliance',
       'To increase battery life',
     ],
@@ -60,9 +64,9 @@ const quickCheckQuestions = [
     id: 'storage-conditions',
     question: 'Why should tools be stored in dry conditions?',
     options: [
-      'To improve appearance',
+      'To keep the batteries charged',
       'To prevent corrosion and electrical damage',
-      'To reduce storage space',
+      'To meet PAT requirements',
     ],
     correctIndex: 1,
     explanation:
@@ -88,10 +92,10 @@ const quizQuestions = [
     id: 2,
     question: 'Which of the following is a sign that a cutting tool needs maintenance?',
     options: [
-      'Clean, polished surface',
+      "The maker's logo worn off the handle",
       'Sharp edges',
       'Blunt or chipped edges',
-      'New packaging',
+      'Light surface marks on the handle',
     ],
     correctAnswer: 2,
     explanation:

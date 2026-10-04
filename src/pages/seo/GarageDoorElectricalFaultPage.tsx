@@ -138,7 +138,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Motor unit</strong> — an AC or DC motor (modern openers increasingly use DC
                 for softer starts and battery backup compatibility) that drives the trolley along
@@ -148,7 +148,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Control board (logic board)</strong> — the PCB that controls all opener
                 functions: receiving remote signals, activating the motor, monitoring limit
@@ -157,7 +157,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Limit switches</strong> — two switches (or magnetic sensors) that detect
                 when the door has reached the fully open and fully closed positions, cutting power
@@ -166,7 +166,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Safety sensors</strong> — a pair of photoelectric sensors mounted at the
                 bottom of the door frame, one transmitter and one receiver, creating an infrared
@@ -176,7 +176,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Power supply</strong> — the opener plugs into a standard 13A socket (BS
                 1363) in the garage. The socket must be within reach of the opener unit (typically
@@ -219,7 +219,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Before any electrical investigation</strong> — unplug the opener from the
                 socket. Engage the manual release to disconnect the motor from the door mechanism,
@@ -228,7 +228,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>For fixed wiring (socket, circuit)</strong> — isolate at the consumer unit
                 and prove dead with a voltage indicator before working on the socket or any fixed
@@ -252,7 +252,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check the consumer unit</strong> — the garage circuit (often a spur from the
                 main ring, or a dedicated radial) may have a tripped MCB or RCD. Reset the breaker
@@ -261,7 +261,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test the socket</strong> — plug a lamp or phone charger into the garage
                 socket to confirm the socket is live. If the socket is dead, the fault is in the
@@ -270,7 +270,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check the plug fuse</strong> — if the opener uses a standard BS 1363 plug,
                 check the fuse in the plug (typically 3A or 5A). Replace with the correct fuse
@@ -279,7 +279,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Battery backup unit</strong> — some modern openers have a battery backup
                 that allows operation during a power cut. If the battery is exhausted and the mains
@@ -305,7 +305,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Symptoms of control board failure</strong> — the door starts to open or
                 close then unexpectedly reverses; the opener responds to neither the remote nor the
@@ -315,7 +315,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Surge damage</strong> — a power surge (from lightning, a nearby short
                 circuit, or switching of large loads) can damage or destroy the control board
@@ -325,7 +325,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Control board replacement</strong> — replacement boards are available from
                 the opener manufacturer or third-party suppliers for most popular brands (Hormann,
@@ -337,7 +337,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Factory reset</strong> — before replacing the board, perform a factory reset
                 as specified in the opener manual. This clears all stored remote codes and returns
@@ -364,7 +364,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Door runs past the closed position</strong> — the close limit is set too
                 far. The door hits the floor and the motor continues to run, straining the
@@ -374,7 +374,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Door reverses before fully closed</strong> — the close limit is set too
                 short, or the obstruction detection sensitivity (close force) is triggering before
@@ -384,7 +384,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Door does not fully open</strong> — the open limit is set too short. The
                 trolley stops before the door reaches the fully open position, leaving the door
@@ -393,7 +393,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mechanical limit switch failure</strong> — on older openers with physical
                 push-to-break limit switches on the rail, the switch can fail mechanically,
@@ -486,7 +486,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Radio className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Radio className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Replace the battery first</strong> — a remote that works intermittently or
                 has a reduced range almost certainly has a low battery. Replace with a fresh battery
@@ -496,7 +496,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Radio className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Radio className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Re-programming the remote</strong> — if the remote has lost its pairing with
                 the opener (this can happen after a power surge or control board replacement), it
@@ -507,7 +507,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Radio className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Radio className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wireless keypad faults</strong> — an external wireless keypad uses the same
                 radio frequency and pairing process as a remote. A keypad that stops working should
@@ -517,7 +517,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Radio className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Radio className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Radio interference</strong> — new wireless devices near the garage (Wi-Fi
                 extenders, baby monitors, LED lighting with poor EMC suppression) can interfere with
@@ -594,7 +594,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Remote control replacement</strong> — £20 to £60. OEM remotes from the
                 manufacturer cost more than aftermarket alternatives, but OEM remotes are more
@@ -602,7 +602,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Safety sensor replacement (pair)</strong> — £30 to £80 for the sensors, plus
                 £40 to £80 labour if fitted by a garage door engineer. Many homeowners can fit
@@ -610,7 +610,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Control board replacement</strong> — £60 to £200 for the board, plus £60 to
                 £120 labour for a garage door engineer to fit and programme it. Brand-specific
@@ -618,7 +618,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full opener replacement</strong> — £200 to £500 for a residential ceiling-
                 mounted opener (belt or chain drive), fully installed and commissioned, including
@@ -626,7 +626,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New dedicated socket in garage</strong> — £150 to £350, including cable from
                 consumer unit, socket, weatherproof enclosure if needed, and Electrical Installation
@@ -663,7 +663,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Issue Certificates Before Leaving Site
@@ -702,7 +702,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete garage electrical certificates on your phone"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site Minor Works certificates, EICs, and instant quoting. No evening paperwork. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site Minor Works certificates, EICs, and instant quoting. No evening paperwork. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -728,7 +728,7 @@ export default function GarageDoorElectricalFaultPage() {
       heroTitle={
         <>
           Garage Door Electrical Fault:{' '}
-          <span className="text-yellow-400">Wiring & Motor Fault Diagnosis</span>
+          <span className="text-elec-yellow">Wiring & Motor Fault Diagnosis</span>
         </>
       }
       heroSubtitle="Complete electrical fault finding guide for garage door openers — motor control board failure, limit switch issues, safety sensor faults, power supply problems, remote control faults, when to call an electrician, and typical repair costs for 2026."
@@ -739,7 +739,7 @@ export default function GarageDoorElectricalFaultPage() {
       faqHeading="Frequently Asked Questions — Garage Door Electrical Faults"
       relatedPages={relatedPages}
       ctaHeading="Complete Garage Electrical Certificates On Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for Minor Works certificates, EICs, and on-site quoting. No evening paperwork. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for Minor Works certificates, EICs, and on-site quoting. No evening paperwork. 7-day free trial, cancel anytime."
     />
   );
 }

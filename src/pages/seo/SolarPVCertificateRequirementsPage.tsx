@@ -182,7 +182,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical Installation Certificate (EIC)</strong> — confirms the electrical
                 work complies with{' '}
@@ -191,28 +191,28 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCS certificate</strong> — confirms the system was installed by an
                 MCS-certified installer and meets MCS standards.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DNO notification (G98 or G99)</strong> — notifies the Distribution Network
                 Operator that generation equipment is connected to the grid.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Handover documentation</strong> — system design, commissioning results,
                 warranties, and user instructions.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Building regulations notification</strong> — Part P self-certification
                 through a competent person scheme or a building regulations application.
@@ -242,7 +242,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">What the EIC Must Cover</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 DC wiring — string cables from panels to inverter, DC isolator, cable type and size,
                 and cable routing. DC connectors must be selected to BS EN 62852:2015+A1:2020 per
@@ -253,28 +253,28 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 AC wiring — inverter output cable, AC isolator, dedicated circuit breaker (MCB or
                 RCBO) in the consumer unit, and cable type and size.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Earthing arrangements — main earthing terminal connection, equipotential bonding of
                 the panel mounting frame (if metallic), and protective conductor sizing.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Test results — continuity, insulation resistance (AC and DC), polarity, earth fault
                 loop impedance, RCD operation, and DC string voltage and current measurements.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 DC-side protective measure — the EIC must record whether double/reinforced
                 insulation (Section 412) or SELV/PELV (Section 414) is applied on the DC side, as
@@ -283,7 +283,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Mandatory warning labels — a permanent warning notice at every DC live-access point
                 (combiner boxes, DC distribution boards) per Reg 712.514.102, and a warning notice
@@ -322,21 +322,21 @@ const sections = [
             </thead>
             <tbody className="divide-y divide-white/10">
               <tr>
-                <td className="px-4 py-3 font-mono text-yellow-300 align-top">712.410.101</td>
+                <td className="px-4 py-3 font-mono text-elec-yellow align-top">712.410.101</td>
                 <td className="px-4 py-3">
                   DC-side equipment shall be considered energised, even when the AC side is
                   disconnected from the grid or when the inverter is disconnected from the DC side.
                 </td>
               </tr>
               <tr>
-                <td className="px-4 py-3 font-mono text-yellow-300 align-top">712.410.102</td>
+                <td className="px-4 py-3 font-mono text-elec-yellow align-top">712.410.102</td>
                 <td className="px-4 py-3">
                   Apply one DC-side protective measure: double or reinforced insulation (Section 412)
                   or extra-low voltage SELV/PELV (Section 414). Record which is used.
                 </td>
               </tr>
               <tr>
-                <td className="px-4 py-3 font-mono text-yellow-300 align-top">712.514.102</td>
+                <td className="px-4 py-3 font-mono text-elec-yellow align-top">712.514.102</td>
                 <td className="px-4 py-3">
                   Permanent warning notice at each point of access to DC live parts (distribution
                   boards, combiner boxes), e.g. &lsquo;SOLAR DC — Live parts can remain energised
@@ -344,14 +344,14 @@ const sections = [
                 </td>
               </tr>
               <tr>
-                <td className="px-4 py-3 font-mono text-yellow-300 align-top">712.514.103</td>
+                <td className="px-4 py-3 font-mono text-elec-yellow align-top">712.514.103</td>
                 <td className="px-4 py-3">
                   Warning notice fixed to all inverters: &lsquo;WARNING — Isolate both AC and DC
                   sides before servicing&rsquo;.
                 </td>
               </tr>
               <tr>
-                <td className="px-4 py-3 font-mono text-yellow-300 align-top">712.521.1041</td>
+                <td className="px-4 py-3 font-mono text-elec-yellow align-top">712.521.1041</td>
                 <td className="px-4 py-3">
                   DC cables selected and erected to minimise earth-fault and short-circuit risk —
                   e.g. single-core non-metallic-sheathed H1Z2Z2-K to BS EN 50618; cables not laid
@@ -359,14 +359,14 @@ const sections = [
                 </td>
               </tr>
               <tr>
-                <td className="px-4 py-3 font-mono text-yellow-300 align-top">712.523.101</td>
+                <td className="px-4 py-3 font-mono text-elec-yellow align-top">712.523.101</td>
                 <td className="px-4 py-3">
                   For cables subject to direct heating under the module, design ambient temperature
                   shall be taken as at least 70&deg;C.
                 </td>
               </tr>
               <tr>
-                <td className="px-4 py-3 font-mono text-yellow-300 align-top">712.526.101</td>
+                <td className="px-4 py-3 font-mono text-elec-yellow align-top">712.526.101</td>
                 <td className="px-4 py-3">
                   DC connectors selected to BS EN 62852:2015+A1:2020. Where accessible to ordinary
                   persons, they must require a key or tool to disconnect (or sit in a key/tool-only
@@ -408,7 +408,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Register for the Smart Export Guarantee (SEG)</strong> — energy suppliers
                 with over 150,000 customers must offer a SEG tariff for exported electricity. MCS
@@ -416,7 +416,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Receive an insurance-backed guarantee</strong> — MCS-certified installations
                 come with an insurance-backed guarantee that protects the customer if the installer
@@ -424,7 +424,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Add value to the property</strong> — an MCS-certified installation with all
                 documentation provides confidence to future buyers and their mortgage lenders.
@@ -462,32 +462,32 @@ const sections = [
             </thead>
             <tbody className="divide-y divide-white/10">
               <tr>
-                <td className="px-4 py-3 font-medium text-white/70">Type</td>
+                <td className="px-4 py-3 font-medium text-white">Type</td>
                 <td className="px-4 py-3">Notification (connect-and-notify)</td>
                 <td className="px-4 py-3">Application (approval before connection)</td>
               </tr>
               <tr>
-                <td className="px-4 py-3 font-medium text-white/70">Threshold</td>
+                <td className="px-4 py-3 font-medium text-white">Threshold</td>
                 <td className="px-4 py-3">Up to 16A per phase</td>
                 <td className="px-4 py-3">Above 16A per phase</td>
               </tr>
               <tr>
-                <td className="px-4 py-3 font-medium text-white/70">Single-phase</td>
+                <td className="px-4 py-3 font-medium text-white">Single-phase</td>
                 <td className="px-4 py-3">Up to approx. 3.68kW</td>
                 <td className="px-4 py-3">Above approx. 3.68kW</td>
               </tr>
               <tr>
-                <td className="px-4 py-3 font-medium text-white/70">Three-phase</td>
+                <td className="px-4 py-3 font-medium text-white">Three-phase</td>
                 <td className="px-4 py-3">Up to approx. 11.04kW</td>
                 <td className="px-4 py-3">Above approx. 11.04kW</td>
               </tr>
               <tr>
-                <td className="px-4 py-3 font-medium text-white/70">DNO timescale</td>
+                <td className="px-4 py-3 font-medium text-white">DNO timescale</td>
                 <td className="px-4 py-3">10 working days to object</td>
                 <td className="px-4 py-3">Several weeks for assessment</td>
               </tr>
               <tr>
-                <td className="px-4 py-3 font-medium text-white/70">Typical use</td>
+                <td className="px-4 py-3 font-medium text-white">Typical use</td>
                 <td className="px-4 py-3">Most domestic (3–4kW) systems</td>
                 <td className="px-4 py-3">Large domestic, commercial, multi-string</td>
               </tr>
@@ -598,7 +598,7 @@ const sections = [
                 <td className="px-4 py-3">Main earthing terminal; bonding of metallic mounting frame where required</td>
               </tr>
               <tr className="bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
-                <td className="px-4 py-3 font-medium text-yellow-300 align-top" rowSpan={2}>
+                <td className="px-4 py-3 font-medium text-elec-yellow align-top" rowSpan={2}>
                   Inverter
                 </td>
                 <td className="px-4 py-3">Grid protection settings</td>
@@ -636,35 +636,35 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">Handover Pack Contents</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 System design summary — panel layout drawing, string configuration, inverter
                 location, cable routes, and total system capacity in kWp.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Commissioning test results — DC string voltage and current measurements, AC test
                 results, inverter commissioning checks, and grid protection settings verification.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Manufacturer documentation — panel datasheets, inverter manual, and warranty
                 certificates for all major components.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 User guide — how to read the inverter display, what the indicator lights mean, how
                 to shut down the system in an emergency, and who to contact for faults.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Copies of all certificates — EIC, MCS certificate, G98/G99 notification, and
                 building regulations notification.
@@ -693,7 +693,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person route</strong> — MCS-certified installers registered with a
                 competent person scheme (such as NICEIC, NAPIT, or ELECSA) can self-certify the
@@ -702,7 +702,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Building regulations application</strong> — if the installer is not
                 registered with a competent person scheme, a building regulations application must
@@ -711,7 +711,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Planning permission</strong> — most domestic solar PV installations are
                 permitted development and do not require planning permission. Exceptions include
@@ -805,7 +805,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Incomplete DC test results</strong> — the EIC must include DC string voltage
                 (Voc) and short-circuit current (Isc) measurements for every string. These are often
@@ -813,7 +813,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Missing DC insulation resistance test</strong> — the DC cables must be
                 tested for insulation resistance at the test voltage given in BS 7671 Table 64: 500V
@@ -823,7 +823,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98 not submitted before commissioning</strong> — the DNO notification must
                 be submitted before the system is connected and commissioned. Retrospective
@@ -831,7 +831,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No grid protection settings verification</strong> — the inverter grid
                 protection settings (voltage and frequency trip limits) must be verified and
@@ -839,7 +839,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Building regulations not notified</strong> — the work must be notified
                 through a competent person scheme or a building regulations application. Missing
@@ -847,7 +847,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Missing DC access-point warning labels (Reg 712.514.102)</strong> — a
                 permanent warning notice is mandatory at every point of access to DC live parts
@@ -857,7 +857,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Missing inverter warning notice (Reg 712.514.103)</strong> — a warning
                 notice must be physically fixed to every inverter with wording similar to:
@@ -866,7 +866,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wrong DC connector type (Reg 712.526.101)</strong> — DC connectors must be
                 selected to BS EN 62852:2015+A1:2020. Generic or non-compliant connectors fail this
@@ -905,7 +905,7 @@ export default function SolarPVCertificateRequirementsPage() {
       badgeIcon={Sun}
       heroTitle={
         <>
-          Solar PV Certificate Requirements: <span className="text-yellow-400">MCS UK Guide</span>
+          Solar PV Certificate Requirements: <span className="text-elec-yellow">MCS UK Guide</span>
         </>
       }
       heroSubtitle="Every solar PV installation requires an EIC, MCS certificate, DNO notification, and handover documentation. This guide explains each certificate requirement in detail, covering what must be included, who issues it, and the consequences of missing documentation."

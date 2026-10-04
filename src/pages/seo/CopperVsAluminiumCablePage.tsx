@@ -294,7 +294,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Service heads and meter tails:</strong> DNO service heads in the UK commonly
                 use aluminium conductors for the final connection to the meter. The tails from the
@@ -308,7 +308,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Distribution cables (submains):</strong> Large-CSA aluminium armoured cables
                 are commonly used for submain cables between distribution boards and
@@ -317,7 +317,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Overhead lines:</strong> Aluminium conductors (with or without a steel core
                 for mechanical strength — ACSR, Aluminium Conductor Steel Reinforced) are the
@@ -361,7 +361,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Compression joints:</strong> The standard jointing method for aluminium
                 cables. A compression sleeve is crimped onto the stripped conductor ends using a
@@ -370,7 +370,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bi-metallic terminals:</strong> Where aluminium cable must be connected to
                 copper busbars or copper terminal blocks, bi-metallic (aluminium/copper) terminals
@@ -380,7 +380,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mechanical connectors:</strong> Bolted-type mechanical connectors with
                 serrated washers are used for larger conductors in distribution switchgear. The
@@ -389,7 +389,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insulating barriers (inspection and older installations):</strong> Where
                 aluminium conductors are in proximity to copper in an existing installation and a
@@ -453,7 +453,7 @@ const sections = [
           connections carefully. Loose or corroded aluminium connections at wiring accessories are a
           Code C2 or C1 defect depending on severity.
         </p>
-        <p className="text-sm text-white/60">
+        <p className="text-sm text-white">
           This guide is written for qualified electricians working to BS 7671:2018+A4:2026 and
           reviewed against the current edition of the standard. Last reviewed: May 2026.
         </p>
@@ -485,7 +485,7 @@ export default function CopperVsAluminiumCablePage() {
       heroTitle={
         <>
           Copper vs Aluminium Cable:{' '}
-          <span className="text-yellow-400">Current Ratings, Termination and When to Use Each</span>
+          <span className="text-elec-yellow">Current Ratings, Termination and When to Use Each</span>
         </>
       }
       heroSubtitle="Aluminium requires 1.6× the cross-sectional area of copper for the same current rating — and must be terminated with anti-oxidant compound. This guide covers BS 7671 Appendix 4 current ratings, correct termination, and when aluminium cable is appropriate in UK electrical installations."

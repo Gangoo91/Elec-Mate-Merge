@@ -36,6 +36,7 @@ import {
   textareaClass,
 } from '@/components/employer/editorial';
 import { SelectField } from '@/components/forms';
+import { autoCompleteOff } from '@/lib/textEntry';
 
 interface LineItem {
   id: string;
@@ -561,7 +562,7 @@ export function CreateQuoteDialog({
                   value={client}
                   onChange={(e) => setClient(e.target.value)}
                   className={inputClass}
-                  autoComplete="off"
+                  autoComplete={autoCompleteOff}
                 />
               </Field>
               <Field label="Client address">
@@ -580,7 +581,7 @@ export function CreateQuoteDialog({
                     value={clientEmail}
                     onChange={(e) => setClientEmail(e.target.value)}
                     className={inputClass}
-                    autoComplete="off"
+                    autoComplete={autoCompleteOff}
                   />
                 </Field>
                 <Field label="Client phone">
@@ -590,7 +591,7 @@ export function CreateQuoteDialog({
                     value={clientPhone}
                     onChange={(e) => setClientPhone(e.target.value)}
                     className={inputClass}
-                    autoComplete="off"
+                    autoComplete={autoCompleteOff}
                   />
                 </Field>
               </FormGrid>
@@ -603,7 +604,7 @@ export function CreateQuoteDialog({
                   value={jobTitle}
                   onChange={(e) => setJobTitle(e.target.value)}
                   className={inputClass}
-                  autoComplete="off"
+                  autoComplete={autoCompleteOff}
                 />
               </Field>
               <div className="space-y-1.5">
@@ -789,7 +790,7 @@ export function CreateQuoteDialog({
                   value={newLabour.description}
                   onChange={(e) => setNewLabour({ ...newLabour, description: e.target.value })}
                   className={inputClass}
-                  autoComplete="off"
+                  autoComplete={autoCompleteOff}
                 />
               </Field>
               <FormGrid cols={2}>
@@ -917,7 +918,7 @@ export function CreateQuoteDialog({
                   value={newItem.description}
                   onChange={(e) => setNewItem({ ...newItem, description: e.target.value })}
                   className={inputClass}
-                  autoComplete="off"
+                  autoComplete={autoCompleteOff}
                 />
               </Field>
               <FormGrid cols={3}>

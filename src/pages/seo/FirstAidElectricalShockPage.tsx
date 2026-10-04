@@ -198,7 +198,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Switch off at the distribution board or isolator.</strong> This is the
                 preferred method. If you can reach the DB or isolator safely, switch off the
@@ -210,7 +210,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Unplug the equipment.</strong> If the shock is from a portable appliance,
                 pull the plug from the socket — but only if you can do so without touching the
@@ -218,7 +218,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use a non-conductive object.</strong> If the supply cannot be isolated
                 quickly, use a dry wooden broom handle, a dry rope, or a rubber mat to separate the
@@ -226,7 +226,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>High voltage incidents.</strong> If the shock involves high voltage (above
                 1000V AC), do not approach. Call 999 and the electricity network operator
@@ -321,7 +321,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Heart className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Heart className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cool the burn under running water</strong> for at least 20 minutes. Use cool
                 (not cold) water. Do not use ice or iced water as this can cause further tissue
@@ -329,14 +329,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Heart className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Heart className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Remove clothing and jewellery</strong> near the burn, but only if they are
                 not stuck to the skin. Do not pull off anything that is adhered to the burn.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Heart className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Heart className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cover with cling film.</strong> After cooling, loosely cover the burn with
                 cling film (laid over the burn, not wrapped around the limb) or a clean, non-fluffy
@@ -344,14 +344,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Heart className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Heart className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Do not apply creams, gels, or butter.</strong> These do not help and can
                 make medical assessment more difficult. Do not burst any blisters.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Heart className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Heart className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>All electrical burn casualties must go to hospital.</strong> Even if the
                 surface burn looks minor, the internal damage may be significant. The casualty needs
@@ -437,21 +437,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fatal injuries:</strong> Must be reported to the HSE immediately by
                 telephone (0345 300 9923), followed by an online report within 10 days.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Specified injuries:</strong> Loss of consciousness caused by electric shock
                 is a specified injury and must be reported online within 10 days.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Over-7-day incapacitation:</strong> If the casualty cannot work for more
                 than 7 consecutive days as a result of the injury, the incident must be reported
@@ -459,7 +459,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dangerous occurrences:</strong> Electrical short circuit or overload
                 attended by fire or explosion is a dangerous occurrence and must be reported
@@ -500,7 +500,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency First Aid at Work (EFAW):</strong> A 1-day course covering basic
                 life-saving first aid. This is the minimum qualification for most workers. Valid for
@@ -508,7 +508,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>First Aid at Work (FAW):</strong> A 3-day course covering a comprehensive
                 range of injuries and medical emergencies. Required for designated first aiders on
@@ -516,7 +516,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical shock-specific training:</strong> All electricians should receive
                 additional training on recognising electrical shock, safe approach procedures,
@@ -528,7 +528,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>AED training:</strong> Automated External Defibrillator training is
                 increasingly included in first aid courses and is highly recommended for anyone
@@ -569,7 +569,7 @@ export default function FirstAidElectricalShockPage() {
       heroTitle={
         <>
           First Aid for Electrical Shock:{' '}
-          <span className="text-yellow-400">Emergency Response That Saves Lives</span>
+          <span className="text-elec-yellow">Emergency Response That Saves Lives</span>
         </>
       }
       heroSubtitle="Knowing how to respond in the first 60 seconds after an electrical shock incident can be the difference between life and death. This guide covers the complete emergency response procedure: danger assessment, supply isolation, CPR, burns treatment, calling 999, and RIDDOR reporting."

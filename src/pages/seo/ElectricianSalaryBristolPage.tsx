@@ -142,7 +142,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Approved Electrician (employed)</strong> — £38,000 to £48,000 per year
                 including JIB allowances. The JIB rate effective 5 January 2026 is £20.08 per hour
@@ -152,7 +152,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Site or Installation Technician / supervisory</strong> — £48,000 to £58,000.
                 Electricians running gangs on
@@ -162,7 +162,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Self-employed</strong> — £500 to £900 per day. Bristol's technology and
                 aerospace sectors drive the highest day rates in the South West. A well-placed
@@ -197,7 +197,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Trainee Electrician</strong> — Stage 1 / Electrical Labourer £14.60 per
                 hour, Stage 2 £16.54 per hour, Stage 3 £17.51 per hour. This is a separate grade
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrician (including Domestic)</strong> — £18.38 per hour (£35,840 per
                 year at 37.5hr/week). Holds NVQ Level 3 and ECS Blue Card. Many Bristol employers start staff at this
@@ -214,7 +214,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Approved Electrician</strong> — £20.08 per hour (£39,150 per year at
                 37.5hr/week). ECS Gold Card holder. The most common grade on Bristol commercial
@@ -222,7 +222,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Site or Installation Technician</strong> — £22.70 per hour (£44,265 per
                 year). The top grade on the JIB scale. Common in Bristol's aerospace and
@@ -230,7 +230,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Responsibility money</strong> — an Approved Electrician placed in charge of
                 work and supervising other operatives receives responsibility money on top of the
@@ -262,7 +262,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Domestic work</strong> — £350 to £550 per day. Consumer unit changes,
                 rewires, extensions, kitchen and bathroom circuits. Higher rates in Bristol's
@@ -270,7 +270,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Small commercial</strong> — £400 to £600 per day. Offices, retail units,
                 restaurants. Bristol's hospitality and retail sector on Whiteladies Road, Clifton
@@ -278,7 +278,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large commercial and industrial</strong> — £500 to £750 per day. Major
                 construction sites, factories, distribution centres. Bristol's growth corridor along
@@ -286,7 +286,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Specialist and tech sector</strong> — £550 to £900 per day. Aerospace, data
                 centres, pharmaceutical, cleanrooms. Airbus at Filton, Leonardo, and BAE Systems
@@ -368,7 +368,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>High voltage (HV) authorised person</strong> — 25 to 40% above standard
                 rate. HV APs in Bristol's industrial and energy sectors earn £60 to £90 per hour.
@@ -376,7 +376,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Instrumentation and control (I&C)</strong> — 20 to 35% above standard. C&G
                 2395 (Inspection and Testing) plus I&C experience commands £500 to £800 per day at
@@ -384,7 +384,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charging installation</strong> — OZEV-authorised installer status adds 15
                 to 25% to day rate. Strong demand from Bristol Council's EV infrastructure programme
@@ -392,7 +392,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire alarm design (FIA qualified)</strong> — fire alarm design and
                 commissioning to BS 5839 adds £50 to £100 per day on top of standard rates.
@@ -419,7 +419,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Stage 1</strong> — £8.16 per hour. Approximately £15,900 per year at 37.5
                 hours per week. Adult entrants to electrical apprenticeships are increasingly common
@@ -427,20 +427,20 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Stage 2</strong> — £10.60 per hour. Approximately £20,670 per year.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Stage 3</strong> — £13.05 per hour. Approximately £25,450 per year. Many
                 Bristol employers pay above the JIB minimum at this stage.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Stage 4</strong> — £14.03 per hour. Approximately £27,360 per year. Upon
                 successful completion and ECS Gold Card application, progression to the Approved
@@ -470,7 +470,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tool allowance</strong> — £500 to £1,500 per year. Most Bristol electrical
                 contractors provide either a tool allowance or supply tools directly. JIB members
@@ -478,7 +478,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Employer pension contribution</strong> — JIB members benefit from the JIB
                 Pension Fund, with employer contributions of 5 to 8%. On a £45,000 salary, this
@@ -486,7 +486,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Van or mileage</strong> — most Bristol electrical contractors provide a
                 works van for site use, or pay mileage at HMRC approved rates (45p per mile up to
@@ -494,7 +494,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Travel and lodging allowances</strong> — JIB provides a nationwide travel
                 and fares scheme. Bristol electricians working away from home on major projects
@@ -504,7 +504,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Private health insurance</strong> — offered by a minority of larger Bristol
                 electrical contractors (typically national firms). Smaller independent contractors
@@ -579,7 +579,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Quote Jobs Faster, Invoice Immediately
@@ -616,7 +616,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Bristol electrical business smarter with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate to quote jobs, complete certificates, and manage their business from their phone. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate to quote jobs, complete certificates, and manage their business from their phone. 7-day free trial."
           icon={PoundSterling}
         />
       </>
@@ -642,7 +642,7 @@ export default function ElectricianSalaryBristolPage() {
       heroTitle={
         <>
           Electrician Salary Bristol 2025:{' '}
-          <span className="text-yellow-400">JIB Rates, Day Rates & Southwest Pay Guide</span>
+          <span className="text-elec-yellow">JIB Rates, Day Rates & Southwest Pay Guide</span>
         </>
       }
       heroSubtitle="Comprehensive guide to electrician earnings in Bristol. Employed salaries (£38,000 to £48,000) on the JIB scale, self-employed day rates (£500 to £900), specialist uplifts in aerospace and tech, apprentice rates, overtime, and benefits for Bristol electricians in 2025."
@@ -653,7 +653,7 @@ export default function ElectricianSalaryBristolPage() {
       faqHeading="Frequently Asked Questions About Electrician Salaries in Bristol"
       relatedPages={relatedPages}
       ctaHeading="Maximise Your Bristol Electrician Earnings with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to quote faster, certificate on site, and get paid sooner. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to quote faster, certificate on site, and get paid sooner. 7-day free trial, cancel anytime."
     />
   );
 }

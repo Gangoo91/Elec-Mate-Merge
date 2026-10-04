@@ -202,7 +202,7 @@ const sections = [
         </p>
         <div className="space-y-3 my-4">
           <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
               1
             </div>
             <div>
@@ -215,7 +215,7 @@ const sections = [
             </div>
           </div>
           <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
               2
             </div>
             <div>
@@ -229,7 +229,7 @@ const sections = [
             </div>
           </div>
           <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
               3
             </div>
             <div>
@@ -243,7 +243,7 @@ const sections = [
             </div>
           </div>
           <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
               4
             </div>
             <div>
@@ -519,7 +519,7 @@ export default function EVChargingCoursePage() {
       heroTitle={
         <>
           EV Charger Installation Course:{' '}
-          <span className="text-yellow-400">IET Code of Practice</span>
+          <span className="text-elec-yellow">IET Code of Practice</span>
         </>
       }
       noindex={true}
@@ -538,7 +538,7 @@ export default function EVChargingCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Ready to install EV chargers?"
-      ctaSubheading="Join 1,600+ UK electricians studying smarter with Elec-Mate. 7 structured modules, interactive quizzes, video content, and an AI tutor for any EV charging question. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians studying smarter with Elec-Mate. 7 structured modules, interactive quizzes, video content, and an AI tutor for any EV charging question. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/guides/ev-charger-installation"
     />

@@ -209,7 +209,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC Approved Contractor (sole trader)</strong> — approximately
                 £400–£600/year including annual assessment fee. This tier covers domestic,
@@ -217,7 +217,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC Domestic Installer</strong> — approximately £200–£350/year.
                 Restricted to domestic electrical work only. Suitable for electricians who work
@@ -225,7 +225,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NAPIT Electrical Registration (sole trader)</strong> — approximately
                 £350–£550/year for standard electrical registration. Multi-discipline bundles (e.g.,
@@ -233,7 +233,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>First-year discounts</strong> — both NICEIC and NAPIT frequently offer
                 reduced-rate first-year registration deals for new applicants. These can
@@ -264,7 +264,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Initial site assessment</strong> — both schemes send an assessor to inspect
                 a sample of your completed installations. They check workmanship quality, compliance
@@ -274,7 +274,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC assessment system</strong> — NICEIC uses a points-based marking
                 system. Installations are graded and must achieve a minimum standard. Recurring
@@ -282,7 +282,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NAPIT assessment</strong> — NAPIT uses a competency framework approach.
                 Assessors look at the overall quality of work and documentation systems rather than
@@ -291,7 +291,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ongoing assessments</strong> — both schemes conduct annual or bi-annual
                 assessments after initial registration. These include a site visit to inspect live
@@ -302,10 +302,10 @@ const sections = [
           </ul>
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
-          <h4 className="text-base font-semibold text-yellow-300 mb-3">
+          <h4 className="text-base font-semibold text-elec-yellow mb-3">
             What assessors check against the 18th Edition A4:2026
           </h4>
-          <p className="text-white/90 text-sm leading-relaxed">
+          <p className="text-white text-sm leading-relaxed">
             From April 2026, BS 7671:2018+A4:2026 introduces requirements that both NICEIC and NAPIT
             assessors will check on new domestic installations. Regulation 411.3.4 now mandates
             additional protection by an RCD with a rated residual operating current not exceeding 30
@@ -333,7 +333,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC public recognition</strong> — surveys consistently show that NICEIC
                 is the most recognised electrical registration body among UK homeowners. Many
@@ -342,7 +342,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NAPIT recognition</strong> — NAPIT is less well known to the general public
                 but is fully recognised by industry professionals, insurers, and building control.
@@ -351,7 +351,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Logo usage</strong> — both schemes allow registered members to use their
                 logo on vehicles, business cards, and websites. The NICEIC logo is more likely to be
@@ -432,7 +432,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC specialist categories</strong> — NICEIC covers domestic, commercial,
                 industrial, and specialist electrical disciplines including electrical vehicle
@@ -441,7 +441,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NAPIT multi-discipline advantage</strong> — NAPIT covers electrical, heating
                 and ventilation (Gas Safe equivalent pathway), solid fuel, plumbing, microgeneration
@@ -451,7 +451,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charging</strong> — both schemes support self-certification of EV
                 charging point installations under Part P. OZEV (Office for Zero Emission Vehicles)
@@ -606,7 +606,7 @@ export default function NICEICvsNAPITComparisonPage() {
       heroTitle={
         <>
           NICEIC vs NAPIT:{' '}
-          <span className="text-yellow-400">Which Registration Scheme Is Best?</span>
+          <span className="text-elec-yellow">Which Registration Scheme Is Best?</span>
         </>
       }
       heroSubtitle="A practical comparison of the UK's two leading electrical competent person schemes — registration costs, assessment processes, consumer recognition, insurer acceptance, specialist work coverage, and how to choose between them."

@@ -204,7 +204,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>kVArh reactive energy charge</strong> — applied to half-hourly metered
                 customers. The charge applies to reactive energy consumed when the power factor
@@ -215,7 +215,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>kVA maximum demand charge</strong> — some tariffs charge for the monthly
                 peak kVA demand rather than (or in addition to) kW maximum demand. Since kVA = kW ÷
@@ -224,7 +224,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Agreed supply capacity</strong> — the connection agreement between the
                 customer and DNO specifies an agreed supply capacity in kVA (or kW with a stated
@@ -234,7 +234,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Identifying charges on the bill</strong> — reactive power charges appear on
                 the electricity invoice under various descriptions: "reactive energy charge", "kVArh
@@ -262,7 +262,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PFC controller</strong> — samples voltage and current from a current
                 transformer (CT) on the supply incomer. Calculates power factor in real time
@@ -272,7 +272,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Capacitor step sizing</strong> — equal steps (e.g., 5 × 20 kVAr = 100 kVAr
                 total) provide 5 levels of correction. The step size should not be larger than
@@ -282,7 +282,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Contactor switching</strong> — each capacitor step is switched by a
                 dedicated AC capacitor duty contactor with peak voltage suppression resistors (to
@@ -293,7 +293,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable sizing for capacitor circuits</strong> — cables feeding each capacitor
                 step must be rated for the full capacitor reactive current (I<sub>rc</sub>), not the
@@ -306,7 +306,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Location</strong> — APFC banks are most effective when connected at the main
                 distribution board (correcting the overall site power factor before the metering
@@ -334,7 +334,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Suitable applications</strong> — fixed capacitor banks are suitable for
                 individual large motors running continuously at full load (e.g., large compressors,
@@ -354,7 +354,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Motor-specific correction</strong> — connecting a fixed capacitor directly
                 at a motor terminal box corrects the reactive current that flows between the motor
@@ -407,7 +407,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Harmonic survey before specification</strong> — before specifying any
                 capacitor bank, measure the existing harmonic voltage and current distortion using a
@@ -470,7 +470,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reactor heat dissipation</strong> — series reactors dissipate heat (I²R
                 losses). The panel enclosure must provide adequate ventilation for the combined heat
@@ -498,7 +498,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1 — measure existing power factor</strong> — from the half-hourly data,
                 calculate the average and peak reactive demand (kVAr) and the corresponding power
@@ -507,7 +507,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2 — calculate current reactive energy cost</strong> — identify the
                 kVArh charge threshold (typically when PF &lt; 0.95) and the charge rate from the
@@ -516,7 +516,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 3 — calculate kVAr correction required</strong> — using the power
                 triangle: kVAr required = kW × (tan(cos⁻¹(existing PF)) − tan(cos⁻¹(target PF))).
@@ -526,7 +526,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 4 — calculate annual saving</strong> — estimated saving = annual
                 reactive energy charge (before PFC) × (1 − residual reactive energy with PFC ÷
@@ -555,7 +555,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large industrial (500+ kW)</strong> — typically 1.5–3 years payback. High
                 reactive power charges, large kVA maximum demand saving, capacity release for
@@ -564,7 +564,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Medium commercial (100–500 kW)</strong> — typically 2–5 years payback.
                 Moderate reactive power charges. 50–150 kVAr APFC bank, detuned if significant
@@ -573,7 +573,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Small commercial (under 100 kW)</strong> — often marginal or no financial
                 case. Small businesses on standard NHH tariffs without kVArh charges or kVA maximum
@@ -582,7 +582,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Non-financial benefits</strong> — reduced cable and switchgear loading
                 (extending equipment life), reduced transformer loading (allowing additional load
@@ -621,7 +621,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete the EIC on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -689,7 +689,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certificate PFC installations and quote industrial work"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, power quality test records, industrial quoting, and instant PDF export."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion, power quality test records, industrial quoting, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -715,7 +715,7 @@ export default function PowerFactorCorrectionPage() {
       heroTitle={
         <>
           Power Factor Correction UK:{' '}
-          <span className="text-yellow-400">PFC Installation Guide for Businesses</span>
+          <span className="text-elec-yellow">PFC Installation Guide for Businesses</span>
         </>
       }
       embeddedTool={<CalculatorSurface><PowerFactorCorrectionCalculator /></CalculatorSurface>}
@@ -727,7 +727,7 @@ export default function PowerFactorCorrectionPage() {
       faqHeading="Frequently Asked Questions About Power Factor Correction"
       relatedPages={relatedPages}
       ctaHeading="Complete PFC Installation EICs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site electrical installation certification, commissioning test records, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site electrical installation certification, commissioning test records, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

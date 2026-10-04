@@ -149,7 +149,7 @@ export default function ElectricalContainmentSymbolsPage() {
       heroTitle={
         <>
           Cable Containment Symbols:{' '}
-          <span className="text-yellow-400">Conduit, trunking + cable tray references</span>
+          <span className="text-elec-yellow">Conduit, trunking + cable tray references</span>
         </>
       }
       heroSubtitle="Every cable containment symbol — conduit through busbar trunking to underfloor systems — drawn to IEC 60617 with BS EN 61386 and BS EN 50085 cross-references."

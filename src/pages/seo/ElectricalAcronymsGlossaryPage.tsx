@@ -165,7 +165,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ShieldCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">MCB — Miniature Circuit Breaker</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -287,7 +287,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PFC — Prospective Fault Current.</strong> The maximum current that would
                 flow under fault conditions at a given point in the installation. Measured at the
@@ -300,7 +300,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ze — External Earth Fault Loop Impedance.</strong> The impedance of the
                 earth fault return path external to the installation — from the transformer, through
@@ -310,7 +310,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Zs — Earth Fault Loop Impedance.</strong> Total impedance of the complete
                 earth fault loop for a specific circuit. Zs = Ze + (R1+R2). Must be low enough for
@@ -330,7 +330,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>R1+R2 — Circuit Loop Resistance.</strong> The combined resistance of the
                 line conductor (R1) and the protective conductor (R2) for a circuit, measured
@@ -343,7 +343,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IR — Insulation Resistance.</strong> The resistance of the insulation
                 between live conductors and earth, measured at 500V DC for circuits rated up to
@@ -383,7 +383,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Cable className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">TN-S — Separate Neutral and Earth</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -444,7 +444,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EIC — Electrical Installation Certificate.</strong> Issued when new
                 installation work or a significant alteration is completed. Confirms the work
@@ -458,7 +458,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR — Electrical Installation Condition Report.</strong> Issued after a
                 periodic inspection and test of an existing installation. Records the condition and
@@ -471,7 +471,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671 — IET Wiring Regulations.</strong> The national standard for
                 electrical installation in the UK. Current edition is{' '}
@@ -483,7 +483,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>GN3 — Guidance Note 3: Inspection and Testing.</strong> Published by the IET
                 to supplement BS 7671. Provides practical guidance on the testing sequence, methods,
@@ -491,7 +491,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part P — Building Regulations (England and Wales).</strong> Approved
                 Document P covers electrical safety in dwellings. Certain types of work are
@@ -516,7 +516,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CPC — Circuit Protective Conductor.</strong> The earth conductor in a
                 circuit. In twin-and-earth cable, it is the bare copper wire. Its job is to provide
@@ -524,7 +524,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SWA — Steel Wire Armoured cable.</strong> A heavy-duty cable with steel wire
                 armouring for mechanical protection. Used for external runs, underground
@@ -533,7 +533,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MICC — Mineral Insulated Copper Clad cable.</strong> Also known as Pyro
                 cable. Uses compressed magnesium oxide insulation inside a copper sheath. Extremely
@@ -542,7 +542,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PEN — Protective Earth and Neutral.</strong> A conductor that serves as both
                 the neutral and the earth simultaneously. Found in TN-C-S (PME) supply systems. The
@@ -551,7 +551,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DB — Distribution Board.</strong> The enclosure containing the protective
                 devices (MCBs, RCDs, RCBOs) that control and protect individual circuits. Also
@@ -576,7 +576,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C&G — City and Guilds.</strong> The awarding body for the main electrical
                 qualifications in the UK: C&G 2382 (18th Edition), C&G 2391 (Inspection and
@@ -584,7 +584,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>
                   NICEIC — National Inspection Council for Electrical Installation Contracting.
@@ -599,7 +599,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>
                   NAPIT — National Association of Professional Inspectors and Testers.
@@ -613,7 +613,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ECS — Electrotechnical Certification Scheme.</strong> Issues the ECS card
                 (commonly called the "sparky card") which proves an electrician's qualifications and
@@ -623,7 +623,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IET — Institution of Engineering and Technology.</strong> The professional
                 body that publishes BS 7671 (the Wiring Regulations), the Guidance Notes, and the
@@ -655,7 +655,7 @@ export default function ElectricalAcronymsGlossaryPage() {
       heroTitle={
         <>
           Electrical Acronyms &amp; Glossary:{' '}
-          <span className="text-yellow-400">Every Abbreviation Explained</span>
+          <span className="text-elec-yellow">Every Abbreviation Explained</span>
         </>
       }
       heroSubtitle="MCB, RCD, RCBO, AFDD, SPD, PFC, Ze, Zs, CPC, PME, TN-S, TN-C-S, TT — the electrical trade runs on acronyms. This A-Z reference explains every one you will encounter in UK installation, testing, and certification work."

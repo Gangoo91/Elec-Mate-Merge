@@ -249,7 +249,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Safe isolation procedures</strong> — the complete GS38-compliant safe
                 isolation sequence, including proving the voltage indicator, isolating the circuit,
@@ -258,7 +258,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit installation</strong> — from removing the old board through to
                 completing the new installation, testing, and certification. Includes cable
@@ -266,7 +266,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing sequences</strong> — each test in the BS 7671 initial verification
                 sequence demonstrated with the correct instrument, settings, connections, and result
@@ -278,7 +278,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable termination techniques</strong> — stripping, preparing, and
                 terminating different cable types in various accessories. Close-up camera angles
@@ -286,7 +286,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fault-finding procedures</strong> — systematic approaches to diagnosing
                 common faults including dead circuits, tripping RCDs, earth faults, and intermittent
@@ -454,7 +454,7 @@ export default function LearningVideosElectricianPage() {
       heroTitle={
         <>
           Learning Videos for Electricians:{' '}
-          <span className="text-yellow-400">Watch, Learn, Qualify</span>
+          <span className="text-elec-yellow">Watch, Learn, Qualify</span>
         </>
       }
       heroSubtitle="Over 46 structured course videos covering practical demonstrations, theory explanations, and exam preparation. Real installations, real tools, real procedures. Download for offline viewing on site."

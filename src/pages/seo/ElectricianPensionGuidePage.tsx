@@ -181,7 +181,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h4 className="font-bold text-white mb-3 flex items-center gap-2">
-            <AlertTriangle className="w-5 h-5 text-yellow-400" /> The Self-Employed Pension Gap
+            <AlertTriangle className="w-5 h-5 text-elec-yellow" /> The Self-Employed Pension Gap
           </h4>
           <ul className="space-y-3 text-white text-sm">
             <li className="flex items-start gap-2">
@@ -237,16 +237,16 @@ const sections = [
               </h4>
               <ul className="space-y-2">
                 <li>
-                  Annual charge: <strong className="text-yellow-400">0.3%</strong>
+                  Annual charge: <strong className="text-elec-yellow">0.3%</strong>
                 </li>
                 <li>
-                  Min contribution: <strong className="text-yellow-400">£10/month</strong>
+                  Min contribution: <strong className="text-elec-yellow">£10/month</strong>
                 </li>
                 <li>
-                  Investment choice: <strong className="text-yellow-400">Limited (5 funds)</strong>
+                  Investment choice: <strong className="text-elec-yellow">Limited (5 funds)</strong>
                 </li>
                 <li>
-                  Setup: <strong className="text-yellow-400">Free, online</strong>
+                  Setup: <strong className="text-elec-yellow">Free, online</strong>
                 </li>
                 <li className="text-white text-xs mt-2">Best for: simplicity and low fees</li>
               </ul>
@@ -257,17 +257,17 @@ const sections = [
               </h4>
               <ul className="space-y-2">
                 <li>
-                  Annual charge: <strong className="text-yellow-400">0.15-0.45%</strong>
+                  Annual charge: <strong className="text-elec-yellow">0.15-0.45%</strong>
                 </li>
                 <li>
-                  Min contribution: <strong className="text-yellow-400">Varies (often £0)</strong>
+                  Min contribution: <strong className="text-elec-yellow">Varies (often £0)</strong>
                 </li>
                 <li>
                   Investment choice:{' '}
-                  <strong className="text-yellow-400">Full (1000s of funds)</strong>
+                  <strong className="text-elec-yellow">Full (1000s of funds)</strong>
                 </li>
                 <li>
-                  Setup: <strong className="text-yellow-400">Free, online</strong>
+                  Setup: <strong className="text-elec-yellow">Free, online</strong>
                 </li>
                 <li className="text-white text-xs mt-2">Best for: control and fund choice</li>
               </ul>
@@ -278,16 +278,16 @@ const sections = [
               </h4>
               <ul className="space-y-2">
                 <li>
-                  Annual charge: <strong className="text-yellow-400">0.5-1.5%</strong>
+                  Annual charge: <strong className="text-elec-yellow">0.5-1.5%</strong>
                 </li>
                 <li>
-                  Min contribution: <strong className="text-yellow-400">£25-50/month</strong>
+                  Min contribution: <strong className="text-elec-yellow">£25-50/month</strong>
                 </li>
                 <li>
-                  Investment choice: <strong className="text-yellow-400">Moderate</strong>
+                  Investment choice: <strong className="text-elec-yellow">Moderate</strong>
                 </li>
                 <li>
-                  Setup: <strong className="text-yellow-400">Via provider or adviser</strong>
+                  Setup: <strong className="text-elec-yellow">Via provider or adviser</strong>
                 </li>
                 <li className="text-white text-xs mt-2">Best for: hands-off with guidance</li>
               </ul>
@@ -339,16 +339,16 @@ const sections = [
             <p>Pays £400/month into NEST pension (£4,800/year)</p>
             <p>
               HMRC adds 25% tax relief: £4,800 becomes{' '}
-              <strong className="text-yellow-400">£6,000 in the pension</strong>
+              <strong className="text-elec-yellow">£6,000 in the pension</strong>
             </p>
             <p>Tax saving on self-assessment: reduces taxable profit by £6,000</p>
             <p>
-              Income tax saved: £6,000 x 20% = <strong className="text-yellow-400">£1,200</strong>
+              Income tax saved: £6,000 x 20% = <strong className="text-elec-yellow">£1,200</strong>
             </p>
             <p>
-              Class 4 NI saved: £6,000 x 6% = <strong className="text-yellow-400">£360</strong>
+              Class 4 NI saved: £6,000 x 6% = <strong className="text-elec-yellow">£360</strong>
             </p>
-            <p className="font-bold text-yellow-400 pt-2">
+            <p className="font-bold text-elec-yellow pt-2">
               Effective cost of £6,000 pension contribution: £3,240
             </p>
           </div>
@@ -388,7 +388,7 @@ const sections = [
               <p className="text-xs mt-1">£562/month on £45k</p>
             </div>
             <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-3 text-centre">
-              <p className="font-bold text-yellow-400">Start at 35</p>
+              <p className="font-bold text-elec-yellow">Start at 35</p>
               <p>Save 17.5%</p>
               <p className="text-xs mt-1">£656/month on £45k</p>
             </div>
@@ -408,9 +408,9 @@ const sections = [
           <h4 className="font-bold text-white mb-3">What Could Your Pot Be Worth?</h4>
           <div className="text-white text-sm space-y-2">
             <p>£300/month from age 30 to 67 (37 years) at 5% growth after fees:</p>
-            <p className="font-bold text-yellow-400 text-lg">Approximately £375,000</p>
+            <p className="font-bold text-elec-yellow text-lg">Approximately £375,000</p>
             <p>£500/month from age 30 to 67 (37 years) at 5% growth after fees:</p>
-            <p className="font-bold text-yellow-400 text-lg">Approximately £625,000</p>
+            <p className="font-bold text-elec-yellow text-lg">Approximately £625,000</p>
             <p className="text-xs mt-2">
               These are illustrative projections. Actual returns will vary based on investment
               performance.
@@ -437,7 +437,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full state pension:</strong> £221.20 per week (£11,502/year) in 2026/27. You
                 need 35 qualifying years of National Insurance contributions to receive the full
@@ -445,7 +445,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minimum qualifying years:</strong> You need at least 10 qualifying years to
                 receive any state pension. Between 10 and 35 years, you receive a proportional
@@ -453,7 +453,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Self-employed contributions:</strong> Class 2 NI contributions (£3.45/week)
                 count towards your qualifying years. If you file a self-assessment tax return and
@@ -461,7 +461,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check your record:</strong> Go to gov.uk/check-national-insurance-record or
                 use the HMRC app. It shows how many qualifying years you have, any gaps, and your
@@ -470,7 +470,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>State pension age:</strong> Currently 66, rising to 67 between 2026 and
                 2028, and expected to rise further. Plan on the basis that you may not receive your
@@ -551,7 +551,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1. Check your NI record.</strong> Go to
                 gov.uk/check-national-insurance-record. Make sure you have no gaps. If you do,
@@ -559,7 +559,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>2. Choose a provider.</strong> For simplicity, open a NEST account at
                 nestyourpension.org.uk. For more control, open a SIPP with Vanguard, AJ Bell, or
@@ -567,7 +567,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3. Set up a direct debit.</strong> Even £100 per month is a start. Set it up
                 to leave your account on the day after your quietest billing day — treat it like a
@@ -575,7 +575,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>4. Increase annually.</strong> Each year, increase your contribution by
                 £25–£50 per month. You will barely notice the difference month to month, but over a
@@ -583,7 +583,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>5. Claim your tax relief.</strong> If you are a higher rate taxpayer, make
                 sure your accountant includes pension contributions on your self-assessment return
@@ -621,7 +621,7 @@ export default function ElectricianPensionGuidePage() {
       heroTitle={
         <>
           Self-Employed Electrician Pension Guide 2026:{' '}
-          <span className="text-yellow-400">Secure Your Future, Start Now</span>
+          <span className="text-elec-yellow">Secure Your Future, Start Now</span>
         </>
       }
       heroSubtitle="No one is saving for your retirement except you. Self-employed electricians are not auto-enrolled into a pension. This guide explains your options (NEST, SIPP, personal pension), how tax relief gives you 25-40% extra, how much to save, and how to build a pension that matches your ambitions."
@@ -632,7 +632,7 @@ export default function ElectricianPensionGuidePage() {
       faqHeading="Frequently Asked Questions About Self-Employed Pensions"
       relatedPages={relatedPages}
       ctaHeading="Earn More, Save More, Retire Better"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. The more efficiently you run your business, the more you can invest in your future. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for quoting, certification, and job management. The more efficiently you run your business, the more you can invest in your future. 7-day free trial, cancel anytime."
     />
   );
 }

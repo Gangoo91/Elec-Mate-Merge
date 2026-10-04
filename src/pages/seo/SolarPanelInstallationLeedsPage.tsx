@@ -140,7 +140,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Yorkshire solar resource</strong> — Leeds receives approximately 1,100 to
                 1,200 peak sun hours per year, sufficient to generate 900 to 1,050 kWh per kWp
@@ -149,7 +149,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Growing market</strong> — West Yorkshire Combined Authority and Leeds City
                 Council have committed to ambitious net zero targets, with residential solar PV
@@ -158,7 +158,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Leaf className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Leaf className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Carbon impact</strong> — a 4kWp solar system in Leeds avoids approximately
                 1.0 to 1.2 tonnes of CO₂ per year, based on the current UK grid carbon intensity.
@@ -187,28 +187,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3kWp system</strong> — £4,500 to £6,500. Suitable for smaller homes or
                 limited roof space. Typically 8 to 10 panels.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>4kWp system</strong> — £6,000 to £9,000. The most popular size for a
                 three-bedroom semi-detached or terrace in Leeds. Typically 10 to 13 panels.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>6kWp system</strong> — £9,000 to £14,000. Suits larger homes or those with
                 EVs and heat pumps. Typically 15 to 18 panels.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Battery storage add-on</strong> — £2,500 to £5,000 for a 5 to 10kWh battery.
                 Popular brands include Tesla Powerwall, Givenergy, and SolarEdge.
@@ -334,7 +334,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Eligibility</strong> — your solar PV system must be MCS-certified and
                 installed by an MCS-certified installer. You need an export smart meter (most
@@ -342,7 +342,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Best rates (2025)</strong> — rates change frequently. As of 2025, top rates
                 include Octopus Outgoing Agile (up to 24p per kWh at peak times), E.ON Next Drive
@@ -352,7 +352,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Switching your SEG tariff</strong> — you can switch your SEG supplier
                 independently of your import tariff. Many Leeds solar owners use a specialist export
@@ -376,7 +376,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Yorkshire stone roofs</strong> — many Leeds properties have Yorkshire stone
                 slate or clay pantile roofs. These require specialist mounting solutions and
@@ -385,7 +385,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Shading analysis</strong> — urban Leeds has significant shading from
                 chimneys, trees, and neighbouring properties. A professional shading analysis (using
@@ -394,7 +394,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Roof orientation</strong> — south-facing is optimal but east/west splits are
                 increasingly common in Leeds terraces where rear roofs face varied directions. An
@@ -403,7 +403,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DNO notification</strong> — National Grid Electricity Distribution (NGED)
                 covers Yorkshire. G98 notification (systems up to 3.68kW) is straightforward and
@@ -429,7 +429,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCS certification</strong> — the Microgeneration Certification Scheme (MCS)
                 certifies both installers and products. Always check that your Leeds installer is
@@ -437,7 +437,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671 compliance</strong> — all electrical work must comply with{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
@@ -449,7 +449,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98/G99 engineering recommendation</strong> — the connection of solar PV to
                 the low voltage distribution network must comply with ENA Engineering Recommendation
@@ -457,7 +457,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire safety</strong> — solar PV arrays on roofs must comply with the
                 requirements of Approved Document B (Fire Safety) regarding access for firefighters.
@@ -483,7 +483,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Quote Solar Jobs Professionally</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -514,7 +514,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your solar installation business in Leeds with"
-          description="Join 1,600+ UK electricians using Elec-Mate to quote solar PV and EV charger jobs, manage certificates, and run their business from their phone."
+          description="Join 2,100+ UK electricians using Elec-Mate to quote solar PV and EV charger jobs, manage certificates, and run their business from their phone."
           icon={Sun}
         />
       </>
@@ -540,7 +540,7 @@ export default function SolarPanelInstallationLeedsPage() {
       heroTitle={
         <>
           Solar Panel Installation Leeds 2025:{' '}
-          <span className="text-yellow-400">Costs, Savings & Yorkshire Guide</span>
+          <span className="text-elec-yellow">Costs, Savings & Yorkshire Guide</span>
         </>
       }
       heroSubtitle="Everything you need to know about solar panel installation in Leeds and West Yorkshire — costs from £4,500, savings calculations, Smart Export Guarantee, grants, planning rules, and how to find an MCS-certified installer."
@@ -551,7 +551,7 @@ export default function SolarPanelInstallationLeedsPage() {
       faqHeading="Frequently Asked Questions About Solar Panels in Leeds"
       relatedPages={relatedPages}
       ctaHeading="Quote Solar PV Jobs in Leeds on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to quote solar PV installations, manage MCS certificates, and grow their business. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to quote solar PV installations, manage MCS certificates, and grow their business. 7-day free trial, cancel anytime."
     />
   );
 }

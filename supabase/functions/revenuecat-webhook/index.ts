@@ -1,5 +1,5 @@
 import { serve, createClient } from '../_shared/deps.ts';
-import { fireCapiEvent } from '../_shared/meta-capi.ts';
+import { fireCapiEventIfConsented } from '../_shared/meta-capi.ts';
 import { capturePostHogEvent } from '../_shared/posthog-server.ts';
 import { captureException } from '../_shared/sentry.ts';
 
@@ -537,7 +537,7 @@ serve(async (req) => {
               },
             });
           }
-          fireCapiEvent({
+          fireCapiEventIfConsented(app_user_id, {
             event_name: eventName,
             event_id: `rc_${type}_${transaction_id || product_id}_${app_user_id}`,
             // 'app' requires full device extinfo which a server webhook doesn't

@@ -45,7 +45,7 @@ export default function ElectricalNoiseAndInterferencePage() {
         <>
           Electrical Noise & Interference
           <br />
-          <span className="text-yellow-400">EMC Guide for Electricians</span>
+          <span className="text-elec-yellow">EMC Guide for Electricians</span>
         </>
       }
       heroSubtitle="Electromagnetic compatibility (EMC) is increasingly important in modern electrical installations. With LED drivers, variable speed drives, inverters, and smart devices generating high-frequency noise, electricians need to understand how interference is created, how it propagates, and how to prevent it from causing problems in data cables, audio systems, and sensitive equipment."
@@ -86,7 +86,7 @@ export default function ElectricalNoiseAndInterferencePage() {
               </p>
               <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mt-4">
                 <div className="flex items-center gap-2 mb-2">
-                  <AlertTriangle className="w-5 h-5 text-yellow-400" />
+                  <AlertTriangle className="w-5 h-5 text-elec-yellow" />
                   <h3 className="font-bold text-white text-lg">Real-World Impact</h3>
                 </div>
                 <p className="text-white text-sm leading-relaxed">
@@ -113,7 +113,7 @@ export default function ElectricalNoiseAndInterferencePage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Cable className="w-5 h-5 text-yellow-400" />
+                    <Cable className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Conducted Interference</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -127,7 +127,7 @@ export default function ElectricalNoiseAndInterferencePage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Waves className="w-5 h-5 text-yellow-400" />
+                    <Waves className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Radiated Interference</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -141,7 +141,7 @@ export default function ElectricalNoiseAndInterferencePage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Zap className="w-5 h-5 text-yellow-400" />
+                    <Zap className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">
                       Common-Mode vs Differential-Mode
                     </h3>
@@ -181,28 +181,28 @@ export default function ElectricalNoiseAndInterferencePage() {
                       <h4 className="font-bold text-white">Unscreened data cable, no barrier</h4>
                       <p className="text-white text-sm">Cat5e/Cat6 parallel to mains cable</p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-lg">50mm</span>
+                    <span className="font-bold text-elec-yellow text-lg">50mm</span>
                   </div>
                   <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
                     <div>
                       <h4 className="font-bold text-white">Screened data cable (STP/FTP)</h4>
                       <p className="text-white text-sm">Shielded cable parallel to mains</p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-lg">0mm</span>
+                    <span className="font-bold text-elec-yellow text-lg">0mm</span>
                   </div>
                   <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
                     <div>
                       <h4 className="font-bold text-white">Power in metal trunking/conduit</h4>
                       <p className="text-white text-sm">Earthed metallic enclosure</p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-lg">0mm</span>
+                    <span className="font-bold text-elec-yellow text-lg">0mm</span>
                   </div>
                   <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
                     <div>
                       <h4 className="font-bold text-white">At crossing points</h4>
                       <p className="text-white text-sm">Cables crossing at 90 degrees</p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-lg">0mm</span>
+                    <span className="font-bold text-elec-yellow text-lg">0mm</span>
                   </div>
                 </div>
               </div>
@@ -237,7 +237,7 @@ export default function ElectricalNoiseAndInterferencePage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <ShieldCheck className="w-5 h-5 text-yellow-400" />
+                    <ShieldCheck className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Foil-Screened (FTP)</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -250,7 +250,7 @@ export default function ElectricalNoiseAndInterferencePage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <ShieldCheck className="w-5 h-5 text-yellow-400" />
+                    <ShieldCheck className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Braided Screen (STP)</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -263,7 +263,7 @@ export default function ElectricalNoiseAndInterferencePage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Cable className="w-5 h-5 text-yellow-400" />
+                    <Cable className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Steel Wire Armoured (SWA)</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -301,9 +301,9 @@ export default function ElectricalNoiseAndInterferencePage() {
                 <h3 className="font-bold text-white text-lg mb-4">Types of EMI Suppression</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Mains line filters</strong> — DIN-rail
+                      <strong className="text-elec-yellow">Mains line filters</strong> — DIN-rail
                       mounted or inline filters installed at the supply to noisy equipment. They
                       contain inductors and capacitors arranged to attenuate high-frequency noise by
                       40-80dB. Available from 1A to 100A+ ratings. Must be installed as close to the
@@ -311,9 +311,9 @@ export default function ElectricalNoiseAndInterferencePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Ferrite cores</strong> — Clip-on ferrite
+                      <strong className="text-elec-yellow">Ferrite cores</strong> — Clip-on ferrite
                       rings placed around cables to suppress high-frequency common-mode noise. They
                       are simple, inexpensive, and can be retrofitted without disconnecting cables.
                       Effective for suppressing noise above 1 MHz. Commonly used on LED driver
@@ -321,18 +321,18 @@ export default function ElectricalNoiseAndInterferencePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Surge protective devices (SPDs)</strong> —
+                      <strong className="text-elec-yellow">Surge protective devices (SPDs)</strong> —
                       While primarily designed for overvoltage protection, SPDs also suppress
                       high-energy transients that can be a source of interference. BS 7671 now
                       recommends SPD installation in most domestic consumer units.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Snubber networks</strong> — RC
+                      <strong className="text-elec-yellow">Snubber networks</strong> — RC
                       (resistor-capacitor) networks fitted across switch contacts or relay contacts
                       to suppress the high-frequency transient generated when the contact opens.
                       Used on motor contactors, heating elements, and any inductive load switching
@@ -368,7 +368,7 @@ export default function ElectricalNoiseAndInterferencePage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">TRIAC-Dimmed LED Drivers</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -385,7 +385,7 @@ export default function ElectricalNoiseAndInterferencePage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Solutions for LED Driver Noise</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -415,36 +415,36 @@ export default function ElectricalNoiseAndInterferencePage() {
                 <h3 className="font-bold text-white text-lg mb-4">Key BS 7671 EMC Regulations</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Regulation 332.1</strong> — The electrical
+                      <strong className="text-elec-yellow">Regulation 332.1</strong> — The electrical
                       installation shall be designed and erected so that it does not cause harmful
                       electromagnetic interference to other equipment, and it shall have adequate
                       immunity to electromagnetic disturbances in its intended environment.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Regulation 444.4.1</strong> — Where the
+                      <strong className="text-elec-yellow">Regulation 444.4.1</strong> — Where the
                       installation includes cables for information technology, telecommunications,
                       or similar, the installation shall be designed to minimise electromagnetic
                       interference between the power cables and the signal cables.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Regulation 528.1</strong> — Cables
+                      <strong className="text-elec-yellow">Regulation 528.1</strong> — Cables
                       carrying power and cables carrying signals shall be separated or screened to
                       prevent mutual electromagnetic interference. The separation distances depend
                       on the cable types, the presence of screening, and the installation method.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Regulation 444.4.3</strong> — Equipment
+                      <strong className="text-elec-yellow">Regulation 444.4.3</strong> — Equipment
                       installed in the electrical installation shall comply with the relevant EMC
                       product standards. All CE/UKCA-marked equipment should meet the applicable
                       emissions and immunity standards.
@@ -479,7 +479,7 @@ export default function ElectricalNoiseAndInterferencePage() {
               </p>
               <div className="space-y-3 mt-4">
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     1
                   </span>
                   <div>
@@ -494,7 +494,7 @@ export default function ElectricalNoiseAndInterferencePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     2
                   </span>
                   <div>
@@ -509,7 +509,7 @@ export default function ElectricalNoiseAndInterferencePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     3
                   </span>
                   <div>

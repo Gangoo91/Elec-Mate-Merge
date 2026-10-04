@@ -37,7 +37,7 @@ export function RecentReviews({
             <Stars rating={r.rating} small />
             <div className="flex-1">
               <span className="font-medium text-white">{r.reviewerNickname}</span>
-              <span className="text-white/70"> — {r.title}</span>
+              <span className="text-white"> — {r.title}</span>
             </div>
           </div>
         ))}
@@ -50,7 +50,7 @@ export function RecentReviews({
       <h2 id="recent-reviews-heading" className="text-2xl sm:text-3xl font-bold text-white mb-2">
         {heading}
       </h2>
-      <p className="text-sm text-white/70 mb-6">Verified reviews from the UK App Store.</p>
+      <p className="text-sm text-white mb-6">Verified reviews from the UK App Store.</p>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {reviews.map((r) => (
@@ -66,10 +66,10 @@ export function RecentReviews({
             <h3 itemProp="name" className="text-base font-semibold text-white leading-snug">
               {r.title}
             </h3>
-            <p itemProp="reviewBody" className="text-sm text-white/80 leading-relaxed line-clamp-6">
+            <p itemProp="reviewBody" className="text-sm text-white leading-relaxed line-clamp-6">
               {r.body}
             </p>
-            <footer className="mt-auto pt-2 flex items-center justify-between text-xs text-white/60">
+            <footer className="mt-auto pt-2 flex items-center justify-between text-xs text-white">
               <span itemProp="author" itemScope itemType="https://schema.org/Person">
                 <span itemProp="name">{r.reviewerNickname}</span>
               </span>
@@ -110,7 +110,7 @@ function Stars({ rating, small = false }: { rating: number; small?: boolean }) {
       {[1, 2, 3, 4, 5].map((i) => (
         <Star
           key={i}
-          className={`${size} ${i <= rating ? 'fill-yellow-400 text-yellow-400' : 'text-white/20'}`}
+          className={`${size} ${i <= rating ? 'fill-yellow-400 text-elec-yellow' : 'text-white'}`}
         />
       ))}
     </div>

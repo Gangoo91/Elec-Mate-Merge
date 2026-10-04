@@ -151,7 +151,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulated by the ONR</strong> — the Office for Nuclear Regulation is
                 responsible for nuclear safety and security regulation in the UK. Site licence
@@ -159,7 +159,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NDA portfolio</strong> — the Nuclear Decommissioning Authority (NDA) owns
                 and manages 17 nuclear sites across the UK, including Sellafield, Dounreay, and the
@@ -168,7 +168,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New build opportunity</strong> — Hinkley Point C in Somerset is the UK's
                 first new nuclear power station in a generation. The project employs thousands of
@@ -218,7 +218,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Safety-classified electrical systems</strong> — electrical systems in the
                 nuclear island are classified by their importance to nuclear safety. Class 1 systems
@@ -245,7 +245,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hinkley Point C, Somerset</strong> — EDF Energy's new-build project, the
                 first new nuclear power station in the UK for over 30 years. Two EPR reactors under
@@ -255,7 +255,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sellafield, Cumbria</strong> — the UK's most complex nuclear site, operated
                 by Sellafield Ltd on behalf of the NDA. Processing, storage, and decommissioning
@@ -265,7 +265,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sizewell B, Suffolk</strong> — the UK's only currently operating pressurised
                 water reactor, operated by EDF Energy. Requires ongoing maintenance electrical
@@ -275,7 +275,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NDA estate</strong> — the wider NDA portfolio includes Dounreay in
                 Caithness, Capenhurst in Cheshire, Winfrith in Dorset, and the Magnox stations at
@@ -362,7 +362,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BPSS (Baseline Personnel Security Standard)</strong> — the minimum clearance
                 level required for all contractors on nuclear licensed sites. Covers identity
@@ -372,7 +372,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SC (Security Check)</strong> — required for many roles on nuclear sites,
                 particularly those with access to sensitive areas or information. SC involves a more
@@ -382,7 +382,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CNI (Civil Nuclear Industry) vetting</strong> — some roles at nuclear
                 licensed sites, particularly those involving sensitive nuclear material or
@@ -392,7 +392,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Planning ahead</strong> — security clearance takes time and cannot be
                 rushed. Electricians intending to move into nuclear work should begin the BPSS or SC
@@ -421,7 +421,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ionising Radiations Regulations 2017 (IRR17)</strong> — the primary UK
                 legislation governing radiation protection at work. Sets dose limits: 20mSv/year for
@@ -431,7 +431,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ALARP principle</strong> — doses must be kept As Low As Reasonably
                 Practicable. This means work planning takes account of dose implications, time in
@@ -440,7 +440,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dosimetry</strong> — when working in designated areas, contractors wear
                 personal dosimeters. Thermoluminescent dosimeters (TLDs) measure cumulative dose
@@ -449,7 +449,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RPA training content</strong> — basics of ionising radiation, types of
                 radiation and their penetrating power, dose units (Sievert, Gray), dose limits,
@@ -534,7 +534,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Employed nuclear electrician</strong> — £45,000 to £70,000 per year
                 depending on experience, site, and specific role. Senior positions such as lead
@@ -542,7 +542,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Self-employed / Ltd company contractor</strong> — £60 to £100+ per hour.
                 Major new-build projects such as Hinkley Point C have historically attracted rates
@@ -551,7 +551,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Overtime and shift premiums</strong> — nuclear sites frequently operate
                 shift patterns and overtime, with shift allowances and overtime premiums on top of
@@ -560,7 +560,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Accommodation and travel</strong> — many UK nuclear sites are in remote
                 locations (Sellafield in west Cumbria, Hinkley Point on the Somerset coast, Dounreay
@@ -593,7 +593,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Users className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Route to Your First Nuclear Contract</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -650,7 +650,7 @@ export default function NuclearSiteElectricalPage() {
       heroTitle={
         <>
           Nuclear Site Electrical Engineering UK:{' '}
-          <span className="text-yellow-400">The Complete Guide</span>
+          <span className="text-elec-yellow">The Complete Guide</span>
         </>
       }
       heroSubtitle="Everything UK electricians need to know about nuclear site electrical work — nuclear island vs conventional island, the Nuclear Baseline QA regime, BPSS and SC security clearance, ECS nuclear card, radiation protection awareness, UK nuclear sites, and premium pay rates of £60–£100+ per hour."

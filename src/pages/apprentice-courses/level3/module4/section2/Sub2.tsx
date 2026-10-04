@@ -416,7 +416,7 @@ export default function Sub2() {
           }
           meaning={
             <>
-              A4:2026 deleted Table 3A and the 5&times;I&Delta;n test. There is now a single AC test
+              A2:2022 deleted Table 3A and the 5&times;I&Delta;n test. There is now a single AC test
               at rated residual operating current &mdash; one button press on a Megger MFT1741+ or
               Kewtech KT64+. A general non-delay RCD must disconnect within 300 ms; a delay
               &apos;S&apos; type within 130&ndash;500 ms. If your firm&apos;s test pro forma still

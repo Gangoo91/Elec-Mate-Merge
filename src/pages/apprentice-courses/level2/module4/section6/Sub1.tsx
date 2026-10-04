@@ -56,7 +56,7 @@ const checks = [
     options: ['0.87 Ω', '1.37 Ω', '2.19 Ω', '1.44 Ω'],
     correctIndex: 1,
     explanation:
-      'A4:2026 Table 41.3 — Type B 32 A = 1.37 Ω. (The older 17th/A2 era value of 1.44 Ω is obsolete — never quote it on a new test result.) Your measured Zs at the far end of the circuit must come in below 1.37 Ω, and BS 7671 method requires applying the 0.8 multiplier when comparing measured (cold cable) values to the table — so the practical measured ceiling is 1.37 × 0.8 = 1.10 Ω.',
+      'A4:2026 Table 41.3 — Type B 32 A = 1.37 Ω. (The 17th Edition value of 1.44 Ω is obsolete — never quote it on a new test result.) Your measured Zs at the far end of the circuit must come in below 1.37 Ω, and BS 7671 method requires applying the 0.8 multiplier when comparing measured (cold cable) values to the table — so the practical measured ceiling is 1.37 × 0.8 = 1.10 Ω.',
   },
   {
     id: 'm4-s6-sub1-bonding-rule',
@@ -145,7 +145,7 @@ const quizQuestions = [
     options: [
       'Disconnect the bonding conductor at both ends first, then read its resistance on the bench so the clamps do not affect the figure.',
       'Apply 500 V DC between the bonding conductor and the gas pipe to confirm the insulation around the clamp is sound.',
-      'Connect one MFT lead to the MET clamp and the other to the bonding clamp at the gas service — read directly. The reading proves end-to-end resistance of the conductor including both clamps. Acceptance: < 0.05 Ω as a practical rule of thumb.',
+      'Isolate, disconnect the bonding conductor at the MET, then measure between its end and the clamp at the gas service. The reading includes the clamp; a practical guide is under 0.05 Ω.',
       'Measure the loop impedance from the gas clamp back to the supply with the installation live, and accept any value under 1 Ω.',
     ],
     correctAnswer: 2,
@@ -155,16 +155,16 @@ const quizQuestions = [
   {
     id: 7,
     question:
-      'A4:2026 Table 41.3 max Zs values are presented differently to legacy texts. Which statement is correct?',
+      'Current Table 41.3 max Zs values are presented differently to legacy texts. Which statement is correct?',
     options: [
-      'Table 41.3 values are still raw figures — you must multiply every reading by 0.95 yourself to apply Cmin before comparing, exactly as in the older A2 texts.',
-      'The A4:2026 values went UP compared to A2 because the disconnection time was relaxed, so B32 rose from 1.37 Ω to 1.44 Ω.',
+      'Table 41.3 values are still raw figures — you must multiply every reading by 0.95 yourself to apply Cmin before comparing, exactly as in the older 17th Edition texts.',
+      'The current values went UP compared with the 17th Edition because the disconnection time was relaxed, so B32 rose from 1.37 Ω to 1.44 Ω.',
       'Table 41.3 now gives the cold-measured site limit directly, so the 1.37 Ω figure is already the value you compare your measured reading against with no further correction.',
-      "Table 41.3 max Zs values in A4:2026 are now published with the Cmin factor (0.95) already applied — you don't multiply by 0.95 yourself. Use the table value directly, then apply the 0.8 measured-vs-calculated correction (e.g. B32 max Zs = 1.37 Ω → 1.10 Ω corrected).",
+      "Table 41.3 max Zs values are now published with the Cmin factor (0.95) already applied — you don't multiply by 0.95 yourself. Use the table value directly, then apply the 0.8 measured-vs-calculated correction (e.g. B32 max Zs = 1.37 Ω → 1.10 Ω corrected).",
     ],
     correctAnswer: 3,
     explanation:
-      "Table 41.3 max Zs values in A4:2026 are now published with the Cmin factor (0.95) already applied — you don't multiply by 0.95 yourself. The 0.8 figure that appears in some legacy texts is a separate temperature correction (Ct), not Cmin. Always use Table 41.3 directly: B32 max Zs = 1.37 Ω, with the 0.8 Ct correction giving 1.10 Ω at the measured-vs-calculated threshold. The net effect compared to older A2 figures is that several rows came down a few percent (B32 from 1.44 Ω to 1.37 Ω, B16 from 2.87 Ω to 2.73 Ω) — quote the A4:2026 value on every new schedule of test results.",
+      "Table 41.3 max Zs values are now published with the Cmin factor (0.95) already applied — you don't multiply by 0.95 yourself. The 0.8 figure that appears in some legacy texts is a separate temperature correction (Ct), not Cmin. Always use Table 41.3 directly: B32 max Zs = 1.37 Ω, with the 0.8 Ct correction giving 1.10 Ω at the measured-vs-calculated threshold. The net effect compared with the 17th Edition figures is that several rows came down a few percent (B32 from 1.44 Ω to 1.37 Ω, B16 from 2.87 Ω to 2.73 Ω) — quote the current Table 41.3 value on every new schedule of test results.",
   },
   {
     id: 8,
@@ -652,9 +652,9 @@ export default function Sub1() {
           </div>
 
           <p>
-            Note the changes from the older A2 values: B16 dropped from 2.87 → 2.73 Ω, B20 from 2.30
-            → 2.19 Ω, B32 from 1.44 → 1.37 Ω. Always quote the A4:2026 figures on a new schedule of
-            test results.
+            Note the changes from the 17th Edition values: B16 dropped from 2.87 → 2.73 Ω, B20 from
+            2.30 → 2.19 Ω, B32 from 1.44 → 1.37 Ω. Always quote the current Table 41.3 figures on a
+            new schedule of test results.
           </p>
         </ConceptBlock>
 

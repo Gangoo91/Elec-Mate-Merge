@@ -384,7 +384,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maintain supply voltage within BS EN 50160 limits</strong> (230V +10%/-6%)
                 for 95% of the time. If your supply is consistently outside these limits, the DNO
@@ -392,7 +392,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Respond to voltage complaints.</strong> If you report a voltage issue, the
                 DNO must investigate. You can support your complaint with recorded voltage data — a
@@ -401,7 +401,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pay compensation for damage caused by supply faults.</strong> If a DNO
                 supply fault (such as a broken neutral) damages your appliances, you may be entitled
@@ -432,7 +432,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use a true RMS multimeter.</strong> Cheap non-RMS meters can give inaccurate
                 readings on distorted waveforms. For voltage measurements that you intend to submit
@@ -440,7 +440,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Measure at the main switch.</strong> Measure line-to-neutral voltage at the
                 supply side of the main switch in the consumer unit. This gives you the voltage at
@@ -448,7 +448,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Record at multiple times.</strong> Take readings in the morning (low
                 demand), afternoon, evening peak (6-8pm, high demand), and late at night (low
@@ -457,7 +457,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use a data logger for evidence.</strong> A plug-in voltage data logger
                 records voltage continuously over 24-72 hours, capturing peaks, dips, and
@@ -535,7 +535,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Gauge className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">1. Measure Supply Voltage</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -627,7 +627,7 @@ export default function VoltageTooHighLowPage() {
       heroTitle={
         <>
           Voltage Too High or Too Low?{' '}
-          <span className="text-yellow-400">Causes, Testing, and Solutions</span>
+          <span className="text-elec-yellow">Causes, Testing, and Solutions</span>
         </>
       }
       heroSubtitle="The UK mains voltage should be between 216V and 253V. If your supply is outside this range, appliances can be damaged, motors overheat, and lighting flickers. This guide covers every cause — from DNO supply faults to loose neutrals — and what to do about it."
@@ -638,7 +638,7 @@ export default function VoltageTooHighLowPage() {
       faqHeading="Frequently Asked Questions About Supply Voltage"
       relatedPages={relatedPages}
       ctaHeading="Every BS 7671 Calculator on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for voltage drop calculations, cable sizing, AI fault diagnosis, and digital certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for voltage drop calculations, cable sizing, AI fault diagnosis, and digital certificates. 7-day free trial, cancel anytime."
     />
   );
 }

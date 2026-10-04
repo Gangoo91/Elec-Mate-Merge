@@ -220,7 +220,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP44</strong> — Protected against solid objects larger than 1mm and
                 splashing water from any direction. This is the minimum for outdoor Christmas lights
@@ -228,14 +228,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP54</strong> — Dust-protected and splash-proof. Suitable for most outdoor
                 positions including exposed walls and fences.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP65</strong> — Dust-tight and protected against water jets. Suitable for
                 ground-level installations, areas prone to standing water, and exposed positions
@@ -243,7 +243,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP67/IP68</strong> — Submersible. Required for lights placed in or near
                 water features, ponds, or areas that flood.
@@ -324,7 +324,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Annual PAT testing</strong> — Christmas lights stored for 11 months and then
                 deployed should be PAT tested before each season. Storage can cause cable
@@ -333,7 +333,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Visual inspection</strong> — check all cables, plugs, transformers,
                 connections, and lamp holders for physical damage, cracking, discolouration, or
@@ -341,7 +341,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insulation resistance test</strong> — test at 500V DC. The minimum
                 acceptable insulation resistance is 1 megohm. Moisture ingress during storage is a
@@ -349,7 +349,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Record keeping</strong> — maintain a register of all Christmas lighting
                 equipment, PAT test dates, results, and any items discarded or replaced. This
@@ -379,7 +379,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Timer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Timer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mechanical timer switches</strong> — plug-in timers with a 24-hour dial
                 allow setting on/off times in 15-minute increments. Cheap, reliable, and no internet
@@ -388,7 +388,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Timer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Timer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smart plugs</strong> — Wi-Fi connected plugs that can be controlled via a
                 phone app, set to schedules, or triggered by sunset/sunrise times. Useful for
@@ -397,7 +397,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Timer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Timer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Light-sensitive switches</strong> — dusk-to-dawn sensors automatically
                 switch lights on when ambient light drops and off at sunrise. Ideal for outdoor
@@ -427,7 +427,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Modern consumer units</strong> — if the property has a consumer unit
                 installed after January 2016, all circuits should already have RCD protection
@@ -436,7 +436,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Older installations</strong> — properties with older consumer units
                 (rewireable fuses, no RCDs) lack this protection. A plug-in RCD adaptor provides
@@ -445,7 +445,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test the RCD monthly</strong> — press the test button on the RCD (at the
                 consumer unit or on the plug-in adaptor) to confirm it trips. If it does not trip,
@@ -471,7 +471,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">PAT Testing Service</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -540,7 +540,7 @@ export default function ChristmasLightingSafetyPage() {
       heroTitle={
         <>
           Christmas Lighting Safety:{' '}
-          <span className="text-yellow-400">Keeping Your Home and Business Safe</span>
+          <span className="text-elec-yellow">Keeping Your Home and Business Safe</span>
         </>
       }
       heroSubtitle="Every year, electrical fires and shock incidents spike during the Christmas period. This guide covers indoor vs outdoor lights, IP ratings, overloading risks, PAT testing for commercial displays, and timer switches — for homeowners and electricians."
@@ -551,7 +551,7 @@ export default function ChristmasLightingSafetyPage() {
       faqHeading="Frequently Asked Questions About Christmas Lighting Safety"
       relatedPages={relatedPages}
       ctaHeading="Keep Your Customers Safe This Christmas"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for PAT testing records, quoting outdoor installations, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for PAT testing records, quoting outdoor installations, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

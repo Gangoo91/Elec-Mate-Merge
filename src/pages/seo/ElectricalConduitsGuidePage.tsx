@@ -44,7 +44,7 @@ export default function ElectricalConduitsGuidePage() {
         <>
           Electrical Conduit Guide
           <br />
-          <span className="text-yellow-400">Types, Sizing & Installation</span>
+          <span className="text-elec-yellow">Types, Sizing & Installation</span>
         </>
       }
       heroSubtitle="Electrical conduit provides mechanical protection and a neat, professional containment system for cables in domestic, commercial, and industrial installations. This guide covers PVC conduit, galvanised steel conduit, flexible conduit, sizing and fill calculations, bending techniques, and installation best practice to BS 7671."
@@ -108,9 +108,9 @@ export default function ElectricalConduitsGuidePage() {
                 <h3 className="font-bold text-white text-lg mb-4">PVC Conduit Types and Sizes</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Round PVC conduit</strong> — Available in
+                      <strong className="text-elec-yellow">Round PVC conduit</strong> — Available in
                       20 mm, 25 mm, and 32 mm nominal sizes (referring to the outside diameter).
                       White or black finish. 20 mm is the standard for domestic installations
                       (lighting and power circuits). 25 mm is used where more cables are needed or
@@ -119,9 +119,9 @@ export default function ElectricalConduitsGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Oval PVC conduit</strong> — Available in
+                      <strong className="text-elec-yellow">Oval PVC conduit</strong> — Available in
                       16 mm and 20 mm sizes. Oval conduit is designed for installation within
                       plastered walls — its flat profile allows it to be channelled into brickwork
                       or blockwork and plastered over without creating excessive depth. It is the
@@ -129,9 +129,9 @@ export default function ElectricalConduitsGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Heavy gauge vs light gauge</strong> — PVC
+                      <strong className="text-elec-yellow">Heavy gauge vs light gauge</strong> — PVC
                       conduit is available in light gauge (for surface mounting where moderate
                       protection is needed) and heavy gauge (for greater impact resistance). Heavy
                       gauge PVC conduit is rated as protection against mechanical impact and is
@@ -178,28 +178,28 @@ export default function ElectricalConduitsGuidePage() {
               </p>
               <div className="grid sm:grid-cols-2 gap-4 my-6">
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-3">Advantages</h3>
+                  <h3 className="font-bold text-elec-yellow text-lg mb-3">Advantages</h3>
                   <ul className="space-y-2 text-white text-sm leading-relaxed">
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>
                         Excellent mechanical protection against impact, crushing, and penetration
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>Can serve as the CPC when installed with proper continuity</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>Fire-resistant — does not burn or produce toxic fumes</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>Electromagnetic screening for sensitive circuits</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>
                         Temperature-stable — operates from minus 25 to over 200 degrees Celsius
                       </span>
@@ -312,7 +312,7 @@ export default function ElectricalConduitsGuidePage() {
                 internal area that can be occupied by cables — this is the conduit fill calculation.
               </p>
               <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-6">
-                <h3 className="font-bold text-yellow-400 text-lg mb-3">The 40% Fill Rule</h3>
+                <h3 className="font-bold text-elec-yellow text-lg mb-3">The 40% Fill Rule</h3>
                 <div className="space-y-3 text-white text-sm leading-relaxed">
                   <p>
                     BS 7671 limits conduit fill to approximately 40% of the internal cross-sectional
@@ -404,7 +404,7 @@ export default function ElectricalConduitsGuidePage() {
               <div className="space-y-4 my-6">
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <div>
                       <h3 className="font-bold text-white mb-1">PVC conduit bending</h3>
                       <p className="text-white text-sm leading-relaxed">
@@ -421,7 +421,7 @@ export default function ElectricalConduitsGuidePage() {
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <div>
                       <h3 className="font-bold text-white mb-1">Steel conduit bending</h3>
                       <p className="text-white text-sm leading-relaxed">
@@ -438,7 +438,7 @@ export default function ElectricalConduitsGuidePage() {
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-start gap-3">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <div>
                       <h3 className="font-bold text-white mb-1">Common bending mistakes</h3>
                       <p className="text-white text-sm leading-relaxed">
@@ -478,9 +478,9 @@ export default function ElectricalConduitsGuidePage() {
                 <h3 className="font-bold text-white text-lg mb-4">Conduit Installation Rules</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Draw points</strong> — Install inspection
+                      <strong className="text-elec-yellow">Draw points</strong> — Install inspection
                       bends, tees, or draw boxes at regular intervals along the conduit run to allow
                       cables to be drawn in stages. The maximum distance between draw points depends
                       on the conduit size and the number of bends — as a general rule, no more than
@@ -489,9 +489,9 @@ export default function ElectricalConduitsGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Draw wires</strong> — Install a draw wire
+                      <strong className="text-elec-yellow">Draw wires</strong> — Install a draw wire
                       (galvanised steel wire or nylon cord) in the conduit during installation,
                       before the conduit is fixed in its final position. This makes cable pulling
                       much easier than trying to push a draw wire through a completed and fixed
@@ -499,9 +499,9 @@ export default function ElectricalConduitsGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Fixings</strong> — Conduit must be
+                      <strong className="text-elec-yellow">Fixings</strong> — Conduit must be
                       securely fixed at regular intervals. For surface-mounted conduit: saddles at
                       every 600 to 900 mm on horizontal runs, 900 to 1200 mm on vertical runs, and
                       within 300 mm of every fitting (bend, tee, box). The conduit should not sag
@@ -509,18 +509,18 @@ export default function ElectricalConduitsGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Expansion joints</strong> — PVC conduit
+                      <strong className="text-elec-yellow">Expansion joints</strong> — PVC conduit
                       expands with temperature changes. On long straight runs (over 6 metres),
                       install an expansion coupling to accommodate thermal expansion and prevent the
                       conduit from bowing or cracking at fixed joints.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Bush at entries</strong> — Where conduit
+                      <strong className="text-elec-yellow">Bush at entries</strong> — Where conduit
                       enters a box, panel, or enclosure, fit a bush on the inside of the entry to
                       protect cable insulation from the sharp edge of the conduit or the knockout
                       hole. For steel conduit, a brass or nylon bush is essential to prevent the
@@ -631,7 +631,7 @@ export default function ElectricalConduitsGuidePage() {
         },
       ]}
       ctaHeading="Calculate Conduit Fill Instantly"
-      ctaSubheading="Elec-Mate's conduit fill calculator, cable sizing tools, and digital certificates support every commercial and domestic conduit installation. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's conduit fill calculator, cable sizing tools, and digital certificates support every commercial and domestic conduit installation. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

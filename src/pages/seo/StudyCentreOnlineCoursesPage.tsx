@@ -48,7 +48,7 @@ export default function StudyCentreOnlineCoursesPage() {
       badgeIcon={GraduationCap}
       heroTitle={
         <>
-          <span className="text-yellow-400">Online Electrical Courses</span> — Study Centre UK
+          <span className="text-elec-yellow">Online Electrical Courses</span> — Study Centre UK
         </>
       }
       heroSubtitle="46+ courses covering Level 2, Level 3, 18th Edition, 2391 Inspection and Testing, AM2 preparation, and CPD for qualified electricians. Video lessons, interactive quizzes, flashcards, mock exams, and progress tracking. Download courses for offline study. Your employer can track your progress from their dashboard."

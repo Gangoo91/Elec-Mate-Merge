@@ -235,7 +235,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New connections and upgrades</strong> — new supplies, increased capacity
                 (for example, upgrading from 60A to 100A for an EV charger or heat pump), and
@@ -243,7 +243,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98/G99 notifications</strong> — solar PV, battery storage, and other
                 generation equipment must be notified to SPEN. G98 (up to 16A per phase) is a simple
@@ -252,7 +252,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing arrangements</strong> — Edinburgh properties are predominantly
                 TN-C-S (PME) or TN-S. Older tenements may have TT earthing, particularly if the
@@ -261,7 +261,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Looped services in tenements</strong> — some Edinburgh tenements have shared
                 or looped service cables, particularly in older buildings. This can affect maximum
@@ -293,7 +293,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <Landmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Listed building consent</strong> — any work that alters the character of a
                 listed building requires consent. This includes external EV charger installations,
@@ -304,7 +304,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <Landmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Conservation area restrictions</strong> — in conservation areas, even
                 unlisted buildings face restrictions on external alterations. Planning permission
@@ -313,7 +313,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <Landmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Practical approach</strong> — when quoting for work on listed or
                 conservation area properties, always flag the potential need for consent. Advise the
@@ -402,7 +402,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ThermometerSun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ThermometerSun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7909 compliance</strong> — temporary electrical installations in
                 entertainment venues must comply with BS 7909 (Code of Practice for Temporary
@@ -411,7 +411,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ThermometerSun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ThermometerSun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Generator installations</strong> — many temporary venues use diesel
                 generators as the primary or backup supply. Generator installations require
@@ -420,7 +420,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ThermometerSun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ThermometerSun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Council licensing</strong> — the City of Edinburgh Council requires
                 electrical safety certificates for all temporary venues. Certificates must be
@@ -429,7 +429,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ThermometerSun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ThermometerSun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Seasonal opportunity</strong> — the Festival season (July setup through
                 September takedown) is a significant revenue opportunity for Edinburgh electricians.
@@ -531,7 +531,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EIC and EICR Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -582,7 +582,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Edinburgh electricians"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -608,7 +608,7 @@ export default function ElectricianEdinburghPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Edinburgh: <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Edinburgh: <span className="text-elec-yellow">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Edinburgh's unique property stock — from stone tenements and Georgian townhouses to UNESCO World Heritage Sites — demands electricians who understand Scottish Building Standards, SPEN connections, and heritage property challenges."
@@ -619,7 +619,7 @@ export default function ElectricianEdinburghPage() {
       faqHeading="Frequently Asked Questions About Electricians in Edinburgh"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Edinburgh Electricians"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the realities of Edinburgh's tenements, listed buildings, and Scottish regulations. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the realities of Edinburgh's tenements, listed buildings, and Scottish regulations. 7-day free trial."
     />
   );
 }

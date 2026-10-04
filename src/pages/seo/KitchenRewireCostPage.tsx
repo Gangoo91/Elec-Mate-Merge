@@ -184,7 +184,7 @@ const sections = [
                   Ring main, cooker circuit, lighting, 6–8 sockets
                 </p>
               </div>
-              <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£800 – £1,200</p>
+              <p className="font-bold text-elec-yellow whitespace-nowrap ml-4">£800 – £1,200</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
@@ -193,7 +193,7 @@ const sections = [
                   Ring main, cooker, dedicated appliance circuits, under-cabinet lighting, extractor
                 </p>
               </div>
-              <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£1,200 – £1,800</p>
+              <p className="font-bold text-elec-yellow whitespace-nowrap ml-4">£1,200 – £1,800</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
@@ -202,7 +202,7 @@ const sections = [
                   All above plus island power, multiple lighting zones, consumer unit upgrade
                 </p>
               </div>
-              <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£1,800 – £2,500</p>
+              <p className="font-bold text-elec-yellow whitespace-nowrap ml-4">£1,800 – £2,500</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
@@ -211,7 +211,7 @@ const sections = [
                   45A switch, 6.0mm² cable, connection to consumer unit
                 </p>
               </div>
-              <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£200 – £350</p>
+              <p className="font-bold text-elec-yellow whitespace-nowrap ml-4">£200 – £350</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
@@ -220,14 +220,14 @@ const sections = [
                   LED strip or puck lights, switched supply, 3–5 metre run
                 </p>
               </div>
-              <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£150 – £300</p>
+              <p className="font-bold text-elec-yellow whitespace-nowrap ml-4">£150 – £300</p>
             </div>
             <div className="flex justify-between items-start">
               <div>
                 <p className="font-bold text-white">Consumer unit upgrade (if needed)</p>
                 <p className="text-white text-sm">New dual RCD or RCBO board with spare ways</p>
               </div>
-              <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£350 – £600</p>
+              <p className="font-bold text-elec-yellow whitespace-nowrap ml-4">£350 – £600</p>
             </div>
           </div>
         </div>
@@ -253,7 +253,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ring main (32A)</strong> — supplies the general worktop socket outlets.
                 Typically 6 to 10 double sockets positioned above the worktop for small appliances
@@ -262,7 +262,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cooker circuit (32A or 45A)</strong> — a dedicated radial circuit for the
                 cooker or built-in oven and hob. Cable size depends on the cooker rating: 6.0mm² for
@@ -271,7 +271,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated appliance circuits</strong> — dishwasher, washing machine, and
                 tumble dryer should each have a dedicated fused connection unit (FCU) or unswitched
@@ -280,7 +280,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lighting circuit</strong> — kitchen lighting (ceiling downlights,
                 under-cabinet lights, pendant over island) on a dedicated lighting circuit or shared
@@ -289,7 +289,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Fan className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Fan className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Extractor fan</strong> — supplied from a fused spur (typically 3A fuse) or
                 from the lighting circuit, depending on the fan type. A cooker hood may be supplied
@@ -359,7 +359,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>LED downlights</strong> — the standard for modern kitchen ceiling lighting.
                 Fire-rated IP65 LED downlights from approximately £5 to £15 each at trade price
@@ -368,7 +368,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Under-cabinet lighting</strong> — LED strip or individual puck lights
                 mounted under wall units to illuminate the worktop. Provides essential task lighting
@@ -378,7 +378,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pendant over island</strong> — decorative pendant lights over a kitchen
                 island provide feature lighting and define the dining/social zone. Requires a
@@ -405,7 +405,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Floor route</strong> — the standard approach is to run the cable under the
                 floor to the island position. On suspended timber floors, this is straightforward.
@@ -414,7 +414,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pop-up sockets</strong> — flush-mounted sockets that pop up from the worktop
                 when needed and push back flush when not in use. Available with 13A sockets and USB
@@ -423,7 +423,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Kickboard sockets</strong> — sockets fitted into the kickboard (plinth) of
                 the island, below the overhanging worktop. Less visible than worktop-mounted
@@ -500,7 +500,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -548,7 +548,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify kitchen rewires on your phone"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
           icon={CookingPot}
         />
       </>
@@ -574,7 +574,7 @@ export default function KitchenRewireCostPage() {
       heroTitle={
         <>
           Kitchen Rewire Cost:{' '}
-          <span className="text-yellow-400">UK Electrical Pricing Guide 2026</span>
+          <span className="text-elec-yellow">UK Electrical Pricing Guide 2026</span>
         </>
       }
       heroSubtitle="How much does a kitchen rewire cost in the UK? This guide covers typical prices from £800 to £2,500, cooker circuits, dedicated appliance circuits, under-cabinet lighting, island power, and Part P notification requirements."
@@ -585,7 +585,7 @@ export default function KitchenRewireCostPage() {
       faqHeading="Frequently Asked Questions About Kitchen Rewire Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Kitchen Rewires on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for kitchen rewires. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for kitchen rewires. 7-day free trial, cancel anytime."
     />
   );
 }

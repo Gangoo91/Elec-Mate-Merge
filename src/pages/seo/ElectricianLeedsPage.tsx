@@ -184,7 +184,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person scheme registration</strong> — ask for their NICEIC, NAPIT,
                 or ELECSA registration number. Verify it on the scheme provider's website. This
@@ -193,7 +193,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ECS card</strong> — the Electrotechnical Certification Scheme card confirms
                 the holder's qualifications and competence. A gold card indicates a fully qualified
@@ -201,7 +201,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Public liability insurance</strong> — minimum £1 million cover, ideally £2
                 million. Higher cover is advisable for work in period properties where accidental
@@ -210,7 +210,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Local recommendations</strong> — check Google Business, Checkatrade, and
                 Trustpilot reviews. Leeds community Facebook groups (Chapel Allerton Community,
@@ -236,7 +236,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full rewire (3-bed stone terrace)</strong> — £4,000 to £6,500 including new
                 consumer unit, all circuits, sockets, switches, lighting, testing, and Part P
@@ -245,7 +245,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacement</strong> — £400 to £650 including supply
                 isolation, new BS 7671:2018+A4:2026 compliant unit with RCBOs, testing, and Part P
@@ -257,7 +257,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR</strong> — £140 to £260 depending on property size. A 2-bed flat is
                 typically £140 to £180; a 3 to 4 bed house is £180 to £260. Older Leeds terraces
@@ -265,7 +265,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional socket</strong> — £80 to £140 per single socket from an existing
                 circuit. Surface-mounted options are cheaper in stone-walled properties where
@@ -273,7 +273,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger installation</strong> — £600 to £1,100 for a 7kW home charger.
                 Suburban Leeds properties with driveways (Roundhay, Horsforth, Guiseley) are
@@ -281,7 +281,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency call-out</strong> — £90 to £160 for the first hour including
                 travel, plus £35 to £55 per additional hour. Evening and weekend surcharges of 30%
@@ -372,7 +372,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New connections and upgrades</strong> — apply through Northern Powergrid's
                 website (northernpowergrid.com) for new electricity supplies, single-phase to
@@ -381,7 +381,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98/G99 notifications</strong> — required for solar PV, battery storage, and
                 generation equipment. Your electrician submits these to Northern Powergrid. G98
@@ -390,7 +390,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Looped service cables</strong> — many older Leeds properties, particularly
                 terraces, have looped service cables (where the incoming supply passes through one
@@ -517,7 +517,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Users className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Key Opportunities</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -550,7 +550,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Leeds electrical business"
-          description="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Complete EICRs and EICs on site…"
+          description="Join 2,100+ UK electricians using Elec-Mate for quoting, certification, and job management. Complete EICRs and EICs on site…"
           icon={MapPin}
         />
       </>
@@ -576,7 +576,7 @@ export default function ElectricianLeedsPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Leeds: <span className="text-yellow-400">Local Electricians in 2026</span>
+          Electrician in Leeds: <span className="text-elec-yellow">Local Electricians in 2026</span>
         </>
       }
       heroSubtitle="How to find a registered electrician in Leeds, realistic local pricing, and the specific challenges of Yorkshire stone terraces and back-to-backs. Covers Northern Powergrid connections, student HMO compliance, Part P, and the commercial market."
@@ -587,7 +587,7 @@ export default function ElectricianLeedsPage() {
       faqHeading="Frequently Asked Questions About Electricians in Leeds"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site and send instant PDFs to Leeds letting agents and landlords. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site and send instant PDFs to Leeds letting agents and landlords. 7-day free trial."
     />
   );
 }

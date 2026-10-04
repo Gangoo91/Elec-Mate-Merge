@@ -143,7 +143,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Approved Electrician (employed)</strong> — £35,000 to £47,000 per year
                 including JIB-SECTA allowances. The 2024/2025 JIB-SECTA rate of £21.27 per hour
@@ -152,7 +152,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Senior / Foreman level</strong> — £46,000 to £56,000. Major Glasgow projects
                 including the Barclays Tradeston campus, Queen Elizabeth University Hospital
@@ -161,7 +161,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Self-employed</strong> — £380 to £900+ per day depending on sector.
                 Glasgow's industrial and energy clients offer some of the highest day rates in
@@ -191,14 +191,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical Trainee (Apprentice)</strong> — £7.56 to £16.48 per hour over
                 four years. Many Glasgow employers pay above these rates in Years 3 and 4.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrician</strong> — £20.12 per hour (£39,200 per year at 37.5hr/week).
                 NVQ/SVQ Level 3 qualified, ECS Blue or Gold Card. Entry grade for newly qualified
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Approved Electrician</strong> — £21.27 per hour (£41,480 per year). ECS Gold
                 Card holder. Market rate in Glasgow is typically £22 to £25 per hour for most
@@ -214,7 +214,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical Technician</strong> — £22.18 per hour (£43,250 per year). For
                 engineers with HNC/HND or degree qualifications. Common in Glasgow's energy, marine
@@ -222,7 +222,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Working Foreman</strong> — £23.09 per hour (£45,000 per year). Site
                 supervisors on Glasgow's major regeneration projects regularly earn £25 to £29 per
@@ -251,7 +251,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Domestic work</strong> — £360 to £540 per day. Strong residential market in
                 Glasgow's West End (Hyndland, Partick, Hillhead), Southside, and new-build
@@ -259,7 +259,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial (retail, hospitality)</strong> — £430 to £640 per day. Glasgow's
                 large retail sector (Buchanan Street, Braehead, Fort Kinnaird) and restaurant/bar
@@ -267,7 +267,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Industrial and manufacturing</strong> — £500 to £750 per day. Hillington
                 Industrial Estate, Blantyre, and the Clyde Valley manufacturing corridor provide
@@ -275,7 +275,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Energy and maritime</strong> — £600 to £900 per day. Offshore wind supply
                 chain, Clyde shipyards (Scotstoun, Govan), and ScottishPower network work offer some
@@ -304,7 +304,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>High voltage authorised person</strong> — 25 to 45% above standard rate.
                 ScottishPower/SP Energy Networks in Glasgow, Queen Elizabeth University Hospital
@@ -313,7 +313,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maritime and shipyard electrical</strong> — £550 to £800 per day. BAE
                 Systems at Govan and Scotstoun builds Royal Navy vessels. Electrical work on naval
@@ -322,7 +322,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Offshore wind supply chain</strong> — £600 to £900 per day. Scotland's
                 offshore wind sector is booming. Glasgow serves as a logistics hub for ScotWind
@@ -331,7 +331,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Process and instrumentation</strong> — £480 to £750 per day. Food and drink
                 manufacturing (Glasgow's substantial food processing sector), chemical plants, and
@@ -356,7 +356,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Year 1 (aged 16 to 18)</strong> — £7.56 per hour. Approximately £14,700 per
                 year. Glasgow's competitive apprentice market means some employers start at above
@@ -364,27 +364,27 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Year 1 (aged 19+)</strong> — £10.42 per hour. Approximately £20,300 per
                 year. Adult entrants to the electrical trade are increasingly common in Glasgow.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Year 2</strong> — £11.55 per hour. Approximately £22,500 per year.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Year 3</strong> — £14.29 per hour. Approximately £27,900 per year. Most
                 Glasgow employers pay above the minimum at Year 3 to retain good apprentices.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Year 4</strong> — £16.48 per hour. Approximately £32,100 per year.
                 Progression to Approved Electrician rate (£21.27/hr minimum) on SVQ Level 3
@@ -415,7 +415,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>JIB-SECTA Pension and Death Benefit Scheme</strong> — employer contributions
                 of 5 to 6%. On a £43,000 Glasgow salary, this represents £2,150 to £2,580 of
@@ -423,7 +423,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Holiday entitlement</strong> — 24 working days per year for JIB-SECTA
                 members, rising to 25 days for many Glasgow employers after three years' service.
@@ -431,7 +431,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tool allowance</strong> — £400 to £1,200 per year. Standard with most
                 Glasgow commercial electrical contractors. SELECT members have access to the SELECT
@@ -439,7 +439,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Van or mileage</strong> — works vans are standard for most Glasgow
                 commercial site roles. Glasgow's congested roads and limited parking make a named
@@ -447,7 +447,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Travel allowances for away-from-base work</strong> — Glasgow electricians
                 working on offshore wind projects, Highland construction, or away-from-home
@@ -572,7 +572,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Quote and Invoice Faster</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -609,7 +609,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Glasgow electrical business smarter with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate to quote jobs, complete certificates on site, and manage their business from their phone. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate to quote jobs, complete certificates on site, and manage their business from their phone. 7-day free trial."
           icon={PoundSterling}
         />
       </>
@@ -635,7 +635,7 @@ export default function ElectricianSalaryGlasgowPage() {
       heroTitle={
         <>
           Electrician Salary Glasgow 2025:{' '}
-          <span className="text-yellow-400">JIB-SECTA Rates, Day Rates & Scotland Pay Guide</span>
+          <span className="text-elec-yellow">JIB-SECTA Rates, Day Rates & Scotland Pay Guide</span>
         </>
       }
       heroSubtitle="Complete guide to electrician earnings in Glasgow. JIB-SECTA rates (£21.27/hr), self-employed day rates from £360 to £900+, specialist uplifts for industrial and offshore energy work, SECTT apprentice pay, and Glasgow vs Edinburgh salary comparison."
@@ -646,7 +646,7 @@ export default function ElectricianSalaryGlasgowPage() {
       faqHeading="Frequently Asked Questions About Electrician Salaries in Glasgow"
       relatedPages={relatedPages}
       ctaHeading="Maximise Your Glasgow Electrician Earnings with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to quote faster, complete certificates on site, and get paid sooner. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to quote faster, complete certificates on site, and get paid sooner. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -197,7 +197,7 @@ const sections = [
               </li>
               <li className="flex justify-between border-t border-white/10 pt-2 mt-2">
                 <span className="font-bold">Total package value</span>
-                <span className="font-bold text-yellow-400">£52,600</span>
+                <span className="font-bold text-elec-yellow">£52,600</span>
               </li>
             </ul>
           </div>
@@ -226,7 +226,7 @@ const sections = [
               </li>
               <li className="flex justify-between border-t border-white/10 pt-2 mt-2">
                 <span className="font-bold">Net before tax</span>
-                <span className="font-bold text-yellow-400">£45,300</span>
+                <span className="font-bold text-elec-yellow">£45,300</span>
               </li>
             </ul>
           </div>
@@ -383,21 +383,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Registered subcontractor:</strong> 20% deducted from labour payments. This
                 is the standard rate for most electricians.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Unregistered subcontractor:</strong> 30% deducted. Always register — there
                 is no reason to pay 30% when you can pay 20%.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Gross payment status:</strong> 0% deducted. Available after 12 months of
                 trading with a clean compliance record. Your accountant can apply for this.
@@ -432,7 +432,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Guaranteed income.</strong> Your salary arrives every month regardless of
                 weather, client cancellations, or market conditions. You do not need to find work —
@@ -440,28 +440,28 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Paid holidays.</strong> 28 days paid leave per year (including bank
                 holidays). As a self-employed electrician, every day off is a day without income.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Employer pension contributions.</strong> Your employer contributes at least
                 3% of qualifying earnings to your pension — free money that compounds over decades.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sick pay.</strong> Statutory sick pay plus any employer sick pay scheme. If
                 you are self-employed and break your wrist, your income drops to zero.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No admin.</strong> No invoicing, no chasing payments, no tax returns, no
                 bookkeeping, no insurance admin. You turn up, do the work, and go home.
@@ -489,7 +489,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Higher earning potential.</strong> Self-employed electricians typically earn
                 30-60% more gross income. At{' '}
@@ -500,7 +500,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tax efficiency.</strong> You can deduct all legitimate business expenses
                 from your taxable income, reducing your tax bill. A limited company structure offers
@@ -508,7 +508,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Freedom and control.</strong> Choose your own hours, clients, and types of
                 work. Take time off when you want. Work harder during busy periods and ease off when
@@ -516,7 +516,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Building business value.</strong> A self-employed business with a client
                 base, reputation, and systems has value that can be sold or grown. An employed
@@ -524,7 +524,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Variety.</strong> You choose the work you take on. Specialise in what you
                 enjoy, turn down jobs you do not want, and build a business around your strengths.
@@ -552,14 +552,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Save 3 to 6 months of expenses.</strong> You need a financial buffer for the
                 transition period when work may be inconsistent and startup costs are high.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Get your qualifications and registrations in order.</strong> Competent
                 person scheme (NICEIC, NAPIT), ECS card, insurance, and all relevant qualifications
@@ -567,7 +567,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Build a network.</strong> Start building relationships with potential
                 clients, contractors, builders, and other tradespeople while you are still employed.
@@ -575,7 +575,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Set up your business systems.</strong> Accounting software, quoting and
                 invoicing tools, expense tracking, and a professional online presence.{' '}
@@ -586,7 +586,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Find a good accountant.</strong> An accountant who specialises in
                 construction or trades will save you more in tax than they cost in fees. Get one
@@ -623,7 +623,7 @@ export default function ContractorVsEmployeePage() {
       heroTitle={
         <>
           Contractor vs Employee:{' '}
-          <span className="text-yellow-400">Which Is Better for Electricians?</span>
+          <span className="text-elec-yellow">Which Is Better for Electricians?</span>
         </>
       }
       heroSubtitle="Should you stay employed on a steady salary or go self-employed for higher earnings and more freedom? This guide compares the financial reality, tax implications, and lifestyle trade-offs of each path — so you can make the right decision for your career."

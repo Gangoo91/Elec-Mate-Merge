@@ -244,7 +244,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Camera className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Photographs</strong> — before, during, and after photos of installations.
                 Show containment runs, cable terminations, consumer units, and finished work. Date
@@ -277,7 +277,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Completed certificates</strong> — EICs, Minor Works certificates, and test
                 result schedules from real installations you contributed to. These demonstrate your
@@ -358,7 +358,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Structured work allocation</strong> — a good supervisor plans your work to
                 ensure you get exposure to a range of tasks that cover the apprenticeship standard.
@@ -366,7 +366,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Progressive responsibility</strong> — they gradually increase the complexity
                 and responsibility of the work you do, from assisting on tasks to carrying them out
@@ -374,7 +374,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regular feedback</strong> — they tell you what you did well and what you
                 need to improve, on a daily basis. Good feedback is specific: "Your cable
@@ -383,7 +383,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Skills observation and sign-off</strong> — they observe you carrying out
                 tasks and formally record your competence against the apprenticeship standard
@@ -391,7 +391,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Progress review participation</strong> — they attend your regular progress
                 reviews with the training provider and contribute their assessment of your
@@ -523,7 +523,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <BarChart3 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart3 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">OJT Progress Dashboard</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -611,7 +611,7 @@ export default function OJTHubGuidePage() {
       heroTitle={
         <>
           On-the-Job Training Guide:{' '}
-          <span className="text-yellow-400">Making Every Day on Site Count</span>
+          <span className="text-elec-yellow">Making Every Day on Site Count</span>
         </>
       }
       heroSubtitle="On-the-job training makes up at least 80% of your electrical apprenticeship. This guide explains what counts as OJT, the evidence you need to collect, how skills sign-off works, the role of your supervisor, and how to track your progress so you reach the gateway fully prepared."

@@ -348,10 +348,14 @@ export function initSentry() {
 
       integrations: [
         Sentry.browserTracingIntegration(),
+        // Masked (4 Oct 2026): replays run without consent, so they must not
+        // carry personal data — the screens show users' CLIENTS' names,
+        // addresses and photos, and wellbeing journal text. Layout, clicks and
+        // errors still come through, which is what debugging needs.
         Sentry.replayIntegration({
-          maskAllText: false,
+          maskAllText: true,
           maskAllInputs: true,
-          blockAllMedia: false,
+          blockAllMedia: true,
         }),
         Sentry.consoleLoggingIntegration({ levels: ['error'] }),
       ],

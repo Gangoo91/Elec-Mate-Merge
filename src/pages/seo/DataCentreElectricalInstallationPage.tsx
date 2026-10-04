@@ -233,7 +233,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Server className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Server className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>UPS (Uninterruptible Power Supply)</strong> — provides instant battery
                 backup on utility failure, protecting the IT load until generators start. Modern
@@ -242,7 +242,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Server className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Server className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standby generators</strong> — diesel or gas generators start within 10–15
                 seconds of utility failure and carry the full data centre load within 30 seconds.
@@ -251,7 +251,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Server className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Server className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ATS (Automatic Transfer Switch)</strong> — transfers the non-UPS loads
                 (cooling, lighting, ancillary) from utility to generator supply on utility failure.
@@ -259,7 +259,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Server className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Server className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>STS (Static Transfer Switch)</strong> — transfers IT loads between two
                 independent UPS paths in under 4 milliseconds using solid-state switching. Used in
@@ -285,14 +285,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS EN 50600-1</strong> — General concepts. Defines terminology, reference
                 models, and the availability class (1–4) framework corresponding to Tier I–IV.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS EN 50600-2-2</strong> — Power distribution. Covers utility intake, UPS,
                 generators, distribution boards, PDUs, and earthing. The core electrical design
@@ -300,7 +300,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS EN 50600-2-3</strong> — Environmental control. Cooling systems including
                 CRAC, CRAH, chillers, and adiabatic cooling. Relevant to M&E coordination as cooling
@@ -308,7 +308,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS EN 50600-3-1</strong> — Management and operational information. Covers
                 monitoring, DCIM (Data Centre Infrastructure Management), and operational procedures
@@ -403,7 +403,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Chiller plant</strong> — the largest single electrical load in most data
                 centres. Chillers, cooling towers, condenser water pumps, and dry coolers can
@@ -411,7 +411,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CRAC/CRAH units</strong> — in-room cooling units circulate chilled water or
                 direct expansion refrigerant in the data hall. Power density: 50–150kW per CRAH
@@ -419,7 +419,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Building services</strong> — lighting, security, fire suppression systems,
                 and HVAC for office and plant rooms complete the non-IT electrical load. These loads
@@ -479,7 +479,7 @@ export default function DataCentreElectricalInstallationPage() {
       heroTitle={
         <>
           Data Centre Electrical Installation:{' '}
-          <span className="text-yellow-400">
+          <span className="text-elec-yellow">
             Tier Classification, Critical Power, and BS EN 50600
           </span>
         </>

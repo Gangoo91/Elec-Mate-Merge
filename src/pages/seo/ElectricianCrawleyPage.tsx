@@ -170,7 +170,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person scheme registration</strong> — ask for their NICEIC, NAPIT,
                 ELECSA, or other scheme registration number. Search it online on the scheme
@@ -178,7 +178,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ECS card</strong> — the Electrotechnical Certification Scheme card confirms
                 the holder's qualifications and competence level. A gold ECS card indicates a
@@ -186,14 +186,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Public liability insurance</strong> — ensure your electrician carries at
                 least £2 million public liability cover. Ask for a copy of the certificate.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Recent references</strong> — ask for contact details of 2 to 3 recent
                 Crawley customers, or check verified reviews on Checkatrade, Trustpilot, or Google
@@ -218,14 +218,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full rewire (3-bed house)</strong> — £4,500 to £7,500 including new consumer
                 unit, all circuits, sockets, switches, lighting, testing, and Part P certification.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacement</strong> — £450 to £750 including supply
                 isolation, new 18th Edition compliant unit with RCBOs or RCDs (as required by BS
@@ -233,28 +233,28 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR</strong> — £180 to £320 for a flat, £280 to £450 for a house. Required
                 every 5 years for rented properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional socket</strong> — £100 to £170 per single socket, depending on
                 cable run length and ease of access to the existing circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger installation</strong> — £700 to £1,300 for a 7kW home charger
                 including supply, installation, earthing, and Part P certification.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency call-out</strong> — £120 to £200 for the first hour including
                 travel, plus £50 to £75 per additional hour.
@@ -335,7 +335,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New connections and supply upgrades</strong> — if you need a new electricity
                 supply or want to upgrade from single-phase to three-phase (for EV chargers, heat
@@ -344,7 +344,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Meter relocations</strong> — moving the electricity meter requires UKPN to
                 disconnect and reconnect the supply. Your electrician installs the new meter tails;
@@ -352,7 +352,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98/G99 notification for solar and battery storage</strong> — if you are
                 installing solar PV or battery storage, the electrician must notify UKPN under
@@ -386,7 +386,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <PoundSterling className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Crawley Market Opportunities</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -418,7 +418,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Crawley electrical business from your phone"
-          description="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs…"
+          description="Join 2,100+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs…"
           icon={MapPin}
         />
       </>
@@ -445,7 +445,7 @@ export default function ElectricianCrawleyPage() {
       heroTitle={
         <>
           Electrician in Crawley:{' '}
-          <span className="text-yellow-400">Find Qualified Electricians in 2026</span>
+          <span className="text-elec-yellow">Find Qualified Electricians in 2026</span>
         </>
       }
       heroSubtitle="How to find a registered electrician in Crawley, what to expect on pricing, and the specific challenges of electrical work in Crawley's new town housing stock. Covers UKPN connections, Part P compliance, consumer unit upgrades, and EV charger installations."
@@ -456,7 +456,7 @@ export default function ElectricianCrawleyPage() {
       faqHeading="Frequently Asked Questions About Electricians in Crawley"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Crawley and send instant PDFs to your customers. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Crawley and send instant PDFs to your customers. 7-day free trial."
     />
   );
 }

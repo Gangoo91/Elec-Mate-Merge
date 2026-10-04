@@ -186,13 +186,13 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6">
             <div className="flex items-center gap-3 mb-4">
-              <Building2 className="w-6 h-6 text-yellow-400" />
+              <Building2 className="w-6 h-6 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Levy-Paying Employers</h3>
             </div>
             <div className="grid grid-cols-2 gap-4 mb-4">
               <div>
                 <div className="text-sm text-white mb-1">Payroll Threshold</div>
-                <div className="text-xl font-bold text-yellow-400">Over £3 million</div>
+                <div className="text-xl font-bold text-elec-yellow">Over £3 million</div>
               </div>
               <div>
                 <div className="text-sm text-white mb-1">Employer Cost</div>
@@ -211,13 +211,13 @@ const sections = [
 
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6">
             <div className="flex items-center gap-3 mb-4">
-              <Users className="w-6 h-6 text-yellow-400" />
+              <Users className="w-6 h-6 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Non-Levy Employers</h3>
             </div>
             <div className="grid grid-cols-2 gap-4 mb-4">
               <div>
                 <div className="text-sm text-white mb-1">Payroll Threshold</div>
-                <div className="text-xl font-bold text-yellow-400">Under £3 million</div>
+                <div className="text-xl font-bold text-elec-yellow">Under £3 million</div>
               </div>
               <div>
                 <div className="text-sm text-white mb-1">Employer Cost</div>
@@ -253,7 +253,7 @@ const sections = [
               <thead>
                 <tr className="border-b border-white/10">
                   <th className="p-4 text-sm font-semibold text-white">Apprenticeship</th>
-                  <th className="p-4 text-sm font-semibold text-yellow-400 text-right">
+                  <th className="p-4 text-sm font-semibold text-elec-yellow text-right">
                     Funding Band
                   </th>
                   <th className="p-4 text-sm font-semibold text-white text-right">
@@ -286,7 +286,7 @@ const sections = [
                 ].map((row, i) => (
                   <tr key={row.name} className={i < 3 ? 'border-b border-white/5' : ''}>
                     <td className="p-4 text-sm text-white">{row.name}</td>
-                    <td className="p-4 text-sm text-yellow-400 font-semibold text-right">
+                    <td className="p-4 text-sm text-elec-yellow font-semibold text-right">
                       {row.band}
                     </td>
                     <td className="p-4 text-sm text-white text-right">{row.duration}</td>
@@ -343,7 +343,7 @@ const sections = [
               className="rounded-2xl bg-white/[0.04] border border-white/10 p-5"
             >
               <div className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <div>
                   <h4 className="font-bold text-white mb-1">{item.title}</h4>
                   <p className="text-white text-sm leading-relaxed">{item.description}</p>
@@ -376,7 +376,7 @@ const sections = [
               <thead>
                 <tr className="border-b border-white/10">
                   <th className="p-4 text-sm font-semibold text-white">Cost Item</th>
-                  <th className="p-4 text-sm font-semibold text-yellow-400 text-right">
+                  <th className="p-4 text-sm font-semibold text-elec-yellow text-right">
                     Typical Range
                   </th>
                   <th className="p-4 text-sm font-semibold text-white">Who Pays</th>
@@ -422,7 +422,7 @@ const sections = [
                 ].map((row, i) => (
                   <tr key={row.item} className={i < 6 ? 'border-b border-white/5' : ''}>
                     <td className="p-4 text-sm text-white">{row.item}</td>
-                    <td className="p-4 text-sm text-yellow-400 font-semibold text-right">
+                    <td className="p-4 text-sm text-elec-yellow font-semibold text-right">
                       {row.range}
                     </td>
                     <td className="p-4 text-sm text-white">{row.who}</td>
@@ -433,7 +433,7 @@ const sections = [
           </div>
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-4 my-4 text-sm text-white leading-relaxed">
-          <strong className="text-yellow-400">Important — buy the current edition:</strong> The live
+          <strong className="text-elec-yellow">Important — buy the current edition:</strong> The live
           wiring regulations are <strong>BS 7671:2018+A4:2026</strong> (Amendment 4, April 2026 —
           orange cover). Apprentices sitting the EPA knowledge test are examined on the current
           edition, so a second-hand A2 or A3 copy will contain deleted requirements and outdated
@@ -446,7 +446,7 @@ const sections = [
               <thead>
                 <tr className="border-b border-white/10">
                   <th className="p-4 text-sm font-semibold text-white">Topic in the current edition</th>
-                  <th className="p-4 text-sm font-semibold text-yellow-400">Regulation</th>
+                  <th className="p-4 text-sm font-semibold text-elec-yellow">Regulation</th>
                   <th className="p-4 text-sm font-semibold text-white">What it requires</th>
                 </tr>
               </thead>
@@ -473,7 +473,7 @@ const sections = [
                 ].map((row, i) => (
                   <tr key={row.reg} className={i < 2 ? 'border-b border-white/5' : ''}>
                     <td className="p-4 text-sm text-white align-top">{row.topic}</td>
-                    <td className="p-4 text-sm text-yellow-400 font-semibold align-top whitespace-nowrap">
+                    <td className="p-4 text-sm text-elec-yellow font-semibold align-top whitespace-nowrap">
                       {row.reg}
                     </td>
                     <td className="p-4 text-sm text-white align-top">{row.detail}</td>
@@ -482,7 +482,7 @@ const sections = [
               </tbody>
             </table>
           </div>
-          <p className="px-4 pb-4 text-xs text-white/50">
+          <p className="px-4 pb-4 text-xs text-white">
             Regulation references verified against BS 7671:2018+A4:2026.
           </p>
         </div>
@@ -506,7 +506,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Wallet className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wallet className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Year 1: Starter Kit (£300 — £500)</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -520,7 +520,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Wallet className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wallet className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Year 2 — 3: Expansion (£200 — £400)</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -534,7 +534,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
-              <Wallet className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wallet className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   AM2 Year: Assessment Kit (£500 — £800)
@@ -577,7 +577,7 @@ const sections = [
               <thead>
                 <tr className="border-b border-white/10">
                   <th className="p-4 text-sm font-semibold text-white">Stage</th>
-                  <th className="p-4 text-sm font-semibold text-yellow-400 text-right">
+                  <th className="p-4 text-sm font-semibold text-elec-yellow text-right">
                     Typical Annual Wage
                   </th>
                 </tr>
@@ -593,7 +593,7 @@ const sections = [
                 ].map((row, i) => (
                   <tr key={row.stage} className={i < 5 ? 'border-b border-white/5' : ''}>
                     <td className="p-4 text-sm text-white">{row.stage}</td>
-                    <td className="p-4 text-sm text-yellow-400 font-semibold text-right">
+                    <td className="p-4 text-sm text-elec-yellow font-semibold text-right">
                       {row.wage}
                     </td>
                   </tr>
@@ -636,7 +636,7 @@ export default function ElectricalApprenticeshipCostPage() {
       heroTitle={
         <>
           Electrical Apprenticeship Cost:{' '}
-          <span className="text-yellow-400">Fees and Funding UK</span>
+          <span className="text-elec-yellow">Fees and Funding UK</span>
         </>
       }
       heroSubtitle="An electrical apprenticeship costs almost nothing for the apprentice and far less than most employers think. The government funds 95 to 100% of training costs. This guide covers the levy, funding bands, co-investment, additional costs for tools and equipment, and what apprentices earn from year 1 to qualified."

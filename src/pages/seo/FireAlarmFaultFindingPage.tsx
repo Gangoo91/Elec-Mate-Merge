@@ -200,7 +200,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dust contamination</strong> — the most common contaminant in optical smoke
                 detectors. Dust particles settle in or near the optical chamber and scatter light,
@@ -211,7 +211,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insect intrusion</strong> — insects entering the optical chamber of a smoke
                 detector are a well-documented cause of false alarms. Inspect detectors in areas
@@ -220,7 +220,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Steam and cooking fumes</strong> — detectors located too close to kitchens,
                 shower rooms, or steam sources are exposed to high humidity and aerosol particles
@@ -230,7 +230,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cleaning procedure</strong> — approved cleaning of a smoke detector involves
                 careful vacuuming of the detector chamber using a soft brush attachment. Never use
@@ -258,7 +258,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BellRing className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BellRing className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>System fault / CPU fault</strong> — a fault reported against the panel
                 itself (rather than a zone or device) indicates an internal panel hardware or
@@ -268,7 +268,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BellRing className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BellRing className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Memory or programming fault</strong> — addressable fire alarm panels store
                 device programming in non-volatile memory. Memory corruption (typically caused by a
@@ -278,7 +278,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BellRing className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BellRing className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sounder or relay module fault</strong> — a fault on the sounder supply
                 circuit or relay output module will prevent the sounders or ancillary outputs from
@@ -309,7 +309,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mains power loss</strong> — the panel should indicate mains power loss via
                 an amber LED and continue operating from the standby battery. The mains supply
@@ -320,7 +320,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standby battery fault</strong> — a battery fault reported by the panel
                 indicates that the standby battery has failed, is not connected, or is not accepting
@@ -330,7 +330,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PSU module failure</strong> — the power supply unit within the fire alarm
                 panel converts mains AC to the panel's DC operating voltage and charges the standby
@@ -413,7 +413,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Work requiring a fire alarm competent person</strong> — fault finding on
                 zone loops and devices, detector replacement on addressable systems requiring
@@ -423,7 +423,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Work a general electrician can carry out</strong> — the dedicated mains
                 supply circuit to the fire alarm panel, including the MCB, cable, and termination at
@@ -432,7 +432,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Do not disable or silence persistent faults</strong> — a fire alarm fault
                 that cannot be resolved must be reported to the responsible person and a competent
@@ -461,7 +461,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <BellRing className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <BellRing className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Fire Alarm on the EICR</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -549,7 +549,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage fire alarm electrical work with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for EICRs, fire alarm certificates, and BS 7671-compliant documentation. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for EICRs, fire alarm certificates, and BS 7671-compliant documentation. 7-day free trial."
           icon={BellRing}
         />
       </>
@@ -575,7 +575,7 @@ export default function FireAlarmFaultFindingPage() {
       heroTitle={
         <>
           Fire Alarm Fault Finding:{' '}
-          <span className="text-yellow-400">Fire Detection System Problems Explained</span>
+          <span className="text-elec-yellow">Fire Detection System Problems Explained</span>
         </>
       }
       heroSubtitle="Your fire alarm is showing a fault condition, producing false alarms, or failing to function correctly. This guide covers zone faults, detector contamination, panel faults, power supply issues, BS 5839 compliance, and when you must use a competent fire alarm engineer."
@@ -586,7 +586,7 @@ export default function FireAlarmFaultFindingPage() {
       faqHeading="Frequently Asked Questions About Fire Alarm Faults"
       relatedPages={relatedPages}
       ctaHeading="Manage Fire Alarm Electrical Work with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EICRs, fire alarm certificates, and compliant documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for EICRs, fire alarm certificates, and compliant documentation. 7-day free trial, cancel anytime."
     />
   );
 }

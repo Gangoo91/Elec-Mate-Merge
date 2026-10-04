@@ -211,7 +211,7 @@ export default function HowToSizeCablesPage() {
       <section className="pt-12 sm:pt-16 pb-10 px-5">
         <div className="max-w-4xl mx-auto text-center">
           <div className="flex flex-wrap justify-center gap-3 mb-6">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-sm font-medium text-yellow-400">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-sm font-medium text-elec-yellow">
               <ShieldCheck className="w-3.5 h-3.5" />
               BS 7671:2018+A4:2026
             </span>
@@ -222,7 +222,7 @@ export default function HowToSizeCablesPage() {
           </div>
 
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-5 leading-tight">
-            How to Size Cables to <span className="text-yellow-400">BS 7671</span>
+            How to Size Cables to <span className="text-elec-yellow">BS 7671</span>
           </h1>
           <p className="text-lg text-white max-w-3xl mx-auto leading-relaxed mb-8">
             The complete step-by-step guide to cable sizing using BS 7671:2018+A4:2026 Appendix 4
@@ -288,7 +288,7 @@ export default function HowToSizeCablesPage() {
                 </p>
                 <div className="p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <p className="text-white text-sm leading-relaxed">
-                    <strong className="text-yellow-400">Tip:</strong> Select the MCB type based on
+                    <strong className="text-elec-yellow">Tip:</strong> Select the MCB type based on
                     the load. Type B for general circuits (trips at 3-5&times; rated current). Type
                     C for motors (5-10&times;). Type D for transformers and high inrush loads
                     (10-20&times;).
@@ -665,7 +665,7 @@ export default function HowToSizeCablesPage() {
 
       <SEOCTASection
         heading="Size Cables in Seconds, Not Minutes"
-        subheading="Join 1,600+ UK electricians using Elec-Mate. 70+ calculators, 19 certificate types, 8 Elec-AI agents, and 46+ training courses — all BS 7671:2018+A4:2026 compliant."
+        subheading="Join 2,100+ UK electricians using Elec-Mate. 70+ calculators, 19 certificate types, 8 Elec-AI agents, and 46+ training courses — all BS 7671:2018+A4:2026 compliant."
       />
     </PublicPageLayout>
   );

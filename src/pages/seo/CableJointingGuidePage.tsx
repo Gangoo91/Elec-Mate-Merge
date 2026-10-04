@@ -146,21 +146,21 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-3">Types of Joint by Application</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Straight joint:</strong> Joins two cable ends in line. The most common type
                 for underground cable extensions and cable repairs.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tee joint:</strong> Branches off a through-cable to a tee connection. Used
                 in distribution networks and sub-mains from mains cable.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Termination:</strong> Seals the end of a cable for connection to switchgear,
                 transformer, or distribution board. Heat shrink termination kits are the standard
@@ -192,7 +192,7 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-4">Heat Shrink Jointing Systems</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Polyolefin tubing shrinks to grip the cable when heated with a hot air gun at 120 to
                 200\u00b0C. Multi-layer MV systems include stress control, insulation, and outer
@@ -200,7 +200,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Advantages:</strong> Well-established technology, lower material cost, wide
                 range of cable sizes covered, joints can be made in field conditions if a suitable
@@ -208,7 +208,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Limitations:</strong> Requires a gas torch or hot air gun — not suitable
                 near flammable materials or in confined spaces with poor ventilation. Overheating
@@ -216,7 +216,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Key manufacturers:</strong> 3M, Tyco Electronics (now TE Connectivity),
                 Raychem — all supply comprehensive heat shrink jointing kits with installation
@@ -229,7 +229,7 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-4">Cold Shrink Jointing Systems</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Silicone rubber components pre-expanded onto a rigid support tube. Remove the tube
                 by pulling a spiral cord — the silicone contracts to grip the cable without any heat
@@ -237,7 +237,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Advantages:</strong> No heat source required — safe in flammable
                 atmospheres, confined spaces, and underground chambers. Silicone provides excellent
@@ -246,14 +246,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Limitations:</strong> Higher material cost, larger installed size than heat
                 shrink, may not suit cables with irregular profiles or unusual outer diameters.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Key manufacturers:</strong> 3M Cold Shrink range, nkt Cables JCS jointing
                 systems, Prysmian Group cold shrink kits.
@@ -277,7 +277,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Scotchlok IDCs:</strong> A metal contact pierces the cable insulation to
                 make contact with the conductor — no stripping required. Suitable for solid or
@@ -286,7 +286,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Crimp ferrules:</strong> Conductors are inserted into a copper or aluminium
                 ferrule and compressed with a ratchet crimping tool calibrated for the ferrule size.
@@ -295,7 +295,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mechanical connectors:</strong> Split-bolt, Polaris multi-tap, and
                 proprietary maintenance-free connectors for LV distribution cables up to
@@ -308,7 +308,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Current capacity:</strong> Always verify that the connector current rating
                 equals or exceeds the cable current-carrying capacity. IDC connectors for data use
@@ -317,7 +317,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Protection after jointing:</strong> After connector installation, the joint
                 must be enclosed in a suitable enclosure providing appropriate IP protection. Do not
@@ -343,7 +343,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Outer sheath removal (LV SWA/XLPE):</strong> Use a rotary cable stripper set
                 to cut through the outer sheath without penetrating the armour or bedding. Score a
@@ -352,7 +352,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Armour removal:</strong> Cut individual armour wires with side cutters one
                 at a time, or use armour cutters for larger cables. Bend wires back carefully to
@@ -361,7 +361,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Core insulation removal:</strong> Use a calibrated wire stripper set for the
                 conductor cross-section. Automatic or ratchet strippers provide the most consistent
@@ -370,7 +370,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Semi-conducting layer (MV cables):</strong> Use a purpose-made semi-con
                 stripping tool. The semi-con must be removed cleanly to a precise tapered pencil end
@@ -399,7 +399,7 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1 — Isolate and prove dead:</strong> Isolate the affected circuit and
                 confirm it is dead using an approved voltage indicator. Co-ordinate with the network
@@ -407,7 +407,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2 — Insulation resistance test (megger):</strong> Perform IR tests
                 between all conductors and to earth to confirm the fault type (phase-to-earth,
@@ -416,7 +416,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 3 — TDR fault location:</strong> A time-domain reflectometer (TDR)
                 sends a pulse along the cable and measures the time to the reflected return, giving
@@ -427,7 +427,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 4 — Excavate and inspect:</strong> Excavate at the TDR-predicted
                 location. Use a cable tracer or signal generator to confirm the route before
@@ -436,7 +436,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 5 — Joint repair and retest:</strong> Cut out the damaged section,
                 prepare and joint with an approved kit, then retest IR and continuity before
@@ -468,10 +468,10 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test voltages and minimums (BS 7671 Reg 643.3.2, Table 64):</strong>
-                <ul className="mt-2 space-y-1 text-white/90 text-sm">
+                <ul className="mt-2 space-y-1 text-white text-sm">
                   <li>SELV / PELV circuits: 250 V DC — minimum 0.5 M\u03a9</li>
                   <li>
                     Circuits up to 500 V (excluding SELV/PELV): 500 V DC — minimum 1.0 M\u03a9
@@ -483,7 +483,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Practical interpretation:</strong> Values below 10 M\u03a9 on a new joint
                 warrant investigation even though the regulatory minimum is 1.0 M\u03a9. Well-made
@@ -491,7 +491,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing methodology:</strong> Test between each conductor pair (L1-L2,
                 L1-L3, L2-L3, L1-E, L2-E, L3-E). For three-phase cables with neutral, test N-E and
@@ -499,7 +499,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Resin cure time:</strong> If a resin-poured enclosure is used, allow the
                 resin to fully cure per the manufacturer instructions before final IR testing.
@@ -525,7 +525,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 526.1:</strong> Every connection between conductors or between a
                 conductor and equipment must provide durable electrical continuity and adequate
@@ -538,7 +538,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 543.3.2:</strong> Every connection and joint shall be accessible
                 for inspection, testing and maintenance. This is the primary operative regulation
@@ -549,7 +549,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 526.3:</strong> Sets out the permitted exceptions to the
                 accessibility requirement in Reg 543.3.2: joints in compound-filled or encapsulated
@@ -559,7 +559,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 543.1:</strong> The circuit protective conductor must be
                 continuous and of sufficient cross-sectional area. A joint in the CPC must meet the
@@ -567,7 +567,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mechanical protection — Regulation 522.8.10:</strong> Buried cables and
                 their joints shall have their location marked by cable covers or a suitable marker
@@ -601,7 +601,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <SEOAppBridge href="/minor-works-certificate" label="Minor Works Certificate" /> —
                 issue minor electrical installation works certificates for cable repairs and joint
@@ -609,7 +609,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <SEOAppBridge href="/eic-certificate" label="Electrical Installation Certificate" />{' '}
                 — generate a compliant EIC for new underground cable installations including
@@ -617,7 +617,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <SEOAppBridge href="/tools/eicr-certificate" label="EICR Certificate" /> — document
                 inaccessible or defective joints identified during periodic inspection as C2 or C3
@@ -649,7 +649,7 @@ export default function CableJointingGuidePage() {
       heroTitle={
         <>
           Cable Jointing Guide{' '}
-          <span className="text-yellow-400">— LV and MV Jointing for Electricians</span>
+          <span className="text-elec-yellow">— LV and MV Jointing for Electricians</span>
         </>
       }
       heroSubtitle="Heat shrink vs cold shrink joints, Scotchlok connectors, cable stripping, insulation testing after jointing, and BS 7671 requirements for cable joints and connections."

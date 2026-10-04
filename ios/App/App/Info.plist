@@ -88,5 +88,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>If you allow it, we can tell whether an Elec-Mate advert on Facebook or Instagram led you here. It doesn't change what you see in the app.</string>
 </dict>
 </plist>

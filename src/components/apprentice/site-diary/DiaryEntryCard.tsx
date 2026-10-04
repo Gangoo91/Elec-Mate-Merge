@@ -21,6 +21,7 @@
  */
 
 import { motion } from 'framer-motion';
+import { useLoggingReminders } from '@/hooks/useLoggingReminders';
 import { MapPin, Pencil, Trash2, ChevronRight, Camera, Briefcase, CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
@@ -52,6 +53,8 @@ export function DiaryEntryCard({
   portfolioNudge,
   hideDate = false,
 }: DiaryEntryCardProps) {
+  // Settings → Reminders hides the streak/portfolio nudging (ELE-1804).
+  const { hidden: hideReminders } = useLoggingReminders();
   const formattedDate = new Date(entry.date + 'T00:00:00').toLocaleDateString('en-GB', {
     weekday: compact ? 'short' : 'long',
     day: 'numeric',
@@ -153,7 +156,7 @@ export function DiaryEntryCard({
               </div>
             )}
 
-            {!compact && portfolioNudge && !entry.linked_portfolio_id && (
+            {!hideReminders && !compact && portfolioNudge && !entry.linked_portfolio_id && (
               <span className="inline-flex max-w-full items-center gap-1.5 rounded-lg border border-elec-yellow/40 px-2.5 py-1 text-[11px] font-medium text-elec-yellow">
                 <Briefcase className="h-3 w-3 flex-shrink-0" aria-hidden />
                 <span className="truncate">{portfolioNudge.nudge}</span>

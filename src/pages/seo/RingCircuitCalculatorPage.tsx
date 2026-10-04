@@ -184,15 +184,15 @@ export default function RingCircuitCalculatorPage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
-        <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-elec-yellow text-sm font-medium mb-6">
             <Zap className="w-4 h-4" />
             Part of 70 Electrical Calculators
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             Ring Final Circuit Calculator
-            <span className="block text-yellow-400 mt-1">R1 R2 Rn Testing to GN3 and BS 7671</span>
+            <span className="block text-elec-yellow mt-1">R1 R2 Rn Testing to GN3 and BS 7671</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             Validate ring circuit continuity test results on site. Enter your r1, rn, and r2
@@ -209,7 +209,7 @@ export default function RingCircuitCalculatorPage() {
             </Link>
             <a
               href="#how-it-works"
-              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-yellow-500/40 touch-manipulation transition-colors"
+              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-white/[0.1] touch-manipulation transition-colors"
             >
               See How It Works
               <ArrowDown className="w-4 h-4 ml-1" />
@@ -239,7 +239,7 @@ export default function RingCircuitCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <CircleDot className="w-5 h-5 text-yellow-400" />
+              <CircleDot className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               What Is a Ring Final Circuit?
@@ -295,7 +295,7 @@ export default function RingCircuitCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Calculator className="w-5 h-5 text-yellow-400" />
+              <Calculator className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               The Cross-Connection Method Explained
@@ -318,7 +318,7 @@ export default function RingCircuitCalculatorPage() {
               conductor in series.
             </p>
             <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center my-6">
-              <p className="text-xl sm:text-2xl font-mono font-bold text-yellow-400">
+              <p className="text-xl sm:text-2xl font-mono font-bold text-elec-yellow">
                 Midpoint reading = (r1 + rn) / 4
               </p>
               <p className="mt-3 text-sm text-white">
@@ -348,7 +348,7 @@ export default function RingCircuitCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <BookOpen className="w-5 h-5 text-yellow-400" />
+              <BookOpen className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Expected Readings for Common Cable Types
@@ -357,16 +357,16 @@ export default function RingCircuitCalculatorPage() {
 
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-6">
             <div className="grid grid-cols-4 gap-px bg-white/10">
-              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                 Cable Type
               </div>
-              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                 r1 (per 100m)
               </div>
-              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                 r2 (per 100m)
               </div>
-              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                 r2/r1 Ratio
               </div>
             </div>
@@ -410,7 +410,7 @@ export default function RingCircuitCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <AlertTriangle className="w-5 h-5 text-yellow-400" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Common Faults and How to Identify Them
@@ -418,7 +418,7 @@ export default function RingCircuitCalculatorPage() {
           </div>
           <div className="space-y-6">
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <h3 className="font-bold text-yellow-400 text-lg mb-3">Broken Ring</h3>
+              <h3 className="font-bold text-elec-yellow text-lg mb-3">Broken Ring</h3>
               <p className="text-white leading-relaxed text-sm">
                 A broken ring occurs when the cable is disconnected or damaged at some point, so the
                 ring no longer forms a complete loop. The end-to-end measurement for the affected
@@ -430,7 +430,7 @@ export default function RingCircuitCalculatorPage() {
               </p>
             </div>
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <h3 className="font-bold text-yellow-400 text-lg mb-3">Bridged Ring</h3>
+              <h3 className="font-bold text-elec-yellow text-lg mb-3">Bridged Ring</h3>
               <p className="text-white leading-relaxed text-sm">
                 A bridged ring occurs when two points on the ring are connected together, creating a
                 shortcut. This reduces the end-to-end resistance because the current has a shorter
@@ -443,7 +443,7 @@ export default function RingCircuitCalculatorPage() {
               </p>
             </div>
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <h3 className="font-bold text-yellow-400 text-lg mb-3">Cross-Polarity</h3>
+              <h3 className="font-bold text-elec-yellow text-lg mb-3">Cross-Polarity</h3>
               <p className="text-white leading-relaxed text-sm">
                 Cross-polarity at one or more sockets means the line and neutral conductors have
                 been swapped. During the cross-connection test, this produces readings that do not
@@ -455,7 +455,7 @@ export default function RingCircuitCalculatorPage() {
               </p>
             </div>
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <h3 className="font-bold text-yellow-400 text-lg mb-3">Interconnected Rings</h3>
+              <h3 className="font-bold text-elec-yellow text-lg mb-3">Interconnected Rings</h3>
               <p className="text-white leading-relaxed text-sm">
                 Interconnected rings occur when two separate ring circuits share a common cable
                 section — typically because a previous electrician ran a cable from one ring to
@@ -475,28 +475,28 @@ export default function RingCircuitCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <BarChart3 className="w-5 h-5 text-yellow-400" />
+              <BarChart3 className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">Worked Examples</h2>
           </div>
           <div className="space-y-6">
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <h3 className="font-bold text-yellow-400 text-lg mb-3">
+              <h3 className="font-bold text-elec-yellow text-lg mb-3">
                 Example 1: Healthy Ring — 35 Metres of 2.5/1.5 mm² T&E
               </h3>
               <div className="space-y-2 text-white leading-relaxed text-sm">
                 <p>End-to-end readings:</p>
                 <p className="font-mono text-white">
                   r1 (line, 2.5 mm²) = 35/100 x 7.41 ={' '}
-                  <strong className="text-yellow-400">0.26 ohms</strong>
+                  <strong className="text-elec-yellow">0.26 ohms</strong>
                 </p>
                 <p className="font-mono text-white">
-                  rn (neutral, 2.5 mm²) = <strong className="text-yellow-400">0.26 ohms</strong>{' '}
+                  rn (neutral, 2.5 mm²) = <strong className="text-elec-yellow">0.26 ohms</strong>{' '}
                   (should match r1)
                 </p>
                 <p className="font-mono text-white">
                   r2 (CPC, 1.5 mm²) = 35/100 x 12.10 ={' '}
-                  <strong className="text-yellow-400">0.42 ohms</strong>
+                  <strong className="text-elec-yellow">0.42 ohms</strong>
                 </p>
                 <p className="font-mono text-white">
                   r2/r1 ratio = 0.42 / 0.26 ={' '}
@@ -505,17 +505,17 @@ export default function RingCircuitCalculatorPage() {
                 <p>Cross-connection expected midpoint readings:</p>
                 <p className="font-mono text-white">
                   Line-neutral midpoint = (0.26 + 0.26) / 4 ={' '}
-                  <strong className="text-yellow-400">0.13 ohms</strong>
+                  <strong className="text-elec-yellow">0.13 ohms</strong>
                 </p>
                 <p className="font-mono text-white">
                   Line-earth midpoint (R1+R2) = (0.26 + 0.42) / 4 ={' '}
-                  <strong className="text-yellow-400">0.17 ohms</strong>
+                  <strong className="text-elec-yellow">0.17 ohms</strong>
                 </p>
               </div>
             </div>
 
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <h3 className="font-bold text-yellow-400 text-lg mb-3">
+              <h3 className="font-bold text-elec-yellow text-lg mb-3">
                 Example 2: Detecting a Spur
               </h3>
               <div className="space-y-2 text-white leading-relaxed text-sm">
@@ -528,7 +528,7 @@ export default function RingCircuitCalculatorPage() {
                   This socket is on a spur. The excess resistance (0.24 - 0.13 = 0.11 ohms)
                   represents the additional cable length of the spur. For 2.5 mm² cable at 7.41 ohms
                   per 100m, the spur length is approximately 0.11 / 7.41 x 100 ={' '}
-                  <strong className="text-yellow-400">1.5 metres</strong> (single length, not
+                  <strong className="text-elec-yellow">1.5 metres</strong> (single length, not
                   return).
                 </p>
                 <p>
@@ -547,7 +547,7 @@ export default function RingCircuitCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               How to Test a Ring Final Circuit — Step by Step
@@ -560,7 +560,7 @@ export default function RingCircuitCalculatorPage() {
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex-shrink-0">
-                  <span className="font-bold text-yellow-400">{index + 1}</span>
+                  <span className="font-bold text-elec-yellow">{index + 1}</span>
                 </div>
                 <div>
                   <h3 className="font-bold text-white text-lg mb-1">{step.name}</h3>
@@ -603,7 +603,7 @@ export default function RingCircuitCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <HelpCircle className="w-5 h-5 text-yellow-400" />
+              <HelpCircle className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Frequently Asked Questions
@@ -617,7 +617,7 @@ export default function RingCircuitCalculatorPage() {
               >
                 <summary className="flex items-center justify-between p-4 min-h-[44px] touch-manipulation cursor-pointer text-white font-medium">
                   <span>{faq.question}</span>
-                  <ChevronDown className="w-5 h-5 text-yellow-400 group-open:rotate-180 transition-transform" />
+                  <ChevronDown className="w-5 h-5 text-elec-yellow group-open:rotate-180 transition-transform" />
                 </summary>
                 <div className="px-4 pb-4 text-white text-sm leading-relaxed">{faq.answer}</div>
               </details>
@@ -668,7 +668,7 @@ export default function RingCircuitCalculatorPage() {
 
       <SEOCTASection
         heading="Validate Ring Circuit Tests on Site"
-        subheading="Join 1,600+ UK electricians using Elec-Mate for on-site testing calculations. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians using Elec-Mate for on-site testing calculations. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

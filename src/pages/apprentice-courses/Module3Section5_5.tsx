@@ -19,11 +19,11 @@ const quizQuestions = [
       'IPX2',
       'IPX4',
       'IPX5',
-      'IP44',
+      'IPX3',
     ],
     correctAnswer: 1,
     explanation:
-      'Zone 1 requires IPX4 minimum (IPX5 if subject to jet spray during cleaning). This protects against water splashing from any direction.',
+      'BS 7671 Regulation 701.512.2 requires at least IPX4 in zones 1 and 2, and IPX5 where equipment is exposed to water jets, for example for cleaning.',
   },
   {
     id: 2,

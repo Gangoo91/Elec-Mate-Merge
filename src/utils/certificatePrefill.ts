@@ -2,7 +2,9 @@
  * Who and where a certificate is for, when it was started from a job.
  *
  * The job page and the diary's event sheet both send
- * `/electrician/inspection-testing/new?projectId=…&clientName=…&address=…`.
+ * `/electrician/inspection-testing?projectId=…&clientName=…&address=…`
+ * (it was `/new`, the old type picker, retired 4 Oct 2026 — that route now
+ * redirects here with the query intact).
  * Until ELE-1755 nothing read those three parameters — the type picker
  * dropped them on the way to the form, and no form looked for them — so
  * "customer and address prefilled" was a URL and nothing more.
@@ -42,4 +44,15 @@ export function certificatePrefillQuery(): string {
     if (v) out.set(k, v);
   }
   return out.toString();
+}
+
+/**
+ * `href` with the prefill carried on, when the current URL has one. Used by
+ * every "start a new certificate" link in the Inspection & Testing screens so
+ * a cert started from a job or booking arrives with who and where filled in.
+ */
+export function withCertificatePrefill(href: string): string {
+  const prefill = certificatePrefillQuery();
+  if (!prefill) return href;
+  return `${href}${href.includes('?') ? '&' : '?'}${prefill}`;
 }

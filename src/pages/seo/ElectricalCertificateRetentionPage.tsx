@@ -200,35 +200,35 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">Landlord Obligations</h3>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Provide to new tenants:</strong> A copy of the current EICR must be provided
                 to new tenants before they move in.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Provide to existing tenants:</strong> A copy must be provided within 28 days
                 of the inspection date.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Provide to local authority:</strong> A copy must be provided within 7 days
                 of a request from the local housing authority.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Retain for tenancy duration:</strong> The EICR must be retained for the full
                 duration of the tenancy.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Post-tenancy retention:</strong> Prudent practice is to retain certificates
                 for at least 5 years after the tenancy ends, to cover the limitation period for
@@ -505,7 +505,7 @@ export default function ElectricalCertificateRetentionPage() {
       badgeIcon={Clock}
       heroTitle={
         <>
-          How Long to Keep <span className="text-yellow-400">Electrical Certificates UK</span>
+          How Long to Keep <span className="text-elec-yellow">Electrical Certificates UK</span>
         </>
       }
       heroSubtitle="The complete guide to electrical certificate retention periods in the UK. EICR, EIC, Minor Works, and specialist certificates — how long to keep them, landlord obligations, commercial requirements, legal discovery, insurance claims, and how to store certificates safely using digital storage."
@@ -515,7 +515,7 @@ export default function ElectricalCertificateRetentionPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Store Every Certificate in the Cloud"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for permanent, searchable cloud storage of all certificates. No paper filing, no lost certificates. Search by property, date, or client. Download PDFs any time. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for permanent, searchable cloud storage of all certificates. No paper filing, no lost certificates. Search by property, date, or client. Download PDFs any time. 7-day free trial."
     />
   );
 }

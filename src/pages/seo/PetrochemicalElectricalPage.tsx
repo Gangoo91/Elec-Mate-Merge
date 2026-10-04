@@ -149,7 +149,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Major UK petrochemical sites</strong> — Grangemouth (Ineos) in Scotland,
                 Fawley Refinery (ExxonMobil) in Hampshire, Pembroke Refinery (Valero) in Wales,
@@ -159,7 +159,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Shutdown and turnaround work</strong> — much petrochemical electrical
                 contractor work is concentrated in planned shutdowns and turnarounds, when plant is
@@ -315,7 +315,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What they show</strong> — area classification drawings show the boundaries
                 of Zone 0, Zone 1, and Zone 2 areas on plan and elevation views. Zone boundaries are
@@ -325,7 +325,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>How they are used</strong> — before selecting or installing any electrical
                 equipment on a petrochemical site, the electrician or engineer must consult the area
@@ -336,7 +336,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maintaining drawings</strong> — area classification drawings must be updated
                 when plant layout, process conditions, or substance inventories change. Out-of-date
@@ -364,7 +364,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Gas groups</strong> — Group IIA covers propane, acetone, and most common
                 hydrocarbons (minimum ignition energy &gt;180µJ). Group IIB covers ethylene and
@@ -374,7 +374,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Temperature classes</strong> — T1 (450°C maximum surface temperature)
                 through T6 (85°C). The temperature class must be below the auto-ignition temperature
@@ -384,7 +384,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Equipment Protection Level (EPL)</strong> — Ga, Gb, Gc (for gas zones) or
                 Da, Db, Dc (for dust zones). EPL must match or exceed the zone requirement: Ga for
@@ -470,7 +470,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CompEx Foundation (ExI01–ExI04)</strong> — covers the fundamentals of
                 explosive atmospheres, zone classification, Ex d flameproof, Ex e increased safety,
@@ -480,7 +480,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CompEx Maintenance (ExM01–ExM04)</strong> — covers inspection and
                 maintenance of Ex installations to BS EN 60079-17. Essential for maintenance
@@ -489,7 +489,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CompEx Dust (ExD units)</strong> — covers dust zone classification and
                 equipment selection for Zones 20, 21, and 22. Relevant for petrochemical sites with
@@ -497,7 +497,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reassessment every five years</strong> — CompEx certification must be
                 renewed by reassessment every five years. The reassessment demonstrates that the
@@ -531,7 +531,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical isolation</strong> — all electrical work on live or potentially
                 live circuits requires a formal isolation and lock-off procedure. The PTW specifies
@@ -541,7 +541,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hot work permits</strong> — any work that creates a source of ignition —
                 angle grinding, welding, use of non-Ex tools — in or near hazardous areas requires a
@@ -550,7 +550,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Confined space permits</strong> — working inside process vessels, tanks, or
                 enclosed spaces (even without an active explosive atmosphere risk) requires a
@@ -576,7 +576,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <AlertTriangle className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Start with CompEx Foundation</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -633,7 +633,7 @@ export default function PetrochemicalElectricalPage() {
       heroTitle={
         <>
           Petrochemical Electrical Installation UK:{' '}
-          <span className="text-yellow-400">Refinery & Chemical Plant Guide</span>
+          <span className="text-elec-yellow">Refinery & Chemical Plant Guide</span>
         </>
       }
       heroSubtitle="Everything UK electricians need to know about petrochemical electrical installation — DSEAR 2002 compliance, ATEX zone classification (Zone 0, 1, 2), Ex d/e/i/m/n protection concepts, area classification drawings, BS EN 60079-17 inspection requirements, and CompEx qualification."

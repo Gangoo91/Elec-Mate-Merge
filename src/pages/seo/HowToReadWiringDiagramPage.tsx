@@ -194,7 +194,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IEC 60617 (current standard)</strong> — the International Electrotechnical
                 Commission standard for graphical symbols for electrical diagrams. The UK adopted
@@ -203,7 +203,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Legacy BS symbols</strong> — older UK drawings (pre-2000s) may use BS 3939
                 symbols, which differ from IEC 60617 in some respects. The most commonly encountered
@@ -212,7 +212,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Always check the drawing legend</strong> — any drawing that uses
                 non-standard or project-specific symbols should include a symbol legend. If no
@@ -237,7 +237,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Switch (single-pole)</strong> — a line with a diagonal break, typically with
                 a small arc or angle. The diagonal indicates the switch can break the circuit. A
@@ -246,7 +246,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit breaker (MCB)</strong> — a rectangle with a diagonal line inside (or
                 in some conventions, the standard switch symbol with a specific annotation). On
@@ -255,7 +255,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Transformer</strong> — two circles side by side (representing the primary
                 and secondary windings) connected to the circuit. Star and delta connections are
@@ -264,7 +264,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Motor</strong> — a circle with the letter M inside. Three-phase motors
                 typically show three input lines. DC motors may show a circle with M and arrows
@@ -273,7 +273,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Relay coil</strong> — a rectangle or circle labelled with the relay
                 reference (e.g., K1, CR1). The coil is the electromagnetic component that operates
@@ -282,7 +282,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fuse</strong> — a rectangle with a line through it (sometimes shown as a
                 small rectangle or diamond). The fuse rating is annotated. BS 88 HRC fuses, BS 1361
@@ -291,7 +291,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth symbol</strong> — three horizontal lines of decreasing length, stacked
                 vertically (or sometimes a single vertical line terminating in three shorter lines).
@@ -317,7 +317,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1: Identify the supply</strong> — find the supply terminals (usually at
                 the top or left of the diagram). Note the voltage and frequency. On a control
@@ -326,7 +326,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2: Identify protective devices</strong> — fuses, MCBs, or RCBOs in
                 series with the circuit. Note their ratings. These define the maximum current the
@@ -334,7 +334,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 3: Trace the current path</strong> — follow the line from supply
                 through the protective device, through any switching devices, through the load
@@ -343,7 +343,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 4: Identify control elements</strong> — switches, relays, and
                 contactors that control when the load operates. On control circuits, a series of
@@ -368,7 +368,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Terminal numbering</strong> — terminals on components are numbered or
                 lettered in the wiring diagram. Wire references (e.g., W1, W2, or using a wire
@@ -377,7 +377,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable references</strong> — cables are typically labelled with a reference
                 (e.g., C1, C2) that matches the cable schedule. The cable schedule specifies the
@@ -386,7 +386,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Multi-core cable representation</strong> — a thick line with a number
                 indicating the number of conductors (e.g., a line with &quot;4c&quot; means a 4-core
@@ -413,7 +413,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Read from top to bottom</strong> — SLDs typically show the incoming supply
                 at the top (DNO cutout, transformer, or site incoming point) and cascade downward
@@ -422,7 +422,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Busbar representation</strong> — horizontal lines represent busbars (copper
                 bars distributing supply to multiple circuit breakers). The main LV busbar in a
@@ -431,7 +431,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Protective device ratings</strong> — each circuit breaker, fuse, or switch
                 on the SLD is annotated with its rating (e.g., &quot;400A 4P ACB&quot; for a 400-amp
@@ -440,7 +440,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Transformer representation</strong> — on SLDs, transformers are shown as two
                 circles side by side with winding notation (e.g., Dyn11 for delta primary, star
@@ -472,7 +472,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Phase labelling</strong> — UK drawings label phases L1, L2, L3 (or the older
                 R, Y, B using red, yellow, blue colours). On three-phase diagrams from European
@@ -481,7 +481,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Star (Y) connection</strong> — three loads or windings connected at a common
                 neutral point. Each load connects between a phase conductor and neutral. Phase
@@ -490,7 +490,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Delta connection</strong> — three loads connected in a closed triangle
                 between phase conductors (no neutral connection). Line voltage (400V in a 400V
@@ -499,7 +499,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Star-delta starter</strong> — a common three-phase motor starting
                 arrangement. The motor starts in star (reduced voltage across each winding, lower
@@ -534,7 +534,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Start with the drawing schedule</strong> — a drawing schedule lists all
                 drawings in the package and their revision status. Always confirm you have the
@@ -543,7 +543,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cross-reference SLD to board schedule</strong> — the SLD gives the big
                 picture; the board schedule gives the detail (circuit numbers, protective device
@@ -551,7 +551,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mark up drawings as you work</strong> — use a pencil or marked-up PDF to
                 record what you have installed, connections made, and any deviations from the
@@ -559,7 +559,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Always verify with instruments</strong> — never assume a circuit is correct
                 based on the drawing alone. Use a multifunction tester to verify polarity,
@@ -585,7 +585,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Record Your Circuits Accurately</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -616,7 +616,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certify your installation work with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC and EICR completion, AI board scanning, and instant PDF certificates. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EIC and EICR completion, AI board scanning, and instant PDF certificates. 7-day free trial."
           icon={Zap}
         />
       </>
@@ -642,7 +642,7 @@ export default function HowToReadWiringDiagramPage() {
       heroTitle={
         <>
           How to Read a Wiring Diagram:{' '}
-          <span className="text-yellow-400">
+          <span className="text-elec-yellow">
             Symbols, Single-Line Diagrams and Three-Phase Explained
           </span>
         </>
@@ -655,7 +655,7 @@ export default function HowToReadWiringDiagramPage() {
       faqHeading="Frequently Asked Questions About Reading Electrical Diagrams"
       relatedPages={relatedPages}
       ctaHeading="Complete Electrical Certificates with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC and EICR completion, AI board scanning, and instant PDF export. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC and EICR completion, AI board scanning, and instant PDF export. 7-day free trial."
     />
   );
 }

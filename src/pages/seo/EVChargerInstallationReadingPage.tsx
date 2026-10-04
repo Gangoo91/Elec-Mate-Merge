@@ -250,7 +250,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow text-black font-bold text-sm shrink-0">
                 1
               </span>
               <span>
@@ -261,7 +261,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow text-black font-bold text-sm shrink-0">
                 2
               </span>
               <span>
@@ -271,7 +271,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow text-black font-bold text-sm shrink-0">
                 3
               </span>
               <span>
@@ -281,7 +281,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow text-black font-bold text-sm shrink-0">
                 4
               </span>
               <span>
@@ -292,7 +292,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow text-black font-bold text-sm shrink-0">
                 5
               </span>
               <span>
@@ -320,7 +320,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard 7kW home installation</strong> — £800 to £1,200 all-in, including
                 charger unit, dedicated circuit, RCD protection, EIC, and Part P certificate. After
@@ -328,7 +328,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Garage installation</strong> — add £50 to £150 for detached garage
                 installations where cabling must run underground or overhead between the house and
@@ -336,7 +336,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit upgrade</strong> — £400 to £700 additional. 1930s and 1950s
                 Reading properties often have older consumer units without adequate spare ways or
@@ -344,7 +344,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth electrode</strong> — £150 to £350 additional, if the PME earthing risk
                 assessment determines a supplementary earth electrode is needed. More common at
@@ -375,7 +375,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New residential buildings</strong> — must include at least one EV charge
                 point per dwelling with associated parking. Many Reading new-build developers
@@ -384,7 +384,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Major renovations</strong> — buildings undergoing renovation or change of
                 use (where more than 10 parking spaces are created or modified) must also comply
@@ -393,7 +393,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV-ready vs fitted charger</strong> — some Reading developers supply only
                 the cable infrastructure (a capped spur at the parking space) rather than a fitted
@@ -472,14 +472,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>OZEV approval</strong> — verify registration at gov.uk OZEV installer
                 search. Only OZEV-registered installers can apply the EVHS grant on your behalf.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC or NAPIT registration</strong> — provides assurance of technical
                 qualifications, regular assessment, and appropriate insurance cover. Verify on the
@@ -487,7 +487,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PME earthing competence</strong> — confirm your installer is familiar with
                 the Regulation 722.411.4 PME earthing assessment. Ask whether they carry an earth
@@ -495,7 +495,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Written all-inclusive quote</strong> — insist on itemised costs covering
                 charger unit, cable, protection devices, commissioning, EIC, Part P certification,
@@ -521,7 +521,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete EV Certificates On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -555,7 +555,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your EV installation business in Reading with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EV certification, instant PDF export, and professional quoting. 7-day free trial, cancel anytime."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EV certification, instant PDF export, and professional quoting. 7-day free trial, cancel anytime."
           icon={Zap}
         />
       </>
@@ -581,7 +581,7 @@ export default function EVChargerInstallationReadingPage() {
       heroTitle={
         <>
           EV Charger Installation Reading:{' '}
-          <span className="text-yellow-400">Home EV Charging & OZEV Grants 2026</span>
+          <span className="text-elec-yellow">Home EV Charging & OZEV Grants 2026</span>
         </>
       }
       heroSubtitle="Everything Reading residents need to know about home EV charger installation — OZEV grants up to £350, typical costs of £800 to £1,200 for a 7kW unit, Building Regulations Part S for new-builds, and how to find a qualified OZEV-approved installer in Berkshire."
@@ -592,7 +592,7 @@ export default function EVChargerInstallationReadingPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in Reading"
       relatedPages={relatedPages}
       ctaHeading="Complete EV Installation Certificates On Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EV certification, OZEV documentation, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EV certification, OZEV documentation, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

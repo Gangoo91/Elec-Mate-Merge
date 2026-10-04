@@ -188,7 +188,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulatory Reform (Fire Safety) Order 2005</strong> — the "responsible
                 person" (usually the employer, building owner, or managing agent) must ensure that
@@ -198,7 +198,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Health and Safety at Work Act 1974</strong> — employers must ensure the
                 health and safety of employees at work, which includes providing adequate emergency
@@ -211,7 +211,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Building Regulations Approved Document B</strong> — requires emergency
                 lighting to be provided in accordance with BS 5266-1:2025 for all new buildings and
@@ -220,7 +220,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HMO licensing requirements</strong> — local authorities require emergency
                 lighting in the common areas of HMOs as a condition of the HMO licence. The LACORS
@@ -256,7 +256,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reg 560.9 — The three-standard compliance chain.</strong> BS 7671 Reg 560.9
                 states:{' '}
@@ -270,7 +270,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reg 740.415.1 — Battery supply on the same RCD as normal lighting.</strong>{' '}
                 In amusement parks and fairground installations (Chapter 74), the supply to a
@@ -281,7 +281,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>OSG Reg 7.4.1 — Circuit segregation.</strong> The On-Site Guide states:
                 <em>
@@ -318,7 +318,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minimum 1 lux</strong> across the full width of the escape route at floor
                 level. BS EN 1838:2024 extended this from the centre line to the whole width;
@@ -327,7 +327,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Uniformity ratio</strong> — the ratio of maximum to minimum illuminance on
                 the escape route must not exceed 40:1. This prevents dark spots that could cause
@@ -335,7 +335,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>50% of required illuminance within 5 seconds.</strong> The emergency
                 luminaire must achieve at least 50% of the required illuminance (0.5 lux across the
@@ -344,7 +344,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minimum duration of 3 hours.</strong> The emergency luminaire must maintain
                 the required illuminance for at least 3 hours on battery power.
@@ -382,7 +382,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minimum 0.5 lux</strong> at floor level across the entire open area. This is
                 lower than the escape route requirement (1 lux) because the purpose is orientation,
@@ -390,21 +390,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Uniformity ratio</strong> — the ratio of maximum to minimum illuminance must
                 not exceed 40:1.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Coverage</strong> — the 0.5 lux minimum must be achieved across the entire
                 area, excluding a 0.5m border around the perimeter.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Duration</strong> — the same minimum of 3 hours applies, with 50% of
                 required illuminance within 5 seconds and full illuminance within 60 seconds.
@@ -497,7 +497,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hospital operating theatres</strong> — surgical procedures cannot be
                 interrupted by a power failure. Standby lighting (usually from a generator) provides
@@ -505,14 +505,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Data centres</strong> — standby lighting allows staff to continue working
                 during a power outage while the UPS and generator maintain server operations.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Control rooms</strong> — building management system control rooms, security
                 monitoring centres, and similar facilities where continuous operation is essential.
@@ -547,7 +547,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Self-contained luminaires.</strong> Each luminaire contains its own
                 rechargeable battery, charger, and control gear. Installation is straightforward —
@@ -559,7 +559,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Central battery systems.</strong> A single central power supply unit
                 (conforming to BS EN 50171 per BS 5266-1:2025 Clause 7.2) feeds all emergency
@@ -607,7 +607,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Daily — Visual check.</strong> Where practicable, a visual check should be
                 made to confirm that the green charging indicator on each self-contained luminaire
@@ -616,7 +616,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Monthly — Functional test.</strong> Simulate a mains failure by switching
                 off the supply to the emergency lighting circuit (or using a test switch on each
@@ -628,7 +628,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Annually — Full rated duration test.</strong> Discharge the batteries for
                 the full rated duration (typically 3 hours). At the end of the test period, check
@@ -719,7 +719,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Emergency Lighting Certificate</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -798,7 +798,7 @@ export default function BS5266EmergencyLightingStandardPage() {
       badgeIcon={Scale}
       heroTitle={
         <>
-          BS 5266 Emergency Lighting: <span className="text-yellow-400">The Complete UK Guide</span>
+          BS 5266 Emergency Lighting: <span className="text-elec-yellow">The Complete UK Guide</span>
         </>
       }
       heroSubtitle="BS 5266-1:2025 is the current UK code of practice for emergency lighting. It covers escape route lighting, open area lighting, high-risk task areas, and standby lighting. This guide explains the design requirements, illuminance levels, testing intervals, and certification — essential knowledge for every electrician."

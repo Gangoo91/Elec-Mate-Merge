@@ -225,7 +225,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <Bell className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Bell className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>LD3 — Escape route protection</strong> — smoke detectors in all circulation
                 spaces forming part of escape routes (hallways, landings, stairwells). This is the
@@ -278,7 +278,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Domestic System Components</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mains-powered interlinked smoke detector</strong> — £20 to £45 each. Optical
                 smoke detection with built-in rechargeable battery backup. Aico, Kidde, and
@@ -286,7 +286,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mains-powered heat detector</strong> — £20 to £40 each. Fixed temperature or
                 rate-of-rise detection (trade prices from £22.75 for Activ series heat detectors).
@@ -294,7 +294,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wireless interlinked smoke alarm</strong> — £30 to £70 each. Battery-powered
                 with radio-frequency interlinking. Higher unit cost but no cable installation
@@ -302,7 +302,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable (for hardwired systems)</strong> — 1.5mm2 fire-resistant cable (FP200
                 or equivalent): £1.50 to £3.00 per metre. A typical domestic installation requires
@@ -316,28 +316,28 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Commercial System Components</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Conventional fire alarm panel (2 to 8 zone)</strong> — £150 to £500. The
                 central control unit that monitors all detection zones and activates sounders.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Addressable fire alarm panel</strong> — £500 to £3,000+ depending on loop
                 capacity. Each device has a unique address for precise location identification.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Detectors and call points</strong> — £15 to £50 each for conventional, £30
                 to £100 each for addressable. Plus detector bases at £3 to £15 each.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sounders and beacons</strong> — £20 to £80 each. Wall-mounted or
                 ceiling-mounted alarm sounders, with visual beacons for areas with high ambient
@@ -362,7 +362,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Domestic hardwired (retrofit)</strong> — £150 to £400 for a typical LD2
                 installation with 5 to 7 detectors. Includes cable routing, detector mounting,
@@ -371,7 +371,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Domestic wireless (retrofit)</strong> — £100 to £250 for a typical LD2
                 installation. Faster installation as no cables to route. Mount detectors, configure
@@ -379,7 +379,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial conventional (small office/shop)</strong> — £800 to £2,000 for a
                 system with 10 to 20 detection points. Panel installation, zone wiring in
@@ -388,7 +388,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial addressable (larger premises)</strong> — £2,000 to £10,000+ for
                 labour depending on the number of devices, building complexity, and integration
@@ -412,14 +412,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Domestic LD3 (escape routes only)</strong> — £250 to £500 total. 2 to 3
                 interlinked smoke detectors, cable or wireless, testing, and certificate.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Domestic LD2 (escape routes plus high-risk rooms)</strong> — £500 to £1,000
                 total. 5 to 7 detectors (smoke and heat), mains-powered with battery backup,
@@ -427,7 +427,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Domestic LD1 (comprehensive coverage)</strong> — £1,000 to £2,000 total. 8
                 to 12 detectors covering every habitable room, hardwired with fire-resistant cable.
@@ -435,7 +435,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial conventional (small premises)</strong> — £2,000 to £5,000 total.
                 Control panel, 10 to 20 detection points, call points, sounders, fire-resistant
@@ -443,7 +443,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial addressable (medium premises)</strong> — £5,000 to £15,000+
                 total. Addressable panel, 30 to 100+ devices, loop wiring, integration with building
@@ -515,7 +515,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Domestic systems</strong> — a fire alarm installation certificate confirming
                 compliance with BS 5839 Part 6 and the grade achieved (LD1, LD2, or LD3). The
@@ -523,7 +523,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial systems</strong> — a BS 5839 Part 1{' '}
                 <SEOInternalLink href="/guides/fire-alarm-certificate-requirements">
@@ -535,7 +535,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing</strong> — every detection device must be functionally tested to
                 confirm it activates the alarm. Sound pressure levels must be measured to confirm
@@ -570,7 +570,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI Cost Engineer</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -604,7 +604,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify fire alarm systems"
-          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting, fire alarm certification, and on-site documentation. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for professional quoting, fire alarm certification, and on-site documentation. 7-day free trial."
           icon={Flame}
         />
       </>
@@ -630,7 +630,7 @@ export default function FireAlarmInstallationCostPage() {
       heroTitle={
         <>
           Fire Alarm Installation Cost:{' '}
-          <span className="text-yellow-400">UK System Pricing Guide 2026</span>
+          <span className="text-elec-yellow">UK System Pricing Guide 2026</span>
         </>
       }
       heroSubtitle="From domestic smoke alarms to full commercial addressable systems — this guide covers every cost element of fire alarm installation. Material prices, labour rates, BS 5839 grades, and certification requirements for electricians and property owners."
@@ -641,7 +641,7 @@ export default function FireAlarmInstallationCostPage() {
       faqHeading="Frequently Asked Questions About Fire Alarm Installation Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Fire Alarm Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for fire alarm quoting, certification, and on-site documentation. Professional results, every time. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for fire alarm quoting, certification, and on-site documentation. Professional results, every time. 7-day free trial, cancel anytime."
     />
   );
 }

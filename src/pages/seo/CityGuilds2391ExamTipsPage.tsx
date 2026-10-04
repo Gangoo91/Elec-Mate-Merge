@@ -175,7 +175,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>40 short-answer questions</strong> in 2 hours. These are not multiple-choice
                 — you must write out your answers in full sentences with technical detail and
@@ -183,7 +183,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Open-book</strong> — you can bring BS 7671 and GN3 (Guidance Note 3:
                 Inspection & Testing). Both can be tabbed. This is different from the 2382 exam
@@ -191,14 +191,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pass mark: 60%.</strong> With 40 questions, you need to score at least 24
                 correct answers. Each question may carry different marks depending on complexity.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation references are expected.</strong> An answer of "you need RCD
                 protection" will score fewer marks than "Regulation 411.3.3 requires additional
@@ -230,7 +230,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Safe Isolation</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -437,7 +437,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">Written Exam Preparation</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Study both BS 7671 and GN3.</strong> The written exam draws heavily from
                 both. GN3 covers the practical aspects of inspection and testing — test methods,
@@ -445,7 +445,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Practise writing detailed answers.</strong> Unlike the 2382 multiple-choice
                 exam, the 2391 expects full technical answers. Practise writing answers to past
@@ -453,7 +453,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use flashcards for key regulations.</strong> Elec-Mate's flashcards tool
                 covers the regulations most commonly tested in the 2391 written exam. Spaced
@@ -466,7 +466,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">Practical Assessment Preparation</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Practise on real installations.</strong> If possible, carry out inspection
                 and testing on real installations under supervision. The more you practise the
@@ -475,7 +475,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Memorise the test sequence.</strong> You should be able to recite the test
                 sequence in your sleep. Practise it until it is automatic — on assessment day,
@@ -483,7 +483,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Practise filling in certification.</strong> Complete blank EIC and EICR
                 forms multiple times. Know which fields go where, what format the results should be
@@ -512,7 +512,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Written exam:</strong> Allocate your time across all 40 questions. Do not
                 spend too long on any single question. If you are stuck, move on and come back.
@@ -521,7 +521,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Practical assessment:</strong> Talk the examiner through what you are doing
                 and why. If you explain "I am now carrying out insulation resistance testing at 500
@@ -531,7 +531,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bring everything you need:</strong> BS 7671 (tabbed), GN3 (tabbed), photo
                 ID, instruments (calibrated), test leads, proving unit, PPE, pen, and spare pen.
@@ -539,7 +539,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Stay calm during the practical.</strong> Being watched by an examiner is
                 stressful. Take a breath, work methodically through the test sequence, and do not
@@ -570,7 +570,7 @@ export default function CityGuilds2391ExamTipsPage() {
       badgeIcon={FileCheck2}
       heroTitle={
         <>
-          2391 Exam Tips: <span className="text-yellow-400">How to Pass Inspection & Testing</span>
+          2391 Exam Tips: <span className="text-elec-yellow">How to Pass Inspection & Testing</span>
         </>
       }
       heroSubtitle="The C&G 2391 is the qualification every electrician needs for inspection and testing work. It has a written exam and a practical assessment — and the pass rate is lower than the 18th Edition. This guide covers both components, the test sequence you must know, and the mistakes that cost candidates marks."

@@ -49,7 +49,7 @@ export default function DigitalCertificatesAppPage() {
       badgeIcon={FileCheck2}
       heroTitle={
         <>
-          <span className="text-yellow-400">Digital Electrical Certificates</span> — EICR, EIC,
+          <span className="text-elec-yellow">Digital Electrical Certificates</span> — EICR, EIC,
           Minor Works, and 5 More
         </>
       }

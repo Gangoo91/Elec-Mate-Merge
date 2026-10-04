@@ -179,18 +179,18 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white leading-relaxed">
             <li className="flex items-start gap-3">
-              <CircuitBoard className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CircuitBoard className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">TN-C-S (PME):</strong> Maximum assumed Ze = 0.35
+                <strong className="text-elec-yellow">TN-C-S (PME):</strong> Maximum assumed Ze = 0.35
                 ohms. The earth return is via the combined neutral/earth (PEN) conductor of the
                 supply cable. This gives the lowest Ze because the PEN conductor has very low
                 impedance. Typical measured values range from 0.10 to 0.35 ohms.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CircuitBoard className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CircuitBoard className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">TN-S (cable sheath):</strong> Maximum assumed Ze
+                <strong className="text-elec-yellow">TN-S (cable sheath):</strong> Maximum assumed Ze
                 = 0.80 ohms. The earth return is via the metallic sheath or armour of the supply
                 cable. This has higher impedance than a PEN conductor. Typical measured values range
                 from 0.30 to 0.80 ohms, though older cable sheaths with corroded joints can exceed
@@ -198,9 +198,9 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CircuitBoard className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CircuitBoard className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">TT (earth electrode):</strong> Maximum assumed
+                <strong className="text-elec-yellow">TT (earth electrode):</strong> Maximum assumed
                 Ze = 21 ohms. The earth return is through the general mass of earth via an earth
                 electrode. The impedance is much higher and varies enormously depending on soil
                 type, moisture content, and electrode characteristics. Typical values range from 10
@@ -229,7 +229,7 @@ const sections = [
           from the distribution board to the point of measurement. The relationship is:
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4 text-center">
-          <p className="text-2xl font-bold text-yellow-400">Zs = Ze + (R1 + R2)</p>
+          <p className="text-2xl font-bold text-elec-yellow">Zs = Ze + (R1 + R2)</p>
           <p className="text-white text-sm mt-2">
             Where R1 = line conductor resistance, R2 = CPC resistance
           </p>
@@ -272,24 +272,24 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
           <ul className="space-y-3 text-white leading-relaxed">
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">0.4 seconds:</strong> Final circuits supplying
+                <strong className="text-elec-yellow">0.4 seconds:</strong> Final circuits supplying
                 socket outlets and circuits supplying portable equipment outdoors. This is the
                 maximum time for most circuits in a domestic installation.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">5 seconds:</strong> Distribution circuits (those
+                <strong className="text-elec-yellow">5 seconds:</strong> Distribution circuits (those
                 feeding other distribution boards, not final circuits directly).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">0.2 seconds:</strong> Required for some specific
+                <strong className="text-elec-yellow">0.2 seconds:</strong> Required for some specific
                 situations, such as circuits in medical locations per Section 710.
               </span>
             </li>
@@ -345,45 +345,45 @@ const sections = [
           </h3>
           <ul className="space-y-2 text-white leading-relaxed">
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">B6:</strong> 7.28 Ω (corrected: 5.82 Ω)
+                <strong className="text-elec-yellow">B6:</strong> 7.28 Ω (corrected: 5.82 Ω)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">B10:</strong> 4.37 Ω (corrected: 3.50 Ω)
+                <strong className="text-elec-yellow">B10:</strong> 4.37 Ω (corrected: 3.50 Ω)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">B16:</strong> 2.73 Ω (corrected: 2.18 Ω)
+                <strong className="text-elec-yellow">B16:</strong> 2.73 Ω (corrected: 2.18 Ω)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">B20:</strong> 2.19 Ω (corrected: 1.75 Ω)
+                <strong className="text-elec-yellow">B20:</strong> 2.19 Ω (corrected: 1.75 Ω)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">B32:</strong> 1.37 Ω (corrected: 1.10 Ω)
+                <strong className="text-elec-yellow">B32:</strong> 1.37 Ω (corrected: 1.10 Ω)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">B40:</strong> 1.09 Ω (corrected: 0.87 Ω)
+                <strong className="text-elec-yellow">B40:</strong> 1.09 Ω (corrected: 0.87 Ω)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">B50:</strong> 0.87 Ω (corrected: 0.70 Ω)
+                <strong className="text-elec-yellow">B50:</strong> 0.87 Ω (corrected: 0.70 Ω)
               </span>
             </li>
           </ul>
@@ -415,18 +415,18 @@ const sections = [
             immediately.
           </p>
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <p className="text-white text-sm leading-relaxed">
-              <strong className="text-yellow-400">Safety warning:</strong> While the main earthing
+              <strong className="text-elec-yellow">Safety warning:</strong> While the main earthing
               conductor is disconnected, the entire installation has no earth connection. This must
               be done as quickly as possible, and no one should use the installation during this
               period.
             </p>
           </div>
           <div className="flex items-start gap-3 mt-3">
-            <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <p className="text-white text-sm leading-relaxed">
-              <strong className="text-yellow-400">Professional tip (OSG Reg 1.3):</strong> On new
+              <strong className="text-elec-yellow">Professional tip (OSG Reg 1.3):</strong> On new
               installations, obtain the typical maximum Ze from the electricity distributor before
               starting work. The distributor can provide this value for the supply address, allowing
               you to calculate the maximum achievable Zs and verify disconnection times during the
@@ -506,7 +506,7 @@ const sections = [
         <div className="space-y-4 mt-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CircuitBoard className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">TN-C-S (PME) Systems</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -521,7 +521,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CircuitBoard className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">TN-S (Cable Sheath) Systems</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -536,7 +536,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CircuitBoard className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">TT (Earth Electrode) Systems</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -552,24 +552,24 @@ const sections = [
                   Table 41.3.
                 </p>
                 <div className="mt-3 rounded-xl bg-white/[0.04] border border-white/10 p-4">
-                  <p className="text-yellow-400 font-semibold text-sm mb-2">
+                  <p className="text-elec-yellow font-semibold text-sm mb-2">
                     Table 41.5 — Maximum Zs for RCD-protected TT systems (230 V)
                   </p>
                   <ul className="space-y-1 text-white text-sm leading-relaxed">
                     <li>
-                      <strong className="text-yellow-400">30 mA RCD:</strong> 1,667 &Omega;
+                      <strong className="text-elec-yellow">30 mA RCD:</strong> 1,667 &Omega;
                     </li>
                     <li>
-                      <strong className="text-yellow-400">100 mA RCD:</strong> 500 &Omega;
+                      <strong className="text-elec-yellow">100 mA RCD:</strong> 500 &Omega;
                     </li>
                     <li>
-                      <strong className="text-yellow-400">300 mA RCD:</strong> 167 &Omega;
+                      <strong className="text-elec-yellow">300 mA RCD:</strong> 167 &Omega;
                     </li>
                     <li>
-                      <strong className="text-yellow-400">500 mA RCD:</strong> 100 &Omega;
+                      <strong className="text-elec-yellow">500 mA RCD:</strong> 100 &Omega;
                     </li>
                   </ul>
-                  <p className="text-white/60 text-xs mt-2">
+                  <p className="text-white text-xs mt-2">
                     Source: BS 7671:2018+A4:2026 Table 41.5, Reg 411.5.3. Applies to non-delayed and
                     time-delayed &#39;S&#39; Type RCDs to BS EN 61008-1 / BS EN 61009-1.
                   </p>
@@ -595,33 +595,33 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Options When Zs Exceeds Maximum</h3>
           <ul className="space-y-3 text-white leading-relaxed">
             <li className="flex items-start gap-3">
-              <Repeat className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Repeat className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Verify the reading:</strong> Retest to confirm.
+                <strong className="text-elec-yellow">Verify the reading:</strong> Retest to confirm.
                 Compare measured Zs against Ze + (R1+R2). Check for high-resistance connections.
                 Ensure your instrument is calibrated.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Reduce R1+R2:</strong> Increase the cable size,
+                <strong className="text-elec-yellow">Reduce R1+R2:</strong> Increase the cable size,
                 shorten the cable run, or use a larger CPC. This directly reduces R1+R2 and
                 therefore Zs.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Change the protective device:</strong> A Type B
+                <strong className="text-elec-yellow">Change the protective device:</strong> A Type B
                 MCB has a higher maximum Zs than a Type C or Type D MCB of the same rating. If the
                 load permits, changing from Type C to Type B may bring Zs within limits.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Add RCD protection:</strong> An{' '}
+                <strong className="text-elec-yellow">Add RCD protection:</strong> An{' '}
                 <SEOInternalLink href="/guides/rcd-testing-procedure">RCD</SEOInternalLink> provides
                 fault disconnection that does not depend on Zs. A 30 mA RCD will trip at 30 mA of
                 earth leakage current regardless of the loop impedance.
@@ -711,7 +711,7 @@ export default function EarthFaultLoopExplainedPage() {
       heroTitle={
         <>
           Earth Fault Loop Impedance Explained:{' '}
-          <span className="text-yellow-400">Ze and Zs Guide</span>
+          <span className="text-elec-yellow">Ze and Zs Guide</span>
         </>
       }
       heroSubtitle="The complete guide to earth fault loop impedance for UK electricians. What Ze and Zs are, why loop impedance determines disconnection time, maximum Zs values per BS 7671, how to measure Ze and Zs, the 0.8 temperature correction factor, TN-C-S vs TN-S vs TT typical values, and what to do when Zs exceeds the maximum."
@@ -724,7 +724,7 @@ export default function EarthFaultLoopExplainedPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Validate Zs against BS 7671 automatically on site"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site testing and certification. Zs lookup by protective device, auto-validation, voice test entry, 70+ calculators. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site testing and certification. Zs lookup by protective device, auto-validation, voice test entry, 70+ calculators. 7-day free trial, cancel anytime."
     />
   );
 }

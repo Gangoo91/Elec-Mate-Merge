@@ -157,7 +157,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">LED High Bay Fitting Costs (2026)</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>100W LED high bay</strong> — £60 to £90 supply price. 14,000 to 16,000
                 lumens. Suitable for mounting heights of 4 to 6 metres. Covers approximately 25 to
@@ -165,7 +165,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>150W LED high bay</strong> — £80 to £130 supply price. 21,000 to 24,000
                 lumens. Suitable for 6 to 8 metre mounting heights. Covers approximately 35 to 45m²
@@ -173,7 +173,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>200W LED high bay</strong> — £120 to £180 supply price. 28,000 to 32,000
                 lumens. Suitable for 8 to 12 metre mounting heights. Covers approximately 40 to 50m²
@@ -181,7 +181,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>240W+ LED high bay</strong> — £160 to £250 supply price. 34,000 to 40,000+
                 lumens. For mounting heights above 12 metres or high lux level requirements.
@@ -211,35 +211,35 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Required Lux Levels by Area</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>General storage — 100 lux</strong> — Racked storage with fork-lift
                 operation. Lower fittings density, wider spacing.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Packing and dispatch — 150 lux</strong> — The most common requirement for
                 general warehouse operations including picking, packing, and dispatch.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inspection and quality — 200 to 300 lux</strong> — Areas where visual
                 inspection of products or documents is required.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Assembly and detailed work — 300 to 500 lux</strong> — Production areas
                 within warehouses where detailed manual work is carried out.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Loading bays — 150 lux</strong> — External and internal loading areas where
                 vehicles are loaded and unloaded.
@@ -305,7 +305,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Occupancy sensing</strong> — Microwave or PIR sensors that dim or switch off
                 lights in unoccupied zones. Particularly effective in racking aisles where
@@ -313,7 +313,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Daylight harvesting</strong> — Photocells that reduce artificial light
                 output when natural daylight through rooflights or translucent panels is sufficient.
@@ -321,7 +321,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DALI dimming</strong> — Digital Addressable Lighting Interface allows
                 individual fitting control, zoning, and scene setting. Adds £5 to £10 per fitting
@@ -329,7 +329,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Time scheduling</strong> — Automatic on/off at shift times, reduced output
                 during breaks, and overnight security lighting levels. Simple to implement with a
@@ -353,7 +353,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Basic high bay (no controls): £15 to £22/fitting</strong> — 100W fitting,
                 chain suspension, connection to existing wiring point. Suitable for simple storage
@@ -361,7 +361,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mid-range high bay with sensor: £22 to £32/fitting</strong> — 150 to 200W
                 fitting with integrated occupancy sensor, DALI dimmable. Includes new wiring from
@@ -369,7 +369,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>High-spec high bay with full controls: £32 to £40/fitting</strong> — 200W+
                 fitting with DALI dimming, daylight harvesting, occupancy sensing, and wireless
@@ -395,7 +395,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671:2018+A4:2026</strong> — The wiring regulations covering the
                 electrical installation. RCD protection is required for lighting circuits in certain
@@ -403,7 +403,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS EN 12464-1:2021</strong> — Lighting of indoor work places. Specifies
                 minimum lux levels, uniformity ratios, and glare ratings for different work
@@ -411,14 +411,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS 5266-1</strong> — Emergency lighting. Specifies minimum illumination on
                 escape routes, duration, and testing requirements.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electricity at Work Regulations 1989</strong> — Requires all electrical
                 systems to be maintained in a safe condition.
@@ -446,7 +446,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Lightbulb className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Get a Lighting Design First</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -515,7 +515,7 @@ export default function WarehouseLightingCostPage() {
       heroTitle={
         <>
           Warehouse Lighting Cost:{' '}
-          <span className="text-yellow-400">LED High Bay UK Guide 2026</span>
+          <span className="text-elec-yellow">LED High Bay UK Guide 2026</span>
         </>
       }
       heroSubtitle="What does warehouse LED lighting cost? This guide covers high bay LED fittings at £15 to £40 per fitting installed, lux level requirements, emergency lighting, lighting controls, and realistic project costs for electricians and facilities managers."
@@ -526,7 +526,7 @@ export default function WarehouseLightingCostPage() {
       faqHeading="Frequently Asked Questions About Warehouse Lighting Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Warehouse Lighting with Per-Fitting Pricing"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for commercial lighting quotes with fitting schedules, energy saving calculations, and professional PDF output. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for commercial lighting quotes with fitting schedules, energy saving calculations, and professional PDF output. 7-day free trial."
     />
   );
 }

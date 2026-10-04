@@ -269,7 +269,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICRs for landlords</strong> — Wigan's active private rental market
                 generates consistent EICR demand. Building relationships with local letting agents
@@ -277,7 +277,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacements</strong> — old fuse boards are extremely common
                 across Wigan's older housing stock. Consumer unit upgrades are one of the most
@@ -285,7 +285,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full and partial rewires</strong> — Wigan's post-war and Victorian housing
                 stock generates consistent rewiring work. Partial rewires following EICR C2
@@ -293,7 +293,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger installations</strong> — growing across Wigan's residential and
                 commercial sectors. ENW G98 notification is not required for standard EV charger
@@ -429,7 +429,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EIC and EICR Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -477,7 +477,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Wigan electricians"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -504,7 +504,7 @@ export default function ElectricianWiganPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Wigan: <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Wigan: <span className="text-elec-yellow">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Wigan's former mining community housing stock, Victorian terraces, and growing EV charger demand create a consistent market for qualified electricians with Part P compliance expertise and EICR knowledge."
@@ -515,7 +515,7 @@ export default function ElectricianWiganPage() {
       faqHeading="Frequently Asked Questions About Electricians in Wigan"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Wigan Electricians"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the residential and rental electrical market in Wigan and the wider Greater Manchester area. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the residential and rental electrical market in Wigan and the wider Greater Manchester area. 7-day free trial."
     />
   );
 }

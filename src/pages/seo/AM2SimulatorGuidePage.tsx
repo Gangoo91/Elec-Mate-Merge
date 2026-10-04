@@ -182,7 +182,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Installation</strong> — You are given a specification and must build a
                 working electrical installation from scratch. This includes mounting a consumer
@@ -193,7 +193,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inspection and Testing</strong> — You inspect and test the installation you
                 built. This includes visual inspection, dead testing (continuity of protective
@@ -204,7 +204,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fault Diagnosis</strong> — You are presented with a pre-wired rig that has
                 deliberate faults introduced. You must use a systematic approach to identify each
@@ -419,7 +419,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <div className="flex items-start gap-4">
-            <Timer className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+            <Timer className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-2">Effective timed practice strategy</h4>
               <ul className="space-y-2 text-white text-sm leading-relaxed">
@@ -521,7 +521,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Timer className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Timer className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Timed Practice Scenarios</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -600,7 +600,7 @@ export default function AM2SimulatorGuidePage() {
       heroTitle={
         <>
           AM2 Simulator:{' '}
-          <span className="text-yellow-400">
+          <span className="text-elec-yellow">
             Practice Assessment Tool for Apprentice Electricians
           </span>
         </>

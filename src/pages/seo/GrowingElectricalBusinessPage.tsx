@@ -215,7 +215,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Employment contract</strong> — a written statement of employment particulars
                 is a legal requirement from day one. Include: job title, start date, pay and payment
@@ -226,7 +226,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Employers' liability insurance</strong> — legally required from day one of
                 employment, minimum £5m cover. Your existing public liability policy does not cover
@@ -235,7 +235,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PAYE registration</strong> — register as an employer with HMRC before your
                 first employee starts. PAYE registration is free and done online via GOV.UK. You
@@ -245,7 +245,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Workplace pension (auto-enrolment)</strong> — employers must auto-enrol
                 eligible workers (aged 22–66, earning over £10,000/year) into a pension scheme. The
@@ -254,7 +254,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Apprentice vs experienced electrician</strong> — apprentices cost
                 significantly less (£6,000–£14,000/year) but generate limited independent revenue
@@ -356,7 +356,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Van livery</strong> — a well-designed, professionally installed van livery
                 is one of the most cost-effective forms of advertising for an electrician. A branded
@@ -366,7 +366,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Stock management</strong> — running out of a common component on a job and
                 needing to visit a trade counter is expensive in time. A well-organised van stock
@@ -376,7 +376,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Vehicle tracking (for a team)</strong> — GPS tracking systems (from
                 £15/month per vehicle) provide route optimisation data, help manage employee van
@@ -385,7 +385,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electric vans</strong> — as EV infrastructure improves and fuel costs remain
                 significant, electric commercial vans are increasingly viable for electricians. The
@@ -468,7 +468,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Target gross margin: 35–50 per cent</strong> — after paying for materials
                 and the direct cost of labour (your own time at your target daily rate, or your
@@ -477,7 +477,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Target net margin: 15–25 per cent</strong> — after paying all overheads (van
                 costs, insurance, tools, software, marketing, accountant, phone, training), a
@@ -487,7 +487,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Materials margin</strong> — buying trade account discounts of 25–40 per cent
                 below retail (from Rexel, Edmundson, City Electrical Factors, or similar) and
@@ -497,7 +497,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Review monthly</strong> — calculate your gross margin monthly, not just
                 annually. A month where it drops below 30 per cent signals a problem — usually a
@@ -524,7 +524,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Zap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">From Quote to Certificate in One App</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -569,7 +569,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="The business platform built for growing electrical companies"
-          description="Join 1,600+ UK electricians using Elec-Mate for quoting, invoicing, job management, and certification. From sole trader to multi-van operation."
+          description="Join 2,100+ UK electricians using Elec-Mate for quoting, invoicing, job management, and certification. From sole trader to multi-van operation."
           icon={TrendingUp}
         />
       </>
@@ -595,7 +595,7 @@ export default function GrowingElectricalBusinessPage() {
       heroTitle={
         <>
           How to Grow Your Electrical Business UK:{' '}
-          <span className="text-yellow-400">The Scaling Guide</span>
+          <span className="text-elec-yellow">The Scaling Guide</span>
         </>
       }
       heroSubtitle="A practical guide to growing a UK electrical business — the three stages of growth, hiring your first employee (apprentice vs experienced), systems for quoting and invoicing, van management, when to move to a limited company, gross profit targets, and using technology to scale."

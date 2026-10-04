@@ -38,11 +38,11 @@ const checks = [
   {
     id: 'm4-s6-sub5-rcd-trip-time-30ma',
     question:
-      'A 30 mA Type AC RCD protecting a kitchen ring final. You instrument-test at 1 × IΔn (30 mA test current). What is the maximum permitted trip time per BS 7671 A4:2026 Reg 643.7.3 / 643.8?',
+      'A 30 mA Type AC RCD protecting a kitchen ring final. You instrument-test at 1 × IΔn (30 mA test current). What is the maximum permitted trip time per BS 7671 Reg 643.8?',
     options: ['300 ms', '40 ms', '10 ms', '500 ms'],
     correctIndex: 0,
     explanation:
-      'A4:2026 redrafted RCD testing — regardless of RCD Type, "an alternating current test at rated residual operating current (IΔn) is used to verify the effectiveness". For a general non-delay-type RCD: trip time ≤ 300 ms maximum at 1 × IΔn. (For delay "S" type RCDs: between 130 ms minimum and 500 ms maximum at 1 × IΔn.) Note: 40 ms is the older requirement for the 5 × IΔn test that A4:2026 deleted from the regulations — Table 3A in Appendix 3 was deleted in A4:2026.',
+      'A2:2022 redrafted RCD testing — regardless of RCD Type, "an alternating current test at rated residual operating current (IΔn) is used to verify the effectiveness". For a general non-delay-type RCD: trip time ≤ 300 ms maximum at 1 × IΔn. (For delay "S" type RCDs the product standards BS EN 61008/61009 give 130 ms minimum to 500 ms maximum at 1 × IΔn.) Note: 40 ms belonged to the 5 × IΔn test in Table 3A of Appendix 3, which A2:2022 deleted.',
   },
   {
     id: 'm4-s6-sub5-test-button-vs-instrument',
@@ -78,16 +78,16 @@ const quizQuestions = [
   {
     id: 1,
     question:
-      'BS 7671 A4:2026 deleted Table 3A from Appendix 3 (the old time/current performance criteria for RCDs). What replaced it?',
+      'BS 7671 A2:2022 deleted Table 3A from Appendix 3 (the old time/current performance criteria for RCDs). What replaced it?',
     options: [
-      'A new Table 3B giving even more detailed per-type test currents — A4:2026 expanded rather than simplified the regime, adding separate trip-time limits for Type F and Type B RCDs.',
-      'A simplified rule: regardless of RCD Type, an alternating current test at rated residual operating current (IΔn) is used to verify effectiveness, with trip time ≤ 300 ms for general non-delay type and 130-500 ms for delay "S" type.',
-      'Nothing — the table was deleted because RCD trip-time testing is no longer required at all under A4:2026; the integral test button now suffices.',
+      'A new Table 3B giving even more detailed per-type test currents, with separate trip-time limits for Type F and Type B RCDs.',
+      'A simplified rule (NOTE to Reg 643.8): regardless of RCD Type, an alternating current test at IΔn verifies effectiveness — 300 ms maximum for a general non-delay type. (Type S devices: 130–500 ms per BS EN 61008/61009.)',
+      'Nothing — RCD trip-time testing is no longer required at all; the integral test button now suffices.',
       'A single fixed limit of 40 ms at 5 × IΔn for every RCD type, taken from the old high-current row of Table 3A.',
     ],
     correctAnswer: 1,
     explanation:
-      'A4:2026 simplified the RCD test regime. Old approach (with Table 3A): different test currents (½ × IΔn, 1 × IΔn, 5 × IΔn) and different trip-time limits per RCD type (AC, A, F, B). New approach: a single AC test at IΔn, single trip-time limit per category — 300 ms for general non-delay, 130-500 ms for type S delay. Effective from A4:2026 onwards. The half-IΔn test (RCD must NOT trip at half rated) is also still good practice but is no longer the central acceptance criterion for the type-specific trip times.',
+      'A2:2022 simplified the RCD test regime. Old approach (with Table 3A): different test currents (½ × IΔn, 1 × IΔn, 5 × IΔn) and different trip-time limits per RCD type (AC, A, F, B). New approach: a single AC test at IΔn, single trip-time limit per category — 300 ms for general non-delay, 130-500 ms for type S delay. Effective from A2:2022 onwards. The half-IΔn test (RCD must NOT trip at half rated) is also still good practice but is no longer the central acceptance criterion for the type-specific trip times.',
   },
   {
     id: 2,
@@ -133,10 +133,10 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question: 'BS 7671 Reg 411.3.3 in A4:2026 — RCD additional protection on socket-outlets:',
+    question: 'BS 7671 Reg 411.3.3 (current edition) — RCD additional protection on socket-outlets:',
     options: [
-      'Unchanged from A2 — RCD protection remains required only for socket-outlets rated up to 20 A, with no exception available in any premises.',
-      'Revised to apply to socket-outlets with a rated current not exceeding 32 A. There is an exception to omit RCD protection where, other than for a dwelling, a documented risk assessment determines that RCD protection is not necessary.',
+      'Applies only to socket-outlets rated up to 20 A, with no exception available in any premises.',
+      'Applies to socket-outlets rated up to 32 A, with an exception to omit RCD protection where, other than for a dwelling, a documented risk assessment determines it is not necessary.',
       'Revised to require RCD protection on every socket-outlet without exception, including those above 32 A, in both dwellings and commercial premises.',
       'Revised to drop RCD protection on socket-outlets entirely, replacing it with AFDD protection as the mandatory measure for all final circuits with sockets.',
     ],
@@ -156,7 +156,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      "AFDDs introduced in A4:2026 require functional testing per the manufacturer's procedure. Most have a status LED that changes state when the manual test is operated correctly. If it doesn't, the device may have an internal fault — consult the manufacturer datasheet for the expected indication and follow the troubleshooting flow. If the device cannot be confirmed to operate correctly per manufacturer procedure, it must be replaced before sign-off.",
+      "Reg 643.10 requires the effectiveness of any manually operated AFDD test facility to be verified — follow the manufacturer's procedure. Most have a status LED that changes state when the manual test is operated correctly. If it doesn't, the device may have an internal fault — consult the manufacturer datasheet for the expected indication and follow the troubleshooting flow. If the device cannot be confirmed to operate correctly per manufacturer procedure, it must be replaced before sign-off.",
   },
   {
     id: 7,
@@ -190,9 +190,9 @@ const quizQuestions = [
 
 const faqs = [
   {
-    question: 'Why did A4:2026 delete the old 5 × IΔn / 0.5 × IΔn test regimen?',
+    question: 'Why did A2:2022 delete the old 5 × IΔn / 0.5 × IΔn test regimen?',
     answer:
-      'Two reasons. First, simplification: the old Table 3A was complex and varied per RCD type (AC, A, F, B), creating room for error in test setup and acceptance interpretation. Second, modernisation of testing techniques: modern test instruments perform a ramp test (gradually increasing current from zero until trip) which gives both the actual trip current and the trip time at IΔn in one measurement, more diagnostic than a fixed-current test. The simplified A4:2026 acceptance — single AC test at IΔn, ≤ 300 ms for general non-delay — captures what matters without the complexity. The 5 × IΔn test is still useful for diagnostics and is still reported by most instruments, but it is no longer a regulatory acceptance criterion.',
+      'Two reasons. First, simplification: the old Table 3A was complex and varied per RCD type (AC, A, F, B), creating room for error in test setup and acceptance interpretation. Second, modernisation of testing techniques: modern test instruments perform a ramp test (gradually increasing current from zero until trip) which gives both the actual trip current and the trip time at IΔn in one measurement, more diagnostic than a fixed-current test. The simplified acceptance (A2:2022) — single AC test at IΔn, ≤ 300 ms for general non-delay — captures what matters without the complexity. The 5 × IΔn test is still useful for diagnostics and is still reported by most instruments, but it is no longer a regulatory acceptance criterion.',
   },
   {
     question: 'Do I still need to test the half-IΔn case (RCD must NOT trip at 0.5 × IΔn)?',
@@ -242,7 +242,7 @@ export default function Sub5() {
         <TLDR
           points={[
             'BS 7671 Reg 643.10 requires functional testing of all assemblies — switchgear, controlgear, drives, controls, interlocks, emergency switching, insulation monitoring — to verify they operate as designed.',
-            'RCD trip-time verification is the most heavily regulated functional test. A4:2026 simplified the regime: a single AC test at 1 × IΔn, ≤ 300 ms for general non-delay, 130-500 ms for delay-type S. Table 3A from Appendix 3 was deleted in A4:2026.',
+            'RCD trip-time verification is the most heavily regulated functional test. A2:2022 simplified the regime: a single AC test at 1 × IΔn, ≤ 300 ms for general non-delay, 130-500 ms for delay-type S. Table 3A from Appendix 3 was deleted in A2:2022.',
             'The integral RCD test button is NOT sufficient on its own — it tests only the trip mechanism. Instrument-based RCD testing (per Reg 643.7.3 and 643.8) is mandatory at initial verification and at every periodic inspection.',
           ]}
         />
@@ -254,7 +254,7 @@ export default function Sub5() {
             'Functionally test switchgear assemblies including main isolators, distribution boards and interlocks.',
             'Functionally test emergency switching and emergency stop systems and verify reset behaviour.',
             'Functionally test the manual test facility on RCDs and AFDDs per manufacturer procedure.',
-            'Cite Reg 643.10 (functional testing scope), Reg 643.7.3/643.8 (RCD verification), Reg 415.1.1 (RCD additional protection) and Reg 411.3.3 (socket RCD requirement, A4:2026 update to 32 A).',
+            'Cite Reg 643.10 (functional testing scope), Reg 643.8 (RCD verification), Reg 415.1.1 (RCD additional protection) and Reg 411.3.3 (socket RCD requirement up to 32 A, since 2018).',
             'Record functional and RCD trip-time results on the schedule of test results.',
           ]}
           initialVisibleCount={4}
@@ -298,7 +298,7 @@ export default function Sub5() {
             </li>
             <li>
               <strong>Test facilities on AFDDs</strong> — manufacturer-defined test procedure.
-              A4:2026 requires the AFDD test facility to be verified.
+              Reg 643.10 requires any manually operated AFDD test facility to be verified.
             </li>
           </ul>
         </ConceptBlock>
@@ -324,7 +324,7 @@ export default function Sub5() {
         <ConceptBlock
           title="Instrument-based RCD test at 1 × IΔn"
           plainEnglish="The MFT injects a known AC residual current at the rated trip current of the RCD. It measures how long until the device opens. For general non-delay, ≤ 300 ms. For Type S delay, 130-500 ms."
-          onSite="A4:2026 simplified the test. One test current (1 × IΔn). One acceptance criterion per RCD category. Old Table 3A in Appendix 3 (with type-specific 5 × IΔn tests at varying limits) was deleted."
+          onSite="A2:2022 simplified the test. One test current (1 × IΔn). One acceptance criterion per RCD category. Old Table 3A in Appendix 3 (with type-specific 5 × IΔn tests at varying limits) was deleted by A2:2022."
         >
           <p>The A4:2026 RCD trip-time test method:</p>
           <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
@@ -574,7 +574,7 @@ export default function Sub5() {
               <strong>Type AC.</strong> Detects sinusoidal AC residual currents only. The cheapest
               and most basic type. NOT suitable for any circuit feeding electronics that produce
               pulsating DC residual currents (which is most modern electronics). Reg 531.3.3 has
-              tightened restrictions on Type AC use under A4:2026 — for new installations, Type AC
+              tightened restrictions on Type AC use under A2:2022 — for new installations, Type AC
               is now rare.
             </li>
             <li>
@@ -785,8 +785,8 @@ export default function Sub5() {
         <KeyTakeaways
           points={[
             'BS 7671 Reg 643.10 requires functional testing of all assemblies — switchgear, controls, interlocks, emergency stops, drives, insulation monitoring, plus the test facilities on RCDs and AFDDs.',
-            'A4:2026 simplified the RCD trip-time test: regardless of RCD type, a single AC test at 1 × IΔn. Acceptance: ≤ 300 ms for general non-delay, 130-500 ms for delay-type S.',
-            'Old Appendix 3 Table 3A (type-specific 5 × IΔn tests at varying limits) was DELETED in A4:2026. Modern test instruments still report 5 × IΔn for diagnostic continuity but it is no longer a regulatory acceptance criterion.',
+            'A2:2022 simplified the RCD trip-time test: regardless of RCD type, a single AC test at 1 × IΔn. Acceptance: ≤ 300 ms for general non-delay, 130-500 ms for delay-type S.',
+            'Old Appendix 3 Table 3A (type-specific 5 × IΔn tests at varying limits) was DELETED in A2:2022. Modern test instruments still report 5 × IΔn for diagnostic continuity but it is no longer a regulatory acceptance criterion.',
             'The integral RCD test button alone is INSUFFICIENT — it tests only the trip mechanism. Mandatory instrument-based RCD test (per Reg 643.7.3 / 643.8) exercises the full sensing-and-trip path with a real residual current.',
             'Reg 415.1.1 — 30 mA RCDs as additional protection in AC systems. Reg 411.3.3 (A4:2026) — RCD protection on socket-outlets up to 32 A is mandatory; documented risk-assessment exception for non-dwellings only.',
             'Switchgear functional testing: verify isolators, door interlocks, racking interlocks, contactor logic, time delays, emergency stop sequences. Test under realistic operational conditions where safe.',

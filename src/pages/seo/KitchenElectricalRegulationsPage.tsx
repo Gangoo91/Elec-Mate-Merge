@@ -174,7 +174,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong>32A radial circuit — most domestic cookers</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
@@ -185,7 +185,7 @@ const sections = [
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong>45A radial circuit — larger range cookers</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
@@ -199,7 +199,7 @@ const sections = [
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong>Cooker outlet unit</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
@@ -310,14 +310,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit cable:</strong> 2.5mm two-core and earth, forming a ring from
                 consumer unit back to consumer unit via all socket outlet positions.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Protection:</strong> 32A Type B MCB or RCBO. Kitchen ring final circuits
                 must be RCD protected under BS 7671 Regulation 411.3.3 (socket outlets used by
@@ -326,7 +326,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Number of sockets:</strong> There is no maximum number of socket outlets on
                 a ring final circuit in BS 7671, but the floor area served must not exceed 100m² and
@@ -334,7 +334,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Number of outlets needed:</strong> The IET On-Site Guide and good practice
                 guidance recommend a minimum of 8 to 10 double socket outlets in a family kitchen to
@@ -360,7 +360,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>300mm minimum horizontal distance from the edge of a sink</strong> — the IET
                 Guidance Notes and On-Site Guide recommend a minimum 300mm horizontal clearance
@@ -368,7 +368,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No sockets directly above the sink</strong> — socket outlets should not be
                 positioned where water from the tap could reach them, or where a person operating
@@ -412,7 +412,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong>Floor-mounted supply</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
@@ -425,7 +425,7 @@ const sections = [
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong>Pop-up socket units</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
@@ -437,7 +437,7 @@ const sections = [
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong>PELV considerations</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
@@ -522,7 +522,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -576,7 +576,7 @@ export default function KitchenElectricalRegulationsPage() {
       heroTitle={
         <>
           Kitchen Electrical Regulations:{' '}
-          <span className="text-yellow-400">Circuits, Sockets, and Compliance</span>
+          <span className="text-elec-yellow">Circuits, Sockets, and Compliance</span>
         </>
       }
       heroSubtitle="Kitchens have some of the highest electrical demands in a dwelling. This guide covers cooker circuits, dedicated appliance circuits, socket placement under Regulation 553.1, kitchen island supply, and Part P notification requirements for new kitchen circuits."

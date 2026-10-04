@@ -188,7 +188,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical installation design</strong> — calculating maximum demand,
                 diversity, cable sizing using Appendix 4 tables, correction factors, and designing
@@ -197,7 +197,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inspection and testing principles</strong> — understanding the testing
                 sequence, what each test measures, acceptable values, and how to interpret results.
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fault diagnosis and rectification</strong> — a critical skill for qualified
                 electricians. You will study systematic fault-finding techniques: reading symptoms,
@@ -214,7 +214,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Special locations</strong> — Part 7 of BS 7671 covers locations with
                 additional risks: bathrooms, swimming pools, saunas, construction sites, agricultural
@@ -223,7 +223,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Advanced electrical science</strong> — three-phase systems, power factor,
                 transformer principles, motor theory, and AC circuit analysis. These topics underpin
@@ -292,7 +292,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>First fix</strong> — installing back boxes, running cable routes, fitting
                 containment (trunking, conduit, cable tray), and pulling cables. By year 3, you
@@ -301,7 +301,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Second fix</strong> — terminating accessories (sockets, switches, light
                 fittings), making off at the consumer unit or distribution board, and labelling
@@ -310,7 +310,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing (under supervision)</strong> — using a multifunction tester to carry
                 out continuity, insulation resistance, and polarity tests. Recording results
@@ -319,7 +319,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit changes</strong> — one of the most common domestic jobs. You
                 should be involved in the full process: safe isolation, disconnection, mechanical
@@ -327,7 +327,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fault finding</strong> — working with a qualified electrician to diagnose
                 faults. Observing the systematic approach: gathering information, making
@@ -363,7 +363,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">AM2 at a Glance</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Day 1</strong> — Installation: wiring a small installation to a given
                 specification within a time limit. Includes containment, cabling, termination at the
@@ -371,7 +371,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Day 2</strong> — Inspection, testing, and fault diagnosis: carrying out a
                 full inspection and test on a pre-wired installation, completing the relevant
@@ -429,14 +429,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Format</strong> — closed-book, 60 multiple-choice questions, 2-hour time
                 limit. Pass mark is 60% (36 out of 60).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Topics covered</strong> — scope and object of BS 7671, definitions,
                 assessment of general characteristics, protection for safety (overload, fault, shock),
@@ -445,7 +445,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Study approach</strong> — work through BS 7671 section by section alongside
                 the IET On-Site Guide. Use practice exams to identify weak areas. Focus on the
@@ -479,7 +479,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>JIB Stage 3 apprentice rate (2026)</strong> — £13.05 per hour, effective
                 5 January 2026 (£14.62 per hour in the London Zone). The JIB grades apprentices by
@@ -490,7 +490,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Non-JIB employers</strong> — rates vary but should be at least in line with
                 the JIB benchmark. If your employer is paying significantly below the JIB Stage 3
@@ -499,7 +499,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional earnings</strong> — overtime rates (typically time-and-a-half or
                 double time for weekends), travel allowances for distant sites, and tool allowances
@@ -507,7 +507,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Progression to qualified rates</strong> — once you complete your
                 apprenticeship and pass the AM2, your pay jumps to qualified electrician rates
@@ -538,7 +538,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Photographic evidence</strong> — photograph your work at key stages: before
                 (existing installation), during (containment, cabling, terminations), and after
@@ -548,7 +548,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Witness testimonies</strong> — your supervisor or qualified electrician signs
                 a statement confirming what work you did, when, and to what standard. Get these
@@ -557,7 +557,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test results and certificates</strong> — keep copies of any test results you
                 helped produce, certificates you contributed to, and risk assessments or method
@@ -566,7 +566,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Range of evidence</strong> — your portfolio needs to cover domestic,
                 commercial, and (ideally) industrial work. If your employer only does domestic work,
@@ -596,7 +596,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Target className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Set Clear Goals</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -666,7 +666,7 @@ export default function Year3ElectricalApprenticePage() {
       heroTitle={
         <>
           Year 3 Electrical Apprentice:{' '}
-          <span className="text-yellow-400">What to Expect in 2026</span>
+          <span className="text-elec-yellow">What to Expect in 2026</span>
         </>
       }
       heroSubtitle="Year 3 is where your apprenticeship gets serious. Level 3 diploma content, more site responsibility, AM2 preparation, and the 18th Edition exam. Here is everything you need to know to make the most of it."

@@ -426,7 +426,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>The safety source</strong> is normally a safety isolating transformer
                 complying with BS EN 61558-2-6 or BS EN 61558-2-8 (Reg 414.3(a)). Standard
@@ -437,7 +437,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>The transformer must be located outside Zones 0, 1 and 2</strong> (Reg
                 702.410.3.4.1) — beyond 3.5 m from the pool edge. The commonly quoted relaxation
@@ -449,7 +449,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SELV circuits must not be connected to earth</strong> — this is the
                 distinction between SELV and PELV (Protective Extra-Low Voltage). In swimming pool
@@ -458,7 +458,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>The SELV circuit wiring</strong> must be physically separated from all other
                 circuits. This means separate conduit, trunking, or cable routes — not bundled with
@@ -489,7 +489,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>All extraneous conductive parts within Zones 0, 1, and 2</strong> must be
                 bonded. This includes: metallic pool shell or liner, pool ladders and handrails,
@@ -499,7 +499,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>The bonding conductor</strong> is sized to Regulation 544.2, not to Section
                 702 — between two extraneous-conductive-parts, not less than 2.5 mm squared copper
@@ -509,7 +509,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bonding connections</strong> must be accessible for inspection and testing.
                 Connections buried in concrete are not acceptable unless they use a proven
@@ -662,7 +662,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Visual inspection</strong> — check all equipment IP ratings are maintained,
                 no corrosion or damage to enclosures, bonding connections are intact and accessible,
@@ -670,7 +670,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Continuity of supplementary bonding</strong> — test the resistance of the
                 supplementary bonding between all extraneous conductive parts. The acceptance
@@ -682,10 +682,10 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD testing</strong> — verify that all RCDs protecting pool circuits
-                operate within the required time. Amendment 4 changed this: Table 3A of Appendix 3
+                operate within the required time. Amendment 2 (2022) changed this: Table 3A of Appendix 3
                 has been deleted, and Regulation 643.8 (additional protection) now deems
                 effectiveness verified by a single alternating current test at the rated residual
                 operating current (IΔn), whatever the RCD type — 300 ms maximum for a general
@@ -694,7 +694,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insulation resistance</strong> — test the insulation resistance of all
                 circuits. Pay particular attention to cables in damp environments, as moisture
@@ -702,7 +702,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth electrode resistance</strong> — where a TT arrangement has been
                 chosen, or where an earth mat or electrode has been installed alongside a PME supply
@@ -743,7 +743,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Brain className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI Regulations Lookup</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -812,7 +812,7 @@ export default function SwimmingPoolElectricalPage() {
       heroTitle={
         <>
           Swimming Pool Electrical Regulations:{' '}
-          <span className="text-yellow-400">BS 7671 Section 702 Explained</span>
+          <span className="text-elec-yellow">BS 7671 Section 702 Explained</span>
         </>
       }
       heroSubtitle="Swimming pools are one of the highest-risk electrical environments. Section 702 of BS 7671 defines zones, IP ratings, SELV requirements, and mandatory supplementary bonding. This guide covers every requirement — including hot tubs, paddling pools, and outdoor installations."

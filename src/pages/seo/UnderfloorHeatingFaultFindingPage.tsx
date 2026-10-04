@@ -131,7 +131,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ThermometerSun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ThermometerSun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Heating mat or cable</strong> — a resistance cable woven into a fibreglass
                 mesh mat, or a single twin-conductor cable laid in a serpentine pattern. The cable
@@ -141,7 +141,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ThermometerSun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ThermometerSun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Thermostat</strong> — controls the heating schedule and set temperature.
                 Most modern thermostats have a digital display, programmable weekly schedule, and
@@ -150,7 +150,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ThermometerSun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ThermometerSun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Floor sensor</strong> — an NTC thermistor probe buried in the floor during
                 installation. Measures the actual floor temperature to prevent overheating and
@@ -159,7 +159,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ThermometerSun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ThermometerSun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated circuit</strong> — the UFH system is fed from a dedicated radial
                 circuit at the consumer unit, usually protected by a 6A or 10A MCB and an RCD.
@@ -199,7 +199,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ol className="space-y-4 text-white list-none">
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center text-yellow-400 text-sm font-bold">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-elec-yellow text-sm font-bold">
                 1
               </span>
               <span>
@@ -208,7 +208,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center text-yellow-400 text-sm font-bold">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-elec-yellow text-sm font-bold">
                 2
               </span>
               <span>
@@ -217,7 +217,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center text-yellow-400 text-sm font-bold">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-elec-yellow text-sm font-bold">
                 3
               </span>
               <span>
@@ -245,7 +245,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check the schedule and set temperature</strong> — the thermostat must be
                 programmed to a heating period that covers the current time. The set temperature
@@ -255,7 +255,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Error codes</strong> — modern thermostats display error codes on the screen
                 when a fault is detected. Common codes are: E1 or E2 (floor sensor fault), E3 (air
@@ -264,7 +264,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Relay failure</strong> — inside the thermostat, a relay switches the mat
                 circuit on and off. A failed relay (either stuck open or stuck closed) can cause no
@@ -274,7 +274,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Thermostat replacement</strong> — replacement thermostats are widely
                 available and most brands follow a standard wiring layout (L, N, E supply; L, N load
@@ -468,14 +468,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Thermostat replacement</strong> — £60 to £150 all-in. Thermostat £30 to
                 £100, labour £30 to £50. Most cost-effective first repair — always start here.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Floor sensor replacement</strong> — £40 to £100 all-in. Sensor £8 to £25,
                 labour £30 to £75. Requires the sensor conduit to be accessible from the thermostat
@@ -483,7 +483,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fault finding and IR testing</strong> — £60 to £120 for a diagnosis visit
                 including mat resistance and IR testing. This confirms whether the mat has failed
@@ -491,7 +491,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Heating mat replacement — bathroom (4 to 6m²)</strong> — £500 to £1,000
                 all-in, including electrical work, lifting and re-laying tiles, and screed repair.
@@ -499,7 +499,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Heating mat replacement — kitchen or living room (15 to 25m²)</strong> —
                 £1,200 to £2,500 or more. Under engineered wood or LVT rather than tiles, the
@@ -536,7 +536,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Record Test Results On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -571,7 +571,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete UFH installation certificates on your phone"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site Electrical Installation Certificates, test result recording, and instant quoting. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site Electrical Installation Certificates, test result recording, and instant quoting. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -597,7 +597,7 @@ export default function UnderfloorHeatingFaultFindingPage() {
       heroTitle={
         <>
           Electric Underfloor Heating Not Working:{' '}
-          <span className="text-yellow-400">Fault Finding Guide</span>
+          <span className="text-elec-yellow">Fault Finding Guide</span>
         </>
       }
       heroSubtitle="Step-by-step fault finding for electric underfloor heating systems — thermostat faults, floor sensor failure, damaged heating mat diagnosis, insulation resistance testing, TDR fault location, and typical repair and replacement costs for 2026."
@@ -608,7 +608,7 @@ export default function UnderfloorHeatingFaultFindingPage() {
       faqHeading="Frequently Asked Questions — Underfloor Heating Faults"
       relatedPages={relatedPages}
       ctaHeading="Complete Electrical Certificates On Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for Electrical Installation Certificates, test result recording, and on-site quoting. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for Electrical Installation Certificates, test result recording, and on-site quoting. 7-day free trial, cancel anytime."
     />
   );
 }

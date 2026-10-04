@@ -88,7 +88,7 @@ export default function HowToFillInMinorWorksPage() {
       badgeIcon={ListOrdered}
       heroTitle={
         <>
-          How to Fill In a <span className="text-yellow-400">Minor Works Certificate</span>
+          How to Fill In a <span className="text-elec-yellow">Minor Works Certificate</span>
         </>
       }
       heroSubtitle="A field-by-field walkthrough of the Minor Electrical Installation Works Certificate as printed in BS 7671:2018+A4:2026 Appendix 6 — Sections A to E, the tests that belong in Section D, and the mistakes that get certificates rejected on audit."
@@ -176,7 +176,7 @@ export default function HowToFillInMinorWorksPage() {
               </p>
               <div className="my-4 grid gap-4 sm:grid-cols-2">
                 <div className={cardCn}>
-                  <h3 className="mb-3 text-lg font-bold text-yellow-400">
+                  <h3 className="mb-3 text-lg font-bold text-elec-yellow">
                     Minor Works Certificate
                   </h3>
                   <ul className="space-y-2 text-sm text-white">
@@ -189,7 +189,7 @@ export default function HowToFillInMinorWorksPage() {
                       'Replacing accessories or luminaires like for like',
                     ].map((item) => (
                       <li key={item} className="flex items-start gap-2">
-                        <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-yellow-400" />
+                        <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-elec-yellow" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -289,7 +289,7 @@ export default function HowToFillInMinorWorksPage() {
                   socket.&rdquo;
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-white">
-                  <span className="font-semibold text-yellow-400">Better:</span> &ldquo;Supplied and
+                  <span className="font-semibold text-elec-yellow">Better:</span> &ldquo;Supplied and
                   installed one twin switched socket-outlet on the existing kitchen ring final
                   circuit, spurred from the existing socket-outlet at the base of the units in 2.5
                   mm&sup2; flat twin and earth to BS 6004, run in the ceiling void and terminated in
@@ -614,9 +614,9 @@ export default function HowToFillInMinorWorksPage() {
                     ['Signature and date', 'Signed or otherwise authenticated, and dated.'],
                   ].map(([label, text]) => (
                     <li key={label} className="flex items-start gap-3">
-                      <PenTool className="mt-0.5 h-5 w-5 flex-shrink-0 text-yellow-400" />
+                      <PenTool className="mt-0.5 h-5 w-5 flex-shrink-0 text-elec-yellow" />
                       <span>
-                        <strong className="text-yellow-400">{label}</strong> — {text}
+                        <strong className="text-elec-yellow">{label}</strong> — {text}
                       </span>
                     </li>
                   ))}
@@ -739,7 +739,7 @@ export default function HowToFillInMinorWorksPage() {
                   ],
                   [
                     'Using a pre-Amendment 4 form',
-                    'Amendment 4 added SPD and AFDD fields to the model forms and deleted Table 3A of Appendix 3. An old pad of forms will have nowhere to record the SPD or AFDD, and may still print a 5× RCD column that no longer exists.',
+                    'Amendment 2 (2022) added SPD and AFDD fields to the model forms and deleted Table 3A of Appendix 3. An old pad of forms will have nowhere to record the SPD or AFDD, and may still print a 5× RCD column that no longer exists.',
                   ],
                   [
                     'Not issuing the certificate to the client',
@@ -876,7 +876,7 @@ export default function HowToFillInMinorWorksPage() {
         },
       ]}
       ctaHeading="Fill In Minor Works Certificates in Minutes"
-      ctaSubheading="Sections A to E on your phone, auto-filled site details, BS 7671 test validation, digital signatures and instant PDF export. Join 1,600+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
+      ctaSubheading="Sections A to E on your phone, auto-filled site details, BS 7671 test validation, digital signatures and instant PDF export. Join 2,100+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
     />
   );
 }

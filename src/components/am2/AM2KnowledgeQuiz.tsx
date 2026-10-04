@@ -1,7 +1,8 @@
 /**
  * AM2KnowledgeQuiz
  *
- * Client-side knowledge test using 400 MCQ questions from questionBank.
+ * Client-side knowledge test: the fixed AM2 bank plus generated calculation
+ * questions whose numbers change every sitting (am2Paper / generatedQuestions).
  * Three phases: Setup → In Progress → Results
  * Saves score to AM2 readiness (15% weight) and am2_mock_sessions.
  */
@@ -31,10 +32,15 @@ import {
 } from './confidence';
 import {
   am2QuestionBank,
-  getRandomQuestions,
   getQuestionsByCategory,
   type AM2Question,
 } from '@/data/apprentice-courses/am2/questionBank';
+import { buildAM2Paper } from '@/data/apprentice-courses/am2/am2Paper';
+import {
+  am2GeneratedFamilies,
+  generateFamilyQuestion,
+} from '@/data/apprentice-courses/am2/generatedQuestions';
+import { shuffleAllQuestionOptions, createShuffleSalt } from '@/utils/shuffleOptions';
 import { useAM2Readiness } from '@/hooks/am2/useAM2Readiness';
 import { useAuth } from '@/contexts/AuthContext';
 import { saveAM2Session } from '@/hooks/am2/saveAM2Session';
@@ -42,11 +48,13 @@ import { saveAM2Session } from '@/hooks/am2/saveAM2Session';
 type Phase = 'setup' | 'quiz' | 'results';
 type Difficulty = 'basic' | 'intermediate' | 'advanced' | 'mixed';
 
+// Must match the bank's category strings exactly. These read 'BS7671 …' (no
+// space) for months, so choosing any of the three BS 7671 areas drew nothing.
 const CATEGORIES: AM2Question['category'][] = [
   'Health & Safety',
-  'BS7671 Fundamentals',
-  'BS7671 Selection & Erection',
-  'BS7671 Inspection & Testing',
+  'BS 7671 Fundamentals',
+  'BS 7671 Selection & Erection',
+  'BS 7671 Inspection & Testing',
   'Building Regulations',
   'Safe Isolation',
   'Fault Finding',
@@ -127,7 +135,14 @@ export function AM2KnowledgeQuiz({ onSessionComplete }: AM2KnowledgeQuizProps) {
 
     let pool: AM2Question[];
     if (selectedCategories.length > 0) {
-      pool = selectedCategories.flatMap((cat) => getQuestionsByCategory(cat));
+      // The fixed questions in those areas plus one fresh draw from each
+      // generated family in them.
+      pool = selectedCategories.flatMap((cat) => [
+        ...getQuestionsByCategory(cat),
+        ...am2GeneratedFamilies
+          .filter((f) => f.verified && f.category === cat)
+          .map((f) => generateFamilyQuestion(f)),
+      ]);
       // Apply difficulty filtering
       if (difficulty !== 'mixed') {
         const primary = pool.filter((q) => q.difficulty === difficulty);
@@ -138,8 +153,13 @@ export function AM2KnowledgeQuiz({ onSessionComplete }: AM2KnowledgeQuizProps) {
       }
       pool = pool.slice(0, questionCount);
     } else {
-      pool = getRandomQuestions(questionCount, weights);
+      pool = buildAM2Paper({ count: questionCount, weights });
     }
+
+    // Options shuffled per sitting: generated questions arrive key-first, and
+    // a fixed question's options in the same place every time can be learnt
+    // by position rather than by knowing the answer.
+    pool = shuffleAllQuestionOptions(pool, createShuffleSalt());
 
     setQuestions(pool);
     setAnswers(new Array(pool.length).fill(null));
@@ -480,6 +500,12 @@ export function AM2KnowledgeQuiz({ onSessionComplete }: AM2KnowledgeQuizProps) {
                   {outcome && <CalibrationPill outcome={outcome} />}
                 </div>
                 <p className="text-xs text-white leading-relaxed">{q.explanation}</p>
+                {q.reference && (
+                  <p className="mt-2 text-xs text-white leading-relaxed">
+                    <span className="font-semibold">Where to find it: </span>
+                    {q.reference}
+                  </p>
+                )}
               </div>
             </motion.div>
           )}

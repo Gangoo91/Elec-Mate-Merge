@@ -168,35 +168,35 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white leading-relaxed">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Replacing a damaged or outdated socket outlet with a new one in the same location
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Replacing a light switch (including upgrading from a standard switch to a dimmer,
                 provided the circuit is suitable)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>Replacing a ceiling rose or light fitting in the same location</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>Replacing a fused connection unit (fused spur) in the same location</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Replacing a damaged section of cable on a single circuit (like-for-like cable
                 replacement)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Replacing a cooker control unit, shaver supply unit, or other accessory in the same
                 location
@@ -233,25 +233,25 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Non-Notifiable Additions</h3>
           <ul className="space-y-3 text-white leading-relaxed">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Adding a socket in a bedroom:</strong>{' '}
+                <strong className="text-elec-yellow">Adding a socket in a bedroom:</strong>{' '}
                 Non-notifiable. Bedrooms are not special locations. Adding a spur from an existing
                 ring circuit to a new socket position in a bedroom does not require notification.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Adding a light in a living room:</strong>{' '}
+                <strong className="text-elec-yellow">Adding a light in a living room:</strong>{' '}
                 Non-notifiable. Adding a lighting point to an existing lighting circuit in a living
                 room, dining room, or hallway does not require notification.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Adding a fused spur in a garage:</strong>{' '}
+                <strong className="text-elec-yellow">Adding a fused spur in a garage:</strong>{' '}
                 Non-notifiable (assuming the garage is attached to or within the curtilage of the
                 dwelling and is not an outbuilding requiring a new circuit).
               </span>
@@ -295,7 +295,7 @@ const sections = [
         <div className="space-y-4 mt-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Bathrooms and shower rooms</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -308,7 +308,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Kitchens</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -321,7 +321,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Outdoors</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -334,7 +334,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Swimming pools, saunas, and hot tubs</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -445,30 +445,30 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <ul className="space-y-3 text-white leading-relaxed">
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Documentary evidence</strong> that the work was
+                <strong className="text-elec-yellow">Documentary evidence</strong> that the work was
                 carried out to BS 7671 and was tested
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Legal protection</strong> for the electrician if
+                <strong className="text-elec-yellow">Legal protection</strong> for the electrician if
                 the work is later questioned or if an incident occurs
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Customer confidence</strong> that the work has
+                <strong className="text-elec-yellow">Customer confidence</strong> that the work has
                 been professionally carried out and verified
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Property sale documentation</strong> —
+                <strong className="text-elec-yellow">Property sale documentation</strong> —
                 solicitors and conveyancers increasingly request electrical certificates during the
                 property sale process
               </span>
@@ -502,7 +502,7 @@ const sections = [
         <div className="space-y-4 mt-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Utility room — is it a kitchen?</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -515,7 +515,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Conservatory — indoors or outdoors?</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -529,7 +529,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Garage — attached vs detached</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -542,7 +542,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Replacing a single MCB</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -664,7 +664,7 @@ export default function NonNotifiableWorkPage() {
       heroTitle={
         <>
           Non-Notifiable Electrical Work:{' '}
-          <span className="text-yellow-400">What Does Not Need Part P</span>
+          <span className="text-elec-yellow">What Does Not Need Part P</span>
         </>
       }
       heroSubtitle="Complete guide to non-notifiable electrical work under Part P of the Building Regulations. Like-for-like replacements, adding sockets in non-special locations, the difference between notifiable and non-notifiable work, and when certification is still recommended."
@@ -674,7 +674,7 @@ export default function NonNotifiableWorkPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Professional certificates for every job — even non-notifiable"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site certification. Minor Works certificates in under 5 minutes. Auto-validated test results. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site certification. Minor Works certificates in under 5 minutes. Auto-validated test results. 7-day free trial, cancel anytime."
     />
   );
 }

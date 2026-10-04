@@ -191,7 +191,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Birmingham Pricing Breakdown (2026)</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Small flat or bedsit (6-way board)</strong> — £350 to £450 total. Common in
                 purpose-built flats and converted terraces across Selly Oak and Edgbaston.
@@ -199,7 +199,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard terraced house (10-way with RCBOs and SPD)</strong> — £450 to £600
                 total. The most common domestic job in Birmingham. Materials: £250 to £380. Labour:
@@ -207,7 +207,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Larger semi or detached (14-way high-integrity with SPD)</strong> — £600 to
                 £900 total. For properties with 12+ circuits, EV charger, or solar PV connection.
@@ -215,7 +215,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-phase property</strong> — £1,200 to £1,800+ total. Required for larger
                 homes with three-phase supply, workshops, or commercial premises. Materials: £500 to
@@ -342,7 +342,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1: Survey and isolation</strong> — the electrician surveys the existing
                 board, identifies all circuits, and safely isolates the mains supply at the DNO
@@ -350,7 +350,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2: Remove old board</strong> — the existing consumer unit is
                 disconnected and removed. In older Birmingham properties, this may reveal ageing
@@ -358,7 +358,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 3: Install new consumer unit</strong> — the new metal consumer unit is
                 mounted, fitted with RCBOs and SPD, and all circuits are reconnected and clearly
@@ -366,7 +366,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 4: Testing</strong> — every circuit is tested to BS 7671 standards
                 including insulation resistance, earth fault loop impedance, RCD trip times, and
@@ -374,7 +374,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 5: Certification</strong> — the electrician completes the{' '}
                 <SEOInternalLink href="/eic-certificate">
@@ -442,7 +442,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person scheme registration</strong> — verify they are registered
                 with NICEIC, NAPIT, or ELECSA. Check the scheme's online register. This is essential
@@ -450,7 +450,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Local to your area</strong> — choose an electrician based in your part of
                 Birmingham or the West Midlands. Travel charges can add to the cost if the
@@ -458,7 +458,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Itemised quote</strong> — the quote should break down materials, labour,
                 Part P notification, and VAT separately. Be cautious of single-figure quotes with no
@@ -466,14 +466,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EIC included</strong> — confirm the quote includes an Electrical
                 Installation Certificate and Part P notification. Some lower quotes exclude these.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reviews and reputation</strong> — check Google reviews, Checkatrade, or
                 Trustpilot. Verify scheme registration before booking.
@@ -509,7 +509,7 @@ export default function ConsumerUnitReplacementBirminghamPage() {
       heroTitle={
         <>
           Consumer Unit Replacement Birmingham:{' '}
-          <span className="text-yellow-400">Cost Guide 2026</span>
+          <span className="text-elec-yellow">Cost Guide 2026</span>
         </>
       }
       heroSubtitle="Consumer unit replacement in Birmingham typically costs £350 to £600 for a standard domestic property. This guide covers local pricing for fuse board upgrades across the city, from terraced houses in Handsworth to semis in Sutton Coldfield — including Part P notification, what to expect during the work, and how to choose a registered electrician."
@@ -520,7 +520,7 @@ export default function ConsumerUnitReplacementBirminghamPage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Replacement in Birmingham"
       relatedPages={relatedPages}
       ctaHeading="Quote Consumer Unit Replacements in Birmingham"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
     />
   );
 }

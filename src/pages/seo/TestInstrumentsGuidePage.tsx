@@ -327,31 +327,31 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Calibration Key Points</h3>
           <ul className="space-y-3 text-white leading-relaxed">
             <li className="flex items-start gap-3">
-              <BadgeCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <BadgeCheck className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Frequency:</strong> Every 12 months is the
+                <strong className="text-elec-yellow">Frequency:</strong> Every 12 months is the
                 industry standard. Mark your calibration due date in your calendar.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BadgeCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <BadgeCheck className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Cost:</strong> Typically 50 to 150 pounds per
+                <strong className="text-elec-yellow">Cost:</strong> Typically 50 to 150 pounds per
                 instrument. Some suppliers include free calibration with the purchase price for the
                 first year.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BadgeCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <BadgeCheck className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Turnaround:</strong> Usually 5 to 10 working
+                <strong className="text-elec-yellow">Turnaround:</strong> Usually 5 to 10 working
                 days. Many suppliers offer loan instruments while yours is being calibrated.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BadgeCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <BadgeCheck className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Records:</strong> Keep all calibration
+                <strong className="text-elec-yellow">Records:</strong> Keep all calibration
                 certificates. They must be available for audit by your competent person scheme
                 provider.
               </span>
@@ -382,7 +382,7 @@ const sections = [
         <div className="space-y-4 mt-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Domestic Electrician Kit</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -395,7 +395,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Commercial/Industrial Kit</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -515,7 +515,7 @@ export default function TestInstrumentsGuidePage() {
       badgeIcon={Wrench}
       heroTitle={
         <>
-          Electrical Test Instruments: <span className="text-yellow-400">What You Need</span>
+          Electrical Test Instruments: <span className="text-elec-yellow">What You Need</span>
         </>
       }
       heroSubtitle="The complete guide to test instruments for UK electricians. Multifunction tester, clamp meter, proving unit, socket tester, PAT tester, and calibration requirements. What to buy, what it costs, and how to stay compliant."
@@ -525,7 +525,7 @@ export default function TestInstrumentsGuidePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Record instrument details on every certificate automatically"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site testing and certification. Instrument details, calibration dates, and auto-validated test results. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site testing and certification. Instrument details, calibration dates, and auto-validated test results. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -177,7 +177,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP44</strong> — suitable for sheltered locations (under eaves, porches,
                 covered pergolas). Protected against solid objects greater than 1 mm and water
@@ -185,21 +185,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP65</strong> — suitable for exposed wall-mounted and post-mounted lights.
                 Dust-tight and protected against low-pressure water jets from any direction.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP66</strong> — suitable for fully exposed locations subject to driving rain
                 or hose-down cleaning. Dust-tight and protected against powerful water jets.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP67/IP68</strong> — required for ground-recessed, drive-over, and
                 underwater fittings. Dust-tight and protected against temporary (IP67) or continuous
@@ -229,7 +229,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SWA (Steel Wire Armoured) cable</strong> — the standard choice for buried
                 mains voltage outdoor circuits. The steel wire armouring provides mechanical
@@ -239,7 +239,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minimum burial depth: 0.5 m</strong> for domestic gardens. 0.6 m under
                 driveways, paths, or areas subject to vehicular traffic. The cable must be laid on a
@@ -248,7 +248,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable route markers</strong> must be placed at each end of the buried
                 section and at every change of direction. The route must be recorded on a plan
@@ -256,7 +256,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SELV cable</strong> — for 12 V or 24 V systems, purpose-made outdoor
                 lighting cable or suitably rated flexible cable can be used. It does not need to be
@@ -291,7 +291,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated RCBO</strong> — the preferred approach is to protect the outdoor
                 lighting circuit with its own RCBO at the{' '}
@@ -301,7 +301,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>30 mA trip current</strong> — the RCD must have a rated residual operating
                 current not exceeding 30 mA. This provides additional protection against electric
@@ -309,7 +309,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type A or Type AC</strong> — for standard lighting loads, a Type AC RCD is
                 sufficient. If the circuit includes LED drivers with DC components, a Type A RCD may
@@ -389,7 +389,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Notifiable:</strong> Adding a new circuit from the consumer unit to supply
                 outdoor lighting. This includes installing a new RCBO and running SWA cable to the
@@ -397,13 +397,13 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Notifiable:</strong> Adding a new outdoor socket outlet on a new circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Generally not notifiable:</strong> Replacing an existing outdoor light
                 fitting on an existing circuit (like-for-like replacement). Adding a light fitting
@@ -440,7 +440,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Voltage drop on long runs.</strong> BS 7671 limits voltage drop to 3% for
                 lighting circuits (6.9 V on a 230 V supply). On a 40 m run of 1.5 mm squared 3-core
@@ -451,7 +451,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Junction boxes and connections.</strong> All outdoor junction boxes must
                 have an IP rating appropriate for the location — typically IP66 or IP68 for buried
@@ -460,7 +460,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Switching and controls.</strong> Outdoor lighting can be controlled by
                 manual switches, photocells (dusk-to-dawn sensors), PIR motion sensors, timers, or
@@ -469,7 +469,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>If the garden includes a pond or water feature,</strong>{' '}
                 <SEOInternalLink href="/guides/swimming-pool-electrical-regulations">
@@ -558,7 +558,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -606,7 +606,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Design and certify garden lighting faster"
-          description="Cable sizing, voltage drop checks, AI regulations lookup, and digital certificates — all on your phone. Join 1,600+ UK electricians using Elec-Mate."
+          description="Cable sizing, voltage drop checks, AI regulations lookup, and digital certificates — all on your phone. Join 2,100+ UK electricians using Elec-Mate."
           icon={Sun}
         />
       </>
@@ -632,7 +632,7 @@ export default function GardenLightingRegsPage() {
       heroTitle={
         <>
           Garden Lighting Regulations:{' '}
-          <span className="text-yellow-400">The Complete Outdoor Electrical Guide</span>
+          <span className="text-elec-yellow">The Complete Outdoor Electrical Guide</span>
         </>
       }
       heroSubtitle="Outdoor lighting installations must meet BS 7671 requirements for IP ratings, cable protection, RCD protection, and Part P notification. This guide covers SWA cable burial depths, SELV options, mains voltage requirements, and common mistakes to avoid."

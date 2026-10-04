@@ -254,7 +254,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MoD nuclear safety regulations</strong> — the Ministry of Defence has its
                 own nuclear safety regulatory framework governing nuclear propulsion in naval
@@ -264,7 +264,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IEC 60364 in the defence context</strong> — IEC 60364, the international
                 standard for electrical installations, is referenced in defence standards as well as
@@ -274,7 +274,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competence documentation</strong> — both the Electricity at Work Regulations
                 1989 (Regulation 16) and defence procurement standards require that persons working
@@ -307,7 +307,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New connections and upgrades</strong> — managed through ENW's connections
                 portal. The Furness Peninsula's geographic position means that supply upgrades for
@@ -316,7 +316,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Walney offshore wind connection</strong> — the Walney offshore wind farm is
                 connected to the ENW network via landfall infrastructure near Barrow. ENW manages
@@ -326,7 +326,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98/G99 notifications</strong> — solar PV, battery storage, and other
                 generation must be notified to ENW. G98 (up to 16A per phase) is a straightforward
@@ -335,7 +335,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing systems</strong> — Barrow town properties are predominantly TN-C-S
                 (PME). Rural properties on the Furness Peninsula and Walney Island may have TT
@@ -502,7 +502,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EIC and EICR Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -555,7 +555,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Barrow-in-Furness"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -582,7 +582,7 @@ export default function ElectricianBarrowPage() {
       heroTitle={
         <>
           Electrician in Barrow-in-Furness:{' '}
-          <span className="text-yellow-400">Local Electricians 2026</span>
+          <span className="text-elec-yellow">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Barrow-in-Furness is home to BAE Systems's shipyard — the UK's sole builder of nuclear submarines. The local electrical market is unlike anywhere else in England: a self-contained peninsula community where defence and marine electrical work, specialist clearances, and standard domestic rewires exist side by side."
@@ -593,7 +593,7 @@ export default function ElectricianBarrowPage() {
       faqHeading="Frequently Asked Questions About Electricians in Barrow-in-Furness"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Barrow Electricians"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Barrow's Victorian terraces, defence-adjacent industrial work, and Furness Peninsula rural properties. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Barrow's Victorian terraces, defence-adjacent industrial work, and Furness Peninsula rural properties. 7-day free trial."
     />
   );
 }

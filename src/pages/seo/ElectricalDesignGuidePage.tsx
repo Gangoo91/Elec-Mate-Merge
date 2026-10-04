@@ -197,7 +197,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Supply characteristics (Chapter 31).</strong> Determine the nominal voltage
                 (typically 230V single-phase or 400V three-phase in the UK), frequency (50Hz),
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing arrangement.</strong> Identify the type of earthing system — TN-S,
                 TN-C-S (PME), or TT. This is determined by the DNO and fundamentally affects the
@@ -219,7 +219,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>External influences (Chapter 32).</strong> Assess environmental conditions:
                 ambient temperature, presence of water, mechanical impacts, corrosive substances,
@@ -228,7 +228,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Compatibility (Chapter 33).</strong> Consider electromagnetic compatibility,
                 harmonic distortion, voltage fluctuations, and the compatibility of equipment with
@@ -236,7 +236,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maintainability (Chapter 34).</strong> Design the installation to allow safe
                 maintenance, inspection, and testing throughout its service life. Provide isolation
@@ -266,7 +266,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fixed loads:</strong> Ib = P / V (single-phase) or Ib = P / (1.732 x VL)
                 (three-phase balanced). For example, a 9.5kW electric shower on a 230V supply: Ib =
@@ -274,7 +274,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Socket circuits:</strong> Use diversity factors from the IET On-Site Guide.
                 For a domestic ring circuit: 100% of the first 10A plus 40% of the remainder. A
@@ -282,7 +282,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lighting circuits:</strong> Sum the wattage of all connected light fittings
                 and apply 66% diversity. For a circuit with 1,200W total connected load: Ib = (1200
@@ -290,7 +290,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cooker circuits:</strong> 10A plus 30% of the remaining load plus 5A if a
                 socket outlet is included. For a 12kW cooker: Ib = 10 + (0.3 x ((12000/230) - 10)) +
@@ -437,7 +437,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Ruler className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Ruler className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maximum voltage drop:</strong> 3% for lighting circuits (6.9V on 230V) and
                 5% for all other circuits (11.5V on 230V), measured from the origin of the
@@ -445,7 +445,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Ruler className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Ruler className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Formula:</strong> Voltage drop (V) = (mV/A/m x Ib x L) / 1000, where mV/A/m
                 is from the cable tables, Ib is the design current, and L is the cable route length
@@ -453,7 +453,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Ruler className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Ruler className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>If voltage drop exceeds the limit:</strong> increase the cable size (lower
                 mV/A/m value) or reduce the cable route length. Cable size may need to be increased
@@ -461,7 +461,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Ruler className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Ruler className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Worked example:</strong> A 32A radial circuit using 4mm2 T&E (clipped
                 direct, mV/A/m = 11), design current 28A, cable length 25m. Voltage drop = (11 x 28
@@ -497,14 +497,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main earthing terminal</strong> — connects the installation earth to the
                 means of earthing (DNO earth for TN systems, earth electrode for TT systems).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main protective bonding conductors</strong> — connect incoming metallic
                 services (gas, water, oil) to the main earthing terminal. Minimum size: 10mm2 for
@@ -512,7 +512,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit protective conductors (CPCs)</strong> — the earth conductor in each
                 circuit cable. Size determined by the adiabatic equation or by Table 54.7 (minimum
@@ -520,7 +520,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Supplementary bonding</strong> — additional bonding between simultaneously
                 accessible exposed-conductive-parts and extraneous-conductive-parts in specific
@@ -551,7 +551,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Between MCBs:</strong> discrimination is achieved when the upstream device
                 has a higher rating and slower time-current characteristic than the downstream
@@ -560,7 +560,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Between RCDs:</strong> discrimination requires the upstream RCD to have both
                 a higher rated residual operating current (e.g., 100mA vs 30mA) and a time delay
@@ -568,7 +568,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCBO boards:</strong> provide inherent discrimination for earth faults —
                 only the RCBO on the faulty circuit trips, leaving all other circuits energised.
@@ -603,7 +603,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Brain className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI Circuit Designer</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -631,7 +631,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Design circuits on your phone with AI"
-          description="Join 1,600+ UK electricians using Elec-Mate's AI Circuit Designer and BS 7671 calculators. Cable sizing, voltage drop…"
+          description="Join 2,100+ UK electricians using Elec-Mate's AI Circuit Designer and BS 7671 calculators. Cable sizing, voltage drop…"
           icon={PenTool}
         />
       </>
@@ -657,7 +657,7 @@ export default function ElectricalDesignGuidePage() {
       heroTitle={
         <>
           Electrical Design Guide:{' '}
-          <span className="text-yellow-400">The BS 7671 Design Process</span>
+          <span className="text-elec-yellow">The BS 7671 Design Process</span>
         </>
       }
       heroSubtitle="Good electrical design is the foundation of a safe, compliant installation. This guide walks through the entire BS 7671 design process — from assessing general characteristics and determining design current, through cable selection and correction factors, to protection coordination and voltage drop verification."
@@ -668,7 +668,7 @@ export default function ElectricalDesignGuidePage() {
       faqHeading="Frequently Asked Questions About Electrical Design"
       relatedPages={relatedPages}
       ctaHeading="AI-Powered Electrical Design on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's AI Circuit Designer, cable sizing calculator, and BS 7671 design tools. Complete the design and certificate on site. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate's AI Circuit Designer, cable sizing calculator, and BS 7671 design tools. Complete the design and certificate on site. 7-day free trial."
     />
   );
 }

@@ -189,14 +189,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Carrying a load close to its rated current</strong> — a 32A MCB carrying 28A
                 will hum more than one carrying 10A. Check the actual load using a clamp meter.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Not seated properly on the busbar</strong> — if the MCB is not clicked fully
                 onto the DIN rail or the busbar connection is not clean and tight, vibration
@@ -331,27 +331,27 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 An MCB that trips periodically under heavy load (for example, when multiple kitchen
                 appliances are used simultaneously)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Cables that feel warm to the touch near the consumer unit (check with the back of
                 your hand — do not grip a warm cable)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Buzzing from a specific MCB that correlates with specific appliances being used
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Dimming lights when high-power appliances start (see our{' '}
                 <SEOInternalLink href="/guides/lights-dimming-when-appliance-turns-on">
@@ -554,7 +554,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Thermometer className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">1. Thermal Assessment</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -568,7 +568,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">2. Visual Inspection and Tightness</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -583,7 +583,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Gauge className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">3. Load Assessment</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -598,7 +598,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">4. Document and Advise</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -615,7 +615,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ShieldCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   5. Current Standard Compliance When Recommending an Upgrade
@@ -677,7 +677,7 @@ export default function HummingNoiseFromConsumerUnitPage() {
       heroTitle={
         <>
           Humming Noise From Consumer Unit:{' '}
-          <span className="text-yellow-400">What It Means and When to Act</span>
+          <span className="text-elec-yellow">What It Means and When to Act</span>
         </>
       }
       heroSubtitle="A hum or buzz from your consumer unit — is it normal? This guide explains the causes from harmless electromagnetic vibration to dangerous loose connections, covers the warning signs of overheating, and tells you when to call an electrician."
@@ -693,7 +693,7 @@ export default function HummingNoiseFromConsumerUnitPage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Humming"
       relatedPages={relatedPages}
       ctaHeading="Inspect and Document Consumer Units on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI board scanning, professional EICR certificates, and fault documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for AI board scanning, professional EICR certificates, and fault documentation. 7-day free trial, cancel anytime."
     />
   );
 }

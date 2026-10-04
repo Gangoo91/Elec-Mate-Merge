@@ -6,7 +6,7 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { withRetry, RetryPresets } from '../_shared/retry.ts';
-import { lovableAICircuit } from '../_shared/circuit-breaker.ts';
+import { aiCircuit } from '../_shared/circuit-breaker.ts';
 
 // Internal function for single design attempt
 async function designCircuitsInternal(
@@ -17,7 +17,7 @@ async function designCircuitsInternal(
   const startTime = Date.now();
 
   // PHASE 4: Check circuit breaker before proceeding
-  if (lovableAICircuit.isOpen()) {
+  if (aiCircuit.isOpen()) {
     throw new Error(
       `Circuit breaker OPEN for Designer Agent - service temporarily unavailable. ` +
         `Too many recent failures. Will retry automatically in 60 seconds.`
@@ -115,7 +115,7 @@ async function designCircuitsInternal(
           `✅ Designer completed ${v2Data.circuits.length} circuits via V2 fallback in ${(duration / 1000).toFixed(1)}s`
         );
 
-        lovableAICircuit.onSuccess();
+        aiCircuit.onSuccess();
 
         return {
           circuits: v2Data.circuits,
@@ -171,7 +171,7 @@ async function designCircuitsInternal(
       );
 
       // PHASE 4: Record success in circuit breaker
-      lovableAICircuit.onSuccess();
+      aiCircuit.onSuccess();
 
       return {
         circuits: data.circuits,
@@ -185,7 +185,7 @@ async function designCircuitsInternal(
       };
     } catch (caughtError) {
       // PHASE 4: Record failure in circuit breaker
-      lovableAICircuit.onFailure();
+      aiCircuit.onFailure();
 
       // Log full error for debugging
       console.error('❌ Circuit Designer Core caught error:', {

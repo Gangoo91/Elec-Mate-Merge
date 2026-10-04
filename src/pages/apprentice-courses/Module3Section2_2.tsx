@@ -39,7 +39,7 @@ const quickCheckQuestions = [
     options: [
       'To prevent rust formation',
       'To ensure safe earthing path',
-      'To make installation faster',
+      'To keep the conduit watertight',
     ],
     correctIndex: 1,
     explanation:
@@ -134,9 +134,9 @@ const quizQuestions = [
     question: 'Why is electrical continuity important in metal conduit systems?',
     options: [
       'To prevent rust',
-      'To make installation easier',
+      'To keep voltage drop low on the circuit',
       'To ensure safe earthing',
-      'To improve appearance',
+      'To stop condensation forming inside',
     ],
     correctAnswer: 2,
     explanation:

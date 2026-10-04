@@ -161,31 +161,31 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>1-bed flat:</strong> £2,500–£4,000 (3–5 days)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>2-bed terraced house:</strong> £2,800–£4,500 (4–6 days)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>3-bed semi-detached:</strong> £4,000–£6,500 (5–8 days)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>4-bed detached:</strong> £6,000–£9,500 (7–10 days)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>5-bed or large period property:</strong> £9,500–£14,000+ (10–15 days)
               </span>
@@ -223,7 +223,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Victorian back-to-backs and terraces (1860s–1900s):</strong> Found in
                 Handsworth, Saltley, Sparkbrook, Bordesley, and Digbeth. Many have had ad-hoc
@@ -232,7 +232,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1930s–1950s semis:</strong> Dominant across Kings Heath, Bournville,
                 Stirchley, Erdington, and Moseley. Many still have original VIR (vulcanised india
@@ -241,7 +241,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1960s–1980s council and private estates:</strong> Found extensively across
                 outer Birmingham — Northfield, Great Barr, Quinton, Sheldon. PVC-insulated wiring in
@@ -251,7 +251,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large period detached (Edgbaston, Moseley, Harborne):</strong> Victorian and
                 Edwardian detached properties with high ceilings, multiple storeys, extensive
@@ -339,7 +339,7 @@ const sections = [
             Typical Rewire Duration by Property Type
           </h3>
           <div className="space-y-2">
-            <div className="grid grid-cols-3 gap-3 px-4 py-2 text-xs uppercase tracking-wide text-white/50">
+            <div className="grid grid-cols-3 gap-3 px-4 py-2 text-xs uppercase tracking-wide text-white">
               <span>Property</span>
               <span className="text-center">Working days</span>
               <span className="text-right">Construction</span>
@@ -347,30 +347,30 @@ const sections = [
             <div className="grid grid-cols-3 gap-3 items-center rounded-xl bg-green-900/30 border border-green-700/40 px-4 py-3 text-white">
               <span className="font-semibold">2-bed terrace</span>
               <span className="text-center">4–6 days</span>
-              <span className="text-right text-sm text-white/70">Plasterboard / render</span>
+              <span className="text-right text-sm text-white">Plasterboard / render</span>
             </div>
             <div className="grid grid-cols-3 gap-3 items-center rounded-xl bg-blue-900/30 border border-blue-700/40 px-4 py-3 text-white">
               <span className="font-semibold">3-bed semi</span>
               <span className="text-center">5–8 days</span>
-              <span className="text-right text-sm text-white/70">1930s–50s semi</span>
+              <span className="text-right text-sm text-white">1930s–50s semi</span>
             </div>
             <div className="grid grid-cols-3 gap-3 items-center rounded-xl bg-blue-900/30 border border-blue-700/40 px-4 py-3 text-white">
               <span className="font-semibold">4-bed detached</span>
               <span className="text-center">7–10 days</span>
-              <span className="text-right text-sm text-white/70">Larger floor area</span>
+              <span className="text-right text-sm text-white">Larger floor area</span>
             </div>
-            <div className="grid grid-cols-3 gap-3 items-center rounded-xl bg-yellow-900/30 border border-yellow-700/40 px-4 py-3 text-white">
+            <div className="grid grid-cols-3 gap-3 items-center rounded-xl bg-white/[0.06] border border-yellow-700/40 px-4 py-3 text-white">
               <span className="font-semibold">Victorian terrace</span>
               <span className="text-center">7–12 days</span>
-              <span className="text-right text-sm text-white/70">Lath-and-plaster, solid floors</span>
+              <span className="text-right text-sm text-white">Lath-and-plaster, solid floors</span>
             </div>
-            <div className="grid grid-cols-3 gap-3 items-center rounded-xl bg-yellow-900/30 border border-yellow-700/40 px-4 py-3 text-white">
+            <div className="grid grid-cols-3 gap-3 items-center rounded-xl bg-white/[0.06] border border-yellow-700/40 px-4 py-3 text-white">
               <span className="font-semibold">Large period detached</span>
               <span className="text-center">10–15 days</span>
-              <span className="text-right text-sm text-white/70">Multiple storeys</span>
+              <span className="text-right text-sm text-white">Multiple storeys</span>
             </div>
           </div>
-          <p className="text-white/50 text-xs mt-4">
+          <p className="text-white text-xs mt-4">
             Indicative durations for a single working team; lath-and-plaster chasing and making good
             in inner-Birmingham terraces (Handsworth, Saltley, Sparkbrook) add time.
           </p>
@@ -431,7 +431,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <p className="text-white text-sm leading-relaxed">
-            <strong className="text-yellow-300">A4:2026 change — lighting circuits:</strong>{' '}
+            <strong className="text-elec-yellow">A4:2026 change — lighting circuits:</strong>{' '}
             Regulation 411.3.4 (A4:2026) now requires that all AC final circuits supplying
             luminaires in domestic premises are protected by a 30&nbsp;mA RCD. This mandatory
             requirement — added by the 2026 amendment — applies to every lighting circuit in a
@@ -455,14 +455,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New consumer unit</strong> — metal enclosure with RCBOs or dual-RCD
                 arrangement, SPD, and main switch. The heart of the new installation.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>All circuit cables</strong> — twin and earth cable for ring finals, radials,
                 lighting circuits, cooker, shower, and immersion heater. Quantities depend on
@@ -470,21 +470,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Accessories</strong> — sockets, switches, ceiling roses, fused connection
                 units. Standard white plastic is included; upgraded finishes cost extra.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing and bonding</strong> — main earth conductor and main bonding
                 conductors to gas, water, and oil pipework.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing and certification</strong> — initial verification of every circuit,
                 the Electrical Installation Certificate (EIC), and Part P notification. The EIC is
@@ -517,14 +517,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Verify NICEIC, NAPIT, or ELECSA registration</strong> — search by postcode
                 on the relevant register. Non-negotiable for Part P compliance.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Get at least three quotes</strong> — compare on a like-for-like basis.
                 Ensure each quote specifies consumer unit type, number of circuits, and whether
@@ -532,7 +532,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ask about experience with your property type</strong> — Victorian Birmingham
                 terraces and 1930s semis require different approaches. Ask for references from
@@ -540,7 +540,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Confirm EIC and Part P notification are included</strong> — these are not
                 optional extras; they are legal requirements.
@@ -575,7 +575,7 @@ export default function RewireCostBirminghamPage() {
       badgeIcon={PoundSterling}
       heroTitle={
         <>
-          Rewire Cost Birmingham: <span className="text-yellow-400">2026 Price Guide</span>
+          Rewire Cost Birmingham: <span className="text-elec-yellow">2026 Price Guide</span>
         </>
       }
       heroSubtitle="Birmingham rewire costs in 2026 across all property types — from Victorian back-to-backs in the inner ring to 1930s semis across Kings Heath and Bournville. Real prices, Part P guidance, and what to look for in a Birmingham electrician."
@@ -587,7 +587,7 @@ export default function RewireCostBirminghamPage() {
       faqHeading="Frequently Asked Questions About Rewire Costs in Birmingham"
       relatedPages={relatedPages}
       ctaHeading="Quote Birmingham Rewires with Real Trade Pricing"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI-powered rewire quoting, on-site EIC certificates, and project management. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for AI-powered rewire quoting, on-site EIC certificates, and project management. 7-day free trial."
     />
   );
 }

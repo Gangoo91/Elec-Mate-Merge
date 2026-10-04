@@ -223,7 +223,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>If the MCB resets and holds</strong> — the trip was likely caused by a
                 momentary overload or a transient fault. Monitor the circuit. If it trips again,
@@ -235,7 +235,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>If the MCB trips immediately on reset</strong> — there is a hard fault on
                 the circuit (short circuit or major overcurrent). Do not keep resetting. An
@@ -243,7 +243,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>If the MCB trips after a few minutes</strong> — the fault is intermittent or
                 building up over time. This could be a thermal overload (the MCB heats up under
@@ -316,7 +316,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DIY damage</strong> — drilling into a wall, screwing into a floor, or
                 nailing into a joist without checking for cables first. This is extremely common and
@@ -324,7 +324,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rodent damage</strong> — rats and mice chew through cable insulation,
                 exposing conductors. This can cause short circuits, earth faults, or open circuits
@@ -332,7 +332,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Age-related degradation</strong> — very old cable (particularly
                 rubber-insulated cable from pre-1960s installations) becomes brittle and the
@@ -341,7 +341,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Thermal damage</strong> — cables that have been overloaded or run near heat
                 sources can have their insulation degraded. Downlighter cables in contact with
@@ -431,7 +431,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Some sockets work, some do not</strong> — sockets on one side of the break
                 continue to work from one leg; sockets on the other side lose power if the break is
@@ -439,7 +439,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>The MCB trips under load</strong> — a broken ring concentrates current on
                 one leg. The single cable may overheat under full load, or a loose connection at the
@@ -447,7 +447,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Common break points</strong> — back of socket terminals (loose screws),
                 junction boxes under floors, and connections inside ceiling roses where ring
@@ -538,7 +538,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Routine</strong> — the MCB reset successfully and is holding, but you want
                 the circuit investigated to find out why it tripped. Or you have an older fuse board
@@ -568,7 +568,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <CircuitBoard className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <CircuitBoard className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">1. Consumer Unit Inspection</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -584,7 +584,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Cable className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">2. Circuit Testing</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -599,7 +599,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">3. Shared Neutral Detection</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -614,7 +614,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">4. Repair and Certify</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -657,7 +657,7 @@ export default function NoElectricityInPartOfHousePage() {
       badgeIcon={Power}
       heroTitle={
         <>
-          No Electricity in Part of House: <span className="text-yellow-400">Causes and Fixes</span>
+          No Electricity in Part of House: <span className="text-elec-yellow">Causes and Fixes</span>
         </>
       }
       heroSubtitle="Part of your house has lost power. This guide covers every common cause — from a simple tripped breaker to shared neutral faults in older properties — tells you what to check yourself, and explains when to call an electrician."
@@ -668,7 +668,7 @@ export default function NoElectricityInPartOfHousePage() {
       faqHeading="Frequently Asked Questions About Partial Power Loss"
       relatedPages={relatedPages}
       ctaHeading="Diagnose Power Loss and Certify Repairs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI fault diagnosis, circuit testing records, and professional certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for AI fault diagnosis, circuit testing records, and professional certificates. 7-day free trial, cancel anytime."
     />
   );
 }

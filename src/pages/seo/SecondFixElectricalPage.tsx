@@ -184,7 +184,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Socket outlets</strong> — strip the cable sheath back to just inside the
                 back box. Strip individual cores to the correct length for the terminal. Connect
@@ -194,7 +194,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Switches</strong> — for one-way switching, connect the permanent live
                 (brown) to the COM terminal and the switched live to L1. For two-way switching,
@@ -203,7 +203,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Light fittings</strong> — ensure the fitting is suitable for the location
                 (IP rating for bathrooms, fire-rated for fire barriers). Connect using the correct
@@ -212,7 +212,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cooker connection units and fused spurs</strong> — size the cable and fuse
                 correctly for the appliance. A 45A cooker switch with a 6.0mm2 cable is standard for
@@ -248,35 +248,35 @@ const sections = [
           <h4 className="font-bold text-white mb-3">Consumer Unit Wiring Best Practice</h4>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Strip cables neatly with consistent sheath lengths. The outer sheath should enter
                 the consumer unit enclosure — do not strip it back outside the enclosure.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Route cables neatly around the inside of the enclosure. Use cable combs or ties to
                 keep cables organised and identifiable.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Tighten all busbar connections and device terminals to the manufacturer's specified
                 torque. Loose connections cause overheating, arcing, and fires.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Install the SPD (Surge Protection Device) if required by the installation design.
                 Connect it to the line side of the main switch.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Ensure the main earthing conductor and main protective bonding conductors are
                 correctly terminated at the main earth terminal.
@@ -301,7 +301,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Tag className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Tag className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit chart</strong> — must be durable, legible, and fixed inside or
                 adjacent to the consumer unit. Handwritten charts are acceptable under BS 7671 but
@@ -309,7 +309,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Tag className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Tag className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Warning labels</strong> — include labels for dual supply (if applicable),
                 mixed earthing (if applicable), RCD test reminder ("This installation, or part of
@@ -318,7 +318,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Tag className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Tag className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Periodic inspection label</strong> — "IMPORTANT — This installation should
                 be periodically inspected and tested" with the recommended date of next inspection.
@@ -407,7 +407,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part 1: Details of the client and installation</strong> — client name,
                 installation address, description of the work, and the extent of the installation
@@ -415,14 +415,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part 2-4: Designer, installer, and inspector declarations</strong> — each
                 signatory confirms their role and that the work complies with BS 7671.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part 5: Supply characteristics and earthing</strong> — supply type (TN-S,
                 TN-C-S, TT), voltage, frequency, prospective fault current, and external earth fault
@@ -430,7 +430,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Schedule of items inspected</strong> — a checklist covering every aspect of
                 the installation from connections to accessories, cable selection, and protective
@@ -438,7 +438,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Schedule of test results</strong> — the full test results for every circuit
                 in the installation. This is the most time-consuming section to complete manually.
@@ -454,7 +454,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Complete EIC certificates on your phone"
-          description="Join 1,600+ UK electricians creating professional EIC certificates with Elec-Mate. AI board scanner, voice test entry, schedule of test results…"
+          description="Join 2,100+ UK electricians creating professional EIC certificates with Elec-Mate. AI board scanner, voice test entry, schedule of test results…"
           icon={FileCheck2}
         />
       </>
@@ -528,14 +528,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Walk the customer through the consumer unit — explain the main switch, show them how
                 to reset a tripped MCB or RCD, and demonstrate the RCD test button.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Hand over the EIC, the schedule of test results, and the schedule of items
                 inspected. Explain that these documents should be kept safely — they will be needed
@@ -543,7 +543,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Explain the recommended date of next periodic inspection (typically 5 years for
                 domestic, 3 years for commercial). Write this on the periodic inspection label at
@@ -551,7 +551,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 If the installation includes{' '}
                 <SEOInternalLink href="/guides/afdd-arc-fault-detection">AFDDs</SEOInternalLink> or
@@ -589,7 +589,7 @@ export default function SecondFixElectricalPage() {
       heroTitle={
         <>
           Second Fix Electrical:{' '}
-          <span className="text-yellow-400">Completion, Testing, and Certification</span>
+          <span className="text-elec-yellow">Completion, Testing, and Certification</span>
         </>
       }
       heroSubtitle="Second fix is where the installation comes together. Fitting accessories, wiring the consumer unit, labelling circuits, completing initial verification, and issuing the EIC. This guide covers the entire second fix process from start to handover."
@@ -600,7 +600,7 @@ export default function SecondFixElectricalPage() {
       faqHeading="Frequently Asked Questions About Second Fix Electrical"
       relatedPages={relatedPages}
       ctaHeading="Complete Certificates On Site, Not At Your Desk"
-      ctaSubheading="Elec-Mate lets you test, certify, and invoice in a single visit. Voice test entry, AI board scanning, professional EIC certificates, and instant delivery. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate lets you test, certify, and invoice in a single visit. Voice test entry, AI board scanning, professional EIC certificates, and instant delivery. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

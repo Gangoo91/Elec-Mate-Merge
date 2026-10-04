@@ -190,7 +190,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Supplementary equipotential bonding (Regulation 705.415.2.1).</strong> All
                 extraneous-conductive-parts simultaneously accessible to livestock must be connected
@@ -200,7 +200,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bonding conductor size.</strong> The supplementary bonding conductor must be
                 at least 4 mm² copper (or equivalent cross-sectional area in another material). This
@@ -209,7 +209,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing system considerations.</strong> Many agricultural premises are on
                 TT earthing systems (earth rod) because they are in rural areas without a PME
@@ -219,7 +219,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PME restrictions.</strong> The DNO may restrict or prohibit the use of the
                 PME (TN-C-S) earth terminal in agricultural buildings where livestock are present,
@@ -253,7 +253,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP44 minimum (Regulation 705.512.2).</strong> All electrical equipment in
                 agricultural premises must have a minimum IP rating of IP44, providing protection
@@ -261,7 +261,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP55/IP56 for wash-down areas.</strong> In milking parlours, dairy rooms,
                 and any area where water jets are used for cleaning, a minimum of IP55 (low-pressure
@@ -269,7 +269,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP5X/IP6X for dusty environments.</strong> Grain stores, feed mills, and hay
                 barns generate significant quantities of fine dust. Equipment must be dust-
@@ -278,7 +278,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Temperature and UV.</strong> Equipment installed in unheated buildings or
                 outdoors must be rated for the expected temperature range (typically -25°C to +40°C
@@ -413,7 +413,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Continuity of supplementary bonding.</strong> Every supplementary bonding
                 connection identified during the visual inspection must be tested for continuity.
@@ -424,7 +424,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insulation resistance.</strong> Insulation resistance testing may be
                 affected by moisture in the environment. Test during dry conditions where possible.
@@ -433,7 +433,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth electrode resistance (TT systems).</strong> Most agricultural
                 buildings use TT earthing with an earth rod. The earth electrode resistance must be
@@ -443,7 +443,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD testing.</strong> Under BS 7671:2018+A4:2026 (Reg 643.8, with Appendix
                 3 Table 3A deleted), effectiveness is verified by a single alternating-current test
@@ -545,7 +545,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Brain className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI Observation Code Assistant</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -600,7 +600,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Professional farm certificates on your phone"
-          description="Join 1,600+ UK electricians creating EICR and EIC certificates with AI-assisted observation coding, photo documentation, and instant PDF delivery."
+          description="Join 2,100+ UK electricians creating EICR and EIC certificates with AI-assisted observation coding, photo documentation, and instant PDF delivery."
           icon={FileCheck2}
         />
       </>
@@ -626,7 +626,7 @@ export default function AgriculturalInstallationsPage() {
       heroTitle={
         <>
           Agricultural Electrical Installations:{' '}
-          <span className="text-yellow-400">BS 7671 Section 705 Explained</span>
+          <span className="text-elec-yellow">BS 7671 Section 705 Explained</span>
         </>
       }
       heroSubtitle="Farms, livestock buildings, milking parlours, and glasshouses all fall under BS 7671 Section 705 — with stricter earthing, bonding, IP rating, and RCD requirements than domestic installations. This guide covers everything electricians need to know about agricultural electrical work."
@@ -637,7 +637,7 @@ export default function AgriculturalInstallationsPage() {
       faqHeading="Frequently Asked Questions About Agricultural Electrical Installations"
       relatedPages={relatedPages}
       ctaHeading="Complete Agricultural EICRs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians creating professional certificates with AI observation coding, photo documentation, and instant PDF delivery. Built for specialist work including agricultural installations. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians creating professional certificates with AI observation coding, photo documentation, and instant PDF delivery. Built for specialist work including agricultural installations. 7-day free trial, cancel anytime."
     />
   );
 }

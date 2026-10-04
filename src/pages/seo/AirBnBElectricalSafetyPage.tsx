@@ -206,7 +206,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR — within the past five years</strong> — commission an{' '}
                 <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> from a
@@ -215,7 +215,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PAT test all portable appliances</strong> — kettle, toaster, toasted
                 sandwich maker, television, lamps, hairdryer, and any other appliances provided for
@@ -223,7 +223,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inspect sockets and switches</strong> — check all guest-accessible sockets
                 and switches for visible damage, cracking, scorch marks, or loose fixings. Any
@@ -231,7 +231,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check consumer unit for RCD protection</strong> — open the consumer unit
                 cover and confirm that RCD or RCBO protection is fitted on socket-outlet circuits.
@@ -240,7 +240,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test smoke and CO alarms</strong> — press the test button on every alarm in
                 the property and replace any batteries that are low. Create a record of test dates
@@ -363,7 +363,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Provide sufficient socket outlets</strong> — insufficient sockets lead
                 guests to daisy-chain extension leads. If bedrooms or communal areas have fewer than
@@ -373,7 +373,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Provide surge-protected extension leads</strong> — if you provide extension
                 leads in the property, use surge-protected multi-socket leads with individually
@@ -382,7 +382,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No daisy-chaining — house rules</strong> — include a note in your property
                 guide and house rules advising guests not to plug one extension lead into another.
@@ -390,7 +390,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>USB charging points</strong> — consider having a qualified electrician
                 install socket outlets with integrated USB charging ports (to USB-A and USB-C
@@ -416,7 +416,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Garden and patio sockets</strong> — must be weatherproof (IP44 minimum
                 rating), protected by 30mA RCD, and installed on a dedicated outdoor circuit. Socket
@@ -425,7 +425,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hot tubs — specific BS 7671 requirements</strong> — hot tub electrical
                 connections must comply with BS 7671 Section 702 (swimming pools and other basins).
@@ -436,7 +436,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV chargers</strong> — if you offer EV charging as a feature, the charger
                 must be installed by an OZEV-approved installer, comply with BS 7671 Section 722,
@@ -445,7 +445,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Outbuilding supplies</strong> — garden rooms, summerhouses, and outbuildings
                 used by guests must have a safe electrical supply installed to BS 7671 requirements,
@@ -525,7 +525,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No EICR on record</strong> — if you have no EICR for the property or the
                 last one was more than five years ago, commission one before the next guest stay.
@@ -533,7 +533,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>After electrical work</strong> — any rewire, consumer unit replacement,
                 circuit addition (additional sockets, EV charger, garden supply), or significant
@@ -542,7 +542,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>After a reported electrical incident during a guest stay</strong> — if a
                 guest reports an electric shock, sparking socket, or frequently tripping RCD, have
@@ -551,7 +551,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Before adding new features</strong> — adding a hot tub, EV charger, garden
                 kitchen, or outbuilding supply to your Airbnb listing requires new electrical work
@@ -579,7 +579,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete EICRs and PAT Tests On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -639,7 +639,7 @@ export default function AirBnBElectricalSafetyPage() {
       heroTitle={
         <>
           Airbnb Electrical Safety UK:{' '}
-          <span className="text-yellow-400">Host Guide to Compliance 2026</span>
+          <span className="text-elec-yellow">Host Guide to Compliance 2026</span>
         </>
       }
       heroSubtitle="Airbnb hosts are not subject to mandatory EICR legislation but owe guests a full duty of care under the Occupiers Liability Act 1957. This guide covers Airbnb's platform requirements for smoke and CO alarms, what electrical checks to carry out before listing, RCD protection, outdoor area safety, extension lead use, and the insurance implications of not having a current EICR."
@@ -650,7 +650,7 @@ export default function AirBnBElectricalSafetyPage() {
       faqHeading="Frequently Asked Questions About Airbnb Electrical Safety"
       relatedPages={relatedPages}
       ctaHeading="Complete Airbnb Property EICRs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

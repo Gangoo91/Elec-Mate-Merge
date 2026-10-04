@@ -61,7 +61,7 @@ const checks = [
       'That the multifunction tester has been nulled on the continuity range, so lead resistance is subtracted before any dead test begins.',
       'That the customer has been briefed and any sensitive equipment disconnected, so the 500 V DC insulation test cannot cause damage.',
       'That the instrument calibration certificate is in date, so the readings will be accepted on the EIC.',
-      'Verified safe isolation per the JIB safe isolation procedure (proving unit checked alive on a known live source, then proving each conductor dead at the point of work, then proving the proving unit alive again).',
+      'Verified safe isolation — prove the voltage indicator on a proving unit, test for dead at the point of work, then prove the indicator again.',
     ],
     correctIndex: 3,
     explanation:
@@ -112,7 +112,7 @@ const quizQuestions = [
   },
   {
     id: 4,
-    question: 'For a ring final circuit, the continuity test (Reg 643.2.2) verifies:',
+    question: 'For a ring final circuit, the continuity test (Reg 643.2.1(b)) verifies:',
     options: [
       'End-to-end continuity of L, N and CPC separately, plus the cross-connection r1+r2 test (R1+R2 at every socket should be roughly equal).',
       'Only the end-to-end continuity of the CPC, since the line and neutral are confirmed by the later polarity test.',
@@ -125,8 +125,7 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question:
-      'BS 7671 Reg 643.3.2.1 specifies that the IR test voltage for SELV / PELV / safety circuits should be:',
+    question: 'BS 7671 Table 64 sets the IR test voltage for SELV and PELV circuits at:',
     options: ['500 V DC', '250 V DC', '50 V DC', '1000 V DC'],
     correctAnswer: 1,
     explanation:
@@ -221,7 +220,7 @@ const testSequence = [
   {
     n: 2,
     test: 'Continuity of ring final circuit conductors (r1 + rn + r2)',
-    reg: '643.2.2',
+    reg: '643.2.1(b)',
     instrument: 'Low-resistance ohmmeter',
     purpose:
       'Verify the ring is wired as a true ring (not as a long radial bridged at the CU). End-to-end on L, N and CPC, then cross-connection R1+R2 reading at every socket.',
@@ -444,7 +443,7 @@ export default function Sub3() {
               Reg 643.2.1 is the continuity test mandate. The CPC at every accessory and every
               bonding connection has to be verified continuous by measurement — not just by visual
               inspection. The R1 + R2 method is the standard technique on radials; on ring finals,
-              the live conductors are also tested per Reg 643.2.2 (ring final continuity).
+              the live conductors are also tested per Reg 643.2.1(b) (ring final continuity).
             </>
           }
           cite="Source: BS 7671:2018+A4:2026 Part 6, Chapter 64, Regulation 643.2.1."
@@ -452,7 +451,7 @@ export default function Sub3() {
 
         <RegsCallout
           source="BS 7671:2018+A4:2026 — Regulation 643.3 (Insulation resistance) (paraphrased)"
-          clause="643.3 has been redrafted in A4:2026. The requirements for testing insulation resistance where equipment is likely to influence the verification test or be damaged has been clarified, and reference is made to a 250 V DC test following the connection of equipment. The test voltage and minimum acceptable insulation resistance values are tabulated in Table 64."
+          clause="643.3 was redrafted in A2:2022. The requirements for testing insulation resistance where equipment is likely to influence the verification test or be damaged has been clarified, and reference is made to a 250 V DC test following the connection of equipment. The test voltage and minimum acceptable insulation resistance values are tabulated in Table 64."
           meaning={
             <>
               Reg 643.3 sets the IR test voltage and minimum acceptable values. For normal 230 V /
@@ -656,8 +655,8 @@ export default function Sub3() {
             </li>
           </ul>
           <p>
-            <strong>Reg 643.3 A4:2026 clarification:</strong> The amendment specifically calls for a
-            250 V DC test following the connection of equipment. So the sequence is: disconnect
+            <strong>Reg 643.3 (A2:2022) clarification:</strong> The amendment specifically calls for
+            a 250 V DC test following the connection of equipment. So the sequence is: disconnect
             sensitive equipment → 500 V DC IR test on the wiring alone → reconnect equipment → 250 V
             DC IR test on the wiring with equipment connected. Both results recorded.
           </p>

@@ -1026,7 +1026,7 @@ export default function IETCodeOfPracticeEVPage() {
       relatedPages={relatedPages}
       heroCtaLabel="Issue EV charger certificates on your phone"
       ctaHeading="Install EV Chargers with Confidence"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EV charger installations. Cable sizing, IET CoP checklist, open-PEN verification, and instant certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for EV charger installations. Cable sizing, IET CoP checklist, open-PEN verification, and instant certificates. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -683,7 +683,7 @@ export const comprehensiveTestingGuides: EnhancedTestGuide[] = [
       { parameter: 'Trip current', limit: '50-100% of rated', unit: 'mA' },
       { parameter: 'Trip time @ 1x In', limit: '< 300', unit: 'ms' },
       // BS EN 61008/61009 device characteristic — NOT a BS 7671 verification limit.
-      // A4:2026 deleted Appendix 3 Table 3A; verification is the AC test at IΔn above.
+      // A2:2022 deleted Appendix 3 Table 3A; verification is the AC test at IΔn above.
       { parameter: 'Trip time @ 5x In (diagnostic)', limit: '< 40', unit: 'ms' },
     ],
     commonIssues: [
@@ -817,7 +817,7 @@ export const comprehensiveTestingGuides: EnhancedTestGuide[] = [
         id: 'trip-time-5x',
         title: 'Optional: Trip Time at 5× Rated Current (diagnostic)',
         description:
-          'Not part of the required verification — BS 7671:2018+A4:2026 deleted Table 3A of Appendix 3 and verifies effectiveness with the single AC test at IΔn. Run at 5× rated current (e.g. 150mA for a 30mA RCD) only as a diagnostic.',
+          'Not part of the required verification — BS 7671:2018+A2:2022 deleted Table 3A of Appendix 3 and verifies effectiveness with the single AC test at IΔn. Run at 5× rated current (e.g. 150mA for a 30mA RCD) only as a diagnostic.',
         safetyWarnings: [
           'Do not record this as the certified trip time — the certified value is the one at IΔn',
           'Ensure the RCD can handle the higher test current',

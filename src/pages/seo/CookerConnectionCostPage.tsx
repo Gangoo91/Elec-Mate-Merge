@@ -156,7 +156,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Connection to existing circuit</strong> — £100 to £250 total. Labour: £80 to
                 £180 (1 to 2 hours). Materials: £15 to £40 (cooker connection unit, cable tail,
@@ -164,7 +164,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New cooker circuit (short run, under 10m)</strong> — £250 to £400 total.
                 Materials: £50 to £100 (6mm² or 10mm² cable, cooker connection unit, MCB/RCBO).
@@ -172,7 +172,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New cooker circuit (long run or difficult route)</strong> — £350 to £500
                 total. Longer cable runs, routes through multiple rooms, or channelling through
@@ -196,28 +196,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cookers up to 13.5kW</strong> — 32A circuit with 6mm² twin and earth cable.
                 Protected by a 32A MCB or RCBO at the consumer unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cookers above 13.5kW</strong> — 45A circuit with 10mm² twin and earth cable.
                 Protected by a 45A MCB or RCBO. Required for large range cookers.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cooker connection unit</strong> — 45A double-pole switch mounted within 2
                 metres of the cooker. Provides local isolation for maintenance and emergency.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Flexible cable from connection unit to cooker</strong> — heat-resistant
                 flexible cable rated for the circuit current. Typically 6mm² or 10mm² 3-core flex.
@@ -283,7 +283,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Existing circuit availability</strong> — if a cooker circuit already exists,
                 the job is quick and inexpensive. If a new circuit is needed, the cost doubles or
@@ -291,7 +291,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable run length</strong> — a short run from the consumer unit to the
                 kitchen (under 10m) is straightforward. Longer runs or routes through multiple rooms
@@ -299,14 +299,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit capacity</strong> — if there is no spare way in the consumer
                 unit for a new cooker circuit, a board upgrade may be needed.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cooker power rating</strong> — high-powered range cookers requiring 10mm²
                 cable and a 45A circuit cost more in materials than standard cookers on 6mm² cable.
@@ -388,7 +388,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Check Before You Quote</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -431,7 +431,7 @@ export default function CookerConnectionCostPage() {
       badgeIcon={PoundSterling}
       heroTitle={
         <>
-          Cooker Connection Cost: <span className="text-yellow-400">UK Price Guide 2026</span>
+          Cooker Connection Cost: <span className="text-elec-yellow">UK Price Guide 2026</span>
         </>
       }
       heroSubtitle="How much does it cost to connect an electric cooker? Whether you have an existing cooker circuit or need a new one installed, this guide covers realistic 2026 UK pricing, circuit requirements, and the regulations that apply."
@@ -442,7 +442,7 @@ export default function CookerConnectionCostPage() {
       faqHeading="Frequently Asked Questions About Cooker Connection Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Cooker Connections Professionally"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and AI cost engineering. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for quoting, certification, and AI cost engineering. 7-day free trial, cancel anytime."
     />
   );
 }

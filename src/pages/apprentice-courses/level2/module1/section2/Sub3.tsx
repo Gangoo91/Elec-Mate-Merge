@@ -189,7 +189,7 @@ const faqs = [
   {
     question: 'Where do AFDDs fit into the fire story?',
     answer:
-      'Arc Fault Detection Devices spot the signature of a series or parallel arc — the kind a normal MCB or RCD will sail straight past. From A2 (and reinforced through later amendments) BS 7671 recommends AFDDs on socket circuits in higher-risk premises, and now A4:2026 broadens the scope further. For Level 2, know what they do and that they’re recommended, not always mandatory — check the current edition for which premises actually require them.',
+      'Arc Fault Detection Devices spot the signature of a series or parallel arc — the kind a normal MCB or RCD will sail straight past. Since A2:2022, BS 7671 Reg 421.1.7 requires AFDDs on single-phase socket-outlet circuits up to 32 A in high rise residential buildings, HMOs, purpose-built student accommodation and care homes, and recommends them in all other premises.',
   },
   {
     question: 'Why do escape routes get special cables?',
@@ -424,7 +424,7 @@ export default function Sub3() {
 
         <ConceptBlock
           title="AFDDs — the device that catches what RCDs and MCBs miss"
-          onSite="A series arc (loose terminal arcing across a tiny gap) draws a tiny current — well under what an MCB or RCD will trip on. AFDDs read the waveform and spot the arc signature. From A4:2026 the recommendation is broader than ever."
+          onSite="A series arc (loose terminal arcing across a tiny gap) draws a tiny current — well under what an MCB or RCD will trip on. AFDDs read the waveform and spot the arc signature. Reg 421.1.7 requires them on socket circuits in HMOs and similar premises, and recommends them everywhere else."
         >
           <p>
             <strong>Arc Fault Detection Devices</strong> have been in BS 7671 since A2. They look at

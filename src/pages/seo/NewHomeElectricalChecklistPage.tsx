@@ -196,7 +196,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Press the T (Test) button on each RCD</strong> — the RCD should trip (switch
                 off) immediately. If your consumer unit has two RCDs (a split-load board), test
@@ -204,7 +204,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>If the RCD does not trip</strong> — this is a serious fault. The RCD is not
                 providing protection. Do not use the circuits it covers until a qualified
@@ -212,7 +212,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>If the RCD will not reset</strong> — there is likely a fault on one of the
                 circuits it protects. Switch off all the individual circuit breakers on that side of
@@ -222,7 +222,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test RCDs every six months</strong> — the Electricity at Work Regulations
                 1989 recommend regular testing of protective devices. Press the T button every six
@@ -305,7 +305,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical fire</strong> — switch off the main switch on the consumer unit
                 immediately. Never use water on an electrical fire. Use a CO2 or dry powder
@@ -314,7 +314,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electric shock</strong> — do not touch the person while they may still be in
                 contact with the electrical source. Switch off the main switch or remove the plug
@@ -323,7 +323,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Flooding</strong> — if water enters areas near electrical equipment, switch
                 off the main switch before entering any flooded area. Do not operate electrical
@@ -332,7 +332,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Note emergency contact numbers</strong> — save your electricity
                 distributor's 24-hour emergency line (National Grid: 0800 816 9176, or your regional
@@ -357,7 +357,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Socket circuits</strong> — plug a lamp or charger into every socket outlet
                 in the property to confirm it is live. Mark any dead sockets and report them to a
@@ -365,7 +365,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lighting circuits</strong> — test every light fitting in the property.
                 Replace any blown lamps. Note any fittings that are damaged, missing covers, or
@@ -373,7 +373,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cooker and shower circuits</strong> — confirm the cooker circuit breaker is
                 correctly rated for your cooker (typically 32A or 40A for a full electric range).
@@ -382,7 +382,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Immersion heater</strong> — if the property has an immersion heater, confirm
                 the circuit breaker is operational and the timer (if fitted) is correctly set.
@@ -406,7 +406,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minimum IP44 rating</strong> — outdoor sockets must be rated to at least
                 IP44. This rating provides protection against solid objects over 1mm and water
@@ -415,7 +415,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection required</strong> — all outdoor socket outlets must be
                 protected by a 30mA RCD under Regulation 411.3.3 of BS 7671. Check that the outdoor
@@ -423,7 +423,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check for weatherproof covers</strong> — outdoor sockets should have
                 spring-loaded covers or flap covers that close over the socket when not in use.
@@ -431,7 +431,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Garden lighting and outbuildings</strong> — check any garden lighting
                 circuits and external wiring to outbuildings, sheds, or garages. Look for armoured
@@ -456,7 +456,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Take photos of the meter reading</strong> — photograph your electricity (and
                 gas) meter on the day you take possession, showing the reading and the meter serial
@@ -465,7 +465,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Contact the existing supplier</strong> — call or email the energy supplier
                 currently serving the property to give them your opening meter reading and to
@@ -474,7 +474,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consider switching supplier</strong> — you are not obliged to stay with the
                 current supplier. Once you have established the supply in your name, you can switch
@@ -482,7 +482,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smart meter upgrade</strong> — if the property has an old-style analogue
                 meter, ask your supplier about a free smart meter installation. Smart meters provide
@@ -506,7 +506,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Economy 7 or Economy 10</strong> — if the property has storage heaters or an
                 off-peak hot water cylinder, it may be on an Economy 7 or Economy 10 tariff with
@@ -515,7 +515,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Direct debit</strong> — set up a direct debit for your energy bill. Most
                 suppliers offer a discount for direct debit customers. Review the direct debit
@@ -523,7 +523,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger and solar PV</strong> — if you plan to install an EV charger or
                 solar panels, discuss EV tariffs and Smart Export Guarantee (SEG) options with your
@@ -601,7 +601,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Deliver the EICR Before You Leave</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -635,7 +635,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win new homeowner electrical work with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -661,7 +661,7 @@ export default function NewHomeElectricalChecklistPage() {
       heroTitle={
         <>
           New Home Electrical Checklist UK:{' '}
-          <span className="text-yellow-400">8 Things to Do When You Move In</span>
+          <span className="text-elec-yellow">8 Things to Do When You Move In</span>
         </>
       }
       heroSubtitle="Moving into a new home is hectic, but a few electrical checks in the first days can prevent serious problems later. This checklist covers locating the consumer unit, testing RCDs, checking smoke and CO detectors, knowing emergency procedures, testing outdoor sockets, and registering your meter."
@@ -672,7 +672,7 @@ export default function NewHomeElectricalChecklistPage() {
       faqHeading="Frequently Asked Questions About Electrical Safety in a New Home"
       relatedPages={relatedPages}
       ctaHeading="Complete Home Electrical Inspections on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning and instant PDF export. Deliver reports to new homeowners before you leave. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning and instant PDF export. Deliver reports to new homeowners before you leave. 7-day free trial."
     />
   );
 }

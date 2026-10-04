@@ -189,7 +189,7 @@ const sections = [
         <div className="space-y-3 my-4">
           <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center shrink-0">
-              <AlertTriangle className="w-5 h-5 text-yellow-400" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow" />
             </div>
             <div>
               <h3 className="font-bold text-white text-lg mb-1">Chrysotile (White Asbestos)</h3>
@@ -203,7 +203,7 @@ const sections = [
           </div>
           <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center shrink-0">
-              <AlertTriangle className="w-5 h-5 text-yellow-400" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow" />
             </div>
             <div>
               <h3 className="font-bold text-white text-lg mb-1">Amosite (Brown Asbestos)</h3>
@@ -217,7 +217,7 @@ const sections = [
           </div>
           <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center shrink-0">
-              <AlertTriangle className="w-5 h-5 text-yellow-400" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow" />
             </div>
             <div>
               <h3 className="font-bold text-white text-lg mb-1">Crocidolite (Blue Asbestos)</h3>
@@ -507,7 +507,7 @@ export default function AsbestosAwarenessCoursePage() {
       badgeIcon={AlertTriangle}
       heroTitle={
         <>
-          Asbestos Awareness Course: <span className="text-yellow-400">Category A Training</span>
+          Asbestos Awareness Course: <span className="text-elec-yellow">Category A Training</span>
         </>
       }
       heroSubtitle="Essential asbestos awareness training for UK electricians. Types of asbestos, where found in buildings, legal duties under the Control of Asbestos Regulations 2012, and what to do if you find asbestos. 5 modules with video content, interactive quizzes, and AI-powered study tools."
@@ -525,7 +525,7 @@ export default function AsbestosAwarenessCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Protect yourself — complete your asbestos awareness training"
-      ctaSubheading="Join 1,600+ UK electricians studying smarter with Elec-Mate. 5 focused modules, interactive quizzes, visual identification guide, and CPD certificate. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians studying smarter with Elec-Mate. 5 focused modules, interactive quizzes, visual identification guide, and CPD certificate. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/asbestos-awareness"
     />

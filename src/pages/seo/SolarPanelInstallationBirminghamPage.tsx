@@ -151,7 +151,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>West Midlands irradiance:</strong> ~900–980 kWh/kWp/year. Comparable to the
                 East Midlands; slightly below London and the South East; significantly better than
@@ -159,7 +159,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Best roof types:</strong> South-facing pitched roofs at 30–40 degrees.
                 East-west split arrays on semi-detached properties. Flat-roof systems with angled
@@ -167,7 +167,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competitive market:</strong> The West Midlands has a large pool of
                 MCS-certified solar installers, leading to competitive pricing and good installer
@@ -193,14 +193,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>South-facing optimum:</strong> A south-facing roof at 35 degrees in the
                 Birmingham area achieves approximately 940–980 kWh/kWp/year.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>East-west arrays:</strong> Achieve around 80–85% of south-facing output
                 (approximately 750–830 kWh/kWp/year) but generate more evenly through the day.
@@ -209,7 +209,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Shading:</strong> Tree shading from the West Midlands' suburban streetscapes
                 is worth assessing. Ask your installer to produce a shading analysis as part of the
@@ -233,21 +233,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3kW:</strong> Suits terraced houses and smaller semis. ~8–10 panels. Output:
                 approximately 2,400–2,850 kWh/year. Cost: £4,000–£5,500.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>4kW:</strong> Most popular choice. ~10–14 panels. Output: approximately
                 3,200–3,800 kWh/year. Cost: £5,000–£7,500.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>6kW:</strong> Ideal for detached properties in Solihull, Sutton Coldfield,
                 or Wolverhampton. ~14–18 panels. Output: approximately 4,800–5,700 kWh/year. Cost:
@@ -255,7 +255,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>With battery:</strong> Adding a 5–10kWh battery to any size system raises
                 self-consumption from ~30% to ~70% and significantly improves financial returns. Add
@@ -280,25 +280,25 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3kW:</strong> £4,000–£5,500 installed.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>4kW:</strong> £5,000–£7,500 installed.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>6kW:</strong> £7,000–£10,000 installed.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Battery storage:</strong> £2,500–£5,000 additional. 0% VAT when installed at
                 the same time as solar panels.
@@ -365,7 +365,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Permitted development:</strong> No planning application required for most
                 residential solar PV. Panels must not protrude more than 200mm from the roof surface
@@ -406,14 +406,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Installer certification:</strong> Check mcscertified.com. MCS certificates
                 expire — a lapsed certificate means your installation will not qualify for SEG.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Product certification:</strong> Panels and inverter must be on the MCS
                 products list. Premium brands (LG, SunPower, REC, Solis, SolarEdge) are all
@@ -421,7 +421,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Documentation:</strong> You must receive an MCS installation certificate and
                 an{' '}
@@ -449,7 +449,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Popular systems:</strong> GivEnergy, SolarEdge Energy Hub, Solis, and Tesla
                 Powerwall are all widely installed across the West Midlands. Capacity typically
@@ -457,14 +457,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cost:</strong> £2,500–£5,000 additional. Batteries installed at the same
                 time as solar panels attract 0% VAT.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Grid charging:</strong> On low-solar days, the battery can be charged from
                 the grid on cheap overnight tariffs (Agile, Economy 7) and discharged during evening
@@ -529,21 +529,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Verify MCS status:</strong> Check mcscertified.com. Search by postcode to
                 find current MCS-certified installers near you.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RECC membership:</strong> Renewable Energy Consumer Code membership provides
                 consumer protection and an alternative dispute resolution process.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three quotes minimum:</strong> Get at least three quotes on like-for-like
                 system specifications. Significant price variations are common in the Birmingham
@@ -551,7 +551,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Design report:</strong> Request a written system design report showing
                 modelled annual generation using PVGIS data for your specific postcode and roof
@@ -576,7 +576,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Issue Solar EICs On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -610,7 +610,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your solar PV business with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site solar certificates, quoting, and business management. 7-day free trial, cancel anytime."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site solar certificates, quoting, and business management. 7-day free trial, cancel anytime."
           icon={FileCheck2}
         />
       </>
@@ -636,7 +636,7 @@ export default function SolarPanelInstallationBirminghamPage() {
       heroTitle={
         <>
           Solar Panel Installation Birmingham:{' '}
-          <span className="text-yellow-400">Costs & Guide 2025</span>
+          <span className="text-elec-yellow">Costs & Guide 2025</span>
         </>
       }
       heroSubtitle="The complete guide to solar PV installation in Birmingham and the West Midlands — system sizes, costs from £5,000, irradiance data, Smart Export Guarantee, MCS certification, planning permission, and realistic payback periods."
@@ -647,7 +647,7 @@ export default function SolarPanelInstallationBirminghamPage() {
       faqHeading="Frequently Asked Questions About Solar Panel Installation in Birmingham"
       relatedPages={relatedPages}
       ctaHeading="Complete Solar PV Certificates On Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site solar EICs, quoting, and business management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site solar EICs, quoting, and business management. 7-day free trial, cancel anytime."
     />
   );
 }

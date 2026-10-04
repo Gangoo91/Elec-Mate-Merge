@@ -187,21 +187,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Studio / one-bedroom flat</strong> — £110 to £200. Very common in Brighton
                 due to the high proportion of converted Victorian terraces in the city centre.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Two-bedroom flat</strong> — £130 to £240. Regency and Victorian conversions
                 take longer to inspect than purpose-built modern flats.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom house</strong> — £200 to £360. Larger Victorian and Edwardian
                 terraced houses in Hanover, Preston Park, and similar areas often take four or more
@@ -209,14 +209,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Four-bedroom+ house</strong> — £320 to £520+. Larger properties or those
                 with multiple consumer units, outbuildings, or three-phase supplies.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HMO</strong> — £380 to £700+. Brighton's large student HMO market means high
                 demand. HMOs have broader inspection scope including fire alarm and emergency
@@ -410,7 +410,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Visual inspection</strong> — consumer unit, protective devices, cable
                 condition, socket outlets, light fittings, switches, and earthing and bonding
@@ -418,21 +418,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dead testing</strong> — continuity of protective conductors, ring final
                 circuit continuity, and insulation resistance (minimum 1 megohm at 500V DC).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Live testing</strong> — earth fault loop impedance (Ze and Zs), prospective
                 fault current, RCD operation times, and polarity.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Report completion</strong> — the inspector completes the EICR including
                 Schedules of Circuit Details and Test Results as required by Chapter 65 of BS 7671,
@@ -452,21 +452,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Private rented property</strong> — at least every 5 years (legal requirement
                 under the 2020 Regulations).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Owner-occupied domestic</strong> — every 10 years recommended. Properties
                 over 25 years old should be inspected every 5 years.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HMO</strong> — every 5 years minimum. Brighton & Hove City Council may
                 specify a shorter interval as a condition of the HMO licence for properties with
@@ -474,7 +474,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Change of occupancy</strong> — a new EICR is required before a new tenant
                 moves into any privately rented property, even if the previous EICR has not expired.
@@ -497,7 +497,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person schemes</strong> — search the NICEIC, NAPIT, or ELECSA
                 registers for Brighton-based inspectors. Brighton & Hove City Council accepts
@@ -505,7 +505,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Qualifications</strong> — City & Guilds 2391 (Inspection and Testing) or the
                 2394/2395 combination, plus a current 18th Edition (C&G 2382) qualification.
@@ -514,7 +514,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insurance</strong> — the inspector should carry professional indemnity
                 insurance. Electricians registered with competent person schemes are required to
@@ -545,7 +545,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete EICRs on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -580,7 +580,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs faster with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -606,7 +606,7 @@ export default function EICRBrightonPage() {
       heroTitle={
         <>
           EICR Brighton:{' '}
-          <span className="text-yellow-400">Electrical Safety Certificate Cost 2026</span>
+          <span className="text-elec-yellow">Electrical Safety Certificate Cost 2026</span>
         </>
       }
       heroSubtitle="Everything you need to know about EICRs in Brighton — costs by property type, landlord legal requirements, council enforcement, Regency and Victorian housing findings, observation codes, and how to find a qualified inspector."
@@ -617,7 +617,7 @@ export default function EICRBrightonPage() {
       faqHeading="Frequently Asked Questions About EICRs in Brighton"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs on Your Phone — Faster Than Paper"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

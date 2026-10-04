@@ -154,14 +154,14 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Edinburgh irradiance:</strong> ~800–900 kWh/kWp/year. Lower than England but
                 sufficient for viable solar economics at current electricity prices.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Scottish regulations:</strong> Scottish Building Standards apply (not
                 England's Building Regulations). Scottish planning rules under the Town and Country
@@ -169,7 +169,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SEG and MCS:</strong> The Smart Export Guarantee and MCS certification
                 requirements are identical to England. There is no Scottish-specific scheme.
@@ -194,7 +194,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>South-facing optimum:</strong> A south-facing roof at 35 degrees in
                 Edinburgh achieves approximately 850–900 kWh/kWp/year. East or west-facing roofs
@@ -202,7 +202,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Seasonal profile:</strong> Edinburgh summers (May–August) are excellent for
                 solar. Long Scottish summer days (Edinburgh sees 17+ hours of daylight at midsummer)
@@ -211,7 +211,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tenement properties:</strong> Edinburgh's traditional sandstone tenements
                 present challenges — shared roofs, south-facing orientation not always available,
@@ -237,7 +237,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Permitted development in Scotland:</strong> Most domestic solar PV is
                 permitted development. Panels must not protrude more than 200mm above the roof
@@ -352,28 +352,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3kW system:</strong> Smaller properties with limited roof space. Output:
                 approximately 2,000–2,400 kWh/year in Edinburgh. Cost: £4,500–£6,500.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>4kW system:</strong> Most popular for suburban Edinburgh houses and
                 bungalows. Output: approximately 2,700–3,200 kWh/year. Cost: £5,500–£8,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>6kW system:</strong> Larger detached properties in suburban Edinburgh.
                 Output: approximately 4,000–4,800 kWh/year. Cost: £8,000–£12,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tenements:</strong> Technically possible where the building has a
                 south-facing roof section and all owners in the tenement agree. Stair associations
@@ -399,25 +399,25 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3kW:</strong> £4,500–£6,500 installed.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>4kW:</strong> £5,500–£8,000 installed.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>6kW:</strong> £8,000–£12,000 installed.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Battery storage:</strong> £2,500–£5,000 additional. 0% VAT when installed at
                 the same time as solar panels.
@@ -486,7 +486,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Verify at mcscertified.com:</strong> Check current MCS installer
                 certification. Scotland has fewer MCS-certified solar installers per capita than
@@ -494,7 +494,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCS certificate on completion:</strong> Required for SEG registration and
                 property documentation. Important in Edinburgh where property sales require
@@ -502,7 +502,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical Installation Certificate:</strong> Must be issued for the PV
                 wiring under BS 7671 Section 712, referenced by Scottish Building Standards Section
@@ -527,7 +527,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Summer generation:</strong> Edinburgh's long summer days (up to 17+ hours of
                 daylight) produce peak daily generation well above household consumption for several
@@ -536,7 +536,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Winter grid charging:</strong> In Edinburgh winters, solar generation is
                 low. A battery can be charged from the grid on cheap overnight tariffs (Economy 7,
@@ -544,7 +544,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cost:</strong> £2,500–£5,000 additional. 0% VAT when installed at the same
                 time as solar panels.
@@ -607,14 +607,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCS register:</strong> Search mcscertified.com for current Edinburgh and
                 central Scotland installers. Verify certificates are not lapsed.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Scottish planning expertise:</strong> Choose an installer familiar with
                 Edinburgh's World Heritage Site and conservation area planning requirements. Ask
@@ -623,7 +623,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Scottish Building Standards compliance:</strong> Confirm your installer is
                 familiar with the notification requirements to Edinburgh City Council's Building
@@ -631,7 +631,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Home Energy Scotland:</strong> The Home Energy Scotland advice service (0808
                 808 2282) can provide guidance on finding local MCS-certified installers and any
@@ -656,7 +656,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Issue Solar EICs On Site in Scotland</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -691,7 +691,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your solar PV business with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site solar certificates, instant quoting, and business management. 7-day free trial, cancel anytime."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site solar certificates, instant quoting, and business management. 7-day free trial, cancel anytime."
           icon={FileCheck2}
         />
       </>
@@ -717,7 +717,7 @@ export default function SolarPanelInstallationEdinburghPage() {
       heroTitle={
         <>
           Solar Panel Installation Edinburgh:{' '}
-          <span className="text-yellow-400">Scotland Guide 2025</span>
+          <span className="text-elec-yellow">Scotland Guide 2025</span>
         </>
       }
       heroSubtitle="Solar PV in Edinburgh comes with Scotland-specific planning and building standards requirements. Complete guide covering Scottish Building Standards, World Heritage Site planning rules, costs, Smart Export Guarantee, MCS certification, and realistic payback periods."
@@ -728,7 +728,7 @@ export default function SolarPanelInstallationEdinburghPage() {
       faqHeading="Frequently Asked Questions About Solar Panel Installation in Edinburgh"
       relatedPages={relatedPages}
       ctaHeading="Complete Solar PV Certificates On Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site solar EICs, quoting, and business management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site solar EICs, quoting, and business management. 7-day free trial, cancel anytime."
     />
   );
 }

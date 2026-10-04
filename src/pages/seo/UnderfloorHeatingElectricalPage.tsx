@@ -239,7 +239,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCB rating:</strong> Typically 16A for loads up to 3,680W or 20A for loads
                 up to 4,600W. The MCB rating must be selected based on the total heating load plus
@@ -247,7 +247,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit type:</strong> Radial circuit — not a ring circuit. The cable runs
                 from the consumer unit to the thermostat location, where the heating element is
@@ -255,7 +255,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable route:</strong> The supply cable runs from the MCB/RCBO in the
                 consumer unit to the thermostat back box. The heating cable cold tails are connected
@@ -263,7 +263,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Continuous load rating:</strong> Because UFH operates continuously for
                 extended periods, the cable must be sized for 100% of the design load with no
@@ -304,7 +304,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Back box:</strong> The thermostat requires a standard single-gang back box
                 (minimum 35mm deep for most models). The back box must accommodate the supply cable,
@@ -313,7 +313,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Supply connection:</strong> Live, neutral, and earth from the dedicated
                 radial circuit connect to the supply terminals on the thermostat. The neutral is
@@ -321,7 +321,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Load connection:</strong> The heating cable cold tails (live and neutral)
                 connect to the load terminals. The earth screen of the heating cable connects to the
@@ -329,7 +329,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Floor sensor:</strong> The floor sensor probe (thermistor) is embedded in
                 the floor between two runs of heating cable, inside a conduit for future
@@ -439,7 +439,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Design current (Ib):</strong> Calculate from the total heating load. For
                 example, a 2,400W system: Ib = 2,400 / 230 = 10.4A. Use the full load — no diversity
@@ -447,7 +447,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Correction factors:</strong> Apply Ca (ambient temperature), Cg (grouping),
                 and Ci (thermal insulation) as applicable. If the cable runs through insulated walls
@@ -456,7 +456,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Voltage drop:</strong> Maximum 5% from the origin to the load (11.5V at
                 230V). Calculate using the mV/A/m values from the cable tables. For a 20m run at
@@ -465,7 +465,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Typical sizes:</strong> 2.5mm2 T&E for loads up to about 2,400W on short
                 runs (under 20m). 4mm2 T&E for loads up to 3,600W or longer runs. 6mm2 for very
@@ -497,7 +497,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test 1 — Before installation:</strong> Test the heating cable out of the
                 box, before unrolling. Measure insulation resistance between each core and the earth
@@ -506,7 +506,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test 2 — After laying, before covering:</strong> With the cable laid on the
                 floor and fixed in position, repeat both tests. This confirms no damage occurred
@@ -515,7 +515,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test 3 — After covering:</strong> Once the screed or adhesive has been
                 applied, test again as part of the final circuit{' '}
@@ -550,7 +550,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -617,7 +617,7 @@ export default function UnderfloorHeatingElectricalPage() {
       heroTitle={
         <>
           Underfloor Heating Electrical:{' '}
-          <span className="text-yellow-400">Wiring, Circuits, and Compliance</span>
+          <span className="text-elec-yellow">Wiring, Circuits, and Compliance</span>
         </>
       }
       heroSubtitle="Electric underfloor heating requires a dedicated radial circuit, correct cable sizing, RCD protection, and proper thermostat wiring. This guide covers everything electricians need to know — from cable vs mat systems to insulation resistance testing and EIC certification."
@@ -633,7 +633,7 @@ export default function UnderfloorHeatingElectricalPage() {
       faqHeading="Frequently Asked Questions About Underfloor Heating Electrical"
       relatedPages={relatedPages}
       ctaHeading="Size UFH Circuits and Certify on Your Phone"
-      ctaSubheading="Cable sizing calculators, EIC certificates, quoting, and invoicing — all in one app. Join 1,600+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
+      ctaSubheading="Cable sizing calculators, EIC certificates, quoting, and invoicing — all in one app. Join 2,100+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
     />
   );
 }

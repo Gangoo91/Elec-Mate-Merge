@@ -45,7 +45,7 @@ export default function PricingStrategyElectricianPage() {
       heroTitle={
         <>
           Pricing Strategy
-          <span className="block text-yellow-400 mt-1">For Electricians Who Want to Profit</span>
+          <span className="block text-elec-yellow mt-1">For Electricians Who Want to Profit</span>
         </>
       }
       heroSubtitle="The difference between a struggling electrician and a thriving one often comes down to pricing. Not how hard you work — but how smartly you price. This guide covers fixed price, day rate, and hourly pricing models, when to use each, and the psychology behind quotes that win profitable work."
@@ -101,7 +101,7 @@ export default function PricingStrategyElectricianPage() {
           content: (
             <>
               <p>
-                <strong className="text-yellow-400">Fixed price</strong> means giving the client a
+                <strong className="text-elec-yellow">Fixed price</strong> means giving the client a
                 single, all-inclusive price for the job before you start. The client knows exactly
                 what they will pay, and you take on the risk that the job might take longer or cost
                 more than estimated. The upside is that if you complete the job efficiently, you
@@ -116,7 +116,7 @@ export default function PricingStrategyElectricianPage() {
                 reasonable accuracy based on past experience.
               </p>
               <p>
-                <strong className="text-yellow-400">How to build a fixed price:</strong> Calculate
+                <strong className="text-elec-yellow">How to build a fixed price:</strong> Calculate
                 your material costs (including 5% to 10% wastage), estimate labour hours (be honest,
                 include travel, testing, and certification time), multiply labour hours by your
                 fully-loaded rate (labour + overheads), add your profit margin (typically 20% to
@@ -127,7 +127,7 @@ export default function PricingStrategyElectricianPage() {
                 helps you build quotes using this exact structure.
               </p>
               <p>
-                <strong className="text-yellow-400">The risk with fixed pricing:</strong> If you
+                <strong className="text-elec-yellow">The risk with fixed pricing:</strong> If you
                 underestimate the time or hit unexpected problems (asbestos, hidden wiring, access
                 issues), you absorb the extra cost. This is why a thorough site survey is essential
                 before quoting fixed price, and why your quote should clearly state what is included
@@ -148,7 +148,7 @@ export default function PricingStrategyElectricianPage() {
           content: (
             <>
               <p>
-                <strong className="text-yellow-400">Day rate</strong> pricing charges the client a
+                <strong className="text-elec-yellow">Day rate</strong> pricing charges the client a
                 fixed amount per day (typically 8 hours on site). The total cost depends on how many
                 days the job takes. The client takes on the risk that the job might take longer than
                 expected, while you have the certainty of earning your rate for every day worked.
@@ -161,7 +161,7 @@ export default function PricingStrategyElectricianPage() {
                 your programme depends on other trades.
               </p>
               <p>
-                <strong className="text-yellow-400">Current UK day rates (2025):</strong> The
+                <strong className="text-elec-yellow">Current UK day rates (2025):</strong> The
                 average electrician day rate in the UK is approximately £250 to £320 for domestic
                 work and £280 to £400 for commercial work. London and the South East command higher
                 rates (£320 to £450). Specialist work (data centres, hospital, hazardous areas) can
@@ -169,7 +169,7 @@ export default function PricingStrategyElectricianPage() {
                 profit, not just what others charge.
               </p>
               <p>
-                <strong className="text-yellow-400">Calculating your day rate:</strong> Start with
+                <strong className="text-elec-yellow">Calculating your day rate:</strong> Start with
                 your desired annual income (say £50,000). Add your annual business overheads (say
                 £15,000). Divide by your annual billable days (typically 220 to 230 after holidays,
                 training, and admin). That gives you £283 per day as a minimum — before profit. Add
@@ -194,7 +194,7 @@ export default function PricingStrategyElectricianPage() {
           content: (
             <>
               <p>
-                <strong className="text-yellow-400">Hourly rate</strong> pricing charges the client
+                <strong className="text-elec-yellow">Hourly rate</strong> pricing charges the client
                 for every hour worked. It is the most transparent model for the client (they can see
                 exactly what they are paying for) but the most risky for you, because clients tend
                 to watch the clock and question every hour.
@@ -206,7 +206,7 @@ export default function PricingStrategyElectricianPage() {
                 estimate duration in advance.
               </p>
               <p>
-                <strong className="text-yellow-400">Setting your hourly rate:</strong> Your hourly
+                <strong className="text-elec-yellow">Setting your hourly rate:</strong> Your hourly
                 rate must cover your labour, a share of your overheads, and profit. Calculate it the
                 same way as the day rate but divide by 8 (or 7.5 if that is your standard day). From
                 the example above, the minimum is approximately £35 per hour — but most electricians
@@ -215,7 +215,7 @@ export default function PricingStrategyElectricianPage() {
                 reduce your billable hours to approximately 6 per day on average.
               </p>
               <p>
-                <strong className="text-yellow-400">Minimum call-out charge:</strong> Always set a
+                <strong className="text-elec-yellow">Minimum call-out charge:</strong> Always set a
                 minimum call-out charge (typically equivalent to 1 to 2 hours) to cover travel time
                 and the opportunity cost of accepting a small job. Without this, a 30-minute job
                 that takes an hour of travel costs you money.
@@ -234,13 +234,13 @@ export default function PricingStrategyElectricianPage() {
                 way that helps clients make confident decisions.
               </p>
               <p>
-                <strong className="text-yellow-400">Anchor with value, not cost:</strong> When
+                <strong className="text-elec-yellow">Anchor with value, not cost:</strong> When
                 presenting a quote, lead with what the client gets — compliance with BS 7671, a safe
                 installation, a 6-year EICR certificate, peace of mind — before showing the price. A
                 client who understands the value is less likely to focus solely on the number.
               </p>
               <p>
-                <strong className="text-yellow-400">Offer options:</strong> Instead of a single
+                <strong className="text-elec-yellow">Offer options:</strong> Instead of a single
                 price, offer two or three options. For example, a consumer unit upgrade could be
                 quoted as: Option A — like-for-like board replacement (£850), Option B — board
                 upgrade with SPD protection (£1,100), Option C — full upgrade with whole-house surge
@@ -248,14 +248,14 @@ export default function PricingStrategyElectricianPage() {
                 and you earn more than with a single quote.
               </p>
               <p>
-                <strong className="text-yellow-400">Professional presentation matters:</strong> A
+                <strong className="text-elec-yellow">Professional presentation matters:</strong> A
                 branded PDF quote with your logo, clear scope of work, terms and conditions, and
                 professional layout signals that you are a serious business. Clients trust
                 professional quotes more than handwritten estimates or text messages. Elec-Mate
                 generates professional quotes automatically from your job details.
               </p>
               <p>
-                <strong className="text-yellow-400">Speed wins:</strong> The first electrician to
+                <strong className="text-elec-yellow">Speed wins:</strong> The first electrician to
                 send a professional quote often wins the job, even if they are not the cheapest.
                 Clients interpret a fast response as professionalism and reliability. Elec-Mate lets
                 you build and send quotes from your phone while still on the site survey.
@@ -269,14 +269,14 @@ export default function PricingStrategyElectricianPage() {
           content: (
             <>
               <p>
-                <strong className="text-yellow-400">Be specific about scope:</strong> Vague quotes
+                <strong className="text-elec-yellow">Be specific about scope:</strong> Vague quotes
                 lead to disputes. State exactly what is included (number of circuits, positions of
                 accessories, cable routes, testing and certification) and what is excluded (making
                 good, decoration, builders work, disposal). This protects you from scope creep and
                 gives the client confidence in what they are paying for.
               </p>
               <p>
-                <strong className="text-yellow-400">Include your certification body logo:</strong>{' '}
+                <strong className="text-elec-yellow">Include your certification body logo:</strong>{' '}
                 If you are NICEIC, NAPIT, or ELECSA registered, include the logo on your quote. It
                 signals competence and compliance, and many clients specifically look for registered
                 electricians. Use the{' '}
@@ -284,7 +284,7 @@ export default function PricingStrategyElectricianPage() {
                 features in Elec-Mate to add these automatically.
               </p>
               <p>
-                <strong className="text-yellow-400">Set clear payment terms:</strong> State when
+                <strong className="text-elec-yellow">Set clear payment terms:</strong> State when
                 payment is due (on completion, 7 days, 14 days), whether you require a deposit, and
                 what payment methods you accept. Offering card payment via Stripe significantly
                 reduces the time to get paid. The{' '}
@@ -292,13 +292,13 @@ export default function PricingStrategyElectricianPage() {
                 tracks payment timelines automatically.
               </p>
               <p>
-                <strong className="text-yellow-400">Quote validity period:</strong> Always include a
+                <strong className="text-elec-yellow">Quote validity period:</strong> Always include a
                 validity period (14 to 30 days is standard). This protects you from material price
                 increases and prevents clients from accepting a months-old quote when your costs
                 have changed. Elec-Mate timestamps every quote and flags expired ones.
               </p>
               <p>
-                <strong className="text-yellow-400">Follow up:</strong> If you have not heard back
+                <strong className="text-elec-yellow">Follow up:</strong> If you have not heard back
                 within a week, follow up with a polite message. Many electricians lose work simply
                 because they never chased the quote. Elec-Mate can send automatic follow-up
                 reminders so you never forget.
@@ -434,7 +434,7 @@ export default function PricingStrategyElectricianPage() {
         },
       ]}
       ctaHeading="Price Every Job for Profit"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to quote accurately, track profitability, and build a business that pays what you deserve. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to quote accurately, track profitability, and build a business that pays what you deserve. 7-day free trial, cancel anytime."
       extraSchemas={[
         {
           '@type': 'SoftwareApplication',

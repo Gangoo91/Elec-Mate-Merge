@@ -204,7 +204,7 @@ const sections = [
         </p>
         <div className="space-y-3 my-4">
           <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <ChevronsUp className="w-8 h-8 text-yellow-400 shrink-0 mt-1" />
+            <ChevronsUp className="w-8 h-8 text-elec-yellow shrink-0 mt-1" />
             <div>
               <h3 className="font-bold text-white text-lg mb-1">Category 3a — Scissor Lifts</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -301,7 +301,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckSquare className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckSquare className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Visual inspection.</strong> Walk around the machine looking for damage,
                 leaks (hydraulic fluid, fuel), flat or damaged tyres, missing or broken guardrails,
@@ -309,7 +309,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckSquare className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckSquare className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Function test.</strong> Start the machine and test all controls from the
                 ground controls first, then from the platform controls. Raise, lower, slew, and
@@ -318,7 +318,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckSquare className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckSquare className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ground assessment.</strong> Check the ground where the machine will operate
                 is firm, level, and capable of supporting the load. Look for voids, trenches, soft
@@ -326,7 +326,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckSquare className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckSquare className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Overhead hazards.</strong> Identify overhead power lines, structural
                 steelwork, beams, pipes, and any other obstructions that could cause entrapment.
@@ -334,7 +334,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckSquare className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckSquare className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Documentation.</strong> Check the machine has a valid thorough examination
                 certificate (LOLER), the IPAF machine familiarisation sticker, and the operator
@@ -404,7 +404,7 @@ const sections = [
         </p>
         <div className="space-y-3 my-4">
           <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <ShieldCheck className="w-6 h-6 text-yellow-400 shrink-0 mt-1" />
+            <ShieldCheck className="w-6 h-6 text-elec-yellow shrink-0 mt-1" />
             <div>
               <h3 className="font-bold text-white text-lg mb-1">Work at Height Regulations 2005</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -416,7 +416,7 @@ const sections = [
             </div>
           </div>
           <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <ShieldCheck className="w-6 h-6 text-yellow-400 shrink-0 mt-1" />
+            <ShieldCheck className="w-6 h-6 text-elec-yellow shrink-0 mt-1" />
             <div>
               <h3 className="font-bold text-white text-lg mb-1">LOLER 1998</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -428,7 +428,7 @@ const sections = [
             </div>
           </div>
           <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <ShieldCheck className="w-6 h-6 text-yellow-400 shrink-0 mt-1" />
+            <ShieldCheck className="w-6 h-6 text-elec-yellow shrink-0 mt-1" />
             <div>
               <h3 className="font-bold text-white text-lg mb-1">PUWER 1998</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -551,7 +551,7 @@ export default function MEWPCoursePage() {
       badgeIcon={ChevronsUp}
       heroTitle={
         <>
-          MEWP Course: <span className="text-yellow-400">Mobile Elevated Work Platforms</span>
+          MEWP Course: <span className="text-elec-yellow">Mobile Elevated Work Platforms</span>
         </>
       }
       heroSubtitle="Master scissor lift and cherry picker operation with MEWP training for electricians. IPAF categories, pre-use checks, safe operating procedures, rescue plans, and regulatory compliance. 6 modules with video content, quizzes, and AI tutor."
@@ -569,7 +569,7 @@ export default function MEWPCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Prepare for your IPAF assessment with confidence"
-      ctaSubheading="Join 1,600+ UK electricians studying smarter with Elec-Mate. MEWP theory modules, interactive quizzes, pre-use checklists, and an AI tutor for any powered access question. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians studying smarter with Elec-Mate. MEWP theory modules, interactive quizzes, pre-use checklists, and an AI tutor for any powered access question. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/mewp-course"
     />

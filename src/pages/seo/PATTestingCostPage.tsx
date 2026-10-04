@@ -157,7 +157,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1 to 20 appliances</strong> — £80 to £120 total (including call-out).
                 Effectively £4 to £6 per appliance. Suitable for small offices, home-based
@@ -165,28 +165,28 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>20 to 50 appliances</strong> — £80 to £150 total. Per-appliance cost: £2 to
                 £3. Typical for medium offices, salons, and small workshops.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>50 to 100 appliances</strong> — £120 to £200 total. Per-appliance cost:
                 £1.50 to £2. Typical for larger offices, schools, and retail premises.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>100 to 500 appliances</strong> — £1 to £1.50 per appliance. Large offices,
                 warehouses, and multi-site contracts.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>500+ appliances</strong> — £0.80 to £1.20 per appliance. Large commercial
                 contracts, hospitals, universities, and factory environments.
@@ -254,25 +254,25 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Visual Inspection</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Cable and plug condition — checking for damage, cuts, kinks, or exposed conductors
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Plug wiring — correct connections, appropriate fuse rating, cable grip secure
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Appliance condition — casing damage, ventilation blocked, signs of overheating
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Suitability for the environment — appropriate IP rating for wet or dusty conditions
               </span>
@@ -283,7 +283,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Electrical Tests</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth continuity</strong> (Class I only) — verifies a low-resistance path
                 from the earth pin of the plug to all exposed metalwork. Pass: typically below 0.1
@@ -291,7 +291,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insulation resistance</strong> — measures the resistance of the insulation
                 between live conductors and earth (Class I) or between live conductors and
@@ -299,7 +299,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Functional check</strong> — the appliance is switched on and checked for
                 correct operation, unusual noises, overheating, or other signs of fault.
@@ -318,7 +318,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Employers</strong> — the Electricity at Work Regulations 1989 require
                 employers to maintain all electrical equipment used by employees in a safe
@@ -326,7 +326,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Landlords</strong> — any electrical appliances supplied with a rental
                 property (washing machine, cooker, kettle) should be PAT tested to demonstrate duty
@@ -334,28 +334,28 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Schools and colleges</strong> — all portable electrical equipment should be
                 tested regularly, typically annually.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hospitality and retail</strong> — hotels, restaurants, shops, and pubs need
                 PAT testing for insurance compliance and health and safety obligations.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Construction sites</strong> — portable tools and equipment on construction
                 sites require testing every 3 months due to the harsh environment.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Churches, village halls, and community venues</strong> — any organisation
                 that allows public use of electrical equipment should have PAT testing in place.
@@ -379,7 +379,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electricity at Work Regulations 1989</strong> — Regulation 4 requires that
                 all electrical systems are maintained to prevent danger. This includes portable
@@ -387,7 +387,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Health and Safety at Work Act 1974</strong> — Section 2 places a general
                 duty on employers to ensure, so far as is reasonably practicable, the health,
@@ -395,7 +395,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Provision and Use of Work Equipment Regulations 1998 (PUWER)</strong> —
                 Regulation 5 requires that work equipment is maintained in an efficient state, in
@@ -403,7 +403,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IET Code of Practice (5th Edition, 2020)</strong> — not legislation, but the
                 industry-standard guide for in-service testing of portable equipment. It provides
@@ -428,35 +428,35 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Construction sites</strong> — visual check weekly, combined inspection and
                 test every 3 months.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Industrial and commercial kitchens</strong> — combined inspection and test
                 every 12 months.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hotels, schools, hospitals</strong> — combined inspection and test every 12
                 months for portable equipment.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Offices</strong> — IT equipment every 4 to 5 years; portable equipment
                 (kettles, heaters) every 2 to 3 years.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rental properties</strong> — at each change of tenancy and otherwise every
                 12 to 24 months for supplied appliances.
@@ -480,7 +480,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Equipment Investment</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -536,7 +536,7 @@ export default function PATTestingCostPage() {
       badgeIcon={PoundSterling}
       heroTitle={
         <>
-          PAT Testing Cost: <span className="text-yellow-400">UK Price Guide 2026</span>
+          PAT Testing Cost: <span className="text-elec-yellow">UK Price Guide 2026</span>
         </>
       }
       heroSubtitle="How much does PAT testing cost? From small offices to large commercial premises, this guide covers realistic 2026 pricing, legal requirements, testing frequency, and what every PAT test involves — whether you are a business owner needing testing or an electrician offering it as a service."
@@ -547,7 +547,7 @@ export default function PATTestingCostPage() {
       faqHeading="Frequently Asked Questions About PAT Testing Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote PAT Testing Jobs Professionally"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for professional quoting, job tracking, and client management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for professional quoting, job tracking, and client management. 7-day free trial, cancel anytime."
     />
   );
 }

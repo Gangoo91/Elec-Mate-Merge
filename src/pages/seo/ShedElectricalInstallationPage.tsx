@@ -188,7 +188,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part P notification</strong> — shed electrical installations are notifiable
                 work. The electrician must be registered with a competent person scheme (NICEIC,
@@ -197,7 +197,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Site survey</strong> — assess the cable route from house to shed. Identify
                 any obstacles (patios, paths, tree roots, drainage runs) and measure the distance.
@@ -205,7 +205,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Load assessment</strong> — determine what the customer wants in the shed
                 (lights, sockets, heating, power tools, EV charger). This drives the cable size,
@@ -213,7 +213,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing assessment</strong> — check the supply type (TN-C-S, TN-S, TT) and
                 decide whether to extend the existing earth or install a local earth rod at the
@@ -281,7 +281,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Burial depth</strong> — minimum 500mm in a garden, 450mm under a hard
                 surface (patio, path). Lay the cable on a 50mm sand bed with 50mm of sand cover
@@ -289,14 +289,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Warning tape</strong> — yellow/black underground cable warning tape must be
                 laid approximately 150mm above the cable to warn anyone digging in the future.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wall entries</strong> — the cable must pass through the house wall and shed
                 wall using SWA glands. Seal both entries to prevent water ingress. Use ducting
@@ -304,7 +304,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable sizing</strong> — size for the load, accounting for voltage drop (max
                 5% from origin to furthest point, though 3% is the practical target for sub-mains).
@@ -335,7 +335,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-4">
-            <AlertTriangle className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-1">Consumer Unit Enclosure</h4>
               <p className="text-white text-sm leading-relaxed">
@@ -370,7 +370,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lighting</strong> — LED battens or bulkhead fittings are practical for
                 sheds. For a workshop, aim for 300 to 500 lux at bench height. A 6W to 10W LED
@@ -380,7 +380,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Socket outlets</strong> — position sockets at bench height (approximately
                 1100mm) for workshop use, or at standard height (300mm to 450mm) for general use. A
@@ -390,7 +390,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated circuits</strong> — if the customer has specific high-power
                 equipment (welder, table saw, compressor), provide dedicated radial circuits from
@@ -464,37 +464,37 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Continuity of protective conductors (ring final circuits and radials)</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Continuity of ring final circuit conductors (if ring circuits are used)</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Insulation resistance (500V DC, minimum 1 megohm between L-N, L-E, and N-E)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Polarity at all termination points</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Earth electrode resistance (if a TT earth rod is installed at the shed)</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Earth fault loop impedance (Zs) on every circuit</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>RCD operation (30mA, trip time within 300ms at rated current, 40ms at 5x)</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Prospective fault current (PSCC) at the origin of the shed installation</span>
             </li>
           </ul>
@@ -568,28 +568,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Basic shed (up to 15m run)</strong> — 2 light points, 2 double sockets,
                 4-way RCBO board: £400 to £700.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard shed (15m to 25m run)</strong> — 3 light points, 4 double sockets,
                 external light, 6-way board: £700 to £1,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Workshop shed (25m+ run)</strong> — full lighting, 6+ double sockets,
                 dedicated power circuit, heating, earth rod: £1,000 to £1,200+.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Add-ons</strong> — earth rod installation: £80 to £150. Trench through patio
                 or hard landscaping: £150 to £400 for reinstatement. Consumer unit upgrade at house
@@ -615,7 +615,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Cable Sizing on the Survey</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -661,7 +661,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify shed electrics"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
           icon={Home}
         />
       </>
@@ -687,7 +687,7 @@ export default function ShedElectricalInstallationPage() {
       heroTitle={
         <>
           Shed Electrical Installation:{' '}
-          <span className="text-yellow-400">Complete Wiring Guide for UK Electricians</span>
+          <span className="text-elec-yellow">Complete Wiring Guide for UK Electricians</span>
         </>
       }
       heroSubtitle="Everything you need to know about running electricity to a garden shed — SWA cable selection, sub-panel design, lighting and socket layout, earthing options (PME vs earth rod), IP ratings, Part P notification, and realistic 2026 pricing."
@@ -698,7 +698,7 @@ export default function ShedElectricalInstallationPage() {
       faqHeading="Frequently Asked Questions About Shed Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Certify Shed Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for outbuilding installations. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for outbuilding installations. 7-day free trial, cancel anytime."
     />
   );
 }

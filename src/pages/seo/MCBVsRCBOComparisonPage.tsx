@@ -379,31 +379,31 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">Common Causes of Cumulative Leakage</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 LED downlighters with capacitive filters (1 to 3mA each — 10 downlighters = 10 to
                 30mA)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 IT equipment with EMC filters (computers, printers, routers — 1 to 5mA each)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 White goods with suppression capacitors (washing machines, dishwashers — 1 to 3mA
                 each)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Long cable runs with moisture ingress (garden circuits, outbuildings)</span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>EV chargers and heat pump inverters with DC leakage components</span>
             </li>
           </ul>
@@ -428,7 +428,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 411.3.3</strong> — additional protection by an RCD with a rated
                 residual operating current not exceeding 30mA shall be provided for socket outlets
@@ -437,7 +437,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 314.1</strong> — every installation shall be divided into
                 circuits as necessary to avoid danger and minimise inconvenience in the event of a
@@ -446,7 +446,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 531.3.3</strong> — where RCD protection is required, the type of
                 RCD must be selected according to the type of fault current expected. Type A is the
@@ -471,7 +471,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -503,7 +503,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify consumer unit upgrades"
-          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification. 7-day free trial."
           icon={ShieldCheck}
         />
       </>
@@ -528,7 +528,7 @@ export default function MCBVsRCBOComparisonPage() {
       badgeIcon={ShieldCheck}
       heroTitle={
         <>
-          MCB vs RCBO: <span className="text-yellow-400">When to Use Each</span>
+          MCB vs RCBO: <span className="text-elec-yellow">When to Use Each</span>
         </>
       }
       heroSubtitle="MCBs are cheaper but require a shared RCD for earth leakage protection. RCBOs cost more but give each circuit independent protection. This guide covers the cost difference, nuisance tripping, BS 7671 requirements, and the honest pros and cons of split-load vs RCBO boards."
@@ -539,7 +539,7 @@ export default function MCBVsRCBOComparisonPage() {
       faqHeading="Frequently Asked Questions About MCBs and RCBOs"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Consumer Unit Upgrades on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for professional quoting and on-site EIC certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for professional quoting and on-site EIC certification. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -165,7 +165,7 @@ const sections = [
         <div className="space-y-4 mt-6">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-center gap-2 mb-3">
-              <Zap className="w-5 h-5 text-yellow-400" />
+              <Zap className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Live Working</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -180,7 +180,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">High-Voltage Work</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -193,7 +193,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <Lock className="w-5 h-5 text-yellow-400" />
+              <Lock className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Confined Spaces</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -207,7 +207,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <Flame className="w-5 h-5 text-yellow-400" />
+              <Flame className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Hot Works</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -221,7 +221,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <HardHat className="w-5 h-5 text-yellow-400" />
+              <HardHat className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Working at Height</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -254,9 +254,9 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Electrical Permit to Work</strong> — Covers
+                <strong className="text-elec-yellow">Electrical Permit to Work</strong> — Covers
                 isolation, switching, testing, and work on electrical systems. Specifies the exact
                 circuit or equipment to be worked on, the isolation points, the method of proving
                 dead, and the lock-off arrangements. This is the core permit type for electricians
@@ -264,9 +264,9 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Hot Works Permit</strong> — Required for any
+                <strong className="text-elec-yellow">Hot Works Permit</strong> — Required for any
                 work that produces heat, sparks, or flame in areas where combustible materials are
                 present. For electricians, this includes soldering, brazing, heat-shrinking, and
                 using angle grinders. Specifies fire precautions, fire watch periods, and emergency
@@ -274,9 +274,9 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Confined Space Entry Permit</strong> — Required
+                <strong className="text-elec-yellow">Confined Space Entry Permit</strong> — Required
                 for entry into any substantially enclosed space where there is a foreseeable risk of
                 serious injury. Cable tunnels, transformer chambers, underground switch rooms, and
                 vertical risers may all qualify. Covers atmospheric monitoring, ventilation, rescue
@@ -284,9 +284,9 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Working at Height Permit</strong> — Required on
+                <strong className="text-elec-yellow">Working at Height Permit</strong> — Required on
                 some sites for any work above ground level using access equipment. Specifies the
                 type of access (ladder, tower scaffold, MEWP), maximum height, and fall protection
                 measures. Particularly relevant for electricians working on lighting installations,
@@ -294,9 +294,9 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Excavation Permit</strong> — Required if
+                <strong className="text-elec-yellow">Excavation Permit</strong> — Required if
                 electrical work involves excavation near underground cables or services. Covers
                 cable avoidance tool (CAT) scanning, hand-digging proximity requirements, and the
                 identification and protection of existing underground services.
@@ -409,9 +409,9 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Key Legislation</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Electricity at Work Regulations 1989</strong> —
+                <strong className="text-elec-yellow">Electricity at Work Regulations 1989</strong> —
                 Regulation 12 requires suitable means of isolation. Regulation 13 requires adequate
                 precautions to prevent re-energisation. Regulation 14 controls live working and
                 requires written justification, specific precautions, and competent personnel. A
@@ -420,9 +420,9 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">
+                <strong className="text-elec-yellow">
                   Management of Health and Safety at Work Regulations 1999
                 </strong>{' '}
                 — Regulation 3 requires suitable and sufficient risk assessments. Where the risk
@@ -432,9 +432,9 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">CDM Regulations 2015</strong> — Regulation 15
+                <strong className="text-elec-yellow">CDM Regulations 2015</strong> — Regulation 15
                 requires contractors to plan, manage, and monitor construction work to ensure it is
                 carried out safely. On managed construction sites, the principal contractor's safety
                 management system typically includes a permit-to-work requirement for all high-risk
@@ -442,9 +442,9 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Health and Safety at Work etc. Act 1974</strong>
+                <strong className="text-elec-yellow">Health and Safety at Work etc. Act 1974</strong>
                 — Sections 2 and 3 impose general duties on employers to ensure, so far as is
                 reasonably practicable, the health, safety, and welfare of employees and others. A
                 permit-to-work system is a recognised means of discharging these duties for
@@ -522,35 +522,35 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">Essential PTW Template Sections</h3>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>Permit reference number and date of issue</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>Description of the work to be carried out (specific, not vague)</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>Exact location of the work (building, floor, room, equipment ID)</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>Duration of the permit (start time, expiry time)</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>Hazards identified and risk rating</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>Safety precautions required (isolation, lock-off, barriers, PPE)</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>Emergency procedures and contact details</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>Signatures: permit issuer, permit holder, and close-out/cancellation</span>
             </li>
           </ul>
@@ -735,7 +735,7 @@ export default function PermitToWorkPage() {
       heroTitle={
         <>
           Permit to Work for Electricians:{' '}
-          <span className="text-yellow-400">Complete Safety Guide</span>
+          <span className="text-elec-yellow">Complete Safety Guide</span>
         </>
       }
       heroSubtitle="The complete guide to permit-to-work systems for electrical work in the UK. When a PTW is required, types of permits, the permit process from request to close-out, safe isolation integration, legal requirements under the Electricity at Work Regulations 1989, and common mistakes that compromise safety."
@@ -748,7 +748,7 @@ export default function PermitToWorkPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Generate PTW templates and RAMS with AI"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI-powered RAMS generation, safe isolation checklists, and professional safety documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for AI-powered RAMS generation, safe isolation checklists, and professional safety documentation. 7-day free trial, cancel anytime."
     />
   );
 }

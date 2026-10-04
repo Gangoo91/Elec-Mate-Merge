@@ -3,6 +3,7 @@ import { Search } from 'lucide-react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import { ACCESSORY_CATEGORIES, type AccessoryType } from '@/data/siteVisit/accessoryTypes';
+import { autoCompleteOff } from '@/lib/textEntry';
 
 interface ItemTypePickerSheetProps {
   open: boolean;
@@ -72,7 +73,7 @@ export const ItemTypePickerSheet = ({
               placeholder="Search — try “led” or “socket”"
               className="h-11 touch-manipulation rounded-xl border-white/[0.1] bg-white/[0.05] pl-9 text-base text-white placeholder:text-white/25 focus:border-elec-yellow focus:ring-elec-yellow/20"
               autoCapitalize="off"
-              autoComplete="off"
+              autoComplete={autoCompleteOff}
               autoCorrect="off"
               enterKeyHint="search"
             />

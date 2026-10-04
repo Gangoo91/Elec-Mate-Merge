@@ -190,17 +190,17 @@ const sections = [
             <div className="col-span-6 px-4 py-3 border-l border-white/10">
               Not exceeding 50V AC or 120V ripple-free DC
             </div>
-            <div className="col-span-3 px-4 py-3 border-l border-white/10 text-white/80">
+            <div className="col-span-3 px-4 py-3 border-l border-white/10 text-white">
               SELV/PELV, signalling
             </div>
           </div>
-          <div className="grid grid-cols-12 text-xs sm:text-sm text-white bg-yellow-900/30 border-b border-yellow-700/40">
+          <div className="grid grid-cols-12 text-xs sm:text-sm text-white bg-white/[0.06] border-b border-yellow-700/40">
             <div className="col-span-3 px-4 py-3 font-semibold">Low (LV)</div>
             <div className="col-span-6 px-4 py-3 border-l border-white/10">
               Exceeding ELV but not exceeding 1000V AC or 1500V DC between conductors (600V AC /
               900V DC to earth)
             </div>
-            <div className="col-span-3 px-4 py-3 border-l border-white/10 text-white/80">
+            <div className="col-span-3 px-4 py-3 border-l border-white/10 text-white">
               230V / 400V — governed by BS 7671
             </div>
           </div>
@@ -209,7 +209,7 @@ const sections = [
             <div className="col-span-6 px-4 py-3 border-l border-white/10">
               Normally exceeding low voltage (above 1kV AC / 1.5kV DC)
             </div>
-            <div className="col-span-3 px-4 py-3 border-l border-white/10 text-white/80">
+            <div className="col-span-3 px-4 py-3 border-l border-white/10 text-white">
               11/33/66/132kV; beyond BS 7671 scope
             </div>
           </div>
@@ -223,21 +223,21 @@ const sections = [
         </p>
         <div className="grid gap-3 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
-            <div className="font-bold text-yellow-400 text-lg">11kV</div>
+            <div className="font-bold text-elec-yellow text-lg">11kV</div>
             <p className="text-white text-sm mt-1">
               Primary distribution. Feeds large industrial/commercial sites and local
               transformers stepping down to 400V/230V.
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
-            <div className="font-bold text-yellow-400 text-lg">33kV</div>
+            <div className="font-bold text-elec-yellow text-lg">33kV</div>
             <p className="text-white text-sm mt-1">
               Sub-transmission. Connects primary substations and larger embedded generation (solar
               and wind farms).
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
-            <div className="font-bold text-yellow-400 text-lg">66 / 132kV</div>
+            <div className="font-bold text-elec-yellow text-lg">66 / 132kV</div>
             <p className="text-white text-sm mt-1">
               Bulk distribution / lower sub-transmission feeding grid supply points and major
               industrial loads.
@@ -310,7 +310,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ENA G74</strong> — Protection of HV electrical plant and associated HV
                 consumer installations. Covers protection relay settings, time-grading, and
@@ -320,7 +320,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ENA G82</strong> — Requirements for the Connection of Generation to
                 Distribution Systems. Governs embedded generation (solar farms, wind farms, CHP)
@@ -329,7 +329,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ENA G99</strong> — Requirements for Generators connecting at LV and up to
                 HV. Sets out the technical requirements for generation connecting to the
@@ -391,7 +391,7 @@ const sections = [
           <h3 className="font-bold text-white text-base mb-3">What Section 442 Requires</h3>
           <ul className="space-y-3 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reg 442.2.1 — Power frequency fault voltage:</strong> The fault voltage Uf
                 (appearing in the LV installation between exposed-conductive-parts and Earth during
@@ -401,7 +401,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reg 442.2.2 — Magnitude and duration of stress voltages:</strong> The power
                 frequency stress voltages (U1 and U2) on LV equipment due to an HV earth fault shall
@@ -410,7 +410,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reg 442.2.3 — Requirements for calculation of limits:</strong> The
                 requirements of 442.2.1 and 442.2.2 are deemed to be fulfilled for installations
@@ -435,14 +435,14 @@ const sections = [
               Permissible stress voltage (U)
             </div>
             <div className="px-5 py-3 text-white border-b border-r border-white/10">
-              t &gt; 5 s <span className="text-white/60">(long disconnection — for example
+              t &gt; 5 s <span className="text-white">(long disconnection — for example
               isolated-neutral or resonant-earthed HV systems)</span>
             </div>
             <div className="px-5 py-3 text-white border-b border-white/10 font-mono">
               Up + 250 V
             </div>
             <div className="px-5 py-3 text-white border-r border-white/10">
-              t &lt; 5 s <span className="text-white/60">(short disconnection — for example the
+              t &lt; 5 s <span className="text-white">(short disconnection — for example the
               low-impedance earthed 11kV networks used by most UK DNOs)</span>
             </div>
             <div className="px-5 py-3 text-white font-mono">Up + 1,200 V</div>
@@ -491,7 +491,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DNO graduate and apprentice schemes</strong> — National Grid Electricity
                 Distribution, SP Energy Networks, UK Power Networks, and Electricity North West all
@@ -500,7 +500,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Independent HV training providers</strong> — PASS (Power Academy Support
                 Services), AEI Cables training division, and various specialist electrical training
@@ -509,7 +509,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Site-specific assessment</strong> — after completing generic HV safety
                 training, the candidate must be assessed on the specific system they will be
@@ -582,7 +582,7 @@ const sections = [
             <h3 className="font-bold text-white text-base">
               Indicative UK day-rate guide by authorisation level
             </h3>
-            <p className="text-white/60 text-xs mt-1">
+            <p className="text-white text-xs mt-1">
               Market guidance only — actual rates vary by sector, region and contract.
             </p>
           </div>
@@ -598,7 +598,7 @@ const sections = [
             <div className="col-span-3 px-4 py-3 border-l border-white/10 font-mono">
               £45–£60/hr
             </div>
-            <div className="col-span-4 px-4 py-3 border-l border-white/10 text-white/80">
+            <div className="col-span-4 px-4 py-3 border-l border-white/10 text-white">
               Industrial HV maintenance
             </div>
           </div>
@@ -609,7 +609,7 @@ const sections = [
             <div className="col-span-3 px-4 py-3 border-l border-white/10 font-mono">
               £60–£80/hr
             </div>
-            <div className="col-span-4 px-4 py-3 border-l border-white/10 text-white/80">
+            <div className="col-span-4 px-4 py-3 border-l border-white/10 text-white">
               DNO substation projects
             </div>
           </div>
@@ -620,7 +620,7 @@ const sections = [
             <div className="col-span-3 px-4 py-3 border-l border-white/10 font-mono">
               £75–£100+/hr
             </div>
-            <div className="col-span-4 px-4 py-3 border-l border-white/10 text-white/80">
+            <div className="col-span-4 px-4 py-3 border-l border-white/10 text-white">
               Offshore wind, nuclear
             </div>
           </div>
@@ -628,7 +628,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <BadgeCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BadgeCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minimum foundation:</strong> C&G 2365 (Electrical Installations), C&G 2382
                 (18th Edition), C&G 2391 (Inspection and Testing), 5+ years LV experience on large
@@ -636,14 +636,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BadgeCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BadgeCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HV training:</strong> Attend an HV Safety Rules course (1–2 weeks,
                 £1,500–£3,000). Seek CP appointment on your first HV site under AP supervision.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BadgeCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BadgeCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Target sectors:</strong> DNO substation construction, large industrial HV
                 maintenance, offshore wind O&amp;M, nuclear site HV.
@@ -674,7 +674,7 @@ export default function HighVoltageElectricalWorkPage() {
       heroTitle={
         <>
           High Voltage Electrical Work in the UK:{' '}
-          <span className="text-yellow-400">Authorisation, Standards, and Career Guide</span>
+          <span className="text-elec-yellow">Authorisation, Standards, and Career Guide</span>
         </>
       }
       heroSubtitle="HV work (above 1kV AC) requires formal authorisation, strict switching procedures, and deep knowledge of EWR Regulation 14. This guide covers everything from AP/CP/SAP roles to ENA G74, DNO connections, and HV career paths."

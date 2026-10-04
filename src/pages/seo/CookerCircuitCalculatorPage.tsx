@@ -43,7 +43,7 @@ export default function CookerCircuitCalculatorPage() {
       badgeIcon={Flame}
       heroTitle={
         <>
-          <span className="text-yellow-400">Cooker Circuit Calculator</span> — Diversity, Cable
+          <span className="text-elec-yellow">Cooker Circuit Calculator</span> — Diversity, Cable
           Size, and MCB Rating for Cooking Appliances
         </>
       }
@@ -111,23 +111,23 @@ export default function CookerCircuitCalculatorPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
                 <ul className="space-y-3 text-white text-sm">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">The first 10A</strong> of the appliance's
+                      <strong className="text-elec-yellow">The first 10A</strong> of the appliance's
                       rated current is taken in full
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Plus 30%</strong> of the remainder of the
+                      <strong className="text-elec-yellow">Plus 30%</strong> of the remainder of the
                       rated current
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Plus 5A</strong> if the cooker control
+                      <strong className="text-elec-yellow">Plus 5A</strong> if the cooker control
                       unit incorporates a socket outlet
                     </span>
                   </li>
@@ -174,21 +174,21 @@ export default function CookerCircuitCalculatorPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
                 <ol className="space-y-3 text-white text-sm list-decimal pl-5">
                   <li>
-                    <strong className="text-yellow-400">Full-load current:</strong> I = P / V =
+                    <strong className="text-elec-yellow">Full-load current:</strong> I = P / V =
                     14400 / 230 = <strong>62.6A</strong>
                   </li>
                   <li>
-                    <strong className="text-yellow-400">First 10A in full:</strong> 10A
+                    <strong className="text-elec-yellow">First 10A in full:</strong> 10A
                   </li>
                   <li>
-                    <strong className="text-yellow-400">30% of the remainder:</strong> 0.30 x (62.6
+                    <strong className="text-elec-yellow">30% of the remainder:</strong> 0.30 x (62.6
                     − 10) = 0.30 x 52.6 = <strong>15.8A</strong>
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Socket on the control unit:</strong> +5A
+                    <strong className="text-elec-yellow">Socket on the control unit:</strong> +5A
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Assessed current:</strong> 10 + 15.8 + 5 ={' '}
+                    <strong className="text-elec-yellow">Assessed current:</strong> 10 + 15.8 + 5 ={' '}
                     <strong>30.8A</strong>
                   </li>
                 </ol>
@@ -219,17 +219,17 @@ export default function CookerCircuitCalculatorPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
                 <ul className="space-y-2 text-white text-sm">
                   <li>
-                    <strong className="text-yellow-400">Assessed up to 32A</strong> (most domestic
+                    <strong className="text-elec-yellow">Assessed up to 32A</strong> (most domestic
                     cookers): 32A MCB or RCBO with 6mm² twin and earth as the typical choice —
                     confirm against the tabulated capacity for the installation method
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Assessed 32-40A</strong> (large range
+                    <strong className="text-elec-yellow">Assessed 32-40A</strong> (large range
                     cookers, or hob + oven combinations on one circuit): 40A device with 10mm² cable
                     as the typical pairing
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Long kitchen runs:</strong> check voltage
+                    <strong className="text-elec-yellow">Long kitchen runs:</strong> check voltage
                     drop against the 5% limit with the{' '}
                     <SEOInternalLink href="/tools/voltage-drop-calculator">
                       voltage drop calculator
@@ -471,7 +471,7 @@ export default function CookerCircuitCalculatorPage() {
         },
       ]}
       ctaHeading="Size cooker circuits with confidence"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for diversity, cable sizing, and certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for diversity, cable sizing, and certification. 7-day free trial, cancel anytime."
       toolPath="/tools/cooker-circuit-calculator"
     />
   );

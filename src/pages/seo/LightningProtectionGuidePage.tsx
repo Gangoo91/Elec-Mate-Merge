@@ -169,7 +169,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part 1: General principles</strong> — covers the physics of lightning,
                 damage mechanisms, and the scope of protection measures. Provides the foundation for
@@ -177,7 +177,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part 2: Risk management</strong> — the methodology for assessing lightning
                 risk and determining whether protection is needed. This is the starting point for
@@ -185,7 +185,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part 3: Physical damage and life hazard</strong> — the design and
                 installation of the structural lightning protection system: air termination, down
@@ -193,7 +193,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part 4: Electrical and electronic systems</strong> — protection of internal
                 electrical and electronic systems from the electromagnetic effects of lightning.
@@ -218,7 +218,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lightning flash density</strong> — the number of lightning flashes per
                 square kilometre per year at the building location. In the UK, this ranges from
@@ -226,7 +226,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Collection area</strong> — calculated from the building dimensions (length,
                 width, height). Taller buildings have a larger collection area and are more likely
@@ -234,7 +234,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consequence analysis</strong> — what happens if the building is struck? The
                 assessment considers loss of human life, loss of public service, loss of cultural
@@ -242,7 +242,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Protection level</strong> — if protection is required, the level (Class I to
                 IV) is determined by the risk reduction needed. Class I provides the highest level
@@ -276,7 +276,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type 1 SPDs</strong> — installed where the building has a lightning
                 protection system or is fed by an overhead supply line. These handle the highest
@@ -284,7 +284,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type 2 SPDs</strong> — the standard choice for most installations. They
                 protect against switching surges and indirect lightning effects. Installed at the
@@ -292,7 +292,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type 3 SPDs</strong> — fine protection for sensitive equipment. Installed
                 close to the equipment being protected (at the socket or within the equipment's
@@ -327,7 +327,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth rods</strong> — vertical copper or copper-clad steel rods driven into
                 the ground to a depth of 2.4m or more. Multiple rods may be needed to achieve the
@@ -335,7 +335,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ring earth electrode</strong> — a bare copper conductor (minimum 50mm
                 cross-section) buried at least 0.5m deep around the perimeter of the building. This
@@ -343,7 +343,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Foundation earth electrode</strong> — conductors embedded in the reinforced
                 concrete foundations during construction. This is the most effective earth
@@ -370,42 +370,42 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tall buildings</strong> — buildings over 20m are significantly more likely
                 to be struck and typically require protection.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Buildings with large footprints</strong> — warehouses, factories, and
                 distribution centres have a large collection area.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Buildings storing flammable or explosive materials</strong> — petrol
                 stations, chemical stores, munitions facilities.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Essential public services</strong> — hospitals, fire stations, data centres,
                 telecommunications facilities.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Buildings of cultural or historical significance</strong> — churches, listed
                 buildings, museums, galleries.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Isolated structures</strong> — buildings on hilltops or in exposed positions
                 with no surrounding structures of similar or greater height.
@@ -433,7 +433,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Visual inspection</strong> — check all visible components for physical
                 damage, corrosion, loose fixings, and broken conductors. Pay particular attention to
@@ -442,7 +442,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Continuity testing</strong> — test the continuity of all conductors and
                 bonds using a low-resistance ohmmeter. The resistance of each down conductor from
@@ -450,7 +450,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth resistance testing</strong> — measure the resistance of each earth
                 electrode using the fall-of-potential method or a clamp-on earth tester. The target
@@ -475,7 +475,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Zap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">SPD Installation</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -531,7 +531,7 @@ export default function LightningProtectionGuidePage() {
       heroTitle={
         <>
           Lightning Protection:{' '}
-          <span className="text-yellow-400">BS EN 62305, SPDs, and Earth Termination</span>
+          <span className="text-elec-yellow">BS EN 62305, SPDs, and Earth Termination</span>
         </>
       }
               embeddedTool={<CalculatorSurface><LightningProtectionCalculator /></CalculatorSurface>}
@@ -543,7 +543,7 @@ export default function LightningProtectionGuidePage() {
       faqHeading="Frequently Asked Questions About Lightning Protection"
       relatedPages={relatedPages}
       ctaHeading="Install SPDs and Certify on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EIC certificates, cable sizing, and regulation lookup. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for EIC certificates, cable sizing, and regulation lookup. 7-day free trial, cancel anytime."
     />
   );
 }

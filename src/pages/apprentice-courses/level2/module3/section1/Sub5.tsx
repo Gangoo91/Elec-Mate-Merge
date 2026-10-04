@@ -7,8 +7,9 @@
  * Frame: the IET Wiring Regulations. Not statutory but treated as such.
  * Goes deeper than Sub2's overview by walking the 8-Part structure, the
  * Part 2 definitions vocabulary, the deemed-to-comply doctrine, navigation
- * technique, and the A4:2026 headline changes (411.3.4, 514.16.1, 421.1.7,
- * 521.11.201, redrafted Section 443, redrafted 411.3.3).
+ * technique, and what A4:2026 actually changed — checked against the book's own
+ * 'Introduction to Amendment 4:2026'. 411.3.4 (2018) and 514.16.1 (A2:2022)
+ * are NOT A4 changes; an earlier version of this page said they were.
  */
 
 import { useNavigate } from 'react-router-dom';
@@ -70,16 +71,16 @@ const checks = [
   {
     id: 'mod3-s1-sub5-a4-changes',
     question:
-      'Which of the following is one of the headline new regulations introduced by BS 7671:2018+A4:2026?',
+      "Which of these was introduced by Amendment 4:2026, according to the book's own summary of changes?",
     options: [
-      'Regulation 701.512.3 — a new rule prohibiting any socket-outlet within 3 m of a bath or shower. This is genuinely new in A4:2026 and reverses the previous zone-based allowance for bathroom sockets.',
-      'Regulation 433.1.204 — a new rule abolishing the ring final circuit and requiring all new domestic socket circuits to be wired as 20 A radials. This is genuinely new in A4:2026 and changes how every domestic socket circuit is designed.',
-      'Regulation 543.1.1 — a new rule raising the minimum protective conductor size to 4 mm² in all domestic installations. This is genuinely new in A4:2026 and changes the CPC sizing on every circuit.',
-      'Regulation 411.3.4 — a 30 mA RCD on AC final circuits supplying luminaires in domestic premises. This is genuinely new in A4:2026 and changes the design pattern for all new domestic lighting circuits.',
+      'Regulation 411.3.4 — a 30 mA RCD on AC final circuits supplying luminaires in domestic (household) premises.',
+      'Regulation 514.16.1 — an information notice at or near the distribution board where SPDs are fitted.',
+      'Regulation 411.3.3 — a 30 mA RCD on socket-outlets rated up to 32 A.',
+      'Chapter 57 — requirements for stationary secondary batteries, such as home battery storage.',
     ],
     correctIndex: 3,
     explanation:
-      "411.3.4 requires additional protection by a 30 mA RCD for AC final circuits supplying luminaires within domestic (household) premises — one of the most consequential A4:2026 changes for domestic work. Combined with the redrafted 411.3.3 (RCD on socket-outlets up to 32 A) and the expanded AFDD scope under 421.1.7, A4:2026 substantially raises the protection floor on a typical domestic install. Knowing the new regs by number isn't the goal — knowing they EXIST and being able to find the verbatim wording in Part 4 is.",
+      "Chapter 57 (stationary secondary batteries) is new in A4:2026. The other three are often called 'new' but came earlier: 411.3.4 with the 2018 base edition, 411.3.3 in 2018 (redrafted in A2:2022) and 514.16.1 with A2:2022. The 'Introduction to Amendment 4:2026' at the front of the book lists the main changes.",
   },
 ];
 
@@ -172,16 +173,16 @@ const quizQuestions = [
   {
     id: 7,
     question:
-      'Where in BS 7671:2018+A4:2026 would you find the new requirement for a label indicating the presence of a Surge Protective Device (SPD)?',
+      'Where in BS 7671 would you find the requirement for a notice indicating the presence of a Surge Protective Device (SPD)?',
     options: [
       'Reg 712.1 — the scope of Section 712, which sets the SPD-presence label requirement because surge protection is most commonly fitted on PV installs. Located in Part 7 (special installations), Section 712 (solar PV).',
       'Reg 443.4 — the transient overvoltage protection rule, which carries the SPD label requirement because the label and the protection are part of the same provision. Located in Part 4 (protection for safety), Chapter 44.',
       'Reg 537.2 — the isolation and switching rules, which require the SPD label because the device has to be identified before isolation. Located in Part 5, Chapter 53 (switching).',
-      'Reg 514.16.1 — introduced by A4:2026, requiring a label to indicate the presence of SPDs (with a domestic exception). Located in Part 5, Chapter 51, Section 514 (identification and notices).',
+      'Reg 514.16.1 — introduced by A2:2022, requiring an information notice at or near the distribution board where SPDs are fitted (with a domestic exception). Part 5, Chapter 51, Section 514 (identification and notices).',
     ],
     correctAnswer: 3,
     explanation:
-      "Section 514 is the home of identification and notices in BS 7671. Reg 514.16.1 was a new addition under A4:2026 to require an SPD-presence label, with an exception for domestic / household premises. Knowing 'Section 514 = labels' rather than memorising the exact reg number is how working installers navigate — same for 'Section 522 = external influences', 'Section 526 = electrical connections', 'Section 543 = protective conductors'.",
+      "Section 514 is the home of identification and notices in BS 7671. Reg 514.16.1, added by A2:2022, requires an information notice at or near the distribution board where SPDs are fitted; in domestic premises it can be left off where the SPD is recorded on the certificate or report issued. Knowing 'Section 514 = notices' rather than memorising the exact reg number is how working installers navigate.",
   },
   {
     id: 8,
@@ -205,7 +206,7 @@ const faqs = [
   {
     question: 'Do I have to memorise BS 7671 reg numbers for the Level 2 exam?',
     answer:
-      "No. You do have to know the structure (eight Parts, what each Part contains), the Part 2 definitions discipline, and the headline regs (411.3.3 and 411.3.4 RCDs, 421.1.7 AFDDs, 514.16.1 SPD labels, 134.1.1 and 510.3 manufacturer's instructions). For everything else, knowing where to look is the working skill — open the Part / Chapter / Section that fits the topic and the regs are right there.",
+      "No. You do have to know the structure (eight Parts, what each Part contains), the Part 2 definitions discipline, and the headline regs (411.3.3 and 411.3.4 RCDs, 421.1.7 AFDDs, 514.16.1 SPD notices, 134.1.1 and 510.3 manufacturer's instructions). For everything else, knowing where to look is the working skill — open the Part / Chapter / Section that fits the topic and the regs are right there.",
   },
   {
     question:
@@ -231,7 +232,7 @@ const faqs = [
   {
     question: 'Where do I find the EIC / EICR / Minor Works model forms?',
     answer:
-      "Appendix 6 of BS 7671. A4:2026 substantially redrafted these forms to add new schedule columns and update the inspection items (e.g. AFDD presence, SPD labelling, RCD on luminaires, explicit recognition of PNB as a TN-C-S sub-arrangement on the inspection schedules). If you're using an old template that pre-dates A4:2026 you'll be missing required fields and your scheme inspector will flag it.",
+      'Appendix 6 of BS 7671. A4:2026 redrafted the notes for the person producing a condition report, rearranged items for clarity, and confirmed that an FI code no longer has to be marked unsatisfactory. Check your templates against the current Appendix 6 rather than one from an older amendment.',
   },
 ];
 
@@ -257,7 +258,7 @@ export default function Sub5() {
           points={[
             'BS 7671:2018+A4:2026 is the IET Wiring Regulations — non-statutory but the deemed-to-comply route to EAWR Reg 4. The structure is eight numbered Parts plus appendices.',
             "Part 2 (Definitions) is the legal vocabulary the standard runs on. 'Exposed-conductive-part' and 'extraneous-conductive-part' are different categories with different bonding rules — get the definitions right and most of the rest reads cleanly.",
-            'A4:2026 brought new headline regs — 411.3.4 (30 mA RCD on domestic luminaires), 514.16.1 (SPD label), expanded 421.1.7 (AFDDs), redrafted 411.3.3 (RCD on socket-outlets up to 32 A) and a redrafted Section 443 (transient overvoltage protection).',
+            'A4:2026 (issued April 2026) moved the cables-in-walls rules into Table 52.1, added Chapter 57 (battery storage), Section 545 (ICT functional earthing) and Chapter 81 (energy efficiency), and brought PNB into Reg 312.2.1.1. Rules like 411.3.4 (RCD on domestic lighting, 2018) and 514.16.1 (SPD notice, A2:2022) came earlier.',
           ]}
         />
 
@@ -268,7 +269,7 @@ export default function Sub5() {
             'Use the BS 7671 reg-numbering convention (Part / Chapter / Section / Reg) to navigate to a specific regulation without an index.',
             "Apply the Part 2 definitions discipline — 'exposed-conductive-part', 'extraneous-conductive-part', 'circuit', 'conductor' — when classifying installation features.",
             'Identify the headline appendices (Appendix 1 referenced standards, Appendix 4 current-carrying capacity, Appendix 6 model forms, Appendix 4 voltage drop) and what each one is for.',
-            'State the headline A4:2026 changes (Reg 411.3.4, Reg 514.16.1, expanded 421.1.7, redrafted 411.3.3, redrafted Section 443, model form updates) and where to find the verbatim text.',
+            'State the main A4:2026 changes (Table 52.1, Chapter 57, Section 545, Chapter 81, PNB) and tell them apart from earlier rules still described as new (411.3.4, 411.3.3, 514.16.1, 421.1.7).',
           ]}
           initialVisibleCount={3}
         />
@@ -333,9 +334,9 @@ export default function Sub5() {
             <li>
               <strong>Part 4 — Protection for safety.</strong> The most-used Part. Chapter 41 (shock
               protection), 42 (thermal effects), 43 (overcurrent), 44 (voltage disturbances and
-              electromagnetic), 46 (isolation and switching, expanded substantially under A4:2026).
-              Reg 411.3.3 (RCD on socket-outlets), Reg 411.3.4 (RCD on domestic luminaires) and Reg
-              421.1.7 (AFDDs) all live here.
+              electromagnetic) and 46 (isolation and switching). Reg 411.3.3 (RCD on
+              socket-outlets), Reg 411.3.4 (RCD on domestic luminaires) and Reg 421.1.7 (AFDDs) all
+              live here.
             </li>
             <li>
               <strong>Part 5 — Selection and erection of equipment.</strong> The other most-used
@@ -629,8 +630,8 @@ export default function Sub5() {
             </li>
             <li>
               <strong>Appendix 6</strong> — Model forms for certification and reporting. EIC, EICR,
-              Minor Works, schedule of test results, schedule of inspections. Substantially
-              redrafted under A4:2026 to add new schedule columns.
+              Minor Works, schedule of test results, schedule of inspections. The condition report
+              notes were redrafted under A4:2026.
             </li>
             <li>
               <strong>Appendix 4 (Section 6.4)</strong> — Voltage drop in consumer&apos;s
@@ -653,100 +654,107 @@ export default function Sub5() {
 
         <ConceptBlock
           title="What's new in the current amendment"
-          plainEnglish="A4:2026 is the fourth amendment to the 2018 base edition. It introduces some genuinely new regulations and substantially redrafts others. Knowing the headline changes by topic is more important than memorising the exact reg numbers."
-          onSite="Three categories of change in A4:2026 — brand new regulations, substantially redrafted regulations, and updated model forms. The new regs raise the protection floor. The redrafted regs tighten the existing rules. The model forms add new columns to capture the new requirements (so an out-of-date EIC template will now miss required fields)."
+          plainEnglish="A4:2026 is the fourth amendment to the 2018 base edition. It was issued on 15 April 2026, and the previous version (A2:2022 + A3:2024) is withdrawn on 15 October 2026. Several rules people call 'new' actually came earlier: 411.3.4 arrived with the 2018 base edition and 514.16.1 with A2:2022."
+          onSite="The book lists its own main changes in the 'Introduction to Amendment 4:2026' at the front. Read that list rather than relying on what you hear on site. Then check your certificate templates against Appendix 6 of the current edition."
         >
-          <p>The brand-new regulations introduced by A4:2026:</p>
-          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>
-              <strong>Reg 411.3.4</strong> — additional protection by an RCD with a rated residual
-              operating current not exceeding 30 mA shall be provided for AC final circuits
-              supplying luminaires within domestic (household) premises. Genuinely new, changes the
-              design pattern for all new domestic lighting circuits.
-            </li>
-            <li>
-              <strong>Reg 514.16.1</strong> — a label is required to indicate the presence of an SPD
-              (with an exception for domestic / household premises). New labelling requirement.
-            </li>
-            <li>
-              <strong>Reg 521.11.201</strong> — escape route cabling requirements (newly introduced
-              provisions on cables along escape routes — to limit fire/smoke propagation along
-              evacuation paths).
-            </li>
-          </ul>
-          <p>The substantially redrafted regulations:</p>
-          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>
-              <strong>Reg 411.3.3</strong> — revised: now applies to socket-outlets with a rated
-              current not exceeding 32 A (previously 20 A). Exception to omit RCD protection where,
-              other than for a dwelling, a documented risk assessment determines that RCD protection
-              is not necessary.
-            </li>
-            <li>
-              <strong>Reg 421.1.7</strong> — expanded: the existing AFDD recommendation
-              strengthened, with broader application to AC final circuits in fixed installations to
-              mitigate fire risk from arc fault currents.
-            </li>
-            <li>
-              <strong>Section 443</strong> — redrafted: protection against transient overvoltages of
-              atmospheric origin or due to switching. Under Reg 443.4.1, protection shall be
-              provided where the consequence of the overvoltage could result in (a) serious injury
-              to, or loss of, human life, or (c) significant financial or data loss — limb (b) was
-              deleted by the A2:2022 Corrigendum (May 2023). For all other cases, protection shall
-              be provided unless the owner of the installation declares it is not required because
-              any loss or damage is tolerable and they accept the risk.
-            </li>
-          </ul>
           <p>
-            Plus model form revisions in Appendix 6 — new schedule columns to capture the new AFDD
-            presence, SPD presence and labelling, RCD-on-luminaires verification, and the explicit
-            recognition of PNB (Protective Neutral Bonding) as a TN-C-S sub-arrangement on the
-            inspection schedules.
+            Main changes made by A4:2026 (from the book&apos;s own summary, which says it is not an
+            exhaustive list):
           </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Table 52.1</strong> — the requirements for a cable concealed in a wall or
+              partition (depth, prescribed zones, RCD, Reg 522.6.204 protection) are now set out in
+              one table, referenced from Reg 522.6.202.
+            </li>
+            <li>
+              <strong>Chapter 57</strong> — a new chapter for stationary secondary batteries, such
+              as home battery storage.
+            </li>
+            <li>
+              <strong>Section 545</strong> — a new section on functional earthing and functional
+              bonding for ICT equipment.
+            </li>
+            <li>
+              <strong>Chapter 81</strong> — energy efficiency, replacing the deleted Appendix 17.
+            </li>
+            <li>
+              <strong>Reg 312.2.1.1</strong> — now includes protective neutral bonding (PNB).
+            </li>
+            <li>
+              <strong>Reg 421.1.7(a)</strong> — now reads &apos;high rise residential
+              buildings&apos;.
+            </li>
+            <li>
+              <strong>Reg 537.4.2</strong> — firefighter&apos;s switches redrafted.
+            </li>
+            <li>
+              <strong>Appendix 4</strong> — new reference methods for buried cables (in direct
+              contact with soil, or in a duct).
+            </li>
+          </ul>
+          <p>Rules from earlier amendments that are still often described as new:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Reg 411.3.4</strong> — 30 mA RCD on AC final circuits supplying luminaires in
+              domestic (household) premises. Introduced by the 2018 base edition.
+            </li>
+            <li>
+              <strong>Reg 411.3.3</strong> — 30 mA RCD on socket-outlets up to 32 A, with a
+              documented risk-assessment exception for premises other than dwellings. Revised in
+              2018, redrafted in A2:2022.
+            </li>
+            <li>
+              <strong>Reg 514.16.1</strong> — a notice where SPDs are fitted. Introduced by A2:2022.
+            </li>
+            <li>
+              <strong>Reg 421.1.7</strong> — AFDDs required on single-phase socket-outlet circuits
+              up to 32 A in high rise residential buildings, HMOs, purpose-built student
+              accommodation and care homes, and recommended in all other premises.
+            </li>
+            <li>
+              <strong>Section 443</strong> — protection against transient overvoltages, redrafted in
+              A2:2022.
+            </li>
+          </ul>
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 7671:2018+A4:2026 — Regulation 411.3.4 (NEW)"
+          source="BS 7671:2018+A4:2026 — Regulation 411.3.4"
           clause={
             <>
-              &quot;Regulation 411.3.4 requires that, within domestic (household) premises,
-              additional protection by an RCD with a rated residual operating current not exceeding
-              30 mA shall be provided for AC final circuits supplying luminaires.&quot;
+              &quot;Within domestic (household) premises, additional protection by an RCD with a
+              rated residual operating current not exceeding 30 mA shall be provided for AC final
+              circuits supplying luminaires.&quot;
             </>
           }
           meaning={
             <>
-              Brand new under A4:2026. Until A4 came in, 30 mA RCD protection on a domestic lighting
-              circuit was a recommendation, not a requirement, and was commonly designed-out on cost
-              grounds. From A4:2026 onwards every new domestic lighting circuit needs 30 mA
-              additional protection. The implication on site: every CU spec for a new dwelling or
-              rewire from A4:2026 onwards needs RCBO protection on lighting circuits, not just on
-              socket circuits.
+              In force since the 2018 base edition, and unchanged by A4:2026. Every new domestic
+              lighting circuit needs 30 mA additional protection, so a domestic consumer unit spec
+              puts the lighting circuits on RCBOs or an RCD-protected way, not just the sockets.
             </>
           }
-          cite="Source: BS 7671:2018+A4:2026 Part 4, Chapter 41, Section 411 — verbatim from the published amendment text."
+          cite="Source: BS 7671:2018+A4:2026, Regulation 411.3.4."
         />
 
         <RegsCallout
-          source="BS 7671:2018+A4:2026 — Regulation 514.16.1 (NEW)"
+          source="BS 7671:2018+A4:2026 — Regulation 514.16.1"
           clause={
             <>
-              &quot;Regulation 514.16.1 has been introduced requiring a label to indicate the
-              presence of SPDs. However, there is an exception for domestic (household) premises or
-              similar.&quot;
+              &quot;The presence of SPDs in an installation shall be indicated by an information
+              notice at or near the relevant distribution board(s).&quot;
             </>
           }
           meaning={
             <>
-              New SPD-presence labelling requirement under A4:2026. The label has to be at the
-              origin of the installation or at a location accessible to a competent person
-              undertaking inspection or maintenance, so that anyone subsequently working on the
-              installation knows an SPD is present. Domestic exception aside, every commercial /
-              industrial install with an SPD needs the label — no excuse for not knowing it&apos;s
-              there.
+              Introduced by A2:2022 and kept in A4:2026. Anyone who later works on the board needs
+              to know an SPD is there. In domestic (household) premises the notice can be left off
+              where the SPD is recorded on the certificate or condition report given to the person
+              who ordered the work. Everywhere else, fit the notice.
             </>
           }
-          cite="Source: BS 7671:2018+A4:2026 Part 5, Chapter 51, Section 514 — verbatim from the published amendment text."
+          cite="Source: BS 7671:2018+A4:2026, Regulation 514.16.1."
         />
 
         <InlineCheck
@@ -789,12 +797,12 @@ export default function Sub5() {
           title="Working to an out-of-date amendment because that's the book on the firm's shelf"
           whatHappens={
             <>
-              Firm bought the 18th Edition base book in 2019 and never renewed the IET subscription.
-              Apprentice is signing certs in 2026 referencing &apos;BS 7671:2018&apos; without the
-              A4 amendment. The cert is missing the new schedule columns introduced by A4 (AFDD
-              presence, SPD label, RCD-on-luminaires verification), the lighting circuit isn&apos;t
-              designed with the new 411.3.4 RCD requirement, and the SPD on the install isn&apos;t
-              labelled per 514.16.1. The next EICR or scheme audit will pick up all three.
+              Firm bought the 18th Edition base book in 2019 and never bought an amendment.
+              Apprentice is signing certs in 2026 referencing &apos;BS 7671:2018&apos;. Everything
+              added since is missed: the SPD notice (Reg 514.16.1, A2:2022), AFDDs being required in
+              HMOs and similar premises (Reg 421.1.7, A2:2022), the battery storage chapter (Chapter
+              57, A4:2026) and the redrafted condition report notes. The next EICR or scheme audit
+              will pick them up.
             </>
           }
           doInstead={
@@ -815,7 +823,7 @@ export default function Sub5() {
               at the origin per the customer&apos;s spec. EIC issued. Customer commissions a
               periodic EICR three years later — different firm. Inspector codes a C3 (improvement
               recommended) for the absence of the SPD-presence label required under Reg 514.16.1,
-              which was new under A4:2026 and was therefore in force when the install was completed.
+              which has been in force since A2:2022 and so applied when the install was completed.
               Customer is on the phone asking why the original cert says &apos;compliant&apos; when
               the inspector has now flagged a regs breach.
             </>
@@ -825,20 +833,20 @@ export default function Sub5() {
               Two issues to separate. (1) The label is straightforward to retrofit — fit the label,
               document the remediation in writing to the customer, and the C3 closes out. (2) The
               original EIC is technically incorrect because the install wasn&apos;t fully compliant
-              with A4:2026 at the time of certification — the firm needs to issue an amended EIC
+              with BS 7671 at the time of certification — the firm needs to issue an amended EIC
               noting the corrective action. Don&apos;t argue the point with the inspector — the
               requirement was in force, the label wasn&apos;t fitted, the C3 stands. Use the
-              experience to update the firm&apos;s commissioning checklist for A4:2026 requirements
+              experience to update the firm&apos;s commissioning checklist for current requirements
               going forward.
             </>
           }
           whyItMatters={
             <>
-              A4:2026 introduced multiple small requirements that a 2018-base-only checklist will
-              miss — SPD label, RCD on domestic luminaires, expanded AFDD scope, escape route
-              cabling provisions. None are individually expensive to comply with. All are expensive
-              to fix retrospectively after a scheme audit or an EICR. Update the commissioning
-              checklist once and the new requirements become routine.
+              Each amendment adds small requirements that an older checklist will miss — the SPD
+              notice, the wider AFDD duty, the battery chapter, the cables-in-walls table. None are
+              individually expensive to comply with. All are expensive to fix retrospectively after
+              a scheme audit or an EICR. Update the commissioning checklist once per amendment and
+              the new requirements become routine.
             </>
           }
         />
@@ -856,7 +864,7 @@ export default function Sub5() {
             'Reg numbers encode location — first digit = Part, first two = Chapter, first three = Section. Reg 411.3.4 = Part 4 / Chapter 41 / Section 411 / Sub-section 3 / Reg 4.',
             "Part 2 (Definitions) is the legal vocabulary. 'Exposed-conductive-part' and 'extraneous-conductive-part' are different categories with different bonding obligations. Use the defined terms with their defined meanings.",
             "Reg 134.1.1 (workmanship and manufacturer's instructions) and Reg 510.3 (selection and erection takes account of manufacturer's instructions) backstop every other technical chapter.",
-            'A4:2026 headline new regs — 411.3.4 (30 mA RCD on domestic luminaires), 514.16.1 (SPD label), 521.11.201 (escape route cabling). Substantially redrafted — 411.3.3 (RCD on socket-outlets up to 32 A), 421.1.7 (AFDDs), Section 443 (transient overvoltage). Plus updated model forms in Appendix 6.',
+            'A4:2026 main changes — Table 52.1 (cables in walls), Chapter 57 (batteries), Section 545 (ICT functional earthing), Chapter 81 (energy efficiency), PNB in Reg 312.2.1.1. Not A4: 411.3.4 RCD on domestic lighting (2018) and 514.16.1 SPD notice (A2:2022).',
             'Working installer skill is navigation, not memorisation. Know the Part / Chapter / Section convention and the appendix list — the regs find themselves.',
             'Always work to the current amendment. Out-of-date editions miss new schedule columns, miss new protection requirements, and produce certs that fail later EICRs and scheme audits.',
           ]}

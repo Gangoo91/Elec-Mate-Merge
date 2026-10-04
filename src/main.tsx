@@ -11,6 +11,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Capacitor } from '@capacitor/core';
 import { initSentry, addBreadcrumb } from './lib/sentry';
+import { installHapticsGate } from './lib/haptics';
 import './index.css';
 
 console.log('[Elec-Mate] Core imports loaded');
@@ -157,6 +158,11 @@ if (!rootElement) {
 // This ensures GoTrue's synchronous getItem() during initialisation finds the
 // stored session tokens in the in-memory cache. On web this is a no-op — App
 // is imported immediately.
+// Settings → Preferences → Vibration (ELE-1805): one gate for every direct
+// navigator.vibrate caller. It reads the setting per call, so it is safe to
+// install before the native storage cache is primed.
+installHapticsGate();
+
 const bootstrap = async () => {
   if (Capacitor.isNativePlatform()) {
     const [{ primeAuthCache }, { primeStorageCache }] = await Promise.all([

@@ -40,10 +40,10 @@ const checks = [
     id: 'm3s5s2-why-high-voltage',
     question: 'Why does the UK National Grid transmit power at 400 kV rather than at 11 kV?',
     options: [
-      'It automatically records calibration data, calculates errors, and generates calibration certificates electronically',
+      'Because 400 kV is the only voltage at which generators can be synchronised to 50 Hz',
       'Because power loss in the line is I²R — and at higher voltage you can transfer the same power at lower current, slashing the I² loss',
-      'Use the back of your hand (to detect temperature) at a safe distance first, then use a vibration pen or stethoscope for detailed assessment',
-      'Between the main earthing terminal and the supply neutral with the installation earthing disconnected',
+      'Because higher voltage lets the same conductors carry more current without overheating',
+      'Because transformers are only manufactured for voltages of 400 kV and above',
     ],
     correctIndex: 1,
     explanation:
@@ -87,8 +87,13 @@ const quizQuestions = [
     id: 2,
     question:
       'A power line carrying 1000 MW at 400 kV three-phase. Approximately what line current?',
-    options: ['14 kA', '250 A', '3.6 kA (≈1443 A)', '1.4 kA'],
-    correctAnswer: 2,
+    options: [
+      '≈ 2.5 kA (1000 MW ÷ 400 kV, forgetting √3)',
+      '≈ 4.3 kA (multiplying by √3 instead of dividing)',
+      '≈ 0.83 kA (dividing by 3 instead of √3)',
+      '≈ 1.44 kA (1000 MW ÷ (√3 × 400 kV))',
+    ],
+    correctAnswer: 3,
     explanation:
       'I = P / (√3 × V × cos φ). Assume unity power factor: I = 1,000,000,000 / (1.732 × 400,000) ≈ 1443 A. That is the line current per phase. If the same 1000 MW were sent at 11 kV the current would be 36× higher (~52 kA) — physically impossible at scale and electrically ruinous in I²R loss.',
   },

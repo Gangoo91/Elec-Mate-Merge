@@ -196,7 +196,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Identify all sources of supply</strong> — the mains DNO supply, any solar PV
                 inverters, battery storage systems, generators, or vehicle-to-grid (V2G) EV
@@ -204,7 +204,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Determine the direction of current flow</strong> — at each protective device
                 in the circuit path, establish whether current can flow in one direction only (from
@@ -212,7 +212,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Select suitable devices</strong> — if bidirectional current flow is
                 possible, the protective device must be rated for bidirectional operation. If a
@@ -221,7 +221,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Document the design decision</strong> — the choice of bidirectional or
                 unidirectional devices should be recorded in the design documentation. This is
@@ -258,7 +258,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Solar PV installations</strong> — the PV inverter feeds current back through
                 the consumer unit into the grid. Any MCB, RCBO, or switching device in the path
@@ -266,7 +266,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Battery energy storage systems (BESS)</strong> — the battery charges from
                 the supply (current flowing in) and discharges to the installation (current flowing
@@ -274,7 +274,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Vehicle-to-grid (V2G) EV chargers</strong> — these chargers can both draw
                 power from the grid to charge the vehicle and feed power from the vehicle battery
@@ -282,7 +282,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Generator installations with grid paralleling</strong> — where a standby
                 generator operates in parallel with the mains supply, current can flow in both
@@ -382,7 +382,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>During design</strong> — when designing an installation with embedded
                 generation, identify every protective device in the circuit path and confirm it is
@@ -390,7 +390,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>During installation</strong> — verify that the devices supplied match the
                 design specification. Check product markings and datasheets. Do not substitute a
@@ -398,7 +398,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>During inspection and testing</strong> — when carrying out an{' '}
                 <SEOInternalLink href="/guides/eicr-for-landlords">EICR</SEOInternalLink> or
@@ -408,7 +408,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>During certification</strong> — the{' '}
                 <SEOInternalLink href="/how-to-fill-in-eicr">
@@ -458,28 +458,28 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">Key Design Considerations</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 The main switch (isolator) at the consumer unit must be bidirectional if the
                 installation exports to the grid.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Any MCB or RCBO protecting the circuit that connects the inverter or BESS to the
                 consumer unit must be confirmed as bidirectional.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 RCDs in the circuit path must detect earth leakage current regardless of the
                 direction of current flow — most standard RCDs do, but always verify.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 The DNO may have additional requirements for the type and rating of protective
                 devices at the point of connection. Check the G98/G99 application requirements.
@@ -541,7 +541,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New installations with solar PV/BESS</strong> — the EIC must confirm
                 compliance with the Reg 530.3.201 (A3:2024) bidirectional device requirement. Record
@@ -550,7 +550,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Alterations adding embedded generation</strong> — if you are adding solar PV
                 or battery storage to an existing installation, check that the existing consumer
@@ -559,7 +559,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR on existing installations</strong> — if the installation has embedded
                 generation that was installed before A3:2024, check device suitability during the
@@ -592,7 +592,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Brain className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI Circuit Designer</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -671,7 +671,7 @@ export default function BS7671Amendment3Page() {
       heroTitle={
         <>
           BS 7671 Amendment 3:{' '}
-          <span className="text-yellow-400">What Changed and Why It Matters</span>
+          <span className="text-elec-yellow">What Changed and Why It Matters</span>
         </>
       }
       heroSubtitle="Amendment 3 (A3:2024) was issued on 31 July 2024 as a free PDF supplement. It introduces two new definitions and Reg 530.3.201 (Chapter 53) — the bidirectional and unidirectional protective device requirement — essential for any installation with solar PV, battery storage, or other embedded generation. This guide explains every detail."

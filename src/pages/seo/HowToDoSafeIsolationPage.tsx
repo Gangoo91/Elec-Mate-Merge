@@ -193,15 +193,15 @@ export default function HowToDoSafeIsolationPage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
-        <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-elec-yellow text-sm font-medium mb-6">
             <ShieldAlert className="w-4 h-4" />
             HSE Guidance Note GS38
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             How to Do
-            <span className="block text-yellow-400 mt-1">Safe Isolation</span>
+            <span className="block text-elec-yellow mt-1">Safe Isolation</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             The complete prove-test-prove procedure for safe electrical isolation. GS38 voltage
@@ -217,7 +217,7 @@ export default function HowToDoSafeIsolationPage() {
             </Link>
             <a
               href="#procedure"
-              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-yellow-500/40 touch-manipulation transition-colors"
+              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-white/[0.1] touch-manipulation transition-colors"
             >
               See the Procedure
               <ArrowDown className="w-4 h-4 ml-1" />
@@ -231,7 +231,7 @@ export default function HowToDoSafeIsolationPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <ShieldAlert className="w-5 h-5 text-yellow-400" />
+              <ShieldAlert className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Why Safe Isolation Is the Most Important Procedure You Will Ever Learn
@@ -286,7 +286,7 @@ export default function HowToDoSafeIsolationPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Activity className="w-5 h-5 text-yellow-400" />
+              <Activity className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               GS38 Requirements for Test Equipment
@@ -344,7 +344,7 @@ export default function HowToDoSafeIsolationPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <ListOrdered className="w-5 h-5 text-yellow-400" />
+              <ListOrdered className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               The Safe Isolation Procedure: Step by Step
@@ -360,7 +360,7 @@ export default function HowToDoSafeIsolationPage() {
                 key={step.name}
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                   {index + 1}
                 </div>
                 <div>
@@ -378,14 +378,14 @@ export default function HowToDoSafeIsolationPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <AlertTriangle className="w-5 h-5 text-yellow-400" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">Common Mistakes to Avoid</h2>
           </div>
           <div className="space-y-4">
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
               <div className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <Zap className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
                   <h3 className="font-bold text-white mb-1">Skipping the second prove step</h3>
                   <p className="text-white text-sm leading-relaxed">
@@ -398,7 +398,7 @@ export default function HowToDoSafeIsolationPage() {
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
               <div className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <Zap className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
                   <h3 className="font-bold text-white mb-1">
                     Using a non-GS38-compliant multimeter
@@ -414,7 +414,7 @@ export default function HowToDoSafeIsolationPage() {
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
               <div className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <Zap className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
                   <h3 className="font-bold text-white mb-1">Not locking off the isolation point</h3>
                   <p className="text-white text-sm leading-relaxed">
@@ -427,7 +427,7 @@ export default function HowToDoSafeIsolationPage() {
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
               <div className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <Zap className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
                   <h3 className="font-bold text-white mb-1">Testing only L-N and not L-E or N-E</h3>
                   <p className="text-white text-sm leading-relaxed">
@@ -440,7 +440,7 @@ export default function HowToDoSafeIsolationPage() {
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
               <div className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <Zap className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
                   <h3 className="font-bold text-white mb-1">
                     Relying on someone else to confirm the circuit is dead
@@ -462,7 +462,7 @@ export default function HowToDoSafeIsolationPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Lock className="w-5 h-5 text-yellow-400" />
+              <Lock className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Tools and Equipment Needed
@@ -537,7 +537,7 @@ export default function HowToDoSafeIsolationPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <HelpCircle className="w-5 h-5 text-yellow-400" />
+              <HelpCircle className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Frequently Asked Questions
@@ -550,7 +550,7 @@ export default function HowToDoSafeIsolationPage() {
                 className="group p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-white/[0.14] transition-colors"
               >
                 <summary className="flex items-start gap-3 cursor-pointer touch-manipulation list-none [&::-webkit-details-marker]:hidden">
-                  <ChevronRight className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0 transition-transform group-open:rotate-90" />
+                  <ChevronRight className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0 transition-transform group-open:rotate-90" />
                   <h3 className="font-bold text-white text-lg">{faq.question}</h3>
                 </summary>
                 <div className="mt-3 pl-8">
@@ -585,7 +585,7 @@ export default function HowToDoSafeIsolationPage() {
 
       <SEOCTASection
         heading="Work Safer with Elec-Mate"
-        subheading="Join 1,600+ UK electricians using Elec-Mate for on-site procedures, testing, and certification. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians using Elec-Mate for on-site procedures, testing, and certification. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

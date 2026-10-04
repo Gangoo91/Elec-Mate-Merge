@@ -229,7 +229,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Self-contained</strong> — each luminaire has its own rechargeable battery
                 (typically NiCd or NiMH, increasingly Li-ion). The battery is charged from the mains
@@ -241,7 +241,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Central battery</strong> — a single battery unit (typically located in a
                 plant room or electrical intake) supplies all emergency luminaires via dedicated
@@ -277,7 +277,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Self-Contained Luminaires</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Non-maintained LED downlight (3W, 3hr)</strong> — £25 to £80 per unit.
                 Compact recessed fitting for corridors and circulation areas. Self-test versions
@@ -285,7 +285,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Non-maintained LED bulkhead (3W to 8W, 3hr)</strong> — £35 to £120 per unit.
                 Surface-mounted for stairwells, plant rooms, and exposed locations. IP65 versions
@@ -294,7 +294,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maintained illuminated exit sign</strong> — £40 to £150 per unit. Wall or
                 ceiling mounted, with running man pictogram conforming to BS 5499. LED with 3-hour
@@ -302,7 +302,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency conversion kit</strong> — £30 to £80 per unit. Converts a standard
                 luminaire into an emergency luminaire by adding a battery pack and inverter module.
@@ -315,14 +315,14 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Central Battery Systems</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Central battery unit (small, up to 50 luminaires)</strong> — £1,500 to
                 £4,000. Wall-mounted unit with charger, battery, and monitoring panel.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Central battery unit (large, 50 to 200+ luminaires)</strong> — £4,000 to
                 £15,000+. Floor-standing cabinet with modular battery banks, automatic testing, and
@@ -330,7 +330,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire-resistant wiring (FP200 or equivalent)</strong> — £1.50 to £3.00 per
                 metre. Required for all central battery system wiring to maintain circuit integrity
@@ -354,7 +354,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Self-contained luminaire installation</strong> — £30 to £60 per luminaire
                 including mounting, wiring, and initial test. A competent electrician can typically
@@ -363,7 +363,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Central battery system installation</strong> — £60 to £100+ per luminaire
                 including fire-resistant cable runs, mounting, connection, and testing. The fire-
@@ -372,7 +372,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Design and documentation</strong> — £200 to £500 for a professional
                 emergency lighting design including luminaire layout, illuminance calculations, and
@@ -380,7 +380,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commissioning and certification</strong> — £150 to £400 including full-
                 duration discharge test, illuminance measurements, and completion of the BS 5266
@@ -405,7 +405,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Small office/shop (4 to 6 luminaires)</strong> — £500 to £1,000 total.
                 Self-contained LED fittings, 1 to 2 exit signs, standard mains wiring. Half-day
@@ -413,7 +413,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Medium commercial (10 to 20 luminaires)</strong> — £1,500 to £4,000 total.
                 Self-contained LED fittings with self-test, exit signs, open area coverage.
@@ -421,7 +421,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large commercial self-contained (30 to 50 luminaires)</strong> — £4,000 to
                 £8,000 total. Self-test luminaires with automated monitoring, comprehensive coverage
@@ -429,7 +429,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Central battery system (50 to 100+ luminaires)</strong> — £10,000 to
                 £30,000+ total. Central battery unit, fire-resistant wiring to every luminaire,
@@ -459,7 +459,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Duration</strong> — emergency lighting must provide illumination for a
                 minimum of 1 hour in premises where the occupants are familiar with the layout and
@@ -468,7 +468,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Illuminance levels</strong> — escape routes: minimum 1 lux along the centre
                 line. Open areas: minimum 0.5 lux over the floor area. High-risk task areas: minimum
@@ -478,7 +478,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Luminaire positioning</strong> — emergency luminaires must be provided near
                 each exit door, at changes of direction, at intersections of corridors, near each
@@ -487,7 +487,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Exit signs</strong> — emergency exit signs must conform to BS 5499 and be
                 illuminated (maintained) during all occupied hours. The signs must be clearly
@@ -518,7 +518,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Timer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Timer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Monthly functional test</strong> — simulate a mains failure for long enough
                 to confirm all emergency luminaires illuminate correctly (minimum 30 seconds for
@@ -573,7 +573,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS 5266 commissioning certificate</strong> — issued after installation,
                 confirming the system meets the design specification and BS 5266 requirements.
@@ -582,7 +582,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical installation certificate</strong> — the electrical wiring for the
                 emergency lighting system requires an EIC or Minor Works Certificate under BS 7671,
@@ -590,7 +590,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>As-built drawings</strong> — a drawing showing the location of every
                 emergency luminaire, exit sign, and the central battery unit (if applicable). This
@@ -598,7 +598,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test logbook</strong> — a logbook must be established at handover for
                 recording all monthly and annual test results. The logbook should be kept on the
@@ -632,7 +632,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -667,7 +667,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and maintain emergency lighting systems"
-          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting, emergency lighting certification, and maintenance documentation."
+          description="Join 2,100+ UK electricians using Elec-Mate for professional quoting, emergency lighting certification, and maintenance documentation."
           icon={Lightbulb}
         />
       </>
@@ -693,7 +693,7 @@ export default function EmergencyLightingCostPage() {
       heroTitle={
         <>
           Emergency Lighting Installation Cost:{' '}
-          <span className="text-yellow-400">UK Price Guide 2026</span>
+          <span className="text-elec-yellow">UK Price Guide 2026</span>
         </>
       }
       heroSubtitle="From self-contained LED bulkheads to full central battery systems — this guide covers every cost element of emergency lighting. Material prices, labour rates, BS 5266 compliance, testing obligations, and the certification requirements that protect lives and livelihoods."
@@ -704,7 +704,7 @@ export default function EmergencyLightingCostPage() {
       faqHeading="Frequently Asked Questions About Emergency Lighting Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Emergency Lighting on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for emergency lighting quoting, certification, and test documentation. Professional results every time. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for emergency lighting quoting, certification, and test documentation. Professional results every time. 7-day free trial, cancel anytime."
     />
   );
 }

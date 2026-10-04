@@ -188,7 +188,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Bristol Pricing Breakdown (2026)</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Small flat (6-way board)</strong> — £380 to £480 total. Common in
                 purpose-built flats and converted terraces in Bedminster, Easton, and Southville.
@@ -196,7 +196,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard terraced house (10-way with RCBOs and SPD)</strong> — £480 to £650
                 total. The most common domestic job in Bristol. Materials: £260 to £390. Labour:
@@ -204,7 +204,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Larger semi or detached (14-way high-integrity with SPD)</strong> — £620 to
                 £950 total. For properties with 12+ circuits, EV charger, or solar PV. Materials:
@@ -212,7 +212,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-phase property</strong> — £1,300 to £1,900+ total. Required for larger
                 homes or commercial premises with three-phase supply. Materials: £520 to £820.
@@ -324,7 +324,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1: Survey and isolation</strong> — the electrician surveys the board,
                 identifies all circuits, and safely isolates the mains at the DNO cutout. All power
@@ -332,7 +332,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2: Remove old board</strong> — the existing consumer unit is
                 disconnected and removed. Ageing cables, earthing issues, or deteriorated
@@ -340,21 +340,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 3: Install new consumer unit</strong> — a new metal consumer unit is
                 mounted, fitted with RCBOs and SPD, all circuits reconnected and labelled.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 4: Testing</strong> — all circuits tested to BS 7671: insulation
                 resistance, earth fault loop impedance, RCD trip times, and polarity checks.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 5: Certification</strong> — the electrician completes the{' '}
                 <SEOInternalLink href="/eic-certificate">
@@ -409,28 +409,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person scheme registration</strong> — verify NICEIC, NAPIT, or
                 ELECSA registration before booking. Essential for Part P self-certification.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Itemised quote</strong> — materials, labour, Part P notification, and VAT
                 should all be itemised separately.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EIC included</strong> — confirm the Electrical Installation Certificate and
                 Part P notification are included in the price.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reviews and reputation</strong> — check Google reviews and Checkatrade.
                 Verify scheme registration before booking.
@@ -466,7 +466,7 @@ export default function ConsumerUnitReplacementBristolPage() {
       heroTitle={
         <>
           Consumer Unit Replacement Bristol:{' '}
-          <span className="text-yellow-400">Cost Guide 2026</span>
+          <span className="text-elec-yellow">Cost Guide 2026</span>
         </>
       }
       heroSubtitle="Consumer unit replacement in Bristol typically costs £380 to £650 — among the higher of English regional cities, reflecting strong local demand. This guide covers local pricing, Part P notification, what to expect during the work, and how to choose a registered electrician in Bristol."
@@ -477,7 +477,7 @@ export default function ConsumerUnitReplacementBristolPage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Replacement in Bristol"
       relatedPages={relatedPages}
       ctaHeading="Quote Consumer Unit Replacements in Bristol"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
     />
   );
 }

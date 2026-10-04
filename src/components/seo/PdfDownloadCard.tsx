@@ -31,7 +31,6 @@
  * from lg: so it fills a desktop measure without stretching the text.
  */
 import { useCallback, useRef, useState } from 'react';
-import { Download, FileText, Check } from 'lucide-react';
 import { EmailCaptureForm } from '@/components/landing/EmailCaptureForm';
 import { trackSeoToolUsed, trackLeadMagnetDownloaded } from '@/lib/analytics-events';
 import { saveOrShareFile } from '@/utils/save-or-share-file';
@@ -124,30 +123,27 @@ export default function PdfDownloadCard({
   );
 
   return (
-    <div className="-mx-4 border-y border-elec-yellow/25 bg-gradient-to-br from-elec-yellow/[0.10] via-white/[0.05] to-white/[0.03] p-5 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-6 lg:p-7">
-      <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:gap-8">
-        {/* Icon */}
-        <div className="flex items-center gap-4 lg:shrink-0 lg:flex-col lg:gap-3">
-          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-elec-yellow lg:h-20 lg:w-20">
-            <FileText className="h-7 w-7 text-black lg:h-10 lg:w-10" aria-hidden />
-          </div>
-          <div className="lg:text-center">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
-              Free download
-            </p>
-            {meta ? <p className="text-[12px] text-white lg:mt-0.5">PDF · {meta}</p> : null}
-          </div>
-        </div>
-
+    // Volt (4 Oct 2026): neutral card with a volt hairline — the old
+    // translucent-yellow wash read brown — no file icon, no tick icons.
+    <div className="relative -mx-4 overflow-hidden border-y border-white/[0.08] bg-[hsl(0_0%_9%)] p-5 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-6 lg:p-7">
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0"
+      />
+      <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:gap-10">
         {/* Copy */}
         <div className="min-w-0 flex-1">
-          <h3 className="text-[17px] font-bold leading-snug text-white sm:text-[19px]">{title}</h3>
+          <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
+            Free download{meta ? ` · PDF · ${meta}` : ' · PDF'}
+          </p>
+          <h3 className="mt-2 text-[19px] font-bold leading-snug tracking-[-0.01em] text-white sm:text-[22px]">
+            {title}
+          </h3>
           <p className="mt-1.5 text-sm leading-relaxed text-white">{description}</p>
           {bullets.length > 0 && (
-            <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5">
+            <ul className="mt-4 divide-y divide-white/[0.08] border-y border-white/[0.08]">
               {bullets.map((b) => (
-                <li key={b} className="flex items-center gap-1.5 text-[13px] text-white">
-                  <Check className="h-3.5 w-3.5 shrink-0 text-elec-yellow" aria-hidden />
+                <li key={b} className="py-2.5 text-[14px] text-white">
                   {b}
                 </li>
               ))}
@@ -156,24 +152,25 @@ export default function PdfDownloadCard({
         </div>
 
         {/* Action */}
-        <div className="lg:w-[300px] lg:shrink-0">
+        <div className="lg:w-[320px] lg:shrink-0">
           {!captureSource ? (
             <>
               <a
                 href={href}
                 download
                 onClick={() => trackSeoToolUsed({ tool: trackAs, page: window.location.pathname })}
-                className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-elec-yellow px-6 text-[15px] font-bold text-black transition-colors hover:brightness-95 touch-manipulation"
+                className="flex h-12 w-full items-center justify-center rounded-xl bg-elec-yellow px-6 text-[15px] font-bold text-black transition-colors hover:brightness-95 touch-manipulation"
               >
-                <Download className="h-4 w-4" aria-hidden />
                 Download the PDF
               </a>
               <p className="mt-2 text-center text-[12px] text-white">No email needed</p>
             </>
           ) : captured ? (
-            <div className="rounded-xl border border-elec-yellow/30 bg-elec-yellow/[0.08] p-4 text-center">
-              <p className="flex items-center justify-center gap-2 text-[15px] font-bold text-white">
-                <Check className="h-4 w-4 text-elec-yellow" aria-hidden />
+            <div
+              role="status"
+              className="rounded-2xl border border-elec-yellow/50 bg-[hsl(0_0%_11%)] p-4"
+            >
+              <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-elec-yellow">
                 {autoSaved ? 'Downloading now' : 'Ready to download'}
               </p>
               <p className="mt-1 text-[13px] leading-relaxed text-white">
@@ -184,9 +181,8 @@ export default function PdfDownloadCard({
               <a
                 href={href}
                 download
-                className="mt-3 inline-flex min-h-11 items-center justify-center gap-2 text-[13.5px] font-semibold text-elec-yellow hover:underline touch-manipulation"
+                className="mt-2 inline-flex min-h-11 items-center text-[13.5px] font-semibold text-elec-yellow hover:underline touch-manipulation"
               >
-                <Download className="h-4 w-4" aria-hidden />
                 {autoSaved ? "Download didn't start? Tap here" : 'Tap to download the PDF'}
               </a>
             </div>
@@ -209,7 +205,6 @@ export default function PdfDownloadCard({
                   }
                   className="mt-3 inline-flex min-h-11 items-center gap-2 text-[13.5px] font-semibold text-elec-yellow hover:underline touch-manipulation"
                 >
-                  <Download className="h-4 w-4" aria-hidden />
                   Signup&rsquo;s playing up — download it directly
                 </a>
               )}

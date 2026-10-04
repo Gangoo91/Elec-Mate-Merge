@@ -186,14 +186,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inspection interval:</strong> Maximum 5 years, or as recommended by the
                 previous inspector. Older installations may require more frequent inspection.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Scope:</strong> The EICR covers the entire fixed electrical installation —
                 from the incoming supply to every final circuit. In a school, this typically
@@ -203,7 +203,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Timing:</strong> School EICRs are typically carried out during school
                 holidays to minimise disruption. The power needs to be switched off for dead
@@ -212,7 +212,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Multiple boards:</strong> Schools often have 5 to 20+ distribution boards
                 across the site. The EICR should cover all of them, with a schedule of test results
@@ -250,7 +250,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Monthly functional test:</strong> Each emergency luminaire must be tested
                 briefly (typically by pressing the test button or using a central test system) to
@@ -259,7 +259,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Annual full duration test:</strong> Each luminaire must run on battery power
                 for its full rated duration (typically 3 hours). This confirms that the battery
@@ -268,7 +268,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Record keeping:</strong> All test results must be recorded in an emergency
                 lighting log book. This log must be available for inspection by the fire service,
@@ -276,7 +276,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Coverage:</strong> Emergency lighting must be provided on all escape routes,
                 at exit signs, at changes of direction, at intersections, near fire alarm call
@@ -310,7 +310,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Bell className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Bell className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Weekly testing:</strong> A different call point should be tested each week,
                 following a rota that covers all call points over a period. The test confirms the
@@ -318,7 +318,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Bell className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Bell className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Quarterly servicing:</strong> A competent fire alarm engineer should carry
                 out a quarterly inspection and service, including checking all detectors, call
@@ -327,7 +327,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Bell className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Bell className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Annual certificate:</strong> Following the quarterly servicing programme, an
                 annual maintenance certificate should be issued confirming the system meets BS
@@ -335,7 +335,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Bell className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Bell className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>False alarm management:</strong> Schools experience high rates of false
                 alarms, particularly from cooking areas, science labs, and DT workshops. A false
@@ -368,7 +368,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IET Code of Practice:</strong> The testing frequency should follow the IET
                 Code of Practice for In-Service Inspection and Testing of Electrical Equipment. This
@@ -377,7 +377,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Typical school intervals:</strong> IT equipment (Class I): formal visual
                 inspection and test every 2 to 4 years. Kitchen equipment: annually. Workshop
@@ -386,7 +386,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>User checks:</strong> Staff should be encouraged to visually inspect
                 equipment before use — checking for damaged cables, cracked plugs, signs of
@@ -395,7 +395,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Asset register:</strong> Maintain a register of all portable equipment,
                 including the make, model, location, test date, result, and next test date. This
@@ -428,7 +428,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Local authority maintained schools:</strong> The local authority is the
                 employer and has the primary duty under the HSWA 1974 and EAWR 1989. The LA
@@ -438,7 +438,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Academies and free schools:</strong> The academy trust is the employer and
                 holds the primary duty. Larger trusts (multi-academy trusts or MATs) often have
@@ -447,7 +447,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Independent schools:</strong> The proprietor or governing body is
                 responsible. Independent schools must meet the Independent Schools Standards, which
@@ -455,7 +455,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>The school business manager:</strong> In practice, the school business
                 manager (SBM) or premises officer is often the person who manages contractor
@@ -483,7 +483,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Good Estate Management for Schools (DfE):</strong> Provides guidance on
                 managing school buildings, including the need for regular statutory compliance
@@ -492,7 +492,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>School Premises Regulations 2012:</strong> Require that school premises and
                 their equipment are maintained to a standard that ensures the health, safety, and
@@ -500,7 +500,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ofsted:</strong> Does not carry out technical electrical inspections, but
                 assesses safeguarding effectiveness. Evidence of building compliance (including
@@ -509,7 +509,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Condition Data Collection (CDC):</strong> The DfE CDC programme surveys
                 school buildings across England. Electrical installations are assessed as part of
@@ -540,7 +540,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Get DBS checked.</strong> An enhanced DBS check is essential for working in
                 schools during term time. Get it done before you start tendering — it can take 2 to
@@ -548,7 +548,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Register with competent person schemes.</strong> NICEIC, NAPIT, or ELECSA
                 registration is expected by schools and academy trusts. It demonstrates competence
@@ -556,7 +556,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Professional documentation.</strong> Schools deal with a lot of compliance
                 paperwork. Making your documentation clear, professional, and easy to file makes the
@@ -565,7 +565,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Understand the procurement process.</strong> Local authority schools
                 typically procure through the LA framework. Academy trusts may have their own
@@ -574,7 +574,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Offer a comprehensive package.</strong> Bundle EICR, emergency lighting
                 testing, fire alarm servicing, and{' '}
@@ -613,7 +613,7 @@ export default function SchoolElectricalInspectionPage() {
       heroTitle={
         <>
           School Electrical Inspection:{' '}
-          <span className="text-yellow-400">Every Requirement in One Place</span>
+          <span className="text-elec-yellow">Every Requirement in One Place</span>
         </>
       }
       heroSubtitle="Schools need EICR inspections every 5 years, monthly emergency lighting tests, quarterly fire alarm servicing, and regular PAT testing. This guide covers every electrical safety requirement for UK schools — for electricians doing the work and for school staff managing compliance."
@@ -624,7 +624,7 @@ export default function SchoolElectricalInspectionPage() {
       faqHeading="Frequently Asked Questions About School Electrical Inspections"
       relatedPages={relatedPages}
       ctaHeading="Professional School Inspection Tools"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for digital EICR certificates, test records, and professional documentation. Perfect for school maintenance contracts. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for digital EICR certificates, test records, and professional documentation. Perfect for school maintenance contracts. 7-day free trial, cancel anytime."
     />
   );
 }

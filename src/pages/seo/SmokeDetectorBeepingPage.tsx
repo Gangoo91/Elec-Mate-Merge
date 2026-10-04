@@ -205,7 +205,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Identify the battery type</strong> — most detectors use a 9V PP3 battery, AA
                 batteries, or a sealed lithium cell. Check the detector's manual or the battery
@@ -213,7 +213,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Remove and replace</strong> — twist the detector off its base plate (most
                 twist anti-clockwise). Open the battery compartment, remove the old battery, and
@@ -221,14 +221,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test the detector</strong> — press and hold the test button until the alarm
                 sounds. This confirms the new battery is working and the detector is functional.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reattach</strong> — twist the detector back onto its base plate until it
                 clicks into position. Ensure it is secure.
@@ -306,7 +306,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cooking fumes</strong> — the most common cause. Ionisation detectors are
                 particularly sensitive to cooking particles. If your detector near the kitchen
@@ -314,14 +314,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Steam</strong> — from bathrooms, kettles, or showers can trigger some
                 detector types. Position detectors away from steam sources.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dust and insects</strong> — particles inside the sensor chamber scatter
                 light in optical detectors, mimicking smoke. Regular gentle vacuuming around the
@@ -329,7 +329,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Temperature extremes</strong> — detectors in unheated lofts or garages may
                 false alarm in very cold or very hot conditions.
@@ -361,7 +361,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Backup battery low</strong> — even mains-powered detectors have a battery
                 for power cut backup. When this battery is low, the detector chirps. Replace the
@@ -369,7 +369,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mains supply interrupted</strong> — if the lighting circuit has been turned
                 off at the consumer unit, or if there is a wiring fault, the detector runs on
@@ -377,7 +377,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wiring fault</strong> — a loose connection or damaged cable in the detector
                 circuit can cause intermittent power loss. The detector switches between mains and
@@ -481,7 +481,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Compliance check</strong> — if you are a landlord and need to ensure your
                 property meets the Smoke and Carbon Monoxide Alarm Regulations, an electrician can
@@ -505,7 +505,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Grade and Category Assessment</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -519,7 +519,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Detector Selection</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -533,7 +533,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Documentation</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -579,7 +579,7 @@ export default function SmokeDetectorBeepingPage() {
       badgeIcon={Bell}
       heroTitle={
         <>
-          Smoke Detector Beeping: <span className="text-yellow-400">Why and What to Do</span>
+          Smoke Detector Beeping: <span className="text-elec-yellow">Why and What to Do</span>
         </>
       }
       heroSubtitle="A beeping smoke detector is trying to tell you something. This guide explains every type of beep — low battery, end of life, false alarm — what to do step by step, and when you need an electrician."
@@ -590,7 +590,7 @@ export default function SmokeDetectorBeepingPage() {
       faqHeading="Frequently Asked Questions About Smoke Detector Beeping"
       relatedPages={relatedPages}
       ctaHeading="Document Fire Detection Systems on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for fire alarm certificates, BS 5839-6 compliance, and professional documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for fire alarm certificates, BS 5839-6 compliance, and professional documentation. 7-day free trial, cancel anytime."
     />
   );
 }

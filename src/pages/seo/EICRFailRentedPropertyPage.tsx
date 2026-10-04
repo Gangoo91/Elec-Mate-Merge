@@ -267,7 +267,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Arrange remedial work</strong> — the landlord must instruct a qualified
                 electrician to carry out the remedial work identified in the EICR. All C1 and C2
@@ -276,7 +276,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Complete work within 28 days</strong> — the remedial work must be finished
                 within 28 days of the date of the EICR inspection. For C1 defects, the inspector
@@ -285,7 +285,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Obtain written confirmation</strong> — after the remedial work is completed,
                 a qualified person must confirm in writing that the identified defects have been
@@ -294,7 +294,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Provide confirmation to the tenant</strong> — the landlord must supply the
                 written confirmation of remedial work to the tenant within 28 days of the work being
@@ -302,7 +302,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Provide confirmation to the local authority</strong> — if the local
                 authority requests it in writing, the landlord must provide the written confirmation
@@ -334,14 +334,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <div className="space-y-4 text-white">
             <div className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Day 0:</strong> EICR inspection carried out. Inspector records C1 and/or C2
                 defects. C1 defects are made safe immediately. Report is prepared.
               </span>
             </div>
             <div className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Days 1 to 7:</strong> Report delivered to landlord. Landlord reviews the
                 observations and contacts an electrician for remedial work. This is where immediate
@@ -349,7 +349,7 @@ const sections = [
               </span>
             </div>
             <div className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Days 7 to 21:</strong> Electrician visits to carry out remedial work. If
                 materials need ordering (specialist consumer units, specific cable sizes, AFDDs),
@@ -357,7 +357,7 @@ const sections = [
               </span>
             </div>
             <div className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Day 28:</strong> Deadline. All remedial work must be completed and written
                 confirmation obtained from a qualified person.
@@ -392,7 +392,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ask the original inspector first</strong> — the electrician who carried out
                 the EICR already knows the installation, has identified the defects, and can provide
@@ -401,7 +401,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Get a written, itemised quote</strong> — the quote should list each defect
                 from the EICR, the proposed remedial action, the materials required, and the cost.
@@ -410,7 +410,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consider bundling C3 improvements</strong> — while C3 observations are not
                 mandatory, addressing them during the same visit as C1/C2 remedials is more
@@ -419,7 +419,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Factor in the 28-day deadline</strong> — the cheapest quote is not helpful
                 if the electrician cannot schedule the work within the deadline. Availability and
@@ -457,7 +457,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person scheme registration</strong> — NICEIC, NAPIT, or ELECSA.
                 This is essential if the remedial work involves notifiable work under Part P (for
@@ -469,7 +469,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C&G 2391 or equivalent</strong> — the inspection and testing qualification.
                 Important because the electrician needs to verify that the remedial work has
@@ -477,7 +477,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Public liability insurance</strong> — at least £2 million for domestic
                 remedial work. Check the certificate is current and covers the type of work being
@@ -485,7 +485,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ability to provide the right certificates</strong> — the remedial work
                 should result in the appropriate electrical certificate (EIC for major work, Minor
@@ -518,7 +518,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing the remedial work</strong> — the electrician carrying out the
                 remedials should test each repaired or replaced element. This includes continuity,
@@ -528,7 +528,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Issuing the appropriate certificate</strong> — for new installation work
                 (e.g., a consumer unit replacement), an Electrical Installation Certificate (EIC) is
@@ -537,7 +537,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Written confirmation</strong> — the qualified person must confirm in writing
                 that the specific defects identified in the original EICR have been satisfactorily
@@ -626,7 +626,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>You have a right to a copy of the EICR</strong> — the landlord must provide
                 you with a copy within 28 days of the inspection. If they have not, ask for it in
@@ -634,7 +634,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C1 defects should have been made safe</strong> — the inspector should have
                 made any C1 (Danger Present) defects safe before leaving the property. If you
@@ -643,7 +643,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>The landlord must arrange remedial work within 28 days</strong> — if the
                 landlord does not arrange remedial work promptly, contact them in writing (email is
@@ -651,7 +651,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Allow reasonable access for repairs</strong> — the landlord needs access to
                 the property to carry out the remedial work. Cooperate with reasonable access
@@ -659,7 +659,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Contact the local authority if needed</strong> — if the landlord fails to
                 act on an unsatisfactory EICR, you can report this to your local authority housing
@@ -691,7 +691,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Claims may be refused</strong> — if an electrical incident occurs (fire,
                 injury, damage) after an unsatisfactory EICR and the landlord has not carried out
@@ -700,7 +700,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Policy conditions may be breached</strong> — most landlord insurance
                 policies include conditions about maintaining the property in a safe condition and
@@ -709,7 +709,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Premiums may increase</strong> — at renewal, if the insurer becomes aware of
                 unremedied electrical defects (through a claim investigation, for example), the
@@ -717,7 +717,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Personal liability</strong> — beyond insurance, a landlord who knowingly
                 allows an unsafe electrical installation to remain in a rented property faces
@@ -752,7 +752,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <AlertTriangle className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Auto-Flag Unsatisfactory Reports</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -765,7 +765,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Receipt className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Receipt className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Remedial Estimator: Instant Pricing</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -779,7 +779,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Send className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Send className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EICR + Quote + Invoice in One Tap</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -826,7 +826,7 @@ export default function EICRFailRentedPropertyPage() {
       heroTitle={
         <>
           EICR Fail on a Rented Property:{' '}
-          <span className="text-yellow-400">What Landlords Must Do Next</span>
+          <span className="text-elec-yellow">What Landlords Must Do Next</span>
         </>
       }
       heroSubtitle="An unsatisfactory EICR means the electrical installation has defects that pose a risk of injury. The landlord has 28 days to complete remedial work. Penalties for non-compliance are up to £30,000. This guide covers obligations, deadlines, and how electricians can convert every fail into a priced remedial job."

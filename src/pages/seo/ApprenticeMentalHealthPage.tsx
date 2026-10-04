@@ -173,7 +173,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Financial stress</strong> — apprentice wages are significantly lower than
                 qualified electrician rates. Managing rent, travel costs, tool purchases, and daily
@@ -218,7 +218,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Heart className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Heart className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Relationship strain</strong> — the demands of the apprenticeship can put
                 pressure on personal relationships. Partners, friends, and family may not fully
@@ -442,7 +442,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Health and Safety at Work Act 1974</strong> — employers must ensure, so far
                 as is reasonably practicable, the health, safety, and welfare of all employees.
@@ -450,7 +450,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Management of Health and Safety at Work Regulations 1999</strong> —
                 employers must assess and manage risks to health, including stress and mental health
@@ -458,7 +458,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Equality Act 2010</strong> — if you have a mental health condition that
                 qualifies as a disability, your employer must make reasonable adjustments. This
@@ -466,7 +466,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Duty of care to apprentices</strong> — as an apprentice, you have additional
                 protections under your apprenticeship agreement. Your employer must provide a safe
@@ -536,7 +536,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Set realistic goals</strong> — do not try to do everything at once. Set one
                 or two achievable goals per week for your apprenticeship. Celebrate progress, even
@@ -579,7 +579,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Phone className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Phone className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Electrical Industries Charity</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -660,7 +660,7 @@ export default function ApprenticeMentalHealthPage() {
       heroTitle={
         <>
           Mental Health for Electrical Apprentices:{' '}
-          <span className="text-yellow-400">You Are Not Alone</span>
+          <span className="text-elec-yellow">You Are Not Alone</span>
         </>
       }
       heroSubtitle="The electrical trade has some of the highest rates of mental health problems in the UK. Apprentices face unique pressures: low pay, exam stress, physically demanding work, and a culture that discourages talking about feelings. This guide covers common pressures, warning signs, employer duties, support resources, and practical strategies for building resilience."

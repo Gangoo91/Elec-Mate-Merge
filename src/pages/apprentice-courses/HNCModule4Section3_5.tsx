@@ -120,7 +120,7 @@ const quizQuestions = [
     options: ['130ms', '300ms', '500ms', '40ms'],
     correctAnswer: 1,
     explanation:
-      'A4:2026 redrafted Reg 643.8 and deleted Table 3A — the verification test is now a single AC test at rated residual operating current (IΔn), with a 300ms maximum operating time for a general (instantaneous) RCD. The older 5×IΔn test (which had a 40ms limit) is no longer required for compliance.',
+      'A2:2022 redrafted Reg 643.8 and deleted Table 3A — the verification test is now a single AC test at rated residual operating current (IΔn), with a 300ms maximum operating time for a general (instantaneous) RCD. The older 5×IΔn test (which had a 40ms limit) is no longer required for compliance.',
   },
   {
     id: 6,
@@ -320,7 +320,7 @@ const HNCModule4Section3_5 = () => {
             <li>0.5 × IΔn — must NOT trip (both types)</li>
           </ul>
           <p className="text-sm text-white/70">
-            A4:2026 redrafted Reg 643.8 and deleted Appendix 3 Table 3A. Regardless of RCD Type, an
+            A2:2022 redrafted Reg 643.8 and deleted Appendix 3 Table 3A. Regardless of RCD Type, an
             AC test at IΔn is used to verify effectiveness — the older 5 × IΔn shot (≤40ms) is no
             longer part of BS 7671 verification. Manufacturer product standards (BS EN 61008/61009)
             still set the 40ms figure at 5 × IΔn for type-test purposes.

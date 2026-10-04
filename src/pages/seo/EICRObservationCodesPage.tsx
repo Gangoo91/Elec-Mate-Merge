@@ -654,7 +654,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Recording C3 when C2 is correct for missing RCD protection
@@ -672,7 +672,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Marking the report Satisfactory with a C2 present
@@ -690,7 +690,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Vague observation descriptions</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -705,7 +705,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Using FI to avoid making a classification decision
@@ -723,7 +723,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Not recording C3 observations at all</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -834,7 +834,7 @@ export default function EICRObservationCodesPage() {
       heroTitle={
         <>
           EICR Observation Codes:{' '}
-          <span className="text-yellow-400">C1, C2, C3, and FI Explained</span>
+          <span className="text-elec-yellow">C1, C2, C3, and FI Explained</span>
         </>
       }
       heroSubtitle="Every defect on an EICR must be classified as C1, C2, C3, or FI. The code you choose determines whether the report is Satisfactory or Unsatisfactory — and whether the landlord faces a £30,000 penalty. This guide explains each code with real examples, common mistakes, and how Elec-Mate's Defect Code AI gets the right answer every time."
@@ -850,7 +850,7 @@ export default function EICRObservationCodesPage() {
       faqHeading="Frequently Asked Questions About EICR Observation Codes"
       relatedPages={relatedPages}
       ctaHeading="Never second-guess an observation code again"
-      ctaSubheading="Elec-Mate's Defect Code AI describes defects in plain English and returns the correct classification with the matching BS 7671 regulation. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's Defect Code AI describes defects in plain English and returns the correct classification with the matching BS 7671 regulation. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

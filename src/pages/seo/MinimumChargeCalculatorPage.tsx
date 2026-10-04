@@ -42,7 +42,7 @@ export default function MinimumChargeCalculatorPage() {
       heroTitle={
         <>
           Minimum Charge Calculator
-          <span className="block text-yellow-400 mt-1">For UK Electricians</span>
+          <span className="block text-elec-yellow mt-1">For UK Electricians</span>
         </>
       }
       heroSubtitle="If your minimum charge is too low, the small jobs that keep the diary moving can quietly destroy your margin. This calculator helps you set a floor price that covers travel, time, overheads, and profit before you even pick up a screwdriver."
@@ -106,35 +106,35 @@ export default function MinimumChargeCalculatorPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Travel time</strong> including traffic, parking, walking to site, and
                       unloading.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Vehicle cost</strong> including fuel, maintenance, insurance, and
                       depreciation.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Business overheads</strong> such as software, phone, accountancy,
                       scheme fees, and non-billable admin time.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Basic materials and consumables</strong> even when the main item is
                       client-supplied or inexpensive.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Profit</strong> because staying busy without margin is not a good
                       business model.

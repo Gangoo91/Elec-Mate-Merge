@@ -200,7 +200,7 @@ export default function BMSCoursePage() {
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-6">
             BMS Course Online
             <br />
-            <span className="text-yellow-400">Building Management Systems</span>
+            <span className="text-elec-yellow">Building Management Systems</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             Master Building Management Systems with an AI-powered study platform. Learn HVAC
@@ -312,7 +312,7 @@ export default function BMSCoursePage() {
                     <Wifi className="w-5 h-5 text-blue-400" />
                   </div>
                   <div>
-                    <p className="font-semibold text-yellow-400 text-sm">{item.protocol}</p>
+                    <p className="font-semibold text-elec-yellow text-sm">{item.protocol}</p>
                     <p className="text-white text-sm">{item.detail}</p>
                   </div>
                 </div>
@@ -427,10 +427,10 @@ export default function BMSCoursePage() {
                 className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10"
               >
                 <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] shrink-0">
-                  <GraduationCap className="w-5 h-5 text-yellow-400" />
+                  <GraduationCap className="w-5 h-5 text-elec-yellow" />
                 </div>
                 <div>
-                  <p className="font-semibold text-yellow-400 text-sm">{item.module}</p>
+                  <p className="font-semibold text-elec-yellow text-sm">{item.module}</p>
                   <p className="text-white text-sm">{item.title}</p>
                 </div>
               </div>
@@ -520,7 +520,7 @@ export default function BMSCoursePage() {
                 >
                   <span className="font-semibold text-white pr-4">{faq.question}</span>
                   <ChevronDown
-                    className={`w-5 h-5 text-yellow-400 shrink-0 transition-transform ${
+                    className={`w-5 h-5 text-elec-yellow shrink-0 transition-transform ${
                       openFaq === index ? 'rotate-180' : ''
                     }`}
                   />
@@ -541,17 +541,17 @@ export default function BMSCoursePage() {
         <div className="max-w-4xl mx-auto">
           <div className="grid sm:grid-cols-3 gap-6 text-center">
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <Users className="w-8 h-8 text-yellow-400 mx-auto mb-3" />
+              <Users className="w-8 h-8 text-elec-yellow mx-auto mb-3" />
               <p className="text-2xl font-bold text-white mb-1">430+</p>
               <p className="text-sm text-white">UK Electricians</p>
             </div>
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <Zap className="w-8 h-8 text-yellow-400 mx-auto mb-3" />
+              <Zap className="w-8 h-8 text-elec-yellow mx-auto mb-3" />
               <p className="text-2xl font-bold text-white mb-1">£250-£400</p>
               <p className="text-sm text-white">BMS Engineer Day Rate</p>
             </div>
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <Building2 className="w-8 h-8 text-yellow-400 mx-auto mb-3" />
+              <Building2 className="w-8 h-8 text-elec-yellow mx-auto mb-3" />
               <p className="text-2xl font-bold text-white mb-1">7 Modules</p>
               <p className="text-sm text-white">Full BMS Coverage</p>
             </div>
@@ -581,7 +581,7 @@ export default function BMSCoursePage() {
 
       <SEOCTASection
         heading="Ready to move into BMS?"
-        subheading="Join 1,600+ UK electricians studying smarter with AI. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians studying smarter with AI. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

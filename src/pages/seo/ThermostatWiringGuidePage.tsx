@@ -185,7 +185,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>S-Plan (two zone valves)</strong> — two separate motorised zone valves
                 (typically Honeywell V4043 or Drayton MA1 types) control the central heating and hot
@@ -197,7 +197,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Y-Plan (one mid-position valve)</strong> — a single three-port motorised
                 valve (typically Honeywell V4073 or Drayton HM2 mid-position type) controls both
@@ -234,7 +234,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard room thermostat terminals</strong> — most UK room thermostats
                 (Honeywell T6360, Drayton RTS1, Salus RT500) have three terminals: 1 = permanent
@@ -244,7 +244,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>S-Plan room thermostat wiring</strong> — permanent live from the heating
                 programmer output (or junction box) to terminal 1. Neutral to terminal 2. Switched
@@ -254,7 +254,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Y-Plan room thermostat wiring</strong> — the room thermostat switched live
                 feeds terminal 3 (White — call for heat) of the mid-position valve wiring centre or
@@ -263,7 +263,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Combi boiler room thermostat</strong> — the switched live from the
                 thermostat connects directly to the boiler's heating call terminals (typically
@@ -291,7 +291,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Thermostat setting — minimum 60°C</strong> — the cylinder thermostat must be
                 set to a minimum of 60°C to prevent Legionella bacteria growth in stored hot water.
@@ -304,7 +304,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cylinder thermostat terminals</strong> — standard cylinder thermostats
                 (Honeywell L641A, Drayton Thermostat 5) have two or three terminals: COM (permanent
@@ -314,7 +314,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>S-Plan cylinder thermostat wiring</strong> — permanent live from the hot
                 water programmer output to the COM terminal. Switched live from the NC terminal to
@@ -324,7 +324,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cylinder positioning</strong> — the thermostat must be in good thermal
                 contact with the cylinder. Clean the cylinder surface before strapping, and use the
@@ -352,7 +352,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard programmer terminals</strong> — most UK programmers use numbered
                 terminals: N (neutral), L (permanent live), HW ON (hot water timed live output), CH
@@ -361,7 +361,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Replacing a programmer</strong> — photograph all existing terminal
                 connections before disconnecting. Map the wire colours and terminal numbers/labels.
@@ -372,7 +372,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wiring centre / junction box</strong> — in S-Plan and Y-Plan systems, the
                 programmer, thermostats, zone valves, and boiler are typically connected via a
@@ -400,7 +400,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth wire requirement</strong> — Nest (3rd generation and Nest E), Hive,
                 and tado° all require an earth connection at the thermostat backplate. Many older UK
@@ -410,7 +410,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Nest wiring (mains voltage systems)</strong> — Nest connects to: W (switched
                 live to heating circuit/zone valve), Rh (permanent live — though Nest can draw this
@@ -420,7 +420,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hive Active Heating</strong> — uses a wireless thermostat that communicates
                 with a receiver unit wired at the boiler/wiring centre. The wireless design means no
@@ -430,7 +430,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Compatibility checking</strong> — all major smart thermostat brands provide
                 online compatibility checking tools. Before purchasing, input the boiler make/model,
@@ -443,7 +443,7 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-4 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <p className="text-white text-sm">
               <strong>Important:</strong> Installing a smart thermostat that requires new wiring
               (running a new earth wire or additional circuits) is notifiable work under Building
@@ -564,7 +564,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Certificate on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -597,7 +597,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certify thermostat and heating control installations with"
-          description="Join 1,600+ UK electricians using Elec-Mate to issue Minor Works Certificates and Electrical Installation Certificates on site."
+          description="Join 2,100+ UK electricians using Elec-Mate to issue Minor Works Certificates and Electrical Installation Certificates on site."
           icon={FileCheck2}
         />
       </>
@@ -623,7 +623,7 @@ export default function ThermostatWiringGuidePage() {
       heroTitle={
         <>
           Thermostat Wiring Guide UK:{' '}
-          <span className="text-yellow-400">Room & Cylinder Thermostat Wiring</span>
+          <span className="text-elec-yellow">Room & Cylinder Thermostat Wiring</span>
         </>
       }
       heroSubtitle="Everything electricians need to know about thermostat wiring in UK heating systems — S-Plan and Y-Plan configurations, room thermostat terminals, cylinder thermostat Legionella settings, programmer wiring, Nest and Hive earth wire requirements, and heat pump thermostat compatibility."
@@ -634,7 +634,7 @@ export default function ThermostatWiringGuidePage() {
       faqHeading="Frequently Asked Questions About Thermostat Wiring"
       relatedPages={relatedPages}
       ctaHeading="Issue Heating Control Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to issue Minor Works Certificates and Electrical Installation Certificates on site. Instant PDF export, Part P compliant, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to issue Minor Works Certificates and Electrical Installation Certificates on site. Instant PDF export, Part P compliant, cancel anytime."
     />
   );
 }

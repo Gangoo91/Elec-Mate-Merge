@@ -44,7 +44,7 @@ export default function EVChargerLoadCalculatorPage() {
       badgeIcon={Car}
       heroTitle={
         <>
-          <span className="text-yellow-400">EV Charger Load Calculator</span> — Demand Assessment
+          <span className="text-elec-yellow">EV Charger Load Calculator</span> — Demand Assessment
           for Electric Vehicle Installations
         </>
       }
@@ -124,7 +124,7 @@ export default function EVChargerLoadCalculatorPage() {
               </p>
               <div className="grid gap-4 sm:grid-cols-2 my-4">
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-                  <h4 className="font-bold text-yellow-400 text-lg mb-2">Single-Phase (7kW)</h4>
+                  <h4 className="font-bold text-elec-yellow text-lg mb-2">Single-Phase (7kW)</h4>
                   <ul className="space-y-2 text-white text-sm">
                     <li>32A at 230V</li>
                     <li>20-30 miles of range per hour</li>
@@ -134,7 +134,7 @@ export default function EVChargerLoadCalculatorPage() {
                   </ul>
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-                  <h4 className="font-bold text-yellow-400 text-lg mb-2">Three-Phase (22kW)</h4>
+                  <h4 className="font-bold text-elec-yellow text-lg mb-2">Three-Phase (22kW)</h4>
                   <ul className="space-y-2 text-white text-sm">
                     <li>32A per phase at 400V</li>
                     <li>60-80 miles of range per hour</li>
@@ -174,7 +174,7 @@ export default function EVChargerLoadCalculatorPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <div>
                       <p className="font-semibold text-white">Static Load Management</p>
                       <p className="text-white text-sm">
@@ -186,7 +186,7 @@ export default function EVChargerLoadCalculatorPage() {
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <div>
                       <p className="font-semibold text-white">Dynamic Load Management</p>
                       <p className="text-white text-sm">
@@ -230,22 +230,22 @@ export default function EVChargerLoadCalculatorPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
                 <ul className="space-y-1 text-white text-sm">
                   <li>
-                    <strong className="text-yellow-400">1 charger:</strong> 1.00 (no diversity)
+                    <strong className="text-elec-yellow">1 charger:</strong> 1.00 (no diversity)
                   </li>
                   <li>
-                    <strong className="text-yellow-400">2 chargers:</strong> 0.80
+                    <strong className="text-elec-yellow">2 chargers:</strong> 0.80
                   </li>
                   <li>
-                    <strong className="text-yellow-400">5 chargers:</strong> 0.60
+                    <strong className="text-elec-yellow">5 chargers:</strong> 0.60
                   </li>
                   <li>
-                    <strong className="text-yellow-400">10 chargers:</strong> 0.50
+                    <strong className="text-elec-yellow">10 chargers:</strong> 0.50
                   </li>
                   <li>
-                    <strong className="text-yellow-400">20 chargers:</strong> 0.40
+                    <strong className="text-elec-yellow">20 chargers:</strong> 0.40
                   </li>
                   <li>
-                    <strong className="text-yellow-400">50+ chargers:</strong> 0.30
+                    <strong className="text-elec-yellow">50+ chargers:</strong> 0.30
                   </li>
                 </ul>
               </div>
@@ -295,9 +295,9 @@ export default function EVChargerLoadCalculatorPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
                 <ul className="space-y-2 text-white text-sm">
                   <li className="flex items-start gap-3">
-                    <Shield className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <Shield className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Earth electrode with protective equipotential bonding:
                       </strong>{' '}
                       Install a local earth electrode (earth rod) and connect it to the protective
@@ -306,9 +306,9 @@ export default function EVChargerLoadCalculatorPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Shield className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <Shield className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Charger with PEN fault detection:</strong>{' '}
+                      <strong className="text-elec-yellow">Charger with PEN fault detection:</strong>{' '}
                       Some EV chargers include built-in PEN fault detection that disconnects the
                       supply if a PEN conductor fault is detected. This eliminates the need for a
                       separate earth electrode.
@@ -522,7 +522,7 @@ export default function EVChargerLoadCalculatorPage() {
         },
       ]}
       ctaHeading="Design EV charger installations with confidence"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EV charger load assessment and cable sizing. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for EV charger load assessment and cable sizing. 7-day free trial, cancel anytime."
       toolPath="/tools/ev-charger-load-calculator"
     />
   );

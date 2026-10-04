@@ -46,7 +46,7 @@ export default function BathroomElectricalRegsPage() {
         <>
           Bathroom Electrical Regulations UK
           <br />
-          <span className="text-yellow-400">BS 7671 Zones, IP Ratings & Requirements</span>
+          <span className="text-elec-yellow">BS 7671 Zones, IP Ratings & Requirements</span>
         </>
       }
       heroSubtitle="Bathrooms are one of the highest-risk environments for electrical installations. BS 7671 Part 7 Section 701 sets out specific requirements for bathroom zones, IP ratings, RCD protection, supplementary bonding, and SELV circuits. This guide explains every requirement in practical terms."
@@ -103,7 +103,7 @@ export default function BathroomElectricalRegsPage() {
               </p>
               <div className="space-y-4 my-6">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                  <h3 className="font-bold text-yellow-400 text-2xl mb-1">Zone 0</h3>
+                  <h3 className="font-bold text-elec-yellow text-2xl mb-1">Zone 0</h3>
                   <h4 className="font-bold text-white mb-3">Inside the Bath or Shower Basin</h4>
                   <p className="text-white text-sm leading-relaxed">
                     Zone 0 is the interior of the bath or shower tray — the space that can contain
@@ -116,7 +116,7 @@ export default function BathroomElectricalRegsPage() {
                   </p>
                 </div>
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-2xl mb-1">Zone 1</h3>
+                  <h3 className="font-bold text-elec-yellow text-2xl mb-1">Zone 1</h3>
                   <h4 className="font-bold text-white mb-3">
                     Above the Bath/Shower to 2.25m Height
                   </h4>
@@ -136,7 +136,7 @@ export default function BathroomElectricalRegsPage() {
                   </p>
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                  <h3 className="font-bold text-yellow-400 text-2xl mb-1">Zone 2</h3>
+                  <h3 className="font-bold text-elec-yellow text-2xl mb-1">Zone 2</h3>
                   <h4 className="font-bold text-white mb-3">0.6m Beyond Zone 1</h4>
                   <p className="text-white text-sm leading-relaxed">
                     Zone 2 extends 0.6 metres horizontally beyond Zone 1 and up to 2.25 metres above
@@ -149,7 +149,7 @@ export default function BathroomElectricalRegsPage() {
                   </p>
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                  <h3 className="font-bold text-yellow-400 text-2xl mb-1">Outside Zones</h3>
+                  <h3 className="font-bold text-elec-yellow text-2xl mb-1">Outside Zones</h3>
                   <h4 className="font-bold text-white mb-3">Beyond Zone 2</h4>
                   <p className="text-white text-sm leading-relaxed">
                     The area outside the defined zones is subject to the general requirements of BS
@@ -192,28 +192,28 @@ export default function BathroomElectricalRegsPage() {
                       <h4 className="font-bold text-white">Zone 0</h4>
                       <p className="text-white text-sm">Inside the bath/shower basin</p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-lg">IPX7</span>
+                    <span className="font-bold text-elec-yellow text-lg">IPX7</span>
                   </div>
                   <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                     <div>
                       <h4 className="font-bold text-white">Zone 1</h4>
                       <p className="text-white text-sm">Above bath/shower to 2.25m</p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-lg">IPX4</span>
+                    <span className="font-bold text-elec-yellow text-lg">IPX4</span>
                   </div>
                   <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
                     <div>
                       <h4 className="font-bold text-white">Zone 2</h4>
                       <p className="text-white text-sm">0.6m beyond Zone 1</p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-lg">IPX4</span>
+                    <span className="font-bold text-elec-yellow text-lg">IPX4</span>
                   </div>
                   <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
                     <div>
                       <h4 className="font-bold text-white">Outside Zones</h4>
                       <p className="text-white text-sm">Beyond Zone 2</p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-lg">IPX0 (general)</span>
+                    <span className="font-bold text-elec-yellow text-lg">IPX0 (general)</span>
                   </div>
                 </div>
               </div>
@@ -254,9 +254,9 @@ export default function BathroomElectricalRegsPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         All final circuits comply with automatic disconnection (Reg 411.3.2) and
                         have additional 30mA RCD protection (Reg 415.1.1)
                       </strong>{' '}
@@ -268,9 +268,9 @@ export default function BathroomElectricalRegsPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Main protective bonding is confirmed as satisfactory
                       </strong>{' '}
                       — The main bonding conductors to incoming services (water, gas) must be
@@ -279,9 +279,9 @@ export default function BathroomElectricalRegsPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         All extraneous conductive parts are effectively connected to the protective
                         equipotential bonding
                       </strong>{' '}
@@ -332,35 +332,35 @@ export default function BathroomElectricalRegsPage() {
               </p>
               <ul className="space-y-2 my-4">
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Lighting circuits</strong> — All bathroom
                     lighting, whether in Zone 1, Zone 2, or outside the zones.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Extractor fan circuits</strong> — Whether the fan
                     is supplied from the lighting circuit or has a dedicated circuit.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Shower circuits</strong> — Electric showers
                     drawing up to 46A on a dedicated circuit.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Heated towel rail circuits</strong> — Whether
                     permanently wired or supplied from a fused connection unit.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Underfloor heating circuits</strong> — Electric
                     underfloor heating elements beneath the bathroom floor.
@@ -369,7 +369,7 @@ export default function BathroomElectricalRegsPage() {
               </ul>
               <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
                 <div className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <h4 className="font-bold text-white mb-2">
                       A4:2026 Update — Reg 411.3.4: 30mA RCD on All Lighting Circuits (Domestic)
@@ -443,7 +443,7 @@ export default function BathroomElectricalRegsPage() {
                 <h3 className="font-bold text-white text-lg mb-4">Equipment Permitted by Zone</h3>
                 <div className="space-y-4">
                   <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                    <h4 className="font-bold text-yellow-400 mb-2">
+                    <h4 className="font-bold text-elec-yellow mb-2">
                       Shaver Socket (BS EN 61558-2-5)
                     </h4>
                     <p className="text-white text-sm leading-relaxed">
@@ -453,7 +453,7 @@ export default function BathroomElectricalRegsPage() {
                     </p>
                   </div>
                   <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                    <h4 className="font-bold text-yellow-400 mb-2">Electric Shower</h4>
+                    <h4 className="font-bold text-elec-yellow mb-2">Electric Shower</h4>
                     <p className="text-white text-sm leading-relaxed">
                       Permitted in Zone 1 — electric showers are specifically designed for
                       installation in this zone. The unit must be IPX4 rated. The pull-cord switch
@@ -463,7 +463,7 @@ export default function BathroomElectricalRegsPage() {
                     </p>
                   </div>
                   <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                    <h4 className="font-bold text-yellow-400 mb-2">Extractor Fan</h4>
+                    <h4 className="font-bold text-elec-yellow mb-2">Extractor Fan</h4>
                     <p className="text-white text-sm leading-relaxed">
                       Permitted in Zone 1 (if rated IPX4 or higher) and Zone 2 (if rated IPX4 or
                       higher). Many bathroom extractor fans are designed for Zone 1 installation.
@@ -472,7 +472,7 @@ export default function BathroomElectricalRegsPage() {
                     </p>
                   </div>
                   <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                    <h4 className="font-bold text-yellow-400 mb-2">Light Fittings</h4>
+                    <h4 className="font-bold text-elec-yellow mb-2">Light Fittings</h4>
                     <p className="text-white text-sm leading-relaxed">
                       Permitted in Zone 1 (if rated IPX4 and suitable for the zone), Zone 2 (if
                       rated IPX4), and outside zones (general IP rating). IP-rated LED downlights
@@ -481,7 +481,7 @@ export default function BathroomElectricalRegsPage() {
                     </p>
                   </div>
                   <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                    <h4 className="font-bold text-yellow-400 mb-2">Heated Towel Rail</h4>
+                    <h4 className="font-bold text-elec-yellow mb-2">Heated Towel Rail</h4>
                     <p className="text-white text-sm leading-relaxed">
                       If electric, permitted in Zone 2 and outside zones with appropriate IP rating.
                       Not permitted in Zone 0 or Zone 1 unless specifically designed and rated for
@@ -511,7 +511,7 @@ export default function BathroomElectricalRegsPage() {
               </p>
               <div className="grid sm:grid-cols-3 gap-4 my-6">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                  <h3 className="font-bold text-yellow-400 text-2xl mb-1">8.5 kW</h3>
+                  <h3 className="font-bold text-elec-yellow text-2xl mb-1">8.5 kW</h3>
                   <h4 className="font-bold text-white mb-3">37A at 230V</h4>
                   <p className="text-white text-sm leading-relaxed">
                     Entry-level shower. Requires a 40A circuit with 6mm² cable for short runs (up to
@@ -519,7 +519,7 @@ export default function BathroomElectricalRegsPage() {
                   </p>
                 </div>
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-2xl mb-1">9.5 kW</h3>
+                  <h3 className="font-bold text-elec-yellow text-2xl mb-1">9.5 kW</h3>
                   <h4 className="font-bold text-white mb-3">41A at 230V</h4>
                   <p className="text-white text-sm leading-relaxed">
                     Most popular domestic shower. Requires a 45A circuit with 10mm² cable. Good flow
@@ -527,7 +527,7 @@ export default function BathroomElectricalRegsPage() {
                   </p>
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                  <h3 className="font-bold text-yellow-400 text-2xl mb-1">10.5 kW</h3>
+                  <h3 className="font-bold text-elec-yellow text-2xl mb-1">10.5 kW</h3>
                   <h4 className="font-bold text-white mb-3">46A at 230V</h4>
                   <p className="text-white text-sm leading-relaxed">
                     High-output shower. Requires a 50A circuit with 10mm² cable (short runs) or

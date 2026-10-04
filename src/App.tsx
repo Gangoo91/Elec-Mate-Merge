@@ -18,6 +18,8 @@ import { ActivityTracker } from '@/components/ActivityTracker';
 import { InAppBrowserDetector } from '@/components/InAppBrowserDetector';
 import { AppUpdatePrompt } from '@/components/app-update/AppUpdatePrompt';
 import AppReviewPromptHost from '@/components/AppReviewPromptHost';
+import { NativeTrackingPrompt } from '@/components/NativeTrackingPrompt';
+import { initConsentSync } from '@/lib/consentSync';
 import { lazy, Suspense, useEffect } from 'react';
 import { Capacitor } from '@capacitor/core';
 import { captureAttribution } from '@/lib/attribution';
@@ -48,6 +50,9 @@ function NativeAppInit({ children }: { children: React.ReactNode }) {
 function AttributionCapture() {
   useEffect(() => {
     if (!Capacitor.isNativePlatform()) captureAttribution();
+    // Mirror the marketing choice onto the profile so server-side Meta events
+    // respect it (ELE-1812).
+    initConsentSync();
   }, []);
   return null;
 }
@@ -97,6 +102,7 @@ function App() {
                     recordPositiveAction() call site shares it. Native only:
                     the store review dialog doesn't exist on web. */}
                 {Capacitor.isNativePlatform() && <AppReviewPromptHost />}
+                {Capacitor.isNativePlatform() && <NativeTrackingPrompt />}
                 {/* Web-only components — not needed in native app */}
                 {!Capacitor.isNativePlatform() && (
                   <>

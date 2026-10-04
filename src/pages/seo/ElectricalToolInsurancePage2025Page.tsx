@@ -254,7 +254,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1 — Report to police</strong> — report the theft to the police
                 immediately and get a crime reference number. This is almost universally required by
@@ -263,7 +263,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2 — Photograph evidence</strong> — before any repair is carried out,
                 photograph the damage (forced entry, damage to the lock, broken window). If
@@ -272,7 +272,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 3 — Notify your insurer promptly</strong> — most policies require
                 notification within a specified period (often 24 to 72 hours). Late notification can
@@ -281,7 +281,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 4 — Provide evidence of ownership and value</strong> — compile your
                 tool register with serial numbers, receipts, bank statements, or warranty
@@ -290,7 +290,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 5 — Loss adjuster visit</strong> — for larger claims (typically above
                 £2,500 to £5,000), the insurer may appoint a loss adjuster to inspect the scene and
@@ -315,7 +315,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard excess range</strong> — £100 to £500 per claim is typical for
                 electrician tool insurance. A £100 excess gives you more claims flexibility but
@@ -324,7 +324,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Voluntary excess</strong> — some insurers allow you to choose a higher
                 voluntary excess in exchange for a lower premium. If you would not realistically
@@ -333,7 +333,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No-claims discount</strong> — unlike motor insurance, tool insurance
                 no-claims discounts are less standardised. Some policies offer a discount for
@@ -359,7 +359,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC and NAPIT approved schemes</strong> — scheme-specific insurance
                 policies are designed around how electricians work. They typically have more
@@ -370,7 +370,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Specialist trade insurers</strong> — brokers such as Tradesman Saver,
                 Kingsbridge, Simply Business, and the Federation of Master Builders offer
@@ -379,7 +379,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>General household or van insurance</strong> — some home and van insurance
                 policies claim to include tool cover, but limits are typically very low (£500 to
@@ -455,7 +455,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check van theft conditions</strong> — does the policy require forced entry
                 evidence? What are the overnight parking requirements? This single question
@@ -464,7 +464,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check test equipment cover</strong> — confirm that your multifunction
                 tester, loop tester, and RCD tester are included and that the per-item limit is
@@ -472,7 +472,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New-for-old or indemnity basis?</strong> — new-for-old replaces stolen or
                 damaged tools with equivalent new items. Indemnity basis deducts depreciation,
@@ -481,7 +481,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Claims handling reputation</strong> — read reviews and, if possible, ask
                 other electricians in your area or your scheme body who they recommend. An insurer
@@ -509,7 +509,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Build Your Tool Register in Elec-Mate</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -537,7 +537,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run a protected electrical business with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for electrical certificates, job scheduling, quoting, and invoicing."
+          description="Join 2,100+ UK electricians using Elec-Mate for electrical certificates, job scheduling, quoting, and invoicing."
           icon={ShieldCheck}
         />
       </>
@@ -563,7 +563,7 @@ export default function ElectricalToolInsurancePage2025Page() {
       heroTitle={
         <>
           Electrician Tool Insurance UK 2025:{' '}
-          <span className="text-yellow-400">Complete Van & Tool Cover Guide</span>
+          <span className="text-elec-yellow">Complete Van & Tool Cover Guide</span>
         </>
       }
       heroSubtitle="What tool insurance covers, the exclusions that catch electricians out (especially van theft without forced entry), how to make a successful claim, specialist vs general insurers, NICEIC and NAPIT approved schemes, and typical premiums for 2025."
@@ -574,7 +574,7 @@ export default function ElectricalToolInsurancePage2025Page() {
       faqHeading="Frequently Asked Questions About Electrician Tool Insurance"
       relatedPages={relatedPages}
       ctaHeading="Protect your electrical business with the right tools and systems"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for electrical certificates, job scheduling, quoting, and invoicing. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for electrical certificates, job scheduling, quoting, and invoicing. 7-day free trial, cancel anytime."
     />
   );
 }

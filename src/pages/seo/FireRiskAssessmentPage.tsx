@@ -104,35 +104,35 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Damaged accessories and overheating connections</strong> in escape routes,
                 plant rooms, kitchens, and high-use communal areas.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Overloaded circuits and poor temporary supplies</strong> where extension
                 leads or adaptors are being used instead of proper installation work.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Missing or defective emergency lighting</strong> on escape routes, stair
                 cores, final exits, and high-risk areas.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire alarm, door release, and access control interfaces</strong> that do not
                 fail safe or are poorly maintained.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Poor containment and unsealed penetrations</strong> that can contribute to
                 fire spread even where the electrical work itself still functions.
@@ -331,7 +331,7 @@ export default function FireRiskAssessmentPage() {
       heroTitle={
         <>
           Fire Risk Assessment
-          <span className="block text-yellow-400 mt-1">Guide for Electricians</span>
+          <span className="block text-elec-yellow mt-1">Guide for Electricians</span>
         </>
       }
       heroSubtitle="Fire risk assessments often create electrical actions, but many contractors still handle them with disconnected notes, quotes, and certificates. This guide explains where electricians fit in, what to check, and how to document the follow-up properly."

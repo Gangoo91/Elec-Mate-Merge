@@ -418,7 +418,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Professional On-Site Certification</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -451,7 +451,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Guildford electricians"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the premium South East market."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the premium South East market."
           icon={MapPin}
         />
       </>
@@ -478,7 +478,7 @@ export default function ElectricianGuildfordPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Guildford: <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Guildford: <span className="text-elec-yellow">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Guildford's premium Surrey market, large Victorian housing stock, University of Surrey HMO sector, and affluent commuter population create excellent opportunities for well-qualified electricians. Find NICEIC and NAPIT approved electricians in Guildford."
@@ -489,7 +489,7 @@ export default function ElectricianGuildfordPage() {
       faqHeading="Frequently Asked Questions About Electricians in Guildford"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Guildford Electricians"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the premium South East and Surrey market. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the premium South East and Surrey market. 7-day free trial."
     />
   );
 }

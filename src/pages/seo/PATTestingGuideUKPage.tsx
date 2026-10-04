@@ -39,7 +39,7 @@ export default function PATTestingGuideUKPage() {
       badgeIcon={PlugZap}
       heroTitle={
         <>
-          <span className="text-yellow-400">PAT Testing</span> Guide UK — Requirements, Law, and
+          <span className="text-elec-yellow">PAT Testing</span> Guide UK — Requirements, Law, and
           Best Practice 2026
         </>
       }

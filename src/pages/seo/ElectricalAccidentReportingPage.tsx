@@ -203,7 +203,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fatalities</strong> — any work-related death must be reported without delay.
                 This includes deaths resulting from electric shock, electrical burns, falls caused
@@ -212,7 +212,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Specified injuries to workers</strong> — RIDDOR Schedule 1 lists specified
                 injuries including: fractures (excluding fingers, thumbs, and toes); amputation; any
@@ -223,7 +223,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Over-seven-day incapacitation injuries</strong> — injuries that result in
                 the worker being incapacitated for more than seven consecutive days (not counting
@@ -233,7 +233,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Injuries to non-workers</strong> — injuries to members of the public,
                 clients, or visitors that result in them being taken from the scene to a hospital
@@ -251,7 +251,7 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 shrink-0" />
               Typically reportable
             </h4>
-            <ul className="space-y-2 text-white/90 text-sm leading-relaxed list-disc pl-4">
+            <ul className="space-y-2 text-white text-sm leading-relaxed list-disc pl-4">
               <li>Electric shock causing unconsciousness</li>
               <li>Electrical burn requiring hospital treatment</li>
               <li>Fracture (other than to fingers, thumbs or toes) from a fall off a ladder after a shock</li>
@@ -265,14 +265,14 @@ const sections = [
               <CheckCircle className="w-5 h-5 text-green-400 shrink-0" />
               Usually not RIDDOR-reportable
             </h4>
-            <ul className="space-y-2 text-white/90 text-sm leading-relaxed list-disc pl-4">
+            <ul className="space-y-2 text-white text-sm leading-relaxed list-disc pl-4">
               <li>Minor shock with full immediate recovery and no time off</li>
               <li>Small burn treated by on-site first aid only</li>
               <li>Absence of seven consecutive days or fewer</li>
               <li>Member of the public examined but not treated</li>
               <li>A near miss with no injury that is not a listed dangerous occurrence</li>
             </ul>
-            <p className="text-white/60 text-xs mt-3">
+            <p className="text-white text-xs mt-3">
               Still record these in the accident book and investigate — they are early warnings.
             </p>
           </div>
@@ -403,7 +403,7 @@ const sections = [
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left text-white border-collapse">
               <thead>
-                <tr className="bg-white/[0.06] text-white/70 uppercase text-xs tracking-wide">
+                <tr className="bg-white/[0.06] text-white uppercase text-xs tracking-wide">
                   <th className="px-4 py-3 font-semibold">Incident type</th>
                   <th className="px-4 py-3 font-semibold">Deadline</th>
                   <th className="px-4 py-3 font-semibold">Initial method</th>
@@ -443,7 +443,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Without delay means as soon as practicable</strong> — for deaths and
                 specified injuries this means the same day in practice. Where a specified injury
@@ -452,7 +452,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>The 15-day clock starts on the day of the accident</strong> — not the day on
                 which seven days of incapacitation is reached. If an injury that first appeared
@@ -461,7 +461,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>When in doubt, report</strong> — even if there is uncertainty about whether
                 an event qualifies as a dangerous occurrence, err on the side of reporting. Doing
@@ -490,22 +490,22 @@ const sections = [
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-4 text-center">
             <div className="text-2xl font-bold text-red-400">1</div>
-            <div className="text-white/80 text-xs mt-1 leading-snug">Fatal accident</div>
+            <div className="text-white text-xs mt-1 leading-snug">Fatal accident</div>
           </div>
           <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-4 text-center">
             <div className="text-2xl font-bold text-orange-400">29</div>
-            <div className="text-white/80 text-xs mt-1 leading-snug">Serious injuries</div>
+            <div className="text-white text-xs mt-1 leading-snug">Serious injuries</div>
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-4 text-center">
-            <div className="text-2xl font-bold text-yellow-400">300</div>
-            <div className="text-white/80 text-xs mt-1 leading-snug">Minor injuries</div>
+            <div className="text-2xl font-bold text-elec-yellow">300</div>
+            <div className="text-white text-xs mt-1 leading-snug">Minor injuries</div>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-4 text-center">
             <div className="text-2xl font-bold text-green-400">3,000</div>
-            <div className="text-white/80 text-xs mt-1 leading-snug">Near misses</div>
+            <div className="text-white text-xs mt-1 leading-snug">Near misses</div>
           </div>
         </div>
-        <p className="text-white/60 text-sm">
+        <p className="text-white text-sm">
           The widely cited accident-ratio model (often attributed to Heinrich) illustrates the
           principle rather than precise statistics: serious injuries sit on a much larger base of
           minor injuries and near misses. Ratios vary by study and industry, but the lesson holds —
@@ -515,7 +515,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <HardHat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <HardHat className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical near misses to report internally</strong> —{' '}
                 <SEOInternalLink href="/how-to-do-safe-isolation">safe isolation</SEOInternalLink>{' '}
@@ -527,7 +527,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <HardHat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <HardHat className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No blame culture</strong> — near miss reporting only works if workers can
                 report without fear of punishment for honest mistakes. Establish a no-blame
@@ -536,7 +536,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <HardHat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <HardHat className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Heinrich's triangle</strong> — for every fatal accident, research suggests
                 there are approximately 29 serious injuries, 300 minor injuries, and 3,000 near
@@ -545,7 +545,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <HardHat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <HardHat className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RIDDOR-reportable near misses</strong> — some near misses are RIDDOR
                 dangerous occurrences (see above). These must be formally reported to the HSE.
@@ -572,7 +572,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Immediate actions</strong> — make the site safe, follow the correct{' '}
                 <SEOInternalLink href="/electrical-rescue-procedure">
@@ -584,7 +584,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Investigation team</strong> — assign a competent person to lead the
                 investigation. For serious accidents, this may include a senior manager, a health
@@ -593,7 +593,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Root cause analysis</strong> — identify not just the immediate cause (e.g.,
                 worker touched a live conductor) but the underlying causes (e.g., safe isolation
@@ -603,7 +603,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Corrective actions</strong> — document and implement corrective actions with
                 specific owners and deadlines. Review and update risk assessments and method
@@ -673,7 +673,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-4">
-            <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+            <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-1">
                 Generate Site RAMS to Prevent Reportable Accidents
@@ -692,7 +692,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional H&S documentation for UK electricians"
-          description="Join 1,600+ UK electricians using Elec-Mate for RAMS generation, risk assessment, and health and safety documentation."
+          description="Join 2,100+ UK electricians using Elec-Mate for RAMS generation, risk assessment, and health and safety documentation."
           icon={HardHat}
         />
       </>
@@ -718,7 +718,7 @@ export default function ElectricalAccidentReportingPage() {
       heroTitle={
         <>
           Electrical Accident Reporting UK:{' '}
-          <span className="text-yellow-400">RIDDOR 2013 Guide</span>
+          <span className="text-elec-yellow">RIDDOR 2013 Guide</span>
         </>
       }
       heroSubtitle="Complete UK guide to reporting electrical accidents under RIDDOR 2013. Covers what must be reported (fatalities, specified injuries, arc flash dangerous occurrences), how and when to report to the HSE, near miss reporting, accident investigation, and RIDDOR duties for self-employed electricians."

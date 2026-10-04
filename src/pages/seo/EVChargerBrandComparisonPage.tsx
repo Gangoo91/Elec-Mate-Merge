@@ -137,7 +137,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Solar diversion</strong> — ECO mode and ECO+ mode use a CT clamp on the grid
                 meter to detect surplus solar generation and divert it into the EV. ECO+ mode
@@ -146,7 +146,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>myenergi ecosystem</strong> — integrates with the myenergi hub, Libbi
                 battery storage, and Eddi hot water diverter. The myenergi app provides unified
@@ -154,7 +154,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tethered or untethered</strong> — available in both configurations. The
                 Zappi 2 is available as a 7.4kW (single-phase) or 22kW (three-phase) model, in
@@ -162,7 +162,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Approximate installed cost</strong> — £1,000–1,400 supply and install (7.4kW
                 tethered). One of the more expensive domestic chargers, but justified for solar PV
@@ -170,7 +170,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Warranty</strong> — 3 years manufacturer's warranty. OZEV-approved.
                 Available through OZEV-approved installers for EVHS and WCS grant applications.
@@ -399,7 +399,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tethered — best for single-vehicle households</strong> — convenient, no
                 cable to manage, ideal where one household always charges the same EV with the same
@@ -408,7 +408,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Untethered — best for commercial and shared charging</strong> — allows
                 multiple users with different vehicles and their own cables to use the same charger.
@@ -429,7 +429,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BarChart2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Zappi (myenergi)</strong> — solar diversion: excellent; smart tariff: good;
                 app quality: excellent; tethered/untethered: both; commercial use: limited;
@@ -437,7 +437,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BarChart2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pod Point Solo 3</strong> — solar diversion: limited; smart tariff: good;
                 app quality: good; tethered/untethered: both; commercial use: via Pod Point Pro;
@@ -445,7 +445,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BarChart2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ohme ePod / Home Pro</strong> — solar diversion: Home Pro only; smart
                 tariff: excellent (Intelligent Octopus native); app quality: excellent;
@@ -454,7 +454,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BarChart2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Easee Charge</strong> — solar diversion: via Equalizer; smart tariff: good;
                 app quality: good; tethered/untethered: both; commercial use: excellent (power
@@ -462,7 +462,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BarChart2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wallbox Pulsar Plus</strong> — solar diversion: via third-party CT; smart
                 tariff: good; app quality: excellent; tethered/untethered: both; commercial use: via
@@ -498,7 +498,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Certificate Every Installation</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -534,7 +534,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more EV charger installations with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for EV certificates, quoting, and job management. Complete every installation professionally. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for EV certificates, quoting, and job management. Complete every installation professionally. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -560,7 +560,7 @@ export default function EVChargerBrandComparisonPage() {
       heroTitle={
         <>
           Best EV Charger UK 2025:{' '}
-          <span className="text-yellow-400">Ohme vs Zappi vs Pod Point vs Wallbox</span>
+          <span className="text-elec-yellow">Ohme vs Zappi vs Pod Point vs Wallbox</span>
         </>
       }
       heroSubtitle="An independent comparison of the UK's leading EV home and workplace chargers for 2025 — Zappi (myenergi), Pod Point, Ohme, Easee, and Wallbox. Solar integration, smart tariff support, app quality, tethered vs untethered options, commercial use, installed costs, and warranty compared side by side."
@@ -571,7 +571,7 @@ export default function EVChargerBrandComparisonPage() {
       faqHeading="Frequently Asked Questions About EV Charger Brands"
       relatedPages={relatedPages}
       ctaHeading="Complete EV Charging Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EV certificates, quoting, and job management. Every brand, every installation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for EV certificates, quoting, and job management. Every brand, every installation. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -66,7 +66,7 @@ export const minorWorksQuizQuestions: QuizQuestion[] = [
     ],
     correctAnswer: 1,
     explanation:
-      'At five times the rated residual current a general non-delay RCD operates within 40 ms. 40 ms at 5xIdn is the BS EN 61008/61009 PRODUCT-STANDARD figure — it describes the device, not the BS 7671 verification. Amendment 4 deleted Table 3A of Appendix 3, and effectiveness is now verified by an AC test at the rated residual operating current: 300 ms maximum for a general non-delay type, or between 130 ms and 500 ms for a delay Type S (Reg 643.7.3).',
+      'At five times the rated residual current a general non-delay RCD operates within 40 ms. 40 ms at 5xIdn is the BS EN 61008/61009 PRODUCT-STANDARD figure — it describes the device, not the BS 7671 verification. Amendment 2 (2022) deleted Table 3A of Appendix 3, and effectiveness is now verified by an AC test at the rated residual operating current: 300 ms maximum for a general non-delay type, or between 130 ms and 500 ms for a delay Type S (Reg 643.7.3).',
   },
   {
     id: 6,

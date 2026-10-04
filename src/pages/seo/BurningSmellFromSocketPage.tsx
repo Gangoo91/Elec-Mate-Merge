@@ -273,7 +273,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Multiple high-power appliances on one socket:</strong> A fan heater (2kW), a
                 kettle (3kW), and a toaster (1.5kW) plugged into a multi-socket adaptor draws 6.5kW
@@ -281,7 +281,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Undersized cable on a spur:</strong> A spur taken from a ring circuit using
                 2.5mm² cable is protected by the 32A MCB, but the cable is only rated for 24A
@@ -290,7 +290,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Daisy-chained extension leads:</strong> Connecting one extension lead to
                 another creates long cable runs with multiple connection points, each adding
@@ -553,7 +553,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regular periodic inspection.</strong> A 5-yearly{' '}
                 <SEOInternalLink href="/guides/eicr-for-landlords">EICR</SEOInternalLink> includes
@@ -562,14 +562,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Avoid overloading sockets.</strong> Do not use multi-socket adaptors for
                 high-power appliances. If you need more sockets, have additional circuits installed.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check socket faceplates.</strong> Any socket that feels warm to the touch,
                 shows discolouration, or has a cracked faceplate should be inspected by an
@@ -577,7 +577,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consider AFDDs.</strong> Arc Fault Detection Devices provide protection
                 against series and parallel arc faults that RCDs and MCBs cannot detect. They are
@@ -585,7 +585,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Replace damaged sockets immediately.</strong> A cracked, loose, or wobbling
                 socket should be replaced before it causes a more serious fault. Do not tape over
@@ -625,7 +625,7 @@ export default function BurningSmellFromSocketPage() {
       heroTitle={
         <>
           Burning Smell from a Socket:{' '}
-          <span className="text-yellow-400">Causes, Dangers, and What to Do</span>
+          <span className="text-elec-yellow">Causes, Dangers, and What to Do</span>
         </>
       }
       heroSubtitle="A burning smell from a socket is a serious warning sign. It can indicate loose connections, circuit overload, or arcing — all of which can cause an electrical fire. This guide explains the causes, immediate safety actions, and how an electrician investigates and fixes the fault."

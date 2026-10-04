@@ -1007,7 +1007,7 @@ export const module1Questions: Question[] = [
     ],
     correctAnswer: 3,
     explanation:
-      'A 30 mA RCD operates within 40 ms at five times its rating (150 mA), giving rapid disconnection for additional protection. That 40 ms is the BS EN 61008/61009 product-standard figure and describes the device — it is not the BS 7671 verification criterion. Amendment 4 deleted Table 3A of Appendix 3, and effectiveness is now verified by an AC test at the rated residual operating current: 300 ms maximum for a general non-delay type (Reg 643.7.3).',
+      'A 30 mA RCD operates within 40 ms at five times its rating (150 mA), giving rapid disconnection for additional protection. That 40 ms is the BS EN 61008/61009 product-standard figure and describes the device — it is not the BS 7671 verification criterion. Amendment 2 (2022) deleted Table 3A of Appendix 3, and effectiveness is now verified by an AC test at the rated residual operating current: 300 ms maximum for a general non-delay type (Reg 643.7.3).',
     difficulty: 'basic',
   },
   {

@@ -16,7 +16,7 @@ const quizQuestions = [
     id: 1,
     question: 'What is the main purpose of a grommet at a cable entry?',
     options: [
-      'To eliminate the need for circuit protection',
+      'To seal the entry to IP65',
       'To protect the cable sheath from sharp knockout edges',
       'To provide an earth connection for the enclosure',
       'To act as a strain-relief clamp for vibrating equipment',

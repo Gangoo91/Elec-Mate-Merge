@@ -249,14 +249,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ol className="space-y-4 text-white list-decimal list-inside">
             <li className="flex items-start gap-3">
-              <span className="font-bold text-yellow-400 text-lg shrink-0">1.</span>
+              <span className="font-bold text-elec-yellow text-lg shrink-0">1.</span>
               <span>
                 Identify the local authority for the property address. This is the district or
                 borough council, not the county council.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="font-bold text-yellow-400 text-lg shrink-0">2.</span>
+              <span className="font-bold text-elec-yellow text-lg shrink-0">2.</span>
               <span>
                 Visit the council's building control website or the Planning Portal
                 (planningportal.co.uk) to submit a building notice application online. Most councils
@@ -264,28 +264,28 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="font-bold text-yellow-400 text-lg shrink-0">3.</span>
+              <span className="font-bold text-elec-yellow text-lg shrink-0">3.</span>
               <span>
                 Complete the building notice form: description of work, address, applicant details,
                 estimated cost of work, and declaration. Pay the building notice fee.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="font-bold text-yellow-400 text-lg shrink-0">4.</span>
+              <span className="font-bold text-elec-yellow text-lg shrink-0">4.</span>
               <span>
                 Await acknowledgement from building control (usually within 2 to 5 working days).
                 Work should not commence until the notice has been acknowledged.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="font-bold text-yellow-400 text-lg shrink-0">5.</span>
+              <span className="font-bold text-elec-yellow text-lg shrink-0">5.</span>
               <span>
                 Carry out the work to BS 7671 standards. Building control may visit during the work;
                 they will definitely inspect on completion.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="font-bold text-yellow-400 text-lg shrink-0">6.</span>
+              <span className="font-bold text-elec-yellow text-lg shrink-0">6.</span>
               <span>
                 Notify building control on completion. They will arrange an inspection and, if
                 satisfied, issue a completion certificate.
@@ -416,7 +416,7 @@ const sections = [
           membership is nearly always the more economical route.
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4 flex items-start gap-4">
-          <PoundSterling className="w-6 h-6 text-yellow-400 shrink-0 mt-0.5" />
+          <PoundSterling className="w-6 h-6 text-elec-yellow shrink-0 mt-0.5" />
           <p className="text-white text-sm leading-relaxed">
             Building notice fees are the homeowner's cost, not the electrician's. However, the time
             delays associated with building control — waiting for acknowledgement before starting,
@@ -552,7 +552,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Issue Certificates on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -604,7 +604,7 @@ export default function ElectricalWorkNotificationGuidePage() {
       heroTitle={
         <>
           Electrical Work Notification:{' '}
-          <span className="text-yellow-400">Part P — What Must Be Notified</span>
+          <span className="text-elec-yellow">Part P — What Must Be Notified</span>
         </>
       }
       heroSubtitle="Part P requires notification to building control for specific types of domestic electrical work. This guide covers exactly what is notifiable, how the building notice process works, what it costs, and why the completion certificate is essential."

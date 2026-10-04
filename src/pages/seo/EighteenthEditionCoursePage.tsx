@@ -189,18 +189,18 @@ export default function EighteenthEditionCoursePage() {
 
       {/* Hero Section */}
       <section className="relative py-16 sm:py-24 px-5 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-6">
-            <GraduationCap className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium text-yellow-400">
+            <GraduationCap className="w-4 h-4 text-elec-yellow" />
+            <span className="text-sm font-medium text-elec-yellow">
               Updated for Amendment 4:2026
             </span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-6">
             18th Edition Course Online
             <br />
-            <span className="text-yellow-400">BS 7671 Training</span>
+            <span className="text-elec-yellow">BS 7671 Training</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             Master BS 7671:2018 + Amendment 4:2026 with an AI-powered study platform built
@@ -371,10 +371,10 @@ export default function EighteenthEditionCoursePage() {
                   className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10"
                 >
                   <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] shrink-0">
-                    <BookOpen className="w-5 h-5 text-yellow-400" />
+                    <BookOpen className="w-5 h-5 text-elec-yellow" />
                   </div>
                   <div>
-                    <p className="font-semibold text-yellow-400 text-sm">{item.part}</p>
+                    <p className="font-semibold text-elec-yellow text-sm">{item.part}</p>
                     <p className="text-white text-sm">{item.title}</p>
                   </div>
                 </div>
@@ -508,7 +508,7 @@ export default function EighteenthEditionCoursePage() {
                 >
                   <span className="font-semibold text-white pr-4">{faq.question}</span>
                   <ChevronDown
-                    className={`w-5 h-5 text-yellow-400 shrink-0 transition-transform ${
+                    className={`w-5 h-5 text-elec-yellow shrink-0 transition-transform ${
                       openFaq === index ? 'rotate-180' : ''
                     }`}
                   />
@@ -529,17 +529,17 @@ export default function EighteenthEditionCoursePage() {
         <div className="max-w-4xl mx-auto">
           <div className="grid sm:grid-cols-3 gap-6 text-center">
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <Users className="w-8 h-8 text-yellow-400 mx-auto mb-3" />
+              <Users className="w-8 h-8 text-elec-yellow mx-auto mb-3" />
               <p className="text-2xl font-bold text-white mb-1">430+</p>
               <p className="text-sm text-white">UK Electricians</p>
             </div>
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <ClipboardCheck className="w-8 h-8 text-yellow-400 mx-auto mb-3" />
+              <ClipboardCheck className="w-8 h-8 text-elec-yellow mx-auto mb-3" />
               <p className="text-2xl font-bold text-white mb-1">2,500+</p>
               <p className="text-sm text-white">Practice Questions</p>
             </div>
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <BookOpen className="w-8 h-8 text-yellow-400 mx-auto mb-3" />
+              <BookOpen className="w-8 h-8 text-elec-yellow mx-auto mb-3" />
               <p className="text-2xl font-bold text-white mb-1">7 Parts</p>
               <p className="text-sm text-white">Full BS 7671 Coverage</p>
             </div>
@@ -570,7 +570,7 @@ export default function EighteenthEditionCoursePage() {
 
       <SEOCTASection
         heading="Ready to master BS 7671?"
-        subheading="Join 1,600+ UK electricians studying smarter with AI. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians studying smarter with AI. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

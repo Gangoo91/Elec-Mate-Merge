@@ -255,7 +255,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC registered contractor search</strong> — go to
                 niceic.com/find-a-contractor. You can filter by location and, in some cases, by
@@ -264,7 +264,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NAPIT registered contractor search</strong> — go to napit.org.uk and use the
                 Find a Member tool. NAPIT is a government-approved competent person scheme
@@ -272,7 +272,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check your home insurance policy</strong> — many home insurance and home
                 assistance policies include 24/7 emergency electrician cover. Check your policy
@@ -280,7 +280,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ask neighbours or local community groups</strong> — a personal
                 recommendation for a local electrician who has recently done good work is often more
@@ -345,7 +345,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Callout fee</strong> — typically £100 to £200 just to attend. This covers
                 the electrician's time to travel to you and the first 30 minutes or hour of their
@@ -354,7 +354,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hourly rate</strong> — typically £50 to £100 per hour after the initial
                 callout period. Out-of-hours rates (weekends, evenings, bank holidays) are typically
@@ -362,7 +362,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Total typical emergency callout cost</strong> — for attendance, diagnosis,
                 and making safe (without significant parts), expect to pay £150 to £400. A
@@ -371,7 +371,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>London and South East premium</strong> — London emergency rates are
                 typically 20 to 40 per cent higher than the national average, with callout fees of
@@ -498,7 +498,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-4">
-            <Phone className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+            <Phone className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-1">Make Your Registration Visible</h4>
               <p className="text-white text-sm leading-relaxed">
@@ -528,7 +528,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Issue certificates on site and quote instantly with"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site certificate completion, AI board scanning, and instant PDF export. Start your 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site certificate completion, AI board scanning, and instant PDF export. Start your 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -554,7 +554,7 @@ export default function FindingEmergencyElectricianPage() {
       heroTitle={
         <>
           Finding an Emergency Electrician UK:{' '}
-          <span className="text-yellow-400">What to Do and Who to Call</span>
+          <span className="text-elec-yellow">What to Do and Who to Call</span>
         </>
       }
       heroSubtitle="What counts as a genuine electrical emergency, the safe steps to take before the electrician arrives, how to find a 24/7 NICEIC or NAPIT registered electrician, typical callout rates, and how to avoid cowboy builders."
@@ -565,7 +565,7 @@ export default function FindingEmergencyElectricianPage() {
       faqHeading="Frequently Asked Questions About Emergency Electricians"
       relatedPages={relatedPages}
       ctaHeading="Are You an Electrician? Stand Out with Elec-Mate"
-      ctaSubheading="Issue Minor Works Certificates and EICs on site before you leave. Join 1,600+ UK electricians. 7-day free trial, cancel anytime."
+      ctaSubheading="Issue Minor Works Certificates and EICs on site before you leave. Join 2,100+ UK electricians. 7-day free trial, cancel anytime."
     />
   );
 }

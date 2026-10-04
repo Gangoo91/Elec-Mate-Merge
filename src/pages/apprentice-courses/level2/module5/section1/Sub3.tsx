@@ -191,7 +191,7 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      "CDM 2015 Reg 15(1)(b) requires every worker to report hazards to the person in control of the work. HASAWA s.7(a) requires every employee to take reasonable care for others affected by their acts or omissions. Reporting hazards via your own chain is how both duties are discharged. Approaching an HSE inspector direct sidesteps your own management — it's an option of last resort if you genuinely believe the chain is suppressing the report, and there are whistle-blower protections under the Employment Rights Act 1996 for that scenario.",
+      "CDM 2015 Reg 8(5) requires every worker to report hazards to the person in control of the work. HASAWA s.7(a) requires every employee to take reasonable care for others affected by their acts or omissions. Reporting hazards via your own chain is how both duties are discharged. Approaching an HSE inspector direct sidesteps your own management — it's an option of last resort if you genuinely believe the chain is suppressing the report, and there are whistle-blower protections under the Employment Rights Act 1996 for that scenario.",
   },
 ];
 
@@ -650,7 +650,7 @@ export default function Sub3() {
             "Building Inspectors (LABC or Approved Inspector) check Building Regulations compliance, including Approved Document P for electrical safety in dwellings. On Part P notifiable work the contractor's competent-person scheme usually self-certifies, so a physical Building Control visit is rare.",
             'Scheme assessors (NICEIC, NAPIT, ELECSA, STROMA, Certsure) conduct annual audits of registered contractors — sampling installations, reviewing certificates, witnessing testing. Failing means restrictions or removal from scheme membership.',
             "If an inspector questions you, be politely factual, never lie or speculate, and ask to fetch your supervisor for anything substantive. The cardinal rule is don't lie — an inspector who catches an embellishment treats the whole company's evidence as suspect.",
-            "If you spot a hazard during a visit, report it via your own chain (Foreman, then Site Manager) under CDM 2015 Reg 15(1)(b). Don't approach an HSE inspector direct unless you genuinely believe the chain is suppressing the report.",
+            "If you spot a hazard during a visit, report it via your own chain (Foreman, then Site Manager) under CDM 2015 Reg 8(5). Don't approach an HSE inspector direct unless you genuinely believe the chain is suppressing the report.",
           ]}
         />
 

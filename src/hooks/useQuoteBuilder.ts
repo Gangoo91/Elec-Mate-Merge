@@ -17,6 +17,7 @@ import {
   takesOwnershipOfDerived,
 } from '@/utils/timeAllowance';
 import { openOrDownloadPdf } from '@/utils/pdf-download';
+import { quoteRecipient, sendQuoteEmail } from '@/utils/sendQuoteEmail';
 
 export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Quote) => {
   const { saveQuote } = useQuoteStorage();
@@ -285,7 +286,10 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
          */
         vat_amount: finalQuote.vatAmount || 0,
         total: finalQuote.total || 0,
-        status: 'draft',
+        // The status the quote HAS. This wrote 'draft' on every autosave, so
+        // merely opening a sent quote in the builder turned it back into a
+        // draft within ten seconds, with nothing saved by the user.
+        status: quote.status || 'draft',
         notes: quote.notes || null,
         site_visit_id: quote.site_visit_id || null,
         // Keep the certificate link on autosaved drafts — without these a
@@ -298,8 +302,22 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
         updated_at: new Date().toISOString(),
       };
 
+      /*
+       * The quote's creation instant: for a quote being edited, its ORIGINAL
+       * one. This sent "now" on the first autosave of every builder session,
+       * and the upsert wrote it over the existing row — so opening a quote to
+       * edit re-dated it (seen 2 Oct 2026: 2026/056 went from 28 Sep to 2 Oct;
+       * at least 10 quotes across 10 users carried a creation date after their
+       * last edit). Same anchor as the expiry below.
+       */
+      const creationMs = (() => {
+        const fromQuote = quote.createdAt ? new Date(quote.createdAt).getTime() : NaN;
+        if (Number.isFinite(fromQuote)) return fromQuote;
+        if (!draftAnchorRef.current) draftAnchorRef.current = Date.now();
+        return draftAnchorRef.current;
+      })();
       if (!lastSavedRef.current) {
-        dbData.created_at = new Date().toISOString();
+        dbData.created_at = new Date(creationMs).toISOString();
       }
 
       /*
@@ -333,12 +351,7 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
          * it silently extends a deadline the client was already given
          * (ELE-1576).
          */
-        const anchorMs = (() => {
-          const fromQuote = quote.createdAt ? new Date(quote.createdAt).getTime() : NaN;
-          if (Number.isFinite(fromQuote)) return fromQuote;
-          if (!draftAnchorRef.current) draftAnchorRef.current = Date.now();
-          return draftAnchorRef.current;
-        })();
+        const anchorMs = creationMs;
 
         const days = quote.settings?.validForDays;
         if (typeof days === 'number' && days > 0) {
@@ -466,234 +479,292 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
     }
   }, []);
 
-  const generateQuote = useCallback(async () => {
-    if (isGenerating) return; // Prevent multiple clicks
+  /**
+   * Save the quote (and its PDF), then leave the builder. With `send`, it is
+   * also emailed to the client once saved — ELE-1794: it used to take save,
+   * leave, re-open the quote and send from there.
+   */
+  const generateQuote = useCallback(
+    async (opts?: { send?: boolean }) => {
+      if (isGenerating) return; // Prevent multiple clicks
+      const send = opts?.send === true;
 
-    const requestId = generateRequestId();
-    logger
-      .api('quotes/generate', requestId)
-      .start({ quoteId: quote.id, quoteNumber: quote.quoteNumber });
-    logger.action('Generate quote', 'quotes', { quoteId: quote.id });
+      const requestId = generateRequestId();
+      logger
+        .api('quotes/generate', requestId)
+        .start({ quoteId: quote.id, quoteNumber: quote.quoteNumber });
+      logger.action('Generate quote', 'quotes', { quoteId: quote.id });
 
-    setIsGenerating(true);
-    let pdfDownloadUrl: string | null = null;
-    let pdfQuoteNumber: string = '';
-    try {
-      const finalQuote = calculateTotals();
-
-      // Validate quote before generation — only require client name and at least one item
-      if (!finalQuote.client?.name) {
-        toast({
-          title: 'Missing Client',
-          description: 'Please enter a client name.',
-          variant: 'destructive',
-        });
-        return;
-      }
-      if (!finalQuote.items || finalQuote.items.length === 0) {
-        toast({
-          title: 'No Items',
-          description: 'Please add at least one item to the quote.',
-          variant: 'destructive',
-        });
-        return;
-      }
-      // Belt-and-braces: the quote is given a uuid at creation (line ~20), so
-      // id should always be present. But generate-pdf-monkey hard-rejects a
-      // quote with no id (400 "Quote data is required"), which then throws into
-      // Sentry — seen from stale PWA builds. Guard so the user gets a clear
-      // recoverable message instead of a crash. Sentry: JAVASCRIPT-REACT-A0.
-      if (!finalQuote.id) {
-        toast({
-          title: 'Could not generate quote',
-          description: 'Please refresh the page and try again.',
-          variant: 'destructive',
-        });
-        logger.error('Quote generation aborted: missing quote id', undefined, {
-          requestId,
-          quoteNumber: finalQuote.quoteNumber,
-          itemCount: finalQuote.items.length,
-        });
-        return;
-      }
-
-      // ELE-1466 — allocate the number here if the autosave has not already
-      // been given one by the trigger. Generation is the right moment to
-      // consume one: the PDF below is stamped with it, and a user who reaches
-      // this point is producing a real document. Allocating on mount instead
-      // put a gap in the sequence every time somebody opened the builder and
-      // changed their mind.
-      if (!finalQuote.quoteNumber) {
-        finalQuote.quoteNumber = await generateSequentialQuoteNumber();
-        setQuote((prev) => ({ ...prev, quoteNumber: finalQuote.quoteNumber }));
-      }
-
-      logger.info('Quote generation started', {
-        requestId,
-        quoteId: finalQuote.id,
-        quoteNumber: finalQuote.quoteNumber,
-        clientName: finalQuote.client?.name,
-        itemCount: finalQuote.items?.length,
-        total: finalQuote.total,
-      });
-
-      // Update quote with expiry - keep as draft until explicitly sent
-      const updatedQuote = {
-        ...finalQuote,
-        status: 'draft' as const,
-        expiryDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
-        updatedAt: new Date(),
-      };
-
-      setQuote(updatedQuote);
-
-      // Fetch FRESH company profile directly - don't rely on React state which has stale closure
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      let freshCompanyProfile = companyProfile;
-
-      if (user) {
-        const { data: cpData } = await supabase
-          .from('company_profiles')
-          .select('*')
-          .eq('user_id', user.id)
-          .single();
-
-        if (cpData) {
-          freshCompanyProfile = cpData;
-        }
-      }
-
-      // Generate PDF using PDF Monkey
+      setIsGenerating(true);
+      let pdfDownloadUrl: string | null = null;
+      let pdfQuoteNumber: string = '';
       try {
-        logger.api('generate-pdf-monkey', requestId).start({ quoteId: updatedQuote.id });
+        const finalQuote = calculateTotals();
 
-        const { data, error } = await supabase.functions.invoke('generate-pdf-monkey', {
-          body: {
-            quote: updatedQuote,
-            companyProfile: freshCompanyProfile,
-          },
-        });
-
-        if (error) {
-          // Capture the underlying Response status + body for Sentry — Sentry REACT-3T
-          // supabase-js wraps the failing Response in FunctionsHttpError.context
-          let edgeFunctionStatus: number | undefined;
-          let edgeFunctionBody: string | undefined;
-          try {
-            const ctx = (error as { context?: Response }).context;
-            if (ctx && typeof ctx === 'object') {
-              edgeFunctionStatus = ctx.status;
-              if (typeof ctx.clone === 'function') {
-                edgeFunctionBody = (await ctx.clone().text()).slice(0, 500);
-              }
-            }
-          } catch {
-            // Best-effort diagnostics — ignore failures reading the response
-          }
-          logger.api('generate-pdf-monkey', requestId).error(error, {
-            quoteId: updatedQuote.id,
-            edgeFunctionStatus,
-            edgeFunctionBody,
-          });
-          throw error;
-        }
-
-        if (data?.downloadUrl) {
-          logger.api('generate-pdf-monkey', requestId).success({ documentId: data.documentId });
-          // Store URL for the success toast action — don't auto-download (ELE-260)
-          pdfDownloadUrl = data.downloadUrl;
-          pdfQuoteNumber = updatedQuote.quoteNumber || updatedQuote.id;
-        } else if (data?.documentId) {
-          logger.info('PDF still processing', { documentId: data.documentId });
+        // Validate quote before generation — only require client name and at least one item
+        if (!finalQuote.client?.name) {
           toast({
-            title: 'PDF Processing',
-            description: 'Your PDF is being generated. It will open shortly.',
-            variant: 'default',
+            title: 'Missing Client',
+            description: 'Please enter a client name.',
+            variant: 'destructive',
+          });
+          return;
+        }
+        // Before anything is saved: "Save & send" with nowhere to send it would
+        // save and then fail, leaving the user to find the quote again.
+        if (send && !quoteRecipient(finalQuote)) {
+          toast({
+            title: 'No client email',
+            description: "Add the client's email address to send it, or just save it for now.",
+            variant: 'destructive',
+          });
+          return;
+        }
+        if (!finalQuote.items || finalQuote.items.length === 0) {
+          toast({
+            title: 'No Items',
+            description: 'Please add at least one item to the quote.',
+            variant: 'destructive',
+          });
+          return;
+        }
+        // Belt-and-braces: the quote is given a uuid at creation (line ~20), so
+        // id should always be present. But generate-pdf-monkey hard-rejects a
+        // quote with no id (400 "Quote data is required"), which then throws into
+        // Sentry — seen from stale PWA builds. Guard so the user gets a clear
+        // recoverable message instead of a crash. Sentry: JAVASCRIPT-REACT-A0.
+        if (!finalQuote.id) {
+          toast({
+            title: 'Could not generate quote',
+            description: 'Please refresh the page and try again.',
+            variant: 'destructive',
+          });
+          logger.error('Quote generation aborted: missing quote id', undefined, {
+            requestId,
+            quoteNumber: finalQuote.quoteNumber,
+            itemCount: finalQuote.items.length,
+          });
+          return;
+        }
+
+        // ELE-1466 — allocate the number here if the autosave has not already
+        // been given one by the trigger. Generation is the right moment to
+        // consume one: the PDF below is stamped with it, and a user who reaches
+        // this point is producing a real document. Allocating on mount instead
+        // put a gap in the sequence every time somebody opened the builder and
+        // changed their mind.
+        if (!finalQuote.quoteNumber) {
+          finalQuote.quoteNumber = await generateSequentialQuoteNumber();
+          setQuote((prev) => ({ ...prev, quoteNumber: finalQuote.quoteNumber }));
+        }
+
+        logger.info('Quote generation started', {
+          requestId,
+          quoteId: finalQuote.id,
+          quoteNumber: finalQuote.quoteNumber,
+          clientName: finalQuote.client?.name,
+          itemCount: finalQuote.items?.length,
+          total: finalQuote.total,
+        });
+
+        // Update quote with expiry - keep as draft until explicitly sent
+        const updatedQuote = {
+          ...finalQuote,
+          status: 'draft' as const,
+          expiryDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
+          updatedAt: new Date(),
+        };
+
+        setQuote(updatedQuote);
+
+        // Fetch FRESH company profile directly - don't rely on React state which has stale closure
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+        let freshCompanyProfile = companyProfile;
+
+        if (user) {
+          const { data: cpData } = await supabase
+            .from('company_profiles')
+            .select('*')
+            .eq('user_id', user.id)
+            .single();
+
+          if (cpData) {
+            freshCompanyProfile = cpData;
+          }
+        }
+
+        // Generate PDF using PDF Monkey
+        try {
+          logger.api('generate-pdf-monkey', requestId).start({ quoteId: updatedQuote.id });
+
+          const { data, error } = await supabase.functions.invoke('generate-pdf-monkey', {
+            body: {
+              quote: updatedQuote,
+              companyProfile: freshCompanyProfile,
+            },
+          });
+
+          if (error) {
+            // Capture the underlying Response status + body for Sentry — Sentry REACT-3T
+            // supabase-js wraps the failing Response in FunctionsHttpError.context
+            let edgeFunctionStatus: number | undefined;
+            let edgeFunctionBody: string | undefined;
+            try {
+              const ctx = (error as { context?: Response }).context;
+              if (ctx && typeof ctx === 'object') {
+                edgeFunctionStatus = ctx.status;
+                if (typeof ctx.clone === 'function') {
+                  edgeFunctionBody = (await ctx.clone().text()).slice(0, 500);
+                }
+              }
+            } catch {
+              // Best-effort diagnostics — ignore failures reading the response
+            }
+            logger.api('generate-pdf-monkey', requestId).error(error, {
+              quoteId: updatedQuote.id,
+              edgeFunctionStatus,
+              edgeFunctionBody,
+            });
+            throw error;
+          }
+
+          if (data?.downloadUrl) {
+            logger.api('generate-pdf-monkey', requestId).success({ documentId: data.documentId });
+            // Store URL for the success toast action — don't auto-download (ELE-260)
+            pdfDownloadUrl = data.downloadUrl;
+            pdfQuoteNumber = updatedQuote.quoteNumber || updatedQuote.id;
+          } else if (data?.documentId) {
+            logger.info('PDF still processing', { documentId: data.documentId });
+            toast({
+              title: 'PDF Processing',
+              description: 'Your PDF is being generated. It will open shortly.',
+              variant: 'default',
+            });
+          }
+        } catch (pdfError) {
+          logger.error('PDF generation failed', pdfError, { quoteId: updatedQuote.id, requestId });
+          toast({
+            title: 'PDF Generation Failed',
+            description: 'Could not generate PDF. The quote has been saved.',
+            variant: 'destructive',
           });
         }
-      } catch (pdfError) {
-        logger.error('PDF generation failed', pdfError, { quoteId: updatedQuote.id, requestId });
-        toast({
-          title: 'PDF Generation Failed',
-          description: 'Could not generate PDF. The quote has been saved.',
-          variant: 'destructive',
-        });
-      }
 
-      // Save quote to Supabase
-      logger.api('quotes/save', requestId).start({ quoteId: updatedQuote.id });
-      const saved = await saveQuote(updatedQuote as Quote);
+        // Save quote to Supabase
+        logger.api('quotes/save', requestId).start({ quoteId: updatedQuote.id });
+        const saved = await saveQuote(updatedQuote as Quote);
 
-      if (saved) {
-        logger.api('quotes/save', requestId).success({ quoteNumber: updatedQuote.quoteNumber });
+        if (saved) {
+          logger.api('quotes/save', requestId).success({ quoteNumber: updatedQuote.quoteNumber });
 
-        // Backlink the source site visit: visit ↔ quote both ways, and mark
-        // the scope as sent so the visits hub reflects reality
-        if (updatedQuote.site_visit_id && updatedQuote.id) {
-          void supabase
-            .from('site_visits')
-            .update({ quote_id: updatedQuote.id, status: 'scope_sent' })
-            .eq('id', updatedQuote.site_visit_id)
-            .then(({ error }) => {
-              if (error) console.warn('[QuoteBuilder] Site-visit backlink failed:', error.message);
+          // Backlink the source site visit: visit ↔ quote both ways, and mark
+          // the scope as sent so the visits hub reflects reality
+          if (updatedQuote.site_visit_id && updatedQuote.id) {
+            void supabase
+              .from('site_visits')
+              .update({ quote_id: updatedQuote.id, status: 'scope_sent' })
+              .eq('id', updatedQuote.site_visit_id)
+              .then(({ error }) => {
+                if (error)
+                  console.warn('[QuoteBuilder] Site-visit backlink failed:', error.message);
+              });
+          }
+
+          const url = pdfDownloadUrl;
+          const num = pdfQuoteNumber;
+          const docLabel = updatedQuote.settings?.isEstimate ? 'Estimate' : 'Quote';
+
+          // ELE-1794 — send now that the row (and its number) exists. The send
+          // marks it sent server-side. A failed send never loses the quote: it
+          // is saved, and the message says where to send it from.
+          let sentTo: string | null = null;
+          if (send) {
+            try {
+              sentTo = await sendQuoteEmail({
+                ...(updatedQuote as Quote),
+                user_id: user?.id ?? null,
+              });
+            } catch (sendError) {
+              logger.error('Save & send: send failed', sendError, {
+                quoteId: updatedQuote.id,
+                requestId,
+              });
+              toast({
+                title: `${docLabel} saved — not sent`,
+                description: `${(sendError as Error).message || 'The email could not be sent.'} Open it from your quotes to send it.`,
+                variant: 'destructive',
+              });
+            }
+          }
+          if (sentTo) {
+            toast({
+              title: `${docLabel} sent`,
+              description: `${docLabel} ${updatedQuote.quoteNumber} saved and emailed to ${sentTo}.`,
+              variant: 'success',
             });
+          } else if (!send)
+            toast({
+              title: `${docLabel} Generated Successfully`,
+              description: `${docLabel} ${updatedQuote.quoteNumber} has been generated and saved.`,
+              variant: 'success',
+              ...(url
+                ? {
+                    action: createElement(
+                      ToastAction,
+                      {
+                        altText: 'Download PDF',
+                        className: 'touch-manipulation',
+                        onClick: () => openOrDownloadPdf(url, `${docLabel}-${num}.pdf`),
+                      },
+                      'Download PDF'
+                    ),
+                  }
+                : {}),
+            });
+        } else {
+          logger.warn('Quote save failed', {
+            quoteId: updatedQuote.id,
+            quoteNumber: updatedQuote.quoteNumber,
+          });
+          const docLabel = updatedQuote.settings?.isEstimate ? 'Estimate' : 'Quote';
+          toast({
+            title: `${docLabel} not saved`,
+            description: `${docLabel} ${updatedQuote.quoteNumber} could not be saved — your work is still here. Check your signal and try again.`,
+            variant: 'destructive',
+          });
         }
 
-        const url = pdfDownloadUrl;
-        const num = pdfQuoteNumber;
-        const docLabel = updatedQuote.settings?.isEstimate ? 'Estimate' : 'Quote';
+        /*
+         * Leave the builder once the quote is saved — never when the save
+         * failed. Leaving cleared the local draft (QuoteWizard
+         * handleQuoteGenerated), so a save that failed on a poor signal threw
+         * the whole quote away while the toast said to "try again".
+         */
+        if (onQuoteGenerated && saved) {
+          logger
+            .api('quotes/generate', requestId)
+            .success({ quoteNumber: updatedQuote.quoteNumber });
+          onQuoteGenerated();
+          return;
+        }
+
+        logger.api('quotes/generate', requestId).success({ quoteNumber: updatedQuote.quoteNumber });
+      } catch (error) {
+        logger.api('quotes/generate', requestId).error(error, { quoteId: quote.id });
         toast({
-          title: `${docLabel} Generated Successfully`,
-          description: `${docLabel} ${updatedQuote.quoteNumber} has been generated and saved.`,
-          variant: 'success',
-          ...(url
-            ? {
-                action: createElement(
-                  ToastAction,
-                  {
-                    altText: 'Download PDF',
-                    className: 'touch-manipulation',
-                    onClick: () => openOrDownloadPdf(url, `${docLabel}-${num}.pdf`),
-                  },
-                  'Download PDF'
-                ),
-              }
-            : {}),
-        });
-      } else {
-        logger.warn('Quote save failed', {
-          quoteId: updatedQuote.id,
-          quoteNumber: updatedQuote.quoteNumber,
-        });
-        const docLabel = updatedQuote.settings?.isEstimate ? 'Estimate' : 'Quote';
-        toast({
-          title: `${docLabel} Generated`,
-          description: `${docLabel} ${updatedQuote.quoteNumber} has been generated but could not be saved. Please try again from the quotes page.`,
+          title: 'Could not save',
+          description:
+            'Something went wrong saving this — your work is still here. Please try again.',
           variant: 'destructive',
         });
+      } finally {
+        setIsGenerating(false);
       }
-
-      // Always navigate away after generation — don't leave user stuck in the builder
-      if (onQuoteGenerated) {
-        logger.api('quotes/generate', requestId).success({ quoteNumber: updatedQuote.quoteNumber });
-        onQuoteGenerated();
-        return;
-      }
-
-      logger.api('quotes/generate', requestId).success({ quoteNumber: updatedQuote.quoteNumber });
-    } catch (error) {
-      logger.api('quotes/generate', requestId).error(error, { quoteId: quote.id });
-      toast({
-        title: 'Generation Failed',
-        description: 'There was an error generating the quote. Please try again.',
-        variant: 'destructive',
-      });
-    } finally {
-      setIsGenerating(false);
-    }
-  }, [quote, isGenerating, onQuoteGenerated, saveQuote, companyProfile, calculateTotals]);
+    },
+    [quote, isGenerating, onQuoteGenerated, saveQuote, companyProfile, calculateTotals]
+  );
 
   const resetQuote = useCallback(async () => {
     // ELE-1466 — no number is allocated for an empty quote. The database

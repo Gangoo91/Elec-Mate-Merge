@@ -259,7 +259,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Power className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Power className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main switch isolation</strong> — the main switch on the consumer unit
                 disconnects the installation from the supply. This is the first action if the
@@ -267,7 +267,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Power className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Power className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Individual circuit isolation</strong> — if only one circuit is affected (for
                 example, a socket circuit with water damage), switch off the relevant MCB or RCBO.
@@ -275,7 +275,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Power className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Power className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DNO disconnection</strong> — if the consumer unit is not safe to touch, or
                 if the damage is to the supply side (meter, cutout, service cable), call 105 and
@@ -348,42 +348,42 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Check the consumer unit for signs of water ingress, burn marks, or damage to the
                 enclosure.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Test the RCD by pressing the test button. If it does not trip, it has failed and
                 must be replaced.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Check for any circuits that have tripped and will not reset — this indicates a fault
                 on the circuit that needs investigation.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Inspect visible wiring, sockets, switches, and light fittings for damage, water
                 staining, or discolouration.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Check outdoor installations — garden lighting, external sockets, EV chargers — for
                 physical damage from wind or debris.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 If the property has suffered significant damage, arrange an{' '}
                 <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> to provide a
@@ -414,21 +414,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Properties in areas with frequent thunderstorm activity</span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Properties with overhead supply lines (more exposed to lightning-induced surges)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Properties with expensive or sensitive electronic equipment</span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Properties with fire alarm, intruder alarm, or telecare systems</span>
             </li>
           </ul>
@@ -456,7 +456,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EICR on Your Phone</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -516,7 +516,7 @@ export default function StormDamageElectricalPage() {
       heroTitle={
         <>
           Storm Damage Electrical Safety:{' '}
-          <span className="text-yellow-400">What to Do and Who to Call</span>
+          <span className="text-elec-yellow">What to Do and Who to Call</span>
         </>
       }
       heroSubtitle="Storms cause downed power lines, water ingress in consumer units, and surge damage to electrical installations. This guide covers the essential safety steps — who to call, how to isolate safely, and when you need a qualified electrician."
@@ -527,7 +527,7 @@ export default function StormDamageElectricalPage() {
       faqHeading="Frequently Asked Questions About Storm Damage and Electrical Safety"
       relatedPages={relatedPages}
       ctaHeading="Be Ready for Storm Call-Outs"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EICR certificates, quoting, and cable sizing. Respond to storm damage call-outs with professional tools on your phone. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for EICR certificates, quoting, and cable sizing. Respond to storm damage call-outs with professional tools on your phone. 7-day free trial."
     />
   );
 }

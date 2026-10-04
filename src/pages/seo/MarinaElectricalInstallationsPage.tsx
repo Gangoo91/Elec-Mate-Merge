@@ -995,7 +995,7 @@ export default function MarinaElectricalInstallationsPage() {
       heroTitle={
         <>
           Marina Electrical Installations:{' '}
-          <span className="text-yellow-400">BS 7671 Section 709 Guide</span>
+          <span className="text-elec-yellow">BS 7671 Section 709 Guide</span>
         </>
       }
       heroSubtitle="BS 7671 does cover marinas — Section 709. A PME earth must not reach the boat, every socket-outlet needs its own 30 mA RCD switching the neutral, sockets are IP44 minimum and at least 1 m above the highest water level. This guide sets out every Section 709 requirement, reg by reg."
@@ -1011,7 +1011,7 @@ export default function MarinaElectricalInstallationsPage() {
       faqHeading="Frequently Asked Questions About Marina Electrical Installations"
       relatedPages={relatedPages}
       ctaHeading="Certify Special Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for digital certificates, AI fault diagnosis, and BS 7671 calculators. Handles special installations including marinas. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for digital certificates, AI fault diagnosis, and BS 7671 calculators. Handles special installations including marinas. 7-day free trial."
     />
   );
 }

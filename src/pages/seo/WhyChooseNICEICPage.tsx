@@ -173,7 +173,7 @@ const sections = [
           specifically request that electrical work is carried out by a NICEIC-registered
           contractor.
         </p>
-        <p className="text-sm text-white/60 border-t border-white/10 pt-3 mt-2">
+        <p className="text-sm text-white border-t border-white/10 pt-3 mt-2">
           This guide is reviewed by Elec-Mate's qualified electrician team — JIB-graded engineers
           holding C&amp;G&nbsp;2391 Inspection &amp; Testing and current NICEIC registration,
           updated in line with BS&nbsp;7671:2018+A4:2026.
@@ -194,7 +194,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Award className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Approved Contractor</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -246,19 +246,19 @@ const sections = [
             </thead>
             <tbody>
               <tr className="border-t border-white/10">
-                <td className="p-3 font-medium text-yellow-400">Approved Contractor</td>
+                <td className="p-3 font-medium text-elec-yellow">Approved Contractor</td>
                 <td className="p-3">Design, install, inspect, test and certify domestic, commercial and industrial work</td>
-                <td className="p-3 text-white/80">Established contracting firms</td>
+                <td className="p-3 text-white">Established contracting firms</td>
               </tr>
               <tr className="border-t border-white/10">
                 <td className="p-3 font-medium text-blue-400">Domestic Installer</td>
                 <td className="p-3">Install, inspect, test and certify electrical work in dwellings</td>
-                <td className="p-3 text-white/80">Sole traders and small residential firms</td>
+                <td className="p-3 text-white">Sole traders and small residential firms</td>
               </tr>
               <tr className="border-t border-white/10">
                 <td className="p-3 font-medium text-green-400">Specialist categories</td>
                 <td className="p-3">Add-on scopes: EV chargers, solar PV, battery storage, fire alarms, emergency lighting</td>
-                <td className="p-3 text-white/80">Contractors extending an existing registration</td>
+                <td className="p-3 text-white">Contractors extending an existing registration</td>
               </tr>
             </tbody>
           </table>
@@ -284,7 +284,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Covers non-compliant workmanship</strong> — if the installation does not
                 comply with{' '}
@@ -293,7 +293,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Protection if the contractor ceases trading</strong> — even if the original
                 electrician goes out of business, the guarantee remains valid. NICEIC will instruct
@@ -301,14 +301,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Independent investigation</strong> — if there is a dispute about whether the
                 work is compliant, NICEIC will arrange an independent technical assessment.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No cost to the consumer</strong> — the investigation and any corrective work
                 arranged under the Platinum Promise are free for the consumer.
@@ -339,14 +339,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Annual visit by a NICEIC assessor</strong> — the assessor visits the
                 contractor's premises and/or a recent installation site.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Review of recent certificates and test results</strong> — the assessor
                 examines completed EICRs, EICs, and Minor Works Certificates to check they are
@@ -354,21 +354,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Verification testing</strong> — the assessor may carry out independent
                 testing on a recent installation to verify the contractor's recorded results.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test instrument calibration</strong> — all test instruments must be within
                 their calibration date and in proper working order.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insurance and qualifications check</strong> — public liability insurance,
                 18th Edition qualification, and inspection and testing qualification must all be
@@ -476,7 +476,7 @@ const sections = [
             <thead>
               <tr className="bg-white/[0.06] text-left">
                 <th className="p-3 font-semibold">Feature</th>
-                <th className="p-3 font-semibold text-yellow-400">NICEIC</th>
+                <th className="p-3 font-semibold text-elec-yellow">NICEIC</th>
                 <th className="p-3 font-semibold text-blue-400">NAPIT</th>
                 <th className="p-3 font-semibold text-green-400">ELECSA</th>
               </tr>
@@ -486,7 +486,7 @@ const sections = [
                 <td className="p-3 font-medium">Approx. registered contractors</td>
                 <td className="p-3">~40,000</td>
                 <td className="p-3">~10,000</td>
-                <td className="p-3 text-white/80">Smaller</td>
+                <td className="p-3 text-white">Smaller</td>
               </tr>
               <tr className="border-t border-white/10">
                 <td className="p-3 font-medium">Trades covered</td>
@@ -516,7 +516,7 @@ const sections = [
                 <td className="p-3 font-medium">Consumer recognition</td>
                 <td className="p-3">Highest</td>
                 <td className="p-3">High</td>
-                <td className="p-3 text-white/80">Lower</td>
+                <td className="p-3 text-white">Lower</td>
               </tr>
             </tbody>
           </table>
@@ -544,14 +544,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use the NICEIC "Find a Contractor" tool</strong> — visit niceic.com and
                 search by your postcode to find registered contractors in your area.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Verify the registration is current</strong> — check the contractor's name
                 and registration number. An expired registration means they cannot self-certify work
@@ -559,7 +559,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ask for the NICEIC registration card</strong> — registered contractors carry
                 an ID card showing their registration status, registration number, and the
@@ -567,7 +567,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Get at least 3 quotes</strong> — a NICEIC-registered electrician should
                 provide a written quote detailing the scope of work, the certificates that will be
@@ -575,7 +575,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ask for the full certificate pack, not just the front page</strong> — under
                 BS&nbsp;7671 Reg&nbsp;644.3, an Electrical Installation Certificate must include the
@@ -626,32 +626,32 @@ const sections = [
             </thead>
             <tbody>
               <tr className="border-t border-white/10">
-                <td className="p-3 font-medium text-yellow-400">Wiring Regulations</td>
+                <td className="p-3 font-medium text-elec-yellow">Wiring Regulations</td>
                 <td className="p-3">Current qualification in BS&nbsp;7671:2018+A4:2026 (the 18th Edition as amended)</td>
               </tr>
               <tr className="border-t border-white/10">
-                <td className="p-3 font-medium text-yellow-400">Inspection &amp; testing</td>
+                <td className="p-3 font-medium text-elec-yellow">Inspection &amp; testing</td>
                 <td className="p-3">
                   A recognised initial verification and periodic inspection qualification — see the{' '}
                   <SEOInternalLink href="/inspection-testing-course">Inspection &amp; Testing course</SEOInternalLink>
                 </td>
               </tr>
               <tr className="border-t border-white/10">
-                <td className="p-3 font-medium text-yellow-400">Test instruments</td>
+                <td className="p-3 font-medium text-elec-yellow">Test instruments</td>
                 <td className="p-3">Calibrated, in-date instruments with calibration records available</td>
               </tr>
               <tr className="border-t border-white/10">
-                <td className="p-3 font-medium text-yellow-400">Insurance</td>
+                <td className="p-3 font-medium text-elec-yellow">Insurance</td>
                 <td className="p-3">Current public liability cover (and employer's liability where staff are employed)</td>
               </tr>
               <tr className="border-t border-white/10">
-                <td className="p-3 font-medium text-yellow-400">Certification</td>
+                <td className="p-3 font-medium text-elec-yellow">Certification</td>
                 <td className="p-3">Correct use of the Appendix 6 model forms with all schedules completed</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <p className="text-sm text-white/60">
+        <p className="text-sm text-white">
           Qualifications from EAL and City &amp; Guilds are separate, standalone routes — the EAS
           recognises each on its own terms. Hold whichever route you completed; there is no need to
           convert one into the other.
@@ -660,7 +660,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Camera className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Assessment-Ready Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -696,7 +696,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Keep your NICEIC assessment hassle-free"
-          description="Join 1,600+ UK electricians creating assessment-ready certificates with Elec-Mate. AI board scanner, voice test entry, BS 7671 validation…"
+          description="Join 2,100+ UK electricians creating assessment-ready certificates with Elec-Mate. AI board scanner, voice test entry, BS 7671 validation…"
           icon={ShieldCheck}
         />
       </>
@@ -722,7 +722,7 @@ export default function WhyChooseNICEICPage() {
       heroTitle={
         <>
           Why Choose a NICEIC Electrician:{' '}
-          <span className="text-yellow-400">The Consumer's Guide to Quality Assurance</span>
+          <span className="text-elec-yellow">The Consumer's Guide to Quality Assurance</span>
         </>
       }
       heroSubtitle="NICEIC is the UK's largest electrical contracting registration body. Every registered contractor is assessed annually, their work is backed by the Platinum Promise guarantee, and there is a formal complaints procedure if something goes wrong. This guide explains what NICEIC registration means and how to find a registered electrician."
@@ -740,7 +740,7 @@ export default function WhyChooseNICEICPage() {
       faqHeading="Frequently Asked Questions About NICEIC"
       relatedPages={relatedPages}
       ctaHeading="Professional Certificates for Registered Electricians"
-      ctaSubheading="Join 1,600+ UK electricians creating assessment-ready certificates with AI-powered tools. EICR, EIC, Minor Works — all following BS 7671 Appendix 6. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians creating assessment-ready certificates with AI-powered tools. EICR, EIC, Minor Works — all following BS 7671 Appendix 6. 7-day free trial, cancel anytime."
     />
   );
 }

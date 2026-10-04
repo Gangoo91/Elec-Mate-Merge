@@ -179,14 +179,14 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">Qualifications</h3>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 18th Edition IET Wiring Regulations (City & Guilds 2382 or equivalent) — this is the
                 current edition qualification and is mandatory
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Inspection and Testing qualification (City & Guilds 2391, or the older 2394/2395) —
                 required for carrying out and certifying periodic inspection and initial
@@ -194,7 +194,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 NVQ Level 3 in Electrical Installation or equivalent (such as City & Guilds 2357 or
                 2365 with AM2 assessment)
@@ -208,7 +208,7 @@ const sections = [
           </h3>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Experience:</strong> You must demonstrate relevant, recent experience in
                 electrical installation work. NICEIC will review your recent certificates and may
@@ -216,7 +216,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Premises:</strong> A fixed business address for correspondence and record
                 keeping. A home address is acceptable. No requirement for a commercial office or
@@ -224,7 +224,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test instruments:</strong> Calibrated multifunction tester (MFT),
                 GS38-compliant voltage indicator, and RCD tester. All instruments must be within
@@ -232,7 +232,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insurance:</strong> Public liability insurance with a minimum cover of 2
                 million pounds. Some scheme types or client requirements may specify higher cover (5
@@ -408,7 +408,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
           <ul className="space-y-3 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part P self-certification:</strong> Certify notifiable domestic work
                 yourself without building control fees or inspections. Issue Building Regulations
@@ -416,7 +416,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer confidence:</strong> NICEIC is the most recognised electrical
                 competent person scheme among homeowners. Being NICEIC registered immediately builds
@@ -424,7 +424,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Listed on NICEIC website:</strong> Your business appears in the NICEIC "Find
                 a Contractor" directory, which receives millions of searches per year from
@@ -432,7 +432,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Technical support:</strong> Access to the NICEIC technical helpline for
                 regulation queries, interpretation of BS 7671, and guidance on complex
@@ -440,7 +440,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Platinum Promise warranty:</strong> NICEIC's Platinum Promise provides a
                 free insurance-backed warranty on domestic work, giving homeowners additional peace
@@ -576,7 +576,7 @@ export default function NICEICRegistrationPage() {
       heroTitle={
         <>
           NICEIC Registration 2026:{' '}
-          <span className="text-yellow-400">How to Join & Requirements</span>
+          <span className="text-elec-yellow">How to Join & Requirements</span>
         </>
       }
       heroSubtitle="The complete guide to NICEIC registration for UK electricians. Registration types, qualification requirements, costs, application process, initial assessment, ongoing compliance, and comparison with NAPIT and ELECSA. Everything you need to know before applying."
@@ -586,7 +586,7 @@ export default function NICEICRegistrationPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Certificates That Meet NICEIC Requirements"
-      ctaSubheading="Join 1,600+ UK electricians producing professional BS 7671 compliant certificates with Elec-Mate. All 19 certificate types, PDF export, digital signatures. Ready for your NICEIC assessment. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians producing professional BS 7671 compliant certificates with Elec-Mate. All 19 certificate types, PDF export, digital signatures. Ready for your NICEIC assessment. 7-day free trial."
     />
   );
 }

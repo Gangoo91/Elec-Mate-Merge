@@ -161,14 +161,14 @@ export default function AICircuitDesignerPage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
-        <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-elec-yellow text-sm font-medium mb-6">
             <Brain className="w-4 h-4" />1 of 8 Elec-AI Specialist Agents
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             AI Circuit Designer
-            <span className="block text-yellow-400 mt-1">BS 7671 Compliant Design</span>
+            <span className="block text-elec-yellow mt-1">BS 7671 Compliant Design</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             Design complete electrical circuits with AI tailored and trained specifically for UK
@@ -185,7 +185,7 @@ export default function AICircuitDesignerPage() {
             </Link>
             <a
               href="#what-is-circuit-designer"
-              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-yellow-500/40 touch-manipulation transition-colors"
+              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-white/[0.1] touch-manipulation transition-colors"
             >
               How It Works
               <ArrowDown className="w-4 h-4 ml-1" />
@@ -198,7 +198,7 @@ export default function AICircuitDesignerPage() {
             </span>
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />
-              1,600+ electricians
+              2,100+ electricians
             </span>
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />
@@ -228,7 +228,7 @@ export default function AICircuitDesignerPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <CircuitBoard className="w-5 h-5 text-yellow-400" />
+              <CircuitBoard className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               What Is the AI Circuit Designer?
@@ -282,7 +282,7 @@ export default function AICircuitDesignerPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Calculator className="w-5 h-5 text-yellow-400" />
+              <Calculator className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               How the Circuit Designer Works
@@ -316,7 +316,7 @@ export default function AICircuitDesignerPage() {
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex-shrink-0">
-                  <span className="font-bold text-yellow-400">{item.step}</span>
+                  <span className="font-bold text-elec-yellow">{item.step}</span>
                 </div>
                 <div>
                   <h3 className="font-bold text-white text-lg mb-1">{item.title}</h3>
@@ -333,7 +333,7 @@ export default function AICircuitDesignerPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Cable className="w-5 h-5 text-yellow-400" />
+              <Cable className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Cable Sizing to BS 7671 Appendix 4
@@ -379,7 +379,7 @@ export default function AICircuitDesignerPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <ShieldCheck className="w-5 h-5 text-yellow-400" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Protection Device Selection
@@ -445,7 +445,7 @@ export default function AICircuitDesignerPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <FileText className="w-5 h-5 text-yellow-400" />
+              <FileText className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Trained on BS 7671:2018+A4:2026
@@ -488,7 +488,7 @@ export default function AICircuitDesignerPage() {
                 key={item}
                 className="flex items-center gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10"
               >
-                <CheckCircle2 className="w-5 h-5 text-yellow-400 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-elec-yellow flex-shrink-0" />
                 <span className="text-white text-sm font-medium">{item}</span>
               </div>
             ))}
@@ -501,7 +501,7 @@ export default function AICircuitDesignerPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <HelpCircle className="w-5 h-5 text-yellow-400" />
+              <HelpCircle className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Frequently Asked Questions
@@ -514,7 +514,7 @@ export default function AICircuitDesignerPage() {
                 className="group p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-white/[0.14] transition-colors"
               >
                 <summary className="flex items-start gap-3 cursor-pointer touch-manipulation list-none [&::-webkit-details-marker]:hidden">
-                  <ChevronRight className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0 transition-transform group-open:rotate-90" />
+                  <ChevronRight className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0 transition-transform group-open:rotate-90" />
                   <h3 className="font-bold text-white text-lg">{faq.question}</h3>
                 </summary>
                 <div className="mt-3 pl-8">
@@ -582,7 +582,7 @@ export default function AICircuitDesignerPage() {
 
       <SEOCTASection
         heading="Design your first circuit in 60 seconds"
-        subheading="Join 1,600+ UK electricians using AI for BS 7671 compliant circuit design. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians using AI for BS 7671 compliant circuit design. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

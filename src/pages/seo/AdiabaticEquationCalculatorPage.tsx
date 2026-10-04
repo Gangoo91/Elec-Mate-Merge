@@ -257,12 +257,12 @@ export default function AdiabaticEquationCalculatorPage() {
       <section className="py-16 sm:py-24 px-5">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-6">
-            <span className="text-sm font-medium text-yellow-400">
+            <span className="text-sm font-medium text-elec-yellow">
               BS 7671:2018+A4:2026 Regulation 543.1
             </span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
-            <span className="text-yellow-400">Adiabatic Equation</span> Calculator for CPC Sizing
+            <span className="text-elec-yellow">Adiabatic Equation</span> Calculator for CPC Sizing
           </h1>
           <p className="text-lg text-white max-w-2xl mx-auto leading-relaxed mb-8">
             Calculate the minimum CPC cross-sectional area instantly using the adiabatic equation.
@@ -278,7 +278,7 @@ export default function AdiabaticEquationCalculatorPage() {
             </a>
             <a
               href="/auth/signup"
-              className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-yellow-500/40 text-white font-semibold rounded-xl touch-manipulation transition-colors"
+              className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-white/[0.1] text-white font-semibold rounded-xl touch-manipulation transition-colors"
             >
               Get All 70 Calculators
             </a>
@@ -381,7 +381,7 @@ export default function AdiabaticEquationCalculatorPage() {
             The Adiabatic Equation Formula
           </h2>
           <div className="rounded-2xl bg-white/[0.04] border border-white/[0.14] p-6 my-6 text-center">
-            <p className="text-2xl sm:text-3xl font-mono font-bold text-yellow-400 mb-4">
+            <p className="text-2xl sm:text-3xl font-mono font-bold text-elec-yellow mb-4">
               S = √(I²t) / k
             </p>
             <div className="space-y-2 text-white text-sm text-left max-w-lg mx-auto">
@@ -403,7 +403,7 @@ export default function AdiabaticEquationCalculatorPage() {
             </div>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
-            <div className="rounded-xl border border-amber-500/30 bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 text-sm text-amber-300">
+            <div className="rounded-xl border border-white/[0.1] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 text-sm text-elec-yellow">
               <strong>5-second limit (Reg 543.1.3):</strong> The adiabatic equation is only valid
               for disconnection times not exceeding 5 seconds. Where the disconnection time exceeds
               5 s, the adiabatic assumption breaks down — heat begins to escape the conductor — so
@@ -463,35 +463,35 @@ export default function AdiabaticEquationCalculatorPage() {
               </div>
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <span>Copper / 70°C PVC</span>
-                <span className="font-bold text-yellow-400">115</span>
+                <span className="font-bold text-elec-yellow">115</span>
               </div>
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <span>Copper / 90°C Thermoplastic</span>
-                <span className="font-bold text-yellow-400">100</span>
+                <span className="font-bold text-elec-yellow">100</span>
               </div>
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <span>Copper / 90°C Thermosetting (XLPE/EPR)</span>
-                <span className="font-bold text-yellow-400">143</span>
+                <span className="font-bold text-elec-yellow">143</span>
               </div>
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <span>Copper / Bare (no insulation contact)</span>
-                <span className="font-bold text-yellow-400">159</span>
+                <span className="font-bold text-elec-yellow">159</span>
               </div>
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <span>Aluminium / 70°C PVC</span>
-                <span className="font-bold text-yellow-400">76</span>
+                <span className="font-bold text-elec-yellow">76</span>
               </div>
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <span>Aluminium / 90°C Thermosetting</span>
-                <span className="font-bold text-yellow-400">94</span>
+                <span className="font-bold text-elec-yellow">94</span>
               </div>
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <span>Steel / 70°C PVC</span>
-                <span className="font-bold text-yellow-400">51</span>
+                <span className="font-bold text-elec-yellow">51</span>
               </div>
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <span>Steel / 90°C Thermosetting</span>
-                <span className="font-bold text-yellow-400">58</span>
+                <span className="font-bold text-elec-yellow">58</span>
               </div>
             </div>
           </div>
@@ -522,10 +522,10 @@ export default function AdiabaticEquationCalculatorPage() {
                 <p>Earth fault current at the furthest point: I = 800 A</p>
                 <p>Disconnection time of the MCB at 800 A: t = 0.01 s (magnetic trip)</p>
                 <p>CPC is copper with PVC insulation: k = 115</p>
-                <p className="font-mono text-yellow-400 mt-2">S = √(800² × 0.01) / 115</p>
-                <p className="font-mono text-yellow-400">S = √(6,400) / 115</p>
-                <p className="font-mono text-yellow-400">S = 80 / 115</p>
-                <p className="font-mono text-yellow-400 font-bold">S = 0.70 mm²</p>
+                <p className="font-mono text-elec-yellow mt-2">S = √(800² × 0.01) / 115</p>
+                <p className="font-mono text-elec-yellow">S = √(6,400) / 115</p>
+                <p className="font-mono text-elec-yellow">S = 80 / 115</p>
+                <p className="font-mono text-elec-yellow font-bold">S = 0.70 mm²</p>
                 <p className="mt-2">
                   The minimum CPC is 0.70 mm². The installed 1.5 mm² CPC in a standard 2.5/1.5 mm²
                   twin and earth cable is more than adequate.
@@ -543,10 +543,10 @@ export default function AdiabaticEquationCalculatorPage() {
                 <p>Earth fault current: I = 2,500 A</p>
                 <p>Disconnection time of the BS 88 fuse at 2,500 A: t = 0.1 s</p>
                 <p>Steel wire armour with PVC insulation: k = 51</p>
-                <p className="font-mono text-yellow-400 mt-2">S = √(2,500² × 0.1) / 51</p>
-                <p className="font-mono text-yellow-400">S = √(625,000) / 51</p>
-                <p className="font-mono text-yellow-400">S = 790.6 / 51</p>
-                <p className="font-mono text-yellow-400 font-bold">S = 15.50 mm²</p>
+                <p className="font-mono text-elec-yellow mt-2">S = √(2,500² × 0.1) / 51</p>
+                <p className="font-mono text-elec-yellow">S = √(625,000) / 51</p>
+                <p className="font-mono text-elec-yellow">S = 790.6 / 51</p>
+                <p className="font-mono text-elec-yellow font-bold">S = 15.50 mm²</p>
                 <p className="mt-2">
                   The minimum armour CSA is 15.50 mm². The actual armour CSA of the cable must be
                   checked against the manufacturer data to verify it meets this requirement.
@@ -636,7 +636,7 @@ export default function AdiabaticEquationCalculatorPage() {
                 key={step.name}
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                   {index + 1}
                 </div>
                 <div>
@@ -738,7 +738,7 @@ export default function AdiabaticEquationCalculatorPage() {
               >
                 <summary className="flex items-center justify-between cursor-pointer p-5 text-white font-semibold text-left touch-manipulation min-h-[44px]">
                   <span>{faq.question}</span>
-                  <span className="ml-4 shrink-0 text-yellow-400 text-xl group-open:rotate-45 transition-transform">
+                  <span className="ml-4 shrink-0 text-elec-yellow text-xl group-open:rotate-45 transition-transform">
                     +
                   </span>
                 </summary>
@@ -760,7 +760,7 @@ export default function AdiabaticEquationCalculatorPage() {
       {/* CTA */}
       <SEOCTASection
         heading="Size protective conductors in seconds"
-        subheading="Join 1,600+ UK electricians using 70 professional calculators on their phone. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians using 70 professional calculators on their phone. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

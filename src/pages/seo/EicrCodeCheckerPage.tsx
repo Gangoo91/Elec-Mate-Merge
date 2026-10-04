@@ -43,7 +43,7 @@ export default function EicrCodeCheckerPage() {
       badgeIcon={ClipboardCheck}
       heroTitle={
         <>
-          <span className="text-yellow-400">EICR Codes Explained</span> — C1, C2, C3 and FI Checker
+          <span className="text-elec-yellow">EICR Codes Explained</span> — C1, C2, C3 and FI Checker
         </>
       }
       heroSubtitle="Type an observation — a broken socket, missing bonding, a plastic consumer unit — and see the classification code most inspectors would apply, with practical reasoning and whether it makes the report unsatisfactory. 76 real-world observations, free to search, no signup."
@@ -89,7 +89,7 @@ export default function EicrCodeCheckerPage() {
                   foreseeable event could make it dangerous. Urgent remedial action is required.
                 </li>
                 <li>
-                  <strong className="text-yellow-400">C3 — Improvement recommended.</strong> The
+                  <strong className="text-elec-yellow">C3 — Improvement recommended.</strong> The
                   installation does not meet current standards, but there is no danger as found.
                   Improvement would enhance safety; it is not compulsory.
                 </li>

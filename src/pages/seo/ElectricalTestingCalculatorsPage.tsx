@@ -194,9 +194,9 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
       >
         <span className="font-semibold text-white pr-4">{question}</span>
         {open ? (
-          <ChevronUp className="w-5 h-5 text-yellow-400 flex-shrink-0" />
+          <ChevronUp className="w-5 h-5 text-elec-yellow flex-shrink-0" />
         ) : (
-          <ChevronDown className="w-5 h-5 text-yellow-400 flex-shrink-0" />
+          <ChevronDown className="w-5 h-5 text-elec-yellow flex-shrink-0" />
         )}
       </button>
       {open && (
@@ -233,14 +233,14 @@ export default function ElectricalTestingCalculatorsPage() {
       <section className="py-16 sm:py-24 px-5">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-6">
-            <Calculator className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium text-yellow-400">
+            <Calculator className="w-4 h-4 text-elec-yellow" />
+            <span className="text-sm font-medium text-elec-yellow">
               70 BS 7671 Compliant Calculators
             </span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white mb-5 leading-tight">
             Electrical Testing Calculators for{' '}
-            <span className="text-yellow-400">UK Electricians</span>
+            <span className="text-elec-yellow">UK Electricians</span>
           </h1>
           <p className="text-lg text-white max-w-2xl mx-auto mb-4 leading-relaxed">
             Elec-Mate provides 70 electrical calculators covering Zs, prospective fault current, RCD
@@ -519,7 +519,7 @@ export default function ElectricalTestingCalculatorsPage() {
                 key={name}
                 className="flex items-center gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10"
               >
-                <FileCheck className="w-5 h-5 text-yellow-400 flex-shrink-0" />
+                <FileCheck className="w-5 h-5 text-elec-yellow flex-shrink-0" />
                 <span className="text-white text-sm font-medium">{name}</span>
               </div>
             ))}
@@ -592,7 +592,7 @@ export default function ElectricalTestingCalculatorsPage() {
 
       <SEOCTASection
         heading="Stop flipping through tables on site"
-        subheading="Join 1,600+ UK electricians using Elec-Mate calculators to speed up testing and certification. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians using Elec-Mate calculators to speed up testing and certification. 7-day free trial, cancel anytime."
       />
     </PublicPageLayout>
   );

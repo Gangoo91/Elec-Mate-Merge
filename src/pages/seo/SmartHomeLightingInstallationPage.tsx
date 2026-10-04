@@ -236,7 +236,7 @@ const sections = [
             </p>
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
-            <Wifi className="w-5 h-5 text-yellow-400 mb-2" />
+            <Wifi className="w-5 h-5 text-elec-yellow mb-2" />
             <h3 className="font-bold text-white text-base mb-2">Zigbee (Mid-Range)</h3>
             <p className="text-white text-sm leading-relaxed">
               Wireless mesh protocol. Wide device ecosystem. Requires a hub (Philips Hue Bridge,
@@ -276,21 +276,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Old colour code (pre-2004):</strong> Red (switched live) + bare earth — no
                 neutral
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New colour code (post-2004):</strong> Brown (switched live) + bare earth —
                 no neutral
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3-core switch drop (2-way wiring):</strong> Brown, grey, black + earth — no
                 neutral present unless specifically wired in
@@ -329,44 +329,44 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Living room (ambient):</strong> 50 to 150 lux
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Living room (reading task):</strong> 300 lux at the reading plane
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Kitchen worktops (task):</strong> 300 to 500 lux
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Office (general):</strong> 300 to 500 lux at desk level (BS EN 12464-1,
                 Table 5.3)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Home office (task):</strong> 500 lux at desk surface
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bedroom (general):</strong> 100 lux; bedside reading: 200 to 300 lux
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bathroom:</strong> 150 to 200 lux general; 300 to 500 lux at vanity mirror
               </span>
@@ -395,7 +395,7 @@ const sections = [
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
-            <ShieldCheck className="w-6 h-6 text-yellow-400 mb-3" />
+            <ShieldCheck className="w-6 h-6 text-elec-yellow mb-3" />
             <h3 className="font-bold text-white text-base mb-2">Presence Detection</h3>
             <p className="text-white text-sm leading-relaxed">
               PIR (passive infrared) or microwave/radar sensors detect occupancy and switch lights
@@ -438,7 +438,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Budget (Philips Hue, IKEA Tradfri, Tapo) — £30 to £80 per point</strong>.
                 Smart bulbs or fittings with Zigbee or WiFi connectivity. Hub required (included in
@@ -447,7 +447,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mid-range (Lutron Caseta, Rako, Shelly) — £80 to £150 per point</strong>.
                 Smart switches or dimmers requiring neutral wire. Scene control, dimming, and
@@ -456,7 +456,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>High-end (DALI, KNX, Control4, Crestron) — £150 to £400+ per point</strong>.
                 Addressable DALI drivers, dedicated bus wiring, presence detectors, daylight
@@ -484,7 +484,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Always Check for Neutral at the Survey
@@ -594,7 +594,7 @@ export default function SmartHomeLightingInstallationPage() {
       heroTitle={
         <>
           Smart Home Lighting Installation:{' '}
-          <span className="text-yellow-400">DALI, KNX, Zigbee and Scene Control</span>
+          <span className="text-elec-yellow">DALI, KNX, Zigbee and Scene Control</span>
         </>
       }
       heroSubtitle="Smart lighting ranges from £30 Philips Hue bulbs to £400-per-point DALI systems. This guide covers the main protocols, neutral wire requirements for smart switches, recommended lux levels, daylight harvesting, presence detection, and costs by budget level."

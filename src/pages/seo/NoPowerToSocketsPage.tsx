@@ -148,7 +148,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
           <div className="grid grid-cols-1 divide-y divide-white/10">
-            <div className="hidden sm:grid grid-cols-12 gap-3 px-5 py-3 bg-white/[0.04] text-xs font-semibold uppercase tracking-wide text-white/60">
+            <div className="hidden sm:grid grid-cols-12 gap-3 px-5 py-3 bg-white/[0.04] text-xs font-semibold uppercase tracking-wide text-white">
               <div className="col-span-3">Cause</div>
               <div className="col-span-5">Typical symptom</div>
               <div className="col-span-2">Who fixes it</div>
@@ -201,10 +201,10 @@ const sections = [
                 className="grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-3 px-5 py-4 text-sm"
               >
                 <div className="sm:col-span-3 font-semibold text-white">{row.cause}</div>
-                <div className="sm:col-span-5 text-white/80 leading-relaxed">{row.symptom}</div>
-                <div className="sm:col-span-2 text-white/80">{row.who}</div>
+                <div className="sm:col-span-5 text-white leading-relaxed">{row.symptom}</div>
+                <div className="sm:col-span-2 text-white">{row.who}</div>
                 <div className="sm:col-span-2">
-                  <a href={row.href} className="text-yellow-400 hover:underline">
+                  <a href={row.href} className="text-elec-yellow hover:underline">
                     {row.label}
                   </a>
                 </div>
@@ -212,13 +212,13 @@ const sections = [
             ))}
           </div>
         </div>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-amber-500/30 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.1] p-5 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
-            <p className="text-sm text-white/80 leading-relaxed">
-              <strong className="text-amber-300">Safe to do yourself:</strong> resetting a tripped
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
+            <p className="text-sm text-white leading-relaxed">
+              <strong className="text-elec-yellow">Safe to do yourself:</strong> resetting a tripped
               MCB or RCD, and replacing a blown BS 1362 fuse in a fused connection unit.{' '}
-              <strong className="text-amber-300">Always an electrician:</strong> anything behind a
+              <strong className="text-elec-yellow">Always an electrician:</strong> anything behind a
               socket faceplate or inside the consumer unit. That work is on the fixed installation,
               can be dangerous, and may be notifiable under Part P of the Building Regulations.
             </p>
@@ -298,7 +298,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <Zap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   MCB Trip — Overcurrent or Short Circuit
@@ -317,7 +317,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <ShieldCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">RCD Trip — Earth Leakage</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -336,7 +336,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <Power className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Power className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   RCBO Trip — Circuit-Specific Protection
@@ -356,7 +356,7 @@ const sections = [
           <p className="font-semibold text-white mb-2">
             Why one RCD trip can kill both sockets and lights — BS 7671:2018+A4:2026 Reg 411.3.4
           </p>
-          <p className="text-sm text-white/80 leading-relaxed">
+          <p className="text-sm text-white leading-relaxed">
             A common source of homeowner confusion on split-load boards is that a single RCD trip
             kills both socket circuits and lighting circuits simultaneously. This is explained by
             Regulation 411.3.4 of BS 7671:2018+A4:2026, which requires that, in domestic premises,
@@ -386,7 +386,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Complete break:</strong> If the cable is completely severed (a nail through
                 both conductors, a joint pulled apart), all sockets beyond the break — when measured
@@ -395,7 +395,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Single conductor break:</strong> If only the line conductor is broken (but
                 the neutral and CPC are intact), the affected sockets will be dead. If only the
@@ -404,7 +404,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CPC break only:</strong> If only the earth conductor (CPC) is broken, the
                 sockets will still work (power is present) but the earth path is compromised. This
@@ -430,7 +430,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
           <p className="font-semibold text-white mb-2">Pass/fail criterion — GN3 Reg 2.20</p>
-          <p className="text-sm text-white/80 leading-relaxed">
+          <p className="text-sm text-white leading-relaxed">
             When the CPC is the same cross-sectional area and material as the line conductor
             (standard 2.5/1.5 mm² twin-and-earth), the line-to-CPC resistance measured at each
             socket-outlet around the ring will be substantially the same — approximately one quarter
@@ -463,7 +463,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Line conductor loose at socket:</strong> If the line connection to the
                 incoming cable is loose, that socket and all sockets downstream (on that leg of the
@@ -472,7 +472,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Neutral conductor loose:</strong> A loose neutral at a socket can cause
                 intermittent operation — the socket may work with light loads but fail under heavy
@@ -480,7 +480,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Junction box connections:</strong> Junction boxes under floors and in loft
                 spaces can develop loose connections due to vibration, thermal cycling, and poor
@@ -489,7 +489,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Distribution board terminals:</strong> A loose connection at the MCB
                 terminal will affect the entire circuit — all sockets on that circuit will be dead.
@@ -508,14 +508,14 @@ const sections = [
           <SEOInternalLink href="/how-to-fill-in-eicr">EICR</SEOInternalLink> as a C1 or C2
           observation.
         </p>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-amber-500/30 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.1] p-5 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
-              <p className="font-semibold text-amber-300 mb-1">
+              <p className="font-semibold text-elec-yellow mb-1">
                 Arc Fault Detection (AFDD) — BS 7671:2018+A4:2026 Reg 421.1.7
               </p>
-              <p className="text-sm text-white/80 leading-relaxed">
+              <p className="text-sm text-white leading-relaxed">
                 Arcing at a loose socket terminal is precisely the hazard that arc fault detection
                 devices (AFDDs) are designed to detect. Regulation 421.1.7 of BS 7671:2018+A4:2026
                 now <strong className="text-white">requires</strong> AFDDs conforming to BS EN 62606
@@ -547,7 +547,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <CircleDot className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <CircleDot className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Blown Fuse in FCU</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -563,7 +563,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <CircleDot className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <CircleDot className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Disconnected Spur at the Ring</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -578,7 +578,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <CircleDot className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <CircleDot className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Cable Damage on the Spur</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -611,9 +611,9 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
           <p className="font-semibold text-white mb-3">Tools you will need</p>
-          <ul className="space-y-2 text-sm text-white/80">
+          <ul className="space-y-2 text-sm text-white">
             <li className="flex items-start gap-2">
-              <Wrench className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong className="text-white">Low-reading ohmmeter</strong> — a standard continuity
                 buzzer is not sufficient for ring circuit continuity work; you need an instrument
@@ -621,7 +621,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-2">
-              <Wrench className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong className="text-white">Proving unit</strong> — used to confirm your voltage
                 indicator is functioning correctly before and after proving dead (prove — test —
@@ -629,16 +629,16 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-2">
-              <Wrench className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong className="text-white">Two-pole voltage indicator (GS38 compliant)</strong>{' '}
                 — for proving the circuit dead before opening any socket faceplate.
               </span>
             </li>
           </ul>
-          <div className="mt-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-amber-500/30 px-4 py-3">
+          <div className="mt-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.1] px-4 py-3">
             <p className="text-sm text-amber-200 leading-relaxed">
-              <strong className="text-amber-300">Common mistake:</strong> Do not test continuity
+              <strong className="text-elec-yellow">Common mistake:</strong> Do not test continuity
               without fully isolating adjacent live circuits. Energised parallel paths — for
               example, a bonding conductor or a second circuit sharing a common neutral — will give
               false low readings on the ohmmeter, making a broken conductor appear intact. Isolate
@@ -724,7 +724,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use a voltage indicator, not a neon screwdriver.</strong> A two-pole voltage
                 indicator (GS38 compliant) is the only reliable way to test for the presence of
@@ -733,7 +733,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Prove — test — prove.</strong> Before testing the dead socket, prove your
                 voltage indicator on a known live source. Then test the dead socket. Then prove the
@@ -742,7 +742,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lock off at the consumer unit.</strong> Switch off the MCB, apply a lock-off
                 device, and attach a warning tag. This prevents anyone from re-energising the
@@ -750,7 +750,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Beware of back-fed circuits.</strong> On a ring circuit, isolating the MCB
                 disconnects the supply from the consumer unit, but if the ring has a connection to
@@ -801,7 +801,7 @@ export default function NoPowerToSocketsPage() {
       heroTitle={
         <>
           No Power to Sockets?{' '}
-          <span className="text-yellow-400">Systematic Troubleshooting Guide</span>
+          <span className="text-elec-yellow">Systematic Troubleshooting Guide</span>
         </>
       }
       heroSubtitle="Dead sockets can be caused by a simple tripped MCB, a broken ring circuit, a loose connection, or a blown spur fuse. This guide covers every common cause, explains what homeowners can check safely, and provides a structured diagnostic approach for electricians."
@@ -819,7 +819,7 @@ export default function NoPowerToSocketsPage() {
       faqHeading="Frequently Asked Questions About Dead Sockets"
       relatedPages={relatedPages}
       ctaHeading="Diagnose Socket Faults with Elec-Mate"
-      ctaSubheading="AI fault diagnosis, ring circuit calculator, digital EICR certificates, and voice test entry. Join 1,600+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
+      ctaSubheading="AI fault diagnosis, ring circuit calculator, digital EICR certificates, and voice test entry. Join 2,100+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
     />
   );
 }

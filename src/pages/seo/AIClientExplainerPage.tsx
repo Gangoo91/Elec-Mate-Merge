@@ -315,7 +315,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Unsatisfactory result:</strong> The AI explains that the landlord must
                 arrange remedial work within 28 days, obtain written confirmation that the work has
@@ -324,7 +324,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Penalties:</strong> The AI notes that non-compliance can result in civil
                 penalties of up to £30,000 per breach, and that the local authority can arrange the
@@ -332,7 +332,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Section 21 notice:</strong> The AI explains that a landlord cannot serve a
                 valid Section 21 eviction notice if they have not provided the tenant with a valid
@@ -340,7 +340,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tenant notification:</strong> The AI reminds the landlord to provide a copy
                 of the EICR to existing tenants within 28 days and to new tenants before they move
@@ -459,7 +459,7 @@ export default function AIClientExplainerPage() {
       heroTitle={
         <>
           AI Client Explainer:{' '}
-          <span className="text-yellow-400">Technical Findings in Plain English</span>
+          <span className="text-elec-yellow">Technical Findings in Plain English</span>
         </>
       }
       heroSubtitle="Turn EICR observation codes and technical findings into clear, plain-English explanations that homeowners and landlords can actually understand. Generate professional summary letters, include legal obligations for landlords, and send everything with the certificate."
@@ -482,7 +482,7 @@ export default function AIClientExplainerPage() {
       faqHeading="Frequently Asked Questions About the AI Client Explainer"
       relatedPages={relatedPages}
       ctaHeading="Explain Every Report in Plain English"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's AI Client Explainer. Turn technical findings into clear client communications. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate's AI Client Explainer. Turn technical findings into clear client communications. 7-day free trial, cancel anytime."
       toolPath="/tools/ai-client-explainer"
     />
   );

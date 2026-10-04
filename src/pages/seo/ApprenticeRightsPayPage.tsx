@@ -148,26 +148,26 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
           <div className="grid grid-cols-[1fr_auto] gap-x-4 px-5 py-3 border-b border-white/10 bg-white/[0.03]">
-            <span className="text-xs font-semibold uppercase tracking-wide text-white/60">
+            <span className="text-xs font-semibold uppercase tracking-wide text-white">
               Who it applies to
             </span>
-            <span className="text-xs font-semibold uppercase tracking-wide text-white/60 text-right">
+            <span className="text-xs font-semibold uppercase tracking-wide text-white text-right">
               Rate (from 1 April 2026)
             </span>
           </div>
-          <div className="grid grid-cols-[1fr_auto] gap-x-4 items-center px-5 py-4 border-b border-white/10 bg-yellow-900/20">
+          <div className="grid grid-cols-[1fr_auto] gap-x-4 items-center px-5 py-4 border-b border-white/10 bg-white/[0.06]">
             <div>
               <p className="font-bold text-white">Apprentice rate</p>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Under 19, or 19+ in the first year of the apprenticeship
               </p>
             </div>
-            <span className="font-bold text-yellow-400 text-lg tabular-nums">£8.00/hr</span>
+            <span className="font-bold text-elec-yellow text-lg tabular-nums">£8.00/hr</span>
           </div>
           <div className="grid grid-cols-[1fr_auto] gap-x-4 items-center px-5 py-4 border-b border-white/10">
             <div>
               <p className="font-bold text-white">Age 18-20 standard rate</p>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 After you turn 19 and complete the first year
               </p>
             </div>
@@ -176,7 +176,7 @@ const sections = [
           <div className="grid grid-cols-[1fr_auto] gap-x-4 items-center px-5 py-4">
             <div>
               <p className="font-bold text-white">Age 21+ (National Living Wage)</p>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 After you turn 21 and complete the first year
               </p>
             </div>
@@ -284,21 +284,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Calendar className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calendar className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>20 days annual leave + 8 bank holidays</strong> = 28 days total for
                 full-time workers on a 5-day week
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calendar className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calendar className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pro-rata for part-time:</strong> If you work fewer than 5 days per week,
                 your holiday entitlement is calculated proportionally
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calendar className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calendar className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Holiday pay at normal rate:</strong> Holiday pay must be at your normal
                 hourly rate. Overtime-only payments may also need to be included if overtime is
@@ -306,7 +306,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calendar className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calendar className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Accrual from day one:</strong> You start accruing holiday from your first
                 day of employment. You do not need to wait for a probation period to end.
@@ -336,7 +336,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SSP rate:</strong> £123.25 per week (2026/27 rate), or 80% of your average
                 weekly earnings if that is lower — paid from the first day of sickness (the old
@@ -344,7 +344,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Qualifying earnings:</strong> From 6 April 2026 there is no minimum
                 earnings requirement — the old lower earnings limit was abolished by the Employment
@@ -352,14 +352,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Duration:</strong> SSP is paid for up to 28 weeks. After that, you may be
                 eligible for Employment and Support Allowance (ESA)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Notification:</strong> You must notify your employer of your absence as
                 required by their sickness policy — typically on the first day of absence
@@ -388,7 +388,7 @@ const sections = [
         </p>
         <div className="space-y-3 my-6">
           <div className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <Clock className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
+            <Clock className="w-5 h-5 text-elec-yellow shrink-0 mt-0.5" />
             <div>
               <h3 className="font-bold text-white text-base mb-1">Maximum Working Hours</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -400,7 +400,7 @@ const sections = [
             </div>
           </div>
           <div className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <Clock className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
+            <Clock className="w-5 h-5 text-elec-yellow shrink-0 mt-0.5" />
             <div>
               <h3 className="font-bold text-white text-base mb-1">Rest Breaks</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -412,7 +412,7 @@ const sections = [
             </div>
           </div>
           <div className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <Clock className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
+            <Clock className="w-5 h-5 text-elec-yellow shrink-0 mt-0.5" />
             <div>
               <h3 className="font-bold text-white text-base mb-1">Daily and Weekly Rest</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -423,7 +423,7 @@ const sections = [
             </div>
           </div>
           <div className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <Clock className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
+            <Clock className="w-5 h-5 text-elec-yellow shrink-0 mt-0.5" />
             <div>
               <h3 className="font-bold text-white text-base mb-1">Night Work</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -455,7 +455,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Notice period:</strong> You are entitled to at least one week's notice if
                 you have been employed for at least one month. After two years, the notice period
@@ -464,7 +464,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Statutory redundancy pay:</strong> If you have been employed for two years
                 or more, you are entitled to statutory redundancy pay based on your age, length of
@@ -472,7 +472,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ESFA Redundancy Support:</strong> The ESFA runs a Redundancy Support Service
                 for Apprentices, which helps you find a new employer to continue your
@@ -480,7 +480,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Your progress carries over:</strong> If you are made redundant and find a
                 new employer, you do not restart your apprenticeship from the beginning. Your
@@ -495,10 +495,10 @@ const sections = [
         </h3>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
           <div className="grid grid-cols-[1fr_auto] gap-x-4 px-5 py-3 border-b border-white/10 bg-white/[0.03]">
-            <span className="text-xs font-semibold uppercase tracking-wide text-white/60">
+            <span className="text-xs font-semibold uppercase tracking-wide text-white">
               Continuous service
             </span>
-            <span className="text-xs font-semibold uppercase tracking-wide text-white/60 text-right">
+            <span className="text-xs font-semibold uppercase tracking-wide text-white text-right">
               Minimum notice
             </span>
           </div>
@@ -515,7 +515,7 @@ const sections = [
             <span className="font-bold text-white tabular-nums">12 weeks (capped)</span>
           </div>
         </div>
-        <p className="text-white/60 text-sm">
+        <p className="text-white text-sm">
           This is the statutory minimum — your contract may set a longer notice period, in which
           case the longer one applies. Statutory redundancy pay only becomes payable once you have
           two or more years of continuous service.
@@ -539,7 +539,7 @@ const sections = [
           treated less favourably because of any protected characteristic:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <p className="text-white/70 text-sm mb-4">
+          <p className="text-white text-sm mb-4">
             The Equality Act 2010 protects nine characteristics. Your employer cannot treat you less
             favourably because of any of them:
           </p>
@@ -559,7 +559,7 @@ const sections = [
                 key={characteristic}
                 className="flex items-center gap-2 rounded-xl bg-white/[0.04] border border-white/10 px-3 py-2.5"
               >
-                <Users className="w-4 h-4 text-yellow-400 shrink-0" />
+                <Users className="w-4 h-4 text-elec-yellow shrink-0" />
                 <span className="text-white text-sm">{characteristic}</span>
               </div>
             ))}
@@ -656,7 +656,7 @@ export default function ApprenticeRightsPayPage() {
       badgeIcon={PoundSterling}
       heroTitle={
         <>
-          Apprentice Rights and Pay: <span className="text-yellow-400">Know Your Entitlements</span>
+          Apprentice Rights and Pay: <span className="text-elec-yellow">Know Your Entitlements</span>
         </>
       }
       heroSubtitle="Every apprentice in the UK has clear legal rights — pay, holiday, sick leave, working hours, and protection against discrimination. This guide explains your entitlements so you know exactly what you are owed and where to get help if your employer falls short."

@@ -4,7 +4,7 @@
  *   AC 6.3 — "Test insulation resistance"
  *
  * Frame: insulation resistance is a 500 V DC test (250 V for SELV/PELV or
- * electronic-sensitive circuits per A4:2026 Reg 643.3.2/.3.3) that proves the
+ * electronic-sensitive circuits per Reg 643.3.2/643.3.3) that proves the
  * insulation between live conductors and between live conductors and earth is
  * intact. Minimum acceptance per Table 64 = 1.0 MΩ for LV circuits, but
  * anything below 100 MΩ deserves investigation. Disconnect electronic loads
@@ -64,7 +64,7 @@ const checks = [
     ],
     correctIndex: 1,
     explanation:
-      'BS 7671 A4:2026 Reg 643.3.3 covers exactly this case. Where connected equipment is likely to influence the test or be damaged, disconnect the equipment, run the test at the table voltage (500 V DC for 230 V circuits) per Reg 643.3.2, then reconnect the equipment and apply a 250 V DC test between live conductors and the protective conductor connected to the earthing arrangement, which must read at least 1.0 MΩ. SPDs clamp at low voltages and will short the test if left in; LED drivers with capacitive input filters will read low or be destroyed; some EV chargers have isolation monitoring that triggers on the test.',
+      'BS 7671 Reg 643.3.3 covers exactly this case. Where connected equipment is likely to influence the test or be damaged, disconnect the equipment, run the test at the table voltage (500 V DC for 230 V circuits) per Reg 643.3.2, then reconnect the equipment and apply a 250 V DC test between live conductors and the protective conductor connected to the earthing arrangement, which must read at least 1.0 MΩ. SPDs clamp at low voltages and will short the test if left in; LED drivers with capacitive input filters will read low or be destroyed; some EV chargers have isolation monitoring that triggers on the test.',
   },
   {
     id: 'm4-s6-sub3-result-interpretation',
@@ -85,7 +85,7 @@ const checks = [
 const quizQuestions = [
   {
     id: 1,
-    question: 'BS 7671 A4:2026 Reg 643.3.1 — insulation resistance shall be measured between:',
+    question: 'BS 7671 Reg 643.3.1 — insulation resistance shall be measured between:',
     options: [
       '(a) each live conductor and earth only; the test between live conductors is not required because the protective device already separates line and neutral.',
       '(a) live conductors; and (b) live conductors and the protective conductor connected to the earthing arrangement. During the test of (b), line and neutral may be connected together.',
@@ -126,7 +126,7 @@ const quizQuestions = [
   },
   {
     id: 4,
-    question: 'BS 7671 A4:2026 Reg 643.3.3 introduced an extra test step. What is it?',
+    question: 'BS 7671 Reg 643.3.3 (redrafted in A2:2022) added an extra test step. What is it?',
     options: [
       'Where equipment was disconnected to allow the standard 500 V DC test, after the equipment is reconnected a 250 V DC test must be applied between live conductors and the protective conductor — minimum 1 MΩ. Confirms the equipment itself does not present an unacceptable insulation defect.',
       'A new requirement to test every circuit at 1000 V DC as well as 500 V DC, to stress-test the insulation to twice the normal voltage before sign-off.',
@@ -135,7 +135,7 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      'A4:2026 Reg 643.3.3 added the post-reconnection 250 V DC test. The thinking: if you had to disconnect electronics to do the main 500 V DC test, you have not actually tested those electronics. The 250 V DC follow-up is gentle enough not to damage them but high enough to detect a serious insulation defect within the equipment. Acceptance is the same 1 MΩ minimum.',
+      'Reg 643.3.3 (A2:2022) added the post-reconnection 250 V DC test. The thinking: if you had to disconnect electronics to do the main 500 V DC test, you have not actually tested those electronics. The 250 V DC follow-up is gentle enough not to damage them but high enough to detect a serious insulation defect within the equipment. Acceptance is the same 1 MΩ minimum.',
   },
   {
     id: 5,
@@ -248,9 +248,9 @@ export default function Sub3() {
 
         <TLDR
           points={[
-            'Insulation resistance is a 500 V DC test (250 V for SELV/PELV) between (a) live conductors and (b) live conductors to the earthed protective conductor — required by BS 7671 A4:2026 Reg 643.3.1 and Table 64.',
+            'Insulation resistance is a 500 V DC test (250 V for SELV/PELV) between (a) live conductors and (b) live conductors to the earthed protective conductor — required by BS 7671 Reg 643.3.1 and Table 64.',
             'Minimum acceptance per Table 64: 1.0 MΩ for circuits up to 500 V; 0.5 MΩ for SELV/PELV; 1.0 MΩ for circuits above 500 V (1000 V test). Healthy new wiring should read >100 MΩ.',
-            'Disconnect electronics (SPDs, LED drivers, dimmers, EV charger control boards) before the test or they will fail or be damaged. After reconnection, apply the A4:2026 follow-up 250 V DC test per Reg 643.3.3 — also 1.0 MΩ minimum.',
+            'Disconnect electronics (SPDs, LED drivers, dimmers, EV charger control boards) before the test or they will fail or be damaged. After reconnection, apply the 250 V DC follow-up test per Reg 643.3.3 — also 1.0 MΩ minimum.',
           ]}
         />
 
@@ -258,11 +258,11 @@ export default function Sub3() {
           outcomes={[
             'Set up a multifunction tester to apply the correct insulation test voltage for the circuit type.',
             'Carry out the IR test between live conductors and between live conductors and earth, per Reg 643.3.1.',
-            'Apply the disconnect-and-retest procedure for circuits with electronic equipment per A4:2026 Reg 643.3.3.',
+            'Apply the disconnect-and-retest procedure for circuits with electronic equipment per Reg 643.3.3.',
             'Read Table 64 acceptance values for different system types (SELV, LV, above 500 V).',
             'Interpret IR readings: > 1 MΩ pass; 1-100 MΩ pass but investigate; > 100 MΩ healthy.',
             'Diagnose IR failures by separating combined L+N tests into individual L-E and N-E tests.',
-            'Cite Reg 643.3.1, 643.3.2 and 643.3.3 (introduced/redrafted in A4:2026) and quote Table 64 from memory.',
+            'Cite Reg 643.3.1, 643.3.2 and 643.3.3 (redrafted in A2:2022) and quote Table 64 from memory.',
           ]}
           initialVisibleCount={4}
         />
@@ -273,7 +273,7 @@ export default function Sub3() {
           channel={videos.insulationResistanceAmd2.channel}
           duration={videos.insulationResistanceAmd2.duration}
           topic="Insulation resistance per A4:2026 · Unit 204 AC 6.3"
-          caption="Craig Wiltshire walks the full IR test sequence under the A4:2026 update — 500 V DC between live conductors and to earth, the disconnect-and-retest discipline for SPDs / LED drivers, and the 250 V DC follow-up test introduced by Reg 643.3.3."
+          caption="Craig Wiltshire walks the full IR test sequence under the current regulations — 500 V DC between live conductors and to earth, the disconnect-and-retest discipline for SPDs / LED drivers, and the 250 V DC follow-up test introduced by Reg 643.3.3."
         />
 
         <ContentEyebrow>What you are testing and why</ContentEyebrow>
@@ -443,7 +443,7 @@ export default function Sub3() {
         <ConceptBlock
           title="Why you can’t leave the electronics in"
           plainEnglish="500 V DC will damage or false-trigger most modern electronic devices that rely on internal capacitive coupling, surge clamping, or isolation monitoring. Disconnect them, test the cabling, then reconnect and run a gentler 250 V test."
-          onSite="The disconnect list grew significantly with A4:2026: SPDs, AFDDs, LED drivers, dimmers, smart switches, EV charger control modules, induction hob driver boards, fixed-wire EMC filters."
+          onSite="Typical equipment to disconnect before the Table 64 test: SPDs, AFDDs, LED drivers, dimmers, smart switches, EV charger control modules, induction hob driver boards, fixed-wire EMC filters."
         >
           <p>Equipment that requires disconnection before the 500 V DC IR test:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -475,7 +475,7 @@ export default function Sub3() {
               spur or isolator before testing the circuit.
             </li>
           </ul>
-          <p>The A4:2026 procedure (Reg 643.3.3):</p>
+          <p>The Reg 643.3.3 procedure:</p>
           <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
             <li>
               Identify equipment that needs disconnection. Disconnect at the most appropriate
@@ -882,11 +882,11 @@ export default function Sub3() {
 
         <KeyTakeaways
           points={[
-            'BS 7671 A4:2026 Reg 643.3.1 requires IR measurement (a) between live conductors and (b) between live conductors and the earthed protective conductor. L and N may be linked for the live-to-earth test.',
+            'BS 7671 Reg 643.3.1 requires IR measurement (a) between live conductors and (b) between live conductors and the earthed protective conductor. L and N may be linked for the live-to-earth test.',
             'Table 64: SELV/PELV at 250 V DC, 0.5 MΩ minimum. Up to 500 V at 500 V DC, 1.0 MΩ minimum. Above 500 V at 1000 V DC, 1.0 MΩ minimum. Memorise the middle row.',
             'Healthy new wiring should read >100 MΩ on a 500 V DC test. 1.0 MΩ is the absolute pass-threshold; anything between 1 and 100 MΩ passes the regulation but warrants investigation.',
             'Disconnect SPDs, LED dimmers, smart switches, EV charger control boards, AFDDs and similar electronics before the 500 V DC test or they will be damaged or give false low readings.',
-            "A4:2026 Reg 643.3.3 introduced the 250 V DC follow-up test after reconnection — minimum 1 MΩ — to confirm the equipment's own insulation is sound.",
+            "Reg 643.3.3 (A2:2022) introduced the 250 V DC follow-up test after reconnection — minimum 1 MΩ — to confirm the equipment's own insulation is sound.",
             'Test each distribution circuit separately, not the whole installation in parallel. Parallel testing of multiple healthy circuits gives a falsely low aggregate reading.',
             'Switch every functional switch ON during testing so the full downstream cable is included. Note any sections that cannot be tested on the schedule of test results.',
             'A 0.45 MΩ reading is a fail. Find the fault (damaged sheath, pinched conductor, water ingress, mis-terminated neutral) and fix before energising — never sign off an installation that fails IR.',

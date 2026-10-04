@@ -243,7 +243,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Nuclear Site Licence conditions</strong> — Sellafield operates under a
                 Nuclear Site Licence and Nuclear Site Licence conditions govern all work on site.
@@ -252,7 +252,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Security clearance</strong> — a valid Sellafield site pass requires security
                 vetting (minimum BPSS, higher for sensitive areas). The clearance process takes
@@ -262,7 +262,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IEC 60364 and nuclear codes</strong> — Sellafield requires compliance with
                 IEC 60364 and nuclear industry codes in addition to BS 7671. Safety-related
@@ -271,7 +271,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Contract rates</strong> — Sellafield contract electrician rates are
                 typically £60–90+/hr, compared to £35–52/hr for standard Workington domestic work.
@@ -296,7 +296,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New connections and upgrades</strong> — managed through ENW's connections
                 portal. Coastal and rural properties around Workington may have overhead
@@ -305,7 +305,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98/G99 notifications</strong> — solar PV, battery storage, and wind
                 micro-generation must be notified to ENW. The west Cumbrian coast has a good wind
@@ -314,7 +314,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>TT earthing systems</strong> — rural and coastal properties near Workington
                 served by overhead lines are more likely to have TT earthing. TT systems require RCD
@@ -458,7 +458,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EIC and EICR Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -510,7 +510,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Workington electricians"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -538,7 +538,7 @@ export default function ElectricianWorkingtonPage() {
       heroTitle={
         <>
           Electrician in Workington:{' '}
-          <span className="text-yellow-400">Local Electricians 2026</span>
+          <span className="text-elec-yellow">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Workington is a coastal industrial town on the west Cumbrian coast, 12 miles from Sellafield nuclear site. The local electrical market combines standard domestic work with industrial, chemical, and nuclear-adjacent opportunities — with coastal exposure adding specific requirements for external installations."
@@ -549,7 +549,7 @@ export default function ElectricianWorkingtonPage() {
       faqHeading="Frequently Asked Questions About Electricians in Workington"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Workington Electricians"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for west Cumbria's industrial sites, coastal properties, and Sellafield-adjacent work. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for west Cumbria's industrial sites, coastal properties, and Sellafield-adjacent work. 7-day free trial."
     />
   );
 }

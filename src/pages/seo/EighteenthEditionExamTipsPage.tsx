@@ -149,27 +149,27 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>60 multiple-choice questions</strong> covering all Parts of BS 7671,
                 including the Appendices.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>2 hours (120 minutes)</strong> to complete the exam. That works out at 2
                 minutes per question — tight if you need to look up regulations.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pass mark: 60%</strong> — you need at least 36 correct answers out of 60.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Open-book exam</strong> — you can bring your copy of BS 7671 with tabs (no
                 handwritten notes). You cannot bring in the On-Site Guide or Guidance Notes.
@@ -197,7 +197,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Target className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Part 4: Protection for Safety</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -279,7 +279,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use active recall.</strong> After reading a section, close the book and
                 write down what you remember. Then check. This is far more effective than
@@ -292,7 +292,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Apply spaced repetition.</strong> Review material at increasing intervals —
                 1 day, 3 days, 7 days, 14 days. This moves information into long-term memory.
@@ -301,7 +301,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Practise with mock exams.</strong> Take full 60-question, 2-hour mock exams
                 under timed conditions. This builds both knowledge and exam technique. Elec-Mate
@@ -310,7 +310,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Study the tables and appendices.</strong> Many exam questions require you to
                 look up values from tables — particularly Appendix 3 (maximum earth fault loop
@@ -319,7 +319,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Learn the numbering system.</strong> BS 7671 uses a logical numbering
                 system: Part → Chapter → Section → Regulation. Once you understand it, navigating
@@ -352,7 +352,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PenTool className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PenTool className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation recall:</strong> "According to Regulation 411.3.3, additional
                 protection by an RCD with a rated residual operating current not exceeding ___mA
@@ -361,7 +361,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PenTool className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PenTool className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Table lookups:</strong> "Using Table 41.3, what is the maximum earth fault
                 loop impedance for a 32A Type B MCB in a TN system with a 0.4s disconnection time?"
@@ -369,7 +369,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PenTool className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PenTool className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Scenario-based:</strong> "An electrician is installing a new circuit in a
                 bathroom. The socket outlet is located 2.5 metres from the edge of the bath. Which
@@ -378,14 +378,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PenTool className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PenTool className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Definition-based:</strong> "Which of the following is the correct definition
                 of an extraneous-conductive-part?" Taken directly from Part 2 of BS 7671.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PenTool className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PenTool className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Calculation-based:</strong> "A circuit is protected by a 20A Type B MCB. The
                 design current is 16A. Using Appendix 4, Table 4D5A, what is the minimum cable size
@@ -417,7 +417,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>First pass: answer what you know.</strong> Go through all 60 questions and
                 answer every question you can answer immediately — from memory or a quick lookup.
@@ -426,7 +426,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Second pass: tackle the harder questions.</strong> Return to the marked
                 questions. Now you have the remaining time to look up regulations, cross-reference
@@ -435,7 +435,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Never leave a question blank.</strong> There is no negative marking. If you
                 have 30 seconds left and three unanswered questions, make your best guess on each
@@ -443,7 +443,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Time your mock exams.</strong> Practise under real time pressure. If you
                 consistently finish mock exams with time to spare, you are in good shape. If you are
@@ -473,7 +473,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Bookmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Bookmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Colour-code by Part.</strong> Use a different colour tab for each Part of BS
                 7671. For example: Part 1 = red, Part 2 = orange, Part 3 = yellow, Part 4 = green,
@@ -482,7 +482,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Bookmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Bookmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sub-tab high-frequency regulations.</strong> Within Part 4, tab Regulation
                 411.3.3 (30mA RCD requirement), Table 41.1 (disconnection times), Tables 41.2–41.4
@@ -491,7 +491,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Bookmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Bookmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tab every Appendix.</strong> Appendix 3 (maximum earth fault loop impedance
                 tables) and Appendix 4 (current-carrying capacity tables) need their own prominent
@@ -499,7 +499,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Bookmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Bookmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tab Part 7 special locations.</strong> Mark Section 701 (bathrooms), 702
                 (swimming pools), 704 (construction sites), and 711 (exhibitions) individually.
@@ -507,7 +507,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Bookmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Bookmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tab Regulation 514.12.1.</strong> This one covers warning and information
                 notices — it appears on almost every exam paper and is easy to overlook if you have
@@ -607,7 +607,7 @@ export default function EighteenthEditionExamTipsPage() {
       badgeIcon={GraduationCap}
       heroTitle={
         <>
-          18th Edition Exam Tips: <span className="text-yellow-400">How to Pass C&G 2382</span>
+          18th Edition Exam Tips: <span className="text-elec-yellow">How to Pass C&G 2382</span>
         </>
       }
       heroSubtitle="The C&G 2382 exam is 60 multiple-choice questions in 2 hours, open-book, with a 60% pass mark. This guide covers the exam format, the regulation areas that come up most, how to tab your BS 7671 book, time management strategies, and the study techniques that actually work."

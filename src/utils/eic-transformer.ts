@@ -1,25 +1,7 @@
 import { EICCircuitData, EICScheduleOfTests, AgentCircuitOutput } from '@/types/eic-integration';
 import { getMcbZsLimit, type MCBCurve } from '@/data/zsLimits';
-
 // BS 7671 Table I1 - Conductor resistances (mΩ/m at 20°C)
-const CONDUCTOR_RESISTANCE: Record<string, number> = {
-  '1.0': 18.1,
-  '1.5': 12.1,
-  '2.5': 7.41,
-  '4.0': 4.61,
-  '6.0': 3.08,
-  '10.0': 1.83,
-  '16.0': 1.15,
-  '25.0': 0.727,
-  '35.0': 0.524,
-  '50.0': 0.387,
-  '70.0': 0.268,
-  '95.0': 0.193,
-  '120.0': 0.153,
-  '150.0': 0.124,
-  '185.0': 0.0991,
-  '240.0': 0.0754,
-};
+import { CONDUCTOR_RESISTANCE } from '@/data/conductorResistance';
 
 /**
  * Max Zs now comes from `@/data/zsLimits`, the single source for BS 7671

@@ -657,7 +657,7 @@ export default function ContinuityTestingGuidePage() {
       heroTitle={
         <>
           Continuity Testing Guide:{' '}
-          <span className="text-yellow-400">Ring Final Circuit & CPC Testing</span>
+          <span className="text-elec-yellow">Ring Final Circuit & CPC Testing</span>
         </>
       }
       heroSubtitle="The complete UK electrician's guide to continuity testing — ring final circuit end-to-end and cross-connected tests, r1, rn and r2, R1+Rn and R1+R2 values, CPC continuity, bonding conductor testing, and recording results on the schedule of test results."

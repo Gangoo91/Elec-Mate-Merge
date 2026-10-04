@@ -210,7 +210,7 @@ const sections = [
         <div className="pt-1">
           <a
             href="#calculator"
-            className="inline-flex h-11 items-center rounded-full border border-elec-yellow/40 bg-elec-yellow/10 px-5 text-[13px] font-semibold text-elec-yellow transition-colors hover:bg-elec-yellow/20 touch-manipulation"
+            className="inline-flex h-11 items-center rounded-full border border-elec-yellow/40 bg-white/[0.06] px-5 text-[13px] font-semibold text-elec-yellow transition-colors hover:bg-white/[0.06] touch-manipulation"
           >
             Look up the maximum Zs for your device
           </a>
@@ -792,7 +792,7 @@ export default function ZeValuesUKPage() {
       heroTitle={
         <>
           Ze Values UK:{' '}
-          <span className="text-yellow-400">External Earth Loop Impedance by Earthing Type</span>
+          <span className="text-elec-yellow">External Earth Loop Impedance by Earthing Type</span>
         </>
       }
       heroSubtitle="Ze is the starting point for every Zs reading in the installation. Distributor-quoted typical maximum values: TN-S 0.80 ohms, TN-C-S (PME) 0.35 ohms, TT 21 ohms. These figures apply to supplies up to 100 A — actual Ze must always be measured. This guide explains what Ze is, how to measure it safely, what affects it, and what to do when the reading exceeds the expected maximum."
@@ -814,7 +814,7 @@ export default function ZeValuesUKPage() {
       leadMagnet={false}
       heroCtaLabel="Record Ze and Zs straight onto your EICR"
       ctaHeading="Validate Ze and Every Test Result Automatically"
-      ctaSubheading="Elec-Mate validates Ze against expected values, cross-checks Zs with Ze + R1+R2, and flags any discrepancies. Voice test entry records readings hands-free. 70+ calculators built in. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate validates Ze against expected values, cross-checks Zs with Ze + R1+R2, and flags any discrepancies. Voice test entry records readings hands-free. 70+ calculators built in. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

@@ -219,19 +219,19 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Supply resilience</strong> — certain MOD facilities require automatic changeover between supplies or UPS backup for critical systems beyond normal BS 7671 requirements. Def Stan 61-12 defines the resilience categories for different facility types.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Electromagnetic compatibility</strong> — military communications and electronic warfare equipment can be sensitive to electromagnetic interference. Def Stan 61-12 addresses screening, cable segregation, and bonding requirements to minimise EMC problems.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Specific cable types</strong> — the standard may mandate particular cable constructions for durability, chemical resistance, or military compatibility that go beyond BS 7671 requirements.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Documentation</strong> — as-built records, test certificates, and change records must be maintained in the MOD's document management system. Def Stan 61-12 specifies the documentation requirements.</span>
             </li>
           </ul>
@@ -256,19 +256,19 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BadgeCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BadgeCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Electrical qualification:</strong> C&G 2365 Level 3 (or equivalent NVQ), C&G 2382 (18th Edition Wiring Regulations), and C&G 2391 (Inspection and Testing) as a minimum.</span>
             </li>
             <li className="flex items-start gap-3">
-              <BadgeCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BadgeCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>ECS card:</strong> Current ECS Gold card at the appropriate grade. This is the baseline competency indicator for MOD estate contractors.</span>
             </li>
             <li className="flex items-start gap-3">
-              <BadgeCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BadgeCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Relevant experience:</strong> Experience appropriate to the type of work — for example, HV experience for HV work, ATEX experience for hazardous area work, airfield lighting experience for airfield projects.</span>
             </li>
             <li className="flex items-start gap-3">
-              <BadgeCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BadgeCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Specialist qualifications:</strong> Where applicable — CompEx for ATEX areas, HV authorisation training, airfield lighting certification.</span>
             </li>
           </ul>
@@ -289,15 +289,15 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>DIO frameworks (Tier 1):</strong> VIVO Defence Services (hard FM for most UK army/RAF sites), Amey Defence Services, Landmarc Support Services. These are long-term PFI or FM contracts. Electrical contractors typically sub-contract from these primes.</span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Pre-qualification questionnaires (PQQs):</strong> MOD construction projects above a value threshold are procured through formal tendering. The first stage is often a PQQ assessing the contractor's financial standing, quality systems (ISO 9001), health and safety record, and relevant experience.</span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Contracts Finder and Find a Tender:</strong> MOD procurement opportunities above £25,000 are published on the UK Government's Contracts Finder website. Monitoring this for electrical and M&E opportunities at MOD sites is a practical route for smaller contractors.</span>
             </li>
           </ul>
@@ -357,19 +357,19 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>General maintenance electrician (BPSS required):</strong> £35–£45/hr on barracks, accommodation, and standard estate sites.</span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Operational site electrician (SC required):</strong> £45–£60/hr on active military installations.</span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Specialist work (HV, ATEX, airfield):</strong> £55–£75/hr reflecting specialist qualifications.</span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>AWE and research establishments (DV required):</strong> £65–£90+/hr, comparable to commercial nuclear sites.</span>
             </li>
           </ul>
@@ -397,7 +397,7 @@ export default function MODDefenceSiteElectricalPage() {
       heroTitle={
         <>
           MOD Defence Site Electrical Work:{' '}
-          <span className="text-yellow-400">Security Clearance, Def Stan, and Career Guide</span>
+          <span className="text-elec-yellow">Security Clearance, Def Stan, and Career Guide</span>
         </>
       }
       heroSubtitle="MOD estate electrical work pays £45–£90+/hr and provides long-term contract stability. This guide covers BPSS, SC, and DV clearance, Def Stan 61-12, SQEP requirements, DIO frameworks, and how to access the defence estate supply chain."

@@ -146,7 +146,7 @@ const sections = [
       <>
         <a
           href="#calculator"
-          className="inline-flex h-11 items-center rounded-full border border-elec-yellow/40 bg-elec-yellow/10 px-5 text-[13px] font-semibold text-white touch-manipulation transition-colors hover:bg-elec-yellow/20"
+          className="inline-flex h-11 items-center rounded-full border border-elec-yellow/40 bg-white/[0.06] px-5 text-[13px] font-semibold text-white touch-manipulation transition-colors hover:bg-white/[0.06]"
         >
           Work out your max demand — free calculator
         </a>
@@ -725,7 +725,7 @@ export default function MaxDemandGuidePage() {
       heroTitle={
         <>
           Max Demand Calculation:{' '}
-          <span className="text-yellow-400">The BS 7671 Method Explained</span>
+          <span className="text-elec-yellow">The BS 7671 Method Explained</span>
         </>
       }
       heroSubtitle="Max demand is the starting point for every installation design. Get it wrong and you undersize the supply or waste money on oversized equipment. This guide walks through diversity factors, worked examples for domestic and commercial installations, and the common mistakes that trip electricians up."
@@ -741,7 +741,7 @@ export default function MaxDemandGuidePage() {
       faqHeading="Frequently Asked Questions About Max Demand Calculations"
       relatedPages={relatedPages}
       ctaHeading="Calculate Max Demand on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's 70+ calculators including max demand, cable sizing, voltage drop, Zs, PFC, and more. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate's 70+ calculators including max demand, cable sizing, voltage drop, Zs, PFC, and more. 7-day free trial, cancel anytime."
     />
   );
 }

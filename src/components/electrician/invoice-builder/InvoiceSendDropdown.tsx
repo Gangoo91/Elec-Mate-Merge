@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useAppReview } from '@/hooks/useAppReview';
 import { useNavigate } from 'react-router-dom';
 import { Quote } from '@/types/quote';
@@ -31,7 +31,45 @@ import { openExternalUrl } from '@/utils/open-external-url';
 import { Capacitor } from '@capacitor/core';
 import { sharePdfBytesFromUrlToWhatsAppWeb } from '@/utils/share-pdf-to-whatsapp-web';
 import { sharePdfFileNative, canShareFilesToWhatsApp } from '@/utils/share-pdf-file-native';
-import { trackInvoiceRaised } from '@/lib/analytics-events';
+import {
+  trackCardPromptDismissed,
+  trackCardPromptShown,
+  trackInvoiceRaised,
+  trackInvoiceSentWithoutCard,
+  trackStripeConnectCompleted,
+  trackStripeConnectStarted,
+} from '@/lib/analytics-events';
+import CardPaymentsPromptSheet, { type CardPromptStatus } from './CardPaymentsPromptSheet';
+import { cardPromptSnoozed, snoozeCardPrompt } from './cardPromptSnooze';
+
+/**
+ * Set when setup starts, taken when the account comes back active. Stripe
+ * returns to the page with a full load, so component state cannot carry it —
+ * and it remembers WHICH invoice started it, so that one can be resent with
+ * the button the moment it can carry one.
+ */
+const CONNECT_STARTED_KEY = 'elecmate:stripe-connect-started';
+const CONNECT_MARKER_DAYS = 3;
+function markConnectStarted(invoiceId: string) {
+  try {
+    localStorage.setItem(CONNECT_STARTED_KEY, JSON.stringify({ at: Date.now(), invoiceId }));
+  } catch {
+    /* storage blocked — the completion event and the resend offer are lost */
+  }
+}
+function takeConnectStarted(): { invoiceId?: string } | null {
+  try {
+    const raw = localStorage.getItem(CONNECT_STARTED_KEY);
+    if (!raw) return null;
+    localStorage.removeItem(CONNECT_STARTED_KEY);
+    const parsed = JSON.parse(raw) as { at?: number; invoiceId?: string };
+    // A setup abandoned last week finishing today is not this invoice's story.
+    if (!parsed.at || Date.now() - parsed.at > CONNECT_MARKER_DAYS * 86_400_000) return null;
+    return { invoiceId: parsed.invoiceId };
+  } catch {
+    return null;
+  }
+}
 
 interface InvoiceSendDropdownProps {
   invoice: Quote;
@@ -59,6 +97,40 @@ export const InvoiceSendDropdown = ({
     'loading' | 'not_connected' | 'pending' | 'active'
   >('loading');
   const [isSyncingAccounting, setIsSyncingAccounting] = useState(false);
+  /** ELE-1705 — the after-send prompt, or the "now resend it" offer. */
+  const [cardPrompt, setCardPrompt] = useState<{
+    mode: 'prompt' | 'ready';
+    status?: CardPromptStatus;
+  } | null>(null);
+  // The status effect runs on focus with stale props; read the invoice live.
+  const invoiceRef = useRef(invoice);
+  invoiceRef.current = invoice;
+
+  /**
+   * Back from Stripe with the account live. If the invoice that started it is
+   * still unpaid, offer to resend it with the button — that is what the setup
+   * was for. Otherwise just say card payments are on.
+   */
+  const onCardsLive = useCallback(async (startedFrom?: string) => {
+    trackStripeConnectCompleted();
+    const current = invoiceRef.current;
+    if (startedFrom && startedFrom === current.id) {
+      const { data } = await supabase
+        .from('quotes')
+        .select('invoice_status, invoice_sent_at')
+        .eq('id', current.id)
+        .maybeSingle();
+      if (data?.invoice_sent_at && data.invoice_status !== 'paid') {
+        setCardPrompt({ mode: 'ready' });
+        return;
+      }
+    }
+    toast({
+      title: 'Card payments are on',
+      description: 'Every invoice you email now carries a Pay now button.',
+      variant: 'success',
+    });
+  }, []);
 
   // Accounting integrations hook
   const {
@@ -98,6 +170,8 @@ export const InvoiceSendDropdown = ({
             .single();
 
           if (profile?.stripe_account_status === 'active') {
+            const started = takeConnectStarted();
+            if (started) onCardsLive(started.invoiceId);
             setStripeStatus('active');
           } else if (profile?.stripe_account_id) {
             setStripeStatus('pending');
@@ -109,6 +183,8 @@ export const InvoiceSendDropdown = ({
 
         // Edge function returns actual Stripe status and updates DB
         if (data?.status === 'active') {
+          const started = takeConnectStarted();
+          if (started) onCardsLive(started.invoiceId);
           setStripeStatus('active');
         } else if (data?.connected) {
           setStripeStatus('pending');
@@ -129,7 +205,7 @@ export const InvoiceSendDropdown = ({
     return () => {
       window.removeEventListener('focus', handleFocus);
     };
-  }, [refreshKey]);
+  }, [refreshKey, onCardsLive]);
 
   // Poll PDF Monkey status via edge function until downloadUrl is ready (max ~90s)
   const pollPdfDownloadUrl = async (
@@ -149,6 +225,24 @@ export const InvoiceSendDropdown = ({
 
   const formatCurrency = (amount: number) =>
     new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount);
+
+  /**
+   * ELE-1705 — after any send that went without a Pay now link, say what the
+   * client cannot do. It was an 8-second toast saying "get paid faster",
+   * which 35 senders scrolled past on 413 invoices in 90 days.
+   */
+  const promptAfterSend = () => {
+    if (stripeStatus === 'active') return;
+    trackInvoiceSentWithoutCard({ stripe_status: stripeStatus });
+    if ((stripeStatus === 'not_connected' || stripeStatus === 'pending') && !cardPromptSnoozed()) {
+      const promptStatus: CardPromptStatus = stripeStatus;
+      // After the success toast has registered, not on top of it.
+      setTimeout(() => {
+        setCardPrompt({ mode: 'prompt', status: promptStatus });
+        trackCardPromptShown({ stripe_status: promptStatus });
+      }, 700);
+    }
+  };
 
   const handleSendEmail = async () => {
     try {
@@ -226,27 +320,12 @@ export const InvoiceSendDropdown = ({
         duration: 4000,
       });
 
-      // Prompt to connect Stripe if not connected
-      if (!payNowIncluded && stripeStatus === 'not_connected') {
-        setTimeout(() => {
-          toast({
-            title: 'Get paid faster with card payments',
-            description: 'Connect Stripe to add a "Pay Now" button to invoices',
-            action: (
-              <Button
-                size="sm"
-                variant="outline"
-                className="border-elec-yellow/30 hover:bg-elec-yellow/10"
-                onClick={() => navigate('/settings?tab=billing')}
-              >
-                <CreditCard className="h-4 w-4 mr-1" />
-                Set up
-              </Button>
-            ),
-            duration: 8000,
-          });
-        }, 1000);
-      }
+      /*
+       * ELE-1705 — say what the client cannot do, at the moment it matters.
+       * It was an 8-second toast saying "get paid faster", which 35 senders
+       * scrolled past on 413 invoices in 90 days.
+       */
+      if (!payNowIncluded) promptAfterSend();
 
       // Update status to sent with timestamp
       await supabase
@@ -287,6 +366,29 @@ export const InvoiceSendDropdown = ({
       } = await supabase.auth.getUser();
       if (!user) {
         throw new Error('User not authenticated');
+      }
+
+      /*
+       * ELE-1705 — a WhatsApp send never carried a way to pay by card, even
+       * for electricians set up for it: only the EMAIL send created the link,
+       * and the PDF only shows one that exists. Of 76 invoices from connected
+       * accounts in 90 days, 7 had a link. Create it first (non-fatal), so
+       * the PDF carries the button and the message carries the link.
+       */
+      const PAY_PAGE = 'https://www.elec-mate.com/pay/';
+      if (stripeStatus === 'active' && invoice.invoice_status !== 'paid') {
+        // Only when it has no permanent link yet — no Stripe round trip on
+        // every share of an invoice that already carries one.
+        const { data: existing } = await supabase
+          .from('quotes')
+          .select('stripe_payment_link_url')
+          .eq('id', invoice.id)
+          .maybeSingle();
+        if (!existing?.stripe_payment_link_url?.startsWith(PAY_PAGE)) {
+          await supabase.functions
+            .invoke('create-invoice-payment-link', { body: { invoiceId: invoice.id } })
+            .catch(() => undefined);
+        }
       }
 
       // Step 1: Fetch FRESH invoice data from database
@@ -373,17 +475,32 @@ export const InvoiceSendDropdown = ({
 
       const clientPhone = clientData?.phone;
 
+      // Only the permanent page goes in a chat — never a Checkout session,
+      // which is dead in 24 hours, and never a signed file URL (ELE-1377).
+      // And only while card payments are live — a link kept from before a
+      // revoked account would open a page that cannot take the payment.
+      const payLink: string | null =
+        stripeStatus === 'active' &&
+        typeof freshInvoice.stripe_payment_link_url === 'string' &&
+        freshInvoice.stripe_payment_link_url.startsWith(PAY_PAGE)
+          ? freshInvoice.stripe_payment_link_url
+          : null;
+      const paymentLine = payLink
+        ? `Pay by card here: ${payLink}\n\nBank details are on the invoice too. If you have any questions, just reply here.`
+        : 'Payment details are on the invoice. If you have any questions, just reply here.';
+
       if (Capacitor.isNativePlatform()) {
         // ELE-1276: attach the actual PDF via the native share sheet — the
         // signed S3 URL expires after an hour and looks unprofessional as
-        // raw text. Message carries no link; the file IS the document.
+        // raw text. The file IS the document; the only link a message carries is
+        // the permanent pay page (ELE-1705), never a file or Checkout URL.
         const nativeMessage = `*Invoice ${freshInvoice.invoice_number} — ${companyName}*
 
 Dear ${clientName},
 
 Please find attached your invoice for ${formatCurrency(totalAmount)}, due ${dueDate}.
 
-Payment details are on the invoice. If you have any questions, just reply here.
+${paymentLine}
 
 Many thanks,
 ${companyName}`;
@@ -401,7 +518,8 @@ ${companyName}`;
           // can't open, point the user at Save rather than send a bad link.
           toast({
             title: 'Could not open share sheet',
-            description: 'Please try again, or use Save to download the PDF and attach it yourself.',
+            description:
+              'Please try again, or use Save to download the PDF and attach it yourself.',
             variant: 'destructive',
           });
           return;
@@ -413,14 +531,14 @@ ${companyName}`;
           duration: 3000,
         });
       } else {
-        // Web: attach the actual PDF, never a link in the body
+        // Web: attach the actual PDF; the pay page is the only link in the body
         const webMessage = `*Invoice ${freshInvoice.invoice_number} — ${companyName}*
 
 Dear ${clientName},
 
 Please find attached your invoice for ${formatCurrency(totalAmount)}, due ${dueDate}.
 
-Payment details are on the invoice. If you have any questions, just reply here.
+${paymentLine}
 
 Many thanks,
 ${companyName}`;
@@ -444,6 +562,7 @@ ${companyName}`;
         });
       }
 
+      if (!payLink) promptAfterSend();
       onSuccess?.();
     } catch (error: any) {
       if (error?.name === 'AbortError') {
@@ -460,7 +579,9 @@ ${companyName}`;
   };
 
   // Connect existing Stripe account via OAuth (instant!)
-  const handleConnectStripeOAuth = async () => {
+  const handleConnectStripeOAuth = async (source: 'send_prompt' | 'send_menu' = 'send_menu') => {
+    trackStripeConnectStarted({ source, method: 'oauth' });
+    markConnectStarted(invoice.id);
     try {
       setIsConnectingStripe(true);
       const { data: session } = await supabase.auth.getSession();
@@ -502,7 +623,9 @@ ${companyName}`;
   };
 
   // Create new Stripe Express account (for users without Stripe)
-  const handleConnectStripeExpress = async () => {
+  const handleConnectStripeExpress = async (source: 'send_prompt' | 'send_menu' = 'send_menu') => {
+    trackStripeConnectStarted({ source, method: 'express' });
+    markConnectStarted(invoice.id);
     try {
       setIsConnectingStripe(true);
       const { data: session } = await supabase.auth.getSession();
@@ -578,242 +701,284 @@ ${companyName}`;
     isSendingEmail || isSharingWhatsApp || isConnectingStripe || isSyncingAccounting;
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        {compact ? (
-          <button
-            disabled={disabled || isLoading}
-            className="flex items-center justify-center gap-2 h-10 px-4 rounded-xl bg-blue-500 hover:bg-blue-600 text-[13px] font-semibold text-white touch-manipulation transition-all active:scale-[0.96] disabled:opacity-50"
-          >
-            {isLoading ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              <Mail className="h-4 w-4" />
-            )}
-            <span>Send</span>
-          </button>
-        ) : (
-          <Button
-            variant="default"
-            disabled={disabled || isLoading}
-            className={`h-11 touch-manipulation rounded-xl bg-blue-600 hover:bg-blue-700 text-white ${className}`}
-          >
-            {isLoading ? (
-              <Loader2 className="h-4 w-4 animate-spin sm:mr-2" />
-            ) : (
-              <Mail className="h-4 w-4 sm:mr-2" />
-            )}
-            <span className="hidden sm:inline">
-              {isLoading ? (isSendingEmail ? 'Sending...' : 'Loading...') : 'Send'}
-            </span>
-          </Button>
-        )}
-      </DropdownMenuTrigger>
-      <DropdownMenuContent
-        align="center"
-        className="w-72 bg-[#111214]/95 backdrop-blur-xl border border-white/[0.08] shadow-2xl rounded-2xl z-50 p-1.5"
-        sideOffset={8}
-      >
-        <DropdownMenuLabel className="text-[11px] font-semibold text-white px-3 pt-2 pb-1 uppercase tracking-[0.08em]">
-          Send invoice
-        </DropdownMenuLabel>
-        <DropdownMenuItem
-          onClick={handleSendEmail}
-          disabled={isSendingEmail}
-          className="cursor-pointer rounded-xl px-3 py-3 gap-3 focus:bg-white/[0.06] touch-manipulation"
-        >
-          {isSendingEmail ? (
-            <Loader2 className="h-[18px] w-[18px] animate-spin text-white/70 flex-shrink-0" />
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          {compact ? (
+            <button
+              disabled={disabled || isLoading}
+              className="flex items-center justify-center gap-2 h-10 px-4 rounded-xl bg-blue-500 hover:bg-blue-600 text-[13px] font-semibold text-white touch-manipulation transition-all active:scale-[0.96] disabled:opacity-50"
+            >
+              {isLoading ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Mail className="h-4 w-4" />
+              )}
+              <span>Send</span>
+            </button>
           ) : (
-            <Mail className="h-[18px] w-[18px] text-white/70 flex-shrink-0" />
+            <Button
+              variant="default"
+              disabled={disabled || isLoading}
+              className={`h-11 touch-manipulation rounded-xl bg-blue-600 hover:bg-blue-700 text-white ${className}`}
+            >
+              {isLoading ? (
+                <Loader2 className="h-4 w-4 animate-spin sm:mr-2" />
+              ) : (
+                <Mail className="h-4 w-4 sm:mr-2" />
+              )}
+              <span className="hidden sm:inline">
+                {isLoading ? (isSendingEmail ? 'Sending...' : 'Loading...') : 'Send'}
+              </span>
+            </Button>
           )}
-          <div className="flex min-w-0 flex-col">
-            <span className="text-[14px] font-semibold text-white leading-tight">Email to client</span>
-            <span className="text-[12px] text-white leading-snug">
-              PDF attached, with payment link
-            </span>
-          </div>
-        </DropdownMenuItem>
-        {/* ELE-1377 — native WhatsApp share (PDF attached via the OS share
-            sheet). Only shown where the device can attach a file; the broken
-            wa.me link fallback that dumped a raw signed URL was removed. */}
-        {canShareFilesToWhatsApp() && (
+        </DropdownMenuTrigger>
+        <DropdownMenuContent
+          align="center"
+          className="w-72 bg-[#111214]/95 backdrop-blur-xl border border-white/[0.08] shadow-2xl rounded-2xl z-50 p-1.5"
+          sideOffset={8}
+        >
+          <DropdownMenuLabel className="text-[11px] font-semibold text-white px-3 pt-2 pb-1 uppercase tracking-[0.08em]">
+            Send invoice
+          </DropdownMenuLabel>
           <DropdownMenuItem
-            onClick={handleShareWhatsApp}
-            disabled={isSharingWhatsApp}
+            onClick={handleSendEmail}
+            disabled={isSendingEmail}
             className="cursor-pointer rounded-xl px-3 py-3 gap-3 focus:bg-white/[0.06] touch-manipulation"
           >
-            {isSharingWhatsApp ? (
+            {isSendingEmail ? (
               <Loader2 className="h-[18px] w-[18px] animate-spin text-white/70 flex-shrink-0" />
             ) : (
-              <MessageCircle className="h-[18px] w-[18px] text-white/70 flex-shrink-0" />
+              <Mail className="h-[18px] w-[18px] text-white/70 flex-shrink-0" />
             )}
             <div className="flex min-w-0 flex-col">
               <span className="text-[14px] font-semibold text-white leading-tight">
-                Share via WhatsApp
+                Email to client
               </span>
+              {/* It said "with payment link" whether or not there was one —
+                to the 35 senders without card payments it was never true. */}
               <span className="text-[12px] text-white leading-snug">
-                Opens your share sheet with the PDF attached
+                {stripeStatus === 'active'
+                  ? 'PDF attached, with a Pay now link'
+                  : 'PDF attached — no card payment link'}
               </span>
             </div>
           </DropdownMenuItem>
-        )}
-
-        {/* Accounting Sync Section */}
-        {!accountingLoading && (
-          <>
-            <DropdownMenuSeparator className="my-2 bg-border/30" />
-            <DropdownMenuLabel className="text-[11px] font-semibold text-white px-3 py-1 uppercase tracking-wider">
-              Accounting Software
-            </DropdownMenuLabel>
-            {/* Already synced - show green tick */}
-            {invoice.external_invoice_id ? (
-              <div className="flex items-center gap-3 px-3 py-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 my-1">
-                <div className="h-10 w-10 rounded-xl bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
-                  <CheckCircle className="h-5 w-5 text-emerald-400" />
-                </div>
-                <div className="flex flex-col">
-                  <span className="font-semibold text-sm text-emerald-400">
-                    Synced to{' '}
-                    {invoice.external_invoice_provider
-                      ? ACCOUNTING_PROVIDERS[
-                          invoice.external_invoice_provider as keyof typeof ACCOUNTING_PROVIDERS
-                        ]?.name || invoice.external_invoice_provider
-                      : 'Accounting'}
-                  </span>
-                  <span className="text-xs text-white">
-                    Invoice is in your accounting software
-                  </span>
-                </div>
+          {/* ELE-1377 — native WhatsApp share (PDF attached via the OS share
+            sheet). Only shown where the device can attach a file; the broken
+            wa.me link fallback that dumped a raw signed URL was removed. */}
+          {canShareFilesToWhatsApp() && (
+            <DropdownMenuItem
+              onClick={handleShareWhatsApp}
+              disabled={isSharingWhatsApp}
+              className="cursor-pointer rounded-xl px-3 py-3 gap-3 focus:bg-white/[0.06] touch-manipulation"
+            >
+              {isSharingWhatsApp ? (
+                <Loader2 className="h-[18px] w-[18px] animate-spin text-white/70 flex-shrink-0" />
+              ) : (
+                <MessageCircle className="h-[18px] w-[18px] text-white/70 flex-shrink-0" />
+              )}
+              <div className="flex min-w-0 flex-col">
+                <span className="text-[14px] font-semibold text-white leading-tight">
+                  Share via WhatsApp
+                </span>
+                <span className="text-[12px] text-white leading-snug">
+                  Opens your share sheet with the PDF attached
+                </span>
               </div>
-            ) : hasAccountingConnected ? (
-              <>
-                {accountingIntegrations
-                  .filter((i) => i.status === 'connected')
-                  .map((integration) => (
-                    <DropdownMenuItem
-                      key={integration.provider}
-                      onClick={handleSyncToAccounting}
-                      disabled={isSyncingAccounting}
-                      className="cursor-pointer rounded-xl h-16 px-3 my-1 focus:bg-purple-500/10 touch-manipulation"
-                    >
-                      <div
-                        className={`h-10 w-10 rounded-xl ${ACCOUNTING_PROVIDERS[integration.provider].bgColor} flex items-center justify-center mr-3 flex-shrink-0`}
+            </DropdownMenuItem>
+          )}
+
+          {/* Accounting Sync Section */}
+          {!accountingLoading && (
+            <>
+              <DropdownMenuSeparator className="my-2 bg-border/30" />
+              <DropdownMenuLabel className="text-[11px] font-semibold text-white px-3 py-1 uppercase tracking-wider">
+                Accounting Software
+              </DropdownMenuLabel>
+              {/* Already synced - show green tick */}
+              {invoice.external_invoice_id ? (
+                <div className="flex items-center gap-3 px-3 py-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 my-1">
+                  <div className="h-10 w-10 rounded-xl bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                    <CheckCircle className="h-5 w-5 text-emerald-400" />
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="font-semibold text-sm text-emerald-400">
+                      Synced to{' '}
+                      {invoice.external_invoice_provider
+                        ? ACCOUNTING_PROVIDERS[
+                            invoice.external_invoice_provider as keyof typeof ACCOUNTING_PROVIDERS
+                          ]?.name || invoice.external_invoice_provider
+                        : 'Accounting'}
+                    </span>
+                    <span className="text-xs text-white">
+                      Invoice is in your accounting software
+                    </span>
+                  </div>
+                </div>
+              ) : hasAccountingConnected ? (
+                <>
+                  {accountingIntegrations
+                    .filter((i) => i.status === 'connected')
+                    .map((integration) => (
+                      <DropdownMenuItem
+                        key={integration.provider}
+                        onClick={handleSyncToAccounting}
+                        disabled={isSyncingAccounting}
+                        className="cursor-pointer rounded-xl h-16 px-3 my-1 focus:bg-purple-500/10 touch-manipulation"
                       >
-                        {isSyncingAccounting ? (
-                          <Loader2 className="h-5 w-5 text-purple-400 animate-spin" />
-                        ) : (
-                          <Calculator
-                            className={`h-5 w-5 ${ACCOUNTING_PROVIDERS[integration.provider].logoColor}`}
-                          />
-                        )}
-                      </div>
-                      <div className="flex flex-col">
-                        <span className="font-semibold text-sm">
-                          Sync to {ACCOUNTING_PROVIDERS[integration.provider].name}
-                        </span>
-                        <span className="text-xs text-white">
-                          {integration.tenantName || 'Send invoice to accounting'}
-                        </span>
-                      </div>
-                    </DropdownMenuItem>
-                  ))}
-              </>
-            ) : (
+                        <div
+                          className={`h-10 w-10 rounded-xl ${ACCOUNTING_PROVIDERS[integration.provider].bgColor} flex items-center justify-center mr-3 flex-shrink-0`}
+                        >
+                          {isSyncingAccounting ? (
+                            <Loader2 className="h-5 w-5 text-purple-400 animate-spin" />
+                          ) : (
+                            <Calculator
+                              className={`h-5 w-5 ${ACCOUNTING_PROVIDERS[integration.provider].logoColor}`}
+                            />
+                          )}
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="font-semibold text-sm">
+                            Sync to {ACCOUNTING_PROVIDERS[integration.provider].name}
+                          </span>
+                          <span className="text-xs text-white">
+                            {integration.tenantName || 'Send invoice to accounting'}
+                          </span>
+                        </div>
+                      </DropdownMenuItem>
+                    ))}
+                </>
+              ) : (
+                <DropdownMenuItem
+                  onClick={handleConnectAccounting}
+                  className="cursor-pointer rounded-xl h-16 px-3 my-1 focus:bg-purple-500/10 touch-manipulation"
+                >
+                  <div className="h-10 w-10 rounded-xl bg-purple-500/15 flex items-center justify-center mr-3 flex-shrink-0">
+                    <Calculator className="h-5 w-5 text-purple-400" />
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="font-semibold text-sm">Connect Accounting</span>
+                    <span className="text-xs text-white">Xero, QuickBooks, Sage & more</span>
+                  </div>
+                  <ExternalLink className="h-4 w-4 text-white ml-auto" />
+                </DropdownMenuItem>
+              )}
+            </>
+          )}
+
+          {/* Stripe Connect - show connect options, pending status, or connected status */}
+          {stripeStatus === 'not_connected' && (
+            <>
+              <DropdownMenuSeparator className="my-2 bg-border/30" />
+              <DropdownMenuLabel className="text-[11px] font-semibold text-white px-3 py-1 uppercase tracking-wider">
+                Accept Card Payments
+              </DropdownMenuLabel>
+              {/* Primary: Connect existing Stripe via OAuth (INSTANT!) */}
               <DropdownMenuItem
-                onClick={handleConnectAccounting}
-                className="cursor-pointer rounded-xl h-16 px-3 my-1 focus:bg-purple-500/10 touch-manipulation"
+                onClick={() => handleConnectStripeOAuth('send_menu')}
+                disabled={isConnectingStripe}
+                className="cursor-pointer rounded-xl h-16 px-3 my-1 focus:bg-elec-yellow/10 touch-manipulation bg-elec-yellow/[0.10] border border-elec-yellow/30"
               >
-                <div className="h-10 w-10 rounded-xl bg-purple-500/15 flex items-center justify-center mr-3 flex-shrink-0">
-                  <Calculator className="h-5 w-5 text-purple-400" />
+                <div className="h-10 w-10 rounded-xl bg-elec-yellow/[0.18] flex items-center justify-center mr-3 flex-shrink-0">
+                  {isConnectingStripe ? (
+                    <Loader2 className="h-5 w-5 text-elec-yellow animate-spin" />
+                  ) : (
+                    <Zap className="h-5 w-5 text-elec-yellow" />
+                  )}
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-semibold text-sm">Connect Accounting</span>
+                  <span className="font-semibold text-sm text-white">Connect Stripe</span>
+                  <span className="text-[11px] text-white font-medium">Instant — just log in</span>
+                </div>
+              </DropdownMenuItem>
+              {/* Secondary: Small link for users without Stripe */}
+              <div className="px-3">
+                <button
+                  onClick={() => handleConnectStripeExpress('send_menu')}
+                  disabled={isConnectingStripe}
+                  className="flex min-h-[44px] w-full items-center text-left text-[11px] text-white underline underline-offset-2 touch-manipulation"
+                >
+                  Don&rsquo;t have Stripe? Create free account
+                </button>
+              </div>
+            </>
+          )}
+          {stripeStatus === 'pending' && (
+            <>
+              <DropdownMenuSeparator className="my-2 bg-border/30" />
+              <DropdownMenuItem
+                onClick={() => handleConnectStripeExpress('send_menu')}
+                disabled={isConnectingStripe}
+                className="cursor-pointer rounded-xl h-16 px-3 my-1 focus:bg-amber-500/10 touch-manipulation bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/20"
+              >
+                <div className="h-10 w-10 rounded-xl bg-amber-500/20 flex items-center justify-center mr-3 flex-shrink-0">
+                  {isConnectingStripe ? (
+                    <Loader2 className="h-5 w-5 text-amber-400 animate-spin" />
+                  ) : (
+                    <CreditCard className="h-5 w-5 text-amber-400" />
+                  )}
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-semibold text-sm flex items-center gap-1">
+                    {isConnectingStripe ? 'Loading...' : 'Finish Stripe Setup'}
+                  </span>
                   <span className="text-xs text-white">
-                    Xero, QuickBooks, Sage & more
+                    Complete verification to accept payments
                   </span>
                 </div>
-                <ExternalLink className="h-4 w-4 text-white ml-auto" />
               </DropdownMenuItem>
-            )}
-          </>
-        )}
+            </>
+          )}
+          {stripeStatus === 'active' && (
+            <>
+              <DropdownMenuSeparator className="my-2 bg-border/30" />
+              <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-green-500/10 border border-green-500/20">
+                <CheckCircle className="h-4 w-4 text-green-400" />
+                <span className="text-xs text-green-400 font-medium">Card payments enabled</span>
+              </div>
+            </>
+          )}
+        </DropdownMenuContent>
+      </DropdownMenu>
 
-        {/* Stripe Connect - show connect options, pending status, or connected status */}
-        {stripeStatus === 'not_connected' && (
-          <>
-            <DropdownMenuSeparator className="my-2 bg-border/30" />
-            <DropdownMenuLabel className="text-[11px] font-semibold text-white px-3 py-1 uppercase tracking-wider">
-              Accept Card Payments
-            </DropdownMenuLabel>
-            {/* Primary: Connect existing Stripe via OAuth (INSTANT!) */}
-            <DropdownMenuItem
-              onClick={handleConnectStripeOAuth}
-              disabled={isConnectingStripe}
-              className="cursor-pointer rounded-xl h-16 px-3 my-1 focus:bg-elec-yellow/10 touch-manipulation bg-elec-yellow/[0.10] border border-elec-yellow/30"
-            >
-              <div className="h-10 w-10 rounded-xl bg-elec-yellow/[0.18] flex items-center justify-center mr-3 flex-shrink-0">
-                {isConnectingStripe ? (
-                  <Loader2 className="h-5 w-5 text-elec-yellow animate-spin" />
-                ) : (
-                  <Zap className="h-5 w-5 text-elec-yellow" />
-                )}
-              </div>
-              <div className="flex flex-col">
-                <span className="font-semibold text-sm text-white">Connect Stripe</span>
-                <span className="text-[11px] text-white font-medium">
-                  Instant — just log in
-                </span>
-              </div>
-            </DropdownMenuItem>
-            {/* Secondary: Small link for users without Stripe */}
-            <div className="px-3">
-              <button
-                onClick={handleConnectStripeExpress}
-                disabled={isConnectingStripe}
-                className="flex min-h-[44px] w-full items-center text-left text-[11px] text-white underline underline-offset-2 touch-manipulation"
-              >
-                Don&rsquo;t have Stripe? Create free account
-              </button>
-            </div>
-          </>
-        )}
-        {stripeStatus === 'pending' && (
-          <>
-            <DropdownMenuSeparator className="my-2 bg-border/30" />
-            <DropdownMenuItem
-              onClick={handleConnectStripeExpress}
-              disabled={isConnectingStripe}
-              className="cursor-pointer rounded-xl h-16 px-3 my-1 focus:bg-amber-500/10 touch-manipulation bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/20"
-            >
-              <div className="h-10 w-10 rounded-xl bg-amber-500/20 flex items-center justify-center mr-3 flex-shrink-0">
-                {isConnectingStripe ? (
-                  <Loader2 className="h-5 w-5 text-amber-400 animate-spin" />
-                ) : (
-                  <CreditCard className="h-5 w-5 text-amber-400" />
-                )}
-              </div>
-              <div className="flex flex-col">
-                <span className="font-semibold text-sm flex items-center gap-1">
-                  {isConnectingStripe ? 'Loading...' : 'Finish Stripe Setup'}
-                </span>
-                <span className="text-xs text-white">
-                  Complete verification to accept payments
-                </span>
-              </div>
-            </DropdownMenuItem>
-          </>
-        )}
-        {stripeStatus === 'active' && (
-          <>
-            <DropdownMenuSeparator className="my-2 bg-border/30" />
-            <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-green-500/10 border border-green-500/20">
-              <CheckCircle className="h-4 w-4 text-green-400" />
-              <span className="text-xs text-green-400 font-medium">Card payments enabled</span>
-            </div>
-          </>
-        )}
-      </DropdownMenuContent>
-    </DropdownMenu>
+      {cardPrompt && (
+        <CardPaymentsPromptSheet
+          open
+          onOpenChange={(open) => {
+            if (!open) setCardPrompt(null);
+          }}
+          mode={cardPrompt.mode}
+          status={cardPrompt.status}
+          clientName={invoice.client?.name}
+          invoiceNumber={invoice.invoice_number}
+          amount={invoice.total}
+          busy={isConnectingStripe || isSendingEmail}
+          // Close as Stripe opens: on a phone it opens in the browser, and the
+          // "can't pay by card" sheet should not be waiting on the way back.
+          onSetUp={() => {
+            setCardPrompt(null);
+            handleConnectStripeExpress('send_prompt');
+          }}
+          onConnectExisting={() => {
+            setCardPrompt(null);
+            handleConnectStripeOAuth('send_prompt');
+          }}
+          onResend={async () => {
+            await handleSendEmail();
+            setCardPrompt(null);
+          }}
+          onNotNow={() => {
+            // Only the after-send prompt snoozes; declining the resend is a
+            // one-off answer about one invoice.
+            if (cardPrompt.mode === 'prompt') {
+              snoozeCardPrompt();
+              trackCardPromptDismissed();
+            }
+            setCardPrompt(null);
+          }}
+        />
+      )}
+    </>
   );
 };

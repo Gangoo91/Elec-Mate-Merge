@@ -164,16 +164,16 @@ const quizQuestions = [
   {
     id: 7,
     question:
-      'Which BS 7671 regulation cross-references the continuity testing of ring final circuit live conductors (the test you might perform alongside protective conductor continuity)?',
+      'Which BS 7671 regulation requires continuity testing of ring final circuit live conductors?',
     options: [
       'Reg 411.3.2 — maximum disconnection times for final circuits under fault conditions.',
       'Reg 514.13.1 — the warning notice requirement at bonding and earthing connections.',
       'Reg 643.3.1 — insulation resistance testing of the whole completed installation.',
-      'Reg 643.2.2 — ring final circuit continuity testing under the same Section 643.',
+      'Reg 643.2.1(b) — the same regulation that covers protective conductors also requires ring final live conductors to be tested.',
     ],
     correctAnswer: 3,
     explanation:
-      'Reg 643.2.2 covers ring final circuit continuity (the loop tests for r1, rn, r2 of the ring). Same family of tests under Section 643 as the protective conductor continuity in Reg 643.2.1. On an EICR or initial verification, you typically do all the continuity tests in one pass with the same MFT.',
+      'Reg 643.2.1(b) covers ring final circuit continuity (the loop tests for r1, rn, r2 of the ring). Same family of tests under Section 643 as the protective conductor continuity in Reg 643.2.1. On an EICR or initial verification, you typically do all the continuity tests in one pass with the same MFT.',
   },
   {
     id: 8,
@@ -525,7 +525,7 @@ export default function Sub4() {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 7671:2018+A4:2026 — Regulation 643.2.2 (Continuity of ring final circuit conductors)"
+          source="BS 7671:2018+A4:2026 — Regulation 643.2.1 (Continuity of conductors)"
           clause="The continuity of every ring final circuit conductor, including the protective conductor, shall be verified by a measurement of resistance."
           meaning={
             <>
@@ -536,7 +536,7 @@ export default function Sub4() {
               Section 6 of this Module.
             </>
           }
-          cite="Source: BS 7671:2018+A4:2026 Part 6, Chapter 64, Regulation 643.2.2."
+          cite="Source: BS 7671:2018+A4:2026 Part 6, Chapter 64, Regulation 643.2.1."
         />
 
         <InlineCheck

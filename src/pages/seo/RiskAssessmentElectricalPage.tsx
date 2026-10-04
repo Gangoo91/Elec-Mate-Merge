@@ -162,9 +162,9 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Key Legislation</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">
+                <strong className="text-elec-yellow">
                   Management of Health and Safety at Work Regulations 1999
                 </strong>{' '}
                 — Regulation 3 is the primary risk assessment duty. It requires every employer to
@@ -176,9 +176,9 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Health and Safety at Work etc. Act 1974</strong>
+                <strong className="text-elec-yellow">Health and Safety at Work etc. Act 1974</strong>
                 — Section 2 imposes a general duty to ensure the health, safety, and welfare of
                 employees. Section 3 extends this to non-employees affected by the work. Risk
                 assessment is the primary mechanism for demonstrating compliance with these general
@@ -186,9 +186,9 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Electricity at Work Regulations 1989</strong> —
+                <strong className="text-elec-yellow">Electricity at Work Regulations 1989</strong> —
                 Require all work on electrical systems to be carried out so as to prevent danger. A
                 risk assessment that identifies electrical hazards and specifies appropriate
                 controls (including{' '}
@@ -199,9 +199,9 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">
+                <strong className="text-elec-yellow">
                   Construction (Design and Management) Regulations 2015
                 </strong>{' '}
                 — CDM 2015 applies to all construction work including electrical installation.
@@ -222,7 +222,7 @@ const sections = [
         <p>
           For working safely on live and isolated systems, the Health and Safety Executive
           publication{' '}
-          <strong className="text-yellow-400">
+          <strong className="text-elec-yellow">
             HSG85 Electricity at Work: Safe Working Practices
           </strong>{' '}
           is the definitive statutory-aligned practical guide, explicitly recommended by the On-Site
@@ -231,7 +231,7 @@ const sections = [
           risk assessment for electrical work.
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
-          <h3 className="font-bold text-yellow-400 text-lg mb-3">
+          <h3 className="font-bold text-elec-yellow text-lg mb-3">
             BS&nbsp;7671:2018+A4:2026 Regulatory Changes Relevant to Risk Assessment
           </h3>
           <p className="text-white text-sm leading-relaxed mb-4">
@@ -240,9 +240,9 @@ const sections = [
           </p>
           <ul className="space-y-3 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">
+                <strong className="text-elec-yellow">
                   Reg&nbsp;421.1.7 — Arc Fault Detection Devices (AFDDs):
                 </strong>{' '}
                 BS&nbsp;7671:2018+A4:2026 recommends the installation of AFDDs on AC final circuits
@@ -254,9 +254,9 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">
+                <strong className="text-elec-yellow">
                   Reg&nbsp;411.3.4 — Mandatory RCD Protection for Domestic Lighting Circuits:
                 </strong>{' '}
                 Within domestic (household) premises, Reg&nbsp;411.3.4 requires that additional
@@ -322,7 +322,7 @@ const sections = [
               className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
             >
               <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] shrink-0">
-                <span className="font-bold text-yellow-400">{item.step}</span>
+                <span className="font-bold text-elec-yellow">{item.step}</span>
               </div>
               <div>
                 <h3 className="font-bold text-white text-lg mb-1">{item.title}</h3>
@@ -348,7 +348,7 @@ const sections = [
         <div className="grid sm:grid-cols-2 gap-4 my-6">
           <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <div className="flex items-center gap-2 mb-3">
-              <Zap className="w-5 h-5 text-yellow-400" />
+              <Zap className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Electric Shock</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -366,7 +366,7 @@ const sections = [
           </div>
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-3">
-              <Flame className="w-5 h-5 text-yellow-400" />
+              <Flame className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Arc Flash</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -380,7 +380,7 @@ const sections = [
           </div>
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-3">
-              <HardHat className="w-5 h-5 text-yellow-400" />
+              <HardHat className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Falls from Height</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -394,7 +394,7 @@ const sections = [
           </div>
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Asbestos Exposure</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -409,7 +409,7 @@ const sections = [
           </div>
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-3">
-              <Activity className="w-5 h-5 text-yellow-400" />
+              <Activity className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Manual Handling</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -423,7 +423,7 @@ const sections = [
           </div>
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-3">
-              <ShieldAlert className="w-5 h-5 text-yellow-400" />
+              <ShieldAlert className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Dust and Noise</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -437,7 +437,7 @@ const sections = [
           </div>
           <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] sm:col-span-2">
             <div className="flex items-center gap-2 mb-3">
-              <Zap className="w-5 h-5 text-yellow-400" />
+              <Zap className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">
                 Solar PV and Battery Storage — DC-Side Hazard
               </h3>
@@ -446,7 +446,7 @@ const sections = [
               Solar PV systems present a specific and frequently underestimated fatal risk during
               domestic surveys, loft rewires, and consumer unit work. Under BS&nbsp;7671
               Reg&nbsp;712.410.101, electrical equipment on the DC side of a PV installation{' '}
-              <strong className="text-yellow-400">
+              <strong className="text-elec-yellow">
                 shall be considered to be energised even when the AC side is disconnected from the
                 grid
               </strong>{' '}
@@ -480,22 +480,22 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Likelihood Scale</h3>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li>
-              <strong className="text-yellow-400">1 — Rare:</strong> Could happen but very unlikely
+              <strong className="text-elec-yellow">1 — Rare:</strong> Could happen but very unlikely
               under normal conditions
             </li>
             <li>
-              <strong className="text-yellow-400">2 — Unlikely:</strong> Could happen but not
+              <strong className="text-elec-yellow">2 — Unlikely:</strong> Could happen but not
               expected
             </li>
             <li>
-              <strong className="text-yellow-400">3 — Possible:</strong> May happen occasionally
+              <strong className="text-elec-yellow">3 — Possible:</strong> May happen occasionally
             </li>
             <li>
-              <strong className="text-yellow-400">4 — Likely:</strong> Will probably happen at some
+              <strong className="text-elec-yellow">4 — Likely:</strong> Will probably happen at some
               point
             </li>
             <li>
-              <strong className="text-yellow-400">5 — Almost certain:</strong> Expected to happen
+              <strong className="text-elec-yellow">5 — Almost certain:</strong> Expected to happen
             </li>
           </ul>
         </div>
@@ -503,23 +503,23 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Severity Scale</h3>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li>
-              <strong className="text-yellow-400">1 — Negligible:</strong> Minor injury requiring
+              <strong className="text-elec-yellow">1 — Negligible:</strong> Minor injury requiring
               first aid only
             </li>
             <li>
-              <strong className="text-yellow-400">2 — Minor:</strong> Injury requiring medical
+              <strong className="text-elec-yellow">2 — Minor:</strong> Injury requiring medical
               attention, short absence
             </li>
             <li>
-              <strong className="text-yellow-400">3 — Moderate:</strong> Serious injury, extended
+              <strong className="text-elec-yellow">3 — Moderate:</strong> Serious injury, extended
               absence, RIDDOR reportable
             </li>
             <li>
-              <strong className="text-yellow-400">4 — Major:</strong> Life-changing injury,
+              <strong className="text-elec-yellow">4 — Major:</strong> Life-changing injury,
               permanent disability
             </li>
             <li>
-              <strong className="text-yellow-400">5 — Catastrophic:</strong> Fatality or multiple
+              <strong className="text-elec-yellow">5 — Catastrophic:</strong> Fatality or multiple
               fatalities
             </li>
           </ul>
@@ -579,7 +579,7 @@ const sections = [
               className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
             >
               <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] shrink-0">
-                <span className="font-bold text-yellow-400">{item.level}</span>
+                <span className="font-bold text-elec-yellow">{item.level}</span>
               </div>
               <div>
                 <h3 className="font-bold text-white text-lg mb-1">{item.title}</h3>
@@ -617,43 +617,43 @@ const sections = [
           </p>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Fire alarm panels and detectors</strong> —
+                <strong className="text-elec-yellow">Fire alarm panels and detectors</strong> —
                 isolating the supply or disturbing the wiring may silence a life-safety system.
                 Notify the fire alarm company and the responsible person; arrange a fire watch if
                 required.
               </span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Emergency lighting</strong> — if the circuit
+                <strong className="text-elec-yellow">Emergency lighting</strong> — if the circuit
                 isolated feeds the charger for maintained or non-maintained emergency luminaires,
                 confirm battery backup duration and whether the building can remain occupied during
                 the outage.
               </span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Door access and security systems</strong> —
+                <strong className="text-elec-yellow">Door access and security systems</strong> —
                 including magnetic door locks and electronic access control that may default to
                 locked or unlocked on power loss.
               </span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Servers, telecoms, and UPS equipment</strong> —
+                <strong className="text-elec-yellow">Servers, telecoms, and UPS equipment</strong> —
                 identify temporary supply requirements and agree the outage window in writing with
                 the responsible person before work starts.
               </span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Medical equipment and refrigeration</strong> —
+                <strong className="text-elec-yellow">Medical equipment and refrigeration</strong> —
                 in residential premises, fridges, freezers, and any home medical equipment (oxygen
                 concentrators, dialysis) must be identified before isolation.
               </span>
@@ -806,7 +806,7 @@ export default function RiskAssessmentElectricalPage() {
       heroTitle={
         <>
           Risk Assessment for Electrical Work:{' '}
-          <span className="text-yellow-400">Template and Guide</span>
+          <span className="text-elec-yellow">Template and Guide</span>
         </>
       }
       heroSubtitle="The complete guide to risk assessment for electrical work in the UK. Legal requirements, the HSE five-step process, electrical-specific hazards, risk matrix scoring, control measures, dynamic risk assessment on site, and how RAMS packs bring it all together."
@@ -819,7 +819,7 @@ export default function RiskAssessmentElectricalPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Generate risk assessments with AI"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI-powered risk assessments, method statements, and complete RAMS packs. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for AI-powered risk assessments, method statements, and complete RAMS packs. 7-day free trial, cancel anytime."
     />
   );
 }

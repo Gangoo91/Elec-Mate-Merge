@@ -38,7 +38,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'BS 7671 Regulation 643.3 and 643.8 (Chapter 64) require RCDs to be tested at the time of installation and as part of every periodic inspection and test. The single A4:2026 verification criterion is an AC test at rated residual operating current (IΔn): the RCD must disconnect within 300ms (general non-delay type). Note: Appendix 3 Table 3A (the previous time/current criteria framework) has been deleted by A4:2026 — half-rated and 5× values now derive from BS EN 61008/61009 product standards, not BS 7671 Chapter 64.',
+  'BS 7671 Regulation 643.3 and 643.8 (Chapter 64) require RCDs to be tested at the time of installation and as part of every periodic inspection and test. The single verification criterion (since A2:2022) is an AC test at rated residual operating current (IΔn): the RCD must disconnect within 300ms (general non-delay type). Note: Appendix 3 Table 3A (the previous time/current criteria framework) has been deleted by A2:2022 — half-rated and 5× values now derive from BS EN 61008/61009 product standards, not BS 7671 Chapter 64.',
   'A 30mA RCD tested at its rated residual operating current (30mA) must trip within 300ms (0.3 seconds) per BS EN 61008/61009 and Reg 643.8. The AC test at IΔn applies regardless of RCD type (AC, A, F, B) per Reg 643.3.',
   'S-type (time-delayed) RCDs have different limits to general type RCDs and are used in series to provide discrimination. They must not operate in less than 130ms at rated current to allow a downstream standard RCD to trip first.',
   'The test must be performed with the instrument connected between the line terminal (downstream of the RCD) and the main earth terminal. Never connect to the neutral — the instrument must drive current through the RCD sensing coil.',
@@ -50,7 +50,7 @@ const faqs = [
   {
     question: 'What tests are required for RCDs under BS 7671?',
     answer:
-      'BS 7671 Regulation 643.3 and 643.8 (Chapter 64) require the effectiveness of RCDs to be verified at the time of installation and as part of every periodic inspection. The A4:2026 verification criterion is an alternating current test at rated residual operating current (IΔn): for a general non-delay type RCD, it must disconnect within 300ms. Note that Appendix 3 Table 3A (which previously listed half-rated and 5× trip-time criteria) has been deleted. The half-rated and 5× values used by test instruments derive from BS EN 61008/61009 product standards. Many inspectors also perform a ramp test to determine the actual tripping current threshold.',
+      'BS 7671 Regulation 643.3 and 643.8 (Chapter 64) require the effectiveness of RCDs to be verified at the time of installation and as part of every periodic inspection. The verification criterion (since A2:2022) is an alternating current test at rated residual operating current (IΔn): for a general non-delay type RCD, it must disconnect within 300ms. Note that Appendix 3 Table 3A (which previously listed half-rated and 5× trip-time criteria) has been deleted. The half-rated and 5× values used by test instruments derive from BS EN 61008/61009 product standards. Many inspectors also perform a ramp test to determine the actual tripping current threshold.',
   },
   {
     question: 'What is the half-rated current test and what must the result be?',
@@ -177,7 +177,7 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <span className="text-white">
               <strong>
                 A4:2026 — Reg 411.3.4: 30mA RCD now mandatory for all domestic lighting circuits
@@ -197,7 +197,7 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <span className="text-white">
               <strong>A4:2026 — Reg 421.1.7: AFDDs recommended for AC final circuits</strong>:
               Alongside Reg 411.3.4, BS 7671:2018+A4:2026 introduced Regulation 421.1.7,
@@ -226,7 +226,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test current</strong>: For a 30mA RCD, the test current is 15mA (half of
                 30mA). For a 100mA RCD, the test current is 50mA. For a 300mA RCD, the test current
@@ -234,7 +234,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Required result</strong>: The RCD must NOT trip during the 2-second test
                 period. If the RCD trips at half rated current, it is operating below its rated
@@ -243,7 +243,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test at both phase angles</strong>: Test at 0 degrees and 180 degrees. An
                 RCD that passes at 0 degrees but trips at 180 degrees (or vice versa) has an
@@ -285,7 +285,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>S-type (time-delayed) RCD</strong>: Must NOT trip before 130ms and must trip
                 within 500ms at rated current. The intentional delay allows downstream standard RCDs
@@ -320,7 +320,7 @@ const sections = [
           <div className="flex items-start gap-3">
             <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
             <span className="text-white">
-              <strong>A4:2026 update — Appendix 3 Table 3A deleted</strong>: BS 7671:2018+A4:2026
+              <strong>A2:2022 update — Appendix 3 Table 3A deleted</strong>: BS 7671:2018+A4:2026
               deleted Table 3A (Time/current performance criteria for RCDs) from Appendix 3. The
               half-rated and 5× trip-time values that test instruments display derive from BS EN
               61008/61009 product standards, not from a BS 7671 Chapter 64 pass/fail table. The
@@ -332,7 +332,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test current</strong>: For a 30mA RCD, the 5 times test current is 150mA.
                 For a 100mA RCD, it is 500mA.
@@ -348,7 +348,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>S-type — product standard reference</strong>: BS EN product standards
                 specify that an S-type RCD at 5 times rated current must NOT trip before 50ms and
@@ -361,7 +361,7 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <span className="text-white">
               <strong>Test sequencing</strong>: Perform the half-rated test first, then the rated
               current test, then the 5 times test. Running the 5 times test first may trip the RCD
@@ -387,7 +387,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Acceptable range for a 30mA RCD</strong>: The ramp test must show the RCD
                 tripping at a current between 15mA and 33mA (50%–110% of rated current per GN3 Ch4
@@ -397,7 +397,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>When to use the ramp test</strong>: The ramp test is most useful when
                 investigating nuisance tripping complaints — to verify the RCD's actual threshold.
@@ -407,7 +407,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Record the ramp trip current</strong>: Note the actual trip current on the
                 schedule of test results alongside the standard test results.
@@ -492,42 +492,42 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD type and rated operating current</strong>: General type or S-type, and
                 the rated operating current (e.g., 30mA, 100mA, 300mA).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Half-rated test result</strong>: Pass (did not trip in 2 seconds) or Fail
                 (tripped). If fail, record the actual trip time.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rated current trip time at 0 and 180 degrees</strong>: Record actual trip
                 times in milliseconds for both phase angles.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>5 times current trip time at 0 and 180 degrees</strong>: Record actual trip
                 times in milliseconds for both phase angles.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ramp test result (if performed)</strong>: Record the actual trip current in
                 milliamps.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reg 411.3.4 compliance (domestic premises)</strong>: When certifying a
                 domestic installation against BS 7671:2018+A4:2026 Reg 411.3.4, the schedule of test
@@ -621,7 +621,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Enter RCD Results On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -673,7 +673,7 @@ export default function RCDTestingGuidePage() {
       badgeIcon={ShieldCheck}
       heroTitle={
         <>
-          RCD Testing Guide: <span className="text-yellow-400">RCD Test Procedures to BS 7671</span>
+          RCD Testing Guide: <span className="text-elec-yellow">RCD Test Procedures to BS 7671</span>
         </>
       }
       heroSubtitle="The complete UK electrician's guide to RCD testing to BS 7671:2018+A4:2026 — half-rated current test, rated current trip time (300ms maximum for 30mA general type, Reg 643.8), 5 times current test, ramp test, correct instrument connection, recording results, and diagnosing nuisance tripping. Updated for A4:2026 including Reg 411.3.4 (30mA RCD on domestic lighting circuits)."

@@ -127,35 +127,35 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Norwich</strong> — city and suburbs including Thorpe St Andrew, Hellesdon,
                 Bowthorpe, and surrounding market towns
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>King&apos;s Lynn</strong> — port town and West Norfolk, including
                 Hunstanton, Downham Market, and the Fens border
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Great Yarmouth</strong> — coastal town, North Sea oil and gas service base,
                 and the Broads gateway
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>North Norfolk coast</strong> — Cromer, Sheringham, Wells-next-the-Sea,
                 Hunstanton and the Area of Outstanding Natural Beauty
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>South Norfolk</strong> — Diss, Attleborough, Wymondham, and the border with
                 Suffolk
@@ -190,14 +190,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>UK Power Networks</strong> — covers all of Norfolk. Emergencies: 0800 783
                 8866. New connections: ukpowernetworks.co.uk/new-connections.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rural supply quality</strong> — many Norfolk villages are at the end of long
                 LV network spurs. Statutory voltage limits (+10%/-6% of 230V) sometimes require DNO
@@ -222,7 +222,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>O&amp;M base electrical</strong> — shore-based operations facilities at
                 Blyth and Bacton require standard commercial electrical maintenance including
@@ -230,7 +230,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Offshore electrical maintenance</strong> — qualified electricians with GWO
                 training, BESC card, and Authorised Person (HV) status can access turbine nacelle
@@ -238,7 +238,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable landfall infrastructure</strong> — inter-array and export cable
                 systems coming ashore in Norfolk require civil and electrical installation and
@@ -268,7 +268,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Voltage drop (Regulation 525)</strong> — cumulative voltage drop on long
                 supply runs must not exceed 3% for lighting or 5% for power under normal load
@@ -277,7 +277,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth fault loop impedance</strong> — high external loop impedance (Ze) on
                 rural TN-C-S and TN-S networks can affect disconnection times. Where Ze exceeds
@@ -286,7 +286,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>TT earthing systems</strong> — some remote Norfolk properties use TT
                 earthing (local earth electrode) where a PME network is unavailable. TT systems
@@ -312,7 +312,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Flint walls</strong> — chasing into flint and lime mortar walls is not
                 recommended and may require listed building consent. Surface-run oval conduit,
@@ -321,7 +321,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Damp and moisture</strong> — Norfolk flint buildings often have damp issues,
                 particularly at ground level. All wiring in damp or wet locations must use
@@ -350,7 +350,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Section 708 — caravan parks</strong> — each pitch supply must be
                 individually RCD-protected (30mA), with an IP55 rated BS EN 60309 socket (CEE form,
@@ -359,7 +359,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Periodic inspection</strong> — commercial caravan parks should have an EICR
                 carried out every 3 years (or more frequently if the site licence requires). The
@@ -393,7 +393,7 @@ export default function ElectricianNorfolkPage() {
       heroTitle={
         <>
           Electrician Norfolk{' '}
-          <span className="text-yellow-400">— Find Registered Electricians</span>
+          <span className="text-elec-yellow">— Find Registered Electricians</span>
         </>
       }
       heroSubtitle="Registered electricians across Norfolk covering Norwich, King's Lynn, Great Yarmouth, the north Norfolk coast, Diss, Fakenham, and rural agricultural properties. All work certified to BS 7671."

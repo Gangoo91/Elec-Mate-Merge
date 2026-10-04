@@ -199,7 +199,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>The board has rewirable fuses.</strong> Rewirable fuses provide
                 significantly less protection than MCBs. They can be incorrectly rewired with the
@@ -208,7 +208,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No RCD protection.</strong> If your consumer unit does not have an RCD or
                 RCBOs, your circuits lack the earth leakage protection that saves lives. This is
@@ -216,14 +216,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Plastic enclosure.</strong> Pre-2016 consumer units in plastic enclosures do
                 not meet the current requirement for non-combustible enclosures.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Adding new circuits.</strong> If you need additional circuits (EV charger,
                 electric shower, extension) and the existing board has no spare ways or is
@@ -231,7 +231,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR recommendation.</strong> An{' '}
                 <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> identifying
@@ -240,7 +240,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Signs of damage or overheating.</strong> Scorch marks, melted plastic,
                 discolouration, or a burning smell from the consumer unit require immediate
@@ -318,7 +318,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Non-combustible enclosure (Regulation 421.1.201)</strong> — all consumer
                 units and similar switchgear in domestic premises must be enclosed in a
@@ -328,7 +328,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>30mA RCD on all lighting circuits (Regulation 411.3.4) — A4:2026</strong> —
                 BS 7671:2018+A4:2026 requires that, within domestic premises, all AC final circuits
@@ -339,7 +339,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection on all other circuits</strong> — every circuit in a domestic
                 installation should have 30mA RCD protection. This can be achieved with a split-load
@@ -348,7 +348,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cables concealed in walls</strong> — Regulation 522.6.202 requires
                 additional protection (30mA RCD) for cables concealed in walls at a depth of less
@@ -380,7 +380,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Flame className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AFDD — Arc Fault Detection Device</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -443,7 +443,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>The work must be carried out by a registered electrician</strong> — a
                 contractor registered with NICEIC, NAPIT, or ELECSA who can self-certify the work
@@ -451,7 +451,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>An Electrical Installation Certificate (EIC) must be issued</strong> — this
                 is the formal certificate confirming the new installation complies with BS 7671. It
@@ -459,7 +459,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Building Control must be notified</strong> — the registered electrician does
                 this automatically through their competent person scheme. You will receive a
@@ -467,7 +467,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Keep the certificates</strong> — the EIC and Building Regulations Compliance
                 Certificate are important documents. Keep them with your property deeds. They may be
@@ -497,7 +497,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Basic upgrade (MCBs + dual RCD):</strong> £500 to £800. Metal consumer unit
                 with MCBs and two RCDs (split-load arrangement). Suitable for smaller installations
@@ -505,7 +505,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full RCBO board:</strong> £700 to £1,200. Metal consumer unit with
                 individual RCBOs for every circuit. Maximum discrimination — a fault on one circuit
@@ -513,7 +513,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCBO board with AFDDs:</strong> £900 to £1,500. Full RCBO board plus AFDDs
                 on selected socket circuits. The premium option with the highest level of fire
@@ -521,7 +521,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional earthing and bonding work:</strong> £100 to £300 extra if the
                 main earth, bonding conductors, or earth electrode need upgrading.
@@ -550,7 +550,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Registered with a competent person scheme</strong> —{' '}
                 <SEOInternalLink href="/guides/why-choose-niceic-electrician">
@@ -560,7 +560,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Detailed written quote</strong> — specifying the make and model of the
                 consumer unit, the type of devices (MCBs, RCBOs, AFDDs), earthing and bonding
@@ -568,13 +568,13 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Public liability insurance</strong> — at least £2 million cover.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Will issue an EIC</strong> — not a Minor Works Certificate. A consumer unit
                 upgrade is new work and requires an EIC.
@@ -605,7 +605,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Camera className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI Board Scanner</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -632,7 +632,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete CU upgrades end-to-end on your phone"
-          description="Join 1,600+ UK electricians creating professional EICs with AI board scanning, voice test entry, and instant PDF delivery."
+          description="Join 2,100+ UK electricians creating professional EICs with AI board scanning, voice test entry, and instant PDF delivery."
           icon={Camera}
         />
       </>
@@ -658,7 +658,7 @@ export default function ConsumerUnitUpgradePage() {
       heroTitle={
         <>
           Consumer Unit Upgrade:{' '}
-          <span className="text-yellow-400">Cost, Regulations, and Complete Guide</span>
+          <span className="text-elec-yellow">Cost, Regulations, and Complete Guide</span>
         </>
       }
       heroSubtitle="Your consumer unit is the heart of your home's electrical safety. This guide covers when to upgrade, the difference between metal and plastic enclosures, Amendment 4 requirements, AFDDs and SPDs, Part P certification, and what you should expect to pay in 2026."
@@ -669,7 +669,7 @@ export default function ConsumerUnitUpgradePage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Upgrades"
       relatedPages={relatedPages}
       ctaHeading="Professional EICs for Consumer Unit Upgrades"
-      ctaSubheading="Join 1,600+ UK electricians completing Electrical Installation Certificates on their phones. AI board scanner, voice test entry, and instant delivery. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians completing Electrical Installation Certificates on their phones. AI board scanner, voice test entry, and instant delivery. 7-day free trial, cancel anytime."
     />
   );
 }

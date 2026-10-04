@@ -212,13 +212,13 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
       <section className="py-16 sm:py-24 px-5">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-6">
-            <Zap className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium text-yellow-400">
+            <Zap className="w-4 h-4 text-elec-yellow" />
+            <span className="text-sm font-medium text-elec-yellow">
               BS 7671:2018+A4:2026 Regulation 434.5.1
             </span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
-            <span className="text-yellow-400">Prospective Fault Current</span> Calculator for
+            <span className="text-elec-yellow">Prospective Fault Current</span> Calculator for
             Electricians
           </h1>
           <p className="text-lg text-white max-w-2xl mx-auto leading-relaxed mb-4">
@@ -229,7 +229,7 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
             Reg&nbsp;643.7.3.201 requires that this value is measured, calculated or determined at
             the origin and at every other relevant point.
           </p>
-          <p className="text-base text-white/80 max-w-2xl mx-auto leading-relaxed mb-8">
+          <p className="text-base text-white max-w-2xl mx-auto leading-relaxed mb-8">
             Calculate PSCC and PEFC instantly on your phone. Verify protective device breaking
             capacity, check compliance with BS&nbsp;7671, and access 70 electrical calculators — all
             in one app.
@@ -243,7 +243,7 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
             </a>
             <a
               href="#how-it-works"
-              className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-yellow-500/40 text-white font-semibold rounded-xl touch-manipulation transition-colors"
+              className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-white/[0.1] text-white font-semibold rounded-xl touch-manipulation transition-colors"
             >
               See How It Works
             </a>
@@ -344,7 +344,7 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/[0.14] p-6 my-6 text-center">
-            <p className="text-2xl sm:text-3xl font-mono font-bold text-yellow-400 mb-3">
+            <p className="text-2xl sm:text-3xl font-mono font-bold text-elec-yellow mb-3">
               Ipf = Uo / Zloop
             </p>
             <div className="space-y-1 text-white text-sm">
@@ -393,11 +393,11 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
                 </div>
                 <div className="flex justify-between gap-3 border-b border-white/10 pb-1.5">
                   <span className="text-white">PEFC = 230 ÷ 0.20</span>
-                  <span className="font-mono font-bold text-yellow-400">1,150 A (1.15 kA)</span>
+                  <span className="font-mono font-bold text-elec-yellow">1,150 A (1.15 kA)</span>
                 </div>
                 <div className="flex justify-between gap-3 border-b border-white/10 pb-1.5">
                   <span className="text-white">PSCC = 230 ÷ 0.12</span>
-                  <span className="font-mono font-bold text-yellow-400">1,917 A (1.92 kA)</span>
+                  <span className="font-mono font-bold text-elec-yellow">1,917 A (1.92 kA)</span>
                 </div>
               </div>
               <div className="mt-3 rounded-lg bg-green-900/30 border border-green-700/40 px-3 py-2 text-sm text-white">
@@ -417,11 +417,11 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
                 </div>
                 <div className="flex justify-between gap-3 border-b border-white/10 pb-1.5">
                   <span className="text-white">PEFC = 230 ÷ 0.08</span>
-                  <span className="font-mono font-bold text-yellow-400">2,875 A (2.88 kA)</span>
+                  <span className="font-mono font-bold text-elec-yellow">2,875 A (2.88 kA)</span>
                 </div>
                 <div className="flex justify-between gap-3 border-b border-white/10 pb-1.5">
                   <span className="text-white">PSCC = 230 ÷ 0.03</span>
-                  <span className="font-mono font-bold text-yellow-400">7,667 A (7.67 kA)</span>
+                  <span className="font-mono font-bold text-elec-yellow">7,667 A (7.67 kA)</span>
                 </div>
               </div>
               <div className="mt-3 rounded-lg bg-orange-900/30 border border-orange-700/40 px-3 py-2 text-sm text-white">
@@ -433,9 +433,9 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
           {/* GN3 0.8 temperature correction note */}
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 mt-4">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow shrink-0 mt-0.5" />
               <div className="space-y-2 text-white text-sm leading-relaxed">
-                <p className="font-semibold text-yellow-400">
+                <p className="font-semibold text-elec-yellow">
                   Important: The 0.8 Temperature Correction Factor
                 </p>
                 <p>
@@ -447,7 +447,7 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
                   industry rule of thumb (set out in IET Guidance Note&nbsp;3) is that the measured
                   Zs satisfies:
                 </p>
-                <p className="font-mono font-bold text-yellow-300">
+                <p className="font-mono font-bold text-elec-yellow">
                   Zs(measured) &le; 0.8 &times; Zs(table)
                 </p>
                 <p>
@@ -519,37 +519,37 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
           </p>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="font-mono font-bold text-yellow-400 text-lg">6 kA</p>
+              <p className="font-mono font-bold text-elec-yellow text-lg">6 kA</p>
               <p className="text-white text-sm mt-1">
                 Standard domestic MCB / RCBO. Adequate for most dwellings.
               </p>
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="font-mono font-bold text-yellow-400 text-lg">10 kA</p>
+              <p className="font-mono font-bold text-elec-yellow text-lg">10 kA</p>
               <p className="text-white text-sm mt-1">
                 Used where PFC exceeds 6 kA — properties near substations, light commercial.
               </p>
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="font-mono font-bold text-yellow-400 text-lg">16 / 25 kA</p>
+              <p className="font-mono font-bold text-elec-yellow text-lg">16 / 25 kA</p>
               <p className="text-white text-sm mt-1">
                 Commercial distribution boards and higher fault-level locations.
               </p>
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="font-mono font-bold text-yellow-400 text-lg">36–50 kA+</p>
+              <p className="font-mono font-bold text-elec-yellow text-lg">36–50 kA+</p>
               <p className="text-white text-sm mt-1">
                 MCCBs and ACBs at industrial main boards and dedicated transformer supplies.
               </p>
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="font-mono font-bold text-yellow-400 text-lg">80 kA+</p>
+              <p className="font-mono font-bold text-elec-yellow text-lg">80 kA+</p>
               <p className="text-white text-sm mt-1">
                 HRC fuses to BS&nbsp;88, often used as the high-rupturing protection at the origin.
               </p>
             </div>
             <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-4">
-              <p className="font-semibold text-yellow-400 text-sm">Rule</p>
+              <p className="font-semibold text-elec-yellow text-sm">Rule</p>
               <p className="text-white text-sm mt-1">
                 Always: device breaking capacity ≥ measured PFC at that point (Reg&nbsp;434.5.1).
               </p>
@@ -611,7 +611,7 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
                 key={step.name}
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                   {index + 1}
                 </div>
                 <div>
@@ -661,7 +661,7 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
                   <td className="p-3 font-mono">~2 kA – 6 kA</td>
                   <td className="p-3">6 kA MCB</td>
                 </tr>
-                <tr className="border-t border-white/10 bg-yellow-900/20">
+                <tr className="border-t border-white/10 bg-white/[0.06]">
                   <td className="p-3">Domestic close to substation</td>
                   <td className="p-3 font-mono">may exceed 6 kA</td>
                   <td className="p-3">10 kA device, or verify</td>
@@ -717,7 +717,7 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
       <section className="py-12 px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <Users className="w-6 h-6 text-yellow-400" />
+            <Users className="w-6 h-6 text-elec-yellow" />
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Built for Working Electricians
             </h2>
@@ -765,7 +765,7 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
               >
                 <summary className="flex items-center justify-between cursor-pointer p-5 text-white font-semibold text-left touch-manipulation min-h-[44px]">
                   <span>{faq.question}</span>
-                  <span className="ml-4 shrink-0 text-yellow-400 text-xl group-open:rotate-45 transition-transform">
+                  <span className="ml-4 shrink-0 text-elec-yellow text-xl group-open:rotate-45 transition-transform">
                     +
                   </span>
                 </summary>
@@ -786,7 +786,7 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
 
       <SEOCTASection
         heading="Calculate fault current in seconds, not minutes"
-        subheading="Join 1,600+ UK electricians using 70 professional calculators on their phone. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians using 70 professional calculators on their phone. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

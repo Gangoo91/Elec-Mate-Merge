@@ -34,7 +34,7 @@ const subsections = [
   {
     number: '6.5',
     title: 'Test functionality (6.5)',
-    description: 'A4:2026 simplified RCD trip-time test (≤ 300 ms at 1×IΔn), switchgear, interlocks, emergency stops, AFDD test facilities.',
+    description: 'Simplified RCD trip-time test (≤ 300 ms at 1×IΔn, since A2:2022), switchgear, interlocks, emergency stops, AFDD test facilities.',
     icon: Power,
     href: '6-5',
   },

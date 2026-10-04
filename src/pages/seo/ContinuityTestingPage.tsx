@@ -306,7 +306,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>High resistance CPC</strong> — a CPC resistance significantly higher than
                 expected for the conductor cross-section and length indicates a poor connection or
@@ -407,7 +407,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ring final circuit conductors</strong> — the continuity of every ring final
                 circuit conductor (line, neutral, and CPC) must be verified, including a check that
@@ -415,7 +415,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>All protective conductors</strong> — the continuity of all protective
                 conductors must be verified, including circuit protective conductors (CPCs), main
@@ -426,7 +426,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>R1+R2 recording</strong> — the measured R1+R2 (or r1+r2 and r2 for ring
                 circuits) must be recorded on the schedule of test results. These values are used to
@@ -470,7 +470,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Use Long Test Leads</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -533,7 +533,7 @@ export default function ContinuityTestingPage() {
       heroTitle={
         <>
           Continuity Testing:{' '}
-          <span className="text-yellow-400">R1+R2, Ring Circuits, and CPC Continuity</span>
+          <span className="text-elec-yellow">R1+R2, Ring Circuits, and CPC Continuity</span>
         </>
       }
       heroSubtitle="A complete guide to continuity testing for UK electricians. Covers R1+R2 measurement, the r1+r2/4 ring circuit method, CPC continuity, test lead resistance, and what Regulation 643.2.1 requires."
@@ -544,7 +544,7 @@ export default function ContinuityTestingPage() {
       faqHeading="Frequently Asked Questions About Continuity Testing"
       relatedPages={relatedPages}
       ctaHeading="Record Continuity Test Results and Complete EICs on Your Phone"
-      ctaSubheading="Elec-Mate records R1+R2 and r1+r2/4 values, calculates Zs automatically, and generates professional test schedules on site. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate records R1+R2 and r1+r2/4 values, calculates Zs automatically, and generates professional test schedules on site. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

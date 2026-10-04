@@ -180,7 +180,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Tag className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Tag className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit identification (Reg 514.9.1)</strong> — every circuit must be
                 identified by a durable label at its origin (the distribution board). This means
@@ -191,7 +191,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Tag className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Tag className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Periodic inspection notice (Reg 514.12.1)</strong> — a label stating the
                 date of the next recommended periodic inspection and the name/contact details of the
@@ -530,7 +530,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Tag className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Tag className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>12mm black on white (circuit labels)</strong> — the workhorse. Used for
                 circuit identification on MCBs and RCBOs. White background with black text is the
@@ -707,7 +707,7 @@ export default function BestLabelPrinterElectriciansPage() {
       heroTitle={
         <>
           Best Label Printer for Electricians:{' '}
-          <span className="text-yellow-400">Circuit Labels and Warning Notices 2026</span>
+          <span className="text-elec-yellow">Circuit Labels and Warning Notices 2026</span>
         </>
       }
       heroSubtitle="Stop using masking tape and marker pens. Four label printers compared for BS 7671 compliance, running costs, Bluetooth connectivity, and real-world value for UK electricians."
@@ -718,7 +718,7 @@ export default function BestLabelPrinterElectriciansPage() {
       faqHeading="Frequently Asked Questions About Label Printers for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Generate Circuit Schedules and Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EIC and EICR certificates with automatic circuit schedules, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for EIC and EICR certificates with automatic circuit schedules, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

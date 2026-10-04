@@ -189,7 +189,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type 2 socket</strong> — the IEC 62196-2 Type 2 (Mennekes) socket is the
                 European standard for AC EV charging. It accepts Type 2 to Type 2 cables (used by
@@ -199,7 +199,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable rating</strong> — the user's cable must be rated for the maximum
                 charge rate. A 32A (7.4kW) cable is required for a 7.4kW charger. Most quality Mode
@@ -208,7 +208,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable locking</strong> — when a charging session is active, the Type 2
                 connector locks into the charge point socket via a mechanical latch (IEC 62196-2
@@ -256,7 +256,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CCS (Combined Charging System)</strong> — used for DC fast charging, not AC
                 home charging. A CCS inlet includes a Type 2 AC section (upper pins) plus two
@@ -425,7 +425,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tethered cable security</strong> — the cable is an integral part of the
                 charge point unit and cannot be removed by users. The connection between the cable
@@ -435,7 +435,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Untethered cable locking</strong> — IEC 62196-2 Type 2 connectors include a
                 mechanical locking actuator that engages when a session starts. The connector is
@@ -445,7 +445,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Charger housing security</strong> — all quality chargers have
                 tamper-resistant housing with security screws. Some commercial chargers include
@@ -454,7 +454,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Recommendation for communal areas</strong> — in communal car parks and
                 exposed locations, tethered chargers eliminate cable theft risk. If untethered
@@ -603,7 +603,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Certificate Every Installation</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -639,7 +639,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional EV charger installations with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for EV certificates, quoting, and job management. Complete every installation professionally. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for EV certificates, quoting, and job management. Complete every installation professionally. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -665,7 +665,7 @@ export default function TetheredUntetheredEVChargePage() {
       heroTitle={
         <>
           Tethered vs Untethered EV Charger UK:{' '}
-          <span className="text-yellow-400">Which Should You Choose?</span>
+          <span className="text-elec-yellow">Which Should You Choose?</span>
         </>
       }
       heroSubtitle="A complete guide to the differences between tethered and untethered EV chargers — pros, cons, cable types (Type 2 and Type 1), theft and security, future-proofing, and clear scenario-by-scenario recommendations for homes, flats, workplaces, and fleet depots."
@@ -676,7 +676,7 @@ export default function TetheredUntetheredEVChargePage() {
       faqHeading="Frequently Asked Questions About Tethered and Untethered EV Chargers"
       relatedPages={relatedPages}
       ctaHeading="Complete EV Charging Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EV certificates, quoting, and job management. Tethered, untethered, domestic, or commercial — every installation done right. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for EV certificates, quoting, and job management. Tethered, untethered, domestic, or commercial — every installation done right. 7-day free trial."
     />
   );
 }

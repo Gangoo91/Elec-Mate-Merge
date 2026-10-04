@@ -143,7 +143,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Technologies covered:</strong> Solar PV (MCS 001), solar thermal (MCS 002),
                 heat pumps (MCS 007), biomass (MCS 006), battery storage (MCS 030), and wind
@@ -152,7 +152,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Product certification:</strong> Panels, inverters, and batteries used in
                 MCS-certified installations must be listed on the MCS Product Directory. Products
@@ -162,7 +162,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Installer certification:</strong> Approximately 3,000 MCS-certified
                 installer companies are registered in the UK. The MCS Contractor Database allows
@@ -299,7 +299,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Initial assessment fee:</strong> £500–£1,500 depending on the certification
                 body. This covers document review and the initial audit visit. Some bodies include a
@@ -307,7 +307,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Annual registration fee:</strong> £500–£1,200 per year for a small company.
                 This covers annual surveillance audits and maintenance of your listing on the MCS
@@ -315,7 +315,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Total first-year cost:</strong> £1,000–£3,000 for solar PV (MCS 001)
                 certification. Adding battery storage (MCS 030) typically costs an additional
@@ -323,7 +323,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MIC issuance fees:</strong> Some certification bodies charge a small fee
                 (£2–£5) for each MCS Installation Certificate issued. Others include unlimited MICs
@@ -425,7 +425,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Design:</strong> MCS 001 requires a formal design assessment including
                 system sizing, shading analysis, energy yield estimate (using PVGIS or equivalent),
@@ -433,7 +433,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Installation:</strong> The standard covers mounting system requirements,
                 cable selection and routing, isolator placement and labelling, inverter
@@ -441,7 +441,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Handover pack:</strong> MCS 001 specifies a mandatory handover pack
                 including: the MCS Installation Certificate (MIC), system schematic, operation and
@@ -450,7 +450,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Relationship with BS 7671:</strong> MCS 001 references and builds on BS
                 7671:2018+A4:2026 Section 712. Compliance with BS 7671 is a prerequisite for MCS 001
@@ -461,13 +461,13 @@ const sections = [
           </ul>
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
-          <p className="text-yellow-300 font-semibold mb-3 flex items-center gap-2">
+          <p className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
             <AlertTriangle className="w-5 h-5 shrink-0" />
             Key BS 7671 Section 712 requirements auditors check
           </p>
           <ul className="space-y-3 text-white text-sm">
             <li className="flex items-start gap-2">
-              <span className="text-yellow-400 mt-0.5 shrink-0">&#9654;</span>
+              <span className="text-elec-yellow mt-0.5 shrink-0">&#9654;</span>
               <span>
                 <strong>Reg 712.410.101 — DC side remains live after AC isolation:</strong> BS 7671
                 requires that DC-side equipment is treated as energised at all times, even when the
@@ -477,7 +477,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-yellow-400 mt-0.5 shrink-0">&#9654;</span>
+              <span className="text-elec-yellow mt-0.5 shrink-0">&#9654;</span>
               <span>
                 <strong>Reg 712.410.102 — Mandatory DC-side protective measure:</strong> One of the
                 following protective measures shall be applied on the DC side: (a) double or
@@ -488,7 +488,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-yellow-400 mt-0.5 shrink-0">&#9654;</span>
+              <span className="text-elec-yellow mt-0.5 shrink-0">&#9654;</span>
               <span>
                 <strong>Reg 712.421.101.1 — Insulation monitoring device (IMD) on DC side:</strong>{' '}
                 An IMD shall be installed on the DC side (subject to the exceptions in the
@@ -558,7 +558,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Issue MCS installation certificates with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for certification, quoting, and job management. Issue EICs, EICRs…"
+          description="Join 2,100+ UK electricians using Elec-Mate for certification, quoting, and job management. Issue EICs, EICRs…"
           icon={ShieldCheck}
         />
       </>
@@ -584,7 +584,7 @@ export default function MCSCertificationGuidePage() {
       heroTitle={
         <>
           MCS Certification for Solar Installers:{' '}
-          <span className="text-yellow-400">Complete UK Guide</span>
+          <span className="text-elec-yellow">Complete UK Guide</span>
         </>
       }
       heroSubtitle="Everything electricians and solar installers need to know about MCS certification in the UK — what the scheme covers, why it is essential for SEG and grants, how to get certified, costs, annual audits, and the MCS 001 standard."
@@ -595,7 +595,7 @@ export default function MCSCertificationGuidePage() {
       faqHeading="Frequently Asked Questions About MCS Certification"
       relatedPages={relatedPages}
       ctaHeading="Grow Your Solar Business with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for certification, quoting, and job management. Issue solar installation certificates on your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for certification, quoting, and job management. Issue solar installation certificates on your phone. 7-day free trial, cancel anytime."
     />
   );
 }

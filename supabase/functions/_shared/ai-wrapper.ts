@@ -3,7 +3,7 @@
  *
  * Features:
  * - Anthropic direct API (when ANTHROPIC_API_KEY present)
- * - Gemini via Lovable AI Gateway (default, fast + free)
+ * - Gemini via its OpenAI-compatible endpoint (direct, no gateway — ELE-1812)
  * - OpenAI direct API support
  * - 60s timeout (safe for Supabase)
  * - Automatic retry with exponential backoff
@@ -14,6 +14,7 @@
 import { withTimeout, Timeouts } from './timeout.ts';
 import { withRetry, RetryPresets } from './retry.ts';
 import { classifyAiError, logAiCall, recordAiFailure } from './ai-log.ts';
+import { fetchChatCompletions } from './llm-direct.ts';
 
 export class AIError extends Error {
   constructor(
@@ -119,7 +120,7 @@ async function callAnthropicDirect(
 /**
  * UNIVERSAL AI WRAPPER - Use this for ALL AI calls
  *
- * @param apiKey - Lovable AI key or OpenAI key
+ * @param apiKey - provider key (OpenAI or Gemini; the call routes by model)
  * @param options - AI call configuration
  * @returns AI response with metadata
  * @throws AIError with proper context
@@ -148,7 +149,7 @@ export async function callAI(apiKey: string, options: AICallOptions): Promise<AI
     ? 'Anthropic Direct'
     : provider === 'openai'
       ? 'OpenAI'
-      : 'Lovable AI';
+      : 'Gemini';
 
   console.log(`🤖 AI Call: ${model} (timeout: ${timeoutMs}ms, provider: ${providerName})`);
 
@@ -162,13 +163,13 @@ export async function callAI(apiKey: string, options: AICallOptions): Promise<AI
             return await callAnthropicDirect(model, systemPrompt, userPrompt, options);
           }
 
-          // Otherwise use Lovable AI Gateway or OpenAI
+          // Otherwise OpenAI or Gemini, direct (ELE-1812 — no Lovable gateway)
           const isOpenAI = provider === 'openai';
           const isGPT5 = model.includes('gpt-5');
 
           const endpoint = isOpenAI
             ? 'https://api.openai.com/v1/chat/completions'
-            : 'https://ai.gateway.lovable.dev/v1/chat/completions';
+            : 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions';
 
           // Build request body with correct parameters for model type
           const body: any = {
@@ -209,7 +210,7 @@ export async function callAI(apiKey: string, options: AICallOptions): Promise<AI
 
           let response;
           try {
-            response = await fetch(endpoint, {
+            response = await fetchChatCompletions({
               method: 'POST',
               headers: {
                 Authorization: `Bearer ${apiKey}`,
@@ -413,7 +414,7 @@ export async function callAI(apiKey: string, options: AICallOptions): Promise<AI
  * Call AI with automatic fallback to template response
  * Use this when you have a fallback strategy (recommended for user-facing features)
  *
- * @param apiKey - Lovable AI key or OpenAI key
+ * @param apiKey - provider key (OpenAI or Gemini; the call routes by model)
  * @param options - AI call configuration
  * @param fallbackFn - Function that generates fallback response
  * @returns AI response with metadata (never throws)

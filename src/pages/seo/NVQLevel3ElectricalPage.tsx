@@ -205,7 +205,7 @@ const sections = [
             <thead>
               <tr className="bg-white/[0.06] text-left">
                 <th className="p-3 font-semibold border-b border-white/10">Feature</th>
-                <th className="p-3 font-semibold border-b border-white/10 text-yellow-400">
+                <th className="p-3 font-semibold border-b border-white/10 text-elec-yellow">
                   NVQ Level 3
                 </th>
                 <th className="p-3 font-semibold border-b border-white/10 text-blue-300">
@@ -215,46 +215,46 @@ const sections = [
             </thead>
             <tbody>
               <tr className="border-b border-white/10">
-                <td className="p-3 font-medium text-white/70">Assessment basis</td>
+                <td className="p-3 font-medium text-white">Assessment basis</td>
                 <td className="p-3">Competency — observed on site</td>
                 <td className="p-3">Knowledge — exams &amp; practicals</td>
               </tr>
               <tr className="border-b border-white/10 bg-white/[0.02]">
-                <td className="p-3 font-medium text-white/70">Written exams</td>
+                <td className="p-3 font-medium text-white">Written exams</td>
                 <td className="p-3">None</td>
                 <td className="p-3">Yes (online + written papers)</td>
               </tr>
               <tr className="border-b border-white/10">
-                <td className="p-3 font-medium text-white/70">Where it is done</td>
+                <td className="p-3 font-medium text-white">Where it is done</td>
                 <td className="p-3">In your workplace / on live jobs</td>
                 <td className="p-3">In a college or training centre</td>
               </tr>
               <tr className="border-b border-white/10 bg-white/[0.02]">
-                <td className="p-3 font-medium text-white/70">Best suited to</td>
+                <td className="p-3 font-medium text-white">Best suited to</td>
                 <td className="p-3">Experienced electricians already working</td>
                 <td className="p-3">New entrants / apprentices learning the trade</td>
               </tr>
               <tr className="border-b border-white/10">
-                <td className="p-3 font-medium text-white/70">Needs an employer / site work</td>
+                <td className="p-3 font-medium text-white">Needs an employer / site work</td>
                 <td className="p-3">Yes — real evidence required</td>
                 <td className="p-3">No — can be studied without a job</td>
               </tr>
               <tr>
-                <td className="p-3 font-medium text-white/70">Leads to Gold Card</td>
+                <td className="p-3 font-medium text-white">Leads to Gold Card</td>
                 <td className="p-3">Yes, with the AM2</td>
                 <td className="p-3">Yes, with the NVQ + AM2</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <p className="text-sm text-white/70 my-4">
+        <p className="text-sm text-white my-4">
           The two are complementary, not interchangeable — a full electrical apprenticeship includes
           both. The notes below explain each in more detail.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>City and Guilds 2365 — knowledge-based</strong> — delivered through a
                 college, involves written examinations, practical assessments, and classroom
@@ -264,7 +264,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NVQ Level 3 — competency-based</strong> — assessed entirely through
                 workplace observation and portfolio of evidence. No written examinations. Suitable
@@ -273,7 +273,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Apprenticeship — both together</strong> — the standard electrical
                 apprenticeship (Level 3 Electrotechnical Installation Apprenticeship) includes both
@@ -283,7 +283,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ECS Card recognition</strong> — both routes, combined with AM2, lead to the
                 JIB ECS Gold Card. The NVQ alone (without the 2365 or equivalent and AM2) leads only
@@ -308,7 +308,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mature entrants with site experience</strong> — electricians who entered the
                 trade in a different way (e.g., helping a family member, working as a mate for
@@ -317,7 +317,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Overseas-qualified electricians</strong> — electricians who qualified in
                 countries where their qualification is not directly recognised in the UK. The NVQ
@@ -329,7 +329,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Those upgrading from older qualifications</strong> — electricians who hold
                 older City and Guilds qualifications (e.g., the 2360 Part I and Part II) that are no
@@ -338,7 +338,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Domestic installers seeking commercial work</strong> — those who can
                 demonstrate competence in a wider range of installation environments, including
@@ -364,7 +364,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EAL (Excellence Achievement and Learning)</strong> — the specialist
                 engineering and technology awarding body, owned by the Electrical Contractors
@@ -374,7 +374,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>City and Guilds</strong> — the UK&apos;s most widely known vocational
                 awarding body. The City and Guilds Level 3 NVQ Diploma in Electrotechnical
@@ -384,7 +384,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>How to choose</strong> — consider the local availability of approved
                 centres, the centre&apos;s assessor-to-candidate ratio, the flexibility of
@@ -411,7 +411,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Direct observation records</strong> — your assessor observes you performing
                 installation, testing, and fault-finding tasks on site and records what they
@@ -420,7 +420,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Witness statements</strong> — written statements from your employer,
                 supervisor, or colleagues confirming they have seen you perform specific tasks. Must
@@ -429,7 +429,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Photographic evidence</strong> — photographs of completed work, labelled and
                 annotated to show what they demonstrate. Particularly useful for evidencing
@@ -438,7 +438,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Work products</strong> — test sheets, certificates (EIC, EICR, Minor Works),
                 risk assessments, method statements, job sheets, and other documents you produce as
@@ -467,7 +467,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What you are assessed on</strong> — installation of a wiring system from
                 drawings, terminating cables and equipment, inspection and testing of the
@@ -476,7 +476,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Booking the AM2</strong> — the AM2 is booked through Lazonby Training
                 (formerly JTL) at approved assessment centres across the UK. Booking well in advance
@@ -484,7 +484,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cost</strong> — the AM2 assessment fee is approximately £350 to £500 in
                 2026. Travel and accommodation costs for candidates attending distant centres should
@@ -492,7 +492,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Preparation</strong> — practise your inspection and testing technique,
                 ensure you can complete test documentation quickly and accurately, and review common
@@ -523,7 +523,7 @@ const sections = [
             <thead>
               <tr className="bg-white/[0.06] text-left">
                 <th className="p-3 font-semibold border-b border-white/10">Cost item</th>
-                <th className="p-3 font-semibold border-b border-white/10 text-yellow-400">
+                <th className="p-3 font-semibold border-b border-white/10 text-elec-yellow">
                   Indicative range
                 </th>
                 <th className="p-3 font-semibold border-b border-white/10">Notes</th>
@@ -531,27 +531,27 @@ const sections = [
             </thead>
             <tbody>
               <tr className="border-b border-white/10">
-                <td className="p-3 font-medium text-white/70">Registration fee</td>
+                <td className="p-3 font-medium text-white">Registration fee</td>
                 <td className="p-3 whitespace-nowrap">£100 – £300</td>
                 <td className="p-3">Usually non-refundable</td>
               </tr>
               <tr className="border-b border-white/10 bg-white/[0.02]">
-                <td className="p-3 font-medium text-white/70">Per assessor visit</td>
+                <td className="p-3 font-medium text-white">Per assessor visit</td>
                 <td className="p-3 whitespace-nowrap">£80 – £150</td>
                 <td className="p-3">Only where charged per visit</td>
               </tr>
               <tr className="border-b border-white/10">
-                <td className="p-3 font-medium text-white/70">All-inclusive package</td>
+                <td className="p-3 font-medium text-white">All-inclusive package</td>
                 <td className="p-3 whitespace-nowrap">£800 – £2,500</td>
                 <td className="p-3">Varies by location &amp; visits included</td>
               </tr>
               <tr className="border-b border-white/10 bg-white/[0.02]">
-                <td className="p-3 font-medium text-white/70">AM2 assessment (separate)</td>
+                <td className="p-3 font-medium text-white">AM2 assessment (separate)</td>
                 <td className="p-3 whitespace-nowrap">£350 – £500</td>
                 <td className="p-3">Rarely included in NVQ packages</td>
               </tr>
               <tr>
-                <td className="p-3 font-medium text-white/70">Adult Skills funding</td>
+                <td className="p-3 font-medium text-white">Adult Skills funding</td>
                 <td className="p-3 whitespace-nowrap">Co- or fully funded</td>
                 <td className="p-3">If eligible — check before paying</td>
               </tr>
@@ -561,14 +561,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Registration fee</strong> — typically £100 to £300, paid to the training
                 centre to register you with the awarding body. This is usually non-refundable.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Assessment visit fees</strong> — some providers charge per assessor visit
                 (typically £80 to £150 per visit). Others include a fixed number of visits in the
@@ -577,7 +577,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>All-inclusive packages</strong> — many private training centres offer
                 all-inclusive NVQ packages ranging from £800 to £2,500 depending on location and the
@@ -586,7 +586,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>AM2 assessment (separate)</strong> — approximately £350 to £500. Not
                 included in most NVQ packages unless specifically stated. Budget for this
@@ -594,7 +594,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Government funding</strong> — Adult Skills funding (for those aged 19 or
                 over in England) may cover some or all of the NVQ cost for eligible candidates.
@@ -620,7 +620,7 @@ const sections = [
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <div className="text-2xl font-bold text-green-400">6–12 months</div>
             <div className="text-sm font-semibold text-white mt-1">Broad work mix</div>
-            <p className="text-sm text-white/80 mt-2 leading-relaxed">
+            <p className="text-sm text-white mt-2 leading-relaxed">
               Working across domestic and commercial projects, regularly inspecting and testing, and
               producing certificates. A wide evidence base lets all units be covered quickly.
             </p>
@@ -628,7 +628,7 @@ const sections = [
           <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
             <div className="text-2xl font-bold text-orange-400">12–24 months</div>
             <div className="text-sm font-semibold text-white mt-1">Narrow work mix</div>
-            <p className="text-sm text-white/80 mt-2 leading-relaxed">
+            <p className="text-sm text-white mt-2 leading-relaxed">
               Working in a single environment (e.g. only domestic rewires, or only commercial
               maintenance), needing to seek extra opportunities to evidence units not covered by
               day-to-day work.
@@ -638,7 +638,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>6 to 12 months</strong> — candidates working across domestic and commercial
                 projects, regularly performing inspection and testing, and producing certificates
@@ -646,7 +646,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>12 to 24 months</strong> — candidates in a single installation environment
                 (e.g., exclusively domestic rewires, or only commercial maintenance) who need to
@@ -654,7 +654,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Factors that slow progress</strong> — infrequent assessor visits, delays in
                 obtaining witness statements, a narrow range of work types, and failure to maintain
@@ -680,7 +680,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Issue Professional Certificates from Day One
@@ -734,7 +734,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Start your electrical business with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site certifying, professional quoting, and business management from their phone."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site certifying, professional quoting, and business management from their phone."
           icon={Zap}
         />
       </>
@@ -765,7 +765,7 @@ export default function NVQLevel3ElectricalPage() {
       heroTitle={
         <>
           NVQ Level 3 Electrical Installation:{' '}
-          <span className="text-yellow-400">Complete UK Guide 2026</span>
+          <span className="text-elec-yellow">Complete UK Guide 2026</span>
         </>
       }
       heroSubtitle="The NVQ Level 3 Electrotechnical Installation qualification is the recognised competency-based route for experienced electricians without a formal UK qualification. This guide explains what the NVQ is, how it compares to City and Guilds 2365, who needs it, how to build a portfolio of evidence, the AM2 assessment, costs from £800 to £2,500, and realistic timescales."
@@ -776,7 +776,7 @@ export default function NVQLevel3ElectricalPage() {
       faqHeading="Frequently Asked Questions About the NVQ Level 3 Electrical"
       relatedPages={relatedPages}
       ctaHeading="Certify and Quote Professionally with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant PDF export, and professional quoting. Start your 7-day free trial today."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant PDF export, and professional quoting. Start your 7-day free trial today."
     />
   );
 }

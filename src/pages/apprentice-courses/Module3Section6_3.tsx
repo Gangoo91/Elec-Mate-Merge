@@ -15,7 +15,7 @@ const quizQuestions = [
     id: 1,
     question: 'What is the main purpose of fire stopping?',
     options: [
-      'To improve the appearance of cable penetrations',
+      'To stop cables moving in the penetration',
       'To prevent the spread of fire and smoke between compartments',
       'To provide mechanical support for cables passing through walls',
       'To reduce electromagnetic interference between circuits',
@@ -123,7 +123,7 @@ const quickCheckQuestions = [
     id: 'escape-routes',
     question: 'Why is fire stopping important in escape routes?',
     options: [
-      'It improves the appearance of the corridor',
+      'It keeps the cables within their current rating',
       'It provides mechanical support to the cables',
       'It reduces electrical interference on data cables',
       'It prevents fire/smoke spread that could block evacuation',
@@ -150,9 +150,9 @@ const quickCheckQuestions = [
     question: 'What should be done if a fire seal is damaged during maintenance?',
     options: [
       'Replace immediately with approved materials',
-      'Balance loads across all three phases',
-      'Electrolytic capacitor (aluminium or tantalum)',
-      'Line to neutral fault (short circuit)',
+      'Fill it with general-purpose expanding foam',
+      'Leave it until the next periodic inspection',
+      'Cover it with a fire-rated access panel only',
     ],
     correctIndex: 0,
     explanation:

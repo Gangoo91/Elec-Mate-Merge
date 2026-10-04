@@ -3778,7 +3778,7 @@ export const module3QuestionBank: QuestionBank[] = [
     options: ['300ms', '40ms', '1 second', '5 seconds'],
     correctAnswer: 1,
     explanation:
-      '40ms is the figure given in the product standards BS EN 61008/61009 for a general non-delay device at 5 × IΔn. Note where it comes from: it is a characteristic of the device, not a BS 7671 test requirement. BS 7671:2018+A4:2026 deleted Table 3A of Appendix 3, and Regulation 643.8 now calls for a single alternating current test at IΔn to verify effectiveness, whatever the RCD type — so the 5 × IΔn test is no longer part of the required verification sequence.',
+      '40ms is the figure given in the product standards BS EN 61008/61009 for a general non-delay device at 5 × IΔn. Note where it comes from: it is a characteristic of the device, not a BS 7671 test requirement. BS 7671:2018+A2:2022 deleted Table 3A of Appendix 3, and Regulation 643.8 now calls for a single alternating current test at IΔn to verify effectiveness, whatever the RCD type — so the 5 × IΔn test is no longer part of the required verification sequence.',
     section: '3.6.3',
     difficulty: 'intermediate',
     topic: 'RCD Testing',

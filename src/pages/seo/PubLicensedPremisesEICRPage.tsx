@@ -209,7 +209,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Five-yearly EICR</strong> — the most common condition. The EICR must be
                 carried out by a competent person (typically a registered member of a competent
@@ -218,7 +218,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency lighting inspection and testing</strong> — monthly function tests
                 and annual full-duration tests of the emergency lighting system, with records kept
@@ -226,7 +226,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire alarm inspection and testing</strong> — weekly testing of at least one
                 fire alarm call point or detector (rotated to test all devices over time),
@@ -235,7 +235,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Remedial works — specified timescale</strong> — where the EICR identifies C1
                 or C2 observations, remedial works must be completed within the timescale specified
@@ -267,7 +267,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Five years — standard licence condition</strong> — the minimum period
                 specified in most premises licence conditions. For a well-maintained modern
@@ -275,7 +275,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three years — high-use or older premises</strong> — industry best practice
                 for high-volume premises (busy city-centre pubs, nightclubs, music venues), premises
@@ -284,7 +284,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>After change of occupier</strong> — when a pub changes hands, the new
                 operator should commission a fresh EICR before reopening. An EICR commissioned by
@@ -293,7 +293,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>After significant electrical work</strong> — a new kitchen installation,
                 gaming machine circuit addition, or entertainment system upgrade should be followed
@@ -350,7 +350,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main switchgear and distribution boards</strong> — condition, labelling,
                 accessibility, overcurrent protection, and RCD protection on appropriate circuits.
@@ -359,7 +359,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Catering kitchen circuits</strong> — commercial ovens, fryers, grills,
                 dishwashers, and extraction systems draw high continuous currents. The inspector
@@ -369,7 +369,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bar area circuits</strong> — glass washers, ice machines, refrigerated
                 back-bar units, and dispensing equipment. High moisture environments require
@@ -378,7 +378,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Outdoor and beer garden circuits</strong> — outdoor sockets, garden
                 lighting, outdoor heaters, and any outdoor bar or food service areas must be
@@ -405,7 +405,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Glycol coolers — high continuous loads</strong> — glycol cellar cooling
                 systems draw significant continuous current and run 24 hours a day. The inspector
@@ -414,7 +414,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Beer cooler circuits — RCD protection essential</strong> — beer cooler and
                 chiller units in damp environments must be protected by 30mA RCD. A cellar beer
@@ -423,7 +423,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CO2 and mixed gas systems</strong> — CO2 and mixed gas extraction fans in
                 cellars are safety-critical. The inspector will verify that extraction fan circuits
@@ -432,7 +432,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insulation resistance — commonly low in cellars</strong> — damp cellar
                 environments cause insulation resistance to deteriorate more rapidly than in dry
@@ -484,7 +484,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated circuit — best practice</strong> — each gaming machine should
                 ideally be on its own dedicated circuit with an appropriately sized MCB. Machines
@@ -493,7 +493,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Extension lead use — commonly found</strong> — gaming machines frequently
                 found on extension leads rather than hardwired connections. Extension leads are not
@@ -503,7 +503,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection — required in public areas</strong> — under Regulation
                 411.3.3 of BS 7671:2018+A4:2026, RCD protection is required on socket-outlets rated
@@ -533,7 +533,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Coverage requirements</strong> — emergency lighting must cover all escape
                 routes, all bar and function room areas, all toilet areas (where internal with no
@@ -543,7 +543,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Duration</strong> — emergency lighting in licensed premises must operate for
                 a minimum of one hour from the moment of mains power failure. Three-hour duration is
@@ -552,7 +552,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing and records</strong> — monthly 30-second function tests and annual
                 full-duration discharge tests must be carried out and recorded in a logbook. The
@@ -561,7 +561,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inclusion in EICR scope</strong> — emergency lighting circuits are part of
                 the fixed electrical installation and must be included in the EICR. The inspector
@@ -641,7 +641,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR — typical community pub</strong> — £800 to £2,000. The scope is
                 substantially larger than a domestic EICR: multiple distribution boards, catering
@@ -650,7 +650,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Distribution board replacement</strong> — £1,500 to £3,000 per board for a
                 commercial-grade RCBO distribution board. A pub may have two or three distribution
@@ -659,7 +659,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency lighting installation or upgrade</strong> — £1,500 to £5,000
                 depending on the size of the premises and the number of luminaires required. Larger
@@ -667,7 +667,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire alarm system upgrade</strong> — £3,000 to £12,000 to upgrade from a
                 basic manual system to a full L2 addressable system. Annual maintenance contracts
@@ -693,7 +693,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete Commercial EICRs On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -752,7 +752,7 @@ export default function PubLicensedPremisesEICRPage() {
       heroTitle={
         <>
           EICR for Pubs & Licensed Premises UK:{' '}
-          <span className="text-yellow-400">Licensing Requirements 2026</span>
+          <span className="text-elec-yellow">Licensing Requirements 2026</span>
         </>
       }
       heroSubtitle="Pubs and licensed premises face electrical safety obligations under both the Licensing Act 2003 and the Regulatory Reform (Fire Safety) Order 2005. This guide covers licence conditions, EICR frequency, what inspectors check in pub installations, cellar equipment and beer cooler circuits, gaming machine circuits, emergency lighting to BS 5266-1, and fire alarm systems to BS 5839-1."
@@ -763,7 +763,7 @@ export default function PubLicensedPremisesEICRPage() {
       faqHeading="Frequently Asked Questions About EICR for Pubs and Licensed Premises"
       relatedPages={relatedPages}
       ctaHeading="Complete Licensed Premises EICRs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

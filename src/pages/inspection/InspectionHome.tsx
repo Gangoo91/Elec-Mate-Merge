@@ -91,7 +91,7 @@ export default function InspectionHome() {
         {/* Quick Actions */}
         <div className="flex flex-wrap gap-3">
           <Button
-            onClick={() => navigate('/electrician/inspection-testing/new')}
+            onClick={() => navigate('/electrician/inspection-testing')}
             className="bg-amber-500 hover:bg-amber-600 text-black font-semibold gap-2 h-11 px-5 touch-manipulation active:scale-[0.98] transition-transform"
           >
             <Plus className="h-4 w-4" />
@@ -252,7 +252,7 @@ export default function InspectionHome() {
               </p>
               {!searchQuery && (
                 <Button
-                  onClick={() => navigate('/electrician/inspection-testing/new')}
+                  onClick={() => navigate('/electrician/inspection-testing')}
                   className="bg-amber-500 hover:bg-amber-600 text-black font-semibold gap-2 touch-manipulation"
                 >
                   <Plus className="h-4 w-4" />

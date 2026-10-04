@@ -5,8 +5,8 @@
  *
  * The big install Sub. Containment (PVC + steel conduit, trunking, tray + basket
  * + ladder) with bend radii, intervals, expansion. Cable support intervals per
- * OSG Table H1. The Reg 521.10.202 / 522.8.5 escape-route fire-support
- * requirement (A4:2026 update — applies throughout, not just escape routes).
+ * OSG Table D1, bend radii per OSG Table D5. Reg 521.10.202 fire-support
+ * requirement (throughout the installation since the 2018 edition) and 522.8.5.
  * Worked example: 2nd-fix kitchen ring through stud wall + ceiling void.
  */
 
@@ -32,44 +32,44 @@ import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Install wiring systems and supports (3.4) | Level 2 Module 4.3.4 | Elec-Mate';
 const DESCRIPTION =
-  'PVC and steel conduit, trunking, tray, basket and ladder. Cable supports and intervals per OSG. Reg 521.10.202 fire-support requirement (A4:2026 — applies throughout the install). T&E and SWA installation patterns from kitchen rings to commercial sub-mains.';
+  'PVC and steel conduit, trunking, tray, basket and ladder. Cable supports and intervals per OSG. Reg 521.10.202 fire-support requirement (applies throughout the install). T&E and SWA installation patterns from kitchen rings to commercial sub-mains.';
 
 const checks = [
   {
     id: 'tne-clip-spacing',
     question:
-      'For 2.5 mm² T&E clipped direct on a horizontal run, the typical maximum interval between clips per OSG Table 4.5 is approximately:',
-    options: ['600 mm', '100 mm', '1000 mm', '250 mm'],
+      'For 1.5 mm² T&E (under 9 mm across) clipped direct on a horizontal run, the maximum interval between clips per OSG Table D1 is:',
+    options: ['400 mm', '300 mm', '600 mm', '250 mm'],
     correctIndex: 3,
     explanation:
-      'OSG Table 4.5 (cable support intervals) gives ~250 mm horizontal for typical small-CSA T&E clipped to a wall or ceiling. Vertical the interval can extend to ~400 mm because gravity pulls less perpendicular load on the clip. Going beyond these intervals lets the cable sag, which puts mechanical stress on terminations (522.8.5) and looks scrappy.',
+      'OSG Table D1 gives 250 mm horizontal and 400 mm vertical for non-armoured cables under 9 mm across (for flat cable, measure the width). 300 mm is the horizontal figure for cables 9–15 mm across; 600 mm is for mineral insulated cable. Going beyond these intervals lets the cable sag, which puts mechanical stress on terminations (522.8.5) and looks scrappy.',
   },
   {
     id: 'conduit-bend-radius',
     question: 'For a cold bend on 25 mm PVC conduit, the minimum bend radius is approximately:',
     options: [
-      '6× OD (so ~150 mm radius for 25 mm conduit).',
+      '2.5× OD (so ~63 mm inner radius for 25 mm conduit).',
       '1× OD (so ~25 mm radius for 25 mm conduit).',
-      '20× OD (so ~500 mm radius for 25 mm conduit).',
+      '6× OD (so ~150 mm radius for 25 mm conduit).',
       'There is no minimum — PVC conduit can be bent to any radius cold.',
     ],
     correctIndex: 0,
     explanation:
-      'Cold bend radius for PVC conduit is typically 6× the outside diameter — for 25 mm OD that is ~150 mm radius (or ~300 mm bend diameter). Tighter and the conduit kinks and the cable inside no longer pulls. Heat-bend if you need tighter, but most jobs use formed bends or pull-elbows.',
+      'OSG Table D3 note (c): the inner radius of a conduit bend should be not less than 2.5 times the outside diameter of the conduit — about 63 mm for 25 mm conduit. Tighter and the conduit kinks and the cable inside no longer pulls. Heat-bend if you need tighter, but most jobs use formed bends or pull-elbows.',
   },
   {
     id: 'fire-support-throughout',
     question:
-      'BS 7671 Reg 521.10.202 (introduced via A4:2026 / Amendment 4) requires non-combustible cable supports against premature collapse in fire — applying:',
+      'BS 7671 Reg 521.10.202 requires wiring systems to be supported so they are not liable to premature collapse in a fire — applying:',
     options: [
       'Only on cables installed in escape routes such as corridors and staircases.',
-      'Throughout the installation, not just on escape routes (A4:2026 expanded the previous escape-route-only requirement).',
+      'Throughout the installation, not just on escape routes (the 2018 edition replaced the escape-route-only Reg 521.11.201).',
       'Only on cables installed outdoors or in unheated plant rooms.',
       'Only on circuits supplying fire-alarm and emergency-lighting systems.',
     ],
     correctIndex: 1,
     explanation:
-      'A4:2026 made this a significant change — previously the requirement applied only on escape routes. Now Reg 521.10.202 requires cables to be adequately supported against premature collapse in fire throughout the installation. In practice this means metal clips or fire-rated supports for clipped cables, not just plastic cable ties along ceiling voids. Worth re-reading the regulation in full when planning a fix-out.',
+      'The 2018 edition made this a significant change — previously Reg 521.11.201 applied only on escape routes. Reg 521.10.202 requires cables to be adequately supported against premature collapse in fire throughout the installation. In practice this means metal clips or fire-rated supports for clipped cables, not just plastic cable ties along ceiling voids. Worth re-reading the regulation in full when planning a fix-out.',
   },
 ];
 
@@ -81,7 +81,7 @@ const quizQuestions = [
     options: ['200 mm', '400 mm', '600 mm', '1200 mm'],
     correctAnswer: 1,
     explanation:
-      'OSG Table 4.5 gives ~400 mm for vertical T&E in the 4-6 mm² range. The cable’s self-weight is the limiting factor — vertical clips carry less perpendicular load than horizontal, so intervals can be longer. Always check the OSG table for the specific CSA and orientation.',
+      'OSG Table D1 gives 400 mm vertical for non-armoured cables 9–15 mm across, which covers 6 mm² T&E. The cable’s self-weight is the limiting factor — vertical clips carry less perpendicular load than horizontal, so intervals can be longer. Always check Table D1 for the cable’s overall size and orientation.',
   },
   {
     id: 2,
@@ -90,12 +90,12 @@ const quizQuestions = [
     options: [
       'No additional saddle is needed at bends — the fitting itself supports the conduit.',
       'A saddle at the midpoint between every pair of boxes, regardless of bends.',
-      'A saddle within ~150-200 mm of every box, fitting and change of direction.',
+      'A support within 300 mm of every bend or fitting.',
       'A saddle only where the conduit changes from horizontal to vertical.',
     ],
     correctAnswer: 2,
     explanation:
-      'Every box, fitting and change of direction needs a saddle within ~150-200 mm to support the conduit at the discontinuity. Without it, the bend or fitting takes the full mechanical load of the unsupported run beyond — over time the threads work loose and the joint pulls apart.',
+      'OSG Table D3 note (b): supports should be positioned within 300 mm of bends or fittings. Without it, the bend or fitting takes the full mechanical load of the unsupported run beyond — over time the threads work loose and the joint pulls apart.',
   },
   {
     id: 3,
@@ -128,28 +128,28 @@ const quizQuestions = [
     id: 5,
     question: 'Bend radius for 6 mm² T&E (twin and CPC) is typically:',
     options: [
-      '3× cable overall diameter (factory minimum).',
-      '6× cable overall diameter (factory minimum).',
-      '8× cable overall diameter (factory minimum).',
-      '12× cable overall diameter (factory minimum).',
+      '3× the cable width — the figure for cables under 10 mm across.',
+      '4× the cable width — non-armoured cable 10–25 mm across (for flat cable, the width).',
+      '6× the cable width — the figure for armoured cable.',
+      '8× the cable width — the figure for solid aluminium or shaped conductors.',
     ],
     correctAnswer: 1,
     explanation:
-      'IET guidance (Appendix to OSG and IET On-Site Guide) gives 6× the overall cable diameter as the minimum bend radius for non-armoured cables like T&E. SWA is 8×; MICC is 12×. Tighter than the minimum and the conductor strain can damage the insulation; instant-fail on a periodic IR test six months later.',
+      'OSG Table D5 gives the minimum internal bend radius for non-armoured PVC cable as 3× the diameter up to 10 mm and 4× from 10 to 25 mm; for flat cable the diameter is the width (major axis). 6 mm² T&E is over 10 mm wide, so 4×. Armoured cable is 6×. Tighter than the minimum and the conductor strain can damage the insulation.',
   },
   {
     id: 6,
     question:
-      'A T&E cable runs along a ceiling void in a flat above a commercial unit. Reg 521.10.202 (A4:2026) means it must be supported by:',
+      'A T&E cable runs along a ceiling void in a flat above a commercial unit. Reg 521.10.202 means it must be supported by:',
     options: [
       'Plastic cable ties at close intervals, since the void is not itself an escape route.',
       'Adhesive cable clips bonded to the joists with high-temperature glue.',
-      'Non-combustible supports (metal clips, metal cable ties, or fire-rated systems) so cables do not prematurely collapse in fire — applies throughout the installation now, not just escape routes.',
+      'Non-combustible supports (metal clips, metal cable ties, or fire-rated systems) so cables do not prematurely collapse in fire — applies throughout the installation, not just escape routes.',
       'No fixed support at all, provided the cable rests on top of the ceiling joists.',
     ],
     correctAnswer: 2,
     explanation:
-      'A4:2026 expanded the previous escape-route-only requirement. Now Reg 521.10.202 requires cable supports to resist premature collapse in fire throughout the installation. Plastic cable ties melt within seconds in fire, dropping the cable and creating a tripping hazard for evacuating occupants AND for fire crews. Metal clips, metal cable ties or BS-rated fire-resistant systems satisfy the regulation.',
+      'Since the 2018 edition, Reg 521.10.202 requires cable supports to resist premature collapse in fire throughout the installation (NOTE 3: non-metallic clips or ties must not be the sole means of support). Plastic cable ties melt within seconds in fire, dropping the cable and creating a tripping hazard for evacuating occupants AND for fire crews. Metal clips, metal cable ties or BS-rated fire-resistant systems satisfy the regulation.',
   },
   {
     id: 7,
@@ -183,7 +183,7 @@ const faqs = [
   {
     question: 'How often should I clip T&E running through a ceiling void?',
     answer:
-      'OSG Table 4.5 gives ~250 mm horizontal for small CSAs (1.0-2.5 mm² T&E). In a ceiling void where the cable might pass over joists, that is one clip per joist crossing as a baseline, plus an additional clip in the middle of any longer span. The new Reg 521.10.202 (A4:2026) requires the supports to be non-combustible — so metal P-clips or metal cable ties throughout the installation, not just on escape routes. Plastic ties are deprecated for cable support.',
+      'OSG Table D1 gives 250 mm horizontal for cables under 9 mm across and 300 mm for 9–15 mm (for flat T&E, measure the width). In a ceiling void where the cable might pass over joists, that is one clip per joist crossing as a baseline, plus an additional clip in the middle of any longer span. Reg 521.10.202 requires supports that will not collapse early in a fire — so metal P-clips or metal cable ties throughout the installation, not just on escape routes. Plastic ties are deprecated for cable support.',
   },
   {
     question: 'When do I need expansion couplers in steel conduit?',
@@ -193,12 +193,12 @@ const faqs = [
   {
     question: 'What bend radius do I need for SWA?',
     answer:
-      '8× the cable overall diameter for SWA, per BS 7671 Appendix and BS 5467 / BS 6724 cable manufacturer data. For 4-core 16 mm² SWA at ~22 mm OD that is ~176 mm radius. Tighter and the steel armour kinks, the lay of the cores distorts, and the cable can fail an IR test six months later because the insulation has been stressed at the bend. Always plan for the bend radius before pulling — use a draw box at any tight corner instead of forcing the bend.',
+      '6× the cable overall diameter for armoured cable, per OSG Table D5. For a 4-core 16 mm² SWA at about 22 mm across that is roughly a 132 mm radius. Tighter and the steel armour kinks, the lay of the cores distorts, and the cable can fail an IR test six months later because the insulation has been stressed at the bend. Always plan for the bend radius before pulling — use a draw box at any tight corner instead of forcing the bend.',
   },
   {
     question: 'Plastic or metal cable ties — does it actually matter?',
     answer:
-      'Yes — and Reg 521.10.202 (A4:2026) made it more important. Plastic cable ties melt within seconds in a fire (typically <100°C). The cable they were supporting drops, creating a hazard for evacuating occupants AND for fire crews. Metal cable ties (stainless steel, sometimes called "industrial ties") survive fire long enough for the cable to remain in place during evacuation. Now required throughout the installation, not just on escape routes. Switch your van stock to metal where you would previously have used plastic.',
+      'Yes — Reg 521.10.202 makes it a requirement. Plastic cable ties melt within seconds in a fire (typically <100°C). The cable they were supporting drops, creating a hazard for evacuating occupants AND for fire crews. Metal cable ties (stainless steel, sometimes called "industrial ties") survive fire long enough for the cable to remain in place during evacuation. Required throughout the installation since the 2018 edition, not just on escape routes. Switch your van stock to metal where you would previously have used plastic.',
   },
   {
     question: 'Do I need to fire-stop where a cable passes through a wall?',
@@ -226,16 +226,16 @@ export default function Sub4() {
       <HubBody>
         <p className="max-w-3xl text-[13px] leading-relaxed text-white">
           The big install Sub. PVC and steel conduit, trunking, basket and ladder. Cable support
-          intervals per OSG. The Reg 521.10.202 fire-support requirement (A4:2026 — applies
-          throughout the install, not just escape routes). Bend radii. Expansion. The mechanical
-          engineering side of the trade.
+          intervals per OSG. The Reg 521.10.202 fire-support requirement (applies throughout the
+          install, not just escape routes). Bend radii. Expansion. The mechanical engineering side
+          of the trade.
         </p>
 
         <TLDR
           points={[
-            'Cable supports per OSG Table 4.5 — typical ~250 mm horizontal / ~400 mm vertical for small T&E. Tighter near terminations, fittings and bends.',
-            'A4:2026 expanded Reg 521.10.202 — non-combustible cable supports throughout the installation, not just on escape routes. Switch from plastic ties to metal clips/ties.',
-            'Bend radius = 6× cable OD for unarmoured (T&E), 8× for SWA, 12× for MICC. Tighter than that and the conductor strain damages insulation.',
+            'Cable supports per OSG Table D1 — 250 mm horizontal / 400 mm vertical for cables under 9 mm across, 300 / 400 mm for 9–15 mm. Tighter near terminations, fittings and bends.',
+            'Reg 521.10.202 (since 2018) — supports must not collapse early in a fire, throughout the installation. Plastic clips or ties cannot be the sole support.',
+            'Bend radius (OSG Table D5) = 3× for unarmoured cable under 10 mm, 4× for 10–25 mm (flat T&E: use the width), 6× for armoured. Tighter than that and the conductor strain damages insulation.',
           ]}
         />
 
@@ -245,8 +245,8 @@ export default function Sub4() {
             'Install PVC and steel conduit (cold and heat-formed bends, threaded joints, expansion couplers) to the bend radii and support intervals required.',
             'Install PVC and metal trunking with correct lid-clip spacing, internal/external corners, tees, end caps and fire-stopping at compartment penetrations.',
             'Install cable basket, tray and ladder with appropriate brackets, expansion provision and cable support cleats for the load and orientation.',
-            'Apply OSG Table 4.5 support intervals to T&E, SWA and singles in conduit installations across horizontal, vertical and overhead runs.',
-            'Apply Reg 521.10.202 (A4:2026) — non-combustible cable supports throughout the installation, not just on escape routes — using metal clips and cable ties.',
+            'Apply OSG Table D1 support intervals to T&E, SWA and singles in conduit installations across horizontal, vertical and overhead runs.',
+            'Apply Reg 521.10.202 — fire-resistant cable supports throughout the installation, not just on escape routes — using metal clips and cable ties.',
           ]}
           initialVisibleCount={3}
         />
@@ -325,53 +325,45 @@ export default function Sub4() {
 
         <SectionRule />
 
-        <ContentEyebrow>Cable support intervals — OSG Table 4.5</ContentEyebrow>
+        <ContentEyebrow>Cable support intervals — OSG Table D1</ContentEyebrow>
 
         <ConceptBlock
           title="The OSG support interval table — your daily reference"
-          plainEnglish="OSG (On-Site Guide) Table 4.5 gives the maximum interval between cable supports for clipped cables. Different intervals for horizontal vs vertical, different intervals for cable CSA. Memorise the common ones for T&E and SWA — they appear on every domestic / light commercial install."
+          plainEnglish="OSG (On-Site Guide) Table D1 gives the maximum spacing of clips for cables in accessible positions. It goes by the overall size of the cable (for flat T&E, the width), with different figures for horizontal and vertical runs and for armoured cable. Memorise the common ones — they appear on every domestic / light commercial install."
           onSite="The interval is a MAXIMUM, not a target. Cables sag between supports; tighter intervals give a tidier install with less stress at the terminations. ~200 mm horizontal on T&E in a kitchen looks much neater than ~250 mm and is worth the extra five clips."
         >
-          <p>Typical OSG Table 4.5 intervals:</p>
+          <p>OSG Table D1 maximum clip spacings (horizontal / vertical):</p>
           <div className="space-y-2.5 sm:hidden">
             <div className="rounded-xl bg-[hsl(0_0%_11%)] border border-white/[0.06] p-3.5">
               <div className="text-[11px] font-semibold uppercase tracking-wider text-elec-yellow/85">
-                T&E (1.0-2.5 mm²)
+                Under 9 mm across (e.g. 1.0–1.5 mm² T&E)
               </div>
-              <p className="text-[13px] text-white/85 mt-1">
-                Horizontal ~250 mm / Vertical ~400 mm.
-              </p>
+              <p className="text-[13px] text-white/85 mt-1">Horizontal 250 mm / Vertical 400 mm.</p>
             </div>
             <div className="rounded-xl bg-[hsl(0_0%_11%)] border border-white/[0.06] p-3.5">
               <div className="text-[11px] font-semibold uppercase tracking-wider text-elec-yellow/85">
-                T&E (4-6 mm²)
+                9–15 mm across (e.g. 4–6 mm² T&E)
               </div>
-              <p className="text-[13px] text-white/85 mt-1">
-                Horizontal ~300 mm / Vertical ~400 mm.
-              </p>
+              <p className="text-[13px] text-white/85 mt-1">Horizontal 300 mm / Vertical 400 mm.</p>
             </div>
             <div className="rounded-xl bg-[hsl(0_0%_11%)] border border-white/[0.06] p-3.5">
               <div className="text-[11px] font-semibold uppercase tracking-wider text-elec-yellow/85">
-                T&E (10-16 mm²)
+                15–20 mm across (e.g. 10–16 mm² T&E)
               </div>
-              <p className="text-[13px] text-white/85 mt-1">
-                Horizontal ~350 mm / Vertical ~450 mm.
-              </p>
+              <p className="text-[13px] text-white/85 mt-1">Horizontal 350 mm / Vertical 450 mm.</p>
             </div>
             <div className="rounded-xl bg-[hsl(0_0%_11%)] border border-white/[0.06] p-3.5">
               <div className="text-[11px] font-semibold uppercase tracking-wider text-elec-yellow/85">
-                SWA (multi-core, &lt;25 mm²)
+                Armoured (SWA), 9–15 mm across
               </div>
-              <p className="text-[13px] text-white/85 mt-1">
-                Horizontal ~600 mm / Vertical ~900 mm.
-              </p>
+              <p className="text-[13px] text-white/85 mt-1">Horizontal 350 mm / Vertical 450 mm.</p>
             </div>
             <div className="rounded-xl bg-[hsl(0_0%_11%)] border border-white/[0.06] p-3.5">
               <div className="text-[11px] font-semibold uppercase tracking-wider text-elec-yellow/85">
-                SWA (multi-core, 25-185 mm²)
+                Armoured (SWA), 15–20 mm across
               </div>
               <p className="text-[13px] text-white/85 mt-1">
-                Horizontal ~900 mm / Vertical ~1500 mm + cleats.
+                Horizontal 400 mm / Vertical 550 mm (20–40 mm across: 450 / 600 mm).
               </p>
             </div>
             <div className="rounded-xl bg-[hsl(0_0%_11%)] border border-white/[0.06] p-3.5">
@@ -379,37 +371,40 @@ export default function Sub4() {
                 PVC singles in conduit
               </div>
               <p className="text-[13px] text-white/85 mt-1">
-                Conduit support ~1 m horizontal, ~1.2 m vertical; cable not separately supported
-                within conduit.
+                Conduit support per OSG Table D3 — 20–25 mm rigid PVC at 1.5 m horizontal / 1.75 m
+                vertical; cable not separately supported within conduit.
               </p>
             </div>
           </div>
           <ul className="hidden sm:block space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
-              <strong>T&E (1.0-2.5 mm²)</strong> — Horizontal ~250 mm / Vertical ~400 mm.
+              <strong>Under 9 mm across (e.g. 1.0–1.5 mm² T&E)</strong> — Horizontal 250 mm /
+              Vertical 400 mm.
             </li>
             <li>
-              <strong>T&E (4-6 mm²)</strong> — Horizontal ~300 mm / Vertical ~400 mm.
+              <strong>9–15 mm across (e.g. 4–6 mm² T&E)</strong> — Horizontal 300 mm / Vertical 400
+              mm.
             </li>
             <li>
-              <strong>T&E (10-16 mm²)</strong> — Horizontal ~350 mm / Vertical ~450 mm.
+              <strong>15–20 mm across (e.g. 10–16 mm² T&E)</strong> — Horizontal 350 mm / Vertical
+              450 mm.
             </li>
             <li>
-              <strong>SWA (multi-core, &lt;25 mm²)</strong> — Horizontal ~600 mm / Vertical ~900 mm.
+              <strong>Armoured (SWA), 9–15 mm across</strong> — Horizontal 350 mm / Vertical 450 mm.
             </li>
             <li>
-              <strong>SWA (multi-core, 25-185 mm²)</strong> — Horizontal ~900 mm / Vertical ~1500 mm
-              + cleats.
+              <strong>Armoured (SWA), 15–20 mm across</strong> — Horizontal 400 mm / Vertical 550 mm
+              (20–40 mm across: 450 / 600 mm).
             </li>
             <li>
-              <strong>PVC singles in conduit</strong> — Conduit support ~1 m horizontal, ~1.2 m
-              vertical.
+              <strong>PVC singles in conduit</strong> — Conduit support per OSG Table D3 — 20–25 mm
+              rigid PVC at 1.5 m horizontal / 1.75 m vertical.
             </li>
           </ul>
           <p>
-            Add an extra clip within ~150 mm of every box, every termination, every change of
-            direction. The discontinuities are where mechanical stress concentrates and where the
-            cable wants to walk away from its support.
+            Add an extra clip close to every box, every termination, every change of direction. The
+            discontinuities are where mechanical stress concentrates and where the cable wants to
+            walk away from its support.
           </p>
         </ConceptBlock>
 
@@ -435,20 +430,18 @@ export default function Sub4() {
 
         <SectionRule />
 
-        <ContentEyebrow>The A4:2026 fire-support change — Reg 521.10.202</ContentEyebrow>
+        <ContentEyebrow>Fire-resistant cable support — Reg 521.10.202</ContentEyebrow>
 
         <ConceptBlock
           title="Fire-resistant cable support — now applies throughout the installation"
-          plainEnglish="Reg 521.10.202 used to apply only on escape routes — corridors, staircases, exit doors. A4:2026 expanded it to apply throughout the installation. The reasoning: a fire that starts in a non-escape area still threatens the safe evacuation of the building, and dropped cables hinder fire crews everywhere, not just on the marked escape route. Switch from plastic cable ties to metal clips, metal ties, or fire-rated systems for all clipped-direct cable supports."
-          onSite="The practical effect is a daily van stock change. Bin the bag of nylon cable ties and replace with stainless steel cable ties or metal P-clips for any cable support task. Plastic ties are still fine for non-load-bearing bundling (tidying multi-cable runs into a neat bunch) but never as the primary support."
+          plainEnglish="Before 2018, the support rule (Reg 521.11.201) applied only on escape routes. The 2018 edition replaced it with Reg 521.10.202, which applies throughout the installation, and A4:2026 added a note explaining the intent. The reasoning: cables that drop in a fire hinder evacuation and firefighting wherever they fall. NOTE 3 rules out non-metallic clips or ties as the sole means of support for cables clipped direct or hung under tray."
+          onSite="The practical effect is a van stock change. Bin the bag of nylon cable ties as primary support and use steel cable ties or metal P-clips. Plastic ties are still fine for bundling cables that are already supported some other way, but never as the only support."
         >
           <p>
-            The original requirement was driven by the Lakanal House fire (Camberwell, 2009) and
-            Grenfell (2017), where dropped wiring impeded escape and rescue. Since the IET&rsquo;s
-            amendment was published the requirement has progressively widened. A4:2026 made it
-            universal because fire spreads, and the boundary of "escape route" was always artificial
-            — the kitchen ceiling void connects to the bedroom ceiling void connects to the
-            stairwell, and one melted plastic tie breaks the chain.
+            NOTE 1 to the regulation explains why: wiring systems hanging across access or egress
+            routes may hinder evacuation and firefighting. The kitchen ceiling void connects to the
+            bedroom ceiling void connects to the stairwell, so one melted plastic tie can drop a
+            cable across the escape route even though the tie was nowhere near it.
           </p>
           <p>Acceptable supports under 521.10.202:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -473,19 +466,19 @@ export default function Sub4() {
 
         <RegsCallout
           source="BS 7671:2018+A4:2026 — Regulation 521.10.202 (Cable support against premature collapse in fire)"
-          clause="(Paraphrased.) Wiring systems shall be supported in such a way that they are not liable to premature collapse in the event of a fire. This regulation applies throughout the installation."
+          clause="Wiring systems shall be supported such that they will not be liable to premature collapse in the event of a fire. NOTE 3: This regulation precludes, for example, the use of non-metallic cable clips or cable ties as the sole means of support where cables are clipped direct to exposed surfaces or suspended under cable tray, and the use of non-metallic cable trunking as the sole means of support of the cables therein."
           meaning={
             <>
-              A4:2026 expanded this requirement from "escape routes only" (the previous Amendment 3
-              wording) to "throughout the installation". The reasoning is that cables dropping into
-              any space during a fire create hazards for escape and for rescue crews. Practical
+              The 2018 edition extended this requirement from escape routes only (the old Reg
+              521.11.201) to the whole installation. The reasoning is that cables dropping into any
+              space during a fire create hazards for escape and for rescue crews. Practical
               implication: switch from plastic cable ties to metal clips or metal ties for any
               clipped-direct cable run, not just on marked escape routes. The cost difference is
               small; the regulatory and fire-safety difference is significant. Worth noting on every
               CDM RAMS for new installs.
             </>
           }
-          cite="Source: BS 7671:2018+A4:2026 Part 5, Chapter 52, Regulation 521.10.202 (introduced/expanded A4:2026)."
+          cite="Source: BS 7671:2018+A4:2026, Regulation 521.10.202 and NOTE 3."
         />
 
         <InlineCheck {...checks[1]} />
@@ -495,8 +488,8 @@ export default function Sub4() {
         <ContentEyebrow>Conduit installation — bends, intervals, joints</ContentEyebrow>
 
         <ConceptBlock
-          title="PVC conduit — saddles every metre, cold bends 6× OD"
-          plainEnglish="PVC conduit is the most common containment in domestic and light commercial install. Cold-bend up to ~6× OD; tighter needs heat. Saddle every ~1 m horizontal, ~1.2 m vertical, plus an extra saddle within 150 mm of every box and bend. Solvent-weld joints set in seconds and bond fully in minutes."
+          title="PVC conduit — supports within 300 mm of bends, bends at least 2.5× OD"
+          plainEnglish="PVC conduit is the most common containment in domestic and light commercial install. Bends need an inner radius of at least 2.5× the conduit's outside diameter (OSG Table D3). For 20–25 mm rigid PVC, supports at no more than 1.5 m horizontal and 1.75 m vertical, plus one within 300 mm of every bend or fitting. Solvent-weld joints set in seconds and bond fully in minutes."
           onSite="PVC conduit goes up fast. The skill is in the planning — getting bends right, leaving access at intervals (round inspection boxes for the cable to be pulled), and not running a 30 m run with 4 bends and no draw box."
         >
           <p>Standard PVC conduit installation sequence:</p>
@@ -513,7 +506,7 @@ export default function Sub4() {
 
         <ConceptBlock
           title="Steel conduit — threaded joints, expansion couplers, banding bushes"
-          plainEnglish="Steel conduit is heavier and slower to install but mechanically robust. Threaded joints made up with banding bushes (cone-shaped earth-continuity fittings). Lock-rings to retain bushes. Expansion couplers every ~30 m to absorb thermal movement. Saddle every 1.2-1.5 m horizontal."
+          plainEnglish="Steel conduit is heavier and slower to install but mechanically robust. Threaded joints made up with banding bushes (cone-shaped earth-continuity fittings). Lock-rings to retain bushes. Expansion couplers every ~30 m to absorb thermal movement. Supports at no more than 1.75 m horizontal / 2.0 m vertical for 20–25 mm steel conduit (OSG Table D3)."
           onSite="Steel conduit installation is a craft — accurate measuring, clean threading, dressed runs, every saddle in line with the next. A well-installed steel conduit run is one of the most satisfying things to look at in a plant room. A poorly installed one looks like a snake fight and never functions properly under fault current."
         >
           <p>Key steel conduit details:</p>
@@ -652,9 +645,9 @@ export default function Sub4() {
               <br />
               <strong>Step 3 — ceiling void run.</strong> Cable runs along the joist tops, through
               joist holes if perpendicular crossings (centre of the joist depth, not closer than 50
-              mm to top or bottom edge — Building Regs Part A). Metal P-clips every ~250 mm
-              horizontal — A4:2026 Reg 521.10.202 requires non-combustible support throughout the
-              installation. NO plastic ties.
+              mm to top or bottom edge — Building Regs Part A). Metal P-clips at OSG Table D1
+              spacing — Reg 521.10.202 requires support that will not collapse early in a fire,
+              throughout the installation. NO plastic ties as the only support.
               <br />
               <br />
               <strong>Step 4 — fire-stop the wall penetration.</strong> Where the cable passes
@@ -684,8 +677,9 @@ export default function Sub4() {
               <strong>Step 8 — terminations at CU.</strong> Both ends of the ring land on the same
               RCBO Type A 32 A. Line conductors twisted together into the line terminal; neutrals
               into the neutral terminal; CPCs into the earth bar. Torque per Hager spec (typically
-              1.2 Nm on the cage-clamp terminal of an NDN132A). Single CPC per terminal preferred
-              (Reg 526.9 update — A4:2026).
+              1.2 Nm on the cage-clamp terminal of an NDN132A). Each CPC in its own earth-bar
+              terminal where the board allows, so one can be lifted for testing without disturbing
+              the other.
               <br />
               <br />
               <strong>Step 9 — verification.</strong> R1+R2 test on the ring (continuity of CPC and
@@ -696,8 +690,8 @@ export default function Sub4() {
           whyItMatters={
             <>
               A kitchen ring is the most common circuit type and the most-installed worked example.
-              The detail above covers the install-time considerations that are easy to forget:
-              A4:2026 fire-support requirement throughout the ceiling void, fire-stopping at the
+              The detail above covers the install-time considerations that are easy to forget: Reg
+              521.10.202 fire-support requirement throughout the ceiling void, fire-stopping at the
               compartment penetration, joist-hole placement in the safe centre band of the joist,
               and clipping at the discontinuities (top and bottom of stud bays) where the cable
               would otherwise hang under its own weight.
@@ -709,12 +703,13 @@ export default function Sub4() {
           title="Plastic cable ties holding T&E along a ceiling void above an escape route"
           whatHappens={
             <>
-              The job was first-fixed before A4:2026 was understood on site. Black nylon cable ties
-              hold three T&E circuits along a ceiling void above the stairwell of a flat. Six months
-              later there is a small kitchen fire, the ceiling void heats up, the plastic ties melt
-              within 30 seconds, all three cables drop into the stairwell. Fire crews report
-              tripping hazards and live cables fouling the only escape route. The post-incident
-              report flags the cable support system as non-compliant with Reg 521.10.202.
+              The job was first-fixed by someone who never read Reg 521.10.202. Black nylon cable
+              ties hold three T&E circuits along a ceiling void above the stairwell of a flat. Six
+              months later there is a small kitchen fire, the ceiling void heats up, the plastic
+              ties melt within 30 seconds, all three cables drop into the stairwell. Fire crews
+              report tripping hazards and live cables fouling the only escape route. The
+              post-incident report flags the cable support system as non-compliant with Reg
+              521.10.202.
             </>
           }
           doInstead={
@@ -723,9 +718,8 @@ export default function Sub4() {
               cable ties (or metal P-clips) for primary cable support. Plastic ties only for
               non-load-bearing tidying of multi-cable bundles. On retrofit jobs, where you discover
               existing plastic-tie installations, flag it on the job report — the responsible person
-              is then on notice that the install is not compliant with current A4:2026 requirements
-              and a remedial visit can be quoted. Reg 521.10.202 + 522.8.5 cross-link gives the
-              regulatory basis.
+              is then on notice that the install is not compliant with Reg 521.10.202 and a remedial
+              visit can be quoted. Reg 521.10.202 + 522.8.5 cross-link gives the regulatory basis.
             </>
           }
         />
@@ -738,10 +732,10 @@ export default function Sub4() {
               Reg 522.8.3 is the regulation behind every minimum bend radius figure. "Conductors or
               cables do not suffer damage" — kink the cable and the insulation cracks or the
               conductor strain compromises the wire. "Terminations are not stressed" — a tight bend
-              immediately at a termination loads the connection. The 6× / 8× / 12× OD figures from
-              cable manufacturer data and IET guidance exist to satisfy this regulation. Tighter
-              than the manufacturer minimum is a 522.8.3 fail; on a periodic inspection it shows up
-              as a reduced IR or a cracked-insulation observation.
+              immediately at a termination loads the connection. The minimum bend radii in OSG Table
+              D5 (3× or 4× for unarmoured cable by size, 6× for armoured) exist to satisfy this
+              regulation. Tighter than the manufacturer minimum is a 522.8.3 fail; on a periodic
+              inspection it shows up as a reduced IR or a cracked-insulation observation.
             </>
           }
           cite="Source: BS 7671:2018+A4:2026 Part 5, Chapter 52, Regulation 522.8.3 (verbatim)."
@@ -755,9 +749,9 @@ export default function Sub4() {
 
         <KeyTakeaways
           points={[
-            'OSG Table 4.5 sets cable support intervals — typical ~250 mm horizontal / ~400 mm vertical for small T&E. Tighter at terminations and bends.',
-            'A4:2026 expanded Reg 521.10.202 — non-combustible cable supports throughout the installation, not just escape routes. Switch from plastic to metal cable ties / P-clips.',
-            'Bend radius minimums — 6× OD for unarmoured (T&E), 8× for SWA, 12× for MICC. Tighter than that = 522.8.3 fail.',
+            'OSG Table D1 sets cable support intervals — 250 / 400 mm for cables under 9 mm across, 300 / 400 mm for 9–15 mm. Tighter at terminations and bends.',
+            'Reg 521.10.202 (since 2018) — cable supports must not collapse early in a fire, throughout the installation. Switch from plastic to metal cable ties / P-clips.',
+            'Bend radius minimums (OSG Table D5) — 3× or 4× for unarmoured (by size), 6× for armoured. Tighter than that = 522.8.3 fail.',
             'Steel conduit needs expansion couplers every ~30 m on long runs — 12 µm/m/°C thermal expansion adds up.',
             'Trunking lid clips every ~600 mm (closer at ends, fittings, vertical runs); end caps every cut; cable retaining clips inside for tidy multi-cable runs.',
             'Cable basket / tray brackets every 1.2-1.5 m horizontal; cable cleats for sub-mains and any cable subject to >10 kA short-circuit fault current.',

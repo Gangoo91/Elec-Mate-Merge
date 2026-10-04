@@ -337,7 +337,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Verification:</strong> You can check the AI's reasoning against the actual
                 regulation text. If the AI says an installation does not comply with Regulation
@@ -346,7 +346,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Documentation:</strong> When you record the fault on an{' '}
                 <SEOInternalLink href="/tools/eicr-certificate">
@@ -357,7 +357,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Client communication:</strong> When explaining a fault to a client or
                 landlord, citing the specific regulation adds authority to your recommendation. The{' '}
@@ -458,7 +458,7 @@ export default function AIFaultDiagnosisPage() {
       heroTitle={
         <>
           AI Fault Diagnosis:{' '}
-          <span className="text-yellow-400">Describe the Symptoms, Get the Diagnosis</span>
+          <span className="text-elec-yellow">Describe the Symptoms, Get the Diagnosis</span>
         </>
       }
       heroSubtitle="Describe any electrical fault in plain English. The AI analyses the symptoms against thousands of documented fault patterns in UK installations, returns a ranked list of probable causes with BS 7671 references, and guides you through the test sequence to confirm the diagnosis."
@@ -481,7 +481,7 @@ export default function AIFaultDiagnosisPage() {
       faqHeading="Frequently Asked Questions About AI Fault Diagnosis"
       relatedPages={relatedPages}
       ctaHeading="Diagnose Faults Faster with AI"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's AI Fault Diagnosis agent. Describe symptoms, get a ranked diagnosis with test sequences. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate's AI Fault Diagnosis agent. Describe symptoms, get a ranked diagnosis with test sequences. 7-day free trial, cancel anytime."
       toolPath="/tools/ai-fault-diagnosis"
     />
   );

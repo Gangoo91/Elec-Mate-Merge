@@ -245,7 +245,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP66 socket outlets</strong> — double sockets in weatherproof enclosures
                 with spring-loaded flap covers (IP66 when closed, IPX4 or better when open and in
@@ -254,7 +254,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated kitchen appliance circuits</strong> — if the outdoor kitchen
                 includes an induction hob (2kW to 3.5kW), electric grill, or pizza oven, a dedicated
@@ -263,7 +263,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>30mA RCD protection mandatory</strong> — Regulation 411.3.3 (BS
                 7671:2018+A4:2026) requires 30mA RCD protection for all socket outlets rated 32A and
@@ -298,7 +298,7 @@ const sections = [
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
-            <Sun className="w-6 h-6 text-yellow-400 mb-3" />
+            <Sun className="w-6 h-6 text-elec-yellow mb-3" />
             <h3 className="font-bold text-white text-base mb-2">12V SELV LED Strip</h3>
             <p className="text-white text-sm leading-relaxed">
               Powered by a weatherproof 12V or 24V transformer. Safe to touch even when wet — ideal
@@ -346,7 +346,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 411.3.3 (A4:2026)</strong> — requires 30mA RCD protection for all
                 socket outlets rated 32A and below. The A4:2026 revision removed the earlier
@@ -358,7 +358,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Section 714 (Fixed Outdoor Lighting)</strong> — applies to fixed outdoor
                 luminaire circuits: roads, parks, gardens, amenity and floodlighting. Temporary
@@ -454,36 +454,36 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Continuity of protective conductors throughout all outdoor circuit runs</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Insulation resistance (500V DC, minimum 1 megohm) — with all luminaires and
                 equipment disconnected
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Polarity at all socket outlets, luminaire positions, and appliance connection points
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Earth fault loop impedance (Zs) at the furthest outdoor socket on each circuit
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 RCD operation (30mA test) on each outdoor circuit at the RCBO or RCD device
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Functional test of all luminaires, sockets, and appliance circuits</span>
             </li>
           </ul>
@@ -514,7 +514,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Coordinate with the Landscape Contractor
@@ -562,7 +562,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote outdoor entertaining area electrical packages on your"
-          description="Join 1,600+ UK electricians using Elec-Mate for outdoor electrical quoting, cable sizing, and on-site EIC certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for outdoor electrical quoting, cable sizing, and on-site EIC certification."
           icon={Sun}
         />
       </>
@@ -588,7 +588,7 @@ export default function OutdoorEntertainingAreaElectricalPage() {
       heroTitle={
         <>
           Outdoor Entertaining Area Electrical:{' '}
-          <span className="text-yellow-400">IP Ratings, Sockets, Lighting and RCD Protection</span>
+          <span className="text-elec-yellow">IP Ratings, Sockets, Lighting and RCD Protection</span>
         </>
       }
       heroSubtitle="Outdoor entertaining areas need weatherproof sockets (IP66), dedicated kitchen circuits, LED strip and festoon lighting, and mandatory 30mA RCD protection under Regulation 411.3.3 (BS 7671:2018+A4:2026) and Section 714. This guide covers everything electricians need to know."

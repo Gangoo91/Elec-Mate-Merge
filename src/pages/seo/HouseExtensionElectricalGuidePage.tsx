@@ -199,7 +199,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Spare ways</strong> — count the number of unused circuit breaker ways in the
                 consumer unit. Each new circuit in the extension requires at least one way (or two
@@ -208,7 +208,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main fuse rating</strong> — the incoming supply fuse (typically 60A, 80A, or
                 100A) limits the total load the property can draw. For a large extension with
@@ -218,7 +218,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit age and condition</strong> — consumer units with rewirable
                 fuses, wooden backs, or no RCD protection should be replaced before adding extension
@@ -259,7 +259,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Extending a ring main — when it works</strong> — if the existing ring final
                 circuit serves a modest floor area, has acceptable earth fault loop impedance
@@ -269,7 +269,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Extending a ring main — when to avoid it</strong> — if the ring already
                 serves a large area (typically more than 100m² under BS 7671 guidance), adding
@@ -279,7 +279,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New circuit from the consumer unit — the preferred approach</strong> — for
                 most extensions, running new circuits back to the consumer unit is the cleanest
@@ -312,7 +312,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person scheme route</strong> — the simplest route to compliance is
                 using an electrician registered with NICEIC, NAPIT, ELECSA, or another
@@ -322,7 +322,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Local authority building control route</strong> — if you use an electrician
                 not registered with a competent person scheme, you must notify your local authority
@@ -467,7 +467,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete the EIC On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -500,7 +500,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage your extension jobs with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for EIC certificates, quoting, job management, and Part P compliance."
+          description="Join 2,100+ UK electricians using Elec-Mate for EIC certificates, quoting, job management, and Part P compliance."
           icon={FileCheck2}
         />
       </>
@@ -526,7 +526,7 @@ export default function HouseExtensionElectricalGuidePage() {
       heroTitle={
         <>
           House Extension Electrical Guide:{' '}
-          <span className="text-yellow-400">Wiring Your Extension Right</span>
+          <span className="text-elec-yellow">Wiring Your Extension Right</span>
         </>
       }
       heroSubtitle="Everything you need to know about electrical work in a house extension — circuit planning, consumer unit capacity, ring main decisions, Part P notification, inspection and testing, and the mandatory Electrical Installation Certificate."
@@ -537,7 +537,7 @@ export default function HouseExtensionElectricalGuidePage() {
       faqHeading="Frequently Asked Questions About House Extension Electrical Work"
       relatedPages={relatedPages}
       ctaHeading="Complete Extension EICs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, quoting, and job management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion, quoting, and job management. 7-day free trial, cancel anytime."
     />
   );
 }

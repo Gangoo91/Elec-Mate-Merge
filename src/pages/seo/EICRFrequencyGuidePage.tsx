@@ -142,14 +142,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Domestic owner-occupied</strong> — every 10 years (recommended, not legally
                 required). Change of occupancy also triggers a recommended inspection.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Private rental properties</strong> — every 5 years or at change of tenancy,
                 whichever is sooner (legally required under the Electrical Safety Standards
@@ -157,35 +157,35 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HMOs</strong> — every 5 years under the 2020 Regulations; many local
                 authority HMO licence conditions require every 3 years.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial (offices, shops)</strong> — every 5 years recommended under BS
                 7671 Table 62 guidance.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial (industrial, public entertainment)</strong> — every 3 years
                 recommended.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Swimming pools</strong> — every 1 year under BS 7671 Section 702 guidance
                 (Special Location).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Caravan parks</strong> — every 1 year under BS 7671 Section 708 guidance.
               </span>
@@ -263,7 +263,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Every 5 years maximum</strong> — the absolute legal maximum under the 2020
                 Regulations. This applies to assured shorthold tenancies, assured tenancies, and
@@ -271,7 +271,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>At change of tenancy</strong> — an EICR must be in place before a new
                 tenancy starts. If the current EICR is still in date (less than five years old and
@@ -280,7 +280,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sooner if specified by the inspector</strong> — if the EICR records a
                 recommended reinspection interval shorter than five years (e.g., three years due to
@@ -313,14 +313,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard HMOs</strong> — five years under the 2020 Regulations (same as all
                 private rental properties).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Licensed HMOs in many London boroughs</strong> — three years. Boroughs
                 including Newham, Tower Hamlets, Camden, Hackney, and others specify three years in
@@ -328,7 +328,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Why the shorter interval?</strong> — HMOs have higher electrical demand than
                 single-family homes, are more likely to have had modifications made by multiple
@@ -360,7 +360,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Offices and shops</strong> — five years recommended under BS 7671 guidance.
                 Modern, well-maintained office installations rarely deteriorate rapidly, making five
@@ -368,7 +368,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Industrial premises</strong> — three years. Industrial environments expose
                 wiring to mechanical damage, vibration, and chemical attack. More frequent
@@ -376,7 +376,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Places of public entertainment</strong> — three years. Frequent
                 modifications to temporary installations, high power loads from audio and lighting
@@ -384,14 +384,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Educational establishments</strong> — five years. Science laboratories and
                 workshops may have more frequent requirements depending on the equipment installed.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hospitals and medical facilities</strong> — five years for general areas;
                 shorter for specialist medical areas (operating theatres, ITUs) where the risk
@@ -471,7 +471,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Buying an older property</strong> — always commission an EICR before or
                 immediately after purchasing a property built before 1990. Rubber-insulated wiring
@@ -480,7 +480,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>After a flood</strong> — water ingress into an electrical installation can
                 cause corrosion, insulation breakdown, and earth faults that develop slowly over
@@ -489,7 +489,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>After major building works</strong> — extensions, loft conversions, and
                 kitchen refits often involve modifications to the electrical installation. Even if
@@ -499,7 +499,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Suspected storm damage</strong> — lightning strikes near a property, or
                 fallen cables on the roof, can damage the installation's earthing and surge
@@ -507,7 +507,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No recent electrical records</strong> — if you have no documentation for the
                 electrical installation (no EIC, no previous EICR) and the property is more than 10
@@ -533,7 +533,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Complete and Track EICRs with Elec-Mate
@@ -554,7 +554,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Track EICR due dates for all your landlord clients"
-          description="Join 1,600+ UK electricians using Elec-Mate to complete on-site EICRs and track reinspection schedules."
+          description="Join 2,100+ UK electricians using Elec-Mate to complete on-site EICRs and track reinspection schedules."
           icon={FileCheck2}
         />
       </>
@@ -580,7 +580,7 @@ export default function EICRFrequencyGuidePage() {
       heroTitle={
         <>
           How Often Do You Need an EICR?{' '}
-          <span className="text-yellow-400">Complete Frequency Guide</span>
+          <span className="text-elec-yellow">Complete Frequency Guide</span>
         </>
       }
       heroSubtitle="EICR frequency depends on property type and use. Rental properties need one every five years by law; owner-occupied homes every 10 years by recommendation; HMOs every three to five years; swimming pools and caravan parks every year. This guide covers all property types with the legal basis for each interval."
@@ -591,7 +591,7 @@ export default function EICRFrequencyGuidePage() {
       faqHeading="Frequently Asked Questions: EICR Frequency"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs on Your Phone with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion. Track reinspection dates, send PDFs to landlords on site, and build a recurring inspection client base. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion. Track reinspection dates, send PDFs to landlords on site, and build a recurring inspection client base. 7-day free trial."
     />
   );
 }

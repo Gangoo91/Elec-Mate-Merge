@@ -162,7 +162,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>A near miss is a free warning.</strong> It tells you that a hazard exists,
                 that your controls failed (or were not in place), and that the next time the outcome
@@ -170,7 +170,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>The only difference between a near miss and an accident is luck.</strong>{' '}
                 The hazard, the failure, and the root cause are the same. Only the outcome is
@@ -178,7 +178,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Near misses vastly outnumber actual incidents.</strong> Research
                 consistently shows that for every serious injury, there are hundreds of near misses.
@@ -203,7 +203,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>The Heinrich Triangle:</strong> Herbert Heinrich's research (later refined
                 by Frank Bird) found that for every 1 serious injury, there are approximately 10
@@ -213,7 +213,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Identifies hidden hazards:</strong> Near misses reveal hazards that were not
                 identified in the original{' '}
@@ -226,7 +226,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Improves controls:</strong> Every near miss report should lead to an action
                 — additional signage, a revised procedure, better PPE, additional training, a{' '}
@@ -238,7 +238,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Demonstrates proactive safety management:</strong> A high near miss
                 reporting rate is a positive indicator — it means your team is actively looking for
@@ -371,7 +371,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Health and Safety at Work Act 1974:</strong> Section 2 requires employers to
                 ensure, so far as is reasonably practicable, the health and safety of their
@@ -380,7 +380,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Management of Health and Safety at Work Regulations 1999:</strong>{' '}
                 Regulation 3 requires employers to carry out a suitable and sufficient risk
@@ -389,7 +389,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RIDDOR 2013:</strong> Certain dangerous occurrences — which are effectively
                 serious near misses — must be reported to the HSE. These include electrical short
@@ -402,7 +402,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CDM 2015:</strong> The principal contractor must ensure that health and
                 safety risks are managed throughout the project. A robust near miss reporting system
@@ -516,7 +516,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <AlertTriangle className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Cable Damage by Other Trades</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -581,7 +581,7 @@ export default function NearMissReportingPage() {
       heroTitle={
         <>
           Near Miss Reporting:{' '}
-          <span className="text-yellow-400">Why Every Unreported Near Miss Is a Ticking Clock</span>
+          <span className="text-elec-yellow">Why Every Unreported Near Miss Is a Ticking Clock</span>
         </>
       }
       heroSubtitle="For every serious workplace injury, there are 300 near misses that nobody reported. Each one is a free warning — a chance to fix the hazard before someone gets hurt. This guide explains what counts as a near miss, how to report effectively, and how to build a culture where reporting is the norm."

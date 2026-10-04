@@ -250,14 +250,14 @@ const sections = [
               settle the tax through Self-Assessment.
             </div>
 
-            <div className="px-4 py-4 border-b border-white/10 bg-yellow-900/20">
-              <span className="text-yellow-300 font-bold text-lg">20%</span>
+            <div className="px-4 py-4 border-b border-white/10 bg-white/[0.06]">
+              <span className="text-elec-yellow font-bold text-lg">20%</span>
             </div>
             <div className="hidden sm:block px-4 py-4 border-b border-white/10 text-white leading-relaxed">
               The <strong>standard rate</strong> for subcontractors registered with HMRC for CIS.
             </div>
             <div className="px-4 py-4 border-b border-white/10 text-white leading-relaxed">
-              <strong className="text-yellow-300">You receive £800.</strong> £200 goes to HMRC and is
+              <strong className="text-elec-yellow">You receive £800.</strong> £200 goes to HMRC and is
               credited against your tax bill.
             </div>
 
@@ -273,7 +273,7 @@ const sections = [
             </div>
           </div>
         </div>
-        <p className="sm:hidden text-white/70 text-sm">
+        <p className="sm:hidden text-white text-sm">
           0% = gross payment status; 20% = registered subcontractor; 30% = unregistered.
         </p>
         <p>
@@ -305,7 +305,7 @@ const sections = [
             <div className="px-4 py-3 border-b border-white/10 text-white">£18,000</div>
             <div className="px-4 py-3 border-b border-white/10 text-white">£42,000</div>
 
-            <div className="px-4 py-3 border-b border-white/10 text-yellow-300 font-semibold">
+            <div className="px-4 py-3 border-b border-white/10 text-elec-yellow font-semibold">
               20% (registered)
             </div>
             <div className="px-4 py-3 border-b border-white/10 text-white">£12,000</div>
@@ -337,7 +337,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Turnover test:</strong> Your annual turnover from construction work
                 (excluding materials and VAT) must be at least £30,000. For partnerships, each
@@ -345,7 +345,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Compliance test:</strong> You must have filed all Self-Assessment tax
                 returns on time, have no outstanding tax debts, and have met all CIS obligations.
@@ -353,7 +353,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Business test:</strong> You must be running a genuine business in the UK —
                 with a business bank account, providing construction services, and not just working
@@ -388,7 +388,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What to include:</strong> The return must list every subcontractor you paid
                 during the tax month, the gross amount of each payment, the amount of CIS deductions
@@ -397,7 +397,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>How to file:</strong> Monthly returns can be filed online through HMRC's CIS
                 online service or through commercial payroll/accounting software. Paper returns are
@@ -448,7 +448,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DRC applies when:</strong> Both you and the contractor are VAT registered,
                 the work is CIS-regulated construction services, and the contractor is not an "end
@@ -456,7 +456,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DRC does not apply when:</strong> You supply services directly to a
                 homeowner or end user, either party is not VAT registered, or the work is not
@@ -506,7 +506,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Always itemise materials separately.</strong> Your invoice should have
                 separate lines for labour and materials. For example: "Labour for consumer unit
@@ -524,7 +524,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Keep receipts for materials.</strong> If HMRC queries the materials
                 allocation, you need to prove the cost. Wholesale receipts, merchant invoices, and
@@ -554,7 +554,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Receipt className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Receipt className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Step 1: Gather Your CIS Statements</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -687,7 +687,7 @@ export default function CISForElectriciansPage() {
       heroTitle={
         <>
           CIS for Electricians:{' '}
-          <span className="text-yellow-400">The Construction Industry Scheme Explained</span>
+          <span className="text-elec-yellow">The Construction Industry Scheme Explained</span>
         </>
       }
       heroSubtitle="If you work as a subcontractor for any contractor, CIS affects your pay. Understand the deduction rates, how to register, how to get gross payment status, and how to claim your deductions back on your tax return. This guide covers everything UK electricians need to know about CIS."
@@ -703,7 +703,7 @@ export default function CISForElectriciansPage() {
       faqHeading="Frequently Asked Questions About CIS for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Get Your CIS Invoicing Right Every Time"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to create professional CIS invoices with correct labour and materials split, track deductions, and export everything for Self-Assessment. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to create professional CIS invoices with correct labour and materials split, track deductions, and export everything for Self-Assessment. 7-day free trial, cancel anytime."
     />
   );
 }

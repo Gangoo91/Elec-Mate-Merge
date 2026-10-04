@@ -202,7 +202,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ask in person first</strong> — when the customer expresses satisfaction
                 (which most do), use that moment: "I'm really glad that's sorted. If you have a
@@ -212,7 +212,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Send the link within one hour</strong> — WhatsApp is the most effective
                 channel for electricians. Compose a short, personal message: "Hi [name], thanks for
@@ -222,7 +222,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>One follow-up only</strong> — if you do not receive a review within a week,
                 one gentle reminder is acceptable: "I hope everything is working well. If you have a
@@ -231,7 +231,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Include the link in your invoice</strong> — add a line to your invoice
                 template: "Enjoyed our service? A Google review means the world to us: [link]."
@@ -270,7 +270,7 @@ const sections = [
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong className="block mb-1">
                   Checkatrade — secondary priority (if you have a paid listing)
@@ -284,7 +284,7 @@ const sections = [
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong className="block mb-1">Trustpilot — useful for larger operations</strong>
                 <span>
@@ -296,7 +296,7 @@ const sections = [
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong className="block mb-1">
                   MyBuilder and Rated People — platform-specific
@@ -326,7 +326,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Respond within 24–48 hours</strong> — a prompt response signals that you
                 take customer concerns seriously. Leaving a negative review unresponded for weeks
@@ -334,7 +334,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Acknowledge, do not argue</strong> — even if the review is unfair or
                 factually incorrect, do not argue publicly. Acknowledge the customer's concern,
@@ -344,7 +344,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Do not include customer information</strong> — never reference specific job
                 details, dates, or pricing in your public response. If the situation was
@@ -354,7 +354,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Flag fraudulent reviews</strong> — if you believe a review is from someone
                 who was not your customer (a competitor, a malicious actor), flag it for removal
@@ -440,7 +440,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <MessageSquare className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MessageSquare className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>WhatsApp templates</strong> — save a review request message template in your
                 phone so you can personalise and send it in under 30 seconds after each job. Semi-
@@ -450,7 +450,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MessageSquare className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MessageSquare className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Job management software triggers</strong> — some CRM and job management
                 systems can automatically send a review request email or SMS when a job is marked
@@ -459,7 +459,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MessageSquare className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MessageSquare className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Invoice-triggered requests</strong> — some invoicing platforms (including
                 Elec-Mate) allow you to include a review link in the invoice footer. When the
@@ -486,7 +486,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <PoundSterling className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Professional Invoices That Impress</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -517,7 +517,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional customer management that generates five-star"
-          description="Join 1,600+ UK electricians using Elec-Mate for quoting, invoicing, job management, and certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for quoting, invoicing, job management, and certification."
           icon={Star}
         />
       </>
@@ -543,7 +543,7 @@ export default function CustomerReviewsElectricianPage() {
       heroTitle={
         <>
           Getting Customer Reviews as an Electrician:{' '}
-          <span className="text-yellow-400">UK Review Strategy</span>
+          <span className="text-elec-yellow">UK Review Strategy</span>
         </>
       }
       heroSubtitle="A practical guide to generating five-star reviews as a UK electrician — why reviews matter for SEO and conversion, when and how to ask, Google vs Checkatrade vs Trustpilot, dealing with negative reviews professionally, and QR code follow-up cards."

@@ -59,7 +59,7 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question: 'A4:2026 deleted Table 3A from Appendix 3. What is the practical consequence?',
+    question: 'A2:2022 deleted Table 3A from Appendix 3. What is the practical consequence?',
     options: [
       'Its time/current criteria are no longer the basis for RCD test pass/fail in the current edition',
       'RCDs no longer need testing',

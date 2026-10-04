@@ -42,7 +42,7 @@ export default function PowerConsumptionCalculatorPage() {
       badgeIcon={Zap}
       heroTitle={
         <>
-          <span className="text-yellow-400">Power Consumption Calculator</span> — kWh and Running
+          <span className="text-elec-yellow">Power Consumption Calculator</span> — kWh and Running
           Cost at UK Rates
         </>
       }
@@ -118,20 +118,20 @@ export default function PowerConsumptionCalculatorPage() {
                 commonly requested calculation in energy assessment:
               </p>
               <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4 text-center">
-                <p className="text-xl font-mono font-bold text-yellow-400">
+                <p className="text-xl font-mono font-bold text-elec-yellow">
                   kWh = (Watts x Hours) / 1000
                 </p>
                 <div className="mt-3 text-left max-w-md mx-auto space-y-1 text-sm text-white">
                   <p>
-                    <strong className="text-yellow-400">Watts:</strong> the power rating of the
+                    <strong className="text-elec-yellow">Watts:</strong> the power rating of the
                     appliance
                   </p>
                   <p>
-                    <strong className="text-yellow-400">Hours:</strong> the number of hours the
+                    <strong className="text-elec-yellow">Hours:</strong> the number of hours the
                     appliance runs
                   </p>
                   <p>
-                    <strong className="text-yellow-400">1000:</strong> conversion from watts to
+                    <strong className="text-elec-yellow">1000:</strong> conversion from watts to
                     kilowatts
                   </p>
                 </div>
@@ -142,18 +142,18 @@ export default function PowerConsumptionCalculatorPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
                 <ul className="space-y-1 text-white text-sm">
                   <li>
-                    <strong className="text-yellow-400">Daily:</strong> 2,000 x 8 / 1,000 = 16 kWh
+                    <strong className="text-elec-yellow">Daily:</strong> 2,000 x 8 / 1,000 = 16 kWh
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Monthly (30 days):</strong> 16 x 30 = 480
+                    <strong className="text-elec-yellow">Monthly (30 days):</strong> 16 x 30 = 480
                     kWh
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Annual (365 days):</strong> 16 x 365 = 5,840
+                    <strong className="text-elec-yellow">Annual (365 days):</strong> 16 x 365 = 5,840
                     kWh
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Annual cost at 24.5p/kWh:</strong> 5,840 x
+                    <strong className="text-elec-yellow">Annual cost at 24.5p/kWh:</strong> 5,840 x
                     0.245 = £1,430.80
                   </li>
                 </ul>
@@ -183,27 +183,27 @@ export default function PowerConsumptionCalculatorPage() {
                 <p className="font-semibold text-white mb-3">Typical UK electricity rates:</p>
                 <ul className="space-y-1 text-white text-sm">
                   <li>
-                    <strong className="text-yellow-400">Standard variable tariff:</strong> 24-25p
+                    <strong className="text-elec-yellow">Standard variable tariff:</strong> 24-25p
                     per kWh
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Fixed tariff:</strong> 22-28p per kWh
+                    <strong className="text-elec-yellow">Fixed tariff:</strong> 22-28p per kWh
                     (depends on provider and term)
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Economy 7 (off-peak):</strong> 10-14p per
+                    <strong className="text-elec-yellow">Economy 7 (off-peak):</strong> 10-14p per
                     kWh (overnight rate)
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Economy 7 (peak):</strong> 28-35p per kWh
+                    <strong className="text-elec-yellow">Economy 7 (peak):</strong> 28-35p per kWh
                     (daytime rate)
                   </li>
                   <li>
-                    <strong className="text-yellow-400">EV charger tariff:</strong> 7-10p per kWh
+                    <strong className="text-elec-yellow">EV charger tariff:</strong> 7-10p per kWh
                     (overnight charging windows)
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Solar export (SEG):</strong> 4-15p per kWh
+                    <strong className="text-elec-yellow">Solar export (SEG):</strong> 4-15p per kWh
                     (varies by supplier)
                   </li>
                 </ul>
@@ -238,75 +238,75 @@ export default function PowerConsumptionCalculatorPage() {
               </p>
               <div className="space-y-3 my-4">
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-                  <h4 className="font-bold text-yellow-400 mb-3">High-Consumption Appliances</h4>
+                  <h4 className="font-bold text-elec-yellow mb-3">High-Consumption Appliances</h4>
                   <ul className="space-y-1 text-white text-sm">
                     <li className="flex justify-between">
                       <span>Electric shower (9.5kW)</span>
-                      <span className="text-yellow-400">~1,700 kWh/year</span>
+                      <span className="text-elec-yellow">~1,700 kWh/year</span>
                     </li>
                     <li className="flex justify-between">
                       <span>Immersion heater (3kW)</span>
-                      <span className="text-yellow-400">~2,000 kWh/year</span>
+                      <span className="text-elec-yellow">~2,000 kWh/year</span>
                     </li>
                     <li className="flex justify-between">
                       <span>Electric oven (2.5kW)</span>
-                      <span className="text-yellow-400">~600 kWh/year</span>
+                      <span className="text-elec-yellow">~600 kWh/year</span>
                     </li>
                     <li className="flex justify-between">
                       <span>Tumble dryer (2.5kW)</span>
-                      <span className="text-yellow-400">~500 kWh/year</span>
+                      <span className="text-elec-yellow">~500 kWh/year</span>
                     </li>
                     <li className="flex justify-between">
                       <span>Washing machine (2kW)</span>
-                      <span className="text-yellow-400">~250 kWh/year</span>
+                      <span className="text-elec-yellow">~250 kWh/year</span>
                     </li>
                   </ul>
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-                  <h4 className="font-bold text-yellow-400 mb-3">
+                  <h4 className="font-bold text-elec-yellow mb-3">
                     Moderate-Consumption Appliances
                   </h4>
                   <ul className="space-y-1 text-white text-sm">
                     <li className="flex justify-between">
                       <span>Fridge-freezer</span>
-                      <span className="text-yellow-400">~250-400 kWh/year</span>
+                      <span className="text-elec-yellow">~250-400 kWh/year</span>
                     </li>
                     <li className="flex justify-between">
                       <span>Dishwasher</span>
-                      <span className="text-yellow-400">~250 kWh/year</span>
+                      <span className="text-elec-yellow">~250 kWh/year</span>
                     </li>
                     <li className="flex justify-between">
                       <span>Television (55-inch LED)</span>
-                      <span className="text-yellow-400">~100-150 kWh/year</span>
+                      <span className="text-elec-yellow">~100-150 kWh/year</span>
                     </li>
                     <li className="flex justify-between">
                       <span>Desktop computer</span>
-                      <span className="text-yellow-400">~150-300 kWh/year</span>
+                      <span className="text-elec-yellow">~150-300 kWh/year</span>
                     </li>
                     <li className="flex justify-between">
                       <span>Kettle (3kW)</span>
-                      <span className="text-yellow-400">~120-170 kWh/year</span>
+                      <span className="text-elec-yellow">~120-170 kWh/year</span>
                     </li>
                   </ul>
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-                  <h4 className="font-bold text-yellow-400 mb-3">Low-Consumption Appliances</h4>
+                  <h4 className="font-bold text-elec-yellow mb-3">Low-Consumption Appliances</h4>
                   <ul className="space-y-1 text-white text-sm">
                     <li className="flex justify-between">
                       <span>LED light bulb (8W)</span>
-                      <span className="text-yellow-400">~12 kWh/year</span>
+                      <span className="text-elec-yellow">~12 kWh/year</span>
                     </li>
                     <li className="flex justify-between">
                       <span>Phone charger (5W)</span>
-                      <span className="text-yellow-400">~4 kWh/year</span>
+                      <span className="text-elec-yellow">~4 kWh/year</span>
                     </li>
                     <li className="flex justify-between">
                       <span>WiFi router (12W)</span>
-                      <span className="text-yellow-400">~105 kWh/year</span>
+                      <span className="text-elec-yellow">~105 kWh/year</span>
                     </li>
                     <li className="flex justify-between">
                       <span>Laptop charger (45-65W)</span>
-                      <span className="text-yellow-400">~40-60 kWh/year</span>
+                      <span className="text-elec-yellow">~40-60 kWh/year</span>
                     </li>
                   </ul>
                 </div>
@@ -532,7 +532,7 @@ export default function PowerConsumptionCalculatorPage() {
         },
       ]}
       ctaHeading="Calculate power consumption and running costs instantly"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for energy calculations, circuit design, and certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for energy calculations, circuit design, and certification. 7-day free trial, cancel anytime."
       toolPath="/tools/power-consumption-calculator"
     />
   );

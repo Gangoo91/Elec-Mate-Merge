@@ -174,7 +174,7 @@ const quizQuestions = [
   },
   {
     id: 8,
-    question: 'A4:2026 simplified RCD verification (Reg 643.8). The current method is:',
+    question: 'A2:2022 simplified RCD verification (Reg 643.8). The current method is:',
     options: [
       "Single AC test at 1 times IΔn — for a general (non-delay) RCD the device must disconnect within 300 ms maximum. The half-current 'no-trip' test, the 5x 'fast trip' test and Appendix 3 Table 3A were all deleted.",
       'A test at half the rated residual current (0.5 times IΔn) only — the device must NOT trip, confirming it will not nuisance-trip in normal service.',
@@ -183,7 +183,7 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      'A4:2026 deleted Appendix 3 Table 3A and simplified RCD verification. Per the Reg 643.8 NOTE, effectiveness is verified by a single alternating-current test at 1 times IΔn (rated residual operating current); a general non-delay RCD must disconnect within 300 ms maximum. The historic half-current and 5x IΔn tests (and the 40 ms figure that went with 5x) were removed. The injected-current test confirms disconnection; the integral test-button operation is verified separately as a functional check under Reg 643.10.',
+      'A2:2022 deleted Appendix 3 Table 3A and simplified RCD verification. Per the Reg 643.8 NOTE, effectiveness is verified by a single alternating-current test at 1 times IΔn (rated residual operating current); a general non-delay RCD must disconnect within 300 ms maximum. The historic half-current and 5x IΔn tests (and the 40 ms figure that went with 5x) were removed. The injected-current test confirms disconnection; the integral test-button operation is verified separately as a functional check under Reg 643.10.',
   },
 ];
 
@@ -437,7 +437,7 @@ export default function Sub1() {
               disconnection). Each has its scope and limitations — see Sub 3.6.
             </li>
             <li>
-              <strong>RCD test — Reg 643.8 (live).</strong> A4:2026 simplified — single AC test at 1
+              <strong>RCD test — Reg 643.8 (live).</strong> A2:2022 simplified — single AC test at 1
               times IΔn, disconnection within 300 ms maximum for a general non-delay RCD. Higher-end
               testers offer Type A / B / F mode for verifying RCD type compatibility.
             </li>
@@ -558,7 +558,7 @@ export default function Sub1() {
             </li>
             <li>
               RCD operation — single AC test at 1×IΔn per Reg 643.8 (the multi-current sequence and
-              Table 3A are deleted in A4:2026).
+              Table 3A are deleted in A2:2022).
             </li>
             <li>Functional checks of switchgear, controls, interlocks, AFDDs and SPDs.</li>
           </ul>

@@ -131,9 +131,25 @@ Deno.serve(async (req: Request): Promise<Response> => {
       results.push(summary);
     }
 
+    // --- Data-export ZIPs whose 7-day link has expired (ELE-1812) ---
+    let expiredExportsRemoved = 0;
+    try {
+      const { data: expired } = await supabaseAdmin.rpc('list_expired_data_exports');
+      const names = ((expired ?? []) as unknown[]).map((r) =>
+        typeof r === 'string' ? r : String((r as Record<string, unknown>).list_expired_data_exports)
+      );
+      if (names.length && !dryRun) {
+        const { error } = await supabaseAdmin.storage.from('data-exports').remove(names);
+        if (error) console.error('Expired export cleanup failed:', error.message);
+        else expiredExportsRemoved = names.length;
+      }
+    } catch (err) {
+      console.error('Expired export cleanup failed:', err);
+    }
+
     const failed = results.filter((r) => r.status === 'failed').length;
     return new Response(
-      JSON.stringify({ dryRun, eligible: results.length, failed, results }),
+      JSON.stringify({ dryRun, eligible: results.length, failed, results, expiredExportsRemoved }),
       { status: failed > 0 ? 500 : 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {

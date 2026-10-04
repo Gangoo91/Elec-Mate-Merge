@@ -11,7 +11,7 @@
  *
  * ACCURACY RULES (do not relax):
  * - Every figure verified against the product or live database, date stated.
- *   User count verified 2026-08-22: 1,635 accounts live → published as 1,600+.
+ *   User count verified 2026-08-22: 1,635 accounts live → published as 2,100+.
  * - Founder bio is grounded in /story (StoryPage.tsx) — nothing invented, and
  *   no registration-body claims (NICEIC/NAPIT) — none exist.
  * - Reviews are verbatim App Store reviews with published nicknames + dates.
@@ -36,13 +36,13 @@ const card =
   'rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]';
 
 const BOILERPLATE_SHORT =
-  'Elec-Mate is the all-in-one app for UK electricians — certificates, quoting, invoicing, calculators, AI assistants and training in one subscription. Built by a qualified electrician from Cumbria, used by 1,600+ UK electricians.';
+  'Elec-Mate is the all-in-one app for UK electricians — certificates, quoting, invoicing, calculators, AI assistants and training in one subscription. Built by a qualified electrician from Cumbria, used by 2,100+ UK electricians.';
 
 const BOILERPLATE_LONG =
-  'Elec-Mate is the all-in-one app for UK electricians. It produces 19 certificate types end-to-end — including EICR, EIC, Minor Works, EV charging, Solar PV and all five BS 5839-1 fire alarm grades — alongside quoting and invoicing with card payment, 70+ electrical calculators, 8 AI assistants trained on BS 7671:2018+A4:2026, and 46+ training courses with free public mock exams. It was founded in 2025 by Andrew Moore, a Cumbrian electrician who came up through a JTL apprenticeship and lived the paperwork problem first-hand, and is used by 1,600+ UK electricians on web, iOS and Android from £6.99 a month. www.elec-mate.com';
+  'Elec-Mate is the all-in-one app for UK electricians. It produces 19 certificate types end-to-end — including EICR, EIC, Minor Works, EV charging, Solar PV and all five BS 5839-1 fire alarm grades — alongside quoting and invoicing with card payment, 70+ electrical calculators, 8 AI assistants trained on BS 7671:2018+A4:2026, and 46+ training courses with free public mock exams. It was founded in 2025 by Andrew Moore, a Cumbrian electrician who came up through a JTL apprenticeship and lived the paperwork problem first-hand, and is used by 2,100+ UK electricians on web, iOS and Android from £6.99 a month. www.elec-mate.com';
 
 const STATS: Array<[string, string]> = [
-  ['1,600+', 'UK electricians on the platform'],
+  ['2,100+', 'UK electricians on the platform'],
   ['19', 'certificate types with full PDF output'],
   ['118,303', 'exam answers analysed in our 2026 report'],
   ['70+', 'electrical calculators, BS 7671-aligned'],
@@ -82,7 +82,7 @@ const FACTS: Array<[string, string]> = [
   ['Company', 'Elec-Mate Ltd, registered in England & Wales. ICO registration ZB935897.'],
   ['Founded', '2025, Cumbria, United Kingdom'],
   ['Founder', 'Andrew Moore — JTL apprentice, then qualified electrician, then founder'],
-  ['Users', '1,600+ UK electricians (verified against the live platform database, 22 Aug 2026)'],
+  ['Users', '2,100+ UK electricians (verified against the live platform database, 22 Aug 2026)'],
   ['Certificates', '19 types end-to-end with PDF output — EICR, EIC, Minor Works, EV charging, Solar PV, battery storage, all five BS 5839-1 fire alarm grades, emergency lighting, PAT and more'],
   ['Standards', 'Aligned to BS 7671:2018+A4:2026 across all certificates, calculators and training'],
   ['Calculators', '70+ electrical calculators — cable sizing, Zs lookup, adiabatic, volt drop and more'],

@@ -179,28 +179,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Studio / one-bedroom flat</strong> — £80 to £160. Common in the city centre
                 and student areas near the University of Exeter.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Two-bedroom flat</strong> — £95 to £180. Victorian and Edwardian conversions
                 in St David's and Heavitree take longer to inspect than modern purpose-built flats.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom house</strong> — £150 to £270. Victorian terraced houses in St
                 Thomas, Heavitree, and Pinhoe are common in Exeter's private rented sector.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Four-bedroom+ house / HMO</strong> — £250 to £480+. Student HMOs in St
                 David's and Heavitree have a broader inspection scope including fire alarm and
@@ -413,14 +413,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Visual inspection</strong> — consumer unit, protective devices, cable
                 condition, socket outlets, light fittings, switches, and earthing and bonding.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dead testing</strong> — continuity of protective conductors, ring final
                 circuit continuity, and insulation resistance. Table 64 of BS 7671:2018+A4:2026
@@ -431,14 +431,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Live testing</strong> — earth fault loop impedance, prospective fault
                 current, RCD operation times, and polarity.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Report completion</strong> — the inspector completes the EICR including
                 Schedules of Circuit Details and Test Results as required by Chapter 65 of BS
@@ -459,14 +459,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Private rented property</strong> — at least every 5 years (legal requirement
                 under the 2020 Regulations).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Owner-occupied domestic</strong> — every 10 years recommended. Exeter's
                 Victorian properties are well over 25 years old — the 5-year interval is more
@@ -474,7 +474,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HMO</strong> — every 5 years minimum under Exeter City Council HMO licensing
                 conditions. A shorter interval may be required for properties with older wiring or
@@ -482,7 +482,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Change of tenancy</strong> — a new EICR is required before a new tenant
                 moves into any privately rented Exeter property, even if the current EICR has not
@@ -502,14 +502,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person schemes</strong> — search NICEIC, NAPIT, or ELECSA
                 registers for Exeter-based inspectors accepted by Exeter City Council.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Qualifications</strong> — City & Guilds 2391 or the 2394/2395 combination,
                 plus a current 18th Edition (C&G 2382) qualification. Experience with Victorian
@@ -517,7 +517,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insurance</strong> — the inspector should carry professional indemnity
                 insurance. Scheme-registered electricians are required to maintain adequate cover.
@@ -547,7 +547,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete EICRs on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -581,7 +581,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs faster with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -607,7 +607,7 @@ export default function EICRExeterPage() {
       heroTitle={
         <>
           EICR Exeter:{' '}
-          <span className="text-yellow-400">Electrical Safety Certificate Cost 2026</span>
+          <span className="text-elec-yellow">Electrical Safety Certificate Cost 2026</span>
         </>
       }
       heroSubtitle="Everything you need to know about EICRs in Exeter — costs by property type, landlord legal requirements, council enforcement, Victorian and student HMO findings, observation codes, and how to find a qualified inspector."
@@ -618,7 +618,7 @@ export default function EICRExeterPage() {
       faqHeading="Frequently Asked Questions About EICRs in Exeter"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs on Your Phone — Faster Than Paper"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

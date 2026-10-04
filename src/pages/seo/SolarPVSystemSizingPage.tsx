@@ -198,7 +198,7 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-3">Step-by-Step Sizing Method</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1 — Establish annual consumption:</strong> Obtain annual kWh
                 consumption from electricity bills or EPC. Use Ofgem typical values if bills are
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2 — Calculate target generation:</strong> For a self-consumption
                 optimised system, target generation of 100% to 130% of annual consumption (excess is
@@ -215,7 +215,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 3 — Estimate kWp required:</strong> Divide target annual generation
                 (kWh) by estimated specific yield (kWh/kWp/year from PVGIS for the specific
@@ -223,7 +223,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 4 — Check roof area:</strong> Each 400Wp panel occupies approximately
                 1.7m² to 2.0m². Multiply panel count by panel area and add 15% for spacing, verge
@@ -231,7 +231,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 5 — Check G98/G99 threshold:</strong> If the resulting kWp exceeds
                 3.68kW single-phase, a G99 application is required before installation can proceed.
@@ -257,13 +257,13 @@ const sections = [
           <h3 className="text-lg font-semibold text-white px-5 pt-5 pb-1">
             Orientation Yield Factors (South England Reference)
           </h3>
-          <p className="text-white/50 text-xs px-5 pb-3">
+          <p className="text-white text-xs px-5 pb-3">
             Indicative relative annual yield versus an optimal south-facing array. Use PVGIS for the
             specific site, location and tilt.
           </p>
           <div className="grid grid-cols-[1fr_auto] text-sm divide-y divide-white/10 border-t border-white/10">
-            <div className="px-5 py-3 text-white/50 text-xs uppercase tracking-wide">Orientation &amp; tilt</div>
-            <div className="px-5 py-3 text-white/50 text-xs uppercase tracking-wide text-right">Relative yield</div>
+            <div className="px-5 py-3 text-white text-xs uppercase tracking-wide">Orientation &amp; tilt</div>
+            <div className="px-5 py-3 text-white text-xs uppercase tracking-wide text-right">Relative yield</div>
 
             <div className="px-5 py-3 text-white bg-green-900/20">South (180°), 35–40° tilt</div>
             <div className="px-5 py-3 text-green-300 font-semibold text-right bg-green-900/20">100%</div>
@@ -278,7 +278,7 @@ const sections = [
             <div className="px-5 py-3 text-white font-semibold text-right">~87%</div>
 
             <div className="px-5 py-3 text-white">North-East / North-West, any tilt</div>
-            <div className="px-5 py-3 text-amber-300 font-semibold text-right">~65–70%</div>
+            <div className="px-5 py-3 text-elec-yellow font-semibold text-right">~65–70%</div>
 
             <div className="px-5 py-3 text-white bg-red-900/20">North (0°), any tilt — marginal</div>
             <div className="px-5 py-3 text-red-300 font-semibold text-right bg-red-900/20">~50–60%</div>
@@ -287,7 +287,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Shading:</strong> Even partial shading on a single cell in a string can
                 reduce the output of all modules in that string. Always carry out a shading analysis
@@ -314,21 +314,21 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-3">MCS Requirements</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 MCS 001 — Solar PV product certification standard (modules and inverters must be
                 certified to the relevant IEC standards and registered on MCS)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 MCS 005 — Installer certification standard. The installation company must hold MCS
                 005 certification for solar PV to issue an MCS certificate.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 MCS certificate required for Smart Export Guarantee (SEG) application — without it
                 the customer cannot receive SEG export payments.
@@ -344,15 +344,15 @@ const sections = [
             </div>
             <dl className="space-y-2 text-sm m-0">
               <div className="flex justify-between gap-4">
-                <dt className="text-white/60">Single-phase</dt>
+                <dt className="text-white">Single-phase</dt>
                 <dd className="text-white font-semibold text-right m-0">Up to 3.68 kW (16 A)</dd>
               </div>
               <div className="flex justify-between gap-4">
-                <dt className="text-white/60">Three-phase</dt>
+                <dt className="text-white">Three-phase</dt>
                 <dd className="text-white font-semibold text-right m-0">Up to 11.04 kW (16 A/phase)</dd>
               </div>
               <div className="flex justify-between gap-4">
-                <dt className="text-white/60">Approval</dt>
+                <dt className="text-white">Approval</dt>
                 <dd className="text-white font-semibold text-right m-0">Notify DNO within 28 days of commissioning</dd>
               </div>
             </dl>
@@ -364,15 +364,15 @@ const sections = [
             </div>
             <dl className="space-y-2 text-sm m-0">
               <div className="flex justify-between gap-4">
-                <dt className="text-white/60">Applies to</dt>
+                <dt className="text-white">Applies to</dt>
                 <dd className="text-white font-semibold text-right m-0">Any system above the G98 thresholds</dd>
               </div>
               <div className="flex justify-between gap-4">
-                <dt className="text-white/60">Standard assessment</dt>
+                <dt className="text-white">Standard assessment</dt>
                 <dd className="text-white font-semibold text-right m-0">Up to 45 working days (residential)</dd>
               </div>
               <div className="flex justify-between gap-4">
-                <dt className="text-white/60">Complex sites</dt>
+                <dt className="text-white">Complex sites</dt>
                 <dd className="text-white font-semibold text-right m-0">Up to 90 working days</dd>
               </div>
             </dl>
@@ -393,11 +393,11 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
           <div className="grid grid-cols-[auto_1fr] divide-y divide-white/10">
-            <div className="contents text-xs uppercase tracking-wide text-white/50">
+            <div className="contents text-xs uppercase tracking-wide text-white">
               <div className="px-4 py-3 font-semibold border-b border-white/10">Regulation</div>
               <div className="px-4 py-3 font-semibold border-b border-white/10">Requirement</div>
             </div>
-            <div className="px-4 py-4 font-mono text-yellow-400 text-sm whitespace-nowrap">712.537.2</div>
+            <div className="px-4 py-4 font-mono text-elec-yellow text-sm whitespace-nowrap">712.537.2</div>
             <div className="px-4 py-4 text-white text-sm">
               <strong className="block text-white">Isolation and switching</strong>
               Means of isolation must be provided on both the AC and DC sides. Devices without DC
@@ -405,14 +405,14 @@ const sections = [
               must be secured against inadvertent operation, for example by a lockable enclosure or
               padlocking (Regulation 712.537.2.2.104).
             </div>
-            <div className="px-4 py-4 font-mono text-yellow-400 text-sm whitespace-nowrap">712.534</div>
+            <div className="px-4 py-4 font-mono text-elec-yellow text-sm whitespace-nowrap">712.534</div>
             <div className="px-4 py-4 text-white text-sm">
               <strong className="block text-white">Overvoltage protection (SPDs)</strong>
               Surge protective devices on the DC side must comply with BS EN 61643-31. SPDs are
               generally Type 2 with a minimum nominal discharge current of 5 kA; Type 1 SPDs apply
               where lightning separation distance cannot be maintained per BS EN 62305-3.
             </div>
-            <div className="px-4 py-4 font-mono text-yellow-400 text-sm whitespace-nowrap">712.514</div>
+            <div className="px-4 py-4 font-mono text-elec-yellow text-sm whitespace-nowrap">712.514</div>
             <div className="px-4 py-4 text-white text-sm">
               <strong className="block text-white">Identification and notices</strong>
               An instruction notice indicating the presence of a PV system must be fixed at the origin,
@@ -420,7 +420,7 @@ const sections = [
               warning that live parts can remain energised after isolation (712.514.102), and every
               inverter must be labelled to isolate both AC and DC before servicing (712.514.103).
             </div>
-            <div className="px-4 py-4 font-mono text-yellow-400 text-sm whitespace-nowrap">712.521.101</div>
+            <div className="px-4 py-4 font-mono text-elec-yellow text-sm whitespace-nowrap">712.521.101</div>
             <div className="px-4 py-4 text-white text-sm">
               <strong className="block text-white">DC wiring system</strong>
               DC cables must be selected and erected to minimise earth-fault and short-circuit risk,
@@ -428,14 +428,14 @@ const sections = [
               insulated conductors in individually insulated conduit or trunking. Cables must not be
               placed directly on the roof surface.
             </div>
-            <div className="px-4 py-4 font-mono text-yellow-400 text-sm whitespace-nowrap">712.533.101</div>
+            <div className="px-4 py-4 font-mono text-elec-yellow text-sm whitespace-nowrap">712.533.101</div>
             <div className="px-4 py-4 text-white text-sm">
               <strong className="block text-white">DC overcurrent protection</strong>
               DC-side overcurrent protective devices must be gPV fuses to BS EN 60269-6 or
               circuit-breakers to BS EN 60947-2 / BS EN 60898-2 / BS IEC 60898-3, and must be
               bidirectional with a breaking capacity at least equal to the array short-circuit current.
             </div>
-            <div className="px-4 py-4 font-mono text-yellow-400 text-sm whitespace-nowrap">712.542.101</div>
+            <div className="px-4 py-4 font-mono text-elec-yellow text-sm whitespace-nowrap">712.542.101</div>
             <div className="px-4 py-4 text-white text-sm">
               <strong className="block text-white">Equipotential bonding of PV structures</strong>
               Where bonding is needed to prevent electrostatic charge accumulation, the metallic
@@ -446,7 +446,7 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <p className="text-white text-sm m-0">
               <strong>A4:2026 change:</strong> the former Regulation 712.443 was deleted by
               BS 7671:2018+A4:2026. Always cite the current numbering — DC-side overvoltage and SPD
@@ -481,10 +481,10 @@ const sections = [
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="text-white font-semibold mb-1">Standards and product compliance</h4>
-                <p className="text-white/80 text-sm m-0">
+                <p className="text-white text-sm m-0">
                   Battery storage forms part of a prosumer&apos;s electrical installation, addressed
                   in BS 7671:2018+A4:2026 Section 826. The battery system must comply with its
                   relevant product standard, and the combined inverter-battery system must satisfy the
@@ -495,10 +495,10 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="text-white font-semibold mb-1">AC-coupled vs DC-coupled</h4>
-                <p className="text-white/80 text-sm m-0">
+                <p className="text-white text-sm m-0">
                   AC-coupled batteries have their own inverter-charger and are simpler to retrofit.
                   DC-coupled batteries connect to the PV inverter&apos;s DC bus and are more efficient
                   but need a compatible inverter/battery pairing. Both require G98/G99 assessment as a
@@ -509,10 +509,10 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 sm:col-span-2">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="text-white font-semibold mb-1">Fire safety and siting</h4>
-                <p className="text-white/80 text-sm m-0">
+                <p className="text-white text-sm m-0">
                   Lithium-ion battery systems should not be installed in habitable rooms without fire
                   separation meeting the manufacturer&apos;s requirements. Enclosures should vent
                   thermal runaway to outside where practicable. Manufacturer installation instructions
@@ -539,7 +539,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Export limit setting:</strong> Where a DNO requires export limiting, the
                 approved export limit (in kW or A) is specified in the G99 agreement. The inverter
@@ -548,7 +548,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Zero export (export prevention):</strong> Some DNOs or property types
                 (leasehold, shared supplies) require zero export — the system is configured to
@@ -557,7 +557,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Documentation:</strong> The G99 agreement (or G98 notification confirmation)
                 must be retained with the installation documentation and provided to the customer
@@ -590,7 +590,7 @@ export default function SolarPVSystemSizingPage() {
       badgeIcon={Sun}
       heroTitle={
         <>
-          Solar PV System Sizing <span className="text-yellow-400">— UK Electrician Guide</span>
+          Solar PV System Sizing <span className="text-elec-yellow">— UK Electrician Guide</span>
         </>
       }
       heroSubtitle="A complete guide to sizing solar PV systems for UK homes: kWp calculations, orientation and tilt factors, MCS standards, G98/G99 DNO notification thresholds, BS 7671 Section 712 requirements, and battery storage integration."

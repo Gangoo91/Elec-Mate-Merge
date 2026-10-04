@@ -134,10 +134,10 @@ const quizQuestions = [
     id: 6,
     question: 'Give one safety check to perform before using a power tool.',
     options: [
-      'Confirm the tool is the most expensive model available',
-      'Check the tool has been used recently by someone else',
+      'Confirm the battery is fully charged',
+      'Check it has a current PAT label and nothing else',
       'Check for damage to the tool casing or power cord',
-      'Make sure the tool matches the colour of the toolbox',
+      'Check the speed setting is on maximum',
     ],
     correctAnswer: 2,
     explanation:
@@ -158,7 +158,7 @@ const quizQuestions = [
   },
   {
     id: 8,
-    question: 'Name one PPE item that should be worn when using a drill.',
+    question: 'Which PPE protects against the main hazard of drilling into masonry overhead?',
     options: [
       'Safety glasses',
       'High-vis vest',

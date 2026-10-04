@@ -140,7 +140,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>How it monitors surplus generation:</strong> A CT (Current Transformer)
                 clamp is installed on the main supply cable at the consumer unit. The diverter
@@ -150,7 +150,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Proportional power control:</strong> Unlike a simple on/off switch, a solar
                 diverter uses phase-angle control to vary the power delivered to the immersion
@@ -160,7 +160,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hot water cylinder requirement:</strong> A solar diverter requires a vented
                 or unvented hot water cylinder with an electric immersion heater (typically a 3 kW
@@ -191,7 +191,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>iBoost (Marlec Engineering) — £230–£290:</strong> The original UK market
                 leader. Wireless design with a separate sender unit that clips onto the export
@@ -202,7 +202,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Eddi (myenergi) — £290–£350:</strong> The most feature-rich diverter, from
                 the Lincolnshire-based manufacturer of the Zappi EV charger and Libbi battery. Full
@@ -213,7 +213,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Immersun (A Heat Ltd) — £200–£260:</strong> A cost-effective alternative to
                 the iBoost, popular with budget-conscious customers. Similar functionality including
@@ -408,7 +408,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Solar diverter advantages:</strong> Much lower cost (£300–£600 vs
                 £3,000–£10,000+ for battery storage); no degradation over time; no maintenance
@@ -417,7 +417,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Battery storage advantages:</strong> Uses stored solar electricity for any
                 appliance — not just water heating; stores energy for evening and nighttime use;
@@ -427,7 +427,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Best combined approach:</strong> A solar diverter and battery storage are
                 complementary rather than competing. The battery handles evening demand; the
@@ -471,7 +471,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Manage solar diverter jobs with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for quoting, job management, and certification. Issue EICs and Minor Works Certificates on your phone."
+          description="Join 2,100+ UK electricians using Elec-Mate for quoting, job management, and certification. Issue EICs and Minor Works Certificates on your phone."
           icon={Zap}
         />
       </>
@@ -497,7 +497,7 @@ export default function SolarDiverterInstallationPage() {
       heroTitle={
         <>
           Solar PV Diverter Installation UK:{' '}
-          <span className="text-yellow-400">Immersion Diverter Guide</span>
+          <span className="text-elec-yellow">Immersion Diverter Guide</span>
         </>
       }
       heroSubtitle="Everything homeowners and electricians need to know about solar diverters in the UK — how they work, popular brands (iBoost, Eddi, Immersun), installation requirements, costs, savings of £100–£250/year, and wiring considerations."
@@ -508,7 +508,7 @@ export default function SolarDiverterInstallationPage() {
       faqHeading="Frequently Asked Questions About Solar Diverters"
       relatedPages={relatedPages}
       ctaHeading="Quote and Manage Solar Diverter Jobs with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, job management, and certification. Issue installation certificates on your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for quoting, job management, and certification. Issue installation certificates on your phone. 7-day free trial, cancel anytime."
     />
   );
 }

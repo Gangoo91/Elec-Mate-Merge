@@ -182,7 +182,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>How it works with flashcards:</strong> You see the question side of the
                 card. Before flipping, you try to recall the answer. This act of retrieval — even if
@@ -191,7 +191,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Why it beats re-reading:</strong> Re-reading creates an illusion of
                 knowledge — the information feels familiar because you have just seen it, but that
@@ -200,7 +200,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>The "desirable difficulty" effect:</strong> The effort of trying to recall
                 information is what makes the learning stick. If recall feels easy, you are probably
@@ -232,31 +232,31 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Repeat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Repeat className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New card:</strong> Review tomorrow.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Repeat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Repeat className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Got it right once:</strong> Review in 3 days.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Repeat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Repeat className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Got it right twice:</strong> Review in 1 week.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Repeat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Repeat className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Got it right three times:</strong> Review in 2 weeks.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Repeat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Repeat className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Got it wrong at any point:</strong> Reset to tomorrow.
               </span>
@@ -289,7 +289,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671 definitions (Part 2):</strong> "What is an exposed-conductive-part?"
                 "Define basic protection." "What is the difference between functional earthing and
@@ -297,21 +297,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maximum Zs values:</strong> "What is the maximum Zs for a B32 MCB in a TN-S
                 system (0.4s)?" Learn the key values from Table 41.3.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minimum insulation resistance values:</strong> "What minimum insulation
                 resistance is acceptable for a 230V circuit?" "For SELV/PELV circuits?"
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>
                   <SEOInternalLink href="/guides/eicr-observation-codes-explained">
@@ -322,7 +322,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>
                   <SEOInternalLink href="/guides/testing-sequence-guide">
@@ -334,7 +334,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>
                   <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">
@@ -346,14 +346,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable colour codes:</strong> "What colour is the neutral in a three-phase
                 system?" "What is the harmonised colour for L2?"
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation numbers:</strong> "Which regulation covers additional protection
                 by RCD?" "What does Regulation 411.3.3 require?"
@@ -381,7 +381,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>One fact per card.</strong> Each flashcard should test one specific piece of
                 knowledge. "What is the maximum Zs for a B32 MCB on a TN-S system at 0.4s?" is a
@@ -389,14 +389,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Be specific.</strong> Vague questions lead to vague answers. "What is
                 Regulation 411.3.3?" is better than "What does Part 4 cover?"
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Keep answers concise.</strong> The answer side should be brief — a sentence
                 or a value, not a paragraph. If the answer needs to be long, break it into multiple
@@ -404,7 +404,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Include the regulation number.</strong> For BS 7671 flashcards, always
                 include the regulation number on the answer side. This trains you to associate the
@@ -412,7 +412,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use both directions.</strong> For definitions, make two cards: one that
                 gives the definition and asks for the term, and one that gives the term and asks for
@@ -437,7 +437,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Daily:</strong> 15 to 20 minutes of flashcard review. If using spaced
                 repetition, the system will determine which cards to show you. This is your minimum
@@ -445,7 +445,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>When learning new topics:</strong> After studying a new topic from your
                 textbook or course, create flashcards for the key facts immediately. Then start
@@ -453,7 +453,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Before mock exams:</strong> Do a flashcard review session before each{' '}
                 <SEOInternalLink href="/guides/mock-exams-electrician">mock exam</SEOInternalLink>.
@@ -461,7 +461,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>On the go:</strong> One of the biggest advantages of digital flashcards is
                 that you can review them anywhere — on the train, during a tea break, in the van
@@ -550,7 +550,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <BookOpen className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Exam-Specific Decks</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -616,7 +616,7 @@ export default function FlashcardsElectricalPage() {
       heroTitle={
         <>
           Flashcards for Electrical Exams:{' '}
-          <span className="text-yellow-400">The Science-Backed Way to Pass</span>
+          <span className="text-elec-yellow">The Science-Backed Way to Pass</span>
         </>
       }
       heroSubtitle="Active recall and spaced repetition are the two most effective study techniques ever tested. Flashcards combine both. This guide shows you how to use them for 18th Edition, 2391, AM2, and EPA exams — and why they outperform every other revision method."
@@ -627,7 +627,7 @@ export default function FlashcardsElectricalPage() {
       faqHeading="Frequently Asked Questions About Flashcards for Electrical Exams"
       relatedPages={relatedPages}
       ctaHeading="Study Smarter With Digital Flashcards"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for flashcards, mock exams, and structured revision. Spaced repetition built in. Study anywhere on your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for flashcards, mock exams, and structured revision. Spaced repetition built in. Study anywhere on your phone. 7-day free trial, cancel anytime."
     />
   );
 }

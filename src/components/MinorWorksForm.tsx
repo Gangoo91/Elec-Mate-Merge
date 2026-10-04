@@ -1431,6 +1431,7 @@ const MinorWorksForm = ({
                   reportId: (currentReportId || initialReportId) as string,
                   onRestored: (d) =>
                     setFormData((prev: any) => ({ ...prev, ...d, certificateNumber: prev.certificateNumber })),
+                  current: formData as Record<string, unknown>,
                 }
               : undefined
           }

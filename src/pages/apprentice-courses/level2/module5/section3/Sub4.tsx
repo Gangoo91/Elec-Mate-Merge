@@ -42,10 +42,10 @@ const checks = [
     question:
       "You're terminating a 6mm² T&E into a Hager RCBO. Where do you find the torque value?",
     options: [
-      'Take ALL adequate precautions: secure isolation (lock-off + key in pocket, not left in lock); a warning notice at the point of isolation; in some installations a separate caution at the point of work; voltage proving on a known live source before AND after testing the isolation; all to prevent the equipment becoming live again whilst work is in progress. Talking to the customer about not touching it is part of the precaution chain.',
-      "Inside the lid of the consumer unit (manufacturer label), or in the manufacturer's data sheet for the device, or in the manufacturer's mobile app. Hager's typical circuit terminal torque is 1.2 Nm; incomers are higher (3.5 Nm). Hitting that value with a calibrated torque screwdriver is what discharges BS 7671 Reg 526.1 (durable connections) and Reg 510.3 (selection and erection in line with mfr instructions).",
-      'Personal Track Safety — the Network Rail mandatory safety competence card for anyone working on or near operational rail track. PTS course typically 2-day classroom + practical assessment plus medical fitness check. PTS expires after 2 years requiring re-validation. Rail electrical work pays significantly above standard rates (often £350-500+/day) but the PTS requirement, rotational shifts and track-access constraints make it a lifestyle commitment.',
-      'C3 — improvement recommended. Reg 421.1.7 uses the language of recommendation, not requirement, for the relevant categories. The absence of an AFDD on an existing circuit is not in itself a defect requiring urgent action — but it is an improvement that brings the installation closer to current best practice. Higher-Risk Residential Buildings under the Building Safety Act 2022 are a separate matter where AFDDs may be a hard requirement.',
+      'In BS 7671 Appendix 4 — the cable tables list the terminal torque for each conductor size.',
+      "On the label inside the consumer unit lid, in the device's data sheet, or in the manufacturer's app — then apply it with a calibrated torque screwdriver.",
+      "Nowhere — terminals are tightened by feel until the conductor won't move.",
+      'On the cable drum label — the cable manufacturer sets the torque for its conductors.',
     ],
     correctIndex: 1,
     explanation:
@@ -56,10 +56,10 @@ const checks = [
     question:
       "The manufacturer data sheet for a new control device specifies bootlace ferrules for stranded conductors above 1mm². You haven't crimped ferrules before and the supervisor says 'just twist the strands and tighten — it'll be fine'. What's the correct response?",
     options: [
-      'Reg 722.410.3.5 prohibits obstacles and placing out of reach (Section 417 measures). Reg 722.410.3.6 prohibits non-conducting location and earth-free local equipotential bonding. Designers must select alternative protective measures permitted within Chapter 72 and elsewhere in BS 7671 — typically ADS with appropriate RCDs, SELV / PELV where applicable, and double or reinforced insulation.',
-      "Apprentice is a formal JIB grade for someone in a registered apprenticeship — typically a learner working towards the C&G 2365 (or NVQ Level 3) and the AM2. 'Improver' is not a formal JIB grade — it's a colloquial industry term sometimes used for the post-college, pre-AM2 stage where the learner has completed the technical qualifications but not yet sat the AM2. Once AM2 is passed and JIB processes the upgrade, the worker becomes an Electrician on the JIB scale.",
-      "Stop. The data sheet specifies ferrules for a reason — stranded conductors crushed under a screw terminal can spread, lose strands, and form a high-resistance joint that runs hot. Working outside the manufacturer's instructions breaches BS 7671 Reg 510.3 (which ties selection and erection to those instructions) and risks failing Reg 526.1 (durable connection). Get the ferrules and crimping tool, or get a written supervisor sign-off that the deviation has been assessed and the manufacturer warranty implications accepted.",
-      'Section 7(a) — to take reasonable care for the health and safety of themselves and of other persons who may be affected by their acts or omissions at work. Section 7(b) — to co-operate with their employer (and any other person under a duty) so far as is necessary to enable that duty to be performed. These are personal statutory duties that apply to every operative on site, including apprentices.',
+      'Twist and tighten as told — twisted strands are electrically identical to a ferrule.',
+      'Tin the strands with solder instead — that is an approved alternative to a ferrule in every case.',
+      'Stop and get the ferrules and a ratchet crimper (or a written, assessed sign-off) — ignoring the data sheet goes against Reg 510.3 and risks a connection that fails Reg 526.1.',
+      'Double the stranded conductor back on itself so the screw has more copper to grip.',
     ],
     correctIndex: 2,
     explanation:
@@ -70,10 +70,10 @@ const checks = [
     question:
       "A customer's two-year-old EV charger fails. The manufacturer asks for the install records. Your firm's records show the unit was torqued by feel because the calibrated torque driver was being used by another team. What's the warranty position?",
     options: [
-      "It tells you the torque settings for the terminals, the conductor sizes the unit accepts, whether ferrules are required for stranded conductors, the breaking capacity, the trip curve, and the IP rating in its housing — all of which feed directly into compliance with BS 7671 Reg 526.1 (durable connections) and Reg 510.3 (selection and erection in line with mfr instructions). Skip the data sheet and you're terminating by feel, which voids warranty AND fails Reg 526.1.",
-      "5-Whys is a root-cause analysis technique from manufacturing (Toyota Production System). Ask 'why?' five times to drill from symptom to root cause. Example: (1) Why did the breaker trip? — earth leakage. (2) Why was there earth leakage? — water in junction box. (3) Why was there water? — ceiling void leak. (4) Why was there a leak? — failed valve seal. (5) Why did the valve fail? — installed wrong rating for the pressure. Root cause: wrong-rated valve at install. Without the 5-Whys, you'd fix the JB (level 2 cause) but the leak returns. With it, you fix the valve too (root cause). Customer needs both fixes; firm needs to specify both in quotes.",
-      "Alternative Dispute Resolution — out-of-court mechanisms for resolving consumer disputes (mediation, conciliation, arbitration). Under the Alternative Dispute Resolution for Consumer Disputes Regulations 2015 you must signpost customers to a certified ADR provider when an internal complaint is unresolved (you're not always required to USE ADR but you must offer it). MCS-registered installers must be members of an approved ADR scheme via RECC or HIES.",
-      "Warranty is at risk. Most equipment warranties are conditional on installation in accordance with the manufacturer's instructions. Failure to use the specified torque value (and the records to prove it) is a documented deviation that gives the manufacturer grounds to void the warranty. The cost of replacement falls on your firm, not the manufacturer. Equally, if the failure caused damage (fire, downstream equipment), the firm's insurance position is weakened. Reading and following the data sheet is also a commercial discipline, not just a technical one.",
+      'The warranty is unaffected — torque has nothing to do with whether the charger fails.',
+      'The warranty transfers to the electrician who fitted it, who must pay for the replacement personally.',
+      'The warranty is automatically valid for two years whatever the installation records show.',
+      "The warranty is at risk — most are conditional on installing to the manufacturer's instructions, and the records show the specified torque wasn't applied.",
     ],
     correctIndex: 3,
     explanation:
@@ -89,10 +89,10 @@ const quizQuestions = [
     question:
       'Which BS 7671 regulation explicitly requires connections to provide durable electrical continuity and adequate mechanical strength?',
     options: [
-      'A work-related FATALITY or a SPECIFIED INJURY (Schedule 1) — fracture (excl fingers/thumbs/toes), amputation, sight loss, crush injury, serious burn, scalping, head-injury unconsciousness, enclosed-space injury. Phone HSE on 0345 300 9923; F2508 follows within 10 days.',
-      "Reg 526.1 — 'Every connection between conductors or between a conductor and other equipment shall provide durable electrical continuity and adequate mechanical strength and protection.' This is the formal hook for torque values, ferrule requirements, conductor preparation and termination sequence.",
-      'Reg 522.6 — every connection shall be accessible for inspection, testing and maintenance unless it is a maintenance-free type in a suitable enclosure. This is the accessibility rule for junction boxes and joints, not the rule that governs the durability and mechanical strength of the connection itself.',
-      'A fixed appliance is contributing leakage. Disconnect the dishwasher at its connection unit, retest. If IR rises above 1 MΩ the dishwasher was the cause. Disconnect the LED driver at the downlights, retest. The reading should now reflect the cable insulation alone — typically tens or hundreds of MΩ.',
+      'Reg 411.3.1.1 — the regulation requiring protective conductors at every point.',
+      'Reg 526.1 — every connection between conductors, or between a conductor and other equipment, shall provide durable electrical continuity and adequate mechanical strength and protection.',
+      'Reg 522.8.5 — the regulation on supporting cables so terminations are not strained.',
+      'Reg 643.2.1 — the regulation requiring continuity to be tested.',
     ],
     correctAnswer: 1,
     explanation:
@@ -102,10 +102,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is the link between BS 7671 Reg 510.3 and manufacturer instructions?',
     options: [
-      'True adaptability requires actively regulating emotional resistance to change, maintaining effectiveness during ambiguity, proactively seeking new approaches, and flexing strategies without losing core values — it is an emotionally regulated, intentional process, not passive compliance',
-      'Replace the periodic inspection with reliance on the O&M regime under GN3 guidance — formal periodic can be reduced or replaced where an effective management system with competent permanent on-site maintenance staff is in place. The decision must be documented and the management regime evidenced.',
-      "Reg 510.3 — 'Every item of equipment shall be selected and erected so as to allow compliance with the regulations stated in this chapter and the relevant regulations in other parts of BS 7671 and shall take account of manufacturers' instructions.' Selection AND erection. The 'take account of manufacturers' instructions' clause is what makes the data sheet effectively part of the standard.",
-      'Depositing controlled waste, or knowingly permitting the deposit of controlled waste, in or on land without an environmental permit; treating, keeping or disposing of controlled waste without a permit; treating, keeping or disposing of controlled waste in a manner likely to cause pollution of the environment or harm to human health. Fly-tipping is the headline s.33 offence.',
+      'There is none — BS 7671 deliberately ignores manufacturer instructions so the standard stays neutral.',
+      'Reg 510.3 only applies to selecting equipment, not to how it is installed.',
+      "Reg 510.3 requires every item of equipment to be selected and erected so as to comply with BS 7671 and taking account of the manufacturer's instructions.",
+      'Reg 510.3 says manufacturer instructions override BS 7671 wherever the two disagree.',
     ],
     correctAnswer: 2,
     explanation:
@@ -115,10 +115,10 @@ const quizQuestions = [
     id: 3,
     question: 'Why does over-torquing a circuit terminal in a consumer unit cause problems?',
     options: [
-      "Report it to your insurer promptly within the timeframe specified in the policy (often within 7-30 days). Preserve evidence (photos, statements, certificates). Don't admit liability — let the insurer handle the negotiation. Failure to notify within the policy timeframe can void cover for that claim.",
-      'All failures on Critical (A) assets, repeated failures on any asset, failures with safety or environmental consequences, and any failure that reveals a gap in the current maintenance programme — the goal is to learn from every significant failure and prevent recurrence',
-      'Make safe by reinstating the bonding connection if competent and equipped to do so, then test continuity, then code based on the as-found evidence — typically C2 (potentially dangerous, urgent action) for absent main protective bonding to an extraneous-conductive-part. Document the as-found state and the corrective action.',
-      "Over-torquing crushes the conductor strands, deforms the terminal, can crack the device housing, and reduces the long-term mechanical and electrical reliability of the connection. It also voids the manufacturer's warranty (most warranties are explicitly conditional on the specified torque) and creates a Reg 526.1 risk because a damaged connection is no longer 'durable'.",
+      "It doesn't — the tighter the terminal, the better the connection.",
+      "It only matters on aluminium conductors; copper can't be over-torqued.",
+      'It makes the RCBO trip faster on overload because the terminal resistance drops.',
+      'It crushes conductor strands, deforms the terminal or cracks the housing, giving a connection that is no longer durable — and it can void the warranty.',
     ],
     correctAnswer: 3,
     explanation:
@@ -129,10 +129,10 @@ const quizQuestions = [
     question:
       "Where would you typically find a manufacturer's torque value for a circuit terminal in a domestic consumer unit?",
     options: [
-      "Inside the consumer unit lid (typically printed on a label), in the manufacturer's data sheet for the device, in the manufacturer's app, or on the manufacturer's website. The lid label is the most accessible on site; the data sheet is the authoritative source.",
-      'XLPE insulation must be handled with extreme cleanliness — contamination (fingerprints, moisture, dust) on the insulation surface can cause partial discharge sites and eventual failure',
-      'Pacesetting and commanding — pacesetting creates anxiety through unrealistic expectations when overused, and commanding creates fear through coercive demands. Both have narrow appropriate applications but are destructive as default styles',
-      'The employer must investigate the grievance promptly, take the allegations seriously, follow the ACAS Code of Practice on grievance procedures, protect the apprentice from victimisation, and take appropriate action based on the findings',
+      "On the label inside the consumer unit lid, in the device data sheet, in the manufacturer's app or on its website.",
+      'In the Schedule of Test Results, where the previous installer recorded it.',
+      'In BS 7671 Table 41.3, alongside the maximum Zs for each device.',
+      "On the DNO's cut-out label at the meter position.",
     ],
     correctAnswer: 0,
     explanation:
@@ -142,10 +142,10 @@ const quizQuestions = [
     id: 5,
     question: "What does 'workmanship' mean in BS 7671 Reg 134.1.1?",
     options: [
-      "(1) Identify circuit (label, drawings, customer info — hypothesis only). (2) Isolate (operate the breaker / switch — confirm it's the right one). (3) Lock-off (apply a personal padlock + tag with your name + date). (4) Prove the tester on a known live source (Martindale GVD2 proving unit OR a known live socket nearby) — voltage tester only. (5) Test the circuit at the work point (between L–N, L–E, N–E) — voltage tester only. (6) Re-prove the tester on the same known live source. Multimeters do NOT prove dead. Socket testers do NOT prove dead. Only a GS38 voltage tester does.",
-      "Reg 134.1.1 requires that 'good workmanship by competent persons and proper materials shall be used in the erection of the electrical installation'. This is the workmanship hook — how the install is physically put together has to meet trade-standard quality. Includes correct torque, correct conductor preparation, neat termination, secure containment, proper labelling. Workmanship is what distinguishes a competent install from one that just barely passes test.",
-      "Read the RAMS for the job before you start so you understand the planned controls. Attend the toolbox talks and sign the register. Operate within the scope of any permit-to-work — never extend the work beyond what the permit authorises. Flag anything you see on site that doesn't match the RAMS. HASAWA s.7 makes all of this a personal duty.",
-      'The Local Authority — specifically the Environmental Health team of the local council. The Health and Safety (Enforcing Authority) Regulations 1998 allocate retail, office, leisure, residential care, places of worship and similar lower-risk premises to local-authority enforcement. EHOs have the same HASAWA powers as HSE inspectors — entry, inspection, notices, prosecution.',
+      'It means the installation must be finished within the time quoted to the customer.',
+      'That good workmanship by competent persons and proper materials are used in erecting the installation — how it is physically put together, not just whether it passes test.',
+      "It means only that the test results are within limits — appearance and method don't matter.",
+      'It refers to the warranty the installer gives on their labour.',
     ],
     correctAnswer: 1,
     explanation:
@@ -155,10 +155,10 @@ const quizQuestions = [
     id: 6,
     question: 'Most equipment warranties are conditional on what?',
     options: [
-      "Only when (a) you're trained in extinguisher use; (b) the fire is small (waste-bin sized); (c) you can identify the correct extinguisher class for the fire; (d) the route to a safe exit is behind you (you don't have to pass the fire to escape); (e) you can do so without risking yourself; (f) someone else has called 999 or is doing so. Otherwise EVACUATE.",
-      "A space substantially enclosed (whether or not entirely) and where a 'specified risk' could arise — fire/explosion (gas, vapour, dust), loss of consciousness from fumes or lack of oxygen, drowning, asphyxiation from free-flowing solid, or trapping/heat-related illness. Reg 4 prohibits entry unless reasonably practicable to do the work without entering. Reg 5 requires a safe system of work (entry permit, atmospheric monitoring, rescue arrangements) where entry is necessary.",
-      "Installation in accordance with the manufacturer's instructions, including torque values, conductor preparation, environmental conditions and any product registration the manufacturer requires. Deviation gives the manufacturer grounds to void the warranty. Some manufacturers (especially EV charger and solar manufacturers) require product registration within a specified period after install.",
-      'The 110 V supply on site is centre-tapped earthed (CTE), so the voltage between either leg and earth is only 55 V. A faulty tool that ends up with the case live to one leg only puts 55 V between the casing and the operative, not 230 V. Combined with a 30 mA RCD at the transformer this dramatically reduces shock energy and survivability if something goes wrong.',
+      "The equipment being bought from an approved wholesaler — how it is installed doesn't matter.",
+      'The installer being a member of a trade union.',
+      "Installation in accordance with the manufacturer's instructions — torque values, conductor preparation, environment and any product registration required.",
+      'The customer keeping the original packaging for the length of the warranty.',
     ],
     correctAnswer: 2,
     explanation:
@@ -168,9 +168,9 @@ const quizQuestions = [
     id: 7,
     question: "What's the typical torque value for a circuit terminal in a Hager domestic RCBO?",
     options: [
-      'On any multi-discipline project of meaningful size, BIM is how electrical coordinates with structural, mechanical, architectural and fire engineering disciplines. The L3 designer who cannot read or contribute to a BIM model is locked out of a growing share of commercial, public sector and HRRB work where BIM is the procurement default.',
-      'Customer / occupier may be a dutyholder under various capacities: HASAWA s.4 (controller of non-domestic premises); CAR 2012 Reg 4 (asbestos register); CDM 2015 Reg 4 (client). Domestic-customer client duties largely cascade to contractor under CDM.',
-      'The line conductor is not easily accessible at the CU end (e.g. busbar trunking systems), the circuit is part of a complex distribution network where you want to isolate the CPC verification, or the wander lead is more practical on a large commercial site (one person at the MET, radio contact with the tester at the accessory).',
+      'Around 0.3 Nm — just enough to stop the conductor moving.',
+      'Around 10 Nm — the same as a busbar connection.',
+      'There is no set value — each electrician uses their own judgement.',
       'Around 1.2 Nm for the circuit terminals, around 3.5 Nm for the incomers (verify against the specific data sheet — values vary by product line and update cycle). Hager publishes the torques inside the CU lid, in the data sheet, and in the Hager Pro app. Wylex and Schneider have similar values for equivalent products.',
     ],
     correctAnswer: 3,
@@ -182,10 +182,10 @@ const quizQuestions = [
     question:
       "If the manufacturer's instructions conflict with custom-and-practice on a particular installation, which takes precedence?",
     options: [
-      "The manufacturer's instructions — BS 7671 Reg 510.3 explicitly requires equipment to be selected and erected taking account of those instructions. 'How it's always been done' isn't a defence under BS 7671 or in a warranty claim. If you genuinely think the instructions are wrong (rare), the right response is to contact the manufacturer in writing and seek written clarification before deviating.",
-      "Custom-and-practice takes precedence — the way an experienced gang has always installed a product reflects real-world knowledge the manufacturer's office can't have, and BS 7671 Reg 510.3 only asks you to 'take account of' the instructions, which leaves the final method to site judgement.",
-      'Employers, employees and the self-employed — all three categories carry duties under EAWR. Employers have the heaviest set of duties (Reg 4 systems, Reg 13 isolation, Reg 16 competence, etc.). Employees have a duty to cooperate (Reg 3(2)(b)). Self-employed contractors have employer-equivalent duties when working on their own account.',
-      'Is a ±12 V PWM (pulse width modulation) signal between the EVSE and the vehicle that communicates: EVSE availability, maximum available current (encoded in the PWM duty cycle), vehicle connected status, and charge enable/disable — it is the fundamental communication protocol for AC charging',
+      "The manufacturer's instructions (Reg 510.3). If you think they are wrong, get written clarification from the manufacturer before deviating.",
+      'Custom and practice — if the trade has always done it that way, it is accepted as compliant.',
+      "The customer's preference, since they are paying for the work.",
+      'Whichever is quicker on the day, provided the circuit passes its tests.',
     ],
     correctAnswer: 0,
     explanation:

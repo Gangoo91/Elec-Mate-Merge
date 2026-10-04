@@ -185,7 +185,7 @@ const sections = [
           can help you differentiate between a supply-side and installation-side neutral fault based
           on the symptoms and test results you provide.
         </p>
-        <p className="text-sm text-white/50 mt-4">
+        <p className="text-sm text-white mt-4">
           Reviewed by a C&amp;G 2391-qualified electrician. Last reviewed: May 2026.
         </p>
       </>
@@ -203,7 +203,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Flickering lights:</strong> Lights brighten and dim unpredictably, often
                 getting worse when other appliances are switched on. The flickering is typically
@@ -212,7 +212,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Voltage fluctuations:</strong> Voltage readings at the sockets swing between
                 approximately 200V and 260V as different loads are switched on and off. A healthy
@@ -222,7 +222,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Erratic appliance behaviour:</strong> Motors run fast then slow, electronic
                 equipment resets or displays errors, and sensitive devices (computers, routers) may
@@ -411,7 +411,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Power className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Power className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DNO responsibility:</strong> Everything from the transformer to the meter —
                 the underground or overhead service cable, the cut-out fuse holder, the service
@@ -420,7 +420,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Power className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Power className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrician responsibility:</strong> Everything from the meter onwards —
                 meter tails, main switch, consumer unit, circuits, and accessories. If the loose
@@ -515,7 +515,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Safe isolation first.</strong> Carry out{' '}
                 <SEOInternalLink href="/guides/safe-isolation-procedure">
@@ -526,7 +526,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Clean and re-terminate.</strong> Remove the conductor from the terminal,
                 clean any oxidation from the copper, cut back to clean copper if the end is
@@ -534,7 +534,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Replace damaged components.</strong> If the terminal itself is damaged
                 (burnt, deformed, or cracked), replace the accessory, junction box, or consumer unit
@@ -542,7 +542,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test after repair.</strong> Repeat the voltage measurements under load to
                 confirm the voltage is now stable and the N-E voltage is close to 0V. Carry out
@@ -550,7 +550,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Issue certification.</strong> If the repair involves work at the consumer
                 unit, issue a{' '}
@@ -564,12 +564,12 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
-            <Zap className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+            <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <p className="font-semibold text-white mb-1">
                 Consider an AFDD upgrade (Code C3 recommendation)
               </p>
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 Arcing at a loose or degraded neutral terminal is precisely the scenario that arc
                 fault detection devices (AFDDs) are designed to detect. BS 7671:2018+A4:2026
                 Regulation 421.1.7 requires AFDDs conforming to BS EN 62606 on single-phase AC final
@@ -612,7 +612,7 @@ export default function LooseNeutralSymptomsPage() {
       heroTitle={
         <>
           Loose Neutral:{' '}
-          <span className="text-yellow-400">Symptoms, Dangers, and How to Fix It</span>
+          <span className="text-elec-yellow">Symptoms, Dangers, and How to Fix It</span>
         </>
       }
       heroSubtitle="A loose neutral connection causes flickering lights, voltage fluctuations, and erratic appliance behaviour. On TN-C-S systems, it can create lethal voltages on exposed metalwork. This guide covers the symptoms, how to diagnose the fault, DNO vs electrician responsibility, and the repair process."

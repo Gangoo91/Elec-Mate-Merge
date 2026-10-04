@@ -217,7 +217,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wifi className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cat6 as a minimum</strong> — Cat6 supports 1 Gigabit Ethernet at all
                 practical home distances and 10 Gigabit up to approximately 55 metres. For most home
@@ -226,7 +226,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wifi className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Two data points per desk position</strong> — install a minimum of two data
                 outlets per working position: one for the workstation and one for a second device or
@@ -234,7 +234,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wifi className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Conduit for future-proofing</strong> — run data cable in conduit where
                 possible. This allows cables to be pulled out and replaced as standards evolve
@@ -243,7 +243,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wifi className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Central patch panel</strong> — running all data cables back to a central
                 patch panel (typically located near the consumer unit or in a hallway cupboard)
@@ -269,7 +269,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Monitor className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Monitor className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Target illuminance</strong> — BS EN 12464-1 (Light and Lighting — Lighting
                 of Work Places — Indoor Work Places) recommends a maintained illuminance of 300 lux
@@ -279,7 +279,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Monitor className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Monitor className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>General lighting</strong> — ceiling LED downlights are the most common
                 solution. A 4W to 6W LED downlight delivers approximately 400 to 600 lumens. For a
@@ -288,7 +288,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Monitor className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Monitor className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Colour temperature</strong> — use 4000K (cool white) during working hours.
                 Avoid 2700K (warm white) in a home office as it promotes relaxation rather than
@@ -297,7 +297,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Monitor className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Monitor className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Avoiding screen glare</strong> — position lights so they do not reflect
                 directly off monitor screens. The critical zone is 30 to 45 degrees above the
@@ -374,7 +374,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sub-main cable</strong> — for a typical garden office with lighting,
                 sockets, and a 2kW heater, 6mm² SWA (steel wire armoured) cable from the main
@@ -383,7 +383,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Burial depth</strong> — SWA cable must be buried at a minimum depth of 600mm
                 in garden areas (450mm under driveways and paths with suitable protection). Mark the
@@ -392,7 +392,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Garden office consumer unit</strong> — the garden office must have its own
                 consumer unit with a main switch and individual circuit breakers. Socket-outlet
@@ -404,7 +404,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing</strong> — the earthing system for the garden office must be
                 carefully considered. Where the sub-main provides an earth from the house TN-C-S
@@ -414,7 +414,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Heating consideration</strong> — electric panel heaters or infrared heaters
                 are the most common heating solution for garden offices. A 1.5kW to 2kW panel heater
@@ -440,7 +440,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Permitted development — structure</strong> — a single-storey garden office
                 is typically permitted development provided: it is no more than 2.5m high if within
@@ -450,7 +450,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Building Regulations always apply to the electrical installation</strong> —
                 even where the structure is permitted development, the electrical installation is
@@ -459,7 +459,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Exceptions to permitted development</strong> — listed buildings, properties
                 in Article 2(3) designated areas (Conservation Areas, National Parks, AONBs), and
@@ -486,7 +486,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What a UPS protects against</strong> — momentary power interruptions (the
                 most common cause of unsaved data loss), voltage sags and surges that can damage
@@ -495,7 +495,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sizing a UPS</strong> — add up the wattage of all equipment to be protected
                 (workstation, monitors, NAS, network switch). Multiply by 1.4 to convert to VA
@@ -505,7 +505,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Line-interactive vs online</strong> — line-interactive UPS units are the
                 most cost-effective for home offices (£80 to £200 for a 1,000VA unit). Online
@@ -514,7 +514,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Battery maintenance</strong> — UPS batteries typically need replacement
                 every three to five years. Most UPS units alert the user when the battery
@@ -539,7 +539,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Self-employed — running costs</strong> — self-employed individuals can claim
                 a proportion of home running costs (electricity bills) as a business expense. HMRC
@@ -550,7 +550,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Self-employed — capital expenditure</strong> — electrical installations
                 (dedicated circuits, garden office wiring) are capital expenditure rather than
@@ -560,7 +560,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Employed — running costs</strong> — employees who must work from home can
                 claim the HMRC flat rate of £6 per week (£312 per year) as a tax-free allowance for
@@ -570,7 +570,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Employed — capital expenditure</strong> — employees cannot claim capital
                 expenditure on home electrical installations as a business expense. The work may add
@@ -602,7 +602,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Certificate and Notify on the Day</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -635,7 +635,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certificate home office and garden office work with"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and same-day quoting."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and same-day quoting."
           icon={FileCheck2}
         />
       </>
@@ -661,7 +661,7 @@ export default function HomeOfficeElectricalGuidePage() {
       heroTitle={
         <>
           Home Office Electrical Guide UK:{' '}
-          <span className="text-yellow-400">Wiring for Working from Home</span>
+          <span className="text-elec-yellow">Wiring for Working from Home</span>
         </>
       }
       heroSubtitle="A well-wired home office improves reliability, productivity, and safety. This guide covers dedicated circuits, data cabling, lighting design, garden office electrical supply, planning rules, UPS protection, and HMRC expense claims for home office electrical work."
@@ -672,7 +672,7 @@ export default function HomeOfficeElectricalGuidePage() {
       faqHeading="Frequently Asked Questions About Home Office Electrical Installations"
       relatedPages={relatedPages}
       ctaHeading="Certificate Home Office Electrical Work on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion with AI assistance, instant PDF export, and same-day quoting. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion with AI assistance, instant PDF export, and same-day quoting. 7-day free trial, cancel anytime."
     />
   );
 }

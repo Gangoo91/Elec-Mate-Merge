@@ -518,7 +518,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Choose NICEIC if:</strong> Brand recognition is important to your business,
                 you do commercial work and need Approved Contractor status, you want the strongest
@@ -526,7 +526,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Choose NAPIT if:</strong> Cost is a priority, you are a sole trader or small
                 business, you do multiple trades (plumbing, heating), or you prefer a collaborative
@@ -534,7 +534,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Choose ELECSA if:</strong> You want the same assessment standards as NICEIC
                 (same Certsure framework) at a lower cost, you do not rely on scheme branding for
@@ -542,7 +542,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Choose STROMA if:</strong> Cost is your primary driver, you do not depend on
                 consumer brand recognition for winning work, and you want full self-certification
@@ -571,27 +571,27 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Apply to the new scheme. Most offer streamlined onboarding for electricians
                 transferring from another recognised scheme.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Complete the new scheme's initial assessment (this is usually required even for
                 transfers).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Cancel your old scheme membership once your new registration is confirmed.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Update your marketing: van signage, website, social media, and business cards.
               </span>
@@ -626,7 +626,7 @@ export default function NICEICvsNAPITvsELECSAPage() {
       heroTitle={
         <>
           NICEIC vs NAPIT vs ELECSA vs STROMA:{' '}
-          <span className="text-yellow-400">Honest Comparison for Electricians</span>
+          <span className="text-elec-yellow">Honest Comparison for Electricians</span>
         </>
       }
       heroSubtitle="All four schemes let you self-certify electrical work under Part P — they are equally authorised under the same legislation. The differences are cost, brand recognition, and commercial credibility. This guide helps you choose the right one for your business."
@@ -637,7 +637,7 @@ export default function NICEICvsNAPITvsELECSAPage() {
       faqHeading="Frequently Asked Questions About NICEIC, NAPIT, ELECSA, and STROMA"
       relatedPages={relatedPages}
       ctaHeading="Professional Certificates for Any Scheme Assessment"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EICs, EICRs, and minor works certificates — assessment-ready documentation accepted by NICEIC, NAPIT, ELECSA, and STROMA. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for EICs, EICRs, and minor works certificates — assessment-ready documentation accepted by NICEIC, NAPIT, ELECSA, and STROMA. 7-day free trial."
     />
   );
 }

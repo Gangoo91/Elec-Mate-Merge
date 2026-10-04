@@ -187,7 +187,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Thermal expansion at loose terminals:</strong> Copper expands when heated by
                 current flow (coefficient of linear expansion: 16.5 x 10⁻⁶ per degree C). A
@@ -197,7 +197,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cold-start failures:</strong> Some faults only appear when the installation
                 is cold — for example, first thing in the morning. Insulation resistance of PVC
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Underfloor heating cable faults:</strong> The insulation on underfloor
                 heating cables can break down at operating temperature but test fine when cold.
@@ -238,7 +238,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Nearby machinery:</strong> Washing machines, tumble dryers, and heat pumps
                 generate vibration during operation. A loose terminal in a socket near the machine
@@ -246,7 +246,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Traffic vibration:</strong> Properties near busy roads, railways, or
                 construction sites experience regular vibration. Over time, this can loosen terminal
@@ -254,7 +254,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable movement:</strong> Cables that are not properly clipped and are free
                 to move (for example, in a loft space where someone walks near them) can chafe
@@ -262,7 +262,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Door and floorboard movement:</strong> Cables routed under floorboards or
                 through door frames can be pinched when the floor flexes or the door closes,
@@ -300,7 +300,7 @@ const sections = [
           <h4 className="font-bold text-white text-base mb-3">Prioritise your search</h4>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Start at the consumer unit.</strong> The most common location for loose
                 connections is the consumer unit — particularly on older boards where terminals have
@@ -308,14 +308,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check junction boxes.</strong> Junction boxes in loft spaces and under
                 floors are often overlooked. Open each one and check the terminal connections.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Focus on the affected area.</strong> If the customer says the fault affects
                 only certain sockets or lights, concentrate on the connections serving that section
@@ -323,7 +323,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Look for signs of overheating.</strong> Even if the connection has since
                 cooled, there may be visible evidence — discoloured insulation, blackened copper, or
@@ -470,7 +470,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Thermal imaging camera:</strong> Identifies hotspots at connections, cables,
                 and accessories while the circuit is under load. A loose terminal that appears
@@ -479,7 +479,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Timer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Timer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Data logger:</strong> A voltage or current data logger can be left on site
                 to monitor the circuit continuously over several days. When the fault occurs, the
@@ -488,7 +488,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insulation tester with timed test:</strong> A timed insulation resistance
                 test (measuring at 1 minute rather than the standard few seconds) can reveal
@@ -498,7 +498,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Low-resistance ohmmeter (micro-ohmmeter):</strong> Measures the resistance
                 of individual connections in milliohms. A healthy terminal connection should have
@@ -542,14 +542,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C1 (Danger Present):</strong> If the fault poses an immediate risk — for
                 example, a burnt-out terminal with exposed live parts.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C2 (Potentially Dangerous):</strong> If the fault is not immediately
                 dangerous but could become so — for example, a loose terminal with signs of
@@ -557,7 +557,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>FI (Further Investigation):</strong> If you cannot confirm the fault but the
                 customer report is credible and consistent with a genuine electrical fault.
@@ -597,7 +597,7 @@ export default function IntermittentElectricalFaultsPage() {
       heroTitle={
         <>
           Intermittent Electrical Faults:{' '}
-          <span className="text-yellow-400">How to Find the Faults That Come and Go</span>
+          <span className="text-elec-yellow">How to Find the Faults That Come and Go</span>
         </>
       }
       heroSubtitle="Intermittent faults are the hardest to diagnose because they may not be present when you arrive. This guide covers temperature-dependent faults, vibration, loose connections, insulation breakdown, and a systematic approach to finding faults that only appear under specific conditions."

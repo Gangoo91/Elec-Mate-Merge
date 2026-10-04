@@ -188,7 +188,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Distribution boards:</strong> A sub-main distribution board serves each
                 floor or zone of the office. Sub-main cables from the main distribution board feed
@@ -199,7 +199,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Perimeter trunking:</strong> In Cat A office fit-outs, perimeter trunking
                 (three-compartment: power, data, and open) is typically installed around the office
@@ -209,7 +209,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Floor boxes:</strong> Open-plan office layouts use floor boxes in the raised
                 access floor to provide power and data at workstations in the centre of the floor
@@ -218,7 +218,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection:</strong> All socket outlet circuits in the office must be
                 protected by 30mA RCDs in accordance with Regulation 411.3.3 of{' '}
@@ -307,7 +307,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Illuminance levels:</strong> CIBSE LG7 specifies 300 to 500 lux maintained
                 average at the working plane for general office work. Task areas, drawing offices,
@@ -316,7 +316,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Glare control:</strong> Computer screen glare is a major comfort issue in
                 offices. LED luminaires must be specified with a UGR (Unified Glare Rating) not
@@ -326,7 +326,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lighting controls:</strong> Part L of the Building Regulations requires
                 automatic lighting controls in offices, including: presence detection (switching off
@@ -337,7 +337,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tunable white lighting:</strong> Human-centric lighting (HCL) systems that
                 vary the colour temperature of the office lighting throughout the day (cooler, bluer
@@ -365,7 +365,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Escape route lighting:</strong> Escape route luminaires must provide a
                 minimum maintained illuminance of 1 lux at floor level across the full width of the
@@ -376,7 +376,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Anti-panic lighting:</strong> In open-plan office areas (open areas greater
                 than 60 m²), anti-panic lighting must provide a minimum of 0.5 lux at floor level
@@ -385,7 +385,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Duration:</strong> Emergency lighting in offices must maintain the required
                 illuminance for a minimum duration of one hour. Where the premises are used for
@@ -395,7 +395,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Automated testing:</strong> BS 5266-1 requires monthly functional testing
                 and annual full-duration testing of emergency lighting. Automated self-testing
@@ -520,7 +520,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part L2B sub-metering:</strong> Where more than 1,000 m² of a building is
                 being renovated, Part L2B requires sub-meters for lighting, small power, HVAC, and
@@ -530,7 +530,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lighting energy:</strong> Part L requires that office lighting achieves a
                 target LENI (Lighting Energy Numeric Indicator) value. The LENI is calculated by the
@@ -540,7 +540,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Energy Performance Certificates:</strong> An EPC is required for any office
                 building offered for sale or let (since October 2008). The EPC rating (A++ to G) is
@@ -569,7 +569,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Building2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Working in Occupied Buildings</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -602,7 +602,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage office fit-out electrical projects with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site certification, quoting, and project management."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site certification, quoting, and project management."
           icon={FileCheck2}
         />
       </>
@@ -628,7 +628,7 @@ export default function OfficeElectricalFitOutPage() {
       heroTitle={
         <>
           Office Electrical Fit Out UK:{' '}
-          <span className="text-yellow-400">Commercial Office Wiring Guide</span>
+          <span className="text-elec-yellow">Commercial Office Wiring Guide</span>
         </>
       }
       heroSubtitle="The complete technical guide to office electrical fit-out in the UK — covering power distribution, data and AV points, office lighting design to CIBSE LG7, emergency lighting to BS 5266-1, fire alarm integration, EV charging, and energy metering for Building Regulations Part L compliance."
@@ -639,7 +639,7 @@ export default function OfficeElectricalFitOutPage() {
       faqHeading="Frequently Asked Questions — Office Electrical Fit Out"
       relatedPages={relatedPages}
       ctaHeading="Manage Your Office Fit-Out Projects with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. Complete EICs and EICRs on your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. Complete EICs and EICRs on your phone. 7-day free trial, cancel anytime."
     />
   );
 }

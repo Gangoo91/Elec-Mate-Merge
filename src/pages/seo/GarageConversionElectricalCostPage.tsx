@@ -181,7 +181,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Basic package (adjacent garage, no consumer unit upgrade)</strong> — £1,500
                 to £2,200. New lighting and socket circuits from an existing consumer unit with
@@ -190,7 +190,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mid-range package (consumer unit upgrade included)</strong> — £2,200 to
                 £3,500. All of the above plus a new 18th edition consumer unit, dedicated underfloor
@@ -198,7 +198,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full package (detached garage or complex installation)</strong> — £3,500 to
                 £4,500+. Long cable run from house (armoured cable or separate sub-main), new
@@ -232,7 +232,7 @@ const sections = [
         </p>
         <div className="grid gap-4 sm:grid-cols-3 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
-            <Lightbulb className="w-6 h-6 text-yellow-400 mb-3" />
+            <Lightbulb className="w-6 h-6 text-elec-yellow mb-3" />
             <h3 className="font-bold text-white text-base mb-2">Lighting Circuit</h3>
             <p className="text-white text-sm leading-relaxed">
               A dedicated lighting circuit or extension of the house lighting circuit. LED
@@ -281,7 +281,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Uninsulated garage (concrete block walls, uninsulated slab floor)</strong> —
                 heat loss 120 to 160W per m². A 20m² garage requires 2,400W to 3,200W of heating.
@@ -289,7 +289,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Basic insulation (50mm wall insulation, 50mm floor insulation)</strong> —
                 heat loss 80 to 100W per m². A 20m² garage requires 1,600W to 2,000W. A 3kW UFH mat
@@ -297,7 +297,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>
                   Building Regulations Part L compliant (100mm PIR floor, cavity wall or 100mm wall
@@ -385,7 +385,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Spare ways</strong> — the new circuits (lighting, sockets, heating) require
                 2 to 3 spare ways. If the existing board is full, an upgrade or a small sub-consumer
@@ -393,7 +393,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection</strong> — the new circuits must have RCD protection (30mA).
                 If the existing board has no RCD protection and an upgrade is not being done, RCBOs
@@ -401,7 +401,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main fuse/supply capacity</strong> — a 20m² garage with 3kW heating,
                 lighting, and sockets adds approximately 15A to 20A to the peak demand. Verify the
@@ -426,7 +426,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Quote the Consumer Unit Separately</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -470,7 +470,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify garage conversion electrical work on your"
-          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification."
           icon={Home}
         />
       </>
@@ -496,7 +496,7 @@ export default function GarageConversionElectricalCostPage() {
       heroTitle={
         <>
           Garage Conversion Electrical Cost:{' '}
-          <span className="text-yellow-400">Circuits, Costs and Part P</span>
+          <span className="text-elec-yellow">Circuits, Costs and Part P</span>
         </>
       }
       heroSubtitle="A garage conversion electrical package typically costs £1,500 to £4,500. This guide covers required circuits, heating load calculations, Building Regulations Part P notification, and consumer unit considerations."

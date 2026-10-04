@@ -324,14 +324,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Qualification check</strong> — the assessor verifies your qualifications
                 (2382, 2391, NVQ, etc.) and public liability insurance.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Site inspection</strong> — the assessor visits one or more of your recent
                 installations to check that the work complies with BS 7671. They look at cable
@@ -340,7 +340,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Documentation review</strong> — the assessor reviews your certificates
                 (EICs, minor works, EICRs) to check they are completed correctly, test results are
@@ -348,7 +348,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Technical discussion</strong> — the assessor may ask technical questions
                 about your work, BS 7671 requirements, and your approach to design and testing.
@@ -376,7 +376,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Brand recognition</strong> — NICEIC is the most recognised by homeowners. If
                 marketing to domestic customers is important to you, the NICEIC name on your van and
@@ -384,7 +384,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cost</strong> — NAPIT and ELECSA are generally cheaper than NICEIC. STROMA
                 is often the cheapest. If cost is your primary concern, compare current prices
@@ -392,7 +392,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial work</strong> — if you do commercial and industrial work as well
                 as domestic, NICEIC's Approved Contractor scheme is the most recognised in the
@@ -400,7 +400,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Assessment experience</strong> — ask other electricians about their
                 experience with each scheme's assessors. Some electricians prefer NAPIT's assessment
@@ -421,30 +421,30 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Annual assessment visit — the scheme will inspect your work once per year.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Notification of completed work — you must register each notifiable job through the
                 scheme's online portal within 30 days of completion.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Maintain qualifications — keep your 2382 and other qualifications current.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Maintain insurance — public liability insurance must remain in force.</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Pay annual fees — keep your subscription current to maintain your registration.
               </span>
@@ -491,7 +491,7 @@ export default function CompetentPersonSchemeGuidePage() {
       heroTitle={
         <>
           Competent Person Scheme Guide:{' '}
-          <span className="text-yellow-400">Self-Certify Your Electrical Work</span>
+          <span className="text-elec-yellow">Self-Certify Your Electrical Work</span>
         </>
       }
       heroSubtitle="Everything you need to know about competent person schemes for electricians. NICEIC, NAPIT, ELECSA, and STROMA — what they mean, what they cost, and which one to choose."
@@ -502,7 +502,7 @@ export default function CompetentPersonSchemeGuidePage() {
       faqHeading="Frequently Asked Questions About Competent Person Schemes"
       relatedPages={relatedPages}
       ctaHeading="Professional Certificates for Scheme Assessments"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EICs, EICRs, and minor works certificates. Professional documentation that passes every assessment. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for EICs, EICRs, and minor works certificates. Professional documentation that passes every assessment. 7-day free trial."
     />
   );
 }

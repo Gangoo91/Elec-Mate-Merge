@@ -147,7 +147,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Independent assessment</strong> — the EPA assessor is from the EPAO (City &
                 Guilds or EAL), not your employer or college. This ensures the outcome is objective
@@ -155,7 +155,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Gateway first</strong> — you must pass the gateway before you can take the
                 EPA. The gateway is a formal review confirming you have met all on-programme
@@ -164,7 +164,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three components</strong> — the EPA consists of a knowledge test, a
                 practical observation, and a professional discussion. All three must be completed
@@ -172,7 +172,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Graded outcome</strong> — the final EPA result is either pass or
                 distinction. Successfully completing the EPA means you are a qualified electrician
@@ -204,7 +204,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1. Knowledge test</strong> — a multiple-choice written exam that tests your
                 theoretical knowledge across the full range of the apprenticeship standard.
@@ -213,7 +213,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>2. Practical observation</strong> — an independent assessor observes you
                 carrying out electrical installation work on-site or in a realistic working
@@ -222,7 +222,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3. Professional discussion</strong> — a structured conversation with the
                 independent assessor, typically 45 to 60 minutes. Assesses your understanding of the
@@ -279,7 +279,7 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <div className="flex items-start gap-3 mb-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <strong className="text-white">
               What&apos;s new in BS 7671:2018+A4:2026 — expect these in your EPA knowledge test
             </strong>
@@ -317,7 +317,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What is observed:</strong> Safe isolation procedures, correct tool selection
                 and use, installation quality (cable routing, fixing, terminations), compliance with
@@ -326,7 +326,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Assessor questioning:</strong> The assessor may ask you questions during the
                 observation — for example, why you have chosen a particular installation method or
@@ -335,7 +335,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>On the day:</strong> Treat it as a normal working day. Be professional,
                 follow safe working practices without being prompted, and demonstrate that safe
@@ -347,7 +347,7 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-3 flex items-center gap-2">
-            <ClipboardCheck className="w-5 h-5 text-yellow-400 shrink-0" />
+            <ClipboardCheck className="w-5 h-5 text-elec-yellow shrink-0" />
             Inspection and Testing: what the EPA assesses
           </h4>
           <p className="text-white text-sm leading-relaxed mb-3">
@@ -441,7 +441,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>City & Guilds</strong> — the UK's largest vocational awarding organisation.
                 C&G has delivered electrical qualifications for over a century and is the dominant
@@ -455,7 +455,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EAL (Excellence, Achievement &amp; Learning)</strong> — a specialist
                 technical awarding organisation originally focused on engineering and manufacturing.
@@ -467,7 +467,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Does it matter?</strong> For most purposes, no. Both lead to the same
                 apprenticeship certificate and both are accepted for JIB ECS Gold Card applications.
@@ -493,7 +493,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Gateway requirements:</strong> Completion of Level 3 Electrical Installation
                 qualification (C&G 2365 or EAL equivalent), achievement of AM2 or AM2S practical
@@ -503,7 +503,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Typical timing:</strong> Most electrical apprentices reach gateway in Year 3
                 or Year 4, depending on how quickly they progress through on-programme learning. The
@@ -511,7 +511,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>AM2 and AM2S:</strong> The AM2 (Achievement Measurement 2) is a practical
                 competency assessment set by JTL and SJIB/SELECT. The AM2S is an equivalent
@@ -538,7 +538,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pass</strong> — demonstrates you have met the required standard across all
                 three EPA components. This is the standard outcome and confirms your competence as a
@@ -547,7 +547,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Distinction</strong> — demonstrates you have exceeded the required standard
                 and shown exceptional knowledge, skill, and professional behaviour. Distinctions are
@@ -556,7 +556,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Component grades:</strong> Some EPAOs grade individual components and
                 combine them into the final grade. Others make a holistic judgement across all three
@@ -580,7 +580,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Component-specific re-sits:</strong> You only re-sit the component(s) that
                 were not achieved — you do not repeat the entire EPA. For example, if you passed the
@@ -589,7 +589,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Waiting period:</strong> EPAOs typically require a minimum waiting period of
                 six to eight weeks before a re-sit. This gives you time to address any gaps
@@ -597,7 +597,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use assessor feedback:</strong> After any component result, ask for detailed
                 feedback from the assessor and your EPAO. Understand exactly what the shortfall was
@@ -622,7 +622,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <BookOpen className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Study the Assessment Plan</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -679,7 +679,7 @@ export default function ApprenticeEndpointAssessmentPage() {
       heroTitle={
         <>
           Electrical Apprentice End-Point Assessment:{' '}
-          <span className="text-yellow-400">Complete EPA Guide</span>
+          <span className="text-elec-yellow">Complete EPA Guide</span>
         </>
       }
       heroSubtitle="Everything you need to know about the electrical apprenticeship End-Point Assessment — what it involves, how to prepare, City & Guilds vs EAL, grading criteria, and what to do if you need to re-sit."

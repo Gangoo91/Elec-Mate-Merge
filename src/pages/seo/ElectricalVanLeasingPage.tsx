@@ -281,7 +281,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Truck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Truck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ford Transit Custom (SWB)</strong> — the most popular electrician's van in
                 the UK. 1,000 to 1,200kg payload, excellent racking compatibility, strong dealer
@@ -291,7 +291,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Truck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Truck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Vauxhall Vivaro / Peugeot Expert / Citroën Dispatch / Fiat Scudo</strong> —
                 the Stellantis platform vans are popular alternatives offering competitive lease
@@ -301,7 +301,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Truck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Truck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mercedes-Benz Sprinter (MWB)</strong> — the choice for electricians on
                 larger commercial or industrial projects who need maximum load space. 900 to 1,200kg
@@ -311,7 +311,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Truck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Truck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Volkswagen Transporter T6.1 / T7</strong> — popular with electricians who
                 value comfort and brand image on customer-facing domestic work. Slightly lower
@@ -392,7 +392,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Annual mileage limit</strong> — set this accurately. Most electricians
                 underestimate mileage. If you drive 20,000 miles per year and agree a 10,000-mile
@@ -400,7 +400,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fair wear and tear</strong> — leasing companies assess the van on return
                 against the BVRLA (British Vehicle Rental and Leasing Association) Fair Wear and
@@ -409,7 +409,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Racking and accessories</strong> — confirm whether you can fit racking, roof
                 bars, or other accessories to the van. Most leasing companies permit professional
@@ -419,7 +419,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Early termination</strong> — understand the cost of ending the lease early.
                 Most contract hire agreements require you to pay 50 to 100% of remaining rentals on
@@ -444,7 +444,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What's typically covered</strong> — all scheduled servicing, MOT (from Year
                 3), tyres (subject to a fair wear and tear policy), replacement pads and discs, and
@@ -453,7 +453,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Typical cost</strong> — maintenance packages for a mid-size diesel van add
                 approximately £30 to £60 per month to the lease cost. This is fully tax-deductible
@@ -461,7 +461,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Is it worth it?</strong> — for high-mileage vans (15,000+ miles per year)
                 the package is generally worth taking. Tyres alone on a working van can cost £400 to
@@ -489,7 +489,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <TrendingUp className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Include Van Costs in Every Quote</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -522,7 +522,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and schedule jobs with Elec-Mate — built for UK"
-          description="Join 1,600+ UK electricians using Elec-Mate for quoting, invoicing, job scheduling, and electrical certificates."
+          description="Join 2,100+ UK electricians using Elec-Mate for quoting, invoicing, job scheduling, and electrical certificates."
           icon={Truck}
         />
       </>
@@ -548,7 +548,7 @@ export default function ElectricalVanLeasingPage() {
       heroTitle={
         <>
           Electrician Van Leasing UK:{' '}
-          <span className="text-yellow-400">Complete Finance Guide 2025</span>
+          <span className="text-elec-yellow">Complete Finance Guide 2025</span>
         </>
       }
       heroSubtitle="Lease vs hire purchase vs outright purchase for electricians. 100% VAT reclaim on leasing, benefit in kind charges, popular van choices, typical monthly costs, what to check in your lease agreement, and maintenance packages explained."
@@ -559,7 +559,7 @@ export default function ElectricalVanLeasingPage() {
       faqHeading="Frequently Asked Questions About Van Leasing for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Run your electrical business smarter with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, invoicing, job scheduling, and electrical certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for quoting, invoicing, job scheduling, and electrical certificates. 7-day free trial, cancel anytime."
     />
   );
 }

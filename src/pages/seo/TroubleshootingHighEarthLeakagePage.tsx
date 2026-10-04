@@ -403,7 +403,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Single-phase</strong> — clamp around both the line and neutral conductors
                 together. The reading is the total earth leakage for everything downstream of the
@@ -411,7 +411,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-phase</strong> — clamp all three phase conductors and the neutral
                 conductor through the jaw simultaneously. The reading is the total earth leakage. If
@@ -420,7 +420,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit by circuit</strong> — repeat at each circuit to identify which
                 circuits contribute most. Work down from the distribution board to individual
@@ -444,7 +444,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Split Circuits to Reduce Cumulative Leakage
@@ -496,7 +496,7 @@ export default function TroubleshootingHighEarthLeakagePage() {
       heroTitle={
         <>
           Troubleshooting High Earth Leakage:{' '}
-          <span className="text-yellow-400">Why RCDs Nuisance Trip and How to Find the Source</span>
+          <span className="text-elec-yellow">Why RCDs Nuisance Trip and How to Find the Source</span>
         </>
       }
       heroSubtitle="A complete guide to diagnosing and resolving RCD nuisance tripping caused by high earth leakage. Covers the clamp meter method, systematic circuit isolation, and common culprits including fluorescent fittings, DALI drivers, VSDs, and old appliances."
@@ -507,7 +507,7 @@ export default function TroubleshootingHighEarthLeakagePage() {
       faqHeading="Frequently Asked Questions About High Earth Leakage and RCD Tripping"
       relatedPages={relatedPages}
       ctaHeading="Document Earth Leakage Investigations and EICRs on Your Phone"
-      ctaSubheading="Elec-Mate's EICR app captures leakage findings, adds photos, and generates professional reports with coded observations. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's EICR app captures leakage findings, adds photos, and generates professional reports with coded observations. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

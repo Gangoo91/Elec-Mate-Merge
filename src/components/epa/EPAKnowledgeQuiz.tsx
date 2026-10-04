@@ -83,6 +83,27 @@ export function EPAKnowledgeQuiz({
     quiz.startQuiz('epa-knowledge-mock', ready, 'test');
   }, [quiz]);
 
+  // Questions this browser has been shown recently, finished or not. The
+  // server also reads completed sessions; this covers abandoned quizzes.
+  const recentKey = `epa-kq-recent:${qualificationCode || 'unknown'}`;
+  const readRecentStems = (): string[] => {
+    try {
+      const raw = localStorage.getItem(recentKey);
+      const parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed.filter((s) => typeof s === 'string') : [];
+    } catch {
+      return [];
+    }
+  };
+  const rememberStems = (stems: string[]) => {
+    try {
+      const merged = [...stems, ...readRecentStems()];
+      localStorage.setItem(recentKey, JSON.stringify([...new Set(merged)].slice(0, 60)));
+    } catch {
+      // Storage unavailable (private mode) — the server-side history still applies.
+    }
+  };
+
   const handleGenerate = async () => {
     const targetCodes = targetAC?.unitCode
       ? [targetAC.unitCode, ...(targetUnitCodes || [])]
@@ -104,6 +125,7 @@ export function EPAKnowledgeQuiz({
         questionCount,
         targetAcRef: targetAC?.acRef,
         targetAcText: targetAC?.acText,
+        avoidStems: readRecentStems(),
       },
       {
         onMeta: (meta) => {
@@ -113,6 +135,7 @@ export function EPAKnowledgeQuiz({
         },
         onQuestion: (q, index, ready) => {
           collectedRef.current[index] = q;
+          rememberStems([q.question]);
           setStreamReady(ready);
           tryEarlyStart();
         },

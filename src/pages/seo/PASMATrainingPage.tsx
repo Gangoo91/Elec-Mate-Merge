@@ -158,15 +158,15 @@ export default function PASMATrainingPage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
-        <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-elec-yellow text-sm font-medium mb-6">
             <Construction className="w-4 h-4" />
             Part of 46+ Training Courses
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             PASMA Training Course Online
-            <span className="block text-yellow-400 mt-1">Mobile Tower Scaffolding Safety</span>
+            <span className="block text-elec-yellow mt-1">Mobile Tower Scaffolding Safety</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             Study PASMA tower scaffold theory at your own pace. Assembly sequences, the 3T method,
@@ -183,7 +183,7 @@ export default function PASMATrainingPage() {
             </Link>
             <a
               href="#what-youll-learn"
-              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-yellow-500/40 touch-manipulation transition-colors"
+              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-white/[0.1] touch-manipulation transition-colors"
             >
               See Course Content
               <ArrowDown className="w-4 h-4 ml-1" />
@@ -192,7 +192,7 @@ export default function PASMATrainingPage() {
           <div className="flex flex-wrap items-center justify-center gap-4 mt-8 text-sm text-white">
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />
-              1,600+ electricians learning
+              2,100+ electricians learning
             </span>
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />8 Elec-AI agents
@@ -210,7 +210,7 @@ export default function PASMATrainingPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <BookOpen className="w-5 h-5 text-yellow-400" />
+              <BookOpen className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               What Is PASMA Certification?
@@ -254,7 +254,7 @@ export default function PASMATrainingPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Target className="w-5 h-5 text-yellow-400" />
+              <Target className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">What You Will Learn</h2>
           </div>
@@ -290,7 +290,7 @@ export default function PASMATrainingPage() {
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex-shrink-0">
-                  <span className="font-bold text-yellow-400">{index + 1}</span>
+                  <span className="font-bold text-elec-yellow">{index + 1}</span>
                 </div>
                 <div>
                   <h3 className="font-bold text-white text-lg mb-1">{item.title}</h3>
@@ -307,7 +307,7 @@ export default function PASMATrainingPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Users className="w-5 h-5 text-yellow-400" />
+              <Users className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">Who Is This Course For?</h2>
           </div>
@@ -324,7 +324,7 @@ export default function PASMATrainingPage() {
                 key={index}
                 className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10"
               >
-                <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <p className="text-white text-sm leading-relaxed">{item}</p>
               </div>
             ))}
@@ -337,7 +337,7 @@ export default function PASMATrainingPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Layers className="w-5 h-5 text-yellow-400" />
+              <Layers className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">Course Structure</h2>
           </div>
@@ -390,7 +390,7 @@ export default function PASMATrainingPage() {
                 },
               ].map((mod, index) => (
                 <div key={index} className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                  <div className="text-yellow-400 font-bold text-sm mb-1">{mod.module}</div>
+                  <div className="text-elec-yellow font-bold text-sm mb-1">{mod.module}</div>
                   <h3 className="font-bold text-white text-lg mb-2">{mod.title}</h3>
                   <p className="text-white text-sm leading-relaxed">{mod.desc}</p>
                 </div>
@@ -431,7 +431,7 @@ export default function PASMATrainingPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <HelpCircle className="w-5 h-5 text-yellow-400" />
+              <HelpCircle className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Frequently Asked Questions
@@ -444,7 +444,7 @@ export default function PASMATrainingPage() {
                 className="group p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-white/[0.14] transition-colors"
               >
                 <summary className="flex items-start gap-3 cursor-pointer touch-manipulation list-none [&::-webkit-details-marker]:hidden">
-                  <ChevronRight className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0 transition-transform group-open:rotate-90" />
+                  <ChevronRight className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0 transition-transform group-open:rotate-90" />
                   <h3 className="font-bold text-white text-lg">{faq.question}</h3>
                 </summary>
                 <div className="mt-3 pl-8">
@@ -482,7 +482,7 @@ export default function PASMATrainingPage() {
 
       <SEOCTASection
         heading="Start Your PASMA Study Today"
-        subheading="Join 1,600+ UK electricians using Elec-Mate for training and professional development. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians using Elec-Mate for training and professional development. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

@@ -181,7 +181,7 @@ const sections = [
                   Basic lighting, power, emergency lighting, simple fire alarm
                 </p>
               </div>
-              <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£3,000 – £6,000</p>
+              <p className="font-bold text-elec-yellow whitespace-nowrap ml-4">£3,000 – £6,000</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
@@ -190,7 +190,7 @@ const sections = [
                   Designed lighting, multiple circuits, fire alarm, data cabling
                 </p>
               </div>
-              <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£6,000 – £10,000</p>
+              <p className="font-bold text-elec-yellow whitespace-nowrap ml-4">£6,000 – £10,000</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
@@ -199,7 +199,7 @@ const sections = [
                   3-phase distribution, extensive lighting, full fire alarm, structured cabling
                 </p>
               </div>
-              <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£10,000 – £15,000+</p>
+              <p className="font-bold text-elec-yellow whitespace-nowrap ml-4">£10,000 – £15,000+</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
@@ -208,7 +208,7 @@ const sections = [
                   Application, survey, installation by DNO, new main switchgear
                 </p>
               </div>
-              <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£1,000 – £3,000+</p>
+              <p className="font-bold text-elec-yellow whitespace-nowrap ml-4">£1,000 – £3,000+</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
@@ -217,7 +217,7 @@ const sections = [
                   Maintained/non-maintained luminaires, exit signs, testing system
                 </p>
               </div>
-              <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£500 – £2,000</p>
+              <p className="font-bold text-elec-yellow whitespace-nowrap ml-4">£500 – £2,000</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
@@ -226,7 +226,7 @@ const sections = [
                   Detection in escape routes, manual call points, sounders, panel
                 </p>
               </div>
-              <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£800 – £1,500</p>
+              <p className="font-bold text-elec-yellow whitespace-nowrap ml-4">£800 – £1,500</p>
             </div>
             <div className="flex justify-between items-start">
               <div>
@@ -235,7 +235,7 @@ const sections = [
                   EPOS points, back-office, WiFi APs, CCTV preparation, patch panel
                 </p>
               </div>
-              <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£800 – £2,500</p>
+              <p className="font-bold text-elec-yellow whitespace-nowrap ml-4">£800 – £2,500</p>
             </div>
           </div>
         </div>
@@ -255,7 +255,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Single-phase supply (up to 100A)</strong> — suitable for small retail units
                 with LED lighting, EPOS systems, a small amount of heating or cooling, and standard
@@ -264,7 +264,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3-phase supply</strong> — required for larger units, premises with
                 commercial catering equipment, multiple air conditioning units, or heavy machinery.
@@ -274,7 +274,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sub-distribution</strong> — larger shops may have multiple distribution
                 boards (sub-mains) serving different areas — for example, a main board feeding a
@@ -283,7 +283,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Surge Protection Devices (SPDs)</strong> — new commercial fit-outs
                 increasingly specify SPD protection at the main or sub-distribution board to protect
@@ -344,7 +344,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>LED panels and downlights</strong> — the workhorse of retail lighting.
                 Recessed LED panels (600mm x 600mm for suspended ceilings) provide uniform ambient
@@ -353,7 +353,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Track lighting</strong> — adjustable spotlights on a track system, ideal for
                 product displays and window displays. Track lighting can be repositioned as the shop
@@ -362,7 +362,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lighting control</strong> — dimming, zoning, and scheduling systems allow
                 different lighting scenes for trading hours, cleaning, and displays.{' '}
@@ -403,7 +403,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Siren className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Siren className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Non-maintained luminaires</strong> — operate only when the mains supply
                 fails. Suitable for areas where the normal lighting is always on during occupation.
@@ -412,7 +412,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Siren className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Siren className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maintained luminaires</strong> — the emergency lamp is illuminated at all
                 times (both on mains and during a mains failure). Required for exit signs and in
@@ -421,7 +421,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Siren className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Siren className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Duration</strong> — most commercial premises require a 3-hour rated
                 emergency lighting system. This means the battery backup in each luminaire must
@@ -491,7 +491,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Network className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Network className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cat6 cabling</strong> — the standard for commercial data cabling. Cat6
                 supports 1Gbps over 100 metres. Each EPOS position, back-office workstation, WiFi
@@ -501,7 +501,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Network className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Network className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EPOS positions</strong> — each till position needs power (double socket plus
                 data), Cat6 for the EPOS terminal, and possibly a separate Cat6 for the card
@@ -510,7 +510,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Network className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Network className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>WiFi access points</strong> — ceiling-mounted access points provide customer
                 WiFi and staff device connectivity. Commercial access points (Ubiquiti UniFi, Cisco
@@ -542,7 +542,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671</strong> — the wiring regulations apply to all electrical
                 installations in commercial premises. The installation must be designed, installed,
@@ -550,7 +550,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD additional protection — Reg 411.3.3</strong> — all socket-outlet
                 circuits rated 32 A or below in the commercial fit-out must be provided with
@@ -562,7 +562,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electricity at Work Regulations 1989</strong> — the employer or premises
                 controller has a duty to ensure the electrical installation is maintained in a safe
@@ -573,7 +573,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulatory Reform (Fire Safety) Order 2005</strong> — the responsible person
                 must carry out a fire risk assessment and ensure appropriate fire detection,
@@ -581,7 +581,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Building Regulations Part L</strong> — energy efficiency requirements for
                 new commercial installations, including maximum lighting power densities and
@@ -624,7 +624,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Cable Sizing and Maximum Demand</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -673,7 +673,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify commercial fit-outs"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, commercial quoting, and on-site EIC certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, commercial quoting, and on-site EIC certification."
           icon={Building2}
         />
       </>
@@ -699,7 +699,7 @@ export default function ShopFitOutElectricalCostPage() {
       heroTitle={
         <>
           Shop Fit-Out Electrical Cost:{' '}
-          <span className="text-yellow-400">UK Commercial Pricing 2026</span>
+          <span className="text-elec-yellow">UK Commercial Pricing 2026</span>
         </>
       }
       heroSubtitle="How much does a shop electrical fit-out cost in the UK? This guide covers typical prices from £3,000 to £15,000+, 3-phase supply, commercial lighting design, emergency lighting, fire alarm systems, and data cabling."
@@ -715,7 +715,7 @@ export default function ShopFitOutElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Shop Fit-Out Electrical Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Commercial Fit-Outs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, commercial quoting, and on-site EIC certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, commercial quoting, and on-site EIC certification. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -179,19 +179,19 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>ISO Class 1–3:</strong> Semiconductor fabrication, advanced nanotechnology. ULPA filters (99.9995% efficiency). Virtually 100% ceiling filter coverage. 1,000–10,000+ air changes/hr. Extremely demanding installation requirements.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>ISO Class 4–5:</strong> Pharmaceutical aseptic manufacturing, medical device manufacture, some semiconductor packaging. HEPA filters. High air change rates. All penetrations sealed. GMP validation required.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>ISO Class 6–7:</strong> Pharmaceutical oral solid dose manufacturing, biotech laboratories, some medical device assembly. HEPA filters. Flush-mounted electrical fittings. GMP documentation required.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>ISO Class 8–9:</strong> Entry vestibules, gowning rooms, support areas. Standard commercial electrical installation with smooth-finish fittings and no exposed horizontal surfaces.</span>
             </li>
           </ul>
@@ -245,19 +245,19 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>No horizontal surfaces</strong> — all cable tray must have smooth solid covers with no ledges. Cable management within the clean room space must be flush with walls or ceiling. Standard surface-mounted cable tray is not acceptable in ISO Class 7 and above.</span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Flush conduit</strong> — conduit runs in clean rooms must be flush-mounted within the wall or ceiling structure. Where surface mounting is unavoidable, conduit must be sealed along its full length to prevent particle accumulation in the gap between conduit and wall.</span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Sealed cable entries</strong> — every penetration through the clean room envelope must be sealed with appropriate materials. Cable entry into clean room equipment, junction boxes, and through walls requires certified sealants that maintain the clean room integrity and fire compartmentation.</span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Flush fittings</strong> — socket outlets, switches, light fittings, and other electrical accessories must be flush with the clean room wall surface. Raised fittings with recessed fronts create particle traps and are not acceptable in ISO Class 7 and above.</span>
             </li>
           </ul>
@@ -310,19 +310,19 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Individual FFU power:</strong> 200–700W per unit. A clean room with 200 FFUs has a connected load of 40–140kW from FFUs alone.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Busbar supply:</strong> FFUs are typically fed from busbar systems in the interstitial space (the void above the clean room ceiling). This avoids cable routes through the clean room itself and allows FFU position changes without rewiring.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Variable speed:</strong> Modern FFUs use EC (electronically commutated) motors with variable speed control. The electrical engineer must account for the harmonic currents generated by the electronic motor drives in the power supply design.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Redundancy:</strong> In pharmaceutical aseptic areas, FFU power is often on a UPS-backed supply — loss of airflow in an aseptic filling line can result in batch rejection worth hundreds of thousands of pounds.</span>
             </li>
           </ul>
@@ -422,7 +422,7 @@ export default function CleanRoomElectricalInstallationPage() {
       heroTitle={
         <>
           Clean Room Electrical Installation:{' '}
-          <span className="text-yellow-400">ISO 14644-1, GMP Validation, and ESD Design</span>
+          <span className="text-elec-yellow">ISO 14644-1, GMP Validation, and ESD Design</span>
         </>
       }
       heroSubtitle="Clean room electrical work demands contamination control, ESD earthing expertise, and GMP validation documentation. This guide covers ISO 14644-1 classifications, flush-mounted containment, HEPA FFU power, and the IQ/OQ/PQ validation process."

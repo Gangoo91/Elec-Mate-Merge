@@ -184,15 +184,15 @@ export default function MaxDemandCalculatorPage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
-        <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-elec-yellow text-sm font-medium mb-6">
             <Zap className="w-4 h-4" />
             Part of 70 Electrical Calculators
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             Maximum Demand Calculator
-            <span className="block text-yellow-400 mt-1">BS 7671 Diversity Factors</span>
+            <span className="block text-elec-yellow mt-1">BS 7671 Diversity Factors</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             Calculate maximum demand using the IET On-Site Guide diversity factors (Table A2).
@@ -209,7 +209,7 @@ export default function MaxDemandCalculatorPage() {
             </Link>
             <a
               href="#how-it-works"
-              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-yellow-500/40 touch-manipulation transition-colors"
+              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-white/[0.1] touch-manipulation transition-colors"
             >
               See How It Works
               <ArrowDown className="w-4 h-4 ml-1" />
@@ -239,7 +239,7 @@ export default function MaxDemandCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Zap className="w-5 h-5 text-yellow-400" />
+              <Zap className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               What Is Maximum Demand and Why Does It Matter?
@@ -297,7 +297,7 @@ export default function MaxDemandCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <BookOpen className="w-5 h-5 text-yellow-400" />
+              <BookOpen className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               IET On-Site Guide Diversity (Table A2)
@@ -313,56 +313,56 @@ export default function MaxDemandCalculatorPage() {
               in a BS 7671 appendix.
             </p>
             <p>
-              <strong className="text-yellow-400">Appendix H</strong> gives the standard circuit
+              <strong className="text-elec-yellow">Appendix H</strong> gives the standard circuit
               arrangements for household and similar premises, including the number and type of
               circuits for lighting, socket outlets, cooker, immersion heater, shower, and other
               fixed appliances. It serves as a reference for what circuits are expected in a
               standard domestic installation.
             </p>
             <p>
-              <strong className="text-yellow-400">Table A2</strong> is the critical table for
+              <strong className="text-elec-yellow">Table A2</strong> is the critical table for
               maximum demand calculations. It lists the diversity allowances that may be applied to
               different types of final circuits. The allowances are expressed differently depending
               on the circuit type:
             </p>
             <ul className="space-y-3 my-4">
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Lighting:</strong> 66% of the total current
+                  <strong className="text-elec-yellow">Lighting:</strong> 66% of the total current
                   demand for domestic premises. For example, if the total lighting load draws 10 A,
                   the diversified demand is 6.6 A.
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Heating (space heating):</strong> For domestic
+                  <strong className="text-elec-yellow">Heating (space heating):</strong> For domestic
                   premises, the first kilowatt at full load plus 50% of the remainder. Commercial
                   premises may use different factors depending on the control system.
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Cooking appliances:</strong> The first 10 A of
+                  <strong className="text-elec-yellow">Cooking appliances:</strong> The first 10 A of
                   the total rated current at full load, plus 30% of the remainder, plus 5 A if the
                   cooker control unit has a socket outlet.
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Socket outlets (ring or radial):</strong> For
+                  <strong className="text-elec-yellow">Socket outlets (ring or radial):</strong> For
                   domestic premises, 100% of the largest circuit plus 40% of every subsequent
                   circuit. This reflects the fact that socket outlet circuits in a home are unlikely
                   to all be at full load simultaneously.
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Immersion heater, shower, EV charger:</strong>{' '}
+                  <strong className="text-elec-yellow">Immersion heater, shower, EV charger:</strong>{' '}
                   These are generally taken at full rated current with no diversity, as they tend to
                   operate at full load for extended periods. However, where multiple units exist,
                   some diversity may be applied.
@@ -384,7 +384,7 @@ export default function MaxDemandCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Home className="w-5 h-5 text-yellow-400" />
+              <Home className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Domestic Maximum Demand — Worked Example
@@ -400,16 +400,16 @@ export default function MaxDemandCalculatorPage() {
 
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-6">
             <div className="grid grid-cols-4 gap-px bg-white/10">
-              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                 Circuit
               </div>
-              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                 Connected Load
               </div>
-              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                 Diversity Rule
               </div>
-              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                 After Diversity
               </div>
             </div>
@@ -444,16 +444,16 @@ export default function MaxDemandCalculatorPage() {
 
           <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] my-6">
             <p className="text-white leading-relaxed">
-              <strong className="text-yellow-400">Total maximum demand:</strong> 5.7 + 32.0 + 12.8 +
+              <strong className="text-elec-yellow">Total maximum demand:</strong> 5.7 + 32.0 + 12.8 +
               12.8 + 27.7 + 41.3 + 13.0 + 32.0 ={' '}
-              <strong className="text-yellow-400">177.3 A</strong>
+              <strong className="text-elec-yellow">177.3 A</strong>
             </p>
             <p className="text-white leading-relaxed mt-2">
               Wait — this exceeds the standard 100 A supply. But this is before applying the overall
               assessment. In practice, the shower and cooker are unlikely to run at full load
               simultaneously with the EV charger and all ring finals loaded. A realistic assessment,
               using engineering judgement alongside Table A2, would place this installation at
-              approximately <strong className="text-yellow-400">80 to 90 A</strong> — within the
+              approximately <strong className="text-elec-yellow">80 to 90 A</strong> — within the
               capacity of a 100 A supply, though marginal. If the maximum demand is genuinely
               expected to exceed 100 A (for example, if the EV charger and shower are frequently
               used at the same time), a supply upgrade or load management system would be required.
@@ -477,7 +477,7 @@ export default function MaxDemandCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Building2 className="w-5 h-5 text-yellow-400" />
+              <Building2 className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Commercial Load Assessment and Three-Phase Balancing
@@ -530,7 +530,7 @@ export default function MaxDemandCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <BarChart3 className="w-5 h-5 text-yellow-400" />
+              <BarChart3 className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               When NOT to Apply Diversity and DNO Supply Capacity
@@ -544,25 +544,25 @@ export default function MaxDemandCalculatorPage() {
               competence.
             </p>
             <p>
-              <strong className="text-yellow-400">Data centres and server rooms</strong> typically
+              <strong className="text-elec-yellow">Data centres and server rooms</strong> typically
               run at high utilisation continuously, and the supply must be sized for the full
               connected load plus cooling. Applying domestic diversity factors to a data centre
               would result in an inadequate supply and potential downtime.
             </p>
             <p>
-              <strong className="text-yellow-400">Industrial process installations</strong> where
+              <strong className="text-elec-yellow">Industrial process installations</strong> where
               all equipment operates simultaneously as part of a production line must be assessed at
               full load. Shutting down part of the line due to supply overload could have serious
               safety and financial consequences.
             </p>
             <p>
-              <strong className="text-yellow-400">Emergency and life safety systems</strong> — fire
+              <strong className="text-elec-yellow">Emergency and life safety systems</strong> — fire
               alarm systems, emergency lighting, sprinkler pumps, smoke ventilation — must be
               available at full capacity at all times and should never have diversity applied to
               their supply calculations.
             </p>
             <p>
-              <strong className="text-yellow-400">Standby generator sizing</strong> requires careful
+              <strong className="text-elec-yellow">Standby generator sizing</strong> requires careful
               consideration. If a generator must supply the entire installation during a mains
               failure, it must be sized for the maximum demand that will occur when all loads
               reconnect simultaneously (this is often higher than normal running demand due to motor
@@ -587,7 +587,7 @@ export default function MaxDemandCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               How to Calculate Maximum Demand — Step by Step
@@ -600,7 +600,7 @@ export default function MaxDemandCalculatorPage() {
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex-shrink-0">
-                  <span className="font-bold text-yellow-400">{index + 1}</span>
+                  <span className="font-bold text-elec-yellow">{index + 1}</span>
                 </div>
                 <div>
                   <h3 className="font-bold text-white text-lg mb-1">{step.name}</h3>
@@ -643,7 +643,7 @@ export default function MaxDemandCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <HelpCircle className="w-5 h-5 text-yellow-400" />
+              <HelpCircle className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Frequently Asked Questions
@@ -657,7 +657,7 @@ export default function MaxDemandCalculatorPage() {
               >
                 <summary className="flex items-center justify-between p-4 min-h-[44px] touch-manipulation cursor-pointer text-white font-medium">
                   <span>{faq.question}</span>
-                  <ChevronDown className="w-5 h-5 text-yellow-400 group-open:rotate-180 transition-transform" />
+                  <ChevronDown className="w-5 h-5 text-elec-yellow group-open:rotate-180 transition-transform" />
                 </summary>
                 <div className="px-4 pb-4 text-white text-sm leading-relaxed">{faq.answer}</div>
               </details>
@@ -710,7 +710,7 @@ export default function MaxDemandCalculatorPage() {
 
       <SEOCTASection
         heading="Calculate Maximum Demand in Minutes"
-        subheading="Join 1,600+ UK electricians using Elec-Mate for on-site calculations. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians using Elec-Mate for on-site calculations. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

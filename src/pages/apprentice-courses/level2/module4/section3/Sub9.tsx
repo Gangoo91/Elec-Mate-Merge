@@ -215,7 +215,7 @@ const faqs = [
   {
     question: 'How do I dress cables tidily on a tray run after pulling?',
     answer:
-      'Lay cables parallel to the run direction. Segregate by service type — mains in one zone, data / fire alarm / extra-low-voltage in another zone, with a barrier or tray division between. Space for thermal dissipation per OSG grouping factors. Secure with metal cable ties (per A4:2026 Reg 521.10.202) at ~600 mm intervals on horizontal, ~400 mm on vertical. Neat dressing also makes future inspection / additions much easier — a knotted bundle of unsegregated cables is impossible to add to without disturbing every existing cable.',
+      'Lay cables parallel to the run direction. Segregate by service type — mains in one zone, data / fire alarm / extra-low-voltage in another zone, with a barrier or tray division between. Space for thermal dissipation per OSG grouping factors. Secure with metal cable ties (per Reg 521.10.202) at ~600 mm intervals on horizontal, ~400 mm on vertical. Neat dressing also makes future inspection / additions much easier — a knotted bundle of unsegregated cables is impossible to add to without disturbing every existing cable.',
   },
 ];
 
@@ -253,7 +253,7 @@ export default function Sub9() {
             'Apply pulling tension limits (~50 N/mm² ≈ 5 kg/mm² copper with stocking grip per published manufacturer / IET Electrical Installation Design Guide; conservative 1.5-2 kg/mm² no-thinking-required field rule on most sites) and recognise the warning signs of an over-tensioned pull.',
             'Use pulling grips and pulling eyes correctly so that pulling force is applied to the cable’s sheath and mechanical termination, never directly to the conductor.',
             'Maintain bend radius minimums during the pull and in the installed run (6× OD unarmoured, 8× OD SWA, 12× OD MICC).',
-            'Dress cables on tray, basket and ladder runs — parallel, segregated by service, spaced for thermal dissipation, secured with non-combustible metal ties per A4:2026 Reg 521.10.202.',
+            'Dress cables on tray, basket and ladder runs — parallel, segregated by service, spaced for thermal dissipation, secured with metal ties per Reg 521.10.202.',
           ]}
           initialVisibleCount={3}
         />
@@ -530,7 +530,7 @@ export default function Sub9() {
               tightly increases Cg and reduces every cable&rsquo;s rated current.
             </li>
             <li>
-              <strong>Securing</strong> — metal cable ties (per A4:2026 Reg 521.10.202) at ~600 mm
+              <strong>Securing</strong> — metal cable ties (per Reg 521.10.202) at ~600 mm
               horizontal, ~400 mm vertical. Tighten enough to hold but not deform the sheath.
             </li>
             <li>

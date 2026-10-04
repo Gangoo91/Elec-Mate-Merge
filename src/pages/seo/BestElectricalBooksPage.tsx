@@ -176,27 +176,27 @@ const sections = [
               <tr className="border-t border-white/10 bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
                 <td className="px-4 py-3 font-bold text-white">BS 7671 (Brown Book)</td>
                 <td className="px-4 py-3 text-white">Every electrician</td>
-                <td className="px-4 py-3 font-bold text-yellow-400">£90 — £100</td>
+                <td className="px-4 py-3 font-bold text-elec-yellow">£90 — £100</td>
               </tr>
               <tr className="border-t border-white/10">
                 <td className="px-4 py-3 font-bold text-white">On-Site Guide (OSG)</td>
                 <td className="px-4 py-3 text-white">Every electrician — daily use</td>
-                <td className="px-4 py-3 font-bold text-yellow-400">£30 — £35</td>
+                <td className="px-4 py-3 font-bold text-elec-yellow">£30 — £35</td>
               </tr>
               <tr className="border-t border-white/10 bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
                 <td className="px-4 py-3 font-bold text-white">Guidance Note 3 (GN3)</td>
                 <td className="px-4 py-3 text-white">Inspectors, 2391 students</td>
-                <td className="px-4 py-3 font-bold text-yellow-400">£35 — £40</td>
+                <td className="px-4 py-3 font-bold text-elec-yellow">£35 — £40</td>
               </tr>
               <tr className="border-t border-white/10">
                 <td className="px-4 py-3 font-bold text-white">Electrician's Guide to the Building Regs</td>
                 <td className="px-4 py-3 text-white">Domestic electricians (Part P)</td>
-                <td className="px-4 py-3 font-bold text-yellow-400">£30 — £35</td>
+                <td className="px-4 py-3 font-bold text-elec-yellow">£30 — £35</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <p className="text-white/60 text-xs -mt-2">
+        <p className="text-white text-xs -mt-2">
           Prices are indicative market guidance, not a quote — check the IET and trade suppliers for
           current pricing.
         </p>
@@ -210,7 +210,7 @@ const sections = [
       <>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <div className="flex items-start gap-4">
-            <Book className="w-8 h-8 text-yellow-400 mt-0.5 shrink-0" />
+            <Book className="w-8 h-8 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h3 className="font-bold text-white text-xl mb-2">
                 Requirements for Electrical Installations
@@ -222,7 +222,7 @@ const sections = [
                 </div>
                 <div>
                   <div className="text-sm text-white mb-1">Price</div>
-                  <div className="text-base font-bold text-yellow-400">£90 — £100</div>
+                  <div className="text-base font-bold text-elec-yellow">£90 — £100</div>
                 </div>
                 <div>
                   <div className="text-sm text-white mb-1">Edition</div>
@@ -270,7 +270,7 @@ const sections = [
       <>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <div className="flex items-start gap-4">
-            <Book className="w-8 h-8 text-yellow-400 mt-0.5 shrink-0" />
+            <Book className="w-8 h-8 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h3 className="font-bold text-white text-xl mb-2">IET On-Site Guide</h3>
               <div className="grid grid-cols-2 gap-4 mb-4">
@@ -280,7 +280,7 @@ const sections = [
                 </div>
                 <div>
                   <div className="text-sm text-white mb-1">Price</div>
-                  <div className="text-base font-bold text-yellow-400">£30 — £35</div>
+                  <div className="text-base font-bold text-elec-yellow">£30 — £35</div>
                 </div>
                 <div>
                   <div className="text-sm text-white mb-1">Edition</div>
@@ -338,7 +338,7 @@ const sections = [
               className="rounded-2xl bg-white/[0.04] border border-white/10 p-4"
             >
               <div className="flex items-start gap-3">
-                <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <div>
                   <h4 className="font-bold text-white text-sm mb-1">{item.label}</h4>
                   <p className="text-white text-sm leading-relaxed">{item.detail}</p>
@@ -364,28 +364,28 @@ const sections = [
             <tbody>
               <tr className="border-t border-white/10 bg-blue-900/20">
                 <td className="px-4 py-3 text-white">Final circuit, TN system (230 V AC)</td>
-                <td className="px-4 py-3 font-bold text-yellow-400">0.4 s</td>
+                <td className="px-4 py-3 font-bold text-elec-yellow">0.4 s</td>
               </tr>
               <tr className="border-t border-white/10">
                 <td className="px-4 py-3 text-white">Final circuit, TT system (230 V AC)</td>
-                <td className="px-4 py-3 font-bold text-yellow-400">0.2 s</td>
+                <td className="px-4 py-3 font-bold text-elec-yellow">0.2 s</td>
               </tr>
               <tr className="border-t border-white/10 bg-blue-900/20">
                 <td className="px-4 py-3 text-white">
                   Distribution circuit, TN system
                 </td>
-                <td className="px-4 py-3 font-bold text-yellow-400">5 s</td>
+                <td className="px-4 py-3 font-bold text-elec-yellow">5 s</td>
               </tr>
               <tr className="border-t border-white/10">
                 <td className="px-4 py-3 text-white">
                   Distribution circuit, TT system
                 </td>
-                <td className="px-4 py-3 font-bold text-yellow-400">1 s</td>
+                <td className="px-4 py-3 font-bold text-elec-yellow">1 s</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <p className="text-white/60 text-xs -mt-2 mb-4">
+        <p className="text-white text-xs -mt-2 mb-4">
           Final-circuit values from BS 7671:2018 Table 41.1; distribution-circuit values from
           Regulations 411.3.2.3 (TN) and 411.3.2.4 (TT). Indicative summary — always confirm against
           the current standard for the exact system and voltage.
@@ -411,7 +411,7 @@ const sections = [
       <>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <div className="flex items-start gap-4">
-            <Book className="w-8 h-8 text-yellow-400 mt-0.5 shrink-0" />
+            <Book className="w-8 h-8 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h3 className="font-bold text-white text-xl mb-2">
                 IET Guidance Note 3: Inspection and Testing
@@ -423,7 +423,7 @@ const sections = [
                 </div>
                 <div>
                   <div className="text-sm text-white mb-1">Price</div>
-                  <div className="text-base font-bold text-yellow-400">£35 — £40</div>
+                  <div className="text-base font-bold text-elec-yellow">£35 — £40</div>
                 </div>
                 <div>
                   <div className="text-sm text-white mb-1">Edition</div>
@@ -470,7 +470,7 @@ const sections = [
       <>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <div className="flex items-start gap-4">
-            <Book className="w-8 h-8 text-yellow-400 mt-0.5 shrink-0" />
+            <Book className="w-8 h-8 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h3 className="font-bold text-white text-xl mb-2">
                 Electrician's Guide to the Building Regulations
@@ -482,7 +482,7 @@ const sections = [
                 </div>
                 <div>
                   <div className="text-sm text-white mb-1">Price</div>
-                  <div className="text-base font-bold text-yellow-400">£30 — £35</div>
+                  <div className="text-base font-bold text-elec-yellow">£30 — £35</div>
                 </div>
                 <div>
                   <div className="text-sm text-white mb-1">Edition</div>
@@ -526,7 +526,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Electrical Installation Work (9th Edition)
@@ -542,7 +542,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   IET Wiring Regulations: Explained and Illustrated
@@ -557,7 +557,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Design and Verification of Electrical Installations
@@ -626,7 +626,7 @@ const sections = [
               className="rounded-2xl bg-white/[0.04] border border-white/10 p-5"
             >
               <div className="flex items-start gap-3">
-                <Bookmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <Bookmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <div>
                   <h4 className="font-bold text-white mb-1">{item.title}</h4>
                   <p className="text-white text-sm leading-relaxed">{item.description}</p>
@@ -689,7 +689,7 @@ const sections = [
               className="rounded-2xl bg-white/[0.04] border border-white/10 p-5"
             >
               <div className="flex items-start gap-3">
-                <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <div>
                   <h4 className="font-bold text-white mb-1">{item.title}</h4>
                   <p className="text-white text-sm leading-relaxed">{item.description}</p>
@@ -727,7 +727,7 @@ export default function BestElectricalBooksPage() {
       heroTitle={
         <>
           Best Electrical Books 2026:{' '}
-          <span className="text-yellow-400">Top Reads for Electricians</span>
+          <span className="text-elec-yellow">Top Reads for Electricians</span>
         </>
       }
       heroSubtitle="From the BS 7671 Brown Book to Brian Scaddan's apprentice textbooks, these are the essential reads for UK electricians in 2026. Whether you are a first-year apprentice or an experienced inspector, this guide covers every book worth buying — and how Elec-Mate complements your bookshelf on site."

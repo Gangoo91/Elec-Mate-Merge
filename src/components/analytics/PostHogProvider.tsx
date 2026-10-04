@@ -60,8 +60,10 @@ export function initPostHog() {
     session_recording: isNativePlatform
       ? false
       : {
+          // Mask all screen text, not just inputs: screens show clients'
+          // names and addresses and wellbeing entries (4 Oct 2026).
           maskAllInputs: true,
-          maskTextSelector: '[data-ph-mask]',
+          maskTextSelector: '*',
         },
     // Respect Do Not Track browser setting
     respect_dnt: true,

@@ -193,7 +193,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person scheme (recommended)</strong> — the electrician is
                 registered with NICEIC, NAPIT, ELECSA, or another approved scheme. They carry out
@@ -203,7 +203,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Building control application</strong> — the homeowner or electrician applies
                 to the local authority building control department before work starts. Building
@@ -242,7 +242,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lighting circuit</strong> — typically 1.0mm or 1.5mm twin-and-earth,
                 protected by a 6A MCB. If the cable route passes through thermal insulation, upsize
@@ -250,7 +250,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Socket circuit</strong> — 2.5mm twin-and-earth (or 4.0mm if enclosed in
                 insulation), protected by a 32A MCB. A ring circuit or radial circuit depending on
@@ -258,7 +258,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>En-suite bathroom</strong> — dedicated circuit for an electric shower
                 (typically 10.0mm cable, 40A or 50A MCB), heated towel rail, and extractor fan. The
@@ -266,7 +266,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sub-distribution board</strong> — if the main consumer unit lacks spare
                 ways, a sub-distribution board in the loft fed by an appropriately sized cable is a
@@ -305,7 +305,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Downlights in sloped ceilings</strong> — fire-rated downlights are essential
                 to maintain the fire integrity of the ceiling. Use IC-rated (insulation contact)
@@ -314,7 +314,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pendant fittings</strong> — suitable for the central area of the room where
                 there is full headroom. Consider the fixing point carefully — the ceiling joist must
@@ -322,7 +322,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wall lights</strong> — particularly useful in the eaves area where the
                 ceiling height is insufficient for downlights. LED wall washers can create an
@@ -330,7 +330,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Two-way and intermediate switching</strong> — a loft room accessed by a
                 staircase needs switching at both the top and bottom of the stairs. If there is a
@@ -417,7 +417,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>30-minute fire-rated construction</strong> — the stairwell and landing
                 forming the escape route from the loft must achieve 30-minute fire resistance. This
@@ -427,7 +427,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>FD30 fire doors</strong> — all doors opening onto the protected escape route
                 must be FD30 (30-minute fire-rated) self-closing doors. This includes the door to
@@ -436,7 +436,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency egress window</strong> — the loft room should have an openable
                 window or rooflight that provides an emergency escape (minimum clear opening of
@@ -469,7 +469,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Thermal insulation derating</strong> — cables enclosed in thermal insulation
                 for more than 0.5m must be derated per BS 7671 Table 52.2. A cable completely
@@ -480,7 +480,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Voltage drop</strong> — the cable run from the main consumer unit on the
                 ground floor to the loft can be 15 to 25 metres or more. BS 7671 limits the voltage
@@ -525,35 +525,35 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Continuity of protective conductors</strong> — verify the earth path from
                 every point to the main earthing terminal.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insulation resistance</strong> — minimum 1 megohm at 500V DC between live
                 conductors and earth, and between live conductors.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Polarity</strong> — confirm correct connection of line, neutral, and earth
                 at every point.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth fault loop impedance (Zs)</strong> — verify Zs values do not exceed
                 the maximum permitted values in BS 7671 Table 41.2, 41.3, or 41.4.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD operation</strong> — test at rated residual operating current (30mA) and
                 verify trip time is within BS 7671 limits (300ms for general protection, 40ms for
@@ -593,7 +593,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -638,7 +638,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify loft conversions faster"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, EIC certificates, and professional quoting."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, EIC certificates, and professional quoting."
           icon={Home}
         />
       </>
@@ -664,7 +664,7 @@ export default function LoftConversionElectricsPage() {
       heroTitle={
         <>
           Loft Conversion Electrics:{' '}
-          <span className="text-yellow-400">Wiring Requirements for UK Installations</span>
+          <span className="text-elec-yellow">Wiring Requirements for UK Installations</span>
         </>
       }
       heroSubtitle="Every loft conversion needs new circuits, fire detection, and a Part P notification. This guide covers the full electrical scope — from cable sizing with thermal insulation derating to smoke alarm requirements under Part B and EIC certification on completion."
@@ -675,7 +675,7 @@ export default function LoftConversionElectricsPage() {
       faqHeading="Frequently Asked Questions About Loft Conversion Electrics"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Certify Loft Conversions on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing with automatic derating, EIC certificates with AI board scanning, and professional quoting. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing with automatic derating, EIC certificates with AI board scanning, and professional quoting. 7-day free trial, cancel anytime."
     />
   );
 }

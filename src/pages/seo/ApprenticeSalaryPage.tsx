@@ -215,7 +215,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-1">JIB apprentice stage rates (2026)</h3>
-          <p className="text-white/70 text-xs mb-4">
+          <p className="text-white text-xs mb-4">
             National standard hourly rates from the JIB Industrial Determination, effective 5
             January 2026. Work in the JIB London rate area pays a higher rate (shown in brackets).
           </p>
@@ -234,13 +234,13 @@ const sections = [
             ).map(([stage, rate]) => (
               <Fragment key={stage}>
                 <div className="p-2 rounded bg-white/[0.04] text-center text-white">{stage}</div>
-                <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+                <div className="p-2 rounded bg-white/[0.04] text-center text-elec-yellow font-bold">
                   {rate}
                 </div>
               </Fragment>
             ))}
           </div>
-          <p className="text-white/70 text-xs mt-4">
+          <p className="text-white text-xs mt-4">
             JIB rates sit above the statutory apprentice minimum of £8.00/hr, and stage rises are
             linked to passing qualifications as well as time served.
           </p>
@@ -562,7 +562,7 @@ export default function ApprenticeSalaryPage() {
       heroTitle={
         <>
           Apprentice Electrician Salary UK 2026 —{' '}
-          <span className="text-yellow-400">Pay Rates and Progression</span>
+          <span className="text-elec-yellow">Pay Rates and Progression</span>
         </>
       }
       heroSubtitle="How much do apprentice electricians earn in 2026? This guide covers minimum wage rates by age, JIB/ECS graded rates, typical weekly take-home pay, overtime and travel allowances, how pay increases through the apprenticeship, and what to expect financially after you qualify."

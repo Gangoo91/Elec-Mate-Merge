@@ -180,7 +180,7 @@ const sections = [
           cable length, and installation method.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
-          <div className="hidden sm:grid grid-cols-12 gap-2 px-4 py-3 bg-white/[0.04] border-b border-white/10 text-xs font-semibold text-white/60 uppercase tracking-wide">
+          <div className="hidden sm:grid grid-cols-12 gap-2 px-4 py-3 bg-white/[0.04] border-b border-white/10 text-xs font-semibold text-white uppercase tracking-wide">
             <div className="col-span-3">Circuit</div>
             <div className="col-span-3">Typical protection</div>
             <div className="col-span-2">Cable</div>
@@ -241,9 +241,9 @@ const sections = [
               className="grid grid-cols-1 sm:grid-cols-12 gap-1 sm:gap-2 px-4 py-3 border-b border-white/5 last:border-b-0 text-sm"
             >
               <div className="sm:col-span-3 font-semibold text-white">{row.circuit}</div>
-              <div className="sm:col-span-3 text-yellow-300">{row.device}</div>
-              <div className="sm:col-span-2 text-white/80">{row.cable}</div>
-              <div className="sm:col-span-4 text-white/70">{row.notes}</div>
+              <div className="sm:col-span-3 text-elec-yellow">{row.device}</div>
+              <div className="sm:col-span-2 text-white">{row.cable}</div>
+              <div className="sm:col-span-4 text-white">{row.notes}</div>
             </div>
           ))}
         </div>
@@ -300,7 +300,7 @@ const sections = [
           </div>
         </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
-          <div className="grid grid-cols-4 gap-2 px-4 py-3 bg-white/[0.04] border-b border-white/10 text-xs font-semibold text-white/60 uppercase tracking-wide">
+          <div className="grid grid-cols-4 gap-2 px-4 py-3 bg-white/[0.04] border-b border-white/10 text-xs font-semibold text-white uppercase tracking-wide">
             <div>Arrangement</div>
             <div>Cable</div>
             <div>Protective device</div>
@@ -316,13 +316,13 @@ const sections = [
               className="grid grid-cols-4 gap-2 px-4 py-3 border-b border-white/5 last:border-b-0 text-sm"
             >
               <div className="font-semibold text-white">{arr}</div>
-              <div className="text-white/80">{cable}</div>
-              <div className="text-yellow-300">{device}</div>
-              <div className="text-white/70">{area}</div>
+              <div className="text-white">{cable}</div>
+              <div className="text-elec-yellow">{device}</div>
+              <div className="text-white">{area}</div>
             </div>
           ))}
         </div>
-        <p className="text-white/60 text-xs my-2">
+        <p className="text-white text-xs my-2">
           Floor-area figures are long-standing design conventions from the informative guidance in
           BS 7671 Appendix 15, not absolute limits — the governing requirement is Regulation
           433.1.204, that the load current in any part of the circuit is unlikely to exceed the
@@ -354,7 +354,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CookingPot className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CookingPot className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electric cooker (8-14kW)</strong> — dedicated 32A or 45A circuit. Cable:
                 6.0mm2 for cookers up to approximately 13.5kW, 10.0mm2 for higher ratings. Via a 45A
@@ -363,7 +363,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CookingPot className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CookingPot className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Induction hob (3-7kW)</strong> — if separate from the oven, the hob needs
                 its own dedicated circuit. A 7kW induction hob draws approximately 30A — use 6.0mm2
@@ -372,7 +372,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dishwasher (1.8-2.4kW)</strong> — dedicated circuit via a switched fused
                 spur with a 13A fuse, or a dedicated socket behind the appliance. 2.5mm2 cable, 16A
@@ -383,14 +383,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Washing machine (2.0-2.5kW)</strong> — same arrangement as the dishwasher.
                 Dedicated fused spur or dedicated socket. 2.5mm2 cable, 16A or 20A RCBO.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fridge/freezer (0.1-0.3kW)</strong> — low power, but should be on its own
                 circuit (separate RCBO) to prevent loss of power if another circuit trips. Its
@@ -408,10 +408,10 @@ const sections = [
         />
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
           <h4 className="font-bold text-white mb-3 flex items-center gap-2">
-            <ShieldCheck className="w-5 h-5 text-yellow-400 shrink-0" />
+            <ShieldCheck className="w-5 h-5 text-elec-yellow shrink-0" />
             Regulation 421.1.7 — Arc Fault Detection Devices (AFDDs)
           </h4>
-          <p className="text-white/80 text-sm leading-relaxed mb-4">
+          <p className="text-white text-sm leading-relaxed mb-4">
             BS 7671:2018+A4:2026 Regulation 421.1.7 sets an AFDD requirement that depends on the
             premises type. For single-phase AC final circuits supplying socket outlets with a rated
             current not exceeding 32A, AFDDs conforming to BS EN 62606{' '}
@@ -424,7 +424,7 @@ const sections = [
               <p className="text-xs font-semibold text-red-300 uppercase tracking-wide mb-2">
                 AFDD mandatory ("shall be provided")
               </p>
-              <ul className="text-white/80 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>
                   High rise residential buildings — assumed to be over 18m in height or in excess of
                   six storeys, whichever is met first
@@ -438,7 +438,7 @@ const sections = [
               <p className="text-xs font-semibold text-blue-300 uppercase tracking-wide mb-2">
                 AFDD recommended
               </p>
-              <p className="text-white/80 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 All other premises, including a standard domestic kitchen. The high density of
                 high-power circuits and concealed cable runs behind fitted units make a kitchen a
                 strong candidate. Where specified, AFDDs fit in place of standard MCBs or RCBOs in
@@ -465,14 +465,14 @@ const sections = [
           <h4 className="font-bold text-white mb-3">Kitchen RCD Strategy</h4>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Use individual RCBOs on each kitchen circuit. This provides the best discrimination
                 — a fault on the dishwasher does not trip the fridge/freezer or the worktop sockets.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 The fridge/freezer circuit must be on a separate RCBO, not shared with other kitchen
                 circuits under a group RCD. If a group RCD trips, the fridge/freezer will defrost —
@@ -480,7 +480,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 The cooker circuit needs 30mA RCD protection where its cable is concealed in a wall
                 at a depth of less than 50mm and relies on being run in a prescribed zone.
@@ -519,7 +519,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No sockets directly above the sink</strong> — do not position socket outlets
                 or fused spurs directly above the sink or draining board where water splashes could
@@ -527,7 +527,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>300mm minimum clearance</strong> — good practice is to maintain at least
                 300mm horizontal distance between the edge of the sink/drainer and any socket
@@ -536,7 +536,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Switches near the sink</strong> — light switches should not be positioned
                 where they can be operated with wet hands while standing at the sink. A pull cord or
@@ -544,7 +544,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Under-sink connections</strong> — waste disposal units and instant hot water
                 taps are often connected under the sink. Use a switched fused spur positioned above
@@ -577,16 +577,16 @@ const sections = [
               key={s.label}
               className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 text-center"
             >
-              <p className="text-xs text-white/50 uppercase tracking-wide mb-1">{s.label}</p>
-              <p className="text-2xl font-bold text-yellow-400">{s.value}</p>
-              <p className="text-xs text-white/60 mt-1">{s.sub}</p>
+              <p className="text-xs text-white uppercase tracking-wide mb-1">{s.label}</p>
+              <p className="text-2xl font-bold text-elec-yellow">{s.value}</p>
+              <p className="text-xs text-white mt-1">{s.sub}</p>
             </div>
           ))}
         </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minimum provision</strong> — at least 4 to 6 double socket outlets above the
                 worktop for a medium kitchen. Larger kitchens with more worktop area need more
@@ -594,7 +594,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Height</strong> — 150mm to 200mm above the worktop surface. This is
                 approximately 1050mm to 1100mm from the finished floor level with a standard 900mm
@@ -602,21 +602,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Spacing</strong> — distribute sockets evenly along the worktop between
                 appliance positions. Avoid clustering all sockets in one area.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>USB sockets</strong> — consider fitting combination sockets with USB-A and
                 USB-C ports at key positions for charging phones, tablets, and other devices.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Splashback coordination</strong> — agree socket positions with the kitchen
                 fitter before{' '}
@@ -643,7 +643,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>General lighting</strong> — LED downlights or a central pendant fitting.
                 Downlights should be fire-rated where they penetrate a fire barrier (such as a
@@ -651,7 +651,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Under-cabinet lighting</strong> — LED strip lighting or individual LED spot
                 fittings under wall units. Connected via a switched fused spur (3A or 5A fuse).
@@ -659,7 +659,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dimming</strong> — LED dimmers provide atmosphere control. Ensure the dimmer
                 is compatible with the LED fittings — not all LED drivers work with all dimmers.
@@ -669,7 +669,7 @@ const sections = [
           </ul>
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
-          <h4 className="font-bold text-yellow-400 mb-2 flex items-center gap-2">
+          <h4 className="font-bold text-elec-yellow mb-2 flex items-center gap-2">
             <ShieldCheck className="w-5 h-5 shrink-0" />
             Regulation 411.3.4: RCD on Lighting Circuits
           </h4>
@@ -718,7 +718,7 @@ export default function KitchenWiringGuidePage() {
       heroTitle={
         <>
           Kitchen Wiring Guide:{' '}
-          <span className="text-yellow-400">Circuits, RCDs, and Regulations</span>
+          <span className="text-elec-yellow">Circuits, RCDs, and Regulations</span>
         </>
       }
       heroSubtitle="The kitchen is the most electrically demanding room in the house. Multiple high-power appliances, worktop sockets, dedicated circuits, and specific RCD protection requirements all need careful design. This guide covers everything from circuit allocation to socket positioning."
@@ -736,7 +736,7 @@ export default function KitchenWiringGuidePage() {
       faqHeading="Frequently Asked Questions About Kitchen Wiring"
       relatedPages={relatedPages}
       ctaHeading="Design Kitchen Wiring Layouts Professionally"
-      ctaSubheading="Elec-Mate's AI circuit designer, cable sizing calculator, and quoting app help you design, size, and price kitchen wiring jobs accurately. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's AI circuit designer, cable sizing calculator, and quoting app help you design, size, and price kitchen wiring jobs accurately. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

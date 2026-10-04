@@ -149,14 +149,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Service head (cut-out)</strong> — owned by the DNO. Contains the main fuse
                 (typically 60A or 100A). Cannot be accessed without DNO authorisation.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smart meter</strong> — owned by the energy supplier. Measures consumption
                 and communicates with the DCC via the Wide Area Network (WAN) using GPRS or mesh
@@ -164,7 +164,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Meter tails</strong> — the cables from the service head to the meter and
                 from the meter to the consumer unit main switch. Typically 16mm\u00b2 or 25mm\u00b2
@@ -173,7 +173,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit (distribution board)</strong> — owned by the property owner.
                 Electricians work on this side. Not affected by the smart meter.
@@ -196,7 +196,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Permitted:</strong> All work on the consumer unit and all circuits
                 downstream of the main switch. Replacing meter tails (with DNO authorisation for
@@ -205,7 +205,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Not permitted without authorisation:</strong> Opening, altering, or removing
                 the smart meter. Removing the cut-out fuse. Interfering with the communications hub
@@ -237,7 +237,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Isolation at the main switch</strong> — in most consumer unit replacements,
                 isolation is achieved at the consumer unit main switch, which is on the load side of
@@ -246,7 +246,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>When the cut-out fuse must be removed</strong> — if the meter tails need to
                 be replaced, or if access to the back of the consumer unit requires removal of the
@@ -255,7 +255,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IHD reconnection</strong> — after restoring the supply, check that the
                 in-home display (IHD) is showing live data. If it has lost connection, follow the
@@ -286,7 +286,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Typical specification</strong> — meter tails for a 100A domestic supply are
                 typically 25mm\u00b2 singles (line and neutral) with a 16mm\u00b2 earth. For
@@ -295,7 +295,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DNO authorisation for cut-out removal</strong> — before replacing meter
                 tails, contact the local DNO (UK Power Networks, National Grid ED, SP Energy
@@ -305,7 +305,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Colour-coding of meter tails</strong> — meter tails in the UK use the
                 current harmonised colour code: brown for line, blue for neutral, green-yellow for
@@ -331,7 +331,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Relocating the IHD</strong> — the IHD can be moved anywhere within the
                 wireless range of the communications hub (typically up to 30m inside a building). No
@@ -340,7 +340,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IHD lost connection after electrical work</strong> — if the supply was
                 interrupted during electrical work, the IHD may need time to reconnect to the HAN.
@@ -366,7 +366,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical Installation Certificate (EIC)</strong> — required for new
                 circuits and consumer unit replacements. Must include test results from all
@@ -375,7 +375,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minor Works Certificate (MWC)</strong> — for additions to existing circuits.
                 Issued after testing the addition and confirming compliance of the existing circuit
@@ -408,7 +408,7 @@ export default function SmartMeterElectricalWorkPage() {
       heroTitle={
         <>
           Electrical Work Around Smart Meters{' '}
-          <span className="text-yellow-400">— UK Electrician Guide</span>
+          <span className="text-elec-yellow">— UK Electrician Guide</span>
         </>
       }
       heroSubtitle="A complete guide to electrical work in properties with SMETS2 smart meters — consumer unit upgrades, meter tails, safe isolation, IHD devices, DNO responsibilities, and Part P certification."

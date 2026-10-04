@@ -295,7 +295,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Work-life balance</strong> — offshore (28/28 rotation) and nuclear (shift
                 work) offer high earnings but significant time away or unsocial hours. Fire and
@@ -303,7 +303,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Geographic flexibility</strong> — nuclear (Sellafield, Hinkley), offshore
                 (Aberdeen, East Anglia), and rail (predominantly London and major cities) require
@@ -312,7 +312,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Self-employment potential</strong> — CompEx, fire/security, and data centre
                 maintenance are all well-suited to self-employment or building a specialist
@@ -321,7 +321,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Time to entry</strong> — fire/security (12–18 months from general
                 electrical) and BMS (12–24 months) are the fastest entry points. Nuclear and
@@ -358,7 +358,7 @@ export default function SpecialistElectricianRoutesPage() {
       heroTitle={
         <>
           Specialist Electrician Routes UK:{' '}
-          <span className="text-yellow-400">Higher Pay, Smaller Talent Pool</span>
+          <span className="text-elec-yellow">Higher Pay, Smaller Talent Pool</span>
         </>
       }
       heroSubtitle="Specialist electricians earn 30 to 80% more than general electrical operatives. This guide covers the eight main specialist routes — ATEX/CompEx, HV, nuclear, rail, offshore, data centre, BMS, and fire/security — with salary figures and entry routes for each."

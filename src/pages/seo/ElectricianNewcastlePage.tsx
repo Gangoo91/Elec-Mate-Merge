@@ -176,7 +176,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New connections and upgrades</strong> — new supplies, capacity upgrades (for
                 EV chargers, heat pumps, or commercial loads), and service cable replacements go
@@ -185,7 +185,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98/G99 notifications</strong> — solar PV, battery storage, and other
                 generation must be notified to Northern Powergrid. G98 (up to 16A per phase) is a
@@ -195,7 +195,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing arrangements</strong> — Newcastle properties are predominantly
                 TN-C-S (PME) in newer areas and TN-S in older areas. Some Victorian properties still
@@ -204,7 +204,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tyneside flat supplies</strong> — Tyneside flats typically have two separate
                 SPEN supplies in what appears to be a single terraced house. Each flat has its own
@@ -350,7 +350,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Charger location</strong> — position the charger to minimise exposure to
                 standing water and ice. Avoid locations where meltwater from roofs or drainpipes
@@ -360,7 +360,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable specification</strong> — SWA (Steel Wire Armoured) cable is the
                 standard choice for external runs and is rated for the temperature range experienced
@@ -373,7 +373,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP rating</strong> — specify IP65 or higher rated chargers for exposed
                 locations in Newcastle. IP65 provides protection against water jets from any
@@ -381,7 +381,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Customer advice</strong> — advise customers that EV battery charging
                 performance decreases in very cold weather — the battery management system limits
@@ -416,7 +416,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HMO licensing</strong> — Newcastle City Council operates mandatory HMO
                 licensing for properties with 5+ occupants from 2+ households. The Jesmond and
@@ -425,7 +425,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR requirements</strong> — a satisfactory{' '}
                 <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> is required
@@ -435,7 +435,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire detection</strong> — HMOs require fire detection to BS 5839-6. Most
                 Newcastle HMOs require Grade D LD2 minimum. The council expects mains-powered,
@@ -444,7 +444,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Turnaround timing</strong> — the student letting cycle in Newcastle means
                 most properties turn over in late June to early July. Landlords need EICRs, fire
@@ -551,7 +551,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EIC and EICR Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -601,7 +601,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Newcastle electricians"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -627,7 +627,7 @@ export default function ElectricianNewcastlePage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Newcastle: <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Newcastle: <span className="text-elec-yellow">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Newcastle's unique Tyneside flats, thriving quayside regeneration, massive student HMO market, and cold climate challenges make it a distinctive and rewarding city for electricians who know the local landscape."
@@ -638,7 +638,7 @@ export default function ElectricianNewcastlePage() {
       faqHeading="Frequently Asked Questions About Electricians in Newcastle"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Newcastle Electricians"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Tyneside flats, HMO compliance, and North East conditions. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Tyneside flats, HMO compliance, and North East conditions. 7-day free trial."
     />
   );
 }

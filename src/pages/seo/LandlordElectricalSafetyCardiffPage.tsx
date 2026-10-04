@@ -221,7 +221,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>"Studentville" — Cathays, Roath, and Canton</strong> — Cathays is informally
                 known as Studentville due to its extraordinary density of student HMO properties
@@ -232,7 +232,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Shared Regulatory Services enforcement</strong> — where an EICR identifies
                 serious electrical defects (C1 or C2 observations), Cardiff Council acting through
@@ -243,7 +243,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HMO licensing</strong> — Cardiff Council operates mandatory HMO licensing
                 for properties with five or more occupants in two or more households. A valid EICR
@@ -252,7 +252,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Residential Property Tribunal Wales</strong> — tenants can make applications
                 to the Residential Property Tribunal Wales where landlords fail to meet their
@@ -288,7 +288,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mandatory HMO licensing</strong> — applies to properties with five or more
                 occupants forming two or more households. A valid EICR is a condition of the
@@ -297,7 +297,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-year inspection intervals</strong> — many Cardiff HMO licence
                 conditions require EICRs every three years rather than the standard five years. This
@@ -306,7 +306,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pre-war terraces and rubber wiring</strong> — the Victorian and Edwardian
                 terraces dominant in Cathays, Roath, Canton, and Splott frequently contain
@@ -316,7 +316,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection and TT earthing</strong> — Regulation 411.3.3 of BS 7671
                 requires RCD protection on socket-outlet circuits rated up to 32A. Absent RCDs are a
@@ -474,7 +474,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>28 days recommended maximum</strong> — following best practice aligned with
                 the England 2020 Regulations, all remedial work should be completed within 28 days
@@ -483,7 +483,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C1 observations — immediate</strong> — where a C1 (danger present)
                 observation is recorded, the inspector may recommend immediate disconnection of the
@@ -492,7 +492,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Written confirmation</strong> — once remedial work is complete, the landlord
                 should obtain written confirmation from a qualified person. This confirmation should
@@ -501,7 +501,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Common Cardiff remedial work</strong> — typical remedial work in Cardiff
                 rental properties includes fitting RCD protection (Regulation 411.3.3), replacing
@@ -536,7 +536,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person schemes</strong> — search the NICEIC, NAPIT, or ELECSA
                 online registers for Cardiff-based inspectors. Registration provides assurance of
@@ -544,7 +544,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Required qualifications</strong> — the inspector should hold City and Guilds
                 2391 (Inspection and Testing) or equivalent, plus a current BS 7671 qualification
@@ -554,7 +554,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>National Grid Electricity Distribution familiarity</strong> — National Grid
                 Electricity Distribution (formerly Western Power Distribution) is the DNO for
@@ -564,7 +564,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HMO experience</strong> — for Cardiff student HMOs in Cathays and Roath,
                 choose an inspector with experience of multi-occupancy properties. HMO EICRs require
@@ -593,14 +593,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>One-bedroom flat</strong> — £140 to £200. Typically 3 to 5 circuits with a
                 single consumer unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Two-bedroom terraced house</strong> — £180 to £280. Very common in Roath,
                 Canton, and Cathays. Properties with rubber-insulated wiring or TT earthing systems
@@ -608,7 +608,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom terraced house</strong> — £230 to £400. Victorian and
                 Edwardian properties in Pontcanna, Roath, and Splott with aged wiring often require
@@ -616,7 +616,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Student HMO</strong> — £320 to £600+. Multiple consumer units, fire alarm
                 systems, and emergency lighting increase inspection scope and time. Cathays HMOs in
@@ -652,7 +652,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete EICRs On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -687,7 +687,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your landlord EICR business with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -713,7 +713,7 @@ export default function LandlordElectricalSafetyCardiffPage() {
       heroTitle={
         <>
           Landlord Electrical Safety Cardiff:{' '}
-          <span className="text-yellow-400">EICR Requirements 2026</span>
+          <span className="text-elec-yellow">EICR Requirements 2026</span>
         </>
       }
       heroSubtitle="Everything Cardiff landlords need to know about electrical safety compliance under the Renting Homes (Wales) Act 2022 — Welsh law explained, Cardiff Council Shared Regulatory Services enforcement, HMO requirements in Cathays and Roath, common defects in older Cardiff stock, tenant rights, and EICR costs."
@@ -724,7 +724,7 @@ export default function LandlordElectricalSafetyCardiffPage() {
       faqHeading="Frequently Asked Questions About Landlord Electrical Safety in Cardiff"
       relatedPages={relatedPages}
       ctaHeading="Complete Landlord EICRs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

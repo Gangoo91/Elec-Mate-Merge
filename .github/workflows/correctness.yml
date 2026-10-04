@@ -322,6 +322,13 @@ jobs:
         run: npm run check:key-integrity
         continue-on-error: true
 
+      # ── Legal pages (4 Oct 2026, ELE-1812) ─────────────────────────────
+      # public/privacy.html and public/account-deletion.html are what Apple and
+      # Google reviewers load. They're generated from src/content/legal/*.md;
+      # this fails if someone edits the Markdown and forgets `npm run legal:static`.
+      - name: Legal static pages match the Markdown (ELE-1812)
+        run: npm run check:legal-static
+
       # ── Inspection & Testing guards (27 Sep 2026) ────────────────────────
       # Each one encodes a defect that reached users this month, and each was
       # mutation-tested when written: break the rule it protects and it fails.
@@ -356,6 +363,10 @@ jobs:
       # (a BS 7671 regulation that does not exist) — and Part P questions must route to them.
       - name: Building Regs RAG citations and routing
         run: npm run check:building-regs-rag
+      # Elec-AI sizes cables from the same verified Appendix 4 data as the app's
+      # calculators — the edge copy must not drift from src (2 Oct 2026).
+      - name: Elec-AI cable selection
+        run: npm run check:cable-select
       # A newer local draft must never hide cloud test results (Rovell, 28 Sep 2026).
       - name: Local-draft guard
         run: npm run check:local-draft-guard

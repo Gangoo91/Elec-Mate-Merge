@@ -108,6 +108,16 @@ export function recordMockExamAttempt(args: RecordMockAttemptArgs): void {
   );
   const percentage = Math.round((correct / questions.length) * 100);
 
+  // What was served and what was missed, so the next paper can prefer unseen
+  // questions and bring back the ones still being got wrong (ELE-1808).
+  const allNumeric = questions.every((q) => typeof q.id === 'number');
+  const servedIds = allNumeric ? questions.map((q) => q.id as number) : null;
+  const missedIds = allNumeric
+    ? questions
+        .filter((q, i) => !isSkipped(answers[i]) && answers[i] !== q.correctAnswer)
+        .map((q) => q.id as number)
+    : null;
+
   const payload = {
     exam_slug: examSlug.slice(0, 100),
     topic_slug: topicSlug,
@@ -120,6 +130,9 @@ export function recordMockExamAttempt(args: RecordMockAttemptArgs): void {
     passed: percentage >= passThreshold,
     user_agent_hint: includeBrowserHints ? (navigator.userAgent?.slice(0, 500) ?? null) : null,
     referrer: includeBrowserHints ? document.referrer?.slice(0, 1000) || null : null,
+    // Bounded at 100 by a table constraint; the papers are at most 60.
+    question_ids: servedIds && servedIds.length <= 100 ? servedIds : null,
+    wrong_ids: missedIds && missedIds.length <= 100 ? missedIds : null,
   };
 
   // `source` and `user_id` were added to seo_mock_attempts in the migration

@@ -1,5 +1,6 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { captureException } from '../_shared/sentry.ts';
+import { fetchChatCompletions } from '../_shared/llm-direct.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -196,24 +197,24 @@ async function generateDiagram({
   type,
   circuitInfo,
   projectName,
-  lovableApiKey,
+  aiApiKey,
 }: {
   type: 'single-line' | 'schematic';
   circuitInfo: any;
   projectName: string;
-  lovableApiKey: string;
+  aiApiKey: string;
 }): Promise<string> {
   const prompt =
     type === 'single-line'
       ? buildSingleLinePrompt(circuitInfo, projectName)
       : buildSchematicPrompt(circuitInfo, projectName);
 
-  console.log(`🎨 Generating ${type} diagram with Lovable AI...`);
+  console.log(`🎨 Generating ${type} diagram with AI...`);
 
-  const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+  const response = await fetchChatCompletions({
     method: 'POST',
     headers: {
-      Authorization: `Bearer ${lovableApiKey}`,
+      Authorization: `Bearer ${aiApiKey}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({

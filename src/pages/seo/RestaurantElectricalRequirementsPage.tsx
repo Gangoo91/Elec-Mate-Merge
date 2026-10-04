@@ -22,7 +22,7 @@ const cardCn =
   '-mx-4 my-5 rounded-none border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5';
 
 const alertCn =
-  '-mx-4 my-5 rounded-none border-y border-amber-500/30 bg-amber-500/[0.08] p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5';
+  '-mx-4 my-5 rounded-none border-y border-white/[0.1] bg-amber-500/[0.08] p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5';
 
 const tableWrapCn = '-mx-4 my-5 overflow-x-auto sm:mx-0';
 
@@ -1085,7 +1085,7 @@ export default function RestaurantElectricalRequirementsPage() {
       faqHeading="Frequently Asked Questions About Restaurant Electrical Requirements"
       relatedPages={relatedPages}
       ctaHeading="Complete Restaurant Certificates on Your Phone"
-      ctaSubheading="EICR, Fire Alarm, Emergency Lighting, PAT Testing — every certificate a restaurant needs, completed on site with AI-powered tools. Join 1,600+ UK electricians using Elec-Mate. 7-day free trial."
+      ctaSubheading="EICR, Fire Alarm, Emergency Lighting, PAT Testing — every certificate a restaurant needs, completed on site with AI-powered tools. Join 2,100+ UK electricians using Elec-Mate. 7-day free trial."
     />
   );
 }

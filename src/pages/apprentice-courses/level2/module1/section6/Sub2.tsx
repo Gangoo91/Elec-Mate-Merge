@@ -61,10 +61,10 @@ const checks = [
     id: 'aed-rhythm-check',
     question: 'When will an AED actually deliver a shock?',
     options: [
-      'The nominal voltage at which the device is designed to operate',
+      'Every time the pads are placed on the chest and the button is pressed',
       'Only when it detects a shockable rhythm like ventricular fibrillation',
-      'To prevent cable insulation damage and meet workmanship standards',
-      'Close the day: review completed work, capture loose ends, preview tomorrow',
+      'Only after five full cycles of CPR have been completed',
+      'Whenever the casualty is not breathing, whatever the heart rhythm',
     ],
     correctIndex: 1,
     explanation:
@@ -134,9 +134,9 @@ const quizQuestions = [
     question: 'Which of these belongs in a workplace first aid kit?',
     options: [
       'Sterile dressings, plasters, eyewash, gloves, foil blanket, scissors',
-      'Implementing a permit to work system for HV switching',
-      'In locations with sleeping accommodation and high fire risk locations',
-      '"Complete weekly planning every Friday 4-4:30pm for the next 3 months"',
+      'Paracetamol and ibuprofen tablets for pain relief',
+      'Burn cream and antiseptic ointment for every wound',
+      'A tourniquet and suture kit for deep cuts',
     ],
     correctAnswer: 0,
     explanation:

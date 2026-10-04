@@ -171,7 +171,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit / distribution board</strong> — verify that line conductors
                 are connected to MCBs and neutral conductors to the neutral bar. Confirm no
@@ -179,7 +179,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Socket outlets</strong> — open each socket outlet and verify that the brown
                 (line) conductor goes to the L terminal, the blue (neutral) to the N terminal, and
@@ -187,7 +187,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Light switches</strong> — single-pole switches must be in the line conductor
                 only. For loop-in wiring, verify that the switch is connected via the switch wire
@@ -195,7 +195,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Luminaires and lamp holders</strong> — for bayonet cap and Edison screw lamp
                 holders, the centre contact must be connected to the line conductor. The outer
@@ -203,7 +203,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Junction boxes</strong> — verify that all connections in junction boxes
                 maintain correct polarity, particularly where cables have been extended or joined.
@@ -326,20 +326,20 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 All fuses and single-pole control and protective devices are connected in the line
                 conductor only.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 The centre contact of Edison screw lamp holders is connected to the line conductor.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 The wiring of socket outlets and similar accessories is correct throughout.
               </span>
@@ -368,7 +368,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Phase-to-neutral voltage</strong> — each phase should read approximately
                 230V to neutral. Significant deviation indicates a connection error or supply
@@ -376,7 +376,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Phase-to-phase voltage</strong> — each phase pair should read approximately
                 400V. Readings of 0V between two phases indicate they are connected to the same
@@ -384,7 +384,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Motor phase rotation</strong> — for three-phase motors, incorrect phase
                 rotation causes the motor to run in reverse. Verify phase rotation with a phase
@@ -405,7 +405,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Use a Socket Tester for Speed</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -456,7 +456,7 @@ export default function PolarityTestingPage() {
       heroTitle={
         <>
           Polarity Testing:{' '}
-          <span className="text-yellow-400">
+          <span className="text-elec-yellow">
             Visual Inspection, Live Checks, and Common Failures
           </span>
         </>
@@ -469,7 +469,7 @@ export default function PolarityTestingPage() {
       faqHeading="Frequently Asked Questions About Polarity Testing"
       relatedPages={relatedPages}
       ctaHeading="Record Polarity Tests and Complete EICs on Your Phone"
-      ctaSubheading="Elec-Mate captures polarity test results for all circuits and generates professional test schedules on site. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate captures polarity test results for all circuits and generates professional test schedules on site. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

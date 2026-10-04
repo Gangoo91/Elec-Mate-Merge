@@ -34448,6 +34448,7 @@ export type Database = {
           id: string
           passed: boolean
           percentage: number
+          question_ids: number[] | null
           referrer: string | null
           score: number
           source: string
@@ -34456,6 +34457,7 @@ export type Database = {
           total_questions: number
           user_agent_hint: string | null
           user_id: string | null
+          wrong_ids: number[] | null
         }
         Insert: {
           created_at?: string
@@ -34463,6 +34465,7 @@ export type Database = {
           id?: string
           passed: boolean
           percentage: number
+          question_ids?: number[] | null
           referrer?: string | null
           score: number
           source?: string
@@ -34471,6 +34474,7 @@ export type Database = {
           total_questions: number
           user_agent_hint?: string | null
           user_id?: string | null
+          wrong_ids?: number[] | null
         }
         Update: {
           created_at?: string
@@ -34478,6 +34482,7 @@ export type Database = {
           id?: string
           passed?: boolean
           percentage?: number
+          question_ids?: number[] | null
           referrer?: string | null
           score?: number
           source?: string
@@ -34486,6 +34491,7 @@ export type Database = {
           total_questions?: number
           user_agent_hint?: string | null
           user_id?: string | null
+          wrong_ids?: number[] | null
         }
         Relationships: []
       }
@@ -43927,6 +43933,7 @@ export type Database = {
               user_id: string
             }[]
           }
+      get_quote_terms_by_token: { Args: { token_param: string }; Returns: string }
       get_referral_stats: { Args: { p_user_id: string }; Returns: Json }
       get_retention_curve: { Args: never; Returns: Json }
       get_retention_metrics: { Args: never; Returns: Json }

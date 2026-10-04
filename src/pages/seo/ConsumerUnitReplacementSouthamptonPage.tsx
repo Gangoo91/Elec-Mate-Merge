@@ -272,7 +272,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sockets and bathrooms — Regulation 411.3.3</strong> — all socket-outlet
                 circuits rated up to 32A must have 30mA RCD additional protection. All circuits in
@@ -281,7 +281,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lighting circuits — Regulation 411.3.4 (A4:2026)</strong> — this is a new
                 requirement introduced by A4:2026. Within domestic (household) premises, all AC
@@ -292,7 +292,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dual-RCD vs RCBO</strong> — a dual-RCD consumer unit divides circuits into
                 two groups on two 30mA RCDs. An all-RCBO consumer unit gives each circuit its own
@@ -303,7 +303,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Nuisance tripping in older properties</strong> — Southampton properties with
                 ageing wiring may experience nuisance RCD tripping due to deteriorating cable
@@ -351,7 +351,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Retrospective certification</strong> — if a previous owner replaced the
                 consumer unit without Part P compliance documentation, a retrospective
@@ -427,35 +427,35 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>One to two-bedroom flat</strong> — £400 to £580. Common in the city centre
                 and waterfront areas. Typically 6 to 8 circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom terraced house</strong> — £500 to £700. The most common job
                 type across Shirley, Freemantle, and St Denys. Up to 12 circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Four or five-bedroom detached property</strong> — £650 to £900. Common in
                 Bassett, Chilworth, and Chandler's Ford on the city fringe.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional work</strong> — earthing upgrades, main bonding, smoke alarm
                 systems, and meter tails replacement add £100 to £400 depending on scope.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Surge Protective Device (SPD)</strong> — Regulation 443/534 and OSG guidance
                 recommend SPD installation at the consumer unit to protect against transient
@@ -490,7 +490,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Victorian and Edwardian terraces</strong> — Shirley, Freemantle, and St
                 Denys have large amounts of terraced housing with original or early rewired wiring.
@@ -500,7 +500,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Humid coastal environment</strong> — Southampton's proximity to Southampton
                 Water and the Solent means properties in lower-lying areas can experience higher
@@ -510,7 +510,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>University student lets</strong> — the University of Southampton generates
                 substantial demand for private rented accommodation. Landlords in Portswood,
@@ -538,7 +538,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete EICs On Site in Southampton</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -549,7 +549,7 @@ const sections = [
                   phone, generate the PDF, and send it to your customer before you leave. No paper
                   certificates, no evening data entry.
                 </p>
-                <p className="text-white/70 text-sm leading-relaxed mt-2">
+                <p className="text-white text-sm leading-relaxed mt-2">
                   <strong className="text-white">Terminal torque:</strong> OSG Regulation 2.2.5 and
                   BS 7671 Regulation 134.1.4 require all screw terminals to be tightened to the
                   equipment manufacturer&apos;s specified torque value. Always use a calibrated
@@ -585,7 +585,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Southampton electrical business with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting. Eliminate evening paperwork."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting. Eliminate evening paperwork."
           icon={FileCheck2}
         />
       </>
@@ -611,7 +611,7 @@ export default function ConsumerUnitReplacementSouthamptonPage() {
       heroTitle={
         <>
           Consumer Unit Replacement Southampton:{' '}
-          <span className="text-yellow-400">Fuse Box Guide 2026</span>
+          <span className="text-elec-yellow">Fuse Box Guide 2026</span>
         </>
       }
       heroSubtitle="Everything Southampton homeowners and landlords need to know about consumer unit replacement — the metal enclosure requirement, Part P Building Regulations, RCD protection, costs of £400 to £800, and how to find a qualified NICEIC or NAPIT registered electrician in Hampshire."
@@ -622,7 +622,7 @@ export default function ConsumerUnitReplacementSouthamptonPage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Replacement in Southampton"
       relatedPages={relatedPages}
       ctaHeading="Complete Consumer Unit Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion with instant PDF export and schedule of test results. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion with instant PDF export and schedule of test results. 7-day free trial, cancel anytime."
     />
   );
 }

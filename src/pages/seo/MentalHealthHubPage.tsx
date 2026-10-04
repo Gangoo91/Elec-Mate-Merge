@@ -293,7 +293,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Stress management</strong> — breathing techniques and thought exercises for
                 managing pressure during difficult jobs, tight deadlines, or confrontations with
@@ -301,7 +301,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Physical tension relief</strong> — body scan and stretching exercises for
                 releasing the physical tension that builds up from manual work, uncomfortable
@@ -309,14 +309,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Grounding techniques</strong> — exercises for moments of anxiety, overwhelm,
                 or panic that can be done discreetly on site without anyone noticing.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sleep improvement</strong> — guided exercises for winding down after long
                 days and improving sleep quality. Essential for electricians who work irregular
@@ -450,7 +450,7 @@ export default function MentalHealthHubPage() {
       heroTitle={
         <>
           Mental Health Hub:{' '}
-          <span className="text-yellow-400">Wellbeing Tools for Tradespeople</span>
+          <span className="text-elec-yellow">Wellbeing Tools for Tradespeople</span>
         </>
       }
       heroSubtitle="Self-assessment tools, mindfulness exercises, and instant access to industry support. Built specifically for the pressures electricians and tradespeople face every day. Completely private — your data is never shared."

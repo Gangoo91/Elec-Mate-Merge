@@ -230,6 +230,12 @@ const REGISTRY: SearchEntry[] = [
     keywords: 'default cert eicr eic minor works',
   },
   {
+    label: 'Vibration',
+    hint: 'App',
+    tab: 'preferences',
+    keywords: 'vibration vibrate haptic haptics buzz feedback',
+  },
+  {
     label: 'Auto-save drafts',
     hint: 'App',
     tab: 'preferences',

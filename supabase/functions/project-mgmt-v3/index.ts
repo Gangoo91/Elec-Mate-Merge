@@ -8,7 +8,7 @@ import {
   ValidationError,
   createClient,
   generateEmbeddingWithRetry,
-  callLovableAIWithTimeout,
+  callAIWithTimeout,
   parseJsonWithRepair,
 } from '../_shared/v3-core.ts';
 import { enrichResponse } from '../_shared/response-enricher.ts';
@@ -101,11 +101,6 @@ serve(async (req) => {
     const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
     if (!OPENAI_API_KEY) {
       throw new Error('OPENAI_API_KEY not configured');
-    }
-
-    const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
-    if (!LOVABLE_API_KEY) {
-      throw new Error('LOVABLE_API_KEY not configured');
     }
 
     // Use intelligent RAG with cross-encoder for PM knowledge

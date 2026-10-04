@@ -121,7 +121,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/rcd-testing-procedure',
     title: 'RCD Testing Procedure',
     description:
-      'The single AC test at IΔn required by BS 7671 Regulation 643.8 since A4:2026 deleted Table 3A.',
+      'The single AC test at IΔn required by BS 7671 Regulation 643.8 since A2:2022 deleted Table 3A.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -245,7 +245,7 @@ const sections = [
         {/* grounded: BS 7671:2018+A4:2026 Table 64 (Minimum values of insulation resistance) — confirmed in bs7671_facets + the standard PDF p.249. */}
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-1">BS 7671 Table 64 — at a glance</h3>
-          <p className="text-white/60 text-xs mb-4">
+          <p className="text-white text-xs mb-4">
             Minimum insulation resistance and DC test voltage by circuit type
           </p>
           <div className="grid grid-cols-3 gap-2 text-sm">
@@ -256,23 +256,23 @@ const sections = [
             <div className="p-2 rounded bg-white/[0.08] text-center font-bold text-white">Min IR</div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">SELV &amp; PELV</div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">250 V DC</div>
-            <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+            <div className="p-2 rounded bg-white/[0.04] text-center text-elec-yellow font-bold">
               0.5 MΩ
             </div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">
               Up to &amp; incl. 500 V
             </div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">500 V DC</div>
-            <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+            <div className="p-2 rounded bg-white/[0.04] text-center text-elec-yellow font-bold">
               1.0 MΩ
             </div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">Above 500 V</div>
             <div className="p-2 rounded bg-white/[0.04] text-center text-white">1000 V DC</div>
-            <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+            <div className="p-2 rounded bg-white/[0.04] text-center text-elec-yellow font-bold">
               1.0 MΩ
             </div>
           </div>
-          <p className="text-white/50 text-xs mt-3">
+          <p className="text-white text-xs mt-3">
             Per BS 7671:2018+A4:2026 Table 64, Regulation 643.3.2. A pass at the minimum is not a
             target — Guidance Note 3 says to investigate any new installation reading below 20 MΩ.
           </p>
@@ -289,7 +289,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Older installation — judge in context</strong> — Guidance Note 3 is explicit
                 that assessing a reading depends on the age and type of installation, the length of
@@ -523,7 +523,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Always Check for SPDs Before Testing</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -586,7 +586,7 @@ export default function InsulationResistanceTestingPage() {
       heroTitle={
         <>
           Insulation Resistance Testing:{' '}
-          <span className="text-yellow-400">BS 7671 Procedure and Minimum Values</span>
+          <span className="text-elec-yellow">BS 7671 Procedure and Minimum Values</span>
         </>
       }
       heroSubtitle="A complete guide to insulation resistance (IR) testing for UK electricians. Covers test voltages, the ≥1 MΩ minimum value, how to test new circuits, precautions on live circuits, and what Regulation 643.3 requires."
@@ -602,7 +602,7 @@ export default function InsulationResistanceTestingPage() {
       faqHeading="Frequently Asked Questions About Insulation Resistance Testing"
       relatedPages={relatedPages}
       ctaHeading="Record IR Test Results and Complete EICRs on Your Phone"
-      ctaSubheading="Elec-Mate automatically checks IR readings against the BS 7671 minimum and generates professional test schedules on site. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate automatically checks IR readings against the BS 7671 minimum and generates professional test schedules on site. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

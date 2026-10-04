@@ -184,7 +184,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Small kitchen extension (up to 20m²)</strong> — £800 to £1,400. Typically
                 one lighting circuit, one ring main, and an oven/hob spur. Additional sockets and
@@ -192,7 +192,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Open-plan kitchen-diner (20–40m²)</strong> — £1,200 to £2,000. More socket
                 outlets required, bi-fold door low-voltage lighting, underfloor heating connections,
@@ -200,7 +200,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large open-plan extension (over 40m²)</strong> — £1,800 to £2,500. Multiple
                 circuits, feature lighting zones, smart switch wiring, data points, and a security
@@ -208,7 +208,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Orangery or glazed extension</strong> — add £300 to £600 for additional
                 weatherproof exterior socket outlets, step lighting, and roof light controls.
@@ -238,7 +238,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard double-storey extension</strong> — £1,500 to £2,500. Two floors,
                 two lighting circuits, two power circuits, plus bathroom zone compliance (Regulation
@@ -246,7 +246,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>With en-suite bathroom</strong> — £2,000 to £3,200. En-suite requires shaver
                 socket (IP44 rated), bathroom extraction fan with overrun timer, and electric towel
@@ -254,7 +254,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large double-storey extension with multiple rooms</strong> — £2,500 to
                 £4,000. Multiple bedrooms, bathrooms, home office circuits, data cabling, and
@@ -284,7 +284,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No spare ways</strong> — if all MCB slots are occupied, a new or larger
                 consumer unit is required. Cost: £400 to £700 fitted, including a new 18th Edition
@@ -292,7 +292,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Old fuseboard</strong> — rewirable fuse boards or early MCB boards without
                 RCD protection are technically non-compliant. An extension is a good trigger to
@@ -300,7 +300,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No RCD protection</strong> — Regulation 411.3.3 of BS 7671 requires 30mA RCD
                 protection on all socket circuits rated up to 32A. Older boards without RCDs will
@@ -308,7 +308,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Steel enclosure requirement</strong> — since Amendment 4 to BS 7671 (January
                 2019), new and replacement consumer units in domestic premises must have a
@@ -385,7 +385,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Number of circuits</strong> — each new circuit (lighting, sockets, oven,
                 hob, underfloor heating, EV charger) adds to the cost. A simple kitchen extension
@@ -394,7 +394,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Distance from consumer unit</strong> — the further the extension from the
                 main board, the more cable is required. Long cable runs also affect volt drop
@@ -402,7 +402,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Specification level</strong> — basic white plastic sockets and switches cost
                 far less than flat plate brushed steel or smart home controls. Wiring for smart home
@@ -410,7 +410,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Underfloor heating</strong> — electric underfloor heating requires a
                 dedicated circuit and thermostat. Wet underfloor heating requires only a boiler
@@ -419,7 +419,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Region</strong> — London and the South East attract labour rates 20 to 40
                 per cent higher than the Midlands and North. Rural areas may also attract travel
@@ -445,7 +445,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Issue the EIC on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -502,7 +502,7 @@ export default function HouseExtensionElectricalCostPage() {
       heroTitle={
         <>
           House Extension Electrical Cost UK 2025:{' '}
-          <span className="text-yellow-400">Extension Wiring Prices</span>
+          <span className="text-elec-yellow">Extension Wiring Prices</span>
         </>
       }
               noindex={true}
@@ -514,7 +514,7 @@ export default function HouseExtensionElectricalCostPage() {
       faqHeading="Frequently Asked Questions About House Extension Electrical Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Your Extension Electrical Work in Minutes"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to create professional electrical quotes, issue EICs on site, and manage multi-stage extension jobs. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to create professional electrical quotes, issue EICs on site, and manage multi-stage extension jobs. 7-day free trial, cancel anytime."
     />
   );
 }

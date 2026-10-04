@@ -188,7 +188,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>When to send instruments for calibration</strong> -- book calibration before
                 the current certificate expires, allowing for turnaround time (typically 5 to 10
@@ -197,7 +197,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Stagger your instruments</strong> -- if you have multiple instruments,
                 stagger their calibration dates so that you always have a calibrated set available.
@@ -205,7 +205,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New instruments</strong> -- a new instrument comes with a manufacturer
                 calibration certificate. The 12-month cycle starts from the date on that
@@ -213,7 +213,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Backup instruments</strong> -- consider having a backup multifunction tester
                 that you use when your primary instrument is being calibrated. The backup must also
@@ -244,7 +244,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Multifunction tester (MFT)</strong> -- the primary instrument for most
                 electricians. Measures continuity, insulation resistance, earth fault loop
@@ -254,7 +254,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated loop impedance tester</strong> -- if you use a standalone loop
                 tester in addition to your MFT, it needs its own calibration. Common if you use a
@@ -262,7 +262,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PAT tester</strong> -- portable appliance testers that measure insulation
                 resistance, earth bond resistance, and leakage current need calibration if the
@@ -270,14 +270,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth electrode resistance tester</strong> -- required for TT installations
                 and earth electrode testing. Needs calibration if used for certification.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Voltage indicator</strong> -- GS 38 compliant voltage indicators should be
                 checked regularly using a proving unit. Formal calibration is recommended but not
@@ -308,7 +308,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Instrument manufacturer service centres</strong> -- Megger, Metrel, Fluke,
                 and Kewtech all operate calibration service centres (or approved service partners)
@@ -317,7 +317,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Independent UKAS accredited laboratories</strong> -- several independent
                 laboratories offer electrical instrument calibration services. Check the UKAS
@@ -326,7 +326,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical wholesaler calibration services</strong> -- some electrical
                 wholesalers offer calibration services through partnerships with accredited
@@ -432,7 +432,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Multifunction tester</strong> -- 60 to 120 pounds depending on the
                 laboratory and whether adjustment is included. Some manufacturers offer annual
@@ -440,27 +440,27 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated loop tester or RCD tester</strong> -- 40 to 80 pounds. Simpler
                 instruments with fewer measurement ranges cost less to calibrate.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PAT tester</strong> -- 50 to 90 pounds depending on the model and the number
                 of test functions.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth electrode resistance tester</strong> -- 50 to 80 pounds.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bundle discounts</strong> -- most laboratories offer discounts when you send
                 multiple instruments together. A typical bundle of MFT plus loop tester plus PAT
@@ -495,7 +495,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Before every use</strong> -- check the battery condition indicator, verify
                 the test leads are in good condition (no damage to insulation, probes, or
@@ -504,7 +504,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Voltage indicator checks</strong> -- always prove the voltage indicator
                 against a known source (proving unit) before and after each use, as required by HSE
@@ -512,7 +512,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insulation resistance check</strong> -- with the leads open circuit, the
                 instrument should read greater than 999 megohms (or infinity). With the leads
@@ -521,7 +521,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>After a drop or impact</strong> -- if the instrument is dropped or subjected
                 to a significant impact, treat it with caution. Perform functional checks and
@@ -552,7 +552,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC</strong> -- requires all test instruments to be calibrated at least
                 every 12 months by a UKAS accredited laboratory. Calibration certificates must be
@@ -561,7 +561,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NAPIT</strong> -- requires calibration at intervals not exceeding 12 months.
                 Calibration must be traceable to national standards. Certificates must be retained
@@ -569,7 +569,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ELECSA</strong> -- requires calibration every 12 months from a UKAS
                 accredited laboratory or manufacturer-approved service centre. Calibration records
@@ -605,7 +605,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <CalendarDays className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <CalendarDays className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Automatic Calibration Reminders</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -618,7 +618,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Digital Calibration Certificate Storage
@@ -633,7 +633,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ShieldCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Certificate Validation</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -673,7 +673,7 @@ export default function ElectricalToolCalibrationPage() {
       heroTitle={
         <>
           Electrical Tool Calibration:{' '}
-          <span className="text-yellow-400">When and Why UK Guide</span>
+          <span className="text-elec-yellow">When and Why UK Guide</span>
         </>
       }
       heroSubtitle="Test instrument calibration every 12 months is an industry requirement. This guide covers the calibration cycle, UKAS accredited labs, what happens during calibration, costs, competent person scheme requirements, and how Elec-Mate tracks calibration dates to keep you compliant."
@@ -684,7 +684,7 @@ export default function ElectricalToolCalibrationPage() {
       faqHeading="Frequently Asked Questions About Electrical Tool Calibration"
       relatedPages={relatedPages}
       ctaHeading="Never Miss a Calibration Date"
-      ctaSubheading="Automatic calibration reminders, digital certificate storage, and certificate validation. Join 1,600+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
+      ctaSubheading="Automatic calibration reminders, digital certificate storage, and certificate validation. Join 2,100+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
     />
   );
 }

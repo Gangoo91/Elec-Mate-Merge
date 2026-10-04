@@ -166,7 +166,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Studio or one-bedroom flat</strong> — £2,000 to £3,000 total. Typically 4 to
                 6 circuits. Materials: £600 to £900 (consumer unit, cable, accessories). Labour:
@@ -174,7 +174,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Two-bedroom flat</strong> — £2,500 to £3,800 total. Typically 6 to 8
                 circuits. Materials: £750 to £1,100. Labour: £1,500 to £2,400 (4 to 7 days).
@@ -182,7 +182,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom flat</strong> — £3,500 to £4,500 total. Typically 8 to 12
                 circuits. Materials: £900 to £1,400. Labour: £2,200 to £2,800 (6 to 9 days).
@@ -208,14 +208,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New consumer unit</strong> — metal enclosure with RCBOs, SPD, and main
                 switch. Typically a 6 to 10-way board for a flat.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Power circuits</strong> — new ring final circuits or 32A radial circuits to
                 socket outlets throughout the flat. Radial circuits are increasingly common in flats
@@ -223,28 +223,28 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lighting circuits</strong> — new 6A lighting circuits with modern cable and
                 ceiling roses or downlight connections.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated circuits</strong> — cooker circuit, electric shower circuit (if
                 applicable), immersion heater, and any other high-power appliances.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bathroom wiring</strong> — IP-rated fittings, extractor fan, shaver socket,
                 all compliant with BS 7671 Section 701 zone requirements.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smoke and heat detection</strong> — hardwired interlinked smoke detectors in
                 hallways and living rooms, heat detectors in the kitchen, as required by Building
@@ -252,14 +252,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bonding</strong> — main protective bonding to gas, water, and oil services.
                 Supplementary bonding where required.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing and certification</strong> — full testing of every circuit to BS
                 7671 standards and issue of an EIC.
@@ -312,7 +312,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Floor construction</strong> — timber-floored flats allow cables to be run
                 under floorboards. Concrete floors require surface-mounted trunking or channelling,
@@ -320,7 +320,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wall construction</strong> — dot-and-dab plasterboard walls have voids for
                 cables. Solid brick or block walls require channelling. Party walls should not be
@@ -328,14 +328,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Number of circuits and accessories</strong> — more sockets, lights, and
                 dedicated circuits mean more cable, more accessories, and more testing time.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Location</strong> — London flat rewires cost 15% to 30% more than the
                 national average due to higher labour rates and overheads. Parking and access
@@ -343,7 +343,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Asbestos</strong> — older flats (1950s to 1980s) may have asbestos in floor
                 tiles, textured coatings, or around heating pipes. If asbestos is encountered, work
@@ -394,7 +394,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Freeholder notification</strong> — most leases require you to notify the
                 freeholder or managing agent before carrying out major electrical work. Some require
@@ -402,7 +402,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Communal supply</strong> — the incoming supply from the communal riser to
                 your flat's meter is typically the freeholder's responsibility. If the meter tails
@@ -411,7 +411,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Party walls and floors</strong> — cables should not be chased into party
                 walls, as this compromises fire resistance and sound insulation. Cable routes may
@@ -419,7 +419,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Noise restrictions</strong> — many flat blocks have restrictions on noisy
                 work hours. Channelling walls with a chaser or SDS drill generates significant
@@ -443,7 +443,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Survey Thoroughly</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -499,7 +499,7 @@ export default function FlatRewireCostPage() {
       badgeIcon={PoundSterling}
       heroTitle={
         <>
-          Flat Rewire Cost: <span className="text-yellow-400">UK Price Guide 2026</span>
+          Flat Rewire Cost: <span className="text-elec-yellow">UK Price Guide 2026</span>
         </>
       }
       heroSubtitle="How much does it cost to rewire a flat in the UK? This guide covers realistic 2026 pricing for studio, one-bedroom, two-bedroom, and three-bedroom flat rewires — including materials, labour, timescales, and the unique challenges of rewiring flats."
@@ -510,7 +510,7 @@ export default function FlatRewireCostPage() {
       faqHeading="Frequently Asked Questions About Flat Rewire Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Flat Rewires with Confidence"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for itemised quoting, on-site EIC certificates, and AI cost engineering. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for itemised quoting, on-site EIC certificates, and AI cost engineering. 7-day free trial, cancel anytime."
     />
   );
 }

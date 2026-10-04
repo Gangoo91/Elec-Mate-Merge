@@ -202,7 +202,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Housing (Scotland) Act 2006 — Repairing Standard</strong> — private
                 landlords in Scotland must ensure that the electrical installation and any
@@ -212,7 +212,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Private Housing (Tenancies) (Scotland) Act 2016</strong> — further
                 strengthened tenant rights and landlord obligations. A landlord cannot lawfully let
@@ -220,7 +220,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Landlord registration</strong> — all private landlords in Aberdeen must be
                 registered with Aberdeen City Council. The council can take action — including
@@ -229,7 +229,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Housing and Property Chamber</strong> — tenants in Scotland can apply to the
                 First-tier Tribunal (Housing and Property Chamber) if a landlord fails to comply
@@ -261,7 +261,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Granite tenements (pre-1960)</strong> — Aberdeen's iconic granite tenements
                 often retain original rubber-insulated wiring, sometimes with a vulcanised rubber or
@@ -271,7 +271,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Aluminium wiring (1960s–1970s)</strong> — some Aberdeen properties built or
                 rewired during the 1960s and 1970s have aluminium conductors. Aluminium wiring is
@@ -280,7 +280,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Absence of RCD protection</strong> — properties wired before the widespread
                 adoption of RCDs (roughly pre-1990s) frequently lack RCD protection on socket-outlet
@@ -290,7 +290,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Modern oil industry housing</strong> — Aberdeen's connection to the North
                 Sea oil industry brought significant new housing development from the 1970s onwards.
@@ -321,7 +321,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Preparation</strong> — ensure all rooms are accessible, including loft
                 hatches if the inspector needs to check wiring in the roof space. The consumer unit
@@ -330,7 +330,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Visual inspection</strong> — the inspector examines all accessible wiring,
                 accessories (sockets, switches, light fittings), the consumer unit, main earthing
@@ -339,7 +339,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing</strong> — circuits are tested individually. The inspector will
                 typically de-energise circuits one at a time to carry out tests. Test results are
@@ -348,7 +348,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Report and handover</strong> — the inspector completes the EICR on site (or
                 shortly afterwards) and provides it to the client. The report states an overall
@@ -384,7 +384,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C2 — Potentially dangerous</strong> — urgent remedial action required. The
                 installation is potentially dangerous but does not present an immediate risk. C2
@@ -433,28 +433,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>One-bedroom flat</strong> — £100 to £200. Typically 3 to 5 circuits.
                 Purpose-built flats are generally faster to inspect than tenement conversions.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Two-bedroom property</strong> — £150 to £280. Allows for 5 to 8 circuits and
                 some additional complexity.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom house</strong> — £180 to £350. Older granite properties with
                 degraded wiring or multiple sub-boards will be at the higher end.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HMO or larger property</strong> — £300 to £600+. Multiple consumer units,
                 fire alarm systems, and a higher circuit count increase the scope and cost.
@@ -483,7 +483,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use a competent person scheme member</strong> — search the NICEIC, NAPIT, or
                 ELECSA registers for electricians based in or covering Aberdeen. Registration
@@ -491,7 +491,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Verify inspection qualifications</strong> — the inspector should hold City
                 and Guilds 2391 (Inspection and Testing of Electrical Installations) or the
@@ -500,7 +500,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Experience with older properties</strong> — given Aberdeen's housing stock,
                 prefer electricians with experience of pre-1960s wiring and the challenges of
@@ -508,7 +508,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Avoid very cheap quotes</strong> — an EICR for a three-bedroom Aberdeen
                 house quoted at under £120 should raise questions about thoroughness. A proper EICR
@@ -534,7 +534,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete EICRs On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -569,7 +569,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Aberdeen EICR business with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -594,7 +594,7 @@ export default function EICRAberdeenPage() {
       badgeIcon={ShieldCheck}
       heroTitle={
         <>
-          EICR Aberdeen: <span className="text-yellow-400">Electrical Inspection Guide 2026</span>
+          EICR Aberdeen: <span className="text-elec-yellow">Electrical Inspection Guide 2026</span>
         </>
       }
       heroSubtitle="Everything you need to know about Electrical Installation Condition Reports in Aberdeen — legal requirements under Scottish law, costs, what inspectors look for in Aberdeen's granite tenements, finding qualified inspectors, and guidance for electricians."
@@ -605,7 +605,7 @@ export default function EICRAberdeenPage() {
       faqHeading="Frequently Asked Questions About EICRs in Aberdeen"
       relatedPages={relatedPages}
       ctaHeading="Complete Aberdeen EICRs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

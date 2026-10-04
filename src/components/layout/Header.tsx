@@ -5,7 +5,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import RecordingIndicator from '../apprentice/timer/RecordingIndicator';
 import UserProfileDropdown from '../auth/UserProfileDropdown';
 import NotificationBell from './NotificationBell';
-import { CommandPalette } from '../search/CommandPalette';
+import { OPEN_SEARCH_EVENT } from '@/lib/searchPages';
 import AppTipsSheet from './AppTipsSheet';
 import { useRef, useEffect, useState } from 'react';
 import { format } from 'date-fns';
@@ -103,15 +103,15 @@ const Header = ({ toggleSidebar, sidebarCollapsed = false }: HeaderProps) => {
   const isMobile = useIsMobile();
   const headerRef = useRef<HTMLElement>(null);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [commandOpen, setCommandOpen] = useState(false);
   const [tipsOpen, setTipsOpen] = useState(false);
 
-  // Cmd+K / Ctrl+K keyboard shortcut
+  // Cmd+K / Ctrl+K — jump to the search box in the sidebar (ELE-1804: one
+  // search, and it lives in the sidebar; there is no pop-up any more).
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
-        setCommandOpen((prev) => !prev);
+        window.dispatchEvent(new Event(OPEN_SEARCH_EVENT));
       }
     };
     document.addEventListener('keydown', handleKeyDown);
@@ -252,7 +252,7 @@ const Header = ({ toggleSidebar, sidebarCollapsed = false }: HeaderProps) => {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => setCommandOpen(true)}
+              onClick={() => window.dispatchEvent(new Event(OPEN_SEARCH_EVENT))}
               className={cn(
                 'h-9 w-9 min-w-[36px] min-h-[36px] sm:h-10 sm:w-10 sm:min-w-[40px] sm:min-h-[40px]',
                 'bg-white/5 border border-white/10',
@@ -274,7 +274,6 @@ const Header = ({ toggleSidebar, sidebarCollapsed = false }: HeaderProps) => {
         </div>
       </div>
 
-      <CommandPalette open={commandOpen} onOpenChange={setCommandOpen} />
       <AppTipsSheet open={tipsOpen} onOpenChange={setTipsOpen} />
     </header>
   );

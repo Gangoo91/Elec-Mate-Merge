@@ -44,7 +44,7 @@ export default function ElectricalBoardTypesPage() {
         <>
           Consumer Unit Types
           <br />
-          <span className="text-yellow-400">Split Load, Dual RCD & RCBO Boards</span>
+          <span className="text-elec-yellow">Split Load, Dual RCD & RCBO Boards</span>
         </>
       }
       heroSubtitle="Understanding the different types of consumer unit is essential for every UK electrician. This guide covers split load boards, dual RCD boards, high integrity boards, all-RCBO boards, and main switch only boards — with detailed pros, cons, and guidance on which type to specify for each installation."
@@ -112,9 +112,9 @@ export default function ElectricalBoardTypesPage() {
                 </h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Lowest cost</strong> — Only one RCD plus
+                      <strong className="text-elec-yellow">Lowest cost</strong> — Only one RCD plus
                       MCBs, making it the cheapest option for consumer unit materials.
                     </span>
                   </li>
@@ -183,25 +183,25 @@ export default function ElectricalBoardTypesPage() {
                   <h3 className="font-bold text-white text-lg mb-3">Advantages</h3>
                   <ul className="space-y-3 text-white text-sm leading-relaxed">
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>
-                        <strong className="text-yellow-400">Cost-effective</strong> — Two RCDs plus
+                        <strong className="text-elec-yellow">Cost-effective</strong> — Two RCDs plus
                         MCBs cost significantly less than individual RCBOs for every circuit.
                         Typically 60 to 100 pounds cheaper than an all-RCBO board.
                       </span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>
-                        <strong className="text-yellow-400">Better than split load</strong> — A
+                        <strong className="text-elec-yellow">Better than split load</strong> — A
                         fault only trips half the circuits rather than all RCD-protected circuits.
                         Some services remain available during a fault.
                       </span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>
-                        <strong className="text-yellow-400">Widely available</strong> — Every
+                        <strong className="text-elec-yellow">Widely available</strong> — Every
                         consumer unit manufacturer offers dual RCD boards in various sizes.
                         Replacement parts and additional MCBs are easy to source.
                       </span>
@@ -273,26 +273,26 @@ export default function ElectricalBoardTypesPage() {
                 virtually eliminated for those critical services.
               </p>
               <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-6">
-                <h3 className="font-bold text-yellow-400 text-lg mb-3">
+                <h3 className="font-bold text-elec-yellow text-lg mb-3">
                   Typical High Integrity Board Layout
                 </h3>
                 <div className="space-y-4 text-white text-sm leading-relaxed">
                   <p>
-                    <strong className="text-yellow-400">Main Switch Side (non-RCD):</strong> Fire
+                    <strong className="text-elec-yellow">Main Switch Side (non-RCD):</strong> Fire
                     alarm, emergency lighting, smoke detection interconnect — circuits where RCD
                     protection could compromise safety.
                   </p>
                   <p>
-                    <strong className="text-yellow-400">RCD 1 (Group A):</strong> Downstairs
+                    <strong className="text-elec-yellow">RCD 1 (Group A):</strong> Downstairs
                     sockets, kitchen ring, cooker, downstairs lighting — general domestic circuits.
                   </p>
                   <p>
-                    <strong className="text-yellow-400">RCD 2 (Group B):</strong> Upstairs sockets,
+                    <strong className="text-elec-yellow">RCD 2 (Group B):</strong> Upstairs sockets,
                     upstairs lighting, bathroom, immersion heater — second group of domestic
                     circuits.
                   </p>
                   <p>
-                    <strong className="text-yellow-400">RCD 3 (Critical):</strong> Freezer, burglar
+                    <strong className="text-elec-yellow">RCD 3 (Critical):</strong> Freezer, burglar
                     alarm, external lighting, garage supply — circuits that must remain live when
                     other groups trip.
                   </p>
@@ -333,46 +333,46 @@ export default function ElectricalBoardTypesPage() {
                 simply by looking at which RCBO has tripped.
               </p>
               <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-6">
-                <h3 className="font-bold text-yellow-400 text-lg mb-4">
+                <h3 className="font-bold text-elec-yellow text-lg mb-4">
                   Why All-RCBO Boards Are the Professional Choice
                 </h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Perfect discrimination</strong> — A fault
+                      <strong className="text-elec-yellow">Perfect discrimination</strong> — A fault
                       on any circuit trips only that circuit. The cooker circuit tripping does not
                       take out the lighting. A faulty appliance does not disconnect the freezer.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">No cumulative leakage</strong> — Each RCBO
+                      <strong className="text-elec-yellow">No cumulative leakage</strong> — Each RCBO
                       monitors only its own circuit. Standing earth leakage from other circuits has
                       zero effect. This virtually eliminates nuisance tripping.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Instant fault identification</strong> —
+                      <strong className="text-elec-yellow">Instant fault identification</strong> —
                       The tripped RCBO immediately tells you which circuit has the fault. No need to
                       isolate circuits one by one.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Fewer call-backs</strong> — The time saved
+                      <strong className="text-elec-yellow">Fewer call-backs</strong> — The time saved
                       in nuisance tripping call-backs often pays for the additional cost of RCBOs
                       within the first year of installation.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Future-proof</strong> — Adding circuits is
+                      <strong className="text-elec-yellow">Future-proof</strong> — Adding circuits is
                       straightforward. No need to worry about balancing loads across RCD groups or
                       exceeding cumulative leakage thresholds.
                     </span>
@@ -446,7 +446,7 @@ export default function ElectricalBoardTypesPage() {
               <div className="space-y-4 my-6">
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <div>
                       <h3 className="font-bold text-white mb-1">
                         New domestic installations and rewires
@@ -462,7 +462,7 @@ export default function ElectricalBoardTypesPage() {
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <div>
                       <h3 className="font-bold text-white mb-1">
                         Budget-conscious consumer unit replacements
@@ -477,7 +477,7 @@ export default function ElectricalBoardTypesPage() {
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <div>
                       <h3 className="font-bold text-white mb-1">
                         Installations with EV chargers or solar PV
@@ -493,7 +493,7 @@ export default function ElectricalBoardTypesPage() {
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <div>
                       <h3 className="font-bold text-white mb-1">
                         Commercial and industrial distribution boards
@@ -602,7 +602,7 @@ export default function ElectricalBoardTypesPage() {
         },
       ]}
       ctaHeading="Design Consumer Units with Confidence"
-      ctaSubheading="Elec-Mate's circuit designer, calculators, and certificate forms support every board type. Join 1,600+ UK electricians. 7-day free trial, cancel anytime."
+      ctaSubheading="Elec-Mate's circuit designer, calculators, and certificate forms support every board type. Join 2,100+ UK electricians. 7-day free trial, cancel anytime."
     />
   );
 }

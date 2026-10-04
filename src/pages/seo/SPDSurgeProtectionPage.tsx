@@ -44,7 +44,7 @@ export default function SPDSurgeProtectionPage() {
         <>
           SPD Surge Protection
           <br />
-          <span className="text-yellow-400">BS 7671 Requirements & Installation</span>
+          <span className="text-elec-yellow">BS 7671 Requirements & Installation</span>
         </>
       }
       heroSubtitle="Surge Protective Devices (SPDs) are now required in the majority of UK domestic installations following the strengthened requirements in BS 7671. This guide covers everything an electrician needs to know — what SPDs are, the risk assessment under Regulation 443.4, Type 1, 2, and 3 devices, earthing considerations, and installation at the consumer unit."
@@ -118,9 +118,9 @@ export default function SPDSurgeProtectionPage() {
                 </h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Serious injury to, or loss of, human life
                       </strong>{' '}
                       — Installations in medical locations, safety services, or where loss of supply
@@ -129,9 +129,9 @@ export default function SPDSurgeProtectionPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Significant financial or data loss
                       </strong>{' '}
                       — Where loss of equipment or data could cause significant financial loss — IT
@@ -140,7 +140,7 @@ export default function SPDSurgeProtectionPage() {
                     </span>
                   </li>
                 </ul>
-                <p className="text-white/60 text-sm mt-4">
+                <p className="text-white text-sm mt-4">
                   Regulation 443.4.1 originally listed a third consequence, but limb (b) was removed
                   by the BS 7671:2018+A2:2022 Corrigendum (May 2023), leaving the two consequences
                   above.
@@ -189,7 +189,7 @@ export default function SPDSurgeProtectionPage() {
               </p>
               <div className="space-y-4 my-6">
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-3">
+                  <h3 className="font-bold text-elec-yellow text-lg mb-3">
                     Type 1 SPD (Class I Test)
                   </h3>
                   <p className="text-white text-sm leading-relaxed mb-3">
@@ -208,7 +208,7 @@ export default function SPDSurgeProtectionPage() {
                   </p>
                 </div>
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-3">
+                  <h3 className="font-bold text-elec-yellow text-lg mb-3">
                     Type 2 SPD (Class II Test)
                   </h3>
                   <p className="text-white text-sm leading-relaxed mb-3">
@@ -267,7 +267,7 @@ export default function SPDSurgeProtectionPage() {
               </p>
               <div className="grid sm:grid-cols-3 gap-4 my-6">
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-3">TN-C-S (PME)</h3>
+                  <h3 className="font-bold text-elec-yellow text-lg mb-3">TN-C-S (PME)</h3>
                   <p className="text-white text-sm leading-relaxed">
                     The most common domestic earthing arrangement. SPDs are connected between line
                     and earth, and between neutral and earth. The low impedance of the PME earth
@@ -337,43 +337,43 @@ export default function SPDSurgeProtectionPage() {
                 <h3 className="font-bold text-white text-lg mb-4">SPD Installation Checklist</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Location</strong> — Install at the origin,
+                      <strong className="text-elec-yellow">Location</strong> — Install at the origin,
                       within or immediately adjacent to the main consumer unit. If space permits,
                       use a consumer unit with a dedicated SPD module position.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Lead length</strong> — Total connecting
+                      <strong className="text-elec-yellow">Lead length</strong> — Total connecting
                       conductor length must not exceed 0.5 metres (Regulation 534.4.4). Keep
                       connections as short as possible. Some consumer units achieve this with a
                       direct plug-in SPD module.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Back-up protection</strong> — Install a
+                      <strong className="text-elec-yellow">Back-up protection</strong> — Install a
                       dedicated MCB or fuse on the supply to the SPD, sized according to the
                       manufacturer's specification (typically 32A or 40A).
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Status indication</strong> — Check that
+                      <strong className="text-elec-yellow">Status indication</strong> — Check that
                       the SPD's green indicator is showing after installation, confirming the device
                       is operational. Explain to the client that when the indicator turns red, the
                       SPD needs replacing.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Documentation</strong> — Record the SPD
+                      <strong className="text-elec-yellow">Documentation</strong> — Record the SPD
                       type, manufacturer, model, and connection arrangement on the Electrical
                       Installation Certificate. Note the SPD on the circuit chart.
                     </span>
@@ -471,27 +471,27 @@ export default function SPDSurgeProtectionPage() {
                 </h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">SPDs with integrated spark gap</strong> —
+                      <strong className="text-elec-yellow">SPDs with integrated spark gap</strong> —
                       Some SPDs use a gas discharge tube (spark gap) in series with the MOV. The
                       spark gap has no follow-through current because it extinguishes cleanly once
                       the surge has passed, preventing RCD tripping.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Type S (time-delayed) RCDs</strong> — A
+                      <strong className="text-elec-yellow">Type S (time-delayed) RCDs</strong> — A
                       time-delayed RCD at the main switch ignores the very brief surge diversion
                       event because its delay exceeds the duration of the surge. Downstream
                       non-delayed RCBOs provide instantaneous personal protection on each circuit.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">SPD upstream of the RCD</strong> — If the
+                      <strong className="text-elec-yellow">SPD upstream of the RCD</strong> — If the
                       SPD is connected upstream of the main RCD (between the main switch and the
                       RCD), the surge current does not pass through the RCD and cannot cause
                       tripping. However, this requires the SPD to have its own separate back-up
@@ -499,9 +499,9 @@ export default function SPDSurgeProtectionPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         3+1 or 1+1 connection configuration
                       </strong>{' '}
                       — Specific SPD connection arrangements that minimise the current flowing
@@ -605,7 +605,7 @@ export default function SPDSurgeProtectionPage() {
         },
       ]}
       ctaHeading="Specify and Certify SPDs With Confidence"
-      ctaSubheading="SPD fields in every certificate, BS 7671 Section 534 accessible in-app, and AI Circuit Designer includes SPD in designs. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="SPD fields in every certificate, BS 7671 Section 534 accessible in-app, and AI Circuit Designer includes SPD in designs. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

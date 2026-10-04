@@ -165,7 +165,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Knee and joint problems</strong> — frequent kneeling during first-fix and
                 board work accelerates wear on knee joints. Many electricians develop significant
@@ -173,7 +173,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Back and shoulder problems</strong> — overhead cable work, working in
                 confined spaces (lofts, floor voids), and carrying heavy cable drums all place
@@ -181,7 +181,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Vibration white finger / HAVS</strong> — long-term use of SDS drills and
                 impact drivers can cause Hand-Arm Vibration Syndrome, which is a prescribed
@@ -189,7 +189,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Eyesight</strong> — reading small print (cable ratings, circuit diagrams,
                 schematic labels) becomes progressively more difficult in the late 40s and 50s. Good
@@ -207,7 +207,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <p className="text-white text-sm">
               <strong>Planning tip:</strong> Structure your transition. At 55–58, consider reducing
               physical site work and moving into inspection and testing, supervision, training
@@ -231,7 +231,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Annual allowance</strong> — you can contribute up to 100% of your annual
                 earnings (net relevant earnings) or £60,000 (the annual allowance), whichever is
@@ -239,7 +239,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tax relief</strong> — pension contributions reduce your taxable profits. If
                 you earn £50,000 and contribute £10,000 to a pension, your taxable income is
@@ -248,7 +248,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SIPP — the standard choice</strong> — a Self-Invested Personal Pension
                 offers flexibility, low costs (index fund options from 0.15% per year), and control
@@ -257,7 +257,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Carry forward</strong> — if you have unused annual allowance from the
                 previous three tax years, you can carry it forward and make a larger contribution in
@@ -288,7 +288,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>How it works</strong> — the company makes pension contributions directly
                 into your SIPP or company pension scheme as an employer. These contributions are a
@@ -297,7 +297,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tax efficiency example</strong> — a limited company with £80,000 profit that
                 makes a £20,000 employer pension contribution reduces taxable profit to £60,000,
@@ -307,7 +307,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>The annual allowance still applies</strong> — employer contributions count
                 towards the £60,000 annual allowance. If you also make personal contributions, the
@@ -316,7 +316,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Salary sacrifice</strong> — in addition to employer contributions, salary
                 sacrifice (where you give up part of your salary in exchange for a larger employer
@@ -342,7 +342,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minimum contributions</strong> — in 2026/27, the minimum total contribution
                 is 8% of qualifying earnings (earnings between £6,240 and £50,270). At least 3% must
@@ -351,7 +351,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Do not opt out</strong> — opting out of automatic enrolment loses the
                 employer contribution, which is effectively a pay cut. Even if finances are tight,
@@ -359,7 +359,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>JIB pension scheme</strong> — electricians covered by the JIB national
                 working rule agreement are enrolled in the JIB pension scheme (currently operated
@@ -368,7 +368,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consider additional voluntary contributions (AVCs)</strong> — if you can
                 afford to save more than the minimum, making additional contributions to the
@@ -394,7 +394,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Check your State Pension forecast on the GOV.UK website (search "check State Pension
                 forecast"). This shows your projected pension based on your NI record and how many
@@ -402,7 +402,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Consider buying missing NI years (Class 3 voluntary contributions, approximately
                 £824 per missing year in 2026/27). Each year you buy adds £329 per year to your
@@ -411,7 +411,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Self-employed electricians should ensure they are registered for self-assessment and
                 paying Class 4 NI contributions annually — these count towards qualifying years.
@@ -437,7 +437,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Briefcase className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">What makes a business saleable?</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -503,7 +503,7 @@ export default function ElectricianRetirementPlanningPage() {
       heroTitle={
         <>
           Electrician Retirement Planning:{' '}
-          <span className="text-yellow-400">Pensions, Business Value and Exit</span>
+          <span className="text-elec-yellow">Pensions, Business Value and Exit</span>
         </>
       }
       heroSubtitle="Retirement planning for UK electricians — the physical realities of a trades career, pension options for sole traders and limited company directors, State Pension maximisation, and how to build and exit a business with real retirement value."

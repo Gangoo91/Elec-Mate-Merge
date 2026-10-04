@@ -5,6 +5,7 @@ import ErrorBoundary from '@/components/ErrorBoundary';
 import { NotificationsManager } from '@/components/notifications/NotificationsManager';
 import { SectionSkeleton } from '@/components/ui/page-skeleton';
 import { certificateRoute, certificateHref, certificateNewHref } from '@/utils/certificate-href';
+import { withCertificatePrefill } from '@/utils/certificatePrefill';
 import { useToast } from '@/hooks/use-toast';
 
 const containerVariants = {
@@ -31,6 +32,9 @@ const QsReviewBenchSection = lazy(() => import('@/components/inspection/QsReview
 
 // Skeleton loader for lazy components
 const SectionLoader = SectionSkeleton;
+
+/** Sections that start or choose a new certificate — the job prefill rides along. */
+const PREFILL_SECTIONS = new Set(['dashboard', 'eicr', 'eic', 'minor-works', 'certificates', 'specialist']);
 
 const InspectionIndex = () => {
   const location = useLocation();
@@ -140,7 +144,13 @@ const InspectionIndex = () => {
     const effectiveType = reportType || section;
     const route = certificateRoute(effectiveType);
     if (route.kind === 'path') {
-      navigate(reportId ? certificateHref(effectiveType, reportId) : certificateNewHref(effectiveType));
+      // A NEW cert carries the job's who/where on (started from a booking or a
+      // project); a resumed one never does — it already has its own.
+      navigate(
+        reportId
+          ? certificateHref(effectiveType, reportId)
+          : withCertificatePrefill(certificateNewHref(effectiveType))
+      );
       return;
     }
 
@@ -153,7 +163,11 @@ const InspectionIndex = () => {
     params.set('section', section);
     if (reportId) params.set('reportId', reportId);
     if (reportType) params.set('reportType', reportType);
-    navigate(`${basePath}?${params.toString()}`);
+    // Keep the job's prefill while the user is still choosing or starting a
+    // new cert (forms read it from the URL). Anywhere else — My Reports,
+    // notifications, a resumed draft — drop it so it can't land on the wrong cert.
+    const target = `${basePath}?${params.toString()}`;
+    navigate(!reportId && PREFILL_SECTIONS.has(section) ? withCertificatePrefill(target) : target);
   };
 
   const renderCurrentSection = () => {

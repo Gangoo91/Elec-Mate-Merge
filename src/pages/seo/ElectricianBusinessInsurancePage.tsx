@@ -284,23 +284,23 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">Example Scenarios</h3>
             <ul className="space-y-2 text-white text-sm">
               <li className="flex items-start gap-2">
-                <AlertTriangle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>
                   You design a circuit with inadequate cable sizing — client pays for re-work
                 </span>
               </li>
               <li className="flex items-start gap-2">
-                <AlertTriangle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>
                   You recommend the wrong type of consumer unit — client has to replace it
                 </span>
               </li>
               <li className="flex items-start gap-2">
-                <AlertTriangle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>Your EICR report misses a defect that later causes damage</span>
               </li>
               <li className="flex items-start gap-2">
-                <AlertTriangle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>Your energy assessment leads a client to make poor investment decisions</span>
               </li>
             </ul>
@@ -436,7 +436,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Scale className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Legal Expenses Insurance</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -483,20 +483,20 @@ const sections = [
               <ul className="space-y-2">
                 <li>
                   Public liability (£2m):{' '}
-                  <strong className="text-yellow-400">£100–£250/year</strong>
+                  <strong className="text-elec-yellow">£100–£250/year</strong>
                 </li>
                 <li>
-                  Professional indemnity: <strong className="text-yellow-400">£50–£150/year</strong>
+                  Professional indemnity: <strong className="text-elec-yellow">£50–£150/year</strong>
                 </li>
                 <li>
-                  Personal accident: <strong className="text-yellow-400">£50–£150/year</strong>
+                  Personal accident: <strong className="text-elec-yellow">£50–£150/year</strong>
                 </li>
                 <li>
-                  Tool cover (£10k): <strong className="text-yellow-400">£100–£300/year</strong>
+                  Tool cover (£10k): <strong className="text-elec-yellow">£100–£300/year</strong>
                 </li>
                 <li className="pt-2 border-t border-white/10">
                   <strong>Combined policy: </strong>
-                  <strong className="text-yellow-400">£300–£800/year</strong>
+                  <strong className="text-elec-yellow">£300–£800/year</strong>
                 </li>
               </ul>
             </div>
@@ -505,22 +505,22 @@ const sections = [
               <ul className="space-y-2">
                 <li>
                   Public liability (£5m):{' '}
-                  <strong className="text-yellow-400">£200–£500/year</strong>
+                  <strong className="text-elec-yellow">£200–£500/year</strong>
                 </li>
                 <li>
                   Employers liability (£10m):{' '}
-                  <strong className="text-yellow-400">£100–£300/year</strong>
+                  <strong className="text-elec-yellow">£100–£300/year</strong>
                 </li>
                 <li>
                   Professional indemnity:{' '}
-                  <strong className="text-yellow-400">£100–£250/year</strong>
+                  <strong className="text-elec-yellow">£100–£250/year</strong>
                 </li>
                 <li>
-                  Tool cover + fleet: <strong className="text-yellow-400">£300–£800/year</strong>
+                  Tool cover + fleet: <strong className="text-elec-yellow">£300–£800/year</strong>
                 </li>
                 <li className="pt-2 border-t border-white/10">
                   <strong>Combined policy: </strong>
-                  <strong className="text-yellow-400">£700–£1,800/year</strong>
+                  <strong className="text-elec-yellow">£700–£1,800/year</strong>
                 </li>
               </ul>
             </div>
@@ -546,7 +546,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Specialist trade insurers</strong> (Rhino Trade Insurance, Kingsbridge,
                 Tradesman Saver) understand electrical work and offer policies tailored to
@@ -555,7 +555,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Comparison and aggregator sites</strong> (Simply Business, PolicyBee,
                 Superscript) let you compare multiple quotes quickly. Useful for finding the best
@@ -563,7 +563,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insurance brokers</strong> can find you a policy and handle claims on your
                 behalf. Useful if you have complex requirements (multiple employees, commercial
@@ -571,7 +571,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Key factors:</strong> check cover limits, excess amounts, exclusions, claims
                 process, and whether the policy is "claims made" (covers claims made during the
@@ -596,7 +596,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Shield className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Review Annually</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -667,7 +667,7 @@ export default function ElectricianBusinessInsurancePage() {
       heroTitle={
         <>
           Electrician Business Insurance UK 2026:{' '}
-          <span className="text-yellow-400">What You Need and What It Costs</span>
+          <span className="text-elec-yellow">What You Need and What It Costs</span>
         </>
       }
       heroSubtitle="Public liability, professional indemnity, employers liability, tool cover, and more. This guide explains every type of business insurance relevant to UK electricians, when you need each one, realistic costs, and how to choose the right provider."
@@ -678,7 +678,7 @@ export default function ElectricianBusinessInsurancePage() {
       faqHeading="Frequently Asked Questions About Electrician Business Insurance"
       relatedPages={relatedPages}
       ctaHeading="Build a Professional Electrical Business"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional tools that make you look professional. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional tools that make you look professional. 7-day free trial, cancel anytime."
     />
   );
 }

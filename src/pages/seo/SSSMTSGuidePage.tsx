@@ -175,19 +175,19 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Electricians who supervise one or more other workers on site</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Foremen and charge hands on electrical contracts</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Self-employed electricians who manage subcontractors</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Apprentices moving into their first supervisory role</span>
             </li>
           </ul>
@@ -212,19 +212,19 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Project managers running electrical contracts</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Business owners managing teams of electricians</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Contracts managers with overall site safety responsibility</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Anyone named as Principal Contractor under CDM Regulations</span>
             </li>
           </ul>
@@ -281,14 +281,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sole trader doing domestic work:</strong> Neither is strictly required, but
                 SSSTS is useful if you ever work on sites managed by a main contractor.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrician working on commercial sites:</strong> SSSTS if you supervise
                 anyone (including apprentices). Not required if you are working under someone else's
@@ -296,14 +296,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Running a small team (2 to 5 people):</strong> SSSTS as a minimum. SMSTS if
                 you are the principal contractor on projects.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Managing projects or running a larger business:</strong> SMSTS. This is
                 expected by clients, main contractors, and your insurers.
@@ -323,7 +323,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <AlertTriangle className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Health and Safety Law</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -336,7 +336,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Risk Assessment and Method Statements</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -349,7 +349,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <HardHat className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <HardHat className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   CDM Regulations (SMSTS only — in depth)
@@ -364,7 +364,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <Users className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Site-Specific Hazards</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -425,7 +425,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <RefreshCw className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <RefreshCw className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SSSTS-R:</strong> 1-day refresher course. Covers updates to health and
                 safety legislation and refreshes the core content. Book at least 3 months before
@@ -433,7 +433,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <RefreshCw className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <RefreshCw className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SMSTS-R:</strong> 2-day refresher course. Covers legislative updates and
                 revisits CDM Regulations and management responsibilities. Book at least 3 months
@@ -490,7 +490,7 @@ export default function SSSMTSGuidePage() {
       heroTitle={
         <>
           SSSTS vs SMSTS:{' '}
-          <span className="text-yellow-400">Site Safety Training for Electricians</span>
+          <span className="text-elec-yellow">Site Safety Training for Electricians</span>
         </>
       }
       heroSubtitle="SSSTS and SMSTS are the industry-standard site safety qualifications. This guide covers which one you need, what the courses cover, costs, renewal, and how they fit into your electrical career."
@@ -501,7 +501,7 @@ export default function SSSMTSGuidePage() {
       faqHeading="Frequently Asked Questions About SSSTS and SMSTS"
       relatedPages={relatedPages}
       ctaHeading="Professional Site Safety Documentation"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for risk assessments, method statements, and site safety management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for risk assessments, method statements, and site safety management. 7-day free trial, cancel anytime."
     />
   );
 }

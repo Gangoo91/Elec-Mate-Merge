@@ -3,7 +3,7 @@
  * Maps to City & Guilds 2365-02 / Unit 204 / LO6 / AC 6.6
  *   AC 6.6 — "Record test results"
  *
- * Frame: BS 7671 Reg 642.4 (recording) and Section 644 (certification) require
+ * Frame: BS 7671 Section 644 (certification, Reg 644.3 schedules) requires
  * every test result to be recorded. The Schedule of Test Results (STR) is the
  * per-circuit form; the Schedule of Inspections summarises visual checks; the
  * Electrical Installation Certificate (EIC) or Minor Works Certificate (MEIWC)
@@ -82,7 +82,7 @@ const checks = [
 const quizQuestions = [
   {
     id: 1,
-    question: 'BS 7671 Reg 642.4 — recording requirements:',
+    question: 'Recording of test results at initial verification:',
     options: [
       'Results need recording only where the customer asks; for a domestic job a verbal handover of the readings is sufficient.',
       'Test results shall be recorded and the records retained, with the Schedule of Test Results as the standard certification form.',
@@ -91,7 +91,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'Reg 642.4 (paraphrased): every test result must be recorded as part of the certification. The Schedule of Test Results captures the per-circuit data; the Schedule of Inspections captures the visual inspection results; the EIC ties them together with declarations and signatures. Records must be retained — Part P of the Building Regulations and various scheme requirements typically require lifetime retention by the customer and at least six years by the contractor.',
+      'Reg 644.3: the certificate must include the Schedules of Inspection, Circuit Details and Test Results. The Schedule of Test Results captures the per-circuit data; the Schedule of Inspections captures the visual inspection results; the EIC ties them together with declarations and signatures. Records must be retained — Part P of the Building Regulations and various scheme requirements typically require lifetime retention by the customer and at least six years by the contractor.',
   },
   {
     id: 2,
@@ -219,7 +219,7 @@ const faqs = [
   {
     question: 'Where does the AFDD test result go on the STR?',
     answer:
-      'A4:2026 introduced AFDD requirements for higher-risk installations. The IET model STR has been updated to include AFDD columns — typically a tick that the device test facility was operated per manufacturer’s instructions, plus a free-text note for any abnormal result. Older STR forms may not have a dedicated AFDD column — in that case, document AFDD test in the Notes column or on the Schedule of Inspections under "Additional protection devices".',
+      'A2:2022 made AFDDs a requirement in HRRBs, HMOs, purpose-built student accommodation and care homes, and the model forms gained fields for recording AFDDs. The model STR includes AFDD columns — typically a tick that the device test facility was operated per manufacturer’s instructions, plus a free-text note for any abnormal result. Older STR forms may not have a dedicated AFDD column — in that case, document AFDD test in the Notes column or on the Schedule of Inspections under "Additional protection devices".',
   },
 ];
 
@@ -243,7 +243,7 @@ export default function Sub6() {
 
         <TLDR
           points={[
-            'BS 7671 Reg 642.4 and Section 644 require all test results to be recorded and certified. The Schedule of Test Results (STR) is the per-circuit form; the Schedule of Inspections is the visual checklist; the Electrical Installation Certificate (EIC) is the top-level signed document.',
+            'BS 7671 Section 644 (Reg 644.3) requires all test results to be recorded and certified. The Schedule of Test Results (STR) is the per-circuit form; the Schedule of Inspections is the visual checklist; the Electrical Installation Certificate (EIC) is the top-level signed document.',
             'For new installations and major alterations: full EIC + Schedule of Inspections + STR. For minor alterations (single socket added, like-for-like accessory swap): a Minor Electrical Installation Works Certificate (MEIWC) on its own.',
             'Per Reg 644.1.1, any defect or omission revealed during testing must be corrected before the Certificate is issued. You cannot sign off an EIC for an installation with known faults.',
           ]}
@@ -255,7 +255,7 @@ export default function Sub6() {
             'Know when a Minor Electrical Installation Works Certificate (MEIWC) is appropriate and when a full EIC pack is required.',
             'Complete every standard column on the Schedule of Test Results for a domestic circuit.',
             'Cross-reference STR readings against Schedule of Inspections items and EIC declarations.',
-            'Cite Reg 642.4 (recording) and Reg 644.1.1 (defects must be corrected before certification).',
+            'Cite Reg 644.3 (schedules with the certificate) and Reg 644.1.1 (defects must be corrected before certification).',
             "Manage record-keeping per the contractor's, customer's and Competent Person Scheme's retention requirements.",
             'Issue duplicate certificates correctly and handle paper-form corrections per industry practice.',
           ]}
@@ -525,8 +525,8 @@ export default function Sub6() {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 7671:2018+A4:2026 — Regulation 642.4 (Recording, paraphrased)"
-          clause="The results of every test required by this Chapter shall be recorded and the records retained as part of the certification of the installation. The certification shall include the Schedule of Test Results (STR), the Schedule of Inspections, and the Electrical Installation Certificate (EIC) for new installations or major alterations, or the Minor Electrical Installation Works Certificate (MEIWC) for minor alterations to an existing installation."
+          source="BS 7671:2018+A4:2026 — Regulation 644.3 (Certificate and schedules)"
+          clause="The Certificate shall include details of the extent of the work covered, and: (a) Schedule(s) of Inspection; and (b) Schedule(s) of Circuit Details and Schedule(s) of Test Results. The schedules shall be based on the models in Appendix 6."
           meaning={
             <>
               Every test result you take is part of the regulatory record. The form (STR plus
@@ -535,7 +535,7 @@ export default function Sub6() {
               certification, not optional companion documents.
             </>
           }
-          cite="Source: BS 7671:2018+A4:2026 Part 6, Chapter 64, Regulation 642.4 and Section 644 (paraphrased)."
+          cite="Source: BS 7671:2018+A4:2026, Regulation 644.3."
         />
 
         <InlineCheck
@@ -890,7 +890,7 @@ export default function Sub6() {
 
         <KeyTakeaways
           points={[
-            'BS 7671 Reg 642.4 + Section 644 require recording of every test result. The Schedule of Test Results (STR) is the per-circuit form; the Schedule of Inspections is the visual checklist; the Electrical Installation Certificate (EIC) is the top-level signed document.',
+            'BS 7671 Section 644 (Reg 644.3) requires recording of every test result. The Schedule of Test Results (STR) is the per-circuit form; the Schedule of Inspections is the visual checklist; the Electrical Installation Certificate (EIC) is the top-level signed document.',
             'For new installations and major alterations: full EIC + Schedule of Inspections + STR pack. For minor alterations (single socket on existing ring): MEIWC alone.',
             'Reg 644.1.1: any defect or omission revealed during testing must be CORRECTED before the EIC is issued. You cannot certify an installation with known faults.',
             'EIC sections: address, supply characteristics, designer/constructor/inspector declarations (each signed), departures from BS 7671, comments, next inspection due date, schedules attached.',

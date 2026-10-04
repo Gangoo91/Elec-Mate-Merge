@@ -125,25 +125,25 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Find V:</strong> V = I × R. Example: I = 5A, R = 10Ω → V = 5 × 10 = 50V.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Find I:</strong> I = V ÷ R. Example: V = 230V, R = 46Ω → I = 230 ÷ 46 = 5A.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Find R:</strong> R = V ÷ I. Example: V = 12V, I = 0.4A → R = 12 ÷ 0.4 = 30Ω.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Series circuit example:</strong> Three resistors of 4Ω, 6Ω, and 10Ω in
                 series on a 20V supply. Rt = 4 + 6 + 10 = 20Ω. I = V ÷ Rt = 20 ÷ 20 = 1A. Vd across
@@ -226,7 +226,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Formula:</strong> Vd = (mV/A/m × I × L) ÷ 1000. Where: mV/A/m = the
                 millivolt drop per ampere per metre for your cable (from BS 7671 Appendix 4 Table
@@ -234,14 +234,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Worked example:</strong> A 2.5mm² twin and earth cable (mV/A/m = 18) runs
                 20m to supply a 13A socket. Vd = (18 × 13 × 20) ÷ 1000 = 4,680 ÷ 1000 = 4.68V.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Recommended maximum voltage drop:</strong> BS 7671 Table 4Ab allows 3% for
                 lighting (6.9V) and 5% for other circuits (11.5V) on a 230V supply. 4.68V = 2.03%,
@@ -249,7 +249,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>When voltage drop is too high:</strong> Select a larger cable with a lower
                 mV/A/m value, reduce the circuit length (use a sub-distribution board closer to the
@@ -321,7 +321,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rule 1 — Do the same to both sides:</strong> To isolate a variable, perform
                 the inverse operation on both sides. If a variable is multiplied, divide both sides.
@@ -329,7 +329,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Example — find R from P = V²/R:</strong> Multiply both sides by R → P × R =
                 V². Divide both sides by P → R = V² ÷ P. Example: P = 100W, V = 230V → R = 230² ÷
@@ -337,7 +337,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Example — find L from voltage drop formula:</strong> From Vd = (mV/A/m × I ×
                 L) ÷ 1000, multiply both sides by 1000 → Vd × 1000 = mV/A/m × I × L. Divide both
@@ -345,7 +345,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rule 2 — Handle square roots and squares carefully:</strong> To isolate a
                 squared variable, take the square root of both sides. To isolate a square-rooted
@@ -370,7 +370,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Impedance formula:</strong> Z = √(R² + X²). Impedance (Z, measured in ohms)
                 is the total opposition to current flow in an AC circuit — the AC equivalent of
@@ -378,14 +378,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Worked example:</strong> A circuit has R = 3Ω and inductive reactance XL =
                 4Ω. Z = √(3² + 4²) = √(9 + 16) = √25 = 5Ω. Current I = V ÷ Z = 230 ÷ 5 = 46A.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Power triangle:</strong> True power (P, watts), reactive power (Q, VAr), and
                 apparent power (S, VA) follow the same Pythagorean relationship: S = √(P² + Q²).
@@ -393,7 +393,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>When this appears in exams:</strong> Impedance calculations with Pythagoras
                 appear in C&G 2365 Unit 204 (Electrical Installations Technology) and again in Unit
@@ -472,7 +472,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-6 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <p>
                   <strong>Example 1 — Cable sizing and voltage drop:</strong>
@@ -487,7 +487,7 @@ const sections = [
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <p>
                   <strong>Example 2 — Power and current:</strong>
@@ -501,7 +501,7 @@ const sections = [
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <p>
                   <strong>Example 3 — Series circuit with voltage drops:</strong>
@@ -543,7 +543,7 @@ export default function ApprenticeMathsElectricianPage() {
       heroTitle={
         <>
           Maths for Electrical Apprentices:{' '}
-          <span className="text-yellow-400">Essential Electrical Calculations</span>
+          <span className="text-elec-yellow">Essential Electrical Calculations</span>
         </>
       }
       heroSubtitle="Every electrical maths skill you need as an apprentice — Ohm's Law, the power triangle, voltage drop, percentage voltage drop, transposition of formulae, Pythagoras for AC circuits, SI prefixes, and practical worked examples."

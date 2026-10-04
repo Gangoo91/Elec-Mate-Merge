@@ -146,35 +146,35 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tripped MCB</strong> — the most common cause. An overloaded or faulted
                 circuit trips its MCB, cutting power to that circuit only.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tripped RCD</strong> — an RCD protecting a bank of circuits trips, cutting
                 power to all circuits behind it.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Failed MCB</strong> — an MCB that appears to be on but has failed internally
                 (open circuit). Less common but easily missed.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Open circuit neutral</strong> — a broken neutral conductor in the fixed
                 wiring or supply. Dangerous in three-phase premises.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Missing phase</strong> — loss of one phase on a three-phase supply, causing
                 all circuits on that phase to lose power.
@@ -262,7 +262,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Open neutral on a final circuit</strong> — safe but requires repair. The
                 circuit will be completely dead. Identify the break by systematic{' '}
@@ -296,7 +296,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>How to test</strong> — with appropriate PPE, use a multimeter to measure
                 voltage at the load terminal of the MCB (the bottom terminal) with the MCB switched
@@ -305,7 +305,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Why it happens</strong> — MCBs can fail after repeated fault current
                 interruptions, which cause pitting and erosion of the internal contact surfaces.
@@ -314,7 +314,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Action</strong> — replace the MCB with a device of the same type and rating.
                 Carry out safe isolation of the affected circuit before removing the old MCB.
@@ -457,7 +457,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Start at the Consumer Unit</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -508,7 +508,7 @@ export default function PartialPowerLossPage() {
       heroTitle={
         <>
           Partial Power Loss Fault Finding:{' '}
-          <span className="text-yellow-400">Missing Phase, Open Neutral, and Failed MCBs</span>
+          <span className="text-elec-yellow">Missing Phase, Open Neutral, and Failed MCBs</span>
         </>
       }
       heroSubtitle="A complete guide to diagnosing and resolving partial power loss in UK electrical installations. Covers missing phase in three-phase premises, the dangers of an open circuit neutral, failed MCBs, multimeter diagnostic checks, and safe isolation."
@@ -519,7 +519,7 @@ export default function PartialPowerLossPage() {
       faqHeading="Frequently Asked Questions About Partial Power Loss"
       relatedPages={relatedPages}
       ctaHeading="Document Fault Findings and Issue Certificates on Your Phone"
-      ctaSubheading="Elec-Mate's AI fault diagnosis and EICR app help you record findings, generate reports, and issue certificates on site. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's AI fault diagnosis and EICR app help you record findings, generate reports, and issue certificates on site. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

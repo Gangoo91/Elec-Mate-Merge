@@ -47,9 +47,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'What is the purpose of sleeving the bare earth conductor?',
     options: [
-      'To reduce voltage drop',
-      'To increase current capacity',
-      'To improve flexibility',
+      'So it can be used as a neutral if needed',
+      "To raise the cable's insulation resistance reading",
+      'To protect it from corrosion inside the box',
       'For identification and safety',
     ],
     correctAnswer: 3,
@@ -124,7 +124,7 @@ const quizQuestions = [
     question: 'Why must sharp bends be avoided when installing T&E?',
     options: [
       'To prevent voltage drop',
-      'To improve aesthetics only',
+      'To keep the cable within its current rating',
       'To avoid damaging the insulation',
       'To make clipping easier',
     ],
@@ -134,7 +134,7 @@ const quizQuestions = [
   },
   {
     id: 7,
-    question: 'What is the maximum clip spacing for T&E cable on horizontal runs?',
+    question: 'What is the maximum horizontal clip spacing for 2.5 mm² T&E (about 10 mm across its flat face)?',
     options: [
       '200mm',
       '500mm',
@@ -143,7 +143,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'BS 7671 requires cable clips at maximum 300mm spacing for horizontal runs of T&E cable.',
+      'On-Site Guide Table D1 gives 300 mm horizontal and 400 mm vertical for non-armoured sheathed cable 9–15 mm across, which covers 2.5 mm² T&E. Smaller cables (under 9 mm) are 250 mm horizontal. 400 mm is the vertical figure.',
   },
   {
     id: 8,
@@ -199,7 +199,7 @@ const quizQuestions = [
   },
   {
     id: 12,
-    question: 'What is the first step when terminating T&E cable at a socket outlet?',
+    question: 'With the circuit isolated, what is the first step when terminating T&E cable at a socket outlet?',
     options: [
       'Strip cable sheath 25-30mm',
       'Install the faceplate',

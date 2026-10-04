@@ -174,7 +174,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Side cutters (diagonal cutting pliers)</strong> — your most-used tool. Cut
                 cable, trim cores, and strip sheathing. Buy the best pair you can afford. Knipex 70
@@ -182,7 +182,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wire strippers</strong> — automatic strippers (like Knipex 12 62 180 or
                 Jokari Super 4 Plus) save time and reduce core damage. Manual strippers work but are
@@ -190,7 +190,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Screwdrivers</strong> — flat-blade and Phillips in multiple sizes. You need
                 at least a small flat-blade (for terminal screws), a medium flat-blade, a PZ1, and a
@@ -199,7 +199,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Long-nose pliers</strong> — for bending cable cores, holding small
                 components, and working in tight spaces. Knipex 26 12 200 or similar. Around £15 to
@@ -207,7 +207,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tape measure</strong> — 5m minimum, preferably 8m. Stanley FatMax or
                 similar. Used constantly for containment runs, cable lengths, and mounting heights.
@@ -215,7 +215,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable knife</strong> — for stripping cable sheathing safely without nicking
                 conductors. CK or Knipex cable knives are designed specifically for this purpose.
@@ -223,14 +223,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Spirit level</strong> — small torpedo level for mounting accessories and a
                 600mm level for containment. Around £5 to £15.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Torch / headlamp</strong> — you will frequently work in poorly lit spaces. A
                 good headlamp keeps your hands free. LED Lenser or similar. Around £15 to £30.
@@ -255,7 +255,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>VDE screwdriver set</strong> — flat-blade and Pozi-drive in the sizes you
                 use most. Wera Kraftform, Wiha SoftFinish, or CK dextro VDE sets are excellent. A
@@ -263,21 +263,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>VDE side cutters</strong> — identical to standard side cutters but with VDE
                 insulated handles. Knipex 70 06 160 VDE or similar. Around £25 to £40.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>VDE long-nose pliers</strong> — insulated version of your standard long-nose
                 pliers. Around £20 to £35.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>VDE cable knife</strong> — insulated handle with a safety blade for
                 stripping cable sheathing near live installations. Around £15 to £25.
@@ -342,7 +342,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Non-contact voltage detector (NCVD)</strong> — useful for quick checks but
                 must never be relied upon for safe isolation. Used for initial detection only. Fluke
@@ -474,7 +474,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Qualification completion (£800 to £1,500)</strong> — your own multifunction
                 tester once you qualify and need your own calibrated instrument. This is the big
@@ -510,7 +510,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Clean tools after each use</strong> — wipe down blades and handles. Remove
                 plaster dust, cement residue, and cable sheathing debris. A dirty tool is harder to
@@ -518,7 +518,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inspect VDE insulation regularly</strong> — check for cracks, chips, cuts,
                 or wear in the insulation. Damaged VDE insulation means the tool is no longer safe
@@ -526,7 +526,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Keep cutting edges sharp</strong> — side cutters and cable knives work best
                 when sharp. Dull blades require more force, increase the risk of slipping, and
@@ -534,7 +534,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Store tools properly</strong> — return tools to their designated pocket in
                 your tool bag. Do not throw them loose into a box or boot. Proper storage prevents
@@ -542,7 +542,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Keep test equipment calibrated</strong> — multifunction testers must be
                 calibrated annually. Keep the calibration certificate with the instrument. Using
@@ -568,7 +568,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Brain className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">46+ Structured Courses</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -637,7 +637,7 @@ export default function ApprenticeToolboxGuidePage() {
       heroTitle={
         <>
           Apprentice Toolbox Guide:{' '}
-          <span className="text-yellow-400">Essential Tools for Every Stage</span>
+          <span className="text-elec-yellow">Essential Tools for Every Stage</span>
         </>
       }
       heroSubtitle="Your tool kit is one of the biggest investments you make as an electrical apprentice. This guide covers every essential hand tool, VDE insulated tool, and piece of test equipment, plus budget advice for building your kit on apprentice wages."

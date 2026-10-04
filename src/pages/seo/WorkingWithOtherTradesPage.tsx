@@ -167,7 +167,7 @@ const sections = [
       <>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-4 flex items-center gap-2">
-            <Calendar className="w-4 h-4 text-yellow-400" /> Typical Domestic First Fix Sequence
+            <Calendar className="w-4 h-4 text-elec-yellow" /> Typical Domestic First Fix Sequence
           </h4>
           <div className="space-y-3 text-white text-sm">
             <div className="flex items-start gap-3 border-b border-white/10 pb-2">
@@ -188,7 +188,7 @@ const sections = [
               </span>
             </div>
             <div className="flex items-start gap-3 border-b border-white/10 pb-2">
-              <span className="w-6 h-6 rounded-full bg-yellow-500/20 text-yellow-400 text-xs font-bold flex items-center justify-center shrink-0">
+              <span className="w-6 h-6 rounded-full bg-elec-yellow text-black text-xs font-bold flex items-center justify-center shrink-0">
                 3
               </span>
               <span>
@@ -251,7 +251,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3 flex items-center gap-2">
-              <AlertTriangle className="w-5 h-5 text-yellow-400" /> Watch Out For
+              <AlertTriangle className="w-5 h-5 text-elec-yellow" /> Watch Out For
             </h3>
             <ul className="space-y-2 text-white text-sm">
               <li>Plumbing pipes clipped over your cables — ask them to route around</li>
@@ -273,7 +273,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Hammer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Hammer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mark your cable routes before bricklaying and plastering.</strong> Use cable
                 markers, photographs, or a simple sketch showing cable positions relative to fixed
@@ -282,7 +282,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Hammer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Hammer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Agree chase sizes and routes before the builder cuts them.</strong> If the
                 builder is chasing walls for you, specify the depth (minimum 25mm for twin and earth
@@ -291,7 +291,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Hammer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Hammer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ducting and conduit before concrete floors are poured.</strong> If you need
                 cables under a concrete floor, get your conduit or ducting in before the pour. Once
@@ -299,7 +299,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Hammer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Hammer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lintels and steels.</strong> Cable routes that cross above windows and doors
                 will encounter lintels and steel beams. Plan your route to avoid drilling through
@@ -417,7 +417,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use the site WhatsApp group.</strong> Most multi-trade projects have a group
                 chat. Use it to confirm dates, flag issues, and share photos of progress. If there
@@ -425,7 +425,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Confirm your schedule in writing.</strong> "I will be on site Monday and
                 Tuesday for first fix. I need clear access to all rooms. Please ensure first fix
@@ -434,7 +434,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Flag problems immediately.</strong> If you arrive on site and the conditions
                 are not what was agreed (plumbing not done, walls not ready, access blocked), notify
@@ -516,7 +516,7 @@ export default function WorkingWithOtherTradesPage() {
       heroTitle={
         <>
           Working with Other Trades:{' '}
-          <span className="text-yellow-400">Coordination, Timing, and Protecting Your Work</span>
+          <span className="text-elec-yellow">Coordination, Timing, and Protecting Your Work</span>
         </>
       }
       heroSubtitle="First fix timing, working with plumbers and builders, protecting your cables, communication, and handling disputes. The practical guide to multi-trade coordination for electricians."
@@ -527,7 +527,7 @@ export default function WorkingWithOtherTradesPage() {
       faqHeading="Frequently Asked Questions About Working with Other Trades"
       relatedPages={relatedPages}
       ctaHeading="Manage Multi-Trade Projects with Confidence"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for scheduling, job management, and on-site documentation. Stay organised across every project. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for scheduling, job management, and on-site documentation. Stay organised across every project. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -199,7 +199,7 @@ const sections = [
                 <span>60W</span>
                 <span>PoE++ (Type 3)</span>
               </div>
-              <div className="grid grid-cols-3 gap-4 font-bold text-yellow-400">
+              <div className="grid grid-cols-3 gap-4 font-bold text-elec-yellow">
                 <span>IEEE 802.3bt</span>
                 <span>90W</span>
                 <span>PoE++ (Type 4)</span>
@@ -232,7 +232,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reduced installation cost</strong> — Ethernet cable is cheaper to install
                 than mains-voltage cable. No conduit, no fire-rated enclosures for the low-voltage
@@ -241,7 +241,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Flexibility</strong> — luminaires can be moved, added, or reconfigured by
                 simply plugging into a different Ethernet port. No rewiring needed. This is
@@ -249,7 +249,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Per-luminaire control</strong> — every luminaire is individually
                 controllable from the network. Dimming, colour temperature, scheduling, scene
@@ -257,7 +257,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Integrated sensors</strong> — PoE luminaires can include occupancy sensors,
                 ambient light sensors, and even Bluetooth beacons for indoor positioning. The sensor
@@ -265,7 +265,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Energy monitoring</strong> — real-time power consumption data per luminaire.
                 Building managers can see exactly how much energy each light uses and optimise
@@ -274,7 +274,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Safety</strong> — SELV voltage on the lighting cables means no risk of
                 lethal shock. Cables can be handled safely without isolation. This reduces risk
@@ -298,7 +298,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cat6 vs Cat6a</strong> — Cat6 supports PoE at up to 100m and is adequate for
                 most installations. Cat6a is recommended for new projects because it has larger
@@ -308,7 +308,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Solid core</strong> — always use solid-core cable for permanent
                 installations (not stranded patch cable). Solid core has lower DC resistance and
@@ -316,7 +316,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable bundling</strong> — when many PoE cables are bundled together (in
                 cable trays or conduit), the current flowing through the cables generates heat. This
@@ -326,7 +326,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maximum distance</strong> — 100m from switch to luminaire (the standard
                 Ethernet limit). This includes any patch leads. For larger buildings, multiple
@@ -334,7 +334,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Installation standards</strong> — install to BS EN 50174 (information
                 technology — cabling installation). Observe bend radius limits (4x cable diameter
@@ -360,7 +360,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Network className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Network className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Port count</strong> — switches are available in 8, 12, 24, and 48-port
                 configurations. Each luminaire uses one port. Plan the port count with 20% spare
@@ -368,7 +368,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Network className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Network className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Total power budget</strong> — the switch has a maximum total PoE power
                 budget. A 48-port switch with 30W per port needs a 1,440W budget. Check that the
@@ -377,7 +377,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Network className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Network className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Managed vs unmanaged</strong> — managed switches allow per-port power
                 control, VLAN configuration, QoS, and integration with the lighting management
@@ -385,7 +385,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Network className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Network className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mains supply</strong> — the switch itself needs a mains power supply. A
                 48-port switch with a 1,440W PoE budget plus its own operating power may draw 7 to
@@ -464,7 +464,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BarChart3 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart3 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Per-luminaire metering</strong> — the PoE switch knows exactly how much
                 power each port is delivering. This data is available in real time via the switch
@@ -472,7 +472,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BarChart3 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart3 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Occupancy data</strong> — luminaires with integrated occupancy sensors
                 report room utilisation data. This is valuable for facility managers — identifying
@@ -481,7 +481,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BarChart3 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart3 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BMS integration</strong> — PoE lighting platforms integrate with building
                 management systems via BACnet/IP, MQTT, or REST APIs. The lighting system becomes
@@ -490,7 +490,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BarChart3 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart3 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Carbon reporting</strong> — real-time energy data enables accurate carbon
                 reporting for ESG compliance and BREEAM certification. Organisations can demonstrate
@@ -514,7 +514,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 528.3</strong> — requires separation of power and communications
                 cables to reduce electromagnetic interference and ensure safety. Maintain the
@@ -523,7 +523,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 414.1</strong> — addresses SELV/PELV protection requirements and
                 functional earthing requirements for data and signalling circuits to prevent mains-
@@ -532,7 +532,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 418.2.1</strong> — different circuit types and connected
                 equipment (lighting, power, data) must be considered as potentially exposed or
@@ -541,7 +541,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mains supply to switches</strong> — the PoE switches require mains power
                 circuits sized and protected per BS 7671. These circuits must have appropriate
@@ -549,7 +549,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing of network equipment</strong> — PoE switches and network cabinets
                 must be earthed to the main earthing terminal. Functional earth connections may also
@@ -586,7 +586,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -628,7 +628,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify PoE lighting mains supply"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
           icon={Lightbulb}
         />
       </>
@@ -654,7 +654,7 @@ export default function PoELightingGuidePage() {
       heroTitle={
         <>
           Power over Ethernet Lighting:{' '}
-          <span className="text-yellow-400">PoE Installation Guide for UK Electricians</span>
+          <span className="text-elec-yellow">PoE Installation Guide for UK Electricians</span>
         </>
       }
       heroSubtitle="PoE lighting delivers power and data to LED luminaires over Ethernet cables. This guide covers IEEE 802.3bt, Cat6/Cat6a cabling, PoE switches, commercial applications, energy monitoring, smart building integration, and BS 7671 considerations."
@@ -665,7 +665,7 @@ export default function PoELightingGuidePage() {
       faqHeading="Frequently Asked Questions About PoE Lighting"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Certify PoE Lighting Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates. Position yourself in the growing PoE lighting market. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates. Position yourself in the growing PoE lighting market. 7-day free trial, cancel anytime."
     />
   );
 }

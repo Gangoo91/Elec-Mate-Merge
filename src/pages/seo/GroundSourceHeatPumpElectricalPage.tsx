@@ -185,7 +185,7 @@ const sections = [
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left">
               <thead>
-                <tr className="bg-white/[0.06] text-white/70">
+                <tr className="bg-white/[0.06] text-white">
                   <th className="px-4 py-3 font-semibold">Load</th>
                   <th className="px-4 py-3 font-semibold">Typical rating</th>
                   <th className="px-4 py-3 font-semibold">Notes</th>
@@ -195,7 +195,7 @@ const sections = [
                 <tr className="border-t border-white/10">
                   <td className="px-4 py-3 font-semibold">Compressor</td>
                   <td className="px-4 py-3 whitespace-nowrap">3–8kW input</td>
-                  <td className="px-4 py-3 text-white/80">
+                  <td className="px-4 py-3 text-white">
                     Main power consumer. Starting current 3–5× running current; soft-start reduces
                     inrush on many units.
                   </td>
@@ -203,7 +203,7 @@ const sections = [
                 <tr className="border-t border-white/10">
                   <td className="px-4 py-3 font-semibold">Ground-loop circulation pump</td>
                   <td className="px-4 py-3 whitespace-nowrap">100–500W</td>
-                  <td className="px-4 py-3 text-white/80">
+                  <td className="px-4 py-3 text-white">
                     Pumps the water-glycol mixture through the buried loop. Rating scales with loop
                     length.
                   </td>
@@ -211,14 +211,14 @@ const sections = [
                 <tr className="border-t border-white/10">
                   <td className="px-4 py-3 font-semibold">Heating circulation pump</td>
                   <td className="px-4 py-3 whitespace-nowrap">50–200W</td>
-                  <td className="px-4 py-3 text-white/80">
+                  <td className="px-4 py-3 text-white">
                     Distributes heated water to radiators or underfloor heating.
                   </td>
                 </tr>
                 <tr className="border-t border-white/10">
                   <td className="px-4 py-3 font-semibold">Immersion heater(s)</td>
                   <td className="px-4 py-3 whitespace-nowrap">3kW each</td>
-                  <td className="px-4 py-3 text-white/80">
+                  <td className="px-4 py-3 text-white">
                     Backup heating in the buffer tank or cylinder. Some systems fit two (upper and
                     lower).
                   </td>
@@ -226,7 +226,7 @@ const sections = [
                 <tr className="border-t border-white/10">
                   <td className="px-4 py-3 font-semibold">Controller and ancillaries</td>
                   <td className="px-4 py-3 whitespace-nowrap">50–100W</td>
-                  <td className="px-4 py-3 text-white/80">
+                  <td className="px-4 py-3 text-white">
                     Zone valves, outdoor sensor, room thermostats, and the control panel.
                   </td>
                 </tr>
@@ -286,7 +286,7 @@ const sections = [
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left">
               <thead>
-                <tr className="bg-white/[0.06] text-white/70">
+                <tr className="bg-white/[0.06] text-white">
                   <th className="px-4 py-3 font-semibold">Factor</th>
                   <th className="px-4 py-3 font-semibold">Single-phase</th>
                   <th className="px-4 py-3 font-semibold">Three-phase</th>
@@ -295,28 +295,28 @@ const sections = [
               <tbody className="text-white">
                 <tr className="border-t border-white/10">
                   <td className="px-4 py-3 font-semibold">Typical GSHP size</td>
-                  <td className="px-4 py-3 text-white/80">Up to ~10kW electrical input</td>
-                  <td className="px-4 py-3 text-white/80">12kW and above (common)</td>
+                  <td className="px-4 py-3 text-white">Up to ~10kW electrical input</td>
+                  <td className="px-4 py-3 text-white">12kW and above (common)</td>
                 </tr>
                 <tr className="border-t border-white/10">
                   <td className="px-4 py-3 font-semibold">Supply capacity</td>
-                  <td className="px-4 py-3 text-white/80">60A or 80A — check spare headroom</td>
-                  <td className="px-4 py-3 text-white/80">~3× capacity (e.g. 3×100A)</td>
+                  <td className="px-4 py-3 text-white">60A or 80A — check spare headroom</td>
+                  <td className="px-4 py-3 text-white">~3× capacity (e.g. 3×100A)</td>
                 </tr>
                 <tr className="border-t border-white/10">
                   <td className="px-4 py-3 font-semibold">Starting current per phase</td>
-                  <td className="px-4 py-3 text-white/80">Higher — can cause voltage dips</td>
-                  <td className="px-4 py-3 text-white/80">Lower — load shared across phases</td>
+                  <td className="px-4 py-3 text-white">Higher — can cause voltage dips</td>
+                  <td className="px-4 py-3 text-white">Lower — load shared across phases</td>
                 </tr>
                 <tr className="border-t border-white/10">
                   <td className="px-4 py-3 font-semibold">Long-run voltage drop</td>
-                  <td className="px-4 py-3 text-white/80">Higher current per conductor</td>
-                  <td className="px-4 py-3 text-white/80">Reduced current per conductor</td>
+                  <td className="px-4 py-3 text-white">Higher current per conductor</td>
+                  <td className="px-4 py-3 text-white">Reduced current per conductor</td>
                 </tr>
                 <tr className="border-t border-white/10">
                   <td className="px-4 py-3 font-semibold">DNO lead time</td>
-                  <td className="px-4 py-3 text-white/80">Usually existing supply</td>
-                  <td className="px-4 py-3 text-white/80">8–16 weeks for an upgrade</td>
+                  <td className="px-4 py-3 text-white">Usually existing supply</td>
+                  <td className="px-4 py-3 text-white">8–16 weeks for an upgrade</td>
                 </tr>
               </tbody>
             </table>
@@ -350,7 +350,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ground loop pump</strong> — typically powered from the heat pump controller
                 (which manages the pump speed via a 0-10V signal or PWM control). The electrical
@@ -359,7 +359,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Heating circuit pump</strong> — distributes heated water from the buffer
                 tank to the heating system. May be controlled by the GSHP controller or by a
@@ -368,7 +368,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wiring</strong> — follow the manufacturer wiring diagram for pump
                 connections. Most pumps are 230V single-phase with a standard 3-core flex. Variable
@@ -413,7 +413,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Zone valves</strong> — 230V motorised valves that control the flow of heated
                 water to different zones (ground floor, first floor, hot water cylinder). Each valve
@@ -422,7 +422,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Room thermostats</strong> — one per heating zone, wired or wireless. Wired
                 thermostats use a 2-core cable to the controller. Wireless thermostats need a
@@ -430,14 +430,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Outdoor sensor</strong> — mounted on a north-facing wall and wired to the
                 controller for weather compensation. 2-core signal cable, typically up to 50m run.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Buffer tank sensors</strong> — temperature sensors in the buffer tank wired
                 to the controller. These are low-voltage signal connections.
@@ -461,7 +461,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Immersion heater circuits</strong> — each 3kW immersion heater requires a
                 dedicated 16A or 20A circuit with 2.5mm cable and a local double-pole switch or FCU.
@@ -470,7 +470,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hot water cylinder</strong> — if the system uses a separate hot water
                 cylinder (in addition to the buffer tank), it may also have its own immersion heater
@@ -478,7 +478,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Control</strong> — immersion heaters are typically controlled by the GSHP
                 controller (energised only when the heat pump cannot maintain the required
@@ -489,7 +489,7 @@ const sections = [
           </ul>
         </div>
         <h4 className="font-bold text-white mt-6 mb-2">Typical GSHP circuit schedule (indicative)</h4>
-        <p className="text-white/80 text-sm mb-3">
+        <p className="text-white text-sm mb-3">
           Indicative only — always size every circuit to the manufacturer data and confirm with a{' '}
           <SEOInternalLink href="/tools/cable-sizing-calculator">cable sizing calculation</SEOInternalLink>{' '}
           against your install method, grouping, and run length.
@@ -498,7 +498,7 @@ const sections = [
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left">
               <thead>
-                <tr className="bg-white/[0.06] text-white/70">
+                <tr className="bg-white/[0.06] text-white">
                   <th className="px-4 py-3 font-semibold">Circuit</th>
                   <th className="px-4 py-3 font-semibold">Supply</th>
                   <th className="px-4 py-3 font-semibold">Protection</th>
@@ -508,27 +508,27 @@ const sections = [
               <tbody className="text-white">
                 <tr className="border-t border-white/10">
                   <td className="px-4 py-3 font-semibold">Compressor</td>
-                  <td className="px-4 py-3 text-white/80">1-ph or 3-ph per model</td>
-                  <td className="px-4 py-3 text-white/80">Sized to manufacturer FLC/MCA</td>
-                  <td className="px-4 py-3 text-white/80">Local isolator at the unit</td>
+                  <td className="px-4 py-3 text-white">1-ph or 3-ph per model</td>
+                  <td className="px-4 py-3 text-white">Sized to manufacturer FLC/MCA</td>
+                  <td className="px-4 py-3 text-white">Local isolator at the unit</td>
                 </tr>
                 <tr className="border-t border-white/10">
                   <td className="px-4 py-3 font-semibold">Immersion heater (3kW)</td>
-                  <td className="px-4 py-3 text-white/80">230V single-phase</td>
-                  <td className="px-4 py-3 text-white/80">16A or 20A, ~2.5mm² cable</td>
-                  <td className="px-4 py-3 text-white/80">Double-pole switch / FCU</td>
+                  <td className="px-4 py-3 text-white">230V single-phase</td>
+                  <td className="px-4 py-3 text-white">16A or 20A, ~2.5mm² cable</td>
+                  <td className="px-4 py-3 text-white">Double-pole switch / FCU</td>
                 </tr>
                 <tr className="border-t border-white/10">
                   <td className="px-4 py-3 font-semibold">Circulation pumps</td>
-                  <td className="px-4 py-3 text-white/80">230V single-phase</td>
-                  <td className="px-4 py-3 text-white/80">Often fed from controller</td>
-                  <td className="px-4 py-3 text-white/80">Fused spur / controller isolation</td>
+                  <td className="px-4 py-3 text-white">230V single-phase</td>
+                  <td className="px-4 py-3 text-white">Often fed from controller</td>
+                  <td className="px-4 py-3 text-white">Fused spur / controller isolation</td>
                 </tr>
                 <tr className="border-t border-white/10">
                   <td className="px-4 py-3 font-semibold">Controller / ancillaries</td>
-                  <td className="px-4 py-3 text-white/80">230V single-phase</td>
-                  <td className="px-4 py-3 text-white/80">Switched fused connection unit</td>
-                  <td className="px-4 py-3 text-white/80">Local FCU</td>
+                  <td className="px-4 py-3 text-white">230V single-phase</td>
+                  <td className="px-4 py-3 text-white">Switched fused connection unit</td>
+                  <td className="px-4 py-3 text-white">Local FCU</td>
                 </tr>
               </tbody>
             </table>
@@ -597,7 +597,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCS for GSHP</strong> — the MCS standard for ground source heat pumps is MIS
                 3005. It covers system design (including ground loop sizing), installation,
@@ -606,7 +606,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical subcontractor</strong> — electricians working as subcontractors
                 to an MCS-certified installer do not need their own MCS certification for the
@@ -635,7 +635,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 411.3.1.2</strong> — extraneous-conductive-parts liable to
                 introduce a dangerous potential difference shall be connected to the main earthing
@@ -646,7 +646,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 411.3.2.2</strong> — sets that the maximum disconnection times
                 in Table 41.1 apply to final circuits rated up to 63 A with one or more
@@ -656,7 +656,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 462.2</strong> — every circuit shall be provided with a means of
                 isolation for all live conductors (except as detailed in Reg 461.2). The GSHP
@@ -666,7 +666,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 421.1.7</strong> — recommends arc fault detection devices (AFDDs)
                 on AC final circuits. Where a GSHP supply upgrade triggers new circuits or rewires
@@ -674,7 +674,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 411.3.4 (A4:2026)</strong> — within domestic (household)
                 premises, AC final circuits supplying luminaires shall have additional protection by
@@ -686,7 +686,7 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h4 className="font-bold text-white mb-3 flex items-center gap-2">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow shrink-0" />
             BS 7671:2018+A4:2026 Updates Relevant to GSHP Installations
           </h4>
           <ul className="space-y-3 text-white text-sm">
@@ -728,7 +728,7 @@ const sections = [
           stream of well-paid work.
         </p>
         <h4 className="font-bold text-white mt-2 mb-2">Indicative electrical cost breakdown</h4>
-        <p className="text-white/80 text-sm mb-3">
+        <p className="text-white text-sm mb-3">
           Indicative UK market guidance, not a quote — actual prices vary by region, access, and
           supply distance.
         </p>
@@ -736,7 +736,7 @@ const sections = [
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left">
               <thead>
-                <tr className="bg-white/[0.06] text-white/70">
+                <tr className="bg-white/[0.06] text-white">
                   <th className="px-4 py-3 font-semibold">Item</th>
                   <th className="px-4 py-3 font-semibold">Indicative range</th>
                 </tr>
@@ -767,7 +767,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -842,7 +842,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify GSHP electrical work"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
           icon={Layers}
         />
       </>
@@ -868,7 +868,7 @@ export default function GroundSourceHeatPumpElectricalPage() {
       heroTitle={
         <>
           Ground Source Heat Pump Electrical:{' '}
-          <span className="text-yellow-400">Wiring Guide for UK Electricians</span>
+          <span className="text-elec-yellow">Wiring Guide for UK Electricians</span>
         </>
       }
       heroSubtitle="Ground source heat pumps have higher electrical demands than air source — often requiring three-phase supplies, multiple circulation pump circuits, and careful earthing around the ground loop. This guide covers everything an electrician needs to know."
@@ -880,7 +880,7 @@ export default function GroundSourceHeatPumpElectricalPage() {
       faqHeading="Frequently Asked Questions About GSHP Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Certify GSHP Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for ground source heat pump installations. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for ground source heat pump installations. 7-day free trial, cancel anytime."
     />
   );
 }

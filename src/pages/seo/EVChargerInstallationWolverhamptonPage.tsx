@@ -259,7 +259,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow text-black font-bold text-sm shrink-0">
                 1
               </span>
               <span>
@@ -270,7 +270,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow text-black font-bold text-sm shrink-0">
                 2
               </span>
               <span>
@@ -281,7 +281,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow text-black font-bold text-sm shrink-0">
                 3
               </span>
               <span>
@@ -294,7 +294,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow text-black font-bold text-sm shrink-0">
                 4
               </span>
               <span>
@@ -304,7 +304,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow text-black font-bold text-sm shrink-0">
                 5
               </span>
               <span>
@@ -332,7 +332,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard 7kW home installation</strong> — £750 to £1,050 all-in, including
                 charger unit, dedicated circuit, RCD protection, EIC, and Part P certificate. After
@@ -340,7 +340,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Integral garage installation</strong> — often the simplest and least
                 expensive installation scenario in Wolverhampton, where the garage is attached and
@@ -349,7 +349,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit upgrade</strong> — £350 to £600 additional. Wolverhampton's
                 stock of 1960s and 1970s properties sometimes includes older consumer units
@@ -358,7 +358,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth electrode</strong> — £150 to £280 additional if required by the PME
                 earthing risk assessment. Most straightforward Wolverhampton installations do not
@@ -388,7 +388,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>WMCA EV strategy</strong> — the West Midlands Combined Authority has set
                 targets for EV charging infrastructure across the region, including public charging
@@ -397,7 +397,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Automotive cluster</strong> — the West Midlands is home to a significant
                 automotive manufacturing and supply chain cluster, including Jaguar Land Rover (now
@@ -407,7 +407,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Public charging network</strong> — Wolverhampton has a growing network of
                 public chargers at council car parks, supermarkets, and along key routes. However,
@@ -416,7 +416,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Midlands Net Zero Hub</strong> — the Midlands Net Zero Hub supports local
                 authorities and businesses across the region, including Wolverhampton, in developing
@@ -516,14 +516,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>OZEV registration</strong> — verify at gov.uk OZEV installer search. Only
                 OZEV-registered installers can apply the EVHS grant on your behalf.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC or NAPIT registration</strong> — verify on the scheme's online
                 register. Provides assurance of technical qualifications, regular assessment, and
@@ -531,7 +531,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Local West Midlands experience</strong> — confirm the installer is familiar
                 with NGED's PME earthing arrangements and the specific housing types in
@@ -540,7 +540,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Written all-inclusive quote</strong> — confirm all costs are included:
                 charger unit, cable, protection devices, commissioning, EIC, Part P certification,
@@ -566,7 +566,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete EV Certificates On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -600,7 +600,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your EV installation business in Wolverhampton with"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EV certification, instant PDF export, and professional quoting."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EV certification, instant PDF export, and professional quoting."
           icon={Zap}
         />
       </>
@@ -626,7 +626,7 @@ export default function EVChargerInstallationWolverhamptonPage() {
       heroTitle={
         <>
           EV Charger Installation Wolverhampton:{' '}
-          <span className="text-yellow-400">Home EV Charging & OZEV Grants 2026</span>
+          <span className="text-elec-yellow">Home EV Charging & OZEV Grants 2026</span>
         </>
       }
       heroSubtitle="Everything Wolverhampton residents need to know about home EV charger installation — OZEV grants up to £350, competitive costs of £750 to £1,050 for a 7kW unit, West Midlands CAZ context, and how to find a qualified OZEV-approved installer."
@@ -637,7 +637,7 @@ export default function EVChargerInstallationWolverhamptonPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in Wolverhampton"
       relatedPages={relatedPages}
       ctaHeading="Complete EV Installation Certificates On Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EV certification, OZEV documentation, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EV certification, OZEV documentation, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -100,7 +100,7 @@ const sections = [
         <div className="grid sm:grid-cols-2 gap-4 my-6">
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-3">
-              <Zap className="w-5 h-5 text-yellow-400" />
+              <Zap className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">MCB (Miniature Circuit Breaker)</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -115,8 +115,8 @@ const sections = [
           </div>
           <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <div className="flex items-center gap-2 mb-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400" />
-              <h3 className="font-bold text-yellow-400 text-lg">RCD (Residual Current Device)</h3>
+              <ShieldCheck className="w-5 h-5 text-elec-yellow" />
+              <h3 className="font-bold text-elec-yellow text-lg">RCD (Residual Current Device)</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
               An RCD protects against earth leakage — current escaping from the circuit through a
@@ -162,7 +162,7 @@ const sections = [
         <div className="space-y-4">
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-2">
-              <Power className="w-5 h-5 text-yellow-400" />
+              <Power className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">1. Overload — Too Many Appliances</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -183,7 +183,7 @@ const sections = [
 
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-2">
-              <Zap className="w-5 h-5 text-yellow-400" />
+              <Zap className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">
                 2. Short Circuit — Live-to-Neutral Fault
               </h3>
@@ -202,7 +202,7 @@ const sections = [
 
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-2">
-              <Activity className="w-5 h-5 text-yellow-400" />
+              <Activity className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">3. Earth Fault (If RCBO Fitted)</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -241,7 +241,7 @@ const sections = [
         </p>
         <div className="space-y-3 my-4">
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
               1
             </span>
             <p className="text-white text-sm leading-relaxed">
@@ -251,7 +251,7 @@ const sections = [
             </p>
           </div>
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
               2
             </span>
             <p className="text-white text-sm leading-relaxed">
@@ -262,7 +262,7 @@ const sections = [
             </p>
           </div>
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
               3
             </span>
             <p className="text-white text-sm leading-relaxed">
@@ -273,7 +273,7 @@ const sections = [
             </p>
           </div>
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
               4
             </span>
             <p className="text-white text-sm leading-relaxed">
@@ -305,7 +305,7 @@ const sections = [
         <div className="space-y-4 mt-4">
           <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <div className="flex items-center gap-2 mb-2">
-              <AlertTriangle className="w-5 h-5 text-yellow-400" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Kitchen Ring Circuit (32A)</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -322,7 +322,7 @@ const sections = [
 
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-2">
-              <Zap className="w-5 h-5 text-yellow-400" />
+              <Zap className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Shower Circuit (40A or 45A)</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -337,7 +337,7 @@ const sections = [
 
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-2">
-              <Cable className="w-5 h-5 text-yellow-400" />
+              <Cable className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Downstairs Socket Ring (32A)</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -371,24 +371,24 @@ const sections = [
         </p>
         <div className="grid sm:grid-cols-2 gap-4 my-6">
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <h3 className="font-bold text-yellow-400 text-lg mb-3">Signs of a Faulty Appliance</h3>
+            <h3 className="font-bold text-elec-yellow text-lg mb-3">Signs of a Faulty Appliance</h3>
             <ul className="space-y-2 text-white text-sm leading-relaxed">
               <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>MCB holds with all appliances unplugged</span>
               </li>
               <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>MCB trips consistently when a specific appliance is connected</span>
               </li>
               <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>
                   Appliance shows signs of damage — frayed flex, burnt smell, scorch marks
                 </span>
               </li>
               <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>
                   Appliance trips the MCB only during certain operations (e.g., heating cycle, spin
                   cycle)
@@ -397,22 +397,22 @@ const sections = [
             </ul>
           </div>
           <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-            <h3 className="font-bold text-yellow-400 text-lg mb-3">Signs of Faulty Wiring</h3>
+            <h3 className="font-bold text-elec-yellow text-lg mb-3">Signs of Faulty Wiring</h3>
             <ul className="space-y-2 text-white text-sm leading-relaxed">
               <li className="flex items-start gap-2">
-                <AlertTriangle className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>MCB trips immediately on resetting, even with nothing plugged in</span>
               </li>
               <li className="flex items-start gap-2">
-                <AlertTriangle className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>Burning smell at sockets, switches, or the consumer unit</span>
               </li>
               <li className="flex items-start gap-2">
-                <AlertTriangle className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>Discolouration or heat marks on socket faceplates</span>
               </li>
               <li className="flex items-start gap-2">
-                <AlertTriangle className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>
                   Tripping started after building work, DIY, or decoration (e.g., nail through a
                   cable)
@@ -464,35 +464,35 @@ const sections = [
         </p>
         <ul className="space-y-3 my-4">
           <li className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
               The MCB trips immediately on resetting with all appliances disconnected — this is a
               short circuit or earth fault in the fixed wiring
             </span>
           </li>
           <li className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
               You can see or smell evidence of burning, scorching, or overheating at any socket,
               switch, junction box, or the consumer unit itself
             </span>
           </li>
           <li className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
               The MCB trips intermittently with no obvious pattern and the process of elimination
               has not identified a single appliance as the cause
             </span>
           </li>
           <li className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
               The tripping started after building work, renovation, or DIY — a cable may have been
               damaged during the work
             </span>
           </li>
           <li className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
               The property has old wiring (rewirable fuses, no earth wire, fabric-insulated cables)
               — a full{' '}
@@ -543,20 +543,20 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-2">Acceptable Temporary Measures</h3>
             <ul className="space-y-2 text-white text-sm leading-relaxed">
               <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>
                   Disconnect the faulty appliance and leave it disconnected until repaired or
                   replaced
                 </span>
               </li>
               <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>
                   Reduce the number of appliances running simultaneously on the overloaded circuit
                 </span>
               </li>
               <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>
                   Move some appliances to sockets on a different circuit to spread the load
                 </span>
@@ -564,31 +564,31 @@ const sections = [
             </ul>
           </div>
           <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-            <h3 className="font-bold text-yellow-400 text-lg mb-2">
+            <h3 className="font-bold text-elec-yellow text-lg mb-2">
               Proper Fixes (Electrician Required)
             </h3>
             <ul className="space-y-2 text-white text-sm leading-relaxed">
               <li className="flex items-start gap-2">
-                <Wrench className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <Wrench className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>
                   Install additional circuits to serve high-demand areas (e.g., dedicated kitchen
                   radials)
                 </span>
               </li>
               <li className="flex items-start gap-2">
-                <Wrench className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <Wrench className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>Repair or replace damaged cables causing short circuits</span>
               </li>
               <li className="flex items-start gap-2">
-                <Wrench className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <Wrench className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>Tighten loose connections at accessories and junction boxes</span>
               </li>
               <li className="flex items-start gap-2">
-                <Wrench className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <Wrench className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>Upgrade the consumer unit to provide better circuit distribution</span>
               </li>
               <li className="flex items-start gap-2">
-                <Wrench className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <Wrench className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>
                   Fit Arc Fault Detection Devices (AFDDs) on final circuits where repeated tripping
                   is suspected to be caused by cable damage, loose connections, or arcing faults.
@@ -672,7 +672,7 @@ export default function CircuitBreakerTrippingPage() {
         <>
           Circuit Breaker Keeps Tripping?
           <br />
-          <span className="text-yellow-400">Causes, Diagnosis & Fixes</span>
+          <span className="text-elec-yellow">Causes, Diagnosis & Fixes</span>
         </>
       }
       heroSubtitle="A tripping circuit breaker is one of the most common electrical problems in UK homes. This guide explains the difference between MCB and RCD tripping, every cause of MCB tripping (overload, short circuit, earth fault), how to diagnose which circuit and which appliance, and when to call an electrician."
@@ -682,7 +682,7 @@ export default function CircuitBreakerTrippingPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Diagnose Circuit Faults Faster with Elec-Mate"
-      ctaSubheading="Max demand calculator, board scanner, AI fault diagnosis, and digital EICR forms. Join 1,600+ UK electricians. 7-day free trial, cancel anytime."
+      ctaSubheading="Max demand calculator, board scanner, AI fault diagnosis, and digital EICR forms. Join 2,100+ UK electricians. 7-day free trial, cancel anytime."
     />
   );
 }

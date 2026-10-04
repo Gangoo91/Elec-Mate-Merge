@@ -206,7 +206,7 @@ const sections = [
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h3 className="font-semibold text-white mb-1.5">Switched FCU</h3>
-            <p className="text-sm text-white/80">
+            <p className="text-sm text-white">
               Incorporates a double-pole rocker switch that disconnects both line and neutral
               simultaneously, giving a local means of isolation (Regulation 462.2). The default
               choice for dishwashers, washing machines, extractor fans, heated towel rails and most
@@ -215,7 +215,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h3 className="font-semibold text-white mb-1.5">Unswitched FCU</h3>
-            <p className="text-sm text-white/80">
+            <p className="text-sm text-white">
               Fuse only, no switch. Used where the appliance has its own integral switch or where
               isolation is provided by a separate DP switch. Less common in practice since switched
               FCUs cost little more.
@@ -223,7 +223,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h3 className="font-semibold text-white mb-1.5">FCU with neon indicator</h3>
-            <p className="text-sm text-white/80">
+            <p className="text-sm text-white">
               Includes an LED or neon lamp that illuminates when the switch is on. Useful for
               appliances in concealed positions where it matters that you can see the supply is live
               (e.g. immersion heater, frost-protection heater).
@@ -231,7 +231,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h3 className="font-semibold text-white mb-1.5">FCU with flex outlet</h3>
-            <p className="text-sm text-white/80">
+            <p className="text-sm text-white">
               Has a small aperture in the face plate through which the appliance flex emerges,
               connected to the load terminals inside the back box. Common for cooker-hood extractors
               and where the flex routing is tight.
@@ -239,7 +239,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 sm:col-span-2">
             <h3 className="font-semibold text-white mb-1.5">20&nbsp;A DP switch / connection unit</h3>
-            <p className="text-sm text-white/80">
+            <p className="text-sm text-white">
               For higher-current fixed loads such as immersion heaters and some fixed heaters. Not a
               standard FCU — it has no cartridge fuse — but a double-pole switch for fixed equipment.
               Circuit protection is provided by the MCB at the consumer unit, so the load is run as
@@ -262,7 +262,7 @@ const sections = [
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h3 className="font-semibold text-white mb-1.5">Built-in dishwashers &amp; washing machines</h3>
-            <p className="text-sm text-white/80">
+            <p className="text-sm text-white">
               Not moved in normal use. An FCU inside the adjacent cupboard gives an accessible
               isolation point without pulling the appliance out to reach a socket. A 13&nbsp;A fuse
               matches the appliance flex rating.
@@ -270,7 +270,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h3 className="font-semibold text-white mb-1.5">Extractor fans (kitchen &amp; bathroom)</h3>
-            <p className="text-sm text-white/80">
+            <p className="text-sm text-white">
               Wired as a 3&nbsp;A or 5&nbsp;A fused spur from the lighting circuit or ring final
               circuit. The FCU protects the fan flex and provides isolation without going to the
               consumer unit.
@@ -278,14 +278,14 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h3 className="font-semibold text-white mb-1.5">Fixed electric heaters &amp; towel rails</h3>
-            <p className="text-sm text-white/80">
+            <p className="text-sm text-white">
               Panel heaters and heated towel rails installed as fixed equipment need a means of
               isolation. A switched FCU provides local double-pole isolation plus flex protection.
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h3 className="font-semibold text-white mb-1.5">Outdoor socket spurs</h3>
-            <p className="text-sm text-white/80">
+            <p className="text-sm text-white">
               Where a weatherproof garden socket is spurred from an indoor ring final circuit, an FCU
               gives the fused connection point. The garden socket (IP44 minimum) connects as the load
               and must have 30&nbsp;mA RCD protection.
@@ -293,7 +293,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 sm:col-span-2">
             <h3 className="font-semibold text-white mb-1.5">Underfloor heating thermostats</h3>
-            <p className="text-sm text-white/80">
+            <p className="text-sm text-white">
               Electric underfloor heating mats are commonly fed via a 13&nbsp;A FCU spurred from the
               ring final circuit, with the thermostat wired between the FCU and the heating mat. See
               the{' '}
@@ -322,7 +322,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
           <div className="px-6 pt-5 pb-3">
             <h3 className="text-lg font-semibold text-white">BS 1362 Fuse Rating Quick Reference</h3>
-            <p className="text-sm text-white/60 mt-1">
+            <p className="text-sm text-white mt-1">
               Approximate wattage limits at 230&nbsp;V. Always confirm against the appliance rating
               plate — the fuse protects the flex, not the ring.
             </p>
@@ -351,7 +351,7 @@ const sections = [
                   Larger fans with integral lighting, small fridges, low-wattage panel heaters
                 </td>
               </tr>
-              <tr className="border-t border-white/10 bg-amber-900/20">
+              <tr className="border-t border-white/10 bg-white/[0.06]">
                 <td className="px-4 py-3 align-top font-semibold whitespace-nowrap">13&nbsp;A (brown)</td>
                 <td className="px-4 py-3 align-top font-mono whitespace-nowrap">up to 3,000&nbsp;W</td>
                 <td className="px-4 py-3 align-top">
@@ -364,7 +364,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Always check the rating plate</strong> — do not assume a 13A fuse is correct
                 for all appliances. A kitchen extractor fan with a 13A fuse has effectively no
@@ -398,7 +398,7 @@ const sections = [
             </thead>
             <tbody>
               <tr className="border-t border-white/10">
-                <td className="px-4 py-3 align-top font-mono text-yellow-400 whitespace-nowrap">462.2</td>
+                <td className="px-4 py-3 align-top font-mono text-elec-yellow whitespace-nowrap">462.2</td>
                 <td className="px-4 py-3 align-top">
                   Every circuit must be provided with isolation means for all live conductors. The
                   double-pole switch of a switched FCU disconnects both line and neutral, providing
@@ -406,7 +406,7 @@ const sections = [
                 </td>
               </tr>
               <tr className="border-t border-white/10">
-                <td className="px-4 py-3 align-top font-mono text-yellow-400 whitespace-nowrap">464.1</td>
+                <td className="px-4 py-3 align-top font-mono text-elec-yellow whitespace-nowrap">464.1</td>
                 <td className="px-4 py-3 align-top">
                   Means for switching off must be provided where mechanical maintenance may involve a
                   risk of physical injury — relevant for fans, pumps and motorised appliances. A
@@ -414,7 +414,7 @@ const sections = [
                 </td>
               </tr>
               <tr className="border-t border-white/10">
-                <td className="px-4 py-3 align-top font-mono text-yellow-400 whitespace-nowrap">411.3.3</td>
+                <td className="px-4 py-3 align-top font-mono text-elec-yellow whitespace-nowrap">411.3.3</td>
                 <td className="px-4 py-3 align-top">
                   Socket-outlets rated up to 32 A require 30 mA RCD additional protection (subject to
                   the permitted exceptions). An FCU spur taken from a ring final circuit must be
@@ -422,7 +422,7 @@ const sections = [
                 </td>
               </tr>
               <tr className="border-t border-white/10">
-                <td className="px-4 py-3 align-top font-mono text-yellow-400 whitespace-nowrap">433.1.204</td>
+                <td className="px-4 py-3 align-top font-mono text-elec-yellow whitespace-nowrap">433.1.204</td>
                 <td className="px-4 py-3 align-top">
                   Ring final circuit rule: accessories to BS 1363 may be supplied through a ring final
                   circuit (with or without unfused spurs) protected by a 30 A or 32 A device, wired in
@@ -430,7 +430,7 @@ const sections = [
                 </td>
               </tr>
               <tr className="border-t border-white/10">
-                <td className="px-4 py-3 align-top font-mono text-yellow-400 whitespace-nowrap">App 15</td>
+                <td className="px-4 py-3 align-top font-mono text-elec-yellow whitespace-nowrap">App 15</td>
                 <td className="px-4 py-3 align-top">
                   Ring and radial arrangements (informative). An unfused spur should feed only one
                   single or one twin socket-outlet; the number of socket-outlets fed from an FCU
@@ -438,7 +438,7 @@ const sections = [
                 </td>
               </tr>
               <tr className="border-t border-white/10">
-                <td className="px-4 py-3 align-top font-mono text-yellow-400 whitespace-nowrap">514.4.2</td>
+                <td className="px-4 py-3 align-top font-mono text-elec-yellow whitespace-nowrap">514.4.2</td>
                 <td className="px-4 py-3 align-top">
                   The green-and-yellow combination is used exclusively for protective conductors.
                   Earth cores must be sleeved green/yellow at terminations; old red/black cable reused
@@ -472,21 +472,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <SEOAppBridge href="/minor-works-certificate" label="Minor Works Certificate" /> — issue
                 an MWC for FCU additions to existing circuits on your phone.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <SEOAppBridge href="/eic-certificate" label="EIC Certificate" /> — generate an
                 EIC where a new dedicated circuit is installed for an appliance.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <SEOAppBridge href="/tools/eicr-certificate" label="EICR Certificate" /> — record
                 any existing installation deficiencies found during the work.
@@ -517,7 +517,7 @@ export default function FusedSpurInstallationGuidePage() {
       heroTitle={
         <>
           Fused Spur Installation Guide{' '}
-          <span className="text-yellow-400">— FCU Wiring Explained</span>
+          <span className="text-elec-yellow">— FCU Wiring Explained</span>
         </>
       }
       heroSubtitle="A complete practical guide to fused connection units (FCUs): types, correct fuse ratings, when to use a spur instead of a socket, BS 7671 requirements, and step-by-step wiring instructions."

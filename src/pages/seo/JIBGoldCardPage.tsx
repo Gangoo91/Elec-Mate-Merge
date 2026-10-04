@@ -194,7 +194,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What it demonstrates</strong> — the Gold Card confirms that you hold a Level
                 3 NVQ/SVQ in Electrotechnical Technology (or equivalent), have passed the AM2
@@ -203,7 +203,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>JIB pay grade</strong> — the Gold Card corresponds to the Electrician pay
                 grade under JIB National Working Rules. Electricians with a Gold Card working for
@@ -212,7 +212,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Five-year validity</strong> — the Gold Card is valid for five years. Renewal
                 requires a current BS 7671 qualification and, for some grades, a current first aid
@@ -237,7 +237,7 @@ const sections = [
         </p>
         <div className="grid sm:grid-cols-2 gap-4 my-6">
           <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-            <h3 className="font-bold text-yellow-400 text-lg mb-3">Route 1 — Apprenticeship</h3>
+            <h3 className="font-bold text-elec-yellow text-lg mb-3">Route 1 — Apprenticeship</h3>
             <ul className="space-y-2 text-white text-sm">
               <li>
                 <strong>Who it suits:</strong> new entrants and current apprentices
@@ -311,7 +311,7 @@ const sections = [
                 <span className="text-white text-sm leading-relaxed">
                   <strong className="text-white">{item.title}</strong>
                   <br />
-                  <span className="text-white/75">{item.note}</span>
+                  <span className="text-white">{item.note}</span>
                 </span>
               </div>
             ))}
@@ -333,7 +333,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-2 sm:p-4 my-6 overflow-hidden">
           {/* Header row — hidden on mobile, cards stack instead */}
-          <div className="hidden sm:grid grid-cols-12 gap-3 px-3 pb-3 mb-1 border-b border-white/10 text-[11px] uppercase tracking-wide text-white/50 font-semibold">
+          <div className="hidden sm:grid grid-cols-12 gap-3 px-3 pb-3 mb-1 border-b border-white/10 text-[11px] uppercase tracking-wide text-white font-semibold">
             <div className="col-span-4">ECS Card</div>
             <div className="col-span-3">JIB Grade</div>
             <div className="col-span-5">Typical Requirement</div>
@@ -387,22 +387,22 @@ const sections = [
               >
                 <div
                   className={`sm:col-span-4 font-bold flex items-center gap-2 ${
-                    row.highlight ? 'text-yellow-400' : 'text-white'
+                    row.highlight ? 'text-elec-yellow' : 'text-white'
                   }`}
                 >
                   {row.highlight && <Star className="w-4 h-4 shrink-0" />}
                   {row.card}
                 </div>
-                <div className="sm:col-span-3 text-white/90 text-sm">
-                  <span className="sm:hidden text-white/50">JIB grade: </span>
+                <div className="sm:col-span-3 text-white text-sm">
+                  <span className="sm:hidden text-white">JIB grade: </span>
                   {row.grade}
                 </div>
-                <div className="sm:col-span-5 text-white/80 text-sm leading-relaxed">{row.req}</div>
+                <div className="sm:col-span-5 text-white text-sm leading-relaxed">{row.req}</div>
               </div>
             ))}
           </div>
         </div>
-        <p className="text-white/70 text-sm">
+        <p className="text-white text-sm">
           The "JIB Gold Card" most people mean is the <strong>Electrician</strong> grade. Both the
           Electrician and Approved Electrician / Technician grades carry a gold ECS card — the
           difference is the additional qualifications behind it.
@@ -517,9 +517,9 @@ const sections = [
           sector-specific evidence. The comparison below shows where they differ.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-2 sm:p-4 my-6 overflow-hidden">
-          <div className="hidden sm:grid grid-cols-3 gap-3 px-3 pb-3 mb-1 border-b border-white/10 text-[11px] uppercase tracking-wide text-white/50 font-semibold">
+          <div className="hidden sm:grid grid-cols-3 gap-3 px-3 pb-3 mb-1 border-b border-white/10 text-[11px] uppercase tracking-wide text-white font-semibold">
             <div>Feature</div>
-            <div className="text-yellow-400/80">JIB Gold Card (ECS)</div>
+            <div className="text-elec-yellow/80">JIB Gold Card (ECS)</div>
             <div>CSCS card</div>
           </div>
           <div className="space-y-2">
@@ -555,12 +555,12 @@ const sections = [
                 className="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/10"
               >
                 <div className="font-bold text-white text-sm">{row.feature}</div>
-                <div className="text-sm text-yellow-300/90">
-                  <span className="sm:hidden text-white/50">JIB Gold: </span>
+                <div className="text-sm text-elec-yellow/90">
+                  <span className="sm:hidden text-white">JIB Gold: </span>
                   {row.jib}
                 </div>
-                <div className="text-sm text-white/80">
-                  <span className="sm:hidden text-white/50">CSCS: </span>
+                <div className="text-sm text-white">
+                  <span className="sm:hidden text-white">CSCS: </span>
                   {row.cscs}
                 </div>
               </div>
@@ -593,29 +593,29 @@ const sections = [
         </p>
         <div className="grid sm:grid-cols-3 gap-4 my-6">
           <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-            <div className="text-[11px] uppercase tracking-wide text-white/50 font-semibold mb-1">
+            <div className="text-[11px] uppercase tracking-wide text-white font-semibold mb-1">
               The ECS card
             </div>
-            <div className="text-2xl font-bold text-yellow-400 mb-2">~£30–£40</div>
-            <p className="text-white/75 text-sm leading-relaxed">
+            <div className="text-2xl font-bold text-elec-yellow mb-2">~£30–£40</div>
+            <p className="text-white text-sm leading-relaxed">
               For a five-year card. The modest part of the total cost.
             </p>
           </div>
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <div className="text-[11px] uppercase tracking-wide text-white/50 font-semibold mb-1">
+            <div className="text-[11px] uppercase tracking-wide text-white font-semibold mb-1">
               AM2 / AM2S assessment
             </div>
             <div className="text-2xl font-bold text-white mb-2">~£400–£600</div>
-            <p className="text-white/75 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Indicative, depending on the assessment centre.
             </p>
           </div>
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <div className="text-[11px] uppercase tracking-wide text-white/50 font-semibold mb-1">
+            <div className="text-[11px] uppercase tracking-wide text-white font-semibold mb-1">
               Level 3 NVQ
             </div>
             <div className="text-2xl font-bold text-white mb-2">Varies</div>
-            <p className="text-white/75 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Set by college or training provider; often funded if completed through an
               apprenticeship.
             </p>
@@ -673,7 +673,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Professional certification tools for qualified electricians"
-          description="Join 1,600+ UK electricians using Elec-Mate to complete EICRs, Minor Works Certificates, and Electrical Installation Certificates on their phone."
+          description="Join 2,100+ UK electricians using Elec-Mate to complete EICRs, Minor Works Certificates, and Electrical Installation Certificates on their phone."
           icon={FileCheck2}
         />
       </>
@@ -699,7 +699,7 @@ export default function JIBGoldCardPage() {
       heroTitle={
         <>
           JIB Gold Card UK:{' '}
-          <span className="text-yellow-400">Electrician's Qualified Operative Card Guide</span>
+          <span className="text-elec-yellow">Electrician's Qualified Operative Card Guide</span>
         </>
       }
       heroSubtitle="Everything UK electricians need to know about the JIB Gold Card — what it is, how to get it (AM2 pass + Level 3 NVQ), all ECS card types, why employers require it, and how it compares to the CSCS card."

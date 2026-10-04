@@ -194,7 +194,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competence requirements</strong> — the RP must have adequate knowledge of BS
                 7671 and BS 7909, experience in designing and supervising temporary electrical
@@ -204,7 +204,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Design responsibilities</strong> — the RP reviews or produces the electrical
                 design, including the single-line diagram, cable schedules, protection coordination,
@@ -213,7 +213,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pre-energisation check</strong> — the RP oversees or carries out the
                 pre-energisation check (PEC) and signs off the installation as safe to energise.
@@ -222,7 +222,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency procedures</strong> — the RP must establish and communicate
                 emergency shutdown procedures to all relevant event staff. The location of all
@@ -248,7 +248,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Primary distribution</strong> — from the power source (mains incomer or
                 generator) to primary distribution boards (PDBs). Primary distribution typically
@@ -258,7 +258,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Secondary distribution</strong> — from PDBs to secondary distribution boards
                 (SDBs) serving individual areas, stages, or zones. Secondary distribution cables are
@@ -268,7 +268,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Final distribution</strong> — from SDBs to 32 A or 16 A socket outlet
                 boards, lighting dimmer racks, or directly to fixed equipment. Every socket outlet
@@ -278,7 +278,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable management</strong> — all cables in public areas must be protected
                 against damage and must not create trip hazards. Cable ramps, cable bridges, and
@@ -353,7 +353,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>30 mA for all socket outlet circuits</strong> — every socket outlet circuit
                 at the final distribution level must be protected by a 30 mA RCBO. This is a
@@ -362,7 +362,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Discrimination — upstream time-delayed RCDs</strong> — primary and secondary
                 distribution boards should incorporate time-delayed RCDs (S-type, with a short time
@@ -372,7 +372,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD testing before energisation</strong> — all RCDs must be functionally
                 tested as part of the pre-energisation check. The test records must include the
@@ -405,7 +405,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Why TN-S for temporary systems</strong> — in a TN-S system, the neutral and
                 protective earth conductors are separate from the source to every point in the
@@ -416,7 +416,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Why PME must not be used</strong> — in a PME (TN-C-S) system, the protective
                 earth is derived from the combined PEN conductor. If this conductor is broken
@@ -427,7 +427,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Isolation transformers</strong> — where a mains supply providing only PME
                 earthing is the available power source, an isolation transformer may be used to
@@ -455,7 +455,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insulation resistance testing</strong> — all distribution cables and board
                 wiring must be tested for insulation resistance before energisation. Tests are
@@ -464,7 +464,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Protective conductor continuity</strong> — continuity of all protective
                 earth conductors must be verified from each load point back to the main earthing
@@ -473,7 +473,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD functional testing</strong> — all RCDs at every distribution level must
                 be tested with a calibrated RCD tester before energisation. Operating times at IΔn
@@ -481,7 +481,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Documentation</strong> — all PEC test results must be recorded and retained
                 as part of the event documentation package. The RP signs off the PEC report and
@@ -509,7 +509,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Complete Pre-Energisation Checks On Site
@@ -547,7 +547,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Event electrical work made simple with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site inspection reporting, pre-energisation check documentation, and instant PDF export."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site inspection reporting, pre-energisation check documentation, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -573,7 +573,7 @@ export default function ExhibitionElectricalPage() {
       heroTitle={
         <>
           Exhibition & Event Electrical:{' '}
-          <span className="text-yellow-400">Temporary Installations BS 7909</span>
+          <span className="text-elec-yellow">Temporary Installations BS 7909</span>
         </>
       }
       heroSubtitle="Everything electricians need to know about temporary electrical installations for exhibitions, festivals, and events — BS 7909 requirements, responsible person duties, temporary distribution systems, generator earthing, 30 mA RCD protection, TN-S earthing, and pre-energisation checks."
@@ -584,7 +584,7 @@ export default function ExhibitionElectricalPage() {
       faqHeading="Frequently Asked Questions About Exhibition and Event Electrical Installations"
       relatedPages={relatedPages}
       ctaHeading="Complete Event Pre-Energisation Checks on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site inspection reporting, test result recording, and instant PDF export. Perfect for BS 7909 pre-energisation checks. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site inspection reporting, test result recording, and instant PDF export. Perfect for BS 7909 pre-energisation checks. 7-day free trial."
     />
   );
 }

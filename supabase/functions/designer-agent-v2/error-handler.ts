@@ -69,7 +69,7 @@ export class CircuitDesignError extends Error {
   }
 
   private getHelpLink(): string {
-    const baseUrl = 'https://docs.lovable.dev/help';
+    const baseUrl = 'https://www.elec-mate.com/support';
     switch (this.code) {
       case 'INVALID_INPUT':
         return `${baseUrl}/invalid-input`;

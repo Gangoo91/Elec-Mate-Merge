@@ -352,7 +352,7 @@ export function useEVChargingSmartForm() {
 
       // RCD Trip Time @ 5×IΔn (≤ 40ms) — BS EN 61008/61009, NOT BS 7671.
       //
-      // A4:2026 no longer asks for a 5×IΔn test (nor the ½×IΔn must-not-trip
+      // Since A2:2022, BS 7671 no longer asks for a 5×IΔn test (nor the ½×IΔn must-not-trip
       // test). The 40 ms figure is still true as a device characteristic under
       // the product standard, and testers still report it, so the field stays
       // and the number stays — but it is reported as a product-standard figure

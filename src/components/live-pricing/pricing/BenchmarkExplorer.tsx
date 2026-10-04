@@ -15,6 +15,7 @@ import {
 import { SearchResultsSkeleton } from '../ui/PricingSkeleton';
 import RangeBar from '../ui/RangeBar';
 import ItemRatesSection from './ItemRatesSection';
+import { autoCompleteOff } from '@/lib/textEntry';
 
 const gbp = (value: number) => `£${Math.round(value).toLocaleString('en-GB')}`;
 
@@ -153,7 +154,7 @@ const BenchmarkExplorer = ({ onSubmitPrice }: BenchmarkExplorerProps) => {
                 'focus:outline-none focus:border-elec-yellow/50',
                 'touch-manipulation'
               )}
-              autoComplete="off"
+              autoComplete={autoCompleteOff}
               autoCorrect="off"
               autoCapitalize="characters"
               spellCheck={false}

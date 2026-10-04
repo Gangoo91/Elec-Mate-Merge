@@ -230,7 +230,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Light industrial / storage (low load density)</strong> — £18–£30/m².
                 Lighting, basic 3-phase socket outlets, small compressor and forklift charging
@@ -238,7 +238,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Medium manufacturing (moderate motor load)</strong> — £30–£50/m². 3-phase
                 distribution, 5–15 motor-driven machines, compressed air ring, emergency lighting. A
@@ -246,7 +246,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Heavy manufacturing / food processing (high motor load)</strong> —
                 £45–£65/m². Full MCC, VSD drives, extensive motor control, 3-phase busbar trunking,
@@ -254,7 +254,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Specialist / hazardous area (ATEX zones)</strong> — £65–£120/m² or higher in
                 ATEX zones. Paint finishing, petrochemical, pharmaceutical, or grain handling where
@@ -326,7 +326,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main LV switchboard</strong> — the main LV switchboard receives the incoming
                 supply from the DNO or substation and distributes to sub-boards or busbar trunking.
@@ -335,7 +335,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Busbar trunking systems</strong> — for production areas with high plug-in
                 load density (overhead cranes, welding positions, machine tool rows), busbar
@@ -345,7 +345,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Power factor correction</strong> — industrial sites with large induction
                 motor loads often have poor power factor (PF), resulting in reactive power charges
@@ -355,7 +355,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HV substation</strong> — sites with a maximum demand above approximately
                 800kVA are typically served by a privately-owned HV/LV substation. A 500kVA package
@@ -392,7 +392,7 @@ const sections = [
               <tr className="bg-white/[0.02]">
                 <td className="px-4 py-3">
                   <strong>Direct On Line (DOL) starter</strong>
-                  <span className="block text-white/60 text-xs mt-0.5">
+                  <span className="block text-white text-xs mt-0.5">
                     Contactor + thermal overload, motors below ~4kW (sometimes to 7.5kW)
                   </span>
                 </td>
@@ -402,7 +402,7 @@ const sections = [
               <tr>
                 <td className="px-4 py-3">
                   <strong>Soft starter</strong>
-                  <span className="block text-white/60 text-xs mt-0.5">
+                  <span className="block text-white text-xs mt-0.5">
                     Reduces starting inrush; no steady-state energy saving (15kW unit)
                   </span>
                 </td>
@@ -412,7 +412,7 @@ const sections = [
               <tr className="bg-white/[0.02]">
                 <td className="px-4 py-3">
                   <strong>Variable Speed Drive (VSD / inverter)</strong>
-                  <span className="block text-white/60 text-xs mt-0.5">
+                  <span className="block text-white text-xs mt-0.5">
                     Varies motor speed to the process; 30–60% saving on fans/pumps (15kW drive)
                   </span>
                 </td>
@@ -422,7 +422,7 @@ const sections = [
               <tr>
                 <td className="px-4 py-3">
                   <strong>Motor Control Centre (MCC)</strong>
-                  <span className="block text-white/60 text-xs mt-0.5">
+                  <span className="block text-white text-xs mt-0.5">
                     Complete assembly housing starters/VSDs for ~20 motors with PLC interface
                   </span>
                 </td>
@@ -432,7 +432,7 @@ const sections = [
             </tbody>
           </table>
         </div>
-        <p className="text-sm text-white/60">
+        <p className="text-sm text-white">
           Figures are indicative market guidance for the equipment only, not a quote. For balanced
           three-phase board and motor circuit design, see our{' '}
           <SEOInternalLink href="/guides/three-phase-installation">
@@ -486,13 +486,13 @@ const sections = [
             </tbody>
           </table>
         </div>
-        <p className="text-sm text-white/60 mb-4">
+        <p className="text-sm text-white mb-4">
           Bends, tees, and reducers add £80–£300 each depending on size. Ex-rated (explosion-proof)
           conduit is required in ATEX zones — see the hazardous-area section below.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <div className="flex items-start gap-3 text-white">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <span>
               <strong>Armoured cable (SWA)</strong> — used for runs across vehicle traffic areas,
               into pits and trenches, or where the cable must resist mechanical damage without being
@@ -562,7 +562,7 @@ const sections = [
             </tbody>
           </table>
         </div>
-        <p className="text-sm text-white/60 mb-4">
+        <p className="text-sm text-white mb-4">
           Zone 1 and Zone 21 are the most common in UK industrial premises. Equipment selection,
           erection, and inspection of installations in these areas are governed by the BS EN IEC
           60079 series.
@@ -646,28 +646,28 @@ const sections = [
                 <td className="px-4 py-3">Fire alarm system</td>
                 <td className="px-4 py-3 whitespace-nowrap">£4,000–£12,000</td>
               </tr>
-              <tr className="bg-yellow-900/30 border-t border-yellow-700/40 font-semibold">
+              <tr className="bg-white/[0.06] border-t border-yellow-700/40 font-semibold">
                 <td className="px-4 py-3">Total — 3,000m² medium manufacturing facility</td>
-                <td className="px-4 py-3 whitespace-nowrap text-yellow-400">£100,000–£290,000</td>
+                <td className="px-4 py-3 whitespace-nowrap text-elec-yellow">£100,000–£290,000</td>
               </tr>
             </tbody>
           </table>
         </div>
         <div className="grid sm:grid-cols-2 gap-4 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <p className="text-xs uppercase tracking-wide text-white/50 mb-1">
+            <p className="text-xs uppercase tracking-wide text-white mb-1">
               Light industrial unit (1,000m²)
             </p>
             <p className="text-lg font-bold text-white">£15,000–£40,000</p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <p className="text-xs uppercase tracking-wide text-white/50 mb-1">
+            <p className="text-xs uppercase tracking-wide text-white mb-1">
               Heavy manufacturing / food processing (10,000m²+)
             </p>
             <p className="text-lg font-bold text-white">£500,000–£2,000,000+</p>
           </div>
         </div>
-        <p className="text-sm text-white/60">
+        <p className="text-sm text-white">
           All figures are indicative market guidance for estimating, not a quote. They exclude VAT
           and DNO/substation connection charges.
         </p>
@@ -687,7 +687,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inspection interval — BS 7671 Reg 652.1</strong> — there is no single
                 prescribed interval. BS 7671 Reg 652.1 requires the responsible person to determine
@@ -702,7 +702,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Production shutdown planning</strong> — a full EICR requires isolation and
                 testing of each circuit. This is typically planned during planned maintenance
@@ -710,7 +710,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Employer's liability implications</strong> — under the Electricity at Work
                 Regulations 1989 (EAW), employers have a duty to ensure electrical systems are
@@ -720,7 +720,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Interim routine checks — a legal requirement</strong> — GN3 Reg 3.5 is
                 explicit: interim routine checks shall be provided for industrial electrical
@@ -732,7 +732,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR cost for industrial premises</strong> — small factory: £600–£1,500.
                 Medium factory (3,000m², multiple boards): £1,500–£4,000. Large plant with MCC and
@@ -759,7 +759,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Quote and Certificate Industrial Work</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -777,7 +777,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage industrial electrical contracts with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for industrial project quoting, multi-board EICR completion, and EIC certification. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for industrial project quoting, multi-board EICR completion, and EIC certification. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -804,7 +804,7 @@ export default function IndustrialElectricalCostPage() {
       heroTitle={
         <>
           Industrial Electrical Installation Cost UK 2025:{' '}
-          <span className="text-yellow-400">Factory Wiring Cost Guide</span>
+          <span className="text-elec-yellow">Factory Wiring Cost Guide</span>
         </>
       }
       heroSubtitle="Complete cost guide for UK industrial and factory electrical installations. Per square metre estimates (£18–£65/m²), 3-phase distribution, motor control centres, VSD drives, cable containment systems, ATEX hazardous areas, and compliance. Manufacturing unit £15,000–£100,000+."
@@ -815,7 +815,7 @@ export default function IndustrialElectricalCostPage() {
       faqHeading="Frequently Asked Questions: Industrial Electrical Installation Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certificate Industrial Electrical Projects"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for industrial project quoting, multi-board EICR completion, and EIC certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for industrial project quoting, multi-board EICR completion, and EIC certification. 7-day free trial, cancel anytime."
     />
   );
 }

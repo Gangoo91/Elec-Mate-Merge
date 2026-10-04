@@ -154,7 +154,7 @@ const sections = [
       <>
         <a
           href="#calculator"
-          className="inline-flex h-11 items-center rounded-full border border-elec-yellow/40 bg-elec-yellow/10 px-5 text-[13px] font-semibold text-white touch-manipulation transition-colors hover:bg-elec-yellow/20"
+          className="inline-flex h-11 items-center rounded-full border border-elec-yellow/40 bg-white/[0.06] px-5 text-[13px] font-semibold text-white touch-manipulation transition-colors hover:bg-white/[0.06]"
         >
           Work out if a socket is on the ring or on a spur — free calculator
         </a>
@@ -235,7 +235,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use an unfused spur</strong> when you need to add a single socket outlet
                 (single or twin) to an existing ring or radial circuit and the cable route from the
@@ -245,7 +245,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PlugZap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PlugZap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use a fused spur</strong> when you need to supply a fixed appliance
                 (extractor fan, heated towel rail, waste disposal unit, boiler, LED driver, outdoor
@@ -256,7 +256,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PlugZap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PlugZap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Always use a fused spur</strong> when connecting to an appliance that uses
                 flex rather than cable, when the appliance is permanently connected (no plug and
@@ -286,7 +286,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>At an existing socket outlet.</strong> The spur cable connects to the
                 terminals of an existing socket on the ring or radial circuit. The socket must have
@@ -296,7 +296,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>At a junction box in the circuit cable.</strong> A junction box to BS EN
                 60670-22 (commonly a 30A-rated box) is inserted into the ring or radial cable, and
@@ -309,7 +309,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>At a fused connection unit.</strong> An FCU is installed at the connection
                 point (either replacing an existing socket or installed alongside one) and the spur
@@ -349,28 +349,28 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Spur Cable Size Reference</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Unfused spur from 32A ring circuit</strong> — 2.5mm{'\u00B2'} twin and earth
                 (same as ring cable). Must match the ring cable cross-sectional area.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Unfused spur from 20A radial</strong> — 2.5mm{'\u00B2'} twin and earth (same
                 as radial cable).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>13A fused spur</strong> — 2.5mm{'\u00B2'} twin and earth from FCU to load.
                 Suitable for socket outlets and higher-power fixed appliances.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3A fused spur</strong> — 1.0mm{'\u00B2'} or 1.5mm{'\u00B2'} twin and earth
                 or flex from FCU to load. Suitable for low-power fixed appliances: extractor fans,
@@ -379,7 +379,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Unfused spur from 32A radial</strong> — 4mm{'\u00B2'} twin and earth (same
                 as radial cable).
@@ -395,9 +395,9 @@ const sections = [
           for the total cable length from the distribution board through the circuit cable and spur
           cable to the load.
         </p>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-amber-500/30 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.1] p-5 my-4">
           <div className="flex items-start gap-3">
-            <ShieldCheck className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+            <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <p className="font-semibold text-white mb-1">
                 30mA RCD protection required for the new socket outlet
@@ -434,7 +434,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Non-fused spurs</strong> — each non-fused spur must be connected to the ring
                 at a socket outlet or junction box that is part of the ring. An unfused spur can
@@ -443,14 +443,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Number of non-fused spurs</strong> — the total number should not exceed the
                 total number of socket outlets and fixed items connected directly in the ring.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fused spurs</strong> — a fused spur can be connected at any socket outlet,
                 junction box, or point in the ring. The FCU can supply multiple outlets or items of
@@ -461,7 +461,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable size</strong> — the cable from the ring to the spur (non-fused) must
                 be 2.5mm{'\u00B2'} minimum for a 32A ring. The cable from a fused spur depends on
@@ -470,9 +470,9 @@ const sections = [
             </li>
           </ul>
         </div>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-amber-500/30 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.1] p-5 my-4">
           <div className="flex items-start gap-3">
-            <ShieldCheck className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+            <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <p className="font-semibold text-white mb-1">
                 High-integrity CPC connections on ring spurs — where the 10mA threshold is reached
@@ -552,7 +552,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Unfused spurs</strong> — must use the same cable size as the radial circuit
                 cable. The spur should supply no more than one single or one twin socket outlet, or
@@ -560,7 +560,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fused spurs</strong> — can be connected at any point on the radial circuit
                 via an FCU. The cable after the FCU can be reduced in size according to the fuse
@@ -569,7 +569,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Total load</strong> — when adding spurs to a radial circuit, consider the
                 total load on the circuit including the spur. A 20A radial on 2.5mm{'\u00B2'} cable
@@ -669,7 +669,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>
                   <SEOInternalLink href="/minor-works-certificate">
@@ -682,7 +682,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>
                   <SEOInternalLink href="/eic-certificate">
@@ -695,9 +695,9 @@ const sections = [
             </li>
           </ul>
         </div>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-amber-500/30 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.1] p-5 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <p className="font-semibold text-white mb-1">
                 Record pre-existing defects on the Minor Works Certificate
@@ -749,7 +749,7 @@ export default function SpurSocketRegsPage() {
       heroTitle={
         <>
           Spur Socket Regulations:{' '}
-          <span className="text-yellow-400">Fused and Unfused Spur Guide UK</span>
+          <span className="text-elec-yellow">Fused and Unfused Spur Guide UK</span>
         </>
       }
       heroSubtitle="Spurs are the fastest way to add socket outlets and fixed equipment connections to existing circuits. But the rules for fused and unfused spurs are different, and getting them wrong is one of the most common EICR defects. This guide explains when to use each type, correct cable sizes, connection methods, and the mistakes that cost electricians time and money."
@@ -765,7 +765,7 @@ export default function SpurSocketRegsPage() {
       faqHeading="Frequently Asked Questions About Spur Socket Regulations"
       relatedPages={relatedPages}
       ctaHeading="Cable Sizing and Certificates on Your Phone"
-      ctaSubheading="Elec-Mate's cable sizing calculator checks your spur design against BS 7671, and the Minor Works Certificate app lets you certify the work on site. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's cable sizing calculator checks your spur design against BS 7671, and the Minor Works Certificate app lets you certify the work on site. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

@@ -202,7 +202,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electric door strikes</strong> — replace the strike plate in the door
                 frame. When energised (or de-energised in fail-safe mode), the strike releases
@@ -212,7 +212,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electromagnetic (magnetic) locks</strong> — a powerful electromagnet
                 mounted on the door frame attracts a steel armature plate on the door. Holding
@@ -223,7 +223,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electric mortice locks</strong> — a motorised or solenoid-operated
                 mortice lock. Higher security than strikes or magnetic locks. Fail-secure versions
@@ -233,7 +233,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Door closers</strong> — a mechanical door closer is required on any
                 controlled door to ensure the door returns to the locked position after entry.
@@ -321,7 +321,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Calculate total current demand</strong> — add the rated current draw of
                 all locks (typically 300–600 mA per magnetic lock at 12V DC), all readers (50–
@@ -330,7 +330,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated circuit</strong> — run a dedicated circuit from the distribution
                 board for the access control PSU. Never share with general power or lighting
@@ -339,7 +339,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Battery backup</strong> — use a PSU with integral battery backup or a
                 separate battery module. Size the battery to maintain full system operation for
@@ -348,7 +348,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Voltage drop on cable runs</strong> — calculate voltage drop over the
                 lock cable runs. A 12V magnetic lock drawing 500 mA over a 30-metre run on
@@ -375,7 +375,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lock power cable</strong> — 2-core screened, 1.0mm² or 1.5mm² depending
                 on run length and current draw. Screen connected to earth at the PSU end only.
@@ -385,7 +385,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reader/keypad data cable</strong> — multi-core screened, typically 6-core
                 or 8-core 0.5mm² (for Wiegand or RS-485 reader interfaces). Screen at panel end
@@ -394,7 +394,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP reader cable (PoE)</strong> — CAT6 (or CAT6A for runs over 70 metres).
                 Power over Ethernet (IEEE 802.3af or 802.3at) delivers both power and data over
@@ -403,7 +403,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mechanical protection</strong> — all cables in accessible areas (below
                 2.1 metres from floor level) must be run in conduit or trunking. Metallic conduit
@@ -493,7 +493,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Basic keypad system</strong> — £500–£800 per door, including keypad,
                 electric strike or magnetic lock, PSU, and installation. No ongoing software cost.
@@ -501,7 +501,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Networked fob/card reader system</strong> — £800–£1,500 per door for a
                 quality networked system with proximity readers, door controllers, management
@@ -510,7 +510,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Biometric system</strong> — £1,200–£2,500 per door for fingerprint readers,
                 rising to £2,000–£4,000 for facial recognition. Includes enrolment of all users.
@@ -518,7 +518,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP video intercom</strong> — £1,500–£3,000 per door entry point for a
                 quality IP video intercom with mobile app integration and NVR recording. Includes
@@ -550,7 +550,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Quote Access Control Jobs Accurately</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -611,7 +611,7 @@ export default function AccessControlInstallationPage() {
       heroTitle={
         <>
           Access Control Installation UK:{' '}
-          <span className="text-yellow-400">Door Entry & Access Systems</span>
+          <span className="text-elec-yellow">Door Entry & Access Systems</span>
         </>
       }
       heroSubtitle="Everything UK electricians and building managers need to know about access control installation — system types, door hardware, fail-safe vs fail-secure, power supply design, cable requirements, fire alarm integration, and realistic costs for 2026."

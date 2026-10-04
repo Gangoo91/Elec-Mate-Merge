@@ -447,7 +447,7 @@ const sections = [
         <div className="space-y-4 my-6">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">EV Charging Installation</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -462,7 +462,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Solar PV Systems</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -476,7 +476,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Fire Alarm Systems (BS 5839)</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -491,7 +491,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Emergency Lighting (BS 5266)</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -505,7 +505,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Brain className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Data and Structured Cabling</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -540,7 +540,7 @@ const sections = [
         <div className="space-y-4 my-6">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
-              <ArrowUpRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ArrowUpRight className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Domestic Installer</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -555,7 +555,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
-              <ArrowUpRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ArrowUpRight className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Approved Contractor</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -571,7 +571,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
-              <ArrowUpRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ArrowUpRight className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Design Engineer</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -587,7 +587,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
-              <ArrowUpRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ArrowUpRight className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Contracts Manager</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -670,7 +670,7 @@ export default function ElectricalQualificationsPathwayPage() {
       heroTitle={
         <>
           Electrical Qualifications Pathway —{' '}
-          <span className="text-yellow-400">From Apprentice to Master</span>
+          <span className="text-elec-yellow">From Apprentice to Master</span>
         </>
       }
       heroSubtitle="The complete qualification map for UK electricians. Every qualification from Level 1 Foundation to specialist certifications, explained in plain English with career progression routes, earning potential at each stage, and how Elec-Mate supports every step of the journey."
@@ -681,7 +681,7 @@ export default function ElectricalQualificationsPathwayPage() {
       faqHeading="Frequently Asked Questions About Electrical Qualifications"
       relatedPages={relatedPages}
       ctaHeading="Every qualification, one platform"
-      ctaSubheading="Join 1,600+ UK electricians and apprentices using Elec-Mate for training, exam preparation, and CPD tracking. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians and apprentices using Elec-Mate for training, exam preparation, and CPD tracking. 7-day free trial, cancel anytime."
     />
   );
 }

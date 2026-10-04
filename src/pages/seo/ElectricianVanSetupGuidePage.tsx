@@ -238,7 +238,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Power tools</strong> — dedicate a shelf or drawer for drill/drivers, SDS
                 drills, jigsaws, and multi-tools. Each tool should have its own space so you can see
@@ -248,7 +248,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hand tools</strong> — a tool bag or tool roll that you take to every job
                 should contain your essential hand tools: screwdrivers (VDE insulated set), pliers,
@@ -257,7 +257,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fixings and small parts</strong> — small compartment boxes (Stanley
                 SortMaster, DeWalt ToughSystem) with labelled sections for screws, wall plugs, cable
@@ -266,7 +266,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PPE</strong> — keep your PPE (safety glasses, ear defenders, dust masks,
                 gloves, hard hat) in a dedicated bag or box near the van door so you can grab it
@@ -290,7 +290,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable drum holder</strong> — a wall-mounted or floor-mounted cable drum
                 spindle lets you store 2 to 4 drums upright at the rear of the van and dispense
@@ -299,7 +299,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Conduit and trunking</strong> — lengths of conduit, trunking, and cable tray
                 should be stored along the offside wall or overhead in a pipe tube. Roof-mounted
@@ -308,7 +308,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer units and accessories</strong> — keep consumer units in their
                 original boxes on a shelf. Do not stack heavy items on top of them. Accessories
@@ -317,7 +317,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tape and consumables</strong> — a dedicated small-parts drawer or wall-
                 mounted rack for PVC tape, self-amalgamating tape, labels, markers, cable ties, and
@@ -392,7 +392,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Deadlocks</strong> — fit deadlocks to all doors (rear and side). Factory
                 locks on most vans are inadequate — they can be defeated in seconds with a
@@ -401,7 +401,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Slam lock</strong> — replaces the side door handle with a lock that
                 automatically engages when the door closes. You cannot accidentally leave the door
@@ -409,7 +409,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Alarm</strong> — a Thatcham-approved alarm with sensors on all doors. Some
                 systems include tilt sensors to detect the van being jacked up or towed. Budget £300
@@ -417,7 +417,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Internal vault</strong> — a lockable steel cabinet inside the van provides a
                 second layer of security. Even if a thief gets into the van, they cannot quickly
@@ -426,7 +426,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>GPS tracker</strong> — if the van is stolen, a GPS tracker increases the
                 chances of recovery. Trackers cost £100 to £200 plus a monthly subscription (£5 to
@@ -455,7 +455,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Leisure battery</strong> — a separate 12V leisure battery (AGM or lithium,
                 100Ah to 200Ah) dedicated to powering your accessories. Never run an inverter from
@@ -465,7 +465,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Split-charge relay or DC-DC charger</strong> — keeps the leisure battery
                 charged from the alternator while driving. A simple split-charge relay costs £30 to
@@ -474,7 +474,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inverter</strong> — a 1,000W to 2,000W pure sine wave inverter converts 12V
                 DC from the leisure battery to 240V AC. Use it for charging drill batteries,
@@ -484,7 +484,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>LED strip lighting</strong> — 12V LED strips inside the van make a huge
                 difference in winter when you are loading and unloading in the dark. Wire them to
@@ -493,7 +493,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>USB charging points</strong> — fit one or two USB sockets (12V to USB) in
                 the cabin and cargo area for convenient phone and tablet charging without using the
@@ -575,7 +575,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial use</strong> — standard social/domestic vehicle insurance does
                 NOT cover you when driving to and from jobs or carrying tools for work. You need
@@ -583,7 +583,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tool and contents cover</strong> — most standard commercial policies include
                 minimal contents cover (often only £500 to £1,000). An electrician typically carries
@@ -592,7 +592,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Overnight cover</strong> — check whether your policy covers tools left in
                 the van overnight. Some policies require tools to be in a locked internal vault or
@@ -600,7 +600,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Security discounts</strong> — deadlocks, slam locks, alarms, and trackers
                 can reduce your premium. Inform your insurer about all security measures fitted. A
@@ -637,7 +637,7 @@ export default function ElectricianVanSetupGuidePage() {
       heroTitle={
         <>
           Electrician Van Setup Guide 2026:{' '}
-          <span className="text-yellow-400">Racking, Tools, Security, and Branding</span>
+          <span className="text-elec-yellow">Racking, Tools, Security, and Branding</span>
         </>
       }
               noindex={true}
@@ -649,7 +649,7 @@ export default function ElectricianVanSetupGuidePage() {
       faqHeading="Frequently Asked Questions About Electrician Van Setup"
       relatedPages={relatedPages}
       ctaHeading="Run Your Business From Your Van"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management — all from your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for quoting, certification, and job management — all from your phone. 7-day free trial, cancel anytime."
     />
   );
 }

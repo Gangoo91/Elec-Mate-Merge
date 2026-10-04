@@ -673,7 +673,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete house purchase EICRs faster with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -699,7 +699,7 @@ export default function ElectricalSurveyBeforeBuyingPage() {
       heroTitle={
         <>
           Electrical Survey When Buying a House:{' '}
-          <span className="text-yellow-400">EICR for House Purchase UK</span>
+          <span className="text-elec-yellow">EICR for House Purchase UK</span>
         </>
       }
       heroSubtitle="An EICR is not legally required when buying a house — but for any property over 25 years old, it is one of the most valuable pieces of due diligence you can commission. This guide explains what an EICR costs, what it reveals, how to interpret C1 and C2 observations, and how to use the findings to negotiate."
@@ -717,7 +717,7 @@ export default function ElectricalSurveyBeforeBuyingPage() {
       faqHeading="Frequently Asked Questions About Electrical Surveys When Buying a House"
       relatedPages={relatedPages}
       ctaHeading="Deliver House Purchase EICRs Before You Leave the Property"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning and instant PDF export. Speed wins house purchase work. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning and instant PDF export. Speed wins house purchase work. 7-day free trial, cancel anytime."
     />
   );
 }

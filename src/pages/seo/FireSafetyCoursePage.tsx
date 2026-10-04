@@ -417,7 +417,7 @@ export default function FireSafetyCoursePage() {
       heroTitle={
         <>
           Fire Safety Course:{' '}
-          <span className="text-yellow-400">Awareness Training for Electricians</span>
+          <span className="text-elec-yellow">Awareness Training for Electricians</span>
         </>
       }
       heroSubtitle="Essential fire safety awareness training covering the fire triangle, extinguisher selection, hot works permits, electrical fire prevention, and evacuation procedures. 4 modules with video content, interactive quizzes, and AI-powered study tools."
@@ -435,7 +435,7 @@ export default function FireSafetyCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Ready to strengthen your fire safety knowledge?"
-      ctaSubheading="Join 1,600+ UK electricians studying smarter with Elec-Mate. 4 focused modules covering fire science, extinguisher selection, hot works, and evacuation procedures. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians studying smarter with Elec-Mate. 4 focused modules covering fire science, extinguisher selection, hot works, and evacuation procedures. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/fire-safety"
     />

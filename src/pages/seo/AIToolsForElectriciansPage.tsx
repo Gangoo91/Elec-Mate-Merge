@@ -42,7 +42,7 @@ export default function AIToolsForElectriciansPage() {
       badgeIcon={Brain}
       heroTitle={
         <>
-          <span className="text-yellow-400">AI Tools</span> for Electricians — The Complete 2026
+          <span className="text-elec-yellow">AI Tools</span> for Electricians — The Complete 2026
           Guide
         </>
       }

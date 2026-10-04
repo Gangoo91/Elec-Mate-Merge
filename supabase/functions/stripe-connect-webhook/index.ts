@@ -167,24 +167,34 @@ serve(async (req) => {
 
     let event: Stripe.Event;
 
-    // Verify webhook signature if secret is configured
-    if (webhookSecret && signature) {
-      try {
-        event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
-        console.log('Webhook signature verified');
-      } catch (err: any) {
-        // Signature verification failed - log but still process
-        // This handles case where secret is misconfigured
-        console.error('Webhook signature verification failed:', err.message);
-        console.log(
-          'Processing webhook anyway (signature mismatch - check STRIPE_CONNECT_WEBHOOK_SECRET)'
-        );
-        event = JSON.parse(body);
-      }
-    } else {
-      // Parse without verification (no secret configured)
-      event = JSON.parse(body);
-      console.log('Processing webhook without signature verification (no secret configured)');
+    // Fail CLOSED. verify_jwt = false here, and this handler marks invoices
+    // PAID — so an unverified event is a forged payment. The old code processed
+    // unsigned events AND events whose signature failed. Every real delivery
+    // was failing verification only because the SYNC constructEvent cannot use
+    // Deno's async SubtleCrypto ("SubtleCryptoProvider cannot be used in a
+    // synchronous context"), not because the secret was wrong.
+    if (!webhookSecret || !signature) {
+      console.error('Rejected Connect webhook: ' + (!webhookSecret ? 'secret not configured' : 'no stripe-signature header'));
+      return new Response(JSON.stringify({ error: 'Missing signature' }), {
+        status: webhookSecret ? 400 : 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+    try {
+      event = await stripe.webhooks.constructEventAsync(
+        body,
+        signature,
+        webhookSecret,
+        undefined,
+        Stripe.createSubtleCryptoProvider()
+      );
+      console.log('Webhook signature verified');
+    } catch (err: any) {
+      console.error('Webhook signature verification failed:', err.message);
+      return new Response(JSON.stringify({ error: 'Invalid signature' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     console.log(`Webhook event received: ${event.type}`);
@@ -513,14 +523,27 @@ serve(async (req) => {
         const invoiceId = session.metadata?.invoice_id;
 
         if (invoiceId) {
-          // Clear the expired payment link
+          /*
+           * Clear only what belonged to THIS session (ELE-1705).
+           *
+           * The stored link is now the permanent `/pay/<id>` page, and every
+           * visit to it mints a session — so an abandoned visit expiring a day
+           * later would wipe the invoice's only pay link. The session id is
+           * cleared only if it is still this one (a newer visit may have
+           * replaced it); the link only if it is a legacy Checkout URL.
+           */
           await supabase
             .from('quotes')
-            .update({
-              stripe_payment_link_url: null,
-              stripe_checkout_session_id: null,
-            })
-            .eq('id', invoiceId);
+            .update({ stripe_checkout_session_id: null })
+            .eq('id', invoiceId)
+            .eq('stripe_checkout_session_id', session.id);
+          // An expired session carries no url to compare, so legacy links are
+          // recognised by their host. The permanent page is never cleared.
+          await supabase
+            .from('quotes')
+            .update({ stripe_payment_link_url: null })
+            .eq('id', invoiceId)
+            .like('stripe_payment_link_url', 'https://checkout.stripe.com/%');
 
           console.log(`Expired checkout session cleared for invoice ${invoiceId}`);
         }

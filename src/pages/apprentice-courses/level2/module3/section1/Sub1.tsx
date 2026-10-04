@@ -72,7 +72,7 @@ const checks = [
       "You're swapping a damaged socket-outlet in a domestic kitchen for a like-for-like replacement. Does this need notifying under Building Regs Part P?",
     options: [
       'Yes — any electrical work in a kitchen is notifiable under Part P, because the kitchen is classed as a special location alongside bathrooms in the current Building Regulations.',
-      'No — replacements, repairs and maintenance of existing accessories on existing circuits are NOT notifiable work under Part P, even in a kitchen. Notifiable work is new circuits and consumer unit replacements (and additions/alterations in special locations under the older interpretation).',
+      'No — replacements, repairs and maintenance are not notifiable, even in a kitchen. Notifiable work is a new circuit, a consumer unit replacement, or an addition or alteration to a circuit in a special location (the zone around a bath or shower).',
       'Yes — replacing any socket-outlet is notifiable because it alters a final circuit, so Building Control must be informed before the new accessory is connected.',
       'No — but only if the replacement socket is the same make and model; fitting a different brand counts as an alteration to the circuit and would then become notifiable.',
     ],

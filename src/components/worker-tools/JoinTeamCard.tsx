@@ -10,6 +10,7 @@ import {
   PrimaryButton,
   inputClass,
 } from '@/components/employer/editorial';
+import { autoCompleteOff } from '@/lib/textEntry';
 
 /* ==========================================================================
    JoinTeamCard — worker-side entry to redeem an employer invite code.
@@ -113,7 +114,7 @@ export function JoinTeamCard({ onJoined }: Props) {
           placeholder="e.g. AB12CD"
           autoCapitalize="characters"
           autoCorrect="off"
-          autoComplete="off"
+          autoComplete={autoCompleteOff}
           spellCheck={false}
           enterKeyHint="done"
           inputMode="text"

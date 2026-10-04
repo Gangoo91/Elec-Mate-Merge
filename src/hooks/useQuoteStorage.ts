@@ -52,8 +52,7 @@ export function quoteRowToQuote(row: any): Quote {
     id: row.id,
     quoteNumber: row.quote_number,
     client: typeof row.client_data === 'string' ? JSON.parse(row.client_data) : row.client_data,
-    jobDetails:
-      typeof row.job_details === 'string' ? JSON.parse(row.job_details) : row.job_details,
+    jobDetails: typeof row.job_details === 'string' ? JSON.parse(row.job_details) : row.job_details,
     items: typeof row.items === 'string' ? JSON.parse(row.items) : row.items,
     settings: typeof row.settings === 'string' ? JSON.parse(row.settings) : row.settings,
     subtotal: parseNumber(row.subtotal),
@@ -463,9 +462,7 @@ export const useQuoteStorage = () => {
           expiry_date: (() => {
             const days = quote.settings?.validForDays;
             if (typeof days === 'number' && days > 0) {
-              const createdMs = quote.createdAt
-                ? new Date(quote.createdAt).getTime()
-                : Date.now();
+              const createdMs = quote.createdAt ? new Date(quote.createdAt).getTime() : Date.now();
               const anchor = Number.isFinite(createdMs) ? createdMs : Date.now();
               return new Date(anchor + days * 24 * 60 * 60 * 1000).toISOString();
             }
@@ -545,14 +542,35 @@ export const useQuoteStorage = () => {
                 .from('quotes')
                 .update({
                   pdf_document_id: documentId,
+                  /*
+                   * ELE-1794 — the link goes with the document. Left as it
+                   * was, `pdf_url` kept pointing at the PREVIOUS render (a
+                   * permanent bucket copy that never expires), and
+                   * send-quote-resend only renders afresh when the link is
+                   * missing — so an edited quote was emailed with the old PDF
+                   * attached and the new total in the body.
+                   */
+                  pdf_url: pdfData?.downloadUrl ?? null,
                   pdf_generated_at: new Date().toISOString(),
                   pdf_version: (quote.pdf_version || 0) + 1,
                 })
                 .eq('id', quote.id);
+            } else {
+              // No new render: the old one no longer matches what was saved.
+              await supabase.from('quotes').update({ pdf_url: null }).eq('id', quote.id);
             }
           }
         } catch {
-          // PDF generation error (non-blocking)
+          // PDF generation error (non-blocking) — but never leave the last
+          // render's link standing for a quote that has since changed.
+          await supabase
+            .from('quotes')
+            .update({ pdf_url: null })
+            .eq('id', quote.id)
+            .then(
+              () => undefined,
+              () => undefined
+            );
         }
 
         // Update local state with potentially updated quote number

@@ -44,10 +44,10 @@ const checks = [
     question:
       "A customer comes out of the kitchen mid-job, visibly angry, and says 'you're useless, I want a different electrician'. You're an apprentice on day three of a five-day rewire and you've done everything by the book. What's your response?",
     options: [
-      "Respond promptly, professionally and publicly. Acknowledge the customer's experience without admitting liability. Offer to discuss offline ('please call us on X to discuss in detail'). Keep tone calm and factual. Never argue publicly. Take resolution to private channels. A good response to a bad review is often better marketing than the review itself was bad — it shows future customers how you handle problems.",
-      "Stay calm. Don't take it personally. Acknowledge the customer's frustration without agreeing with the substance ('I can see this isn't what you expected — I'm sorry it's frustrating'). Don't argue, don't explain at length, don't get defensive. Offer to call your supervisor immediately so they can come to site or speak to the customer directly. Document the interaction in your job pack — date, time, exact words, your response — and let the supervisor handle the conversation about scope and quality. Carry on with the work in a non-confrontational way until the supervisor arrives.",
-      "The technical lead for a project on the sub-contractor's side. The Project Engineer coordinates design (where applicable), procurement, programme, technical queries (RFIs), QA and the eventual handover. They are the sub-contractor's technical face to the main contractor and the M&E Consultant. Typically a Technician-grade or HNC-qualified electrician with several years on site, or a graduate engineer who has crossed in from design.",
-      'UK-SPEC (UK Standard for Professional Engineering Competence) is the published competence standard against which Engineering Council professional registrations (EngTech, IEng, CEng) are assessed. It defines five competence areas (knowledge and understanding, design, leadership and management, communication, professional commitment) and the level of evidence required at each tier. Available free at engc.org.uk.',
+      'Explain in detail why you are right and they are wrong.',
+      'Stay calm, acknowledge their frustration without arguing, offer to call your supervisor straight away, and note what was said.',
+      'Pack up and leave — the customer has asked for a different electrician.',
+      'Agree with them to calm things down, and promise to redo the work for free.',
     ],
     correctIndex: 1,
     explanation:
@@ -58,10 +58,10 @@ const checks = [
     question:
       "A co-worker on your team has been making comments about your accent for the past week. They're framed as 'banter' but they're consistent and they're starting to bother you. What's the right next step?",
     options: [
-      "CALIBRATION — formal laboratory measurement of an instrument's accuracy against UKAS-traceable reference standards, results documented in a certificate, performed at fixed intervals (annually for MFT, every 24 months for two-pole). VERIFICATION — comparison of two instruments under field conditions to confirm they agree (e.g. MFT EFLI reading agreed within 5% of a known reference loop). FUNCTION CHECK — pre-use confirmation that the instrument operates at all (powers on, indicates on a known source, returns to zero on a known dead source). Each is a different level of confidence; calibration is the formal baseline, verification confirms field agreement, function is the daily go/no-go.",
-      'LLP = Limited Liability Partnership, a hybrid form created by the Limited Liability Partnerships Act 2000. Partners have limited liability (like Ltd directors) but the partnership is taxed as a partnership (members file Self Assessment on share of profits, no Corporation Tax). Common in professional services (law, accountancy) but rare in trades. For an electrical firm with multiple working partners LLP is sometimes considered as an alternative to Ltd.',
-      "Have a direct, private conversation with the co-worker first. State clearly that the comments aren't welcome and you'd like them to stop ('I know it's meant as banter, but the accent comments aren't landing as funny — I'd appreciate it if you stopped'). Keep it brief, don't argue. If the comments continue, raise it with your supervisor or your training-provider mentor. Repeated unwanted conduct related to a protected characteristic (race, in this case) is harassment under Equality Act 2010 s.26 — it doesn't have to be 'severe' to count, just unwanted, repeated and connected to a protected characteristic. Document the conversations in writing.",
-      "(1) Inform the customer in writing of the planned outage, expected duration, and any contingency they need (move stock, brief staff, sign at door). (2) Check whether the affected circuit has any safety-critical loads — fire alarm sounders, emergency lighting central battery, intruder alarm — and if so, brief the customer to put out a 'system off' note and inform their alarm-receiving centre. (3) Plan the isolation window to minimise impact (early morning, lunchtime closure). (4) Document the conversation on the job sheet — customer agreed to isolation, accepted impact, etc. (5) ONLY THEN isolate. The customer's commercial loss is real and your firm carries professional liability for unannounced outages.",
+      "Put up with it — banter is part of site life and can't be harassment.",
+      'Make jokes about their accent in return so it evens out.',
+      "Tell them privately and clearly that the comments aren't welcome; if they continue, raise it with your supervisor, and keep a note of what happens.",
+      'Raise an Employment Tribunal claim straight away.',
     ],
     correctIndex: 2,
     explanation:
@@ -72,10 +72,10 @@ const checks = [
     question:
       "Your supervisor has consistently been giving you tasks that are below your training level and refusing to let you do the more complex work. You've raised it informally twice and nothing has changed. What's the right next step?",
     options: [
-      "Raise it formally. As an apprentice you have three points of contact — your employer (formal grievance procedure under the ACAS Code), your training-provider tutor (responsible for the quality of your training experience), and your end-point assessment organisation. Talk to your tutor first — they have the authority to intervene with the employer about training quality. If the employer is in breach of the apprenticeship agreement (which sets out the training the employer must provide), there's a documented escalation route. ACAS conciliation is available if it can't be resolved internally.",
-      'Currently £90,000 of VAT-taxable turnover in any rolling 12-month period (£85,000 was the long-standing figure, raised to £90,000 in April 2024). When you cross the threshold you must register for VAT within 30 days and start charging VAT (currently 20% standard rate) on your invoices. Quarterly VAT returns. You can reclaim VAT paid on business purchases. For a busy electrical firm crossing the threshold is a significant administrative event.',
-      "Directly — every tool in the cable-prep kit (auto strippers, ratchet crimpers, preset torque drivers, calibrated test instruments) exists to deliver consistent, repeatable, manufacturer-spec terminations. 'Good workmanship' is delivered through the tools as much as through the operative's skill. An apprentice using the right tool the right way produces 134.1.1-compliant work; using the wrong tool (knife strip, plier crimp, eyeballed torque) produces work that fails 134.1.1 even if it tests OK on the day.",
-      'Four dead-test functions on the MFT: (1) Continuity of protective conductors (R1+R2 / R2), low-resistance ohms range; (2) Insulation resistance, 500 V DC test (250 V for SELV / 1000 V for over 500 V circuits); (3) Polarity, by continuity check from origin to accessory; (4) Earth electrode resistance (where TT system or earth electrode used). The live-test sequence then adds Ze, Zs, PFC and RCD time/current. Sub 6.x covers the full sequence in detail.',
+      "Raise it formally — speak to your training-provider tutor, who can take up training quality with the employer, and use the employer's grievance procedure if needed.",
+      'Start doing the complex work anyway without telling the supervisor.',
+      'Leave the apprenticeship and look for another employer.',
+      'Accept it — the employer decides what work you do and there is no route to challenge it.',
     ],
     correctIndex: 0,
     explanation:
@@ -91,10 +91,10 @@ const quizQuestions = [
     question:
       "What's the first step in dealing with a conflict between an operative and a customer?",
     options: [
-      'Stage 1: try to discuss and resolve — most disputes resolve through conversation. Stage 2: if unresolved, follow your written complaints procedure. Stage 3: if still unresolved, signpost ADR (RECC for MCS work, NICEIC/NAPIT for scheme work, generic ADR providers like Centre for Effective Dispute Resolution). Stage 4: as last resort, small claims court (under £10k, online process). Document everything in writing throughout.',
-      "De-escalate. Stay calm, acknowledge the customer's feelings without conceding the substance, separate the person from the problem, don't get drawn into argument. Offer to involve the supervisor for the contractual conversation. Document the interaction. The first move in conflict resolution is to lower the temperature, not to win the point.",
-      'Other trades working above, beside or below you. Plumbers cutting overhead, joiners with battery saws, decorators with wet paint and dust sheets, scaffolders moving boards. Their work creates falling-object risk, slip risk and noise risk for you, and your work creates electrical and tripping risk for them. The walk-round needs to take account of who else is on site, not just your own activity.',
-      'To plan, manage, monitor and co-ordinate matters relating to H&S during the pre-construction phase. The PD identifies, eliminates or controls foreseeable risks via the design, ensures designers comply with their Reg 9 duties, prepares the pre-construction information and liaises with the Principal Contractor for the duration of the appointment.',
+      'Win the argument with facts so the customer backs down.',
+      "De-escalate — stay calm, acknowledge their feelings, don't get drawn into argument, and involve the supervisor for anything contractual.",
+      'Walk off site until the customer calms down.',
+      'Tell the customer to put their complaint in writing before you will speak to them.',
     ],
     correctAnswer: 1,
     explanation:
@@ -105,10 +105,10 @@ const quizQuestions = [
     question:
       "Under the ACAS Code of Practice on Discipline and Grievance, what's the right approach to a workplace dispute?",
     options: [
-      "Unwanted conduct related to a protected characteristic (or unwanted conduct of a sexual nature) which has the purpose or effect of violating a person's dignity or creating an intimidating, hostile, degrading, humiliating or offensive environment. The conduct doesn't have to be 'severe' to count — repeated 'banter' related to race, sex, disability or another protected characteristic can be harassment if it has the proscribed effect on the recipient.",
-      'PSCC (Prospective Short Circuit Current) = the current that would flow in an L-N short-circuit fault, measured by the MFT applying brief test current via the L-N loop. Represents short-circuit fault scenarios. PEFC (Prospective Earth Fault Current) = the current that would flow in an L-E earth fault, measured by the MFT applying brief test current via the L-E loop. Represents earth-fault scenarios. The two are measured separately during a 3-lead Zs test; the higher value is reported as Ipf (PFC) for breaking-capacity verification.',
-      "Resolve it informally first where possible. The ACAS Code recommends informal resolution as the starting point, then a written grievance under the employer's documented grievance procedure, then a meeting with management with the right to be accompanied by a colleague or trade-union representative, then a written outcome with a right of appeal. ACAS conciliation is available if the internal procedure fails. Employment tribunal is the last resort and tribunals will assess whether both parties followed the Code reasonably.",
-      "Uses an EFLI tester to measure the loop impedance from the supply, with the installation's earthing conductor disconnected from the electrode and connected to the EFLI tester instead. The reading gives total loop impedance — for TT, this approximates the electrode resistance plus the supply network impedance (small in comparison). Useful when stakes / clamps are not available, but requires the earthing conductor to be safely re-connected before re-energising.",
+      'Go straight to an Employment Tribunal — the Code says internal procedures are optional.',
+      'Let the employer decide the outcome with no meeting or appeal.',
+      'Try to resolve it informally first, then a written grievance, a meeting (with the right to be accompanied), a written outcome and a right of appeal.',
+      'Settle it by a vote among the team.',
     ],
     correctAnswer: 2,
     explanation:
@@ -118,10 +118,10 @@ const quizQuestions = [
     id: 3,
     question: "What's the definition of harassment under the Equality Act 2010 s.26?",
     options: [
-      'Per BS 8599-1 (small kit): guidance leaflet, medium dressings (4), large dressings (1), triangular bandages (2), safety pins (6), eye pads (2), adhesive plasters (40), assorted plasters (10), conforming bandages (3), microporous tape (1), disposable gloves (6 pairs), face shield (1), foil blanket (1), cleansing wipes (10), burn gel sachets (2), shears (1).',
-      'BPEC (British Plumbing Employers Council, now expanded to other trades) runs an MCS-recognised Solar PV installer course typically delivered as a 4-5 day classroom + practical course covering PV system design, installation, MCS standards and commissioning. AM2S is the JIB practical assessment route — assumes prior PV training and tests practical competence. Both routes earn the ECS PV endorsement; BPEC is more course-based, AM2S is more assessment-based.',
-      'A structured plan that includes: self-assessment (identifying current EI strengths and gaps), specific goals (which competencies to develop), practice opportunities (real situations to apply new skills), feedback mechanisms (trusted people who will give honest observations), reflection practices (regular review of progress), and accountability (commitments to specific actions with review dates)',
-      "Unwanted conduct related to a protected characteristic (or unwanted conduct of a sexual nature) which has the purpose or effect of violating a person's dignity or creating an intimidating, hostile, degrading, humiliating or offensive environment. The conduct doesn't have to be 'severe' to count — repeated 'banter' related to race, sex, disability or another protected characteristic can be harassment if it has the proscribed effect on the recipient.",
+      'Only physical contact that the person did not consent to.',
+      "Any criticism of someone's work by a supervisor.",
+      "Conduct that was intended to offend — jokes can't be harassment.",
+      'Unwanted conduct related to a protected characteristic (or of a sexual nature) that has the purpose or effect of violating dignity or creating an intimidating, hostile, degrading, humiliating or offensive environment.',
     ],
     correctAnswer: 3,
     explanation:
@@ -131,10 +131,10 @@ const quizQuestions = [
     id: 4,
     question: 'What does ACAS stand for and what does it do?',
     options: [
-      'Advisory, Conciliation and Arbitration Service — a non-departmental public body that provides free, impartial advice on workplace rights and conflict resolution. ACAS publishes the Codes of Practice on Discipline and Grievance, runs early conciliation (mandatory before most employment tribunal claims), provides advice through a national helpline, and trains employers and unions on workplace dispute resolution.',
-      'An open-PEN protective device (O-PEN device) that disconnects the supply if the PEN integrity is lost (typical V<159 V or V>253 V detection), OR by deriving the EVSE earth from a separate TT electrode rather than the PME terminal — preventing PEN-fault diverted-N current from appearing on the vehicle chassis.',
-      "Work outside the quoted scope: making good (plastering, decorating), other trades' work, building control / scheme fees if charged separately, scaffolding hire, unforeseen issues (asbestos, existing-defect remediation, hidden services). Clear exclusions prevent disputes about who pays for what.",
-      'The label records the refrigerant type, GWP value, charge weight in kilograms and the equivalent tonnes of CO2 the charge represents. The label is a statutory requirement under the F-Gas Regulation. It triggers leak-check frequency rules (typically once a year for charges over 5 tonnes CO2 equivalent without an automatic leak detection system, less often with one), drives the recovery requirements at end of life, and helps the F-Gas engineer choose the right recovery cylinder if the unit is decommissioned.',
+      'The Advisory, Conciliation and Arbitration Service — it gives free, impartial advice on workplace rights, publishes the Codes of Practice and runs early conciliation.',
+      'The Apprentice Careers and Skills Service — it finds apprenticeships for school leavers.',
+      'The Association of Contractors and Approved Suppliers — the trade body for electrical contractors.',
+      'The Accident Claims and Settlement Service — it handles injury claims at work.',
     ],
     correctAnswer: 0,
     explanation:
@@ -145,10 +145,10 @@ const quizQuestions = [
     question:
       'An apprentice has a dispute with their employer about the quality of training being provided. Who can the apprentice escalate to?',
     options: [
-      'The four stages — concrete experience (having an emotional interaction), reflective observation (thinking about what happened and how you felt), abstract conceptualisation (identifying patterns and principles), and active experimentation (trying a new approach next time) — create a systematic method for learning from emotional experiences rather than repeating the same patterns',
-      "The training-provider tutor first — they have responsibility for the quality of the apprentice's training experience and the authority to intervene with the employer. The apprenticeship agreement is a tripartite document (apprentice, employer, training provider) and the training provider can hold the employer to account on training delivery. If that doesn't resolve it, the apprentice can raise a formal grievance with the employer under the ACAS Code, escalate to ACAS conciliation, and ultimately to an employment tribunal.",
-      "Three. (1) Test readings — pre-rectification (the failed reading) and post-rectification (the corrected reading), with timestamps and instrument IDs. (2) Functional test outcomes — what was tested, what worked, any anomalies. (3) Customer hand-back record — what was demonstrated, what documentation provided, customer's signed acceptance. The records become the diagnostic narrative on the job sheet — defensible audit trail of what was found, what was done, what was verified.",
-      "Significant career achievement and contribution to engineering practice — typically 10+ years senior engineering experience, evidence of leadership, technical contribution to the profession (publications, mentoring, committee work, etc.), and a Fellow's nomination process. CEng registration is typical alongside FIET. Annual subscription higher (£200-300/year). Fellowship is recognition of senior career standing.",
+      'Only the HSE, because training quality is a health and safety matter.',
+      'Their training-provider tutor first; then a formal grievance with the employer, ACAS, and as a last resort an employment tribunal.',
+      'Only the customer whose job they are working on.',
+      "No one — training quality is entirely at the employer's discretion.",
     ],
     correctAnswer: 1,
     explanation:
@@ -159,10 +159,10 @@ const quizQuestions = [
     question:
       "What's the right way to document a conflict that you've raised informally with a co-worker?",
     options: [
-      'Three things — battery life vs run time (a hard day on an SDS will drain a 5 Ah pack faster than you can charge spares), tool weight (cordless SDS with a 9 Ah pack on the back is noticeably heavier than a corded equivalent), and what supply is actually on site (no 110 V on site = corded 230 V is awkward, cordless wins). Most apprentices end up with a mixed loadout — cordless drill/driver + cordless impact for general work, corded SDS / grinder / recip on site supply for the heavy-duty jobs.',
-      'Temperature. Copper has a temperature coefficient of approximately 0.004 / °C. A 1.5 mm² CPC reading 0.36 Ω at 20 °C will read approximately 0.43 Ω at 70 °C (full operating temperature) — a 20 % rise. This is why measured R1+R2 must be corrected (or the 0.8 factor applied to the table limit) before judging compliance against Table 41.3.',
-      "Make a contemporaneous note in your own records — date, time, location, what was said, by whom, who else was present, your response. Keep the note factual and unemotional. Don't share with the co-worker (it's your private record at this stage). If the conflict continues and you escalate, the contemporaneous notes are your evidence base and they carry significant weight because they were written at the time, not from memory weeks later.",
-      "Because a ladder is a personal access platform that doesn't have a guardrail and depends on the user's three-point contact and footing for stability. It provides minimal collective protection. INDG401 and INDG402 (HSE guidance) limit ladder use to short-duration tasks (typically up to 30 minutes at one location), light work (one-handed work where reasonably practicable, with a free hand for grip) and where a higher control isn't reasonably practicable.",
+      'Post about it on social media so there is a public record.',
+      'Write nothing down — notes make the situation worse.',
+      'A factual, contemporaneous note in your own records — date, time, place, what was said, who was there and your response.',
+      'Write it up from memory a few weeks later if it gets worse.',
     ],
     correctAnswer: 2,
     explanation:
@@ -172,10 +172,10 @@ const quizQuestions = [
     id: 7,
     question: 'What protection does the Employment Rights Act 1996 s.44 provide?',
     options: [
-      'Politely correct them. The five-year payback figure is from the Feed-in Tariff (FIT) era which closed in 2019 — under the current Smart Export Guarantee (SEG) and current electricity prices, realistic payback is 9–12 years. Quote real numbers, not historic ones, so the customer makes an informed decision.',
-      "Address fabric first — insulation and glazing — then size any heat pump to the reduced load. A heat pump in a leaky house works at high flow temperatures, runs constantly, and posts a poor SCOP, blowing the customer's bills past where they were on gas. The MCS heat-loss calculation methodology assumes a reasonably insulated envelope. The honest answer is fabric upgrade first, then size the kit to the new load — which often ends up being smaller and cheaper.",
-      'The reasons for the chosen frequency, including a note that licensing requirements were the basis. GN3 is explicit: even where set periods imposed by local authority licensing apply, the inspector shall still record on the EICR that those set periods were applied and the reason.',
-      "The right not to suffer detriment for raising health and safety concerns. An employee who is dismissed, demoted, denied promotion, harassed or otherwise penalised for raising a genuine health and safety concern (or for refusing to work in conditions of serious and imminent danger) has a claim under s.44. The right is automatic and doesn't require a qualifying period of employment.",
+      'The right to paid overtime for all hours worked over 40 a week.',
+      'Protection from being dismissed during an apprenticeship for any reason.',
+      'The right to choose which site you are sent to work on.',
+      'Protection from detriment (such as demotion or harassment) for raising genuine health and safety concerns, or for leaving or refusing to work in serious and imminent danger.',
     ],
     correctAnswer: 3,
     explanation:
@@ -186,10 +186,10 @@ const quizQuestions = [
     question:
       "What's the appropriate first step when a customer makes a formal complaint about your work to your employer?",
     options: [
-      "Cooperate fully with your employer's investigation. Provide a calm, factual account of what happened — what you did, when, with what materials, against what specification, with what test results, with what documentation. Don't speculate about the customer's motives. Don't post about it on social media. Don't approach the customer directly. The employer will manage the customer relationship; your job is to give your employer the evidence base they need to respond.",
-      'Yes — most specialisms welcome experienced electricians from any background. The path requires investment in specialist training (BAFE, CompEx, NSI/SSAIB, BICSI) and sometimes a step-down in seniority while building specialist competence. Many career-direction electricians specialise in their 5-15 year window post-AM2 to escape the price-pressure of generic domestic work and access higher-value markets.',
-      'Other trades create falling-object risk, slip risk, dust and noise risk for you, and your work creates electrical and tripping risk for them. The walk-round and the toolbox talks need to take account of who else is working in or above your area, not just your own activity. CDM 2015 Reg 13 puts a co-ordination duty on the Principal Contractor; HASAWA s.7(b) puts a co-operation duty on every operative.',
-      "Decline. Most firms have a drug-and-alcohol policy that prohibits consumption during working hours, including any time you're still in uniform, on customer premises or driving the van. Even if the working day is officially over, you're still representing the firm and you may have to drive. The policy protects the customer (no impaired work), the firm (no insurance issues, no reputational damage) and you (no DR10 driving conviction).",
+      "Co-operate fully with your employer's investigation and give a calm, factual account backed by your records — don't contact the customer or post about it.",
+      'Contact the customer directly to sort it out yourself before the firm gets involved.',
+      'Refuse to discuss it until you have a union representative present.',
+      'Post your side of the story online so it is on record.',
     ],
     correctAnswer: 0,
     explanation:

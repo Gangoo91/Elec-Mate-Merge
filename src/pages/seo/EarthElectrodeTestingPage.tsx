@@ -147,7 +147,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth rods (BS EN 62561-2)</strong>: The most common type for new
                 domestic and commercial installations. Copper-bonded steel-cored rods, typically
@@ -158,7 +158,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth plates</strong>: Flat copper or galvanised steel plates, minimum
                 500mm × 500mm, buried vertically at a depth of at least 0.5m. Less common than
@@ -168,7 +168,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth tapes (strip electrodes)</strong>: Bare copper or tinned copper
                 tape or round wire, buried horizontally in a trench at a minimum depth of 0.5m.
@@ -178,7 +178,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Foundation electrodes (concrete-embedded)</strong>: Steel reinforcement
                 bars in concrete foundations can serve as an earth electrode where the concrete
@@ -188,7 +188,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable sheaths and armour</strong>: The lead sheath or steel armour of
                 certain buried cables may serve as an earth electrode where specifically approved.
@@ -269,7 +269,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 411.5.3 — the key requirement</strong>: For TT earthing
                 systems, the earth fault loop impedance Zs must satisfy: Zs ≤ 50V ÷ I∆n, where
@@ -279,7 +279,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ra × I∆n ≤ 50V</strong>: This is equivalent to requiring that the
                 electrode resistance Ra multiplied by the RCD operating current does not exceed
@@ -288,7 +288,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCDs mandatory on TT systems</strong>: BS 7671 Regulation 411.5.2
                 requires that all final circuits in a TT system are protected by an RCD.
@@ -298,7 +298,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing conductor and main earth terminal</strong>: The electrode
                 must be connected to the main earthing terminal (MET) via an earthing conductor
@@ -365,7 +365,7 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <span className="text-white">
               <strong>Sufficient separation is critical</strong>: If the current stake and the
               electrode under test are too close together, their resistance areas overlap and the
@@ -393,7 +393,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CircleDot className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CircleDot className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>How it works</strong>: The clamp is placed around the earthing conductor
                 connecting the electrode to the MET. The instrument injects a known voltage via
@@ -404,7 +404,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CircleDot className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CircleDot className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minimum two parallel paths required</strong>: The clamp method measures
                 the resistance of the electrode under test in parallel with all other earth
@@ -414,7 +414,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CircleDot className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CircleDot className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Where it is most useful</strong>: Multi-electrode systems at substations,
                 industrial premises, telecommunications sites, and commercial buildings. Also
@@ -423,7 +423,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CircleDot className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CircleDot className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Interpretation</strong>: The clamp reading is the parallel combination of
                 the electrode under test and all other parallel paths. If the parallel paths are
@@ -478,7 +478,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Improving high resistance</strong>: Where electrode resistance is too
                 high, options include: driving additional rods in parallel (two rods with
@@ -506,7 +506,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Info className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Summer vs winter variation</strong>: In the UK, electrode resistance
                 measured during a dry summer period may be 2 to 5 times higher than the same
@@ -515,7 +515,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Info className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Frost effects</strong>: Frozen soil has extremely high resistivity —
                 ice does not conduct electricity. Shallow electrodes in cold climates can show
@@ -524,7 +524,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Info className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test during dry conditions</strong>: For the most conservative (highest)
                 resistance reading that represents worst-case conditions, test during a dry period
@@ -534,7 +534,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Info className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Deeper electrodes are more stable</strong>: Soil at depth retains moisture
                 more consistently than the surface layer. Driving electrodes to 2.4m or more
@@ -563,7 +563,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrode type and dimensions</strong>: Record whether the electrode is
                 a rod, plate, tape, or other type; the material (copper-bonded steel, bare copper
@@ -571,7 +571,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test method</strong>: Record whether the fall of potential method or
                 stakeless clamp method was used. Note the E-to-C and E-to-P distances used for
@@ -579,20 +579,20 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ra value</strong>: Record the measured electrode resistance in ohms.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Weather conditions at time of test</strong>: Note whether conditions were
                 dry, wet, or after recent rainfall. This contextualises the reading.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD rating and Ra × I∆n calculation</strong>: Record the RCD rated
                 current and the product Ra × I∆n to confirm compliance with BS 7671
@@ -600,7 +600,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Instrument details</strong>: Record the earth tester make, model, serial
                 number, and calibration due date.
@@ -630,7 +630,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Record Results On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -684,7 +684,7 @@ export default function EarthElectrodeTestingPage() {
       heroTitle={
         <>
           Earth Electrode Testing Guide:{' '}
-          <span className="text-yellow-400">Rod, Plate & Strip Electrodes</span>
+          <span className="text-elec-yellow">Rod, Plate & Strip Electrodes</span>
         </>
       }
               noindex={true}

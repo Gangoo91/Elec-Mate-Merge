@@ -884,7 +884,7 @@ const sections = [
               <SEOInternalLink href="/rcd-testing-guide">RCD verification</SEOInternalLink> under
               Regulation 643.8 using equipment to BS EN 61557-6 — a single alternating current test
               at the rated residual operating current, I<sub>Δn</sub>, whatever the device type,
-              with 300 ms maximum for a general non-delay device. Amendment 4 deleted Table 3A of
+              with 300 ms maximum for a general non-delay device. Amendment 2 (2022) deleted Table 3A of
               Appendix 3, so the ½× and 5× tests are no longer part of the required sequence.
             </li>
             <li>

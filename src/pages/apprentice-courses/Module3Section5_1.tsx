@@ -31,8 +31,8 @@ const quizQuestions = [
     options: [
       'The degree of severity',
       'The general category of influence',
-      'The size of the cable',
-      'The type of fuse required',
+      'The installation reference method',
+      'The protective measure to apply',
     ],
     correctAnswer: 1,
     explanation:
@@ -107,9 +107,9 @@ const quizQuestions = [
     id: 7,
     question: 'What might happen if a standard accessory is used in a high-humidity environment?',
     options: [
-      'It would operate at a higher voltage',
-      'It would carry more current safely',
-      'It would need no maintenance at all',
+      'It would need a larger protective device',
+      "It would raise the circuit's earth fault loop impedance",
+      'It would need a SELV supply by law',
       'It could fail prematurely due to corrosion',
     ],
     correctAnswer: 3,
@@ -164,9 +164,9 @@ const quickCheckQuestions = [
     question: 'Why is it important to classify external influences before installation?',
     options: [
       'To ensure equipment and cable selection is appropriate',
-      'To reduce the number of circuits required',
-      'To avoid having to test the installation',
-      'To lower the rated voltage of the supply',
+      'To decide the supply earthing arrangement',
+      "To set the installation's maximum demand",
+      'To decide the number of circuits',
     ],
     correctIndex: 0,
     explanation:

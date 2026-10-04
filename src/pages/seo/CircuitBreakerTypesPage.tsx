@@ -193,7 +193,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Current ratings</strong> — MCBs for domestic use are typically available in
                 6A, 10A, 16A, 20A, 25A, 32A, 40A, 50A, 63A, and 100A. Standard final circuits use:
@@ -202,7 +202,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Breaking capacity</strong> — standard domestic MCBs have a breaking capacity
                 of 6kA, which is sufficient for most UK domestic supplies. Higher breaking capacity
@@ -211,7 +211,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No RCD function</strong> — MCBs provide overcurrent protection only. For
                 circuits requiring 30mA additional protection (socket outlets, bathrooms, outdoor
@@ -219,7 +219,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS EN 60898</strong> — UK MCBs are manufactured to BS EN 60898, which
                 defines the performance requirements, trip characteristics, and marking for
@@ -246,7 +246,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Higher current ratings</strong> — MCCBs are available from around 16A up to
                 1,600A or more, making them suitable as main switches for commercial distribution
@@ -255,7 +255,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Adjustable trip settings</strong> — unlike fixed MCBs, MCCBs often have
                 adjustable thermal and magnetic trip settings. This allows the protection
@@ -264,7 +264,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Higher breaking capacity</strong> — MCCBs are available with breaking
                 capacities from 16kA up to 150kA, essential for installations near transformer
@@ -272,7 +272,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-phase versions</strong> — MCCBs are commonly available in three-pole
                 (three-phase) and four-pole (three-phase plus neutral) configurations, making them
@@ -346,7 +346,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Per-circuit isolation</strong> — a fault on one circuit trips only that
                 RCBO, leaving all other circuits unaffected. This eliminates the nuisance tripping
@@ -355,7 +355,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Higher cost per device</strong> — an RCBO costs three to five times more
                 than an equivalent MCB. However, when the cost of the RCCB is removed from the
@@ -364,7 +364,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD type selection</strong> — RCBOs come in Type AC, Type A, and Type B
                 variants. Type A is now recommended as standard for domestic installations. Type B
@@ -419,7 +419,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Impact on earth loop impedance</strong> — higher curve types require a lower
                 earth loop impedance (Zs) to ensure the breaker trips within the required
@@ -491,7 +491,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Domestic consumer unit replacement</strong> — specify an all-RCBO board with
                 Type A, 30mA, 6kA RCBOs. Use Type B curve for all final circuits. This eliminates
@@ -500,7 +500,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial distribution board</strong> — specify MCCBs for incoming
                 protection (with appropriate breaking capacity based on measured PFC), Type C MCBs
@@ -509,7 +509,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charging circuit</strong> — use a Type A or Type B RCBO (not Type AC).
                 Check the charge point manufacturer's documentation — some units have built-in Type
@@ -517,7 +517,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Retrofit where Zs is marginal</strong> — if measured Zs is close to the
                 maximum for the existing MCB, consider replacing with an RCBO of the same rating and
@@ -545,7 +545,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EIC and Test Results Required</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -576,7 +576,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete consumer unit certificates on your phone"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC and EICR completion with AI board scanning, test result recording, and instant PDF export."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EIC and EICR completion with AI board scanning, test result recording, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -602,7 +602,7 @@ export default function CircuitBreakerTypesPage() {
       heroTitle={
         <>
           Types of Circuit Breakers UK:{' '}
-          <span className="text-yellow-400">MCB, MCCB, RCCB and RCBO Explained</span>
+          <span className="text-elec-yellow">MCB, MCCB, RCCB and RCBO Explained</span>
         </>
       }
       heroSubtitle="A complete practical guide to circuit breaker types used in UK electrical installations — MCB, MCCB, RCCB and RCBO explained with curve types, breaking capacity requirements, BS 7671 compliance, and guidance on selecting the right device for every application."
@@ -613,7 +613,7 @@ export default function CircuitBreakerTypesPage() {
       faqHeading="Frequently Asked Questions About Circuit Breaker Types"
       relatedPages={relatedPages}
       ctaHeading="Complete Circuit Certificates and EICRs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC and EICR completion with AI board scanning, test result recording, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC and EICR completion with AI board scanning, test result recording, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

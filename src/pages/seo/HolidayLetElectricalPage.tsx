@@ -251,7 +251,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Five years — standard recommended interval</strong> — consistent with the
                 residential landlord EICR requirement and with BS 7671 guidance on periodic
@@ -260,7 +260,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>On acquisition of a new holiday let</strong> — commission an EICR
                 immediately when purchasing a property for holiday letting, before the first guests
@@ -269,7 +269,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>After significant electrical work</strong> — any rewire, consumer unit
                 replacement, or significant circuit addition should be followed by a fresh EICR to
@@ -278,7 +278,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Keep the report on file</strong> — retain every EICR carried out on the
                 property. In the event of a claim, these records demonstrate the history of
@@ -304,7 +304,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Annual PAT testing recommended</strong> — test all portable appliances
                 provided for guest use at least once a year, typically at the end of the main
@@ -313,7 +313,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What PAT testing covers</strong> — visual inspection of plugs, cables, and
                 appliance casings plus electrical testing of insulation resistance and earth
@@ -322,7 +322,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electric blankets — additional risk</strong> — electric blankets are one of
                 the highest-risk portable appliances in holiday lets. They should be tested annually
@@ -332,7 +332,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Keep a PAT testing register</strong> — maintain a record of every appliance
                 tested, the test date, result, and tester's details. This register is evidence of
@@ -360,7 +360,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BellRing className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BellRing className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smoke alarms on every floor</strong> — fit an interlinked smoke alarm on
                 every floor of the holiday let, positioned in hallways and at the top of stairwells.
@@ -369,7 +369,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BellRing className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BellRing className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Carbon monoxide alarms</strong> — fit a CO alarm in every room containing a
                 solid fuel burning appliance (log burner, open fire) and in any room adjacent to a
@@ -378,7 +378,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BellRing className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BellRing className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Heat detectors in kitchens</strong> — install a heat detector rather than a
                 smoke detector in the kitchen to avoid false alarms from cooking. The heat detector
@@ -386,7 +386,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BellRing className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BellRing className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Guest information — what to do in a fire</strong> — post clear instructions
                 in each bedroom and in the hallway explaining the fire exit route, the location of
@@ -484,7 +484,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Listing on booking platforms</strong> — platforms including Airbnb, Vrbo,
                 and Booking.com allow or encourage owners to display safety certificates. Airbnb has
@@ -494,7 +494,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Holiday cottage directory accreditation</strong> — directories such as
                 Cottages.com, Sykes Cottages, and VisitBritain's quality assurance schemes
@@ -503,7 +503,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reassurance for families with children</strong> — families booking holiday
                 accommodation are increasingly aware of electrical safety risks. Displaying a
@@ -581,7 +581,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR within the past five years</strong> — if you do not have a current
                 EICR, commission one from a{' '}
@@ -592,35 +592,35 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PAT testing of all portable appliances</strong> — test annually and keep a
                 register of all appliances, test dates, and results.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smoke alarms on every floor</strong> — mains-powered with battery back-up,
                 interlinked. Test at every changeover clean.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Carbon monoxide alarms</strong> — in every room with a solid fuel or gas
                 appliance. Test at every changeover clean.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection on all socket circuits</strong> — check the consumer unit
                 provides 30mA RCD protection on all socket-outlet circuits. If not, arrange upgrade.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Outdoor circuits protected</strong> — garden sockets, outbuilding supplies,
                 hot tub connections, and outdoor lighting all require appropriate RCD protection and
@@ -628,7 +628,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insurance policy reviewed</strong> — check policy wording for EICR and PAT
                 testing requirements. Ensure all certificates are available for inspection by the
@@ -654,7 +654,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete EICRs and PAT Tests On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -713,7 +713,7 @@ export default function HolidayLetElectricalPage() {
       heroTitle={
         <>
           Holiday Let Electrical Safety UK:{' '}
-          <span className="text-yellow-400">Airbnb & Holiday Cottage Guide 2026</span>
+          <span className="text-elec-yellow">Airbnb & Holiday Cottage Guide 2026</span>
         </>
       }
       heroSubtitle="Holiday lets are not subject to mandatory EICR legislation, but owners still owe a duty of care to guests under the Occupiers Liability Act 1957. This guide explains your legal position, the recommended five-yearly EICR, PAT testing, smoke and CO detection, RCD protection, insurance implications, and how to use safety certificates for marketing."
@@ -729,7 +729,7 @@ export default function HolidayLetElectricalPage() {
       faqHeading="Frequently Asked Questions About Holiday Let Electrical Safety"
       relatedPages={relatedPages}
       ctaHeading="Complete Holiday Let EICRs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

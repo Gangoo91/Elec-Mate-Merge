@@ -227,7 +227,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Student accommodation</strong> — each college houses hundreds of students.
                 Rooms need periodic inspection, socket upgrades (USB charging is now standard),
@@ -237,7 +237,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Libraries and archives</strong> — the Bodleian Library, Radcliffe Camera,
                 and individual college libraries have stringent environmental control requirements.
@@ -248,7 +248,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Laboratories</strong> — the university's science departments (Chemistry,
                 Physics, Engineering Science, and the Pathology building) have extensive laboratory
@@ -259,7 +259,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Conference and events</strong> — colleges host conferences, weddings, and
                 events outside term time. Temporary power, outdoor lighting, marquee supplies, and
@@ -292,7 +292,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Landmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cotswold stone properties</strong> — many Oxford buildings use Headington
                 stone or Cotswold limestone, which is relatively soft and porous. Never chase cable
@@ -303,7 +303,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Landmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>North Oxford Victorian villas</strong> — the large Victorian and Edwardian
                 houses of North Oxford (Norham Gardens, Park Town, Bardwell Road) are predominantly
@@ -314,7 +314,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Landmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Conservation area controls</strong> — in Oxford's conservation areas,
                 external changes require planning permission. This affects external cable routes,
@@ -351,7 +351,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New-build developments</strong> — the Oxford Local Plan allocates
                 significant housing development in East Oxford, Cowley, Barton Park, and the Oxpens
@@ -362,7 +362,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HMO electrical requirements</strong> — Oxford City Council operates a
                 mandatory HMO licensing scheme. Licensed HMOs require a satisfactory EICR (maximum 5
@@ -374,7 +374,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1950s–60s rewiring</strong> — Cowley's post-war housing estates (Rose Hill,
                 Blackbird Leys, Greater Leys) were built in the 1950s and 1960s. Many still have
@@ -407,7 +407,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShoppingBag className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShoppingBag className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Westgate Oxford</strong> — the redeveloped Westgate shopping centre is one
                 of the largest retail destinations in the south of England. Ongoing tenant fit-outs,
@@ -418,7 +418,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShoppingBag className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShoppingBag className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Oxford Science Park and Harwell</strong> — the Oxford Science Park
                 (Littlemore) and Harwell Science and Innovation Campus (south of Didcot) are major
@@ -428,7 +428,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShoppingBag className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShoppingBag className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Healthcare</strong> — the Oxford University Hospitals NHS Foundation Trust
                 operates the John Radcliffe, Churchill, Horton, and Nuffield Orthopaedic Centre
@@ -438,7 +438,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShoppingBag className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShoppingBag className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Oxford to Cambridge Arc</strong> — the government-backed Ox-Cam development
                 corridor is driving long-term growth in commercial and residential construction
@@ -526,7 +526,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EICR Certificate App</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -571,7 +571,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional certification for Oxford electricians"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting."
           icon={MapPin}
         />
       </>
@@ -598,7 +598,7 @@ export default function ElectricianOxfordPage() {
       heroTitle={
         <>
           Electrician in Oxford:{' '}
-          <span className="text-yellow-400">Local Guide for UK Electricians</span>
+          <span className="text-elec-yellow">Local Guide for UK Electricians</span>
         </>
       }
       heroSubtitle="Oxford's world-class university, booming science sector, and thriving HMO market offer diverse opportunities for electricians. This guide covers the DNO, college work, heritage requirements, new builds, commercial development, and realistic pricing."
@@ -609,7 +609,7 @@ export default function ElectricianOxfordPage() {
       faqHeading="Frequently Asked Questions About Electrical Work in Oxford"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Electrical Work in Oxford — On Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting. Heritage, HMO, or commercial — certify it all on site. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting. Heritage, HMO, or commercial — certify it all on site. 7-day free trial."
     />
   );
 }

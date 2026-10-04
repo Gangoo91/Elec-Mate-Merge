@@ -197,7 +197,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tools and equipment</strong> — hand tools, power tools, test instruments
                 (multimeters, RCD testers, loop impedance testers), ladders, work bags, and
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Van and vehicle costs</strong> — fuel, insurance, road tax, MOT, servicing,
                 repairs, and HP or lease payments. Alternatively, use HMRC's approved mileage rate
@@ -215,7 +215,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PPE and workwear</strong> — protective boots, hard hats, gloves, hi-vis
                 vests, overalls, and any clothing required for safety. Note: ordinary clothing that
@@ -223,7 +223,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Training and CPD</strong> — training courses directly related to your
                 electrical work, such as 18th Edition update training, inspection and testing
@@ -232,7 +232,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Professional subscriptions</strong> — NICEIC, NAPIT, or ELECSA registration
                 fees, ECS card, JIB membership, CHAS registration, trade union membership (if
@@ -240,7 +240,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Accountant and bookkeeping fees</strong> — the cost of your accountant
                 preparing your self-assessment return, bookkeeping software subscriptions, and any
@@ -248,7 +248,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Phone and internet</strong> — the business proportion of your mobile phone
                 bill and broadband costs. If you use your phone 70% for business, claim 70% of the
@@ -256,7 +256,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Home office costs</strong> — if you do administrative work at home (quoting,
                 invoicing, record keeping), you can claim a proportion of household costs (heating,
@@ -349,7 +349,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>How they work</strong> — each payment on account is 50% of your previous
                 year's tax bill. Two payments are required: one on 31 January (alongside your
@@ -357,7 +357,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>The January shock</strong> — in your first year of paying payments on
                 account, you pay your full previous year's tax bill plus 50% advance all on 31
@@ -366,7 +366,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reducing payments on account</strong> — if you know your income will be
                 lower this year, you can apply to reduce your payments on account via your HMRC
@@ -399,7 +399,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Popular options for electricians</strong> — QuickBooks Self-Employed,
                 FreeAgent, Xero, and Sage are all MTD-compatible. Many are cloud-based with mobile
@@ -407,7 +407,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bank feeds</strong> — most accounting software can connect directly to your
                 business bank account and automatically import transactions, reducing manual data
@@ -415,7 +415,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mileage tracking</strong> — apps such as MileIQ or built-in mileage tracking
                 in some accounting tools automatically log business journeys. This is useful
@@ -495,7 +495,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileText className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Complete Invoice Records Automatically
@@ -528,7 +528,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your electrical business finances with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting, invoicing, and job records."
+          description="Join 2,100+ UK electricians using Elec-Mate for professional quoting, invoicing, and job records."
           icon={FileText}
         />
       </>
@@ -554,7 +554,7 @@ export default function SelfAssessmentElectricianPage() {
       heroTitle={
         <>
           Self-Assessment Tax Return for Electricians:{' '}
-          <span className="text-yellow-400">Complete UK Guide</span>
+          <span className="text-elec-yellow">Complete UK Guide</span>
         </>
       }
       heroSubtitle="Everything self-employed electricians need to know about filing a self-assessment tax return — what income to declare, every allowable expense you can claim, the 31 January deadline, late filing penalties, payments on account, and when to hire an accountant."
@@ -565,7 +565,7 @@ export default function SelfAssessmentElectricianPage() {
       faqHeading="Frequently Asked Questions About Self-Assessment for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Keep Your Income Records Organised All Year"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for professional invoicing and job records. Hand your accountant a complete income record at self-assessment time — no scrambling in January. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for professional invoicing and job records. Hand your accountant a complete income record at self-assessment time — no scrambling in January. 7-day free trial."
     />
   );
 }

@@ -176,7 +176,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4 space-y-5">
           <div>
             <h3 className="font-bold text-white mb-2 flex items-center gap-2">
-              <ClipboardCheck className="w-4 h-4 text-yellow-400" />
+              <ClipboardCheck className="w-4 h-4 text-elec-yellow" />
               Observation Evidence
             </h3>
             <p className="text-white text-sm leading-relaxed">
@@ -290,25 +290,25 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Camera className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What to photograph:</strong> Completed consumer unit wiring (before the cover is fitted), cable routes in the ceiling void or wall chase (before plastering or boarding), containment installation, earth bonding connections, completed external installations (EV chargers, solar PV connections, external sockets), and any unusual or interesting installation method that demonstrates problem-solving.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Camera className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Photo quality:</strong> Use the camera on your smartphone — modern phone cameras are entirely adequate for portfolio photographs. Ensure the image is sharp, well-lit (use a torch or work light if the area is dark), and clearly shows the relevant detail. For board photographs, take both an overall shot (showing the full board) and close-up shots (showing individual terminations and cable identification).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Camera className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What NOT to photograph:</strong> Exposed live terminals with power on; anything that identifies the client without their permission; other trades' work; or situations that suggest unsafe practice (no PPE worn, unsafe access). The assessor will draw negative conclusions from photographs that suggest unsafe working conditions.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Camera className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Caption every photograph:</strong> A photograph without context has limited evidential value. Every photograph in your portfolio must have a caption: the date, what the photograph shows, which job it is from, and which NVQ criteria it evidences. Assessors reviewing large portfolios should not have to guess what they are looking at.
               </span>
@@ -330,19 +330,19 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>The witness should describe specifically what they observed — not generic praise. "John correctly carried out safe isolation on the lighting circuit before commencing work, tested with a non-contact voltage indicator and approved multimeter, and wired the new 1.0mm² lighting circuit cleanly in the ceiling void" is useful evidence.</span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>The witness must be identified — name, job title, contact details, and their relevant qualification or JIB card number. An anonymous testimony carries no evidential weight.</span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Brief your employer on what a useful testimony looks like. Provide them with a template or prompt list. Most employers want to support their apprentice but do not know instinctively what an NVQ witness testimony requires.</span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Cross-reference the testimony with other evidence. A witness testimony supported by a photograph of the completed work and a copy of the EIC signed by the apprentice provides very strong multi-source evidence for the criteria.</span>
             </li>
           </ul>
@@ -363,19 +363,19 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <FolderOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FolderOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Use your training provider's portfolio management system</strong> — most providers use an e-portfolio platform (OneFile, SmartAssessor, or similar). Use it consistently — do not maintain a parallel paper portfolio and then try to transfer everything to the system at the end.</span>
             </li>
             <li className="flex items-start gap-3">
-              <FolderOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FolderOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>File evidence against criteria immediately</strong> — when you upload a photograph or complete a written account, map it to the criteria immediately. Do not leave a pile of unmapped evidence to sort later.</span>
             </li>
             <li className="flex items-start gap-3">
-              <FolderOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FolderOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Cross-reference where evidence satisfies multiple criteria</strong> — a single observation record from a consumer unit changeout may evidence criteria across installation, testing, safe isolation, and risk assessment units simultaneously. Note the cross-reference in each relevant location.</span>
             </li>
             <li className="flex items-start gap-3">
-              <FolderOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FolderOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Review progress monthly</strong> — use the portfolio mapping tool to identify which criteria have adequate evidence and which have gaps. Address gaps proactively — arrange an assessor observation on a job type that would provide the missing evidence.</span>
             </li>
           </ul>
@@ -440,7 +440,7 @@ export default function ApprenticePortfolioBuildingPage() {
       heroTitle={
         <>
           Apprentice Portfolio Building Tips:{' '}
-          <span className="text-yellow-400">How to Build Strong NVQ Evidence Throughout Your Apprenticeship</span>
+          <span className="text-elec-yellow">How to Build Strong NVQ Evidence Throughout Your Apprenticeship</span>
         </>
       }
       heroSubtitle="Your NVQ portfolio is the gateway to the AM2 End Point Assessment. This guide covers the three evidence types, how to document jobs professionally, photography tips, witness testimonies, portfolio organisation, and the mistakes that cause unnecessary delays."

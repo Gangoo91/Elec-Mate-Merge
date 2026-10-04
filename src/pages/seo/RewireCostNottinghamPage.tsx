@@ -145,7 +145,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>One-bedroom flat or studio</strong> — £1,800 to £2,800. Smaller properties
                 in Nottingham city centre conversions and apartment blocks commonly fall in this
@@ -153,14 +153,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Two-bedroom terraced house</strong> — £2,500 to £3,500. Common in areas such
                 as Radford, Sneinton, Bulwell, and Basford. Typical 8 to 12 circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom semi-detached</strong> — £3,500 to £5,000. The most common
                 property type across suburbs such as Arnold, Carlton, and Beeston. Typically 12 to
@@ -168,7 +168,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Four-bedroom detached</strong> — £4,500 to £6,500. Larger properties in West
                 Bridgford, Edwalton, and Ruddington with complex layouts command the higher end of
@@ -176,7 +176,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Victorian and Edwardian properties</strong> — add 20 to 40 per cent for
                 properties built before 1940. Solid walls require surface-run conduit rather than
@@ -283,7 +283,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>First fix</strong> — removal of existing wiring, installation of new
                 consumer unit position, running cables through floors and walls, installing back
@@ -292,7 +292,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Second fix</strong> — fitting the consumer unit, connecting all circuits,
                 installing sockets, switches, and light fittings, making off the mains connection.
@@ -300,7 +300,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing and inspection</strong> — comprehensive testing of all circuits
                 including insulation resistance, earth continuity, and RCD operation in accordance
@@ -309,7 +309,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Certification and notification</strong> — the electrician issues the
                 Electrical Installation Certificate and notifies the work to the relevant authority
@@ -341,14 +341,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Two-bedroom terrace</strong> — 2 to 3 days. Straightforward cavity wall
                 construction with timber floors allows efficient cable routing.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom semi-detached</strong> — 3 to 5 days. The most common rewire
                 in Nottingham suburbs. A team of two electricians working efficiently can complete
@@ -356,14 +356,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Four-bedroom detached</strong> — 5 to 7 days. More circuits, longer cable
                 runs, and additional floors add time.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Victorian solid-wall property</strong> — add 1 to 3 days. Surface-run
                 mini-trunking or conduit is often more practical than chasing solid brick walls, and
@@ -446,7 +446,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC or NAPIT registration</strong> — use the online registers to confirm
                 the contractor is currently registered and their scope covers domestic
@@ -455,7 +455,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Get three quotes</strong> — obtain at least three detailed written quotes.
                 Each quote should specify the number of circuits, consumer unit type, accessories
@@ -464,7 +464,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Public liability insurance</strong> — verify the contractor carries a
                 minimum of £1 million public liability insurance. This protects you if damage occurs
@@ -472,7 +472,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Local references</strong> — ask for references from recent rewire customers
                 in the Nottingham area. A reputable local contractor will be happy to provide these.
@@ -496,7 +496,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical Installation Certificate (EIC)</strong> — the primary legal
                 document confirming the rewire complies with BS 7671. Must include schedules of
@@ -504,7 +504,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Building Regulations Compliance Certificate</strong> — issued by the
                 competent person scheme or Nottingham City Council building control confirming Part
@@ -512,7 +512,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Manufacturer guarantees</strong> — the consumer unit and accessories should
                 come with manufacturer guarantees, typically 5 to 10 years for quality components.
@@ -520,7 +520,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Workmanship guarantee</strong> — most reputable Nottingham contractors offer
                 a workmanship guarantee of 1 to 5 years. Confirm this in writing before work begins
@@ -550,7 +550,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Issue EICs On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -582,7 +582,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Nottingham rewire business with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, professional quoting, and job management. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion, professional quoting, and job management. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -608,7 +608,7 @@ export default function RewireCostNottinghamPage() {
       heroTitle={
         <>
           House Rewire Cost Nottingham:{' '}
-          <span className="text-yellow-400">2025 Prices & East Midlands Guide</span>
+          <span className="text-elec-yellow">2025 Prices & East Midlands Guide</span>
         </>
       }
       heroSubtitle="Everything you need to know about house rewire costs in Nottingham and the East Midlands — property size price breakdowns, Part P compliance, finding NICEIC and NAPIT registered contractors, signs your property needs rewiring, timescales, and the certification you should receive."
@@ -619,7 +619,7 @@ export default function RewireCostNottinghamPage() {
       faqHeading="Frequently Asked Questions About House Rewiring in Nottingham"
       relatedPages={relatedPages}
       ctaHeading="Issue Electrical Installation Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, auto-populated test schedules, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion, auto-populated test schedules, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

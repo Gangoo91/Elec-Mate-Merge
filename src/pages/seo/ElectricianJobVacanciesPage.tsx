@@ -97,7 +97,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Key Demand Drivers</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>EV charging infrastructure:</strong> The UK government's push towards
                 electric vehicles requires hundreds of thousands of EV charger installations in
@@ -105,7 +105,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Solar PV and battery storage:</strong> Rising energy costs and net-zero
                 commitments are driving massive growth in domestic and commercial solar
@@ -113,14 +113,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Housing construction:</strong> Government housing targets require first-fix
                 and second-fix electricians on new-build sites across the country.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Ageing workforce:</strong> Many experienced electricians are approaching
                 retirement, creating openings that need to be filled by the next generation.
@@ -155,7 +155,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Recommended Job Boards</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Globe className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Globe className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Indeed (uk.indeed.com):</strong> The largest general job board in the UK.
                 Excellent for volume — search "electrician" plus your location. Set up daily email
@@ -163,7 +163,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Globe className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Globe className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Reed (reed.co.uk):</strong> Strong for electrical and building services
                 roles, particularly permanent positions with larger contractors. Allows salary
@@ -171,7 +171,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Globe className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Globe className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Totaljobs (totaljobs.com):</strong> Another major board with good electrical
                 sector coverage. Useful "recommended jobs" feature based on your profile and search
@@ -179,7 +179,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Globe className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Globe className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>JIB Recruitment:</strong> The JIB's own recruitment service specifically for
                 the electrical contracting industry. Vacancies here tend to be from established,
@@ -187,7 +187,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Globe className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Globe className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>GoElectric / trade-specific boards:</strong> Niche boards focused
                 specifically on the electrical trade. Smaller volume but higher relevance — every
@@ -219,7 +219,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Getting the Best from Agencies</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Choose specialists:</strong> Register with agencies that specialise in
                 electrical, mechanical, and building services — not generalist recruitment firms.
@@ -227,7 +227,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Negotiate your rate:</strong> Always push back on the first rate offered.
                 Agencies have margin built in, and a confident negotiation can add GBP 20-50 to your
@@ -236,7 +236,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Read the contract carefully:</strong> Check for restrictive clauses,
                 temp-to-perm fees, and notice periods. Some agency contracts restrict you from
@@ -244,7 +244,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Keep your details updated:</strong> Call your agency contact every week or
                 two to remind them you are available. Agencies work with the people they remember —
@@ -278,7 +278,7 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>LinkedIn:</strong> Create a professional profile listing your
                 qualifications, certifications, and experience. Connect with electrical contractors,
@@ -287,7 +287,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Facebook groups:</strong> Join local electrician groups and national trade
                 groups (Electricians Forum UK, UK Electricians, etc.). Work opportunities are
@@ -296,7 +296,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Word of mouth:</strong> Tell every electrician you know that you are looking
                 for work. The electrical trade is a close-knit community, and personal
@@ -338,7 +338,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">How to Approach Employers Directly</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Phone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Phone className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Research target companies:</strong> Identify electrical contractors in your
                 area through Google, Yell, NICEIC and NAPIT contractor search tools, and Companies
@@ -346,7 +346,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Phone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Phone className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Phone first, then follow up with a CV:</strong> A 2-minute phone call is
                 more effective than 50 emailed CVs. Introduce yourself, state your qualifications,
@@ -355,7 +355,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Phone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Phone className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Visit in person:</strong> For smaller local firms, dropping in to their
                 office or yard with a printed CV and a handshake can be surprisingly effective. It
@@ -363,7 +363,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Phone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Phone className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Approach property management companies:</strong> Firms that manage rental
                 portfolios, housing associations, and commercial properties need reliable
@@ -400,7 +400,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Permanent vs Contract Comparison</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Permanent employment:</strong> Guaranteed salary (GBP 28,000-50,000+),
                 holiday pay (21-25 days + bank holidays), statutory sick pay, employer pension
@@ -409,7 +409,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Contract/self-employed:</strong> Higher day rates (GBP 200-350+),
                 flexibility to choose projects, potential tax advantages, no ceiling on earnings,
@@ -459,42 +459,42 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">2026 Pay Ranges by Role</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Domestic electrician (employed):</strong> GBP 28,000-40,000 depending on
                 experience and location
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Commercial electrician (employed):</strong> GBP 32,000-48,000 depending on
                 employer and project type
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Industrial electrician (employed):</strong> GBP 35,000-55,000 with shift
                 premiums and overtime
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Testing and inspection specialist:</strong> GBP 250-350/day contract or GBP
                 35,000-50,000 employed
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>EV charger installer:</strong> GBP 280-350/day contract or GBP 32,000-45,000
                 employed
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Supervisor / foreman:</strong> GBP 40,000-55,000 employed, with
                 responsibility allowances
@@ -527,7 +527,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">How to Stand Out</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Hold specialist qualifications:</strong> EV charger installation, C&G 2391,
                 solar PV, fire alarm (BS 5839), and emergency lighting (BS 5266) set you apart from
@@ -535,7 +535,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Have a professional online presence:</strong> A LinkedIn profile, Google
                 Business listing, or simple website demonstrates professionalism. Include photos of
@@ -543,7 +543,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>
                   Prepare a strong{' '}
@@ -554,7 +554,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Be reliable and communicate well:</strong> Employers consistently say that
                 reliability and communication are the most valued qualities in an electrician — more
@@ -635,7 +635,7 @@ export default function ElectricianJobVacanciesPage() {
       heroTitle={
         <>
           Electrician Job Vacancies UK:{' '}
-          <span className="text-yellow-400">Where to Find Work in 2026</span>
+          <span className="text-elec-yellow">Where to Find Work in 2026</span>
         </>
       }
       heroSubtitle="The UK needs thousands more qualified electricians. Here is exactly where to find the best vacancies, how to stand out from other candidates, and what you should expect to earn — whether you want permanent employment or contract freedom."

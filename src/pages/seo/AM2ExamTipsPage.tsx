@@ -168,7 +168,7 @@ const sections = [
         <div className="space-y-4 my-6">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                 1
               </div>
               <div>
@@ -181,10 +181,10 @@ const sections = [
                   careful work and a professional finish.
                 </p>
                 <div className="mt-3 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] px-4 py-3">
-                  <p className="text-yellow-300 text-xs font-semibold mb-1">
+                  <p className="text-elec-yellow text-xs font-semibold mb-1">
                     BS 7671:2018+A4:2026 update — device selection
                   </p>
-                  <p className="text-white/80 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     <strong className="text-white">Reg 411.3.4:</strong> Within domestic (household)
                     premises, additional protection by an RCD with a rated residual operating
                     current not exceeding 30 mA is now mandatory on AC final circuits supplying
@@ -204,7 +204,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                 2
               </div>
               <div>
@@ -221,7 +221,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                 3
               </div>
               <div>
@@ -241,7 +241,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                 4
               </div>
               <div>
@@ -414,10 +414,10 @@ const sections = [
           record results on a test schedule.
         </p>
         <div className="rounded-xl bg-white/[0.04] border border-white/10 px-4 py-3 my-3">
-          <p className="text-yellow-300 text-xs font-semibold mb-2">
+          <p className="text-elec-yellow text-xs font-semibold mb-2">
             Key AM2 testing values to memorise
           </p>
-          <ul className="text-white/80 text-xs leading-relaxed space-y-1 list-disc list-inside">
+          <ul className="text-white text-xs leading-relaxed space-y-1 list-disc list-inside">
             <li>
               <strong className="text-white">
                 Ring final circuit continuity (BS 7671 Reg 643.2.1, method in GN3):
@@ -441,7 +441,7 @@ const sections = [
               <strong className="text-white">RCD verification (BS 7671 Reg 643.8):</strong>{' '}
               Regardless of RCD Type, an alternating current test at rated residual operating
               current (IΔn) is used. A general non-delay RCD must disconnect within 300 ms maximum;
-              if your MFT reads above 300 ms the device fails. A4:2026 deleted Appendix 3 Table 3A,
+              if your MFT reads above 300 ms the device fails. A2:2022 deleted Appendix 3 Table 3A,
               so the old half-IΔn and five-times-IΔn multiplier tests are no longer part of BS 7671
               verification.
             </li>
@@ -577,7 +577,7 @@ export default function AM2ExamTipsPage() {
       heroTitle={
         <>
           AM2 Exam Tips 2026 —{' '}
-          <span className="text-yellow-400">What to Expect and How to Pass</span>
+          <span className="text-elec-yellow">What to Expect and How to Pass</span>
         </>
       }
       heroSubtitle="The AM2 practical assessment is the final hurdle before you qualify as an electrician. This guide covers what the AM2 tests, the format and tasks, what to bring, the most common failures, how to prepare effectively, and tips for the day itself."

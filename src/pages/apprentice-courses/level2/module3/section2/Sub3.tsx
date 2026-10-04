@@ -14,7 +14,7 @@
  * superseded by the IEC 60617 online database — the symbols are unchanged
  * and the "60617" name remains the lingua franca on UK sites.
  *
- * Reg sources cited: 514.9.2 (A4:2026 — diagrams shall comply with applicable
+ * Reg sources cited: 514.9.2 (A2:2022 — diagrams shall comply with applicable
  * standards), 514.1.1 (labels for switchgear/controlgear).
  */
 
@@ -72,16 +72,16 @@ const checks = [
   {
     id: 'symbols-switch-check',
     question:
-      "On a layout drawing, two pendant lights are wired to a single switch position drawn as a rectangle with a slash and the number '2' next to it. What does the '2' mean?",
+      'A stair layout shows one landing light controlled from a switch at the bottom AND a switch at the top. What type of switch is used at each position?',
     options: [
-      'Two-way switch (one of a pair on a stairwell circuit)',
-      'Two-gang switch (two separate switches on one plate)',
-      'Two-pole switch (breaks line and neutral together)',
-      'A switch controlling two separate lighting circuits',
+      'Two-way switches (one at each end of the stair)',
+      'Two-gang switches (two switches on one plate)',
+      'Two-pole switches (breaking line and neutral)',
+      'Intermediate switches',
     ],
     correctIndex: 0,
     explanation:
-      "Two-way switch — one of a matched pair, typically used on stairwells, hallways or any room with two entry points so you can switch the same light from either end. Don't confuse with two-gang (which is two physically separate switches in one faceplate, drawn differently) or two-pole (which is a different symbol again).",
+      'Controlling one light from two places needs a pair of two-way switches. A two-gang switch is two separate switches on one plate; a two-pole switch breaks line and neutral together; an intermediate switch is only added between two two-way switches for a third position.',
   },
   {
     id: 'symbols-cable-check',
@@ -127,8 +127,7 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question:
-      'A symbol on a layout shows a circle with a horizontal line through the middle and two terminals coming out the top. It is labelled "FCU 13A". What is it?',
+    question: 'A layout shows a symbol on the kitchen wall labelled "FCU 13A". What is it?',
     options: [
       'Fused Conduit Union, 13 amp',
       'Floor-Cable Unit, 13 amp',
@@ -155,8 +154,7 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question:
-      'A symbol shows a vertical line with a small triangle pointing horizontally outwards. Underneath is the marking "AFDD". What is this?',
+    question: 'A board schedule lists a device in a final circuit marked "AFDD". What is it?',
     options: [
       'Audio Frequency Detection Device',
       'Arc Fault Detection Device',
@@ -165,26 +163,26 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      "AFDD = Arc Fault Detection Device. It's recommended for AC final circuits supplying socket-outlets ≤ 32 A in dwellings (per BS 7671 Reg 421.1.7). The recommendation strengthens to a requirement in Higher-Risk Residential Buildings (HRRBs) under the Building Safety Act 2022 framework. In HMOs, sleeping accommodation and care homes, supporting fire-safety guidance treats them as effectively required practice. It detects the unique signature of dangerous series and parallel arcs and disconnects before a fire starts.",
+      'AFDD = Arc Fault Detection Device. BS 7671 Reg 421.1.7 requires AFDDs on single-phase socket-outlet circuits ≤ 32 A in HRRBs, HMOs, purpose-built student accommodation and care homes, and recommends them everywhere else. It detects the unique signature of dangerous series and parallel arcs and disconnects before a fire starts.',
   },
   {
     id: 6,
     question:
-      'A pair of horizontal lines, one solid and one dashed, drawn close together with no other components — what does this typically represent on an electrical drawing?',
+      'The IEC symbol made of one long thin line and one short thick line, side by side, represents what?',
     options: [
       'A capacitor',
       'A cable junction',
-      'A battery',
+      'A cell (battery)',
       'A two-conductor cable shown in cross-section',
     ],
     correctAnswer: 2,
     explanation:
-      'Two parallel lines — one long, one short — is the standard battery cell symbol. Multiple cells stacked = a multi-cell battery. The longer line is the positive terminal, the shorter line is the negative.',
+      'One long thin line beside one short thick line is a single cell; several pairs make a battery. A capacitor is two equal parallel lines, and a cable junction is a dot where conductors meet.',
   },
   {
     id: 7,
     question:
-      'BS 7671:2018+A4:2026 introduced regulation 514.9.2. What does it require regarding diagrams and symbols?',
+      'Reg 514.9.2 was added to BS 7671 by A2:2022. What does it require regarding diagrams and notices?',
     options: [
       'Every drawing must carry a unique reference number and a revision letter',
       'Symbols must be drawn at a minimum size for legibility on site',
@@ -193,21 +191,21 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      "514.9.2 (new in A4:2026) requires diagrams, charts and information/instruction notices to comply with the applicable standards — symbols per IEC 60617 (the modern continuation of IEC 60617), notices per BS EN 60073 / 60446. Home-made symbols don't comply.",
+      "514.9.2 (added by A2:2022) requires diagrams, charts and information/instruction notices to comply with the applicable standards — BS EN 61082-1 and BS EN IEC/IEEE 82079-1 for diagrams, charts and instructions, BS ISO 3864-1 and BS EN ISO 7010 for warning notices and safety signs. The symbols themselves must comply with IEC 60617 under Reg 514.9.1. Home-made symbols don't comply.",
   },
   {
     id: 8,
     question:
-      "You see a symbol on a layout showing a downward-pointing triangle with two vertical lines extending below it. It's placed in the corridor of an office. What is it?",
+      'A luminaire symbol in an office corridor is marked as non-maintained emergency. What does it do?',
     options: [
       'An emergency luminaire',
       'A smoke detector',
       'A standard luminaire',
-      'A wall socket',
+      'A PIR presence detector',
     ],
     correctAnswer: 0,
     explanation:
-      "An emergency luminaire (the triangle pointing down with the additional marking — often an 'M' for maintained or 'NM' for non-maintained inside or alongside). Emergency lighting symbols on layouts are deliberately distinct from standard luminaires so the emergency layout is unambiguous.",
+      'A non-maintained emergency luminaire is off in normal use and lights automatically when the normal supply fails, to BS 5266. A standard luminaire goes out in a power failure; smoke and PIR detectors are not luminaires.',
   },
 ];
 
@@ -267,7 +265,7 @@ export default function Sub3() {
           points={[
             'BS EN 60617 (now IEC 60617) is the standard graphical symbol set used on UK electrical drawings. It replaced the older BS 3939.',
             "There are about 30 common symbols you'll see daily. Memorise those; look up the rest as they appear.",
-            'Reg 514.9.2 (new in A4:2026) requires diagrams to comply with the applicable standard — IEC 60617 for symbols.',
+            'Reg 514.9.2 (added by A2:2022) requires diagrams to comply with the applicable standard — IEC 60617 for symbols.',
           ]}
         />
 
@@ -305,17 +303,16 @@ export default function Sub3() {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 7671 — Regulation 514.9.2 (new in A4:2026)"
-          clause="514.9.2 — All diagrams, charts, and information or instruction notices used in electrical installations shall comply with the applicable standards specified."
+          source="BS 7671:2018+A4:2026 — Regulation 514.9.2"
+          clause="All diagrams, charts, and information or instruction notices shall comply with BS EN 61082-1, BS EN IEC/IEEE 82079-1, and, where appropriate, BS EN 81346-1. All warning notices and other relevant safety signs shall comply with BS ISO 3864-1, BS EN ISO 7010, and BS EN IEC/IEEE 82079-1."
           meaning={
             <>
-              The regulatory backbone for using a standard symbol set. The 'applicable standard' for
-              graphical symbols on UK electrical drawings is the IEC 60617 online database (the
-              modern continuation of IEC 60617). Drawings that mix standards or invent symbols don't
-              comply with this regulation, and an inspector can flag them as a non-conformance.
+              Together with Reg 514.9.1 (any symbol used shall comply with IEC 60617), this is the
+              backbone for using a standard symbol set. Drawings that mix standards or invent
+              symbols don't comply, and an inspector can flag them as a non-conformance.
             </>
           }
-          cite="Reference: BS 7671:2018+A4:2026 Part 5, Section 514.9.2 (paraphrased)"
+          cite="Source: BS 7671:2018+A4:2026, Regulation 514.9.2 (added by A2:2022)."
         />
 
         <SectionRule />
@@ -606,13 +603,10 @@ export default function Sub3() {
               current (e.g. 30 mA).
             </li>
             <li>
-              <strong>AFDD (Arc Fault Detection Device)</strong> — recommended by BS 7671 Reg
-              421.1.7 for AC final circuits supplying socket-outlets ≤ 32 A in dwellings. The
-              recommendation strengthens to a requirement in Higher-Risk Residential Buildings
-              (HRRBs) under the Building Safety Act 2022 framework, and supporting fire-safety
-              guidance treats AFDDs as effectively required in HMOs, sleeping accommodation and care
-              homes. Symbol shows the breaker base with a small triangle/arc marking and 'AFDD'
-              annotation.
+              <strong>AFDD (Arc Fault Detection Device)</strong> — required by BS 7671 Reg 421.1.7
+              on single-phase socket-outlet circuits ≤ 32 A in HRRBs, HMOs, purpose-built student
+              accommodation and care homes, and recommended everywhere else. Symbol shows the
+              breaker base with a small triangle/arc marking and 'AFDD' annotation.
             </li>
           </ul>
         </ConceptBlock>
@@ -721,11 +715,11 @@ export default function Sub3() {
           whatToDo={
             <>
               Stop and raise a Technical Query (TQ) in writing before installing anything where
-              you're not 100% sure of the symbol meaning. Reg 514.9.2 (A4:2026) requires diagrams to
-              comply with the applicable standards — non-standard symbols on a drawing are a
-              non-conformance the designer needs to fix. Don't guess. Wiring the wrong device into a
-              position because you assumed the symbol meant a socket when it meant an FCU is a snag
-              waiting to happen.
+              you're not 100% sure of the symbol meaning. Reg 514.9.2 (added by A2:2022) requires
+              diagrams to comply with the applicable standards — non-standard symbols on a drawing
+              are a non-conformance the designer needs to fix. Don't guess. Wiring the wrong device
+              into a position because you assumed the symbol meant a socket when it meant an FCU is
+              a snag waiting to happen.
             </>
           }
           whyItMatters={
@@ -747,7 +741,7 @@ export default function Sub3() {
         <KeyTakeaways
           points={[
             'BS EN 60617 (now IEC 60617) is the standard graphical symbol set on UK electrical drawings. It replaced the older BS 3939.',
-            'Reg 514.9.2 (new in A4:2026) makes compliance with the applicable standards mandatory — including IEC 60617 for symbols.',
+            'Reg 514.9.2 (added by A2:2022) makes compliance with the applicable standards mandatory — including IEC 60617 for symbols.',
             "Memorise the common families: power sources, conductors, switches, sockets, lighting, accessories and protective devices. About 30 symbols cover 90% of what you'll see daily.",
             "mA on a protective device = residual operating current (RCD trip threshold). A = rated load current. They're different parameters — read the unit.",
             '2-way (SPDT — paired stairwell switch) is NOT the same as 2-gang (two separate switches on one plate) or 2-pole (switches both L and N). Read each symbol carefully.',

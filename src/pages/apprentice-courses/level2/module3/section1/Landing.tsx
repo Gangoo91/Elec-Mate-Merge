@@ -39,7 +39,7 @@ const subsections = [
     number: '1.5',
     title: 'BS 7671 deep dive (1.2, 1.4)',
     description:
-      'Structure of Parts 1-8, Part 2 definitions as the legal vocabulary, the deemed-to-comply doctrine and the headline A4:2026 changes — PNB, AFDD, schedule columns, model forms.',
+      'Structure of Parts 1-8, Part 2 definitions as the legal vocabulary, the deemed-to-comply doctrine and the headline A4:2026 changes — PNB, the cables-in-walls table, the battery storage chapter and model forms.',
     icon: Library,
     href: '1-5',
   },

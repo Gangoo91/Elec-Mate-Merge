@@ -133,7 +133,7 @@ const sections = [
         <div className="space-y-4 mt-6">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-center gap-2 mb-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Programme and Progress Management</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -147,7 +147,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <Users className="w-5 h-5 text-yellow-400" />
+              <Users className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Workforce Management</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -161,7 +161,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Quality and Testing</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -179,7 +179,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <Shield className="w-5 h-5 text-yellow-400" />
+              <Shield className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Health and Safety</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -218,17 +218,17 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Essential Qualifications</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Level 3 NVQ in Electrical Installation</strong>{' '}
+                <strong className="text-elec-yellow">Level 3 NVQ in Electrical Installation</strong>{' '}
                 — The foundation qualification that demonstrates you are a qualified electrician.
                 You cannot credibly manage electricians without being one yourself.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">BS 7671 18th Edition</strong> — Current edition
+                <strong className="text-elec-yellow">BS 7671 18th Edition</strong> — Current edition
                 certification is essential. As site manager, you need to understand the regulations
                 that govern the work your team carries out. See our{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
@@ -238,25 +238,25 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">SMSTS</strong> — Site Management Safety Training
+                <strong className="text-elec-yellow">SMSTS</strong> — Site Management Safety Training
                 Scheme. The 5-day course covering CDM 2015, risk management, and construction
                 safety. Required for CSCS black card and access to major sites.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">CSCS Black Card</strong> — The Construction
+                <strong className="text-elec-yellow">CSCS Black Card</strong> — The Construction
                 Skills Certification Scheme manager-level card. Required for site access on
                 virtually all major construction projects. Requires SMSTS and a relevant NVQ.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">First Aid at Work</strong> — 3-day HSE-approved
+                <strong className="text-elec-yellow">First Aid at Work</strong> — 3-day HSE-approved
                 course. Most employers require site managers to hold a current first aid
                 certificate. Valid for 3 years.
               </span>
@@ -267,25 +267,25 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Desirable Qualifications</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">2391 Inspection and Testing</strong> —
+                <strong className="text-elec-yellow">2391 Inspection and Testing</strong> —
                 Understanding the testing and certification process is important even if you are not
                 personally carrying out the testing.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">NVQ Level 6 Construction Management</strong> —
+                <strong className="text-elec-yellow">NVQ Level 6 Construction Management</strong> —
                 Demonstrates management competence at a senior level. Increasingly expected for
                 larger projects.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">NEBOSH Construction Certificate</strong> — A
+                <strong className="text-elec-yellow">NEBOSH Construction Certificate</strong> — A
                 recognised health and safety qualification that demonstrates competence in
                 construction safety management beyond the SMSTS level.
               </span>
@@ -349,40 +349,40 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Contractor Duties under CDM 2015</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Regulation 15(1)</strong> — Plan, manage, and
+                <strong className="text-elec-yellow">Regulation 15(1)</strong> — Plan, manage, and
                 monitor construction work under your control so that it is carried out without risks
                 to health or safety, so far as is reasonably practicable.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Regulation 15(2)</strong> — Ensure that anyone
+                <strong className="text-elec-yellow">Regulation 15(2)</strong> — Ensure that anyone
                 working under your control has the necessary skills, knowledge, training, and
                 experience, or is under the supervision of a person with those attributes.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Regulation 15(5)</strong> — Provide appropriate
+                <strong className="text-elec-yellow">Regulation 15(5)</strong> — Provide appropriate
                 supervision, instructions, and information to every worker under your control.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Regulation 15(7)</strong> — Not begin work
+                <strong className="text-elec-yellow">Regulation 15(7)</strong> — Not begin work
                 unless reasonable steps have been taken to prevent access by unauthorised persons to
                 the construction site.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Regulation 15(8)</strong> — Provide suitable
+                <strong className="text-elec-yellow">Regulation 15(8)</strong> — Provide suitable
                 welfare facilities, or ensure the principal contractor provides them, for the
                 duration of the project.
               </span>
@@ -451,23 +451,23 @@ const sections = [
           <div className="space-y-3">
             <div className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <span className="text-white font-medium">Apprentice Electrician</span>
-              <span className="text-yellow-400 font-bold">Years 1-4</span>
+              <span className="text-elec-yellow font-bold">Years 1-4</span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
               <span className="text-white font-medium">Qualified Electrician</span>
-              <span className="text-yellow-400 font-bold">Years 4-8</span>
+              <span className="text-elec-yellow font-bold">Years 4-8</span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
               <span className="text-white font-medium">Approved Electrician / Chargehand</span>
-              <span className="text-yellow-400 font-bold">Years 6-10</span>
+              <span className="text-elec-yellow font-bold">Years 6-10</span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
               <span className="text-white font-medium">Foreman / Supervisor</span>
-              <span className="text-yellow-400 font-bold">Years 8-12</span>
+              <span className="text-elec-yellow font-bold">Years 8-12</span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <span className="text-white font-medium">Electrical Site Manager</span>
-              <span className="text-yellow-400 font-bold">Years 10-15+</span>
+              <span className="text-elec-yellow font-bold">Years 10-15+</span>
             </div>
           </div>
         </div>
@@ -607,7 +607,7 @@ export default function ElectricalSiteManagerGuidePage() {
       heroTitle={
         <>
           Electrical Site Manager:{' '}
-          <span className="text-yellow-400">Role, Responsibilities & Career Path</span>
+          <span className="text-elec-yellow">Role, Responsibilities & Career Path</span>
         </>
       }
       heroSubtitle="The complete guide to becoming and succeeding as an electrical site manager. Qualifications, CDM duties, subcontractor management, health and safety, career progression, and the skills that separate good site managers from great ones."
@@ -617,7 +617,7 @@ export default function ElectricalSiteManagerGuidePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Professional tools for electrical site managers"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI-powered RAMS generation, digital certificate management, and professional documentation. Manage your site more efficiently. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for AI-powered RAMS generation, digital certificate management, and professional documentation. Manage your site more efficiently. 7-day free trial, cancel anytime."
     />
   );
 }

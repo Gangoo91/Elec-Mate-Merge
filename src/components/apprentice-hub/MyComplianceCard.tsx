@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useLoggingReminders } from '@/hooks/useLoggingReminders';
 import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { supabase } from '@/integrations/supabase/client';
@@ -68,6 +69,8 @@ interface ProgrammeRow {
 }
 
 export function MyComplianceCard() {
+  // Settings → Reminders: keep the facts, drop the nudging (ELE-1804).
+  const { hidden: hideReminders } = useLoggingReminders();
   const otj = useOtjProgramme();
   const [programme, setProgramme] = useState<ProgrammeRow | null>(null);
   const [verifiedMin, setVerifiedMin] = useState(0);
@@ -273,11 +276,17 @@ export function MyComplianceCard() {
           )}
         >
           {status === 'green' &&
-            `You've covered ${pct}% of what's expected at this point. Keep logging — every verified hour counts at gateway.`}
+            (hideReminders
+              ? `You've covered ${pct}% of what's expected at this point.`
+              : `You've covered ${pct}% of what's expected at this point. Keep logging — every verified hour counts at gateway.`)}
           {status === 'amber' &&
-            `You're at ${pct}% of the expected pace. Submit any work activities you haven't logged yet — closing the gap now is easier than at gateway.`}
+            (hideReminders
+              ? `You're at ${pct}% of the expected pace.`
+              : `You're at ${pct}% of the expected pace. Submit any work activities you haven't logged yet — closing the gap now is easier than at gateway.`)}
           {status === 'red' &&
-            `You're at ${pct}% of the expected pace. This is a real gateway risk — submit work activities and ask your tutor for a 1-2-1 to plan catch-up hours.`}
+            (hideReminders
+              ? `You're at ${pct}% of the expected pace.`
+              : `You're at ${pct}% of the expected pace. This is a real gateway risk — submit work activities and ask your tutor for a 1-2-1 to plan catch-up hours.`)}
           {status === 'unknown' &&
             'Programme just started — your compliance baseline will activate once a few weeks have elapsed.'}
           {calc.pendingHours > 0 && (

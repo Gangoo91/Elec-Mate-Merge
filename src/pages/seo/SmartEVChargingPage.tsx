@@ -219,7 +219,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Intelligent Octopus Go</strong> — Octopus Energy's smart EV tariff
                 integrates directly with compatible chargers (including Tesla, BMW, and Volkswagen
@@ -229,7 +229,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Octopus Go</strong> — a simpler fixed off-peak rate (around 7.5p per kWh
                 between midnight and 5am) available with any smart charger that supports scheduled
@@ -238,14 +238,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EDF GoElectric</strong> — a seven-hour off-peak window overnight at a
                 discounted rate. Available with a smart meter and compatible charger.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Agile Octopus</strong> — half-hourly variable pricing based on wholesale
                 electricity prices. During periods of high renewable generation, prices can drop to
@@ -339,7 +339,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BarChart2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Flexibility services</strong> — National Grid ESO and distribution network
                 operators can request demand reduction from aggregated smart chargers during periods
@@ -348,7 +348,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BarChart2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Vehicle-to-Grid (V2G)</strong> — while not yet mainstream, V2G technology
                 allows bidirectional charging: the EV battery can export power back to the home or
@@ -358,7 +358,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BarChart2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Octopus Power-Up</strong> — a demand response scheme where Octopus Energy
                 customers receive alerts and are paid in account credit for reducing their
@@ -385,7 +385,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CT clamp measurement</strong> — a current transformer is fitted to the
                 incoming supply tails. The charger reads the total building load in real time and
@@ -394,7 +394,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Avoiding supply upgrades</strong> — a supply upgrade from 60A to 100A via
                 the network operator (DNO) typically costs £1,000–3,000 and takes weeks. Dynamic
@@ -403,7 +403,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Multi-charger load sharing</strong> — in workplace and multi-unit
                 residential installations, a load management controller distributes available
@@ -412,7 +412,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3-phase installations</strong> — three-phase supplies (typical in commercial
                 premises) provide up to 69kW per charger (22kW per phase × 3 phases). Load
@@ -490,7 +490,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete EV Certificates On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -527,7 +527,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your EV charging installation business with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for EV charging certificates, quoting, and job management."
+          description="Join 2,100+ UK electricians using Elec-Mate for EV charging certificates, quoting, and job management."
           icon={FileCheck2}
         />
       </>
@@ -553,7 +553,7 @@ export default function SmartEVChargingPage() {
       heroTitle={
         <>
           Smart EV Charging UK:{' '}
-          <span className="text-yellow-400">Smart Charge Points Guide 2025</span>
+          <span className="text-elec-yellow">Smart Charge Points Guide 2025</span>
         </>
       }
       heroSubtitle="Everything you need to know about smart EV charging in the UK — the Electric Vehicles (Smart Charge Points) Regulations 2021, off-peak tariffs like Intelligent Octopus, solar PV diversion, demand response, load management, and what smart functionality means for OZEV grant eligibility."
@@ -564,7 +564,7 @@ export default function SmartEVChargingPage() {
       faqHeading="Frequently Asked Questions About Smart EV Charging"
       relatedPages={relatedPages}
       ctaHeading="Complete EV Charging Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EV charging certificates, quoting, and job management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EV charging certificates, quoting, and job management. 7-day free trial, cancel anytime."
     />
   );
 }

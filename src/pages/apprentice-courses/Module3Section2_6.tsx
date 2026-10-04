@@ -111,7 +111,7 @@ const quizQuestions = [
     options: [
       'Plastic tie',
       'Stainless steel tie',
-      'Paper tie',
+      'Black UV-stabilised nylon tie',
       'Nylon tie',
     ],
     correctAnswer: 1,
@@ -135,9 +135,9 @@ const quizQuestions = [
     id: 7,
     question: 'Why should cable ties not be over-tightened?',
     options: [
-      "They're expensive",
-      'They make the cable too flexible',
-      'They may cause cables to overheat',
+      "It voids the manufacturer's warranty",
+      'It changes the installation reference method',
+      'It increases the earth fault loop impedance',
       'They can damage cable insulation',
     ],
     correctAnswer: 3,

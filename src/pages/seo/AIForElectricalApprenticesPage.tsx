@@ -39,7 +39,7 @@ export default function AIForElectricalApprenticesPage() {
       badgeIcon={GraduationCap}
       heroTitle={
         <>
-          <span className="text-yellow-400">AI for Electrical Apprentices</span> — How to Study
+          <span className="text-elec-yellow">AI for Electrical Apprentices</span> — How to Study
           Smarter with AI Tools
         </>
       }

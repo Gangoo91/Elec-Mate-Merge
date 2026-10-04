@@ -6,7 +6,7 @@ const BASE_URL = 'https://www.elec-mate.com';
 const DEFAULT_TITLE = 'Elec-Mate | UK Electrical Certification & Apprentice Training Platform';
 const DEFAULT_DESCRIPTION =
   'The #1 UK platform for electricians and apprentices. EICR & EIC certification software, BS 7671 training, off-job learning hours tracking, AI-powered tools, and professional community.';
-const DEFAULT_IMAGE = `${BASE_URL}/og-image.jpg`;
+const DEFAULT_IMAGE = `${BASE_URL}/og-image.jpg?v=3`;
 
 export interface SEOBreadcrumb {
   name: string;

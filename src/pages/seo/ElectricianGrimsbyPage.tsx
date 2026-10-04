@@ -300,7 +300,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICRs for landlords</strong> — Grimsby and Cleethorpes have active private
                 rental markets. Landlords must comply with The Electrical Safety Standards in the
@@ -309,7 +309,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacements</strong> — old fuse boards are common across
                 Grimsby's 1930s–1960s housing stock. Consumer unit upgrades to dual-RCD or RCBO
@@ -317,7 +317,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full and partial rewires</strong> — ageing wiring in Grimsby's inter-war and
                 post-war housing stock generates rewiring work. Partial rewires following EICR C2
@@ -326,7 +326,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger installations</strong> — growing in residential areas, and
                 particularly in the commercial and logistics sectors associated with the port and
@@ -335,7 +335,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Offshore wind and industrial</strong> — on-shore electrical work related to
                 the Humber offshore wind cluster, including substation maintenance, cable
@@ -465,7 +465,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EIC and EICR Certificates On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -515,7 +515,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Grimsby electricians"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -543,7 +543,7 @@ export default function ElectricianGrimsbyPage() {
       heroTitle={
         <>
           Electrician in Grimsby:{' '}
-          <span className="text-yellow-400">Find Electricians in Grimsby & Cleethorpes</span>
+          <span className="text-elec-yellow">Find Electricians in Grimsby & Cleethorpes</span>
         </>
       }
       heroSubtitle="Grimsby's large inter-war housing stock, active rental market, and position as the UK's leading offshore wind hub create diverse demand for qualified electricians. Find NICEIC and NAPIT registered electricians across Grimsby, Cleethorpes, and North East Lincolnshire."
@@ -554,7 +554,7 @@ export default function ElectricianGrimsbyPage() {
       faqHeading="Frequently Asked Questions About Electricians in Grimsby"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Grimsby Electricians"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the residential and commercial electrical market in Grimsby and Cleethorpes. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the residential and commercial electrical market in Grimsby and Cleethorpes. 7-day free trial."
     />
   );
 }

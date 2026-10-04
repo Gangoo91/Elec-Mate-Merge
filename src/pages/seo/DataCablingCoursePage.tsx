@@ -505,7 +505,7 @@ export default function DataCablingCoursePage() {
       badgeIcon={Cable}
       heroTitle={
         <>
-          Data Cabling Course: <span className="text-yellow-400">Cat 6 & Fibre Optic Training</span>
+          Data Cabling Course: <span className="text-elec-yellow">Cat 6 & Fibre Optic Training</span>
         </>
       }
       heroSubtitle="Master data cabling with comprehensive training covering Cat 5e, Cat 6, Cat 6A copper cabling, single-mode and multimode fibre optics, structured cabling design, termination, testing, and certification. 8 modules with video content, interactive quizzes, and AI-powered study tools."
@@ -523,7 +523,7 @@ export default function DataCablingCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Ready to add data cabling to your skill set?"
-      ctaSubheading="Join 1,600+ UK electricians studying smarter with Elec-Mate. 8 structured modules covering copper and fibre cabling, structured design, termination, and testing. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians studying smarter with Elec-Mate. 8 structured modules covering copper and fibre cabling, structured design, termination, and testing. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/data-cabling"
     />

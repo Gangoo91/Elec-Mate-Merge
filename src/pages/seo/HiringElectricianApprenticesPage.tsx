@@ -197,7 +197,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Funding band maximum</strong> — the ESFA sets a maximum funding band for
                 each apprenticeship standard. For the Level 3 Electrician Standard (ST0145) this is
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional payments</strong> — if your apprentice is aged 16 to 18 at the
                 start of their apprenticeship, the ESFA pays an additional £1,000 to you (the
@@ -215,7 +215,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Digital Apprenticeship Service (DAS)</strong> — all employers must manage
                 their apprenticeships through the DAS account on gov.uk. This is where you find
@@ -224,7 +224,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What funding does NOT cover</strong> — ESFA funding covers training and
                 assessment costs only. It does not cover apprentice wages, PPE, tools, travel, or
@@ -248,7 +248,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Levy-paying employers</strong> — businesses with an annual wage bill above
                 £3 million pay the Apprenticeship Levy at 0.5% of their payroll, minus a £15,000
@@ -260,7 +260,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Non-levy employers</strong> — businesses with a wage bill below £3 million
                 (the vast majority of independent electrical contractors) pay just 5% of training
@@ -270,7 +270,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Levy transfer</strong> — if you are a small non-levy employer and have a
                 good relationship with a large M&E contractor who is a levy payer, ask whether they
@@ -355,7 +355,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ESFA registered providers</strong> — you must use a provider on the ESFA
                 Register of Apprenticeship Training Providers (RoATP). Search the Find
@@ -364,7 +364,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ofsted rating</strong> — check the provider's most recent Ofsted inspection
                 rating. Good or Outstanding-rated providers deliver better outcomes. Inadequate or
@@ -373,7 +373,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Achievement rates</strong> — ask providers for their achievement rates for
                 electrical apprenticeships. The national average is around 55 to 65%. A provider
@@ -381,7 +381,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Location and delivery model</strong> — consider travel time for your
                 apprentice on college days. Some providers offer day-release, block-release
@@ -408,7 +408,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Apprentice registration</strong> — register your apprentice with the JIB
                 online within the first few weeks of employment. You will need: the apprentice's
@@ -417,7 +417,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ECS Apprentice Card</strong> — once registered, the apprentice applies for
                 an Electrotechnical Certification Scheme (ECS) Apprentice Card. This must be carried
@@ -426,7 +426,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Annual registration renewal</strong> — JIB apprentice registration must be
                 renewed annually. The training provider usually handles this in conjunction with the
@@ -435,7 +435,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Grading on completion</strong> — on successful completion of the
                 apprenticeship standard and EPA, submit the apprentice's grading application to the
@@ -518,7 +518,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <CheckCircle2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Schedule College Days Automatically</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -548,7 +548,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage your apprentice alongside your business with"
-          description="Scheduling, job management, certificates, and invoicing in one app. Join 1,600+ UK electricians using Elec-Mate to run their business more efficiently."
+          description="Scheduling, job management, certificates, and invoicing in one app. Join 2,100+ UK electricians using Elec-Mate to run their business more efficiently."
           icon={GraduationCap}
         />
       </>
@@ -574,7 +574,7 @@ export default function HiringElectricianApprenticesPage() {
       heroTitle={
         <>
           Hiring Electrical Apprentices UK:{' '}
-          <span className="text-yellow-400">Employer Guide 2025</span>
+          <span className="text-elec-yellow">Employer Guide 2025</span>
         </>
       }
       heroSubtitle="Everything you need to know about taking on an electrical apprentice — ESFA funding (up to 95% of training costs), levy vs non-levy rules, JIB paperwork, apprentice wages, choosing a training provider, and your mentoring responsibilities."
@@ -585,7 +585,7 @@ export default function HiringElectricianApprenticesPage() {
       faqHeading="Frequently Asked Questions About Hiring Electrical Apprentices"
       relatedPages={relatedPages}
       ctaHeading="Run your electrical business and manage your apprentice with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for job scheduling, electrical certificates, quoting, and invoicing. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for job scheduling, electrical certificates, quoting, and invoicing. 7-day free trial, cancel anytime."
     />
   );
 }

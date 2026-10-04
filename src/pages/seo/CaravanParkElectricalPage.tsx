@@ -197,7 +197,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Overcurrent protection</strong> — each pitch supply must incorporate an MCB
                 or fuse providing overcurrent protection. The rating is typically 16 A for standard
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection</strong> — a 30 mA residual current device must protect each
                 pitch supply. The RCD and MCB are typically combined as an RCBO in modern pitch
@@ -215,7 +215,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Weatherproof enclosure</strong> — the supply equipment assembly must be
                 housed in an enclosure with a minimum IP rating of IP44. Enclosures in exposed
@@ -224,7 +224,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mechanical protection — IK08 minimum</strong> — Regulation 708.512.2.1.3
                 requires that equipment installed at a campsite be protected against mechanical
@@ -254,7 +254,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Colour coding</strong> — CEE connectors are colour-coded by voltage and
                 frequency. Blue indicates 200–250 V, 50/60 Hz. Three pins (line, neutral, earth) for
@@ -263,7 +263,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP rating</strong> — IEC 60309 socket outlets are available in IP44 and IP67
                 ratings. IP44 is the minimum for outdoor caravan park use. A self-closing cover on
@@ -271,7 +271,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth contact first</strong> — CEE connectors are designed so the earth
                 contact engages first when connecting and disengages last when disconnecting. This
@@ -280,7 +280,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EHU cables</strong> — caravan users connect via a proprietary electric
                 hookup (EHU) cable with a CEE plug at one end and an inlet socket at the caravan
@@ -372,7 +372,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>20 m maximum distance</strong> — Regulation 708.55.1.2 requires that caravan
                 pitch electrical supply equipment shall be located not more than 20 m from the
@@ -382,7 +382,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>At least one socket-outlet per pitch</strong> — Regulation 708.55.1.4
                 requires every caravan pitch or tent pitch to be supplied by at least one
@@ -392,7 +392,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mounting height</strong> — Regulation 708.55.1.6 requires the lowest part of
                 any socket outlet to be placed at a height between 0.5 m and 1.5 m from the ground.
@@ -402,7 +402,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maximum 4 socket outlets per enclosure</strong> — Regulation 708.55.1.3
                 states that, in order to avoid any hazard due to long connection cables, no more
@@ -488,7 +488,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Individual metering</strong> — where per-pitch metering is provided
                 (increasingly common at premium sites), the meter is installed within or adjacent to
@@ -497,7 +497,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Submain cables</strong> — submain cables between distribution boards and
                 pitch supply units must be sized to carry maximum expected load with adequate
@@ -506,7 +506,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Diversity</strong> — maximum demand calculations must apply diversity. Not
                 all pitches will be occupied simultaneously, and caravans rarely run at full
@@ -535,7 +535,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete EICRs On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -595,7 +595,7 @@ export default function CaravanParkElectricalPage() {
       heroTitle={
         <>
           Caravan Park Electrical Installation UK:{' '}
-          <span className="text-yellow-400">BS 7671 Section 708</span>
+          <span className="text-elec-yellow">BS 7671 Section 708</span>
         </>
       }
       heroSubtitle="Everything electricians and park operators need to know about caravan park electrical installations — BS 7671 Section 708 requirements, IEC 60309 CEE connectors, 30 mA RCD protection, socket outlet spacing, TT earthing, and periodic inspection obligations."
@@ -611,7 +611,7 @@ export default function CaravanParkElectricalPage() {
       faqHeading="Frequently Asked Questions About Caravan Park Electrical Installations"
       relatedPages={relatedPages}
       ctaHeading="Complete Caravan Park EICRs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site inspection reporting, RCD test entry, and instant PDF export. Perfect for annual caravan park inspections. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site inspection reporting, RCD test entry, and instant PDF export. Perfect for annual caravan park inspections. 7-day free trial."
     />
   );
 }

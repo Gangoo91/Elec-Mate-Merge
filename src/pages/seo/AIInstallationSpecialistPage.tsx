@@ -393,7 +393,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <TestTube className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TestTube className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Continuity of protective conductors:</strong> Testing R1+R2 and main bonding
                 conductors using a low-resistance ohmmeter. Expected values and what abnormal
@@ -401,7 +401,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TestTube className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TestTube className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Continuity of ring final circuits:</strong> The step-by-step method for the
                 figure-of-eight test, including how to identify broken rings, cross-connections, and
@@ -409,7 +409,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TestTube className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TestTube className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>
                   <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">
@@ -423,7 +423,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TestTube className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TestTube className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth fault loop impedance:</strong> Zs measurement or calculation using Zs
                 = Ze + (R1+R2), comparison against maximum values from BS 7671 Tables 41.2-41.6, and
@@ -431,7 +431,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TestTube className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TestTube className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD testing:</strong> Test at rated residual operating current (should trip
                 within 300ms), at 5x rated current (should trip within 40ms), and ramp test to
@@ -474,7 +474,7 @@ export default function AIInstallationSpecialistPage() {
       heroTitle={
         <>
           AI Installation Specialist:{' '}
-          <span className="text-yellow-400">Step-by-Step Guidance for Every Task</span>
+          <span className="text-elec-yellow">Step-by-Step Guidance for Every Task</span>
         </>
       }
       heroSubtitle="Get step-by-step installation guidance for any electrical task. Cable routing with safe zone compliance, containment sizing, first fix and second fix checklists, and GN3 testing procedures. Every instruction includes the BS 7671 regulation reference."
@@ -497,7 +497,7 @@ export default function AIInstallationSpecialistPage() {
       faqHeading="Frequently Asked Questions About the AI Installation Specialist"
       relatedPages={relatedPages}
       ctaHeading="Get Expert Installation Guidance"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's AI Installation Specialist for step-by-step guidance on every task. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate's AI Installation Specialist for step-by-step guidance on every task. 7-day free trial, cancel anytime."
       toolPath="/tools/ai-installation-specialist"
     />
   );

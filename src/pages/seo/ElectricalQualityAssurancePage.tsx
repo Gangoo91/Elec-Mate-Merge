@@ -139,51 +139,51 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Material receipt inspection</strong> — Verify
+                <strong className="text-elec-yellow">Material receipt inspection</strong> — Verify
                 delivered materials match the order and specification. Check for damage. Record
                 batch numbers for critical items (cables, switchgear).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Containment installation</strong> — Check routes
+                <strong className="text-elec-yellow">Containment installation</strong> — Check routes
                 match drawings, fixing centres are correct, joints and bends are properly formed,
                 fire barriers are installed, and supports are adequate. This is often a hold point
                 before ceiling panels are installed.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Cable installation</strong> — Correct cable type
+                <strong className="text-elec-yellow">Cable installation</strong> — Correct cable type
                 and size per the schedule, correct bending radii maintained, cables labelled at both
                 ends, no visible damage to sheath, segregation of power and data cables maintained.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Distribution board installation</strong> — Board
+                <strong className="text-elec-yellow">Distribution board installation</strong> — Board
                 level and plumb, cables dressed neatly, connections torqued correctly, circuit chart
                 completed and accurate, earth and neutral bars correctly connected.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Termination and connection</strong> — Correct
+                <strong className="text-elec-yellow">Termination and connection</strong> — Correct
                 termination technique, conductor stripped to correct length, no exposed copper
                 outside the terminal, connections tight and secure. Often a hold point before
                 energisation.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">
+                <strong className="text-elec-yellow">
                   <SEOInternalLink href="/guides/testing-sequence-guide">Testing</SEOInternalLink>
                 </strong>{' '}
                 — Full BS 7671 testing sequence: continuity, insulation resistance, polarity, earth
@@ -192,9 +192,9 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Commissioning</strong> — System-level
+                <strong className="text-elec-yellow">Commissioning</strong> — System-level
                 verification that everything works as intended. Lighting control, fire alarm
                 interface, emergency lighting, BMS integration.
               </span>
@@ -223,7 +223,7 @@ const sections = [
         <div className="grid gap-4 sm:grid-cols-2 mt-6">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-center gap-2 mb-3">
-              <Target className="w-5 h-5 text-yellow-400" />
+              <Target className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Hold Points</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -238,7 +238,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <Eye className="w-5 h-5 text-yellow-400" />
+              <Eye className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Witness Points</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -284,35 +284,35 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Common Electrical Snag Items</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Damaged or dirty faceplates (scratches, paint splashes, plaster marks)</span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Misaligned switch plates and socket outlets (not level, not square)</span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Missing or incorrect labels on distribution boards and accessories</span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Visible cable ties on exposed containment (should be trimmed or removed)</span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Incomplete fire stopping around cable penetrations</span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Missing blanking plates on unused ways in distribution boards</span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Luminaires with incorrect lamp type or colour temperature</span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <SEOInternalLink href="/emergency-lighting-certificate">
                   Emergency lighting
@@ -345,7 +345,7 @@ const sections = [
         <div className="space-y-4 mt-6">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-center gap-2 mb-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Test Certificates</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -365,7 +365,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">ITP Check Sheets</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -378,7 +378,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <BookOpen className="w-5 h-5 text-yellow-400" />
+              <BookOpen className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">As-Built Records</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -391,7 +391,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <Shield className="w-5 h-5 text-yellow-400" />
+              <Shield className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Photographic Records</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -503,7 +503,7 @@ const sections = [
         <div className="space-y-4 mt-6">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-center gap-2 mb-3">
-              <Users className="w-5 h-5 text-yellow-400" />
+              <Users className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Lead by Example</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -515,7 +515,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Train Your Team</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -532,7 +532,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <Target className="w-5 h-5 text-yellow-400" />
+              <Target className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Right First Time</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -618,7 +618,7 @@ export default function ElectricalQualityAssurancePage() {
       badgeIcon={Award}
       heroTitle={
         <>
-          Electrical Quality Assurance: <span className="text-yellow-400">QA on Site Guide</span>
+          Electrical Quality Assurance: <span className="text-elec-yellow">QA on Site Guide</span>
         </>
       }
       heroSubtitle="The complete guide to quality assurance for electrical installations on construction sites. Inspection and test plans, hold and witness points, snagging, quality documentation, non-conformance management, client acceptance, and building a QA culture that delivers right-first-time installations."
@@ -628,7 +628,7 @@ export default function ElectricalQualityAssurancePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Professional quality documentation tools"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for BS 7671-compliant certification, professional test documentation, and digital record-keeping. Build your reputation for quality. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for BS 7671-compliant certification, professional test documentation, and digital record-keeping. Build your reputation for quality. 7-day free trial, cancel anytime."
     />
   );
 }

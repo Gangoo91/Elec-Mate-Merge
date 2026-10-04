@@ -44,7 +44,7 @@ export default function ElectricianAccountingSoftwarePage() {
         <>
           Accounting Software for Electricians
           <br />
-          <span className="text-yellow-400">Best Options for UK Electrical Businesses in 2026</span>
+          <span className="text-elec-yellow">Best Options for UK Electrical Businesses in 2026</span>
         </>
       }
       heroSubtitle="Running an electrical business means managing invoices, expenses, VAT returns, and tax obligations alongside the actual electrical work. The right accounting software saves hours of admin time, ensures MTD for VAT compliance, and gives you real-time visibility of your business finances. This guide compares the three most popular options for UK electricians."
@@ -74,7 +74,7 @@ export default function ElectricianAccountingSoftwarePage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Receipt className="w-5 h-5 text-yellow-400" />
+                    <Receipt className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Expense Tracking on the Go</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -88,7 +88,7 @@ export default function ElectricianAccountingSoftwarePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <PoundSterling className="w-5 h-5 text-yellow-400" />
+                    <PoundSterling className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Invoicing and Cash Flow</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -105,7 +105,7 @@ export default function ElectricianAccountingSoftwarePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <BarChart3 className="w-5 h-5 text-yellow-400" />
+                    <BarChart3 className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Real-Time Financial Visibility</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -119,7 +119,7 @@ export default function ElectricianAccountingSoftwarePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <ShieldCheck className="w-5 h-5 text-yellow-400" />
+                    <ShieldCheck className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">HMRC Compliance</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -150,32 +150,32 @@ export default function ElectricianAccountingSoftwarePage() {
                 </h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Digital records</strong> — All sales and
+                      <strong className="text-elec-yellow">Digital records</strong> — All sales and
                       purchase invoices, receipts, and financial transactions must be recorded
                       digitally, not on paper.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Digital links</strong> — If you use more
+                      <strong className="text-elec-yellow">Digital links</strong> — If you use more
                       than one piece of software (e.g., a quoting app and accounting software), data
                       must flow between them digitally — no manual re-keying of figures.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Quarterly submissions</strong> — VAT
+                      <strong className="text-elec-yellow">Quarterly submissions</strong> — VAT
                       returns are submitted quarterly through the software's MTD connection to HMRC.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">HMRC-recognised software</strong> — The
+                      <strong className="text-elec-yellow">HMRC-recognised software</strong> — The
                       software must be on HMRC's list of recognised providers. QuickBooks, Xero, and
                       FreeAgent are all on this list.
                     </span>
@@ -205,44 +205,44 @@ export default function ElectricianAccountingSoftwarePage() {
                 <h3 className="font-bold text-white text-lg mb-4">QuickBooks Key Features</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Invoicing</strong> — Professional invoice
+                      <strong className="text-elec-yellow">Invoicing</strong> — Professional invoice
                       templates, recurring invoices, automatic payment reminders, and online payment
                       links (GoCardless, Stripe, PayPal). Customers can pay invoices directly from
                       the email.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Receipt capture</strong> — Photograph
+                      <strong className="text-elec-yellow">Receipt capture</strong> — Photograph
                       receipts with the mobile app and QuickBooks automatically extracts the
                       supplier, amount, and VAT. Receipts are stored digitally, eliminating the
                       paper trail.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Bank feeds</strong> — Connect your
+                      <strong className="text-elec-yellow">Bank feeds</strong> — Connect your
                       business bank account and credit card. Transactions are imported automatically
                       and can be categorised with a few taps. Bank reconciliation takes minutes
                       instead of hours.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">VAT returns</strong> — MTD-compatible VAT
+                      <strong className="text-elec-yellow">VAT returns</strong> — MTD-compatible VAT
                       return submission directly to HMRC. QuickBooks calculates the VAT
                       automatically from your categorised transactions.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Mobile app</strong> — Full-featured iOS
+                      <strong className="text-elec-yellow">Mobile app</strong> — Full-featured iOS
                       and Android app for invoicing, expense capture, and financial overview from
                       the van or job site.
                     </span>
@@ -273,45 +273,45 @@ export default function ElectricianAccountingSoftwarePage() {
                 <h3 className="font-bold text-white text-lg mb-4">Xero Key Features</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Unlimited users</strong> — All Xero plans
+                      <strong className="text-elec-yellow">Unlimited users</strong> — All Xero plans
                       include unlimited users (with different permission levels). This is a
                       significant advantage if your accountant, bookkeeper, and business partner all
                       need access.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">App marketplace</strong> — Xero has the
+                      <strong className="text-elec-yellow">App marketplace</strong> — Xero has the
                       largest ecosystem of third-party apps. Integrations with CRM, project
                       management, inventory, time tracking, and payroll tools. Many trade-specific
                       apps connect to Xero.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Bank reconciliation</strong> — Excellent
+                      <strong className="text-elec-yellow">Bank reconciliation</strong> — Excellent
                       bank feed integration with machine learning that suggests transaction
                       categories based on previous entries. The more you use it, the more accurate
                       the suggestions become.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Multi-currency</strong> — If you buy tools
+                      <strong className="text-elec-yellow">Multi-currency</strong> — If you buy tools
                       or materials from overseas suppliers, Xero handles multi-currency transactions
                       natively. Not essential for most domestic electricians but valuable for those
                       buying specialist equipment.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">CIS support</strong> — Built-in{' '}
+                      <strong className="text-elec-yellow">CIS support</strong> — Built-in{' '}
                       <SEOInternalLink href="/guides/electrical-subcontracting">
                         Construction Industry Scheme (CIS)
                       </SEOInternalLink>{' '}
@@ -346,45 +346,45 @@ export default function ElectricianAccountingSoftwarePage() {
                 <h3 className="font-bold text-white text-lg mb-4">FreeAgent Key Features</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Free with partner banks</strong> —
+                      <strong className="text-elec-yellow">Free with partner banks</strong> —
                       FreeAgent is free with NatWest, RBS, Mettle, and Tide business accounts. If
                       you already bank with one of these, you get full FreeAgent access at no
                       additional cost.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Tax timeline</strong> — A visual tax
+                      <strong className="text-elec-yellow">Tax timeline</strong> — A visual tax
                       timeline that shows upcoming tax obligations, estimated tax due, and
                       deadlines. This is particularly useful for sole traders managing their own
                       Self Assessment.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Simple expense tracking</strong> —
+                      <strong className="text-elec-yellow">Simple expense tracking</strong> —
                       Straightforward expense entry with receipt photo capture. Categories are
                       pre-set for common business expenses. Mileage tracking for van and vehicle
                       costs.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Self Assessment filing</strong> —
+                      <strong className="text-elec-yellow">Self Assessment filing</strong> —
                       FreeAgent can submit your Self Assessment tax return directly to HMRC. This is
                       a unique feature — QuickBooks and Xero require you to file Self Assessment
                       separately or through your accountant.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">MTD compatible</strong> — Full MTD for VAT
+                      <strong className="text-elec-yellow">MTD compatible</strong> — Full MTD for VAT
                       compliance with direct HMRC submission.
                     </span>
                   </li>
@@ -419,7 +419,7 @@ export default function ElectricianAccountingSoftwarePage() {
                   <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10">
                     <h4 className="font-bold text-white mb-3">Best for Sole Traders on a Budget</h4>
                     <p className="text-white text-sm leading-relaxed">
-                      <strong className="text-yellow-400">FreeAgent</strong> — Free with
+                      <strong className="text-elec-yellow">FreeAgent</strong> — Free with
                       NatWest/Mettle/Tide, simplest interface, built-in Self Assessment filing.
                       Ideal for one-person electrical businesses who want minimal accounting
                       complexity.
@@ -428,7 +428,7 @@ export default function ElectricianAccountingSoftwarePage() {
                   <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10">
                     <h4 className="font-bold text-white mb-3">Best All-Rounder</h4>
                     <p className="text-white text-sm leading-relaxed">
-                      <strong className="text-yellow-400">QuickBooks</strong> — Most complete
+                      <strong className="text-elec-yellow">QuickBooks</strong> — Most complete
                       feature set at the entry price point, excellent mobile app, strong receipt
                       capture. Best balance of features, ease of use, and cost for growing
                       electrical businesses.
@@ -439,7 +439,7 @@ export default function ElectricianAccountingSoftwarePage() {
                       Best for Working With an Accountant
                     </h4>
                     <p className="text-white text-sm leading-relaxed">
-                      <strong className="text-yellow-400">Xero</strong> — Unlimited users, most
+                      <strong className="text-elec-yellow">Xero</strong> — Unlimited users, most
                       accountant-friendly, largest app ecosystem. If your accountant recommends
                       Xero, it is usually worth following their advice for the seamless year-end
                       process.
@@ -448,7 +448,7 @@ export default function ElectricianAccountingSoftwarePage() {
                   <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10">
                     <h4 className="font-bold text-white mb-3">Best for CIS Subcontracting</h4>
                     <p className="text-white text-sm leading-relaxed">
-                      <strong className="text-yellow-400">Xero</strong> — Built-in CIS handling is
+                      <strong className="text-elec-yellow">Xero</strong> — Built-in CIS handling is
                       the most comprehensive. QuickBooks also supports CIS. FreeAgent has more
                       limited CIS features. If you regularly{' '}
                       <SEOInternalLink href="/guides/electrical-subcontracting">
@@ -482,7 +482,7 @@ export default function ElectricianAccountingSoftwarePage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Smartphone className="w-5 h-5 text-yellow-400" />
+                    <Smartphone className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Elec-Mate for Job Costing</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -501,7 +501,7 @@ export default function ElectricianAccountingSoftwarePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <BarChart3 className="w-5 h-5 text-yellow-400" />
+                    <BarChart3 className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Tracking Job Profitability</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">

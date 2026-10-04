@@ -148,7 +148,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Approved Electrician (employed)</strong> — £37,000 to £49,000 per year
                 including JIB-SECTA allowances. The 2024/2025 JIB-SECTA rate of £21.27 per hour
@@ -157,7 +157,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Senior / Foreman level</strong> — £48,000 to £58,000. Working foremen on
                 Edinburgh's major projects (St James Quarter completion, Edinburgh Bioquarter,
@@ -165,7 +165,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Self-employed</strong> — £500 to £900+ per day. Government facilities,
                 defence estates, and Edinburgh's large university sector drive premium rates.
@@ -197,14 +197,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical Trainee (Apprentice)</strong> — £7.56 to £16.48 per hour,
                 graduated over four years. SVQ Level 3 in Electrotechnical Services.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrician</strong> — £20.12 per hour (£39,200 per year at 37.5hr/week).
                 NVQ/SVQ Level 3 qualified, ECS Blue or Gold Card. Starting grade for newly qualified
@@ -212,7 +212,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Approved Electrician</strong> — £21.27 per hour (£41,480 per year). ECS Gold
                 Card. Most common grade on Edinburgh commercial and industrial sites. Market rate in
@@ -220,7 +220,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical Technician</strong> — £22.18 per hour (£43,250 per year). For
                 those with HNC/HND or degree-level engineering qualifications. Common in Edinburgh's
@@ -228,7 +228,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Working Foreman</strong> — £23.09 per hour (£45,000 per year). Edinburgh
                 premium pushes this to £25 to £29 per hour on major projects.
@@ -314,7 +314,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Domestic and small commercial</strong> — £380 to £580 per day. Edinburgh's
                 large private rental market and affluent areas (Morningside, Newington, Stockbridge)
@@ -322,7 +322,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial and industrial</strong> — £450 to £700 per day. Edinburgh's
                 office market (including the New Town, Fountainbridge, and Quartermile developments)
@@ -330,7 +330,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Government and public sector</strong> — £500 to £800 per day. The Scottish
                 Parliament, government buildings, NHS Lothian hospitals, and City of Edinburgh
@@ -339,7 +339,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Specialist and defence</strong> — £600 to £950 per day. Edinburgh's
                 proximity to RAF Leuchars, Faslane (naval base via Glasgow), and various defence
@@ -363,7 +363,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>High voltage authorised person</strong> — 25 to 40% above standard rate.
                 Edinburgh's large NHS Lothian hospitals (Royal Infirmary, Western General),
@@ -371,7 +371,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Data centre and critical systems</strong> — £500 to £800 per day. Edinburgh
                 is home to several major Scottish data centre facilities serving the financial
@@ -380,7 +380,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Security-cleared work (SC/DV)</strong> — 15 to 30% premium above standard
                 commercial rates. Scottish government, justice, and intelligence facilities in and
@@ -388,7 +388,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Historic building electrical work</strong> — Edinburgh's UNESCO World
                 Heritage site and vast stock of listed Georgian and Victorian buildings demand
@@ -414,7 +414,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Year 1 (aged 16 to 18)</strong> — £7.56 per hour. Approximately £14,700 per
                 year. Most Edinburgh employers pay the National Minimum Wage for 16 to 18 year olds
@@ -422,7 +422,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Year 1 (aged 19+)</strong> — £10.42 per hour. Approximately £20,300 per
                 year. Adult entrants to electrical apprenticeships in Edinburgh are increasingly
@@ -430,20 +430,20 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Year 2</strong> — £11.55 per hour. Approximately £22,500 per year.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Year 3</strong> — £14.29 per hour. Approximately £27,900 per year. Many
                 Edinburgh employers increase to £15 to £17 per hour at Year 3 stage.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Year 4</strong> — £16.48 per hour. Approximately £32,100 per year.
                 Progression to Approved Electrician grade (£21.27/hr JIB-SECTA minimum) follows
@@ -467,7 +467,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>JIB-SECTA Pension and Death Benefit Scheme</strong> — employer contributions
                 of 5 to 6% of salary. On a £45,000 Edinburgh salary, this is £2,250 to £2,700 of
@@ -475,7 +475,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Holiday entitlement</strong> — 24 working days per year for JIB-SECTA
                 members (one day more than the England JIB standard of 23 days). Rising to 25 days
@@ -483,7 +483,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tool allowance</strong> — £500 to £1,200 per year. Most Edinburgh electrical
                 contractors provide a tool allowance or direct tool provision. SELECT members also
@@ -491,7 +491,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Van or mileage</strong> — standard across most Edinburgh contractors. A
                 works van has an effective annual value of £3,000 to £6,000. Edinburgh's parking
@@ -499,7 +499,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Scottish bank holidays</strong> — Scottish electricians get additional paid
                 bank holidays compared to English counterparts, including St Andrew's Day and two
@@ -573,7 +573,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete Certificates Efficiently</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -605,7 +605,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Edinburgh electrical business smarter with"
-          description="Join 1,600+ UK electricians using Elec-Mate to quote jobs, complete certificates on site, and manage their business from their phone. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate to quote jobs, complete certificates on site, and manage their business from their phone. 7-day free trial."
           icon={PoundSterling}
         />
       </>
@@ -631,7 +631,7 @@ export default function ElectricianSalaryEdinburghPage() {
       heroTitle={
         <>
           Electrician Salary Edinburgh 2025:{' '}
-          <span className="text-yellow-400">Scotland JIB Rates, SECTT & Pay Guide</span>
+          <span className="text-elec-yellow">Scotland JIB Rates, SECTT & Pay Guide</span>
         </>
       }
       heroSubtitle="Comprehensive guide to electrician earnings in Edinburgh. JIB-SECTA Scotland rates (£21.27/hr), SECTT apprenticeships, self-employed day rates (£500 to £900+), specialist uplifts for government and defence work, and Edinburgh benefits packages."
@@ -642,7 +642,7 @@ export default function ElectricianSalaryEdinburghPage() {
       faqHeading="Frequently Asked Questions About Electrician Salaries in Edinburgh"
       relatedPages={relatedPages}
       ctaHeading="Maximise Your Edinburgh Electrician Earnings with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to quote faster, complete certificates on site, and get paid sooner. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to quote faster, complete certificates on site, and get paid sooner. 7-day free trial, cancel anytime."
     />
   );
 }

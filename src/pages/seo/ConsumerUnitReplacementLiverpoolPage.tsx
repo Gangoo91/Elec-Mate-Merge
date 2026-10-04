@@ -252,7 +252,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Socket-outlet circuits</strong> — all socket-outlet circuits rated up to 32A
                 must have 30mA RCD protection. This applies to ring final circuits and radial socket
@@ -260,7 +260,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bathroom and shower circuits</strong> — Regulation 701 requires 30mA RCD
                 protection for all circuits serving locations containing a bath or shower. In
@@ -269,7 +269,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dual-RCD vs RCBO</strong> — the choice between a dual-RCD consumer unit and
                 an all-RCBO consumer unit affects both cost and resilience. RCBOs cost more per
@@ -319,7 +319,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Property transactions</strong> — solicitors acting on Liverpool property
                 sales routinely request Part P compliance certificates for consumer unit
@@ -391,28 +391,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Small flat or terrace (1–2 bed)</strong> — £380 to £520. Common across L1,
                 L4, L6, and L8 postcodes. Typically 6 to 10 circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom terrace or semi</strong> — £480 to £680. The most common
                 property type in Liverpool. Up to 12 circuits, full testing included.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Larger detached property</strong> — £650 to £900. More ways, potentially
                 RCBO arrangement, longer installation and testing time.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional work</strong> — earthing upgrades, main bonding conductors, or
                 meter tails replacement can add £100 to £350 depending on the scope identified
@@ -443,7 +443,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Victorian terraces (L1, L4, L6, L7, L8)</strong> — some retain
                 rubber-insulated wiring or round-pin sockets indicating very old wiring. In these
@@ -452,7 +452,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HMO properties</strong> — Liverpool has a large student population due to
                 the University of Liverpool and Liverpool John Moores University. Student HMOs in
@@ -461,7 +461,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wirral and Knowsley</strong> — properties on the Wirral peninsula (CH44 to
                 CH48) and in Knowsley are covered by different local authorities but the same Part P
@@ -489,7 +489,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete EICs On Site in Liverpool</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -523,7 +523,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Liverpool electrical business with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting."
           icon={FileCheck2}
         />
       </>
@@ -549,7 +549,7 @@ export default function ConsumerUnitReplacementLiverpoolPage() {
       heroTitle={
         <>
           Consumer Unit Replacement Liverpool:{' '}
-          <span className="text-yellow-400">Fuse Box Upgrade Guide 2026</span>
+          <span className="text-elec-yellow">Fuse Box Upgrade Guide 2026</span>
         </>
       }
       heroSubtitle="Everything Liverpool homeowners and landlords need to know about consumer unit replacement — metal enclosure requirements, Part P Building Regulations, RCD protection, costs of £400 to £750, and how to find a qualified NICEIC or NAPIT registered electrician on Merseyside."
@@ -560,7 +560,7 @@ export default function ConsumerUnitReplacementLiverpoolPage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Replacement in Liverpool"
       relatedPages={relatedPages}
       ctaHeading="Complete Consumer Unit Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion with instant PDF export and schedule of test results. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion with instant PDF export and schedule of test results. 7-day free trial, cancel anytime."
     />
   );
 }

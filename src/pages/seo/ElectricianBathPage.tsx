@@ -229,7 +229,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Landmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Listed Building Consent</strong> — Bath has over 5,000 listed buildings,
                 including 170 Grade I and over 500 Grade II* structures. Any electrical work that
@@ -240,7 +240,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Landmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Article 4 directions</strong> — BANES has Article 4 directions that remove
                 permitted development rights within the World Heritage Site. This means that
@@ -251,7 +251,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Landmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Uniform character</strong> — Bath's Georgian terraces were designed as
                 unified compositions. The Royal Crescent, for example, is a single curved facade
@@ -286,7 +286,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Floor voids</strong> — Georgian houses have timber suspended floors with
                 reasonable voids (typically 150 to 250mm). Cables can be run through floor voids
@@ -297,7 +297,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Vertical risers</strong> — Georgian townhouses are narrow and tall. Vertical
                 cable routes are the main challenge. Use existing chimney flue voids (many Georgian
@@ -309,7 +309,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lime plaster</strong> — Bath Georgian plaster is lime-based and historically
                 significant. It is softer than modern gypsum plaster and cracks easily if disturbed.
@@ -321,7 +321,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Accessories</strong> — in the principal rooms of a listed Georgian
                 townhouse, white plastic switches and sockets are usually inappropriate. Period
@@ -356,7 +356,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Never chase Bath stone</strong> — Bath stone is soft, porous, and fractures
                 along bedding planes. Chasing a cable route into Bath stone will cause the face to
@@ -366,7 +366,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Core drilling</strong> — when a cable penetration through Bath stone is
                 unavoidable, core drill through the mortar joint (not the stone). Use a diamond core
@@ -376,7 +376,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Non-ferrous fixings</strong> — iron and steel fixings cause rust staining on
                 Bath stone that is virtually impossible to remove. All external fixings into Bath
@@ -386,7 +386,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Moisture and damp</strong> — Bath stone is highly porous and many Bath
                 properties have rising damp or penetrating damp issues, particularly at basement and
@@ -420,7 +420,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ThermometerSun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ThermometerSun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Stone floors</strong> — many Bath properties have original Bath stone
                 flagstone floors, particularly in hallways, kitchens, and basements. These floors
@@ -431,7 +431,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ThermometerSun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ThermometerSun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Timber floors</strong> — Georgian suspended timber floors can accommodate
                 UFH mats between the floorboards and a new floor covering, or foil heating elements
@@ -441,7 +441,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ThermometerSun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ThermometerSun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical requirements</strong> — electric UFH in a domestic setting is a
                 notifiable alteration under Part P. The heating circuit must be protected by a
@@ -453,7 +453,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ThermometerSun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ThermometerSun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Running costs</strong> — advise customers on the running cost implications.
                 Electric UFH in a Bath stone property can be expensive to run as the primary heating
@@ -544,7 +544,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EICR Certificate App</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -589,7 +589,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional certification for Bath electricians"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting."
           icon={MapPin}
         />
       </>
@@ -616,7 +616,7 @@ export default function ElectricianBathPage() {
       heroTitle={
         <>
           Electrician in Bath:{' '}
-          <span className="text-yellow-400">Local Guide for UK Electricians</span>
+          <span className="text-elec-yellow">Local Guide for UK Electricians</span>
         </>
       }
       heroSubtitle="Bath's UNESCO World Heritage status means the strictest conservation controls in the UK. This guide covers the DNO, Georgian rewiring, Bath stone challenges, underfloor heating in listed buildings, and realistic pricing for electricians in Bath."
@@ -627,7 +627,7 @@ export default function ElectricianBathPage() {
       faqHeading="Frequently Asked Questions About Electrical Work in Bath"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Electrical Work in Bath — On Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting. Georgian rewires, heritage work, or commercial — certify it all on site. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting. Georgian rewires, heritage work, or commercial — certify it all on site. 7-day free trial."
     />
   );
 }

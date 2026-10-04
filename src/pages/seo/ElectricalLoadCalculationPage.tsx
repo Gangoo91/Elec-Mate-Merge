@@ -187,13 +187,13 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lighting:</strong> 66% of the total current demand
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Heating and power</strong> (final circuits not otherwise listed): 100% of
                 the total current demand up to 10 A, plus 50% of any current demand in excess of 10
@@ -202,7 +202,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cooking appliances:</strong> 10 A + 30% of the full load of connected
                 cooking appliances in excess of 10 A + 5 A if a socket-outlet is incorporated in the
@@ -210,7 +210,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Socket-outlets and standard final circuit arrangements:</strong> 100% of the
                 current demand of the largest circuit or point of utilization + 40% of every other
@@ -219,7 +219,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Motors</strong> (other than lift motors): <strong>not applicable</strong> to
                 individual household installations
@@ -239,7 +239,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV chargers and heat pumps:</strong> These loads should generally be
                 assessed at 100% (no diversity) unless a load management system is installed that
@@ -266,26 +266,26 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-3">Domestic Example — 3-Bed Semi</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Lighting (8 × 100W equivalent): 66% of 800W = 528W / 230V = 2.3A</span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Ring final circuits (2 × 32A rings): 32A + (32A × 40%) = 44.8A (but limited by
                 supply)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Cooker (7kW): 10A + (30% × 20.4A) = 16.1A</span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Immersion heater (3kW): 100% = 13A</span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Assessed maximum demand: approximately 52A — 60A supply adequate</strong>
               </span>
@@ -312,12 +312,12 @@ const sections = [
           The fundamental relationship is:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <p className="font-mono text-sm text-yellow-300 mb-4">
+          <p className="font-mono text-sm text-elec-yellow mb-4">
             Iz (corrected) = tabulated Iz × Ca × Cg × Ci ≥ Ib
           </p>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ca — Ambient temperature correction:</strong> Applied when the ambient
                 temperature at the cable location exceeds 30°C. Cables in roof spaces in summer can
@@ -325,7 +325,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cg — Grouping correction:</strong> Applied when cables are grouped together
                 or run in a common enclosure. For 4 touching cables, Cg = 0.65 (35% reduction in
@@ -333,7 +333,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ci — Insulation enclosure correction:</strong> Applied to cables fully
                 enclosed in thermal insulation. For full enclosure, Ci = 0.5 for some installation
@@ -365,7 +365,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-phase balanced load:</strong> For balanced three-phase loads
                 (three-phase motors, three-phase heaters), P = √3 × V_L × I × pf, where V_L is the
@@ -374,7 +374,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Single-phase loads on a three-phase supply:</strong> Each single-phase load
                 draws current on one phase only. Phase balance must be considered during circuit
@@ -383,7 +383,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Neutral conductor sizing:</strong> For balanced three-phase loading with no
                 significant harmonic distortion, the neutral current is zero or negligible. Where
@@ -411,7 +411,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Distribution board schedules:</strong> Each distribution board requires a
                 schedule documenting circuit designation, protective device rating, cable size,
@@ -419,7 +419,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Demand diversity in commercial premises:</strong> On-Site Guide Table A2 has
                 a column for small shops, stores, offices and business premises, but nothing for
@@ -430,7 +430,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Power factor correction:</strong> Industrial premises with large motor loads
                 have a lagging power factor — the apparent power (kVA) exceeds the true power (kW).
@@ -459,19 +459,19 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Existing assessed maximum demand: 52A (from previous calculation)</span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>New 7kW EV charger (32A): added at 100% demand (no diversity) = 32A</span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Revised maximum demand: 52A + 32A = 84A — exceeds 60A/80A supply</span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Action:</strong> Apply for 100A supply upgrade from DNO, or install DLM
                 system limiting charger to 28A or less
@@ -485,21 +485,21 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Lighting (6 × 2A circuits): 100% = 12A</span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Socket outlet circuits (4 × 32A): 100% of total = 128A (commercial — no diversity)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Air conditioning (3-phase, 12kW): 12,000 / (√3 × 400) = 17.3A per phase</span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>
                   Assessed maximum demand: 157A — select 160A MCCB, 95mm² supply cable
@@ -540,7 +540,7 @@ export default function ElectricalLoadCalculationPage() {
       heroTitle={
         <>
           Electrical Load Calculation{' '}
-          <span className="text-yellow-400">— UK Electrician Guide</span>
+          <span className="text-elec-yellow">— UK Electrician Guide</span>
         </>
       }
       heroSubtitle="A complete guide to calculating electrical load for domestic and commercial premises: diversity factors from IET On-Site Guide Appendix A, maximum demand, cable sizing correction factors, three-phase calculations, and IET On-Site Guide methods with worked examples."

@@ -44,7 +44,7 @@ export default function CapacityPlanningCalculatorPage() {
       heroTitle={
         <>
           Capacity Planning Calculator
-          <span className="block text-yellow-400 mt-1">For UK Electricians</span>
+          <span className="block text-elec-yellow mt-1">For UK Electricians</span>
         </>
       }
       heroSubtitle="The difference between a profitable electrical business and an overworked, underpaid one is capacity planning. Know how many billable hours you have available, how many jobs you can realistically take each week, when to say no, and when it is time to grow. Elec-Mate's capacity planning tools give you the data to make these decisions with confidence."
@@ -114,37 +114,37 @@ export default function CapacityPlanningCalculatorPage() {
                 realistic calculation for a sole trader:
               </p>
               <p>
-                <strong className="text-yellow-400">Starting point:</strong> 52 weeks x 5 days x 8
+                <strong className="text-elec-yellow">Starting point:</strong> 52 weeks x 5 days x 8
                 hours = 2,080 total hours per year.
               </p>
               <p>
-                <strong className="text-yellow-400">Deduct holidays:</strong> 28 days minimum
+                <strong className="text-elec-yellow">Deduct holidays:</strong> 28 days minimum
                 (statutory entitlement including bank holidays) = 224 hours. Many electricians take
                 fewer holidays than this, but you should budget for at least 28 days to avoid
                 burnout.
               </p>
               <p>
-                <strong className="text-yellow-400">Deduct sick days:</strong> Budget 5 to 8 days
+                <strong className="text-elec-yellow">Deduct sick days:</strong> Budget 5 to 8 days
                 per year = 40 to 64 hours. Even if you rarely get ill, one bout of flu or a minor
                 injury can wipe out a week.
               </p>
               <p>
-                <strong className="text-yellow-400">Deduct training:</strong> 3 to 5 days per year
+                <strong className="text-elec-yellow">Deduct training:</strong> 3 to 5 days per year
                 for CPD, update courses, and new qualifications = 24 to 40 hours. Use Elec-Mate's{' '}
                 <SEOInternalLink href="/guides/cpd-for-electricians">CPD tracker</SEOInternalLink> to
                 log these hours automatically.
               </p>
               <p>
-                <strong className="text-yellow-400">Deduct admin time:</strong> Quoting, invoicing,
+                <strong className="text-elec-yellow">Deduct admin time:</strong> Quoting, invoicing,
                 accounting, phone calls, and emails consume 3 to 5 hours per week = 156 to 260 hours
                 per year.
               </p>
               <p>
-                <strong className="text-yellow-400">Deduct travel time:</strong> 1 to 2 hours per
+                <strong className="text-elec-yellow">Deduct travel time:</strong> 1 to 2 hours per
                 day in non-billable travel = 250 to 500 hours per year.
               </p>
               <p>
-                <strong className="text-yellow-400">Result:</strong> After all deductions, a typical
+                <strong className="text-elec-yellow">Result:</strong> After all deductions, a typical
                 sole trader has 1,350 to 1,600 billable hours per year — roughly 27 to 32 billable
                 hours per week. That is your real capacity. Every job you quote and schedule must
                 fit within these hours.
@@ -163,7 +163,7 @@ export default function CapacityPlanningCalculatorPage() {
                 total available billable hours) x 100.
               </p>
               <p>
-                <strong className="text-yellow-400">Below 55%:</strong> You have too much idle time.
+                <strong className="text-elec-yellow">Below 55%:</strong> You have too much idle time.
                 Your marketing is not generating enough leads, you are declining too much work, or
                 your pricing is putting clients off. Focus on lead generation and review your{' '}
                 <SEOInternalLink href="/tools/pricing-strategy-electrician">
@@ -172,23 +172,23 @@ export default function CapacityPlanningCalculatorPage() {
                 .
               </p>
               <p>
-                <strong className="text-yellow-400">55% to 65%:</strong> Below target but
+                <strong className="text-elec-yellow">55% to 65%:</strong> Below target but
                 sustainable. You have room to take on more work without overcommitting. This is
                 common for electricians in their first year of business or those who have recently
                 moved to a new area.
               </p>
               <p>
-                <strong className="text-yellow-400">65% to 75%:</strong> The sweet spot. You are
+                <strong className="text-elec-yellow">65% to 75%:</strong> The sweet spot. You are
                 busy enough to be profitable but have enough buffer to handle overruns, urgent
                 callouts, and quote requests without disrupting existing commitments.
               </p>
               <p>
-                <strong className="text-yellow-400">75% to 85%:</strong> Very busy. You need to be
+                <strong className="text-elec-yellow">75% to 85%:</strong> Very busy. You need to be
                 disciplined about scheduling and may need to extend lead times for new work. Good
                 for profitability but leaves little room for problems.
               </p>
               <p>
-                <strong className="text-yellow-400">Above 85%:</strong> Danger zone. You are
+                <strong className="text-elec-yellow">Above 85%:</strong> Danger zone. You are
                 overcommitted. Jobs will overrun, quality may suffer, and you risk burning out. This
                 is the signal to either raise prices (to reduce demand), hire help, or subcontract
                 overflow work. Elec-Mate's{' '}
@@ -213,21 +213,21 @@ export default function CapacityPlanningCalculatorPage() {
                 sequencing jobs to minimise travel and maximise productive time on site.
               </p>
               <p>
-                <strong className="text-yellow-400">Job duration estimation:</strong> Track how long
+                <strong className="text-elec-yellow">Job duration estimation:</strong> Track how long
                 each type of job actually takes you. A consumer unit change might be quoted at 4
                 hours but consistently takes 5.5 hours when you include preparation, testing,
                 labelling, and paperwork. Over time, your actual duration data replaces your
                 estimates, making your scheduling more accurate and your quotes more profitable.
               </p>
               <p>
-                <strong className="text-yellow-400">Geographic clustering:</strong> Group jobs by
+                <strong className="text-elec-yellow">Geographic clustering:</strong> Group jobs by
                 location to minimise travel time. If you have three jobs in the same area of town,
                 schedule them on consecutive days rather than alternating with jobs across town. The
                 30 to 45 minutes saved on each journey adds up to 1 to 2 extra billable hours per
                 day.
               </p>
               <p>
-                <strong className="text-yellow-400">Buffer time:</strong> Schedule 80% of your
+                <strong className="text-elec-yellow">Buffer time:</strong> Schedule 80% of your
                 available time, not 100%. The remaining 20% absorbs overruns, urgent callouts, quote
                 visits, and unexpected issues without displacing your committed work. If the buffer
                 is not needed, you can fill it with smaller jobs or administrative tasks.
@@ -261,14 +261,14 @@ export default function CapacityPlanningCalculatorPage() {
                 and burn out trying to do everything yourself.
               </p>
               <p>
-                <strong className="text-yellow-400">Signals that you need help:</strong> Your
+                <strong className="text-elec-yellow">Signals that you need help:</strong> Your
                 utilisation rate has exceeded 85% for three consecutive months. You are regularly
                 declining work or pushing start dates back by more than two weeks. You are working
                 evenings and weekends on admin tasks. Your job satisfaction is declining because you
                 are always rushing.
               </p>
               <p>
-                <strong className="text-yellow-400">Subcontracting vs employing:</strong>{' '}
+                <strong className="text-elec-yellow">Subcontracting vs employing:</strong>{' '}
                 Subcontracting is lower risk — you only pay for work done, there are no employer NI
                 contributions, no holiday pay, and no employment obligations. But it is more
                 expensive per hour and you have less control over quality and availability.
@@ -280,7 +280,7 @@ export default function CapacityPlanningCalculatorPage() {
                 to compare the true cost of each option.
               </p>
               <p>
-                <strong className="text-yellow-400">Financial readiness:</strong> Before hiring, you
+                <strong className="text-elec-yellow">Financial readiness:</strong> Before hiring, you
                 need consistent revenue to cover the new person's cost even during quiet periods. As
                 a rule of thumb, you should be able to cover three months of their salary from your
                 cash reserves. Use the{' '}
@@ -301,21 +301,21 @@ export default function CapacityPlanningCalculatorPage() {
                 skills, and operational systems.
               </p>
               <p>
-                <strong className="text-yellow-400">Revenue targets:</strong> Before adding staff,
+                <strong className="text-elec-yellow">Revenue targets:</strong> Before adding staff,
                 calculate the additional revenue you need to cover their cost and still increase
                 your profit. If an employee costs £35,000 to £45,000 per year fully loaded (salary,
                 employer NI, pension, holiday pay, tools, van), you need to generate that much
                 additional revenue — plus profit margin — to justify the hire.
               </p>
               <p>
-                <strong className="text-yellow-400">Systems and processes:</strong> A sole trader
+                <strong className="text-elec-yellow">Systems and processes:</strong> A sole trader
                 can run their business from their head — they know every job, every customer, every
                 deadline. Once you have staff, you need systems: job management, scheduling, quality
                 control, and communication. Elec-Mate provides all of these in a single platform,
                 making the transition from sole trader to employer significantly smoother.
               </p>
               <p>
-                <strong className="text-yellow-400">Apprentices:</strong> Taking on an apprentice is
+                <strong className="text-elec-yellow">Apprentices:</strong> Taking on an apprentice is
                 often the first step in growing a team. The initial cost is lower (apprentice wages
                 are below fully qualified rates), the Apprenticeship Levy may cover training costs,
                 and you get to train someone to your standards. See the{' '}
@@ -326,7 +326,7 @@ export default function CapacityPlanningCalculatorPage() {
                 employer responsibilities.
               </p>
               <p>
-                <strong className="text-yellow-400">Stage planning:</strong> Most successful
+                <strong className="text-elec-yellow">Stage planning:</strong> Most successful
                 electrical businesses grow in stages. Stage one: maximise your own capacity (target
                 75% utilisation). Stage two: add a subcontractor for overflow work. Stage three:
                 hire your first employee or apprentice. Stage four: build a team. Each stage
@@ -462,7 +462,7 @@ export default function CapacityPlanningCalculatorPage() {
         },
       ]}
       ctaHeading="Plan Your Capacity, Grow with Confidence"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to track utilisation, schedule jobs, and make data-driven growth decisions. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to track utilisation, schedule jobs, and make data-driven growth decisions. 7-day free trial, cancel anytime."
       extraSchemas={[
         {
           '@type': 'SoftwareApplication',

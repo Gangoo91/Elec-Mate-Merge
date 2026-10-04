@@ -27,7 +27,7 @@ const quickCheckQuestions = [
     options: [
       'To ensure insulation against electric shock',
       'To give a stronger grip on tight terminals',
-      'To make the tool lighter to carry',
+      'To resist corrosion in damp locations',
     ],
     correctIndex: 0,
     explanation:
@@ -45,7 +45,7 @@ const quickCheckQuestions = [
     id: 'wrong-screwdriver',
     question: 'Name one reason why using the wrong size screwdriver can cause problems.',
     options: [
-      'It speeds the job up at the cost of accuracy',
+      "It voids the accessory's warranty",
       'It strengthens the electrical connection',
       'It damages the screw head or the tool tip',
     ],
@@ -160,9 +160,9 @@ const quizQuestions = [
     question: 'Name one measuring tool commonly used in electrical installations.',
     options: [
       'Tape measure',
-      'Protractor',
-      'Compass',
-      'Caliper',
+      'Jab saw',
+      'Bolster chisel',
+      'Crimping tool',
     ],
     correctAnswer: 0,
     explanation:

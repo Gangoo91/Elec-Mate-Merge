@@ -1,0 +1,7 @@
+# Elec-Mate Ltd — security contact (RFC 9116)
+Contact: mailto:info@elec-mate.com
+Contact: https://www.elec-mate.com/support
+Preferred-Languages: en
+Canonical: https://www.elec-mate.com/.well-known/security.txt
+Policy: https://www.elec-mate.com/acceptable-use
+Expires: 2027-10-04T00:00:00.000Z

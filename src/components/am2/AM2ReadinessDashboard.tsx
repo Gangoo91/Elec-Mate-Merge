@@ -106,7 +106,7 @@ const MODE_CARDS: Array<{
     eyebrow: 'Knowledge',
     title: 'Knowledge test',
     description:
-      'BS 7671, health & safety, building regs. 400-question bank with weak-topic feedback.',
+      'BS 7671, health & safety, building regs, plus worked calculations with new numbers every time, and weak-topic feedback.',
     tab: 'knowledge',
   },
 ];

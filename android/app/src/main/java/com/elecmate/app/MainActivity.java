@@ -3,11 +3,7 @@ package com.elecmate.app;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 import com.getcapacitor.BridgeActivity;
 
@@ -16,9 +12,8 @@ public class MainActivity extends BridgeActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Android 15 (API 35+) mandates edge-to-edge — setDecorFitsSystemWindows is
-        // ignored. Opt in explicitly and let the WebView handle inset padding itself
-        // via CSS env(safe-area-inset-*) which the web code already uses.
+        // Android 15 (API 35+) mandates edge-to-edge. Opt in explicitly on
+        // older APIs too so every version behaves the same.
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
 
         // Transparent system bars so the WebView can paint edge-to-edge underneath.
@@ -35,19 +30,15 @@ public class MainActivity extends BridgeActivity {
             insetsController.setAppearanceLightNavigationBars(false);
         }
 
-        // Pad the Capacitor bridge root view with the system bar insets so the
-        // WebView content doesn't render underneath the status / nav bars on
-        // older APIs. CSS safe-area-inset handles the visual offset — this just
-        // ensures the WebView's layout rect reflects the full window.
-        final View root = findViewById(android.R.id.content);
-        if (root != null) {
-            ViewCompat.setOnApplyWindowInsetsListener(root, (v, windowInsets) -> {
-                Insets sysBars = windowInsets.getInsets(
-                    WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout()
-                );
-                v.setPadding(sysBars.left, sysBars.top, sysBars.right, sysBars.bottom);
-                return WindowInsetsCompat.CONSUMED;
-            });
-        }
+        // Window insets — status bar, navigation bar, display cutout AND the
+        // keyboard — are handled by Capacitor's SystemBars plugin (registered
+        // automatically since Capacitor 8). It pads the decor view by the
+        // keyboard height while the keyboard is up, so the WebView shrinks and
+        // Chromium scrolls the focused field into view, and it exposes the
+        // safe-area insets to CSS. ELE-1802: this activity used to install its
+        // own OnApplyWindowInsetsListener on android.R.id.content that padded
+        // for the system bars only and returned CONSUMED — it replaced the
+        // Keyboard plugin's listener on the same view and swallowed the IME
+        // inset, so the keyboard opened over the page. Do not add one back.
     }
 }

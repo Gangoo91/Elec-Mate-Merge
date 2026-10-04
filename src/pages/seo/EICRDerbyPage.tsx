@@ -201,7 +201,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Before a new tenancy:</strong> A valid EICR must be provided to new tenants
                 before they take occupation of the property. If no valid EICR exists, one must be
@@ -209,14 +209,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Existing tenants:</strong> A copy of the EICR must be provided to existing
                 tenants within 28 days of the inspection.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Five-year maximum:</strong> The electrical installation must be inspected at
                 intervals of no more than five years, or sooner if the inspector recommends a
@@ -224,7 +224,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Council requests:</strong> Derby City Council can request a copy of the EICR
                 and the landlord must provide it within seven days.
@@ -256,7 +256,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Civil penalties up to £30,000:</strong> Each breach of the regulations
                 attracts a separate civil penalty. Derby City Council can impose these penalties and
@@ -264,7 +264,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Remedial notices:</strong> Where a landlord fails to complete required
                 remedial work, the council can serve a remedial notice. If the notice is not
@@ -273,7 +273,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HMO licensing:</strong> Derby City Council enforces mandatory HMO licensing
                 for larger HMOs. A valid EICR is a mandatory condition of every HMO licence.
@@ -281,7 +281,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Section 21 restriction:</strong> A Derby landlord who has not provided the
                 current EICR to their tenant cannot serve a valid Section 21 notice for possession.
@@ -311,14 +311,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>One-bedroom flat</strong> — £150 to £190. Typical for purpose-built flats or
                 converted properties in Derby city centre.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Two-bedroom property</strong> — £175 to £260. Inter-war and post-war semis
                 in areas such as Allestree, Mickleover, or Chaddesden typically fall here. Older
@@ -326,14 +326,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom house</strong> — £210 to £300. Larger semi-detached or
                 detached properties in Littleover or Mackworth typically fall in this range.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HMO or large property</strong> — £300 to £500+. Student HMOs near the
                 University of Derby with multiple consumer units, fire alarm systems, and extensive
@@ -364,7 +364,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mandatory HMO licensing:</strong> Properties with five or more occupants in
                 two or more households require a mandatory HMO licence from Derby City Council. A
@@ -372,7 +372,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire alarm systems:</strong> HMOs in Derby require interlinked fire
                 detection systems. The fire alarm installation forms part of the fixed electrical
@@ -380,14 +380,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency lighting:</strong> Some larger HMOs in Derby require emergency
                 lighting as a licence condition. This also forms part of the EICR inspection scope.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Unlicensed HMOs:</strong> Operating an unlicensed HMO in Derby is a criminal
                 offence carrying an unlimited fine, a potential banning order, and exposure to Rent
@@ -465,7 +465,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer units without RCD protection:</strong> Rewirable fuse boards and
                 early MCB boards without RCD protection are found throughout Derby's older private
@@ -474,7 +474,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Deteriorated wiring:</strong> Pre-1965 rubber-insulated wiring with perished
                 insulation is found in Derby's Victorian terraces and older semis. Cracked or
@@ -482,7 +482,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Missing main bonding:</strong> Inadequate or absent main protective bonding
                 to gas and water pipes is a common finding in Derby's inter-war and post-war
@@ -490,7 +490,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Overloaded or improperly extended circuits:</strong> In HMOs and converted
                 properties, circuits are sometimes extended by unqualified persons beyond their
@@ -515,7 +515,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use official registers:</strong> Search the NICEIC, NAPIT, or ELECSA
                 registers by postcode to find Derby-based approved contractors. Registration with a
@@ -523,7 +523,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Verify inspection qualifications:</strong> The inspector should hold City
                 and Guilds 2391 (Inspection and Testing) or an equivalent qualification, plus a
@@ -532,7 +532,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Obtain multiple quotes:</strong> Two or three quotes allow you to compare
                 pricing and the inspector's approach. Be cautious of very low prices — a proper EICR
@@ -541,7 +541,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insurance:</strong> Confirm that the electrician carries professional
                 indemnity insurance. This is required for competent person scheme membership and
@@ -568,7 +568,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete EICRs On Site in Derby</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -604,7 +604,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your EICR business in Derby with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate to complete EICRs on site, scan boards with AI, and export instant PDFs."
+          description="Join 2,100+ UK electricians using Elec-Mate to complete EICRs on site, scan boards with AI, and export instant PDFs."
           icon={FileCheck2}
         />
       </>
@@ -630,7 +630,7 @@ export default function EICRDerbyPage() {
       heroTitle={
         <>
           EICR Derby:{' '}
-          <span className="text-yellow-400">Electrical Installation Condition Report</span>
+          <span className="text-elec-yellow">Electrical Installation Condition Report</span>
         </>
       }
       heroSubtitle="Everything Derby landlords and homeowners need to know about EICR — legal requirements under the 2020 Regulations, Derby City Council enforcement, inspection costs, HMO obligations, common findings in Derby's housing stock, and how to find a qualified electrician."
@@ -641,7 +641,7 @@ export default function EICRDerbyPage() {
       faqHeading="Frequently Asked Questions About EICR in Derby"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs On Site — Anywhere in the East Midlands"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -4,6 +4,7 @@ import { Loader2, Check, ChevronLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { draftStorage } from '@/utils/draftStorage';
 import { useQuoteBuilder } from '@/hooks/useQuoteBuilder';
+import { quoteRecipient } from '@/utils/sendQuoteEmail';
 import { useInventoryStorage } from '@/hooks/useInventoryStorage';
 import { ClientDetailsStep } from './steps/ClientDetailsStep';
 import { JobDetailsStep } from './steps/JobDetailsStep';
@@ -409,7 +410,7 @@ export const QuoteWizard = ({
       actions: ['add_labour_item', 'add_material_item', 'remove_last_item'],
       onFillField: handleVoiceFillField,
       onAction: handleVoiceAction,
-      onSubmit: generateQuote,
+      onSubmit: () => generateQuote(),
       onClear: resetQuote,
       onCancel: () => window.history.back(),
     });
@@ -435,6 +436,12 @@ export const QuoteWizard = ({
   }, [initialCostData]);
 
   const canSave = !!quote.client?.name;
+  // ELE-1794 — "Save & send" needs somewhere to send it.
+  const canSend = !!quoteRecipient(quote);
+  // A quote the client already has: saving a correction must not re-email
+  // them by default, so plain Save leads and the send reads "Save & resend".
+  const alreadySent = !!quote.status && quote.status !== 'draft';
+  const [sendPressed, setSendPressed] = useState(false);
   const itemCount = quote.items?.length ?? 0;
 
   /*
@@ -787,10 +794,12 @@ export const QuoteWizard = ({
               )}
               <span>£{gbp2(footerPayable)}</span>
             </span>
-            {!isLastStep && canSave && (
+            {/* Tablet, mid-flow: save a draft without leaving the step. On a
+                desktop the pair below already shows on every step. */}
+            {!isLastStep && !isDesktop && canSave && (
               <button
                 type="button"
-                onClick={generateQuote}
+                onClick={() => generateQuote()}
                 disabled={isGenerating}
                 className="hidden sm:flex h-12 px-5 items-center justify-center rounded-xl bg-white/[0.06] border border-white/[0.10] text-[13px] font-semibold text-white touch-manipulation active:scale-[0.97] transition-all disabled:opacity-50"
               >
@@ -798,22 +807,53 @@ export const QuoteWizard = ({
               </button>
             )}
             {isLastStep || isDesktop ? (
-              <Button
-                onClick={generateQuote}
-                disabled={isGenerating || !canSave}
-                className="flex-1 sm:flex-none sm:px-10 h-12 bg-elec-yellow text-black hover:brightness-110 font-semibold text-[15px] rounded-xl touch-manipulation active:scale-[0.98]"
-              >
-                {isGenerating ? (
-                  <>
-                    <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-                    Saving…
-                  </>
-                ) : canSave ? (
-                  `Save ${DocWord}`
-                ) : (
-                  'Add a client name to save'
+              <>
+                {/* ELE-1794 — with a client email the main action sends as well
+                    as saves; plain Save stays beside it for a draft. These used
+                    to be two buttons that both just saved. */}
+                {canSend && canSave && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      // Already with the client: this is the (re)send.
+                      setSendPressed(alreadySent);
+                      void generateQuote(alreadySent ? { send: true } : undefined);
+                    }}
+                    disabled={isGenerating}
+                    className="h-12 px-5 flex items-center justify-center rounded-xl bg-white/[0.06] border border-white/[0.10] text-[13px] font-semibold text-white touch-manipulation active:scale-[0.97] transition-all disabled:opacity-50 flex-shrink-0"
+                  >
+                    {isGenerating && sendPressed === alreadySent
+                      ? alreadySent
+                        ? 'Sending…'
+                        : 'Saving…'
+                      : alreadySent
+                        ? 'Save & resend'
+                        : 'Save'}
+                  </button>
                 )}
-              </Button>
+                <Button
+                  onClick={() => {
+                    const send = canSend && !alreadySent;
+                    setSendPressed(send);
+                    void generateQuote(send ? { send: true } : undefined);
+                  }}
+                  disabled={isGenerating || !canSave}
+                  className="flex-1 sm:flex-none sm:px-10 h-12 bg-elec-yellow text-black hover:brightness-110 font-semibold text-[15px] rounded-xl touch-manipulation active:scale-[0.98]"
+                >
+                  {isGenerating && sendPressed === (canSend && !alreadySent) ? (
+                    <>
+                      <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+                      {sendPressed ? 'Sending…' : 'Saving…'}
+                    </>
+                  ) : !canSave ? (
+                    'Add a client name to save'
+                  ) : canSend && !alreadySent ? (
+                    'Save & send'
+                  ) : (
+                    `Save ${DocWord}`
+                  )}
+                </Button>
+              </>
             ) : (
               <button
                 type="button"

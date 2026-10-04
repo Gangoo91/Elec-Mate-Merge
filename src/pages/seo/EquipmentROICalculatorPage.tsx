@@ -136,13 +136,13 @@ const sections = [
           smart investment and wasted money.
         </p>
         <p>
-          <strong className="text-yellow-400">The basic ROI formula is:</strong> ROI = (Gain from
+          <strong className="text-elec-yellow">The basic ROI formula is:</strong> ROI = (Gain from
           Investment minus Cost of Investment) divided by Cost of Investment, expressed as a
           percentage. A 100% ROI means you doubled your money. A 500% ROI means you got back five
           times what you spent.
         </p>
         <p>
-          <strong className="text-yellow-400">The payback period</strong> is the complementary
+          <strong className="text-elec-yellow">The payback period</strong> is the complementary
           metric: how long it takes for the investment to pay for itself. A GBP 900 multifunction
           tester that enables GBP 150 per day of testing work has a payback period of 6 days. After
           that, every day of testing work is pure profit contribution. A GBP 1,200{' '}
@@ -176,43 +176,43 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Multifunction Tester ROI Example</h3>
           <ul className="space-y-2 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Purchase cost:</strong> GBP 900 (Megger MFT1741 or equivalent)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Annual calibration:</strong> GBP 80
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>5-year total cost:</strong> GBP 1,300
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Revenue per testing day:</strong> GBP 150-GBP 300
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Testing days per year:</strong> 50-100 (1-2 days per week)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>5-year revenue enabled:</strong> GBP 37,500-GBP 150,000
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>5-year ROI:</strong> 2,785% to 11,438%
               </span>
@@ -241,7 +241,7 @@ const sections = [
           profitability.
         </p>
         <p>
-          <strong className="text-yellow-400">Total cost of ownership (TCO)</strong> is the right
+          <strong className="text-elec-yellow">Total cost of ownership (TCO)</strong> is the right
           metric, not just the purchase price. TCO includes the purchase price (or total
           finance/lease payments), fuel costs, insurance, road tax, servicing and MOT, repairs,
           breakdown cover, and depreciation (the loss of value over time). A GBP 15,000 used van
@@ -284,7 +284,7 @@ const sections = [
           a measurable impact on your productivity and therefore your earnings.
         </p>
         <p>
-          <strong className="text-yellow-400">Time is the key metric.</strong> A cordless SDS drill
+          <strong className="text-elec-yellow">Time is the key metric.</strong> A cordless SDS drill
           that eliminates the need for extension leads, RCDs, and finding a socket on site might
           save 10-15 minutes per use. If you use it 3 times per day, that is 30-45 minutes per day
           saved. At GBP 45 per hour, that is GBP 22 to GBP 34 per day in time savings. A GBP 350
@@ -323,7 +323,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Training Investment Comparison</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>C&G 2391 (Inspection & Testing):</strong> Cost GBP 600-GBP 1,200. Unlocks
                 EICR and EIC certification work. Estimated additional revenue: GBP 10,000-GBP 20,000
@@ -331,7 +331,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>EV Charger Installation (C&G 2919):</strong> Cost GBP 300-GBP 800. Unlocks
                 domestic and commercial EV charger installations. Estimated additional revenue: GBP
@@ -339,7 +339,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Fire Alarm (BS 5839):</strong> Cost GBP 400-GBP 900. Unlocks fire alarm
                 installation, commissioning, and servicing. Estimated additional revenue: GBP
@@ -347,7 +347,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Solar PV (C&G 2399):</strong> Cost GBP 500-GBP 1,200. Unlocks domestic and
                 commercial solar installations. Estimated additional revenue: GBP 10,000-GBP 25,000
@@ -385,35 +385,35 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Calculator Inputs</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Purchase cost:</strong> The price of the equipment, training course, or
                 vehicle. If financing, enter the deposit and monthly payment.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Running costs:</strong> Annual maintenance, calibration, fuel, insurance, or
                 any recurring costs associated with the investment.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Expected lifespan:</strong> How many years you expect the equipment to last
                 before replacement.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Revenue enabled:</strong> The daily, weekly, or annual revenue the
                 investment will generate (or the time/cost it will save).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Usage frequency:</strong> How often you will use the equipment -- daily,
                 weekly, monthly, or a specific number of days per year.
@@ -510,7 +510,7 @@ export default function EquipmentROICalculatorPage() {
       badgeIcon={Calculator}
       heroTitle={
         <>
-          Equipment ROI Calculator <span className="text-yellow-400">for UK Electricians</span>
+          Equipment ROI Calculator <span className="text-elec-yellow">for UK Electricians</span>
         </>
       }
       heroSubtitle="Is that new tester worth it? Should you upgrade your van? Will the 2391 course pay for itself? The Equipment ROI Calculator answers these questions with data, not gut feeling."
@@ -525,7 +525,7 @@ export default function EquipmentROICalculatorPage() {
       faqHeading="Frequently Asked Questions About Equipment ROI"
       relatedPages={relatedPages}
       ctaHeading="Make Smarter Investment Decisions"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for business calculations, job costing, and financial planning. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for business calculations, job costing, and financial planning. 7-day free trial, cancel anytime."
       pagePath="/tools/equipment-roi-calculator"
     />
   );

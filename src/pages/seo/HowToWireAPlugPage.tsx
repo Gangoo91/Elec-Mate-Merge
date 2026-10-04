@@ -167,21 +167,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>A BS 1363 UK 3-pin plug</strong> — the standard UK plug with three
                 rectangular pins. Make sure it carries the BS 1363 kitemark.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>A small flat-blade screwdriver</strong> — for the terminal screws and the
                 plug cover screw.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wire strippers</strong> — to remove insulation from the individual
                 conductors. A sharp knife can be used carefully, but wire strippers are safer and
@@ -189,13 +189,13 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Side cutters</strong> — to trim wires to the correct length.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>The correct fuse</strong> — 3A (red) or 13A (brown), depending on the
                 appliance rating.
@@ -381,14 +381,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Outer sheath:</strong> Strip approximately 50mm from the end of the flex.
                 This exposes enough of the individual wires to reach their terminals.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Individual wire insulation:</strong> Strip approximately 8mm from each
                 conductor. The exact amount depends on the terminal type — enough copper should be
@@ -397,7 +397,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wire lengths:</strong> Each wire should be cut to reach its terminal without
                 excess slack. The earth wire is the longest (it goes to the top pin), the neutral is
@@ -532,7 +532,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <BookOpen className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Client Reference Library</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -588,7 +588,7 @@ export default function HowToWireAPlugPage() {
       badgeIcon={Plug}
       heroTitle={
         <>
-          How to Wire a Plug: <span className="text-yellow-400">Step-by-Step Guide for the UK</span>
+          How to Wire a Plug: <span className="text-elec-yellow">Step-by-Step Guide for the UK</span>
         </>
       }
       heroSubtitle="Brown is live, blue is neutral, green/yellow is earth. Use a 3A fuse for appliances up to 700W and 13A for everything above. This guide walks you through every step of wiring a UK 13A plug safely and correctly."

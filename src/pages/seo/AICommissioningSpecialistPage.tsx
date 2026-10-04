@@ -420,7 +420,7 @@ export default function AICommissioningSpecialistPage() {
       heroTitle={
         <>
           AI Commissioning Specialist:{' '}
-          <span className="text-yellow-400">Systematic Commissioning, Every Time</span>
+          <span className="text-elec-yellow">Systematic Commissioning, Every Time</span>
         </>
       }
       heroSubtitle="Generate tailored commissioning checklists, follow step-by-step functional test guidance, and produce professional commissioning documentation — all aligned with BS 7671:2018+A4:2026 and GN3 test sequences."
@@ -443,7 +443,7 @@ export default function AICommissioningSpecialistPage() {
       faqHeading="Frequently Asked Questions About AI Commissioning"
       relatedPages={relatedPages}
       ctaHeading="Commission Installations with Confidence"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's AI Commissioning Specialist. Tailored checklists, functional test guidance, and professional documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate's AI Commissioning Specialist. Tailored checklists, functional test guidance, and professional documentation. 7-day free trial, cancel anytime."
       toolPath="/tools/ai-commissioning-specialist"
     />
   );

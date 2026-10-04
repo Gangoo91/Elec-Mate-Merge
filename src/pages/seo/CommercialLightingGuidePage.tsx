@@ -181,42 +181,42 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>General offices and open-plan workspaces:</strong> 500 lux on the working
                 plane (720mm above floor level). Uniformity ratio of at least 0.6 in the task area.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Meeting and conference rooms:</strong> 300 to 500 lux, with dimming
                 capability for presentations and video conferencing. Avoid direct glare on screens.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reception and entrance areas:</strong> 200 to 300 lux. Higher accent
                 lighting on feature walls and signage.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Corridors and circulation areas:</strong> 100 to 200 lux. Consistent
                 illumination with no dark spots.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Warehouses and storage:</strong> 200 lux for general warehouse areas, 300
                 lux for picking and packing zones, 500 lux for quality inspection areas.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Retail showrooms:</strong> 300 to 500 lux general, up to 1,000 lux on
                 display areas and feature products. Colour rendering index (CRI) of 80 or above,
@@ -224,7 +224,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Car parks (covered):</strong> 75 lux general, 300 lux at entry and exit
                 ramps, 100 lux at payment machines.
@@ -380,7 +380,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Occupancy sensors:</strong> Passive infrared (PIR) or microwave sensors that
                 detect room occupancy and switch lights on when people are present, off (or dim)
@@ -390,7 +390,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Daylight sensors:</strong> Photocells that measure ambient daylight and dim
                 the electric lighting to maintain the required lux level. In a perimeter office zone
@@ -399,7 +399,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Time scheduling:</strong> Automatic on/off at programmed times. Typically
                 used for out-of-hours shut-off in offices, with override switches for late workers.
@@ -407,7 +407,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Scene control:</strong> Pre-set lighting scenes that can be recalled with a
                 single button press or automatically triggered by time, occupancy, or daylight
@@ -440,7 +440,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Two-wire control bus:</strong> DALI uses a dedicated two-wire control cable
                 (typically 1.5mm2) that runs alongside the mains supply cable to each luminaire. The
@@ -449,7 +449,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Individual addressing:</strong> Each DALI luminaire (or DALI driver) has a
                 unique address on the bus. Up to 64 individual addresses per bus, with the option to
@@ -458,7 +458,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DALI-2:</strong> The latest version of the DALI standard (IEC 62386 Part
                 103) extends the protocol to include input devices (sensors, switches) as well as
@@ -467,7 +467,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BMS integration:</strong> DALI controllers (gateways) can connect to a
                 Building Management System (BMS) via BACnet, Modbus, or KNX, allowing the lighting
@@ -500,7 +500,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical Installation Certificate (EIC):</strong> Required for all new
                 lighting circuits. Must record circuit details, test results, and compliance with BS
@@ -509,7 +509,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency Lighting Certificate:</strong> A separate certificate to{' '}
                 <SEOInternalLink href="/emergency-lighting-certificate">
@@ -520,7 +520,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part L compliance:</strong> For new buildings and major refurbishments, the
                 lighting installation must meet the energy efficiency requirements of Part L. This
@@ -529,7 +529,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR (periodic):</strong> Existing commercial installations require periodic
                 inspection. The recommended interval for commercial premises is typically 5 years
@@ -559,7 +559,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Circuit Design Calculators</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -607,7 +607,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Design, certify, and quote commercial lighting on your phone"
-          description="Cable sizing, voltage drop, EIC and emergency lighting certificates, quoting, and invoicing — all in one app. Join 1,600+ UK electricians using Elec-Mate."
+          description="Cable sizing, voltage drop, EIC and emergency lighting certificates, quoting, and invoicing — all in one app. Join 2,100+ UK electricians using Elec-Mate."
           icon={Lightbulb}
         />
       </>
@@ -633,7 +633,7 @@ export default function CommercialLightingGuidePage() {
       heroTitle={
         <>
           Commercial Lighting Installation:{' '}
-          <span className="text-yellow-400">Design, Controls, and Compliance</span>
+          <span className="text-elec-yellow">Design, Controls, and Compliance</span>
         </>
       }
       heroSubtitle="Commercial lighting is one of the most profitable areas of electrical work. This guide covers CIBSE lux levels, emergency lighting requirements, LED retrofit business cases, DALI digital control systems, and the certification you need to deliver compliant installations."
@@ -644,7 +644,7 @@ export default function CommercialLightingGuidePage() {
       faqHeading="Frequently Asked Questions About Commercial Lighting Installation"
       relatedPages={relatedPages}
       ctaHeading="Quote, Design, and Certify Commercial Lighting on Your Phone"
-      ctaSubheading="Cable sizing, voltage drop, EIC and emergency lighting certificates, professional quoting — all in one app. Join 1,600+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
+      ctaSubheading="Cable sizing, voltage drop, EIC and emergency lighting certificates, professional quoting — all in one app. Join 2,100+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
     />
   );
 }

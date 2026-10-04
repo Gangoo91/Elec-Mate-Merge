@@ -340,7 +340,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Outdoor sockets and lights</strong> — rain can enter through damaged
                 gaskets, cracked enclosures, or poorly sealed cable entries. This is the number one
@@ -348,7 +348,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Junction boxes in loft spaces</strong> — condensation forms on cold surfaces
                 in lofts, particularly during temperature changes. Water droplets on terminal blocks
@@ -356,7 +356,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bathroom and kitchen fittings</strong> — steam and condensation can enter
                 light fittings, extractor fan terminals, and downlight housings. Recessed downlights
@@ -364,7 +364,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Underground cables</strong> — SWA cables supplying garden buildings or
                 outhouses can be damaged by garden work or have corroded glands allowing water
@@ -442,7 +442,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CircuitBoard className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rewirable fuses (no MCBs)</strong> — if your consumer unit still uses
                 rewirable fuses with fuse wire, it provides no RCD protection at all. A fault that
@@ -452,7 +452,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CircuitBoard className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Single RCD covering all circuits</strong> — a single RCD means one earth
                 fault on any circuit trips the entire house. This is the cause of "the whole house
@@ -461,7 +461,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CircuitBoard className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Plastic consumer unit</strong> — since January 2016 (Amendment 4 to BS
                 7671), consumer units in domestic premises must be enclosed in a non-combustible
@@ -474,7 +474,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CircuitBoard className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Worn or faulty MCBs</strong> — MCBs can degrade over time, particularly if
                 they have tripped many times. A worn MCB may trip at a lower current than its
@@ -530,7 +530,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Routine</strong> — you have identified a faulty appliance causing the
                 tripping (remove the appliance from use), or the tripping only occurs during wet
@@ -562,7 +562,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Search className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">1. Identify Which Device Is Tripping</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -576,7 +576,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Cable className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   2. Isolate and Test Circuit by Circuit
@@ -593,7 +593,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">3. Check Common Culprits</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -609,7 +609,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">4. Document and Certify</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -655,7 +655,7 @@ export default function TripSwitchKeepsGoingOffPage() {
       badgeIcon={Zap}
       heroTitle={
         <>
-          Trip Switch Keeps Going Off: <span className="text-yellow-400">Why and How to Fix</span>
+          Trip Switch Keeps Going Off: <span className="text-elec-yellow">Why and How to Fix</span>
         </>
       }
       heroSubtitle="Your trip switch keeps tripping and you want to know why. This guide explains the difference between MCB and RCD tripping, covers every common cause, shows you how to find a faulty appliance, and tells you when to call an electrician."
@@ -666,7 +666,7 @@ export default function TripSwitchKeepsGoingOffPage() {
       faqHeading="Frequently Asked Questions About Trip Switches"
       relatedPages={relatedPages}
       ctaHeading="Diagnose Tripping Faults and Certify Repairs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI fault diagnosis, test result recording, and professional certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for AI fault diagnosis, test result recording, and professional certificates. 7-day free trial, cancel anytime."
     />
   );
 }

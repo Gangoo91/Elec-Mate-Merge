@@ -452,7 +452,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EIC and EICR Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -500,7 +500,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Bolton electricians"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -527,7 +527,7 @@ export default function ElectricianBoltonPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Bolton: <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Bolton: <span className="text-elec-yellow">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Bolton's large stock of Victorian terraced housing and growing rental sector creates strong demand for rewires, EICRs, consumer unit upgrades, and EV charger installations. Find NICEIC and NAPIT registered electricians in Bolton."
@@ -538,7 +538,7 @@ export default function ElectricianBoltonPage() {
       faqHeading="Frequently Asked Questions About Electricians in Bolton"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Bolton Electricians"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the realities of Bolton's housing stock and the North West market. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the realities of Bolton's housing stock and the North West market. 7-day free trial."
     />
   );
 }

@@ -362,7 +362,7 @@ const sections = [
         </p>
         <div className="space-y-3 my-6">
           <div className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <Wrench className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
+            <Wrench className="w-5 h-5 text-elec-yellow shrink-0 mt-0.5" />
             <div>
               <h3 className="font-bold text-white text-base mb-1">VDE Insulated Screwdrivers</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -373,7 +373,7 @@ const sections = [
             </div>
           </div>
           <div className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <Wrench className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
+            <Wrench className="w-5 h-5 text-elec-yellow shrink-0 mt-0.5" />
             <div>
               <h3 className="font-bold text-white text-base mb-1">Side Cutters (160mm minimum)</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -384,7 +384,7 @@ const sections = [
             </div>
           </div>
           <div className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <Wrench className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
+            <Wrench className="w-5 h-5 text-elec-yellow shrink-0 mt-0.5" />
             <div>
               <h3 className="font-bold text-white text-base mb-1">Long-Nose Pliers</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -395,7 +395,7 @@ const sections = [
             </div>
           </div>
           <div className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <Wrench className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
+            <Wrench className="w-5 h-5 text-elec-yellow shrink-0 mt-0.5" />
             <div>
               <h3 className="font-bold text-white text-base mb-1">Cable Strippers</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -407,7 +407,7 @@ const sections = [
             </div>
           </div>
           <div className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <Wrench className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
+            <Wrench className="w-5 h-5 text-elec-yellow shrink-0 mt-0.5" />
             <div>
               <h3 className="font-bold text-white text-base mb-1">Tape Measure and Spirit Level</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -418,7 +418,7 @@ const sections = [
             </div>
           </div>
           <div className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <Wrench className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
+            <Wrench className="w-5 h-5 text-elec-yellow shrink-0 mt-0.5" />
             <div>
               <h3 className="font-bold text-white text-base mb-1">Knife and Tool Pouch</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -672,7 +672,7 @@ export default function Year1ApprenticeGuidePage() {
       badgeIcon={Calendar}
       heroTitle={
         <>
-          Year 1 Electrical Apprentice — <span className="text-yellow-400">What to Expect</span>
+          Year 1 Electrical Apprentice — <span className="text-elec-yellow">What to Expect</span>
         </>
       }
       heroSubtitle="Starting an electrical apprenticeship is one of the best career decisions you can make. But the first year can feel overwhelming — new environment, new skills, new expectations. This guide covers everything you need to know about year 1: what your days look like, what you learn, what your employer expects, and how to make the most of it."

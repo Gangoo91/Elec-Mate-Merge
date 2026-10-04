@@ -186,13 +186,13 @@ export default function EPAPreparationPage() {
       <section className="py-16 sm:py-24 px-5">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-6">
-            <GraduationCap className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium text-yellow-400">ST0215 EPA Preparation</span>
+            <GraduationCap className="w-4 h-4 text-elec-yellow" />
+            <span className="text-sm font-medium text-elec-yellow">ST0215 EPA Preparation</span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
             End Point Assessment
             <br />
-            <span className="text-yellow-400">Simulator</span>
+            <span className="text-elec-yellow">Simulator</span>
           </h1>
           <p className="text-lg text-white max-w-2xl mx-auto leading-relaxed mb-8">
             AI-graded simulators for all three EPA components: practical assessment, knowledge test,
@@ -208,7 +208,7 @@ export default function EPAPreparationPage() {
             </a>
             <a
               href="#what-is-epa"
-              className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-yellow-500/40 text-white font-semibold rounded-xl touch-manipulation transition-colors"
+              className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-white/[0.1] text-white font-semibold rounded-xl touch-manipulation transition-colors"
             >
               What Is the EPA?
             </a>
@@ -282,7 +282,7 @@ export default function EPAPreparationPage() {
             {/* Component 1: Practical */}
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6">
               <div className="flex items-start gap-4 mb-4">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                   1
                 </div>
                 <div>
@@ -316,7 +316,7 @@ export default function EPAPreparationPage() {
             {/* Component 2: Knowledge Test */}
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6">
               <div className="flex items-start gap-4 mb-4">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                   2
                 </div>
                 <div>
@@ -352,7 +352,7 @@ export default function EPAPreparationPage() {
             {/* Component 3: Professional Discussion */}
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6">
               <div className="flex items-start gap-4 mb-4">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                   3
                 </div>
                 <div>
@@ -490,7 +490,7 @@ export default function EPAPreparationPage() {
                 key={item.step}
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                   {item.step}
                 </div>
                 <div>
@@ -522,17 +522,17 @@ export default function EPAPreparationPage() {
         <div className="max-w-4xl mx-auto">
           <div className="grid sm:grid-cols-3 gap-6 text-center">
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <Award className="w-8 h-8 text-yellow-400 mx-auto mb-3" />
+              <Award className="w-8 h-8 text-elec-yellow mx-auto mb-3" />
               <p className="text-2xl font-bold text-white mb-1">3 Components</p>
               <p className="text-sm text-white">All Simulated with AI</p>
             </div>
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <Target className="w-8 h-8 text-yellow-400 mx-auto mb-3" />
+              <Target className="w-8 h-8 text-elec-yellow mx-auto mb-3" />
               <p className="text-2xl font-bold text-white mb-1">ST0215</p>
               <p className="text-sm text-white">Standard Aligned</p>
             </div>
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <Zap className="w-8 h-8 text-yellow-400 mx-auto mb-3" />
+              <Zap className="w-8 h-8 text-elec-yellow mx-auto mb-3" />
               <p className="text-2xl font-bold text-white mb-1">36+</p>
               <p className="text-sm text-white">Training Courses</p>
             </div>
@@ -566,7 +566,7 @@ export default function EPAPreparationPage() {
               >
                 <summary className="flex items-center justify-between p-4 min-h-[44px] touch-manipulation cursor-pointer text-white font-medium">
                   <span>{faq.question}</span>
-                  <ChevronDown className="w-5 h-5 text-yellow-400 group-open:rotate-180 transition-transform shrink-0 ml-4" />
+                  <ChevronDown className="w-5 h-5 text-elec-yellow group-open:rotate-180 transition-transform shrink-0 ml-4" />
                 </summary>
                 <div className="px-4 pb-4 text-white text-sm leading-relaxed">{faq.answer}</div>
               </details>
@@ -593,7 +593,7 @@ export default function EPAPreparationPage() {
 
       <SEOCTASection
         heading="Ace your End Point Assessment"
-        subheading="Join 1,600+ UK electricians and apprentices preparing for assessments and qualifications. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians and apprentices preparing for assessments and qualifications. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

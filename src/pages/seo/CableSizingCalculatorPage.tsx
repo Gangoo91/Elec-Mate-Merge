@@ -215,12 +215,12 @@ export default function CableSizingCalculatorPage() {
       <section className="py-16 sm:py-24 px-5">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-6">
-            <span className="text-sm font-medium text-yellow-400">
+            <span className="text-sm font-medium text-elec-yellow">
               BS 7671:2018+A4:2026 Compliant
             </span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
-            <span className="text-yellow-400">Cable Sizing Calculator</span> to BS 7671
+            <span className="text-elec-yellow">Cable Sizing Calculator</span> to BS 7671
           </h1>
           <p className="text-lg text-white max-w-2xl mx-auto leading-relaxed mb-8">
             Size cables correctly to the 18th Edition IET Wiring Regulations. Automatic correction
@@ -236,7 +236,7 @@ export default function CableSizingCalculatorPage() {
             </a>
             <a
               href="#how-it-works"
-              className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-yellow-500/40 text-white font-semibold rounded-xl touch-manipulation transition-colors"
+              className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-white/[0.1] text-white font-semibold rounded-xl touch-manipulation transition-colors"
             >
               See How It Works
             </a>
@@ -317,7 +317,7 @@ export default function CableSizingCalculatorPage() {
 
           <div className="space-y-4">
             <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                 1
               </div>
               <div>
@@ -332,7 +332,7 @@ export default function CableSizingCalculatorPage() {
             </div>
 
             <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                 2
               </div>
               <div>
@@ -350,7 +350,7 @@ export default function CableSizingCalculatorPage() {
             </div>
 
             <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                 3
               </div>
               <div>
@@ -367,7 +367,7 @@ export default function CableSizingCalculatorPage() {
             </div>
 
             <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                 4
               </div>
               <div>
@@ -385,7 +385,7 @@ export default function CableSizingCalculatorPage() {
             </div>
 
             <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                 5
               </div>
               <div>
@@ -581,7 +581,7 @@ export default function CableSizingCalculatorPage() {
                 key={step.name}
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                   {index + 1}
                 </div>
                 <div>
@@ -662,7 +662,7 @@ export default function CableSizingCalculatorPage() {
               >
                 <summary className="flex items-center justify-between cursor-pointer p-5 text-white font-semibold text-left touch-manipulation min-h-[44px]">
                   <span>{faq.question}</span>
-                  <span className="ml-4 shrink-0 text-yellow-400 text-xl group-open:rotate-45 transition-transform">
+                  <span className="ml-4 shrink-0 text-elec-yellow text-xl group-open:rotate-45 transition-transform">
                     +
                   </span>
                 </summary>
@@ -683,7 +683,7 @@ export default function CableSizingCalculatorPage() {
 
       <SEOCTASection
         heading="Stop flipping through cable sizing tables"
-        subheading="Join 1,600+ UK electricians using Elec-Mate to size cables in seconds. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians using Elec-Mate to size cables in seconds. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

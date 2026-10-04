@@ -220,7 +220,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong className="block mb-1">
                   Purchase-intent local keywords (highest priority)
@@ -234,7 +234,7 @@ const sections = [
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong className="block mb-1">Informational keywords (secondary priority)</strong>
                 <span>
@@ -246,7 +246,7 @@ const sections = [
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong className="block mb-1">Avoid</strong>
                 <span>
@@ -281,7 +281,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Page title (H1)</strong> — include your primary keyword and location.
                 Example: "EICR Certificate in Birmingham | NICEIC Registered Electrician". This is
@@ -289,7 +289,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Meta title and description</strong> — the meta title appears in Google
                 results as your blue link text. Include your keyword, location, and a differentiator
@@ -298,7 +298,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Content length and quality</strong> — each service page should have at least
                 300–500 words explaining the service, what it involves, why it matters, what the
@@ -307,7 +307,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Internal linking</strong> — link between your service pages and location
                 pages. This helps Google understand the structure of your site and distributes
@@ -316,7 +316,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Schema markup</strong> — add LocalBusiness schema to your homepage. This
                 structured data tells Google your business name, address, phone, opening hours, and
@@ -454,7 +454,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Link2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Link2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Trade platform listings</strong> — Checkatrade, MyBuilder, Rated People, and
                 TrustATrader all link to your website. These are high-authority links and are the
@@ -463,7 +463,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Link2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Link2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Scheme directories</strong> — your NICEIC, NAPIT, or ELECSA profile links to
                 your website. These are trusted industry sites with significant authority. Make sure
@@ -471,7 +471,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Link2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Link2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Local business partnerships</strong> — builders, plumbers, kitchen fitters,
                 and estate agents you work with may be willing to link to your website from their
@@ -480,7 +480,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Link2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Link2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Local press and business groups</strong> — sponsoring a local sports club or
                 charity event often earns a link from their website. Joining your local chamber of
@@ -510,7 +510,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Weeks 1–4</strong> — complete your Google Business Profile, correct citation
                 inconsistencies, and request your first 10 reviews. You may see your profile begin
@@ -518,7 +518,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Months 2–3</strong> — with 20+ reviews and a fully optimised profile, you
                 should appear in the map pack for your core local area in most non-metropolitan
@@ -526,7 +526,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Months 3–6</strong> — organic website rankings improve as your content
                 matures and backlinks build. You should begin ranking on page one for your key
@@ -534,7 +534,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>6–12 months (competitive areas)</strong> — inner London, Birmingham,
                 Manchester, and other major cities have established competitors with years of SEO
@@ -565,7 +565,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <MessageSquare className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <MessageSquare className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Professional Quotes That Win Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -597,7 +597,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your electrical business professionally from day one"
-          description="Join 1,600+ UK electricians using Elec-Mate for quoting, invoicing, job management, and certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for quoting, invoicing, job management, and certification."
           icon={Search}
         />
       </>
@@ -622,7 +622,7 @@ export default function SEOForElectriciansPage() {
       badgeIcon={Search}
       heroTitle={
         <>
-          SEO for Electricians UK: <span className="text-yellow-400">How to Rank on Google</span>
+          SEO for Electricians UK: <span className="text-elec-yellow">How to Rank on Google</span>
         </>
       }
       heroSubtitle="A practical guide to SEO for UK electricians — from Google Business Profile optimisation (the single most important thing) to local citations, on-page SEO, review generation, link building, and realistic timelines."

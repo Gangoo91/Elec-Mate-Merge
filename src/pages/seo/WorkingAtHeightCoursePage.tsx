@@ -264,7 +264,7 @@ const sections = [
             </div>
           </div>
           <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
               3
             </div>
             <div>
@@ -514,7 +514,7 @@ export default function WorkingAtHeightCoursePage() {
       heroTitle={
         <>
           Working at Height Course:{' '}
-          <span className="text-yellow-400">Electrical Safety Training</span>
+          <span className="text-elec-yellow">Electrical Safety Training</span>
         </>
       }
       heroSubtitle="Essential working at height training for UK electricians. The Work at Height Regulations 2005, hierarchy of controls, ladder safety, mobile tower scaffolding, fall arrest systems, and emergency procedures. 6 modules with video content, interactive quizzes, and AI-powered study tools."
@@ -532,7 +532,7 @@ export default function WorkingAtHeightCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Protect yourself when working at height"
-      ctaSubheading="Join 1,600+ UK electricians studying smarter with Elec-Mate. 6 focused modules, interactive quizzes, video demonstrations, and CPD certificate. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians studying smarter with Elec-Mate. 6 focused modules, interactive quizzes, video demonstrations, and CPD certificate. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/working-at-height"
     />

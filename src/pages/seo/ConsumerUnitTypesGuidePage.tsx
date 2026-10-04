@@ -140,7 +140,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main switch</strong> — isolates the entire installation by disconnecting all
                 live and neutral conductors simultaneously. Rated in amps (typically 63A or 80A for
@@ -150,7 +150,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCDs (Residual Current Devices)</strong> — in split-load consumer units, one
                 or more RCDs protect groups of circuits. The RCD monitors the difference between the
@@ -159,7 +159,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCBs (Miniature Circuit Breakers)</strong> — one per circuit, providing
                 overcurrent protection against overloads and short circuits. Rated in amps (typical
@@ -168,7 +168,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCBOs</strong> — in an RCBO board, each MCB is replaced with an RCBO that
                 combines overcurrent and residual current protection. No separate RCDs are required.
@@ -176,7 +176,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Busbar</strong> — a copper conductor bar that distributes the supply from
                 the main switch to all the protective devices. Each MCB or RCBO clips onto the
@@ -258,7 +258,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>How it works</strong> — circuits are divided between two RCD sections. If a
                 fault occurs on any circuit in section 1, the section 1 RCD trips, disconnecting all
@@ -268,7 +268,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit allocation</strong> — the allocation of circuits between the two RCD
                 sections should be planned to ensure that critical circuits (fridge, freezer, alarm,
@@ -277,7 +277,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cost advantage</strong> — split-load boards are cheaper than RCBO boards
                 because they use standard MCBs rather than RCBOs. The materials cost saving is
@@ -305,7 +305,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Typical layout</strong> — Section 1 (main switch and no RCD): circuits that
                 require continuous power and are not legally required to have 30mA RCD protection
@@ -316,7 +316,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>When to specify a high-integrity board</strong> — for clients who prioritise
                 resilience, work from home, or who have medical equipment that must remain live. A
@@ -344,7 +344,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Key advantage</strong> — a fault on any single circuit trips only that
                 circuit's RCBO. Every other circuit remains unaffected. No "half-dark house" effect.
@@ -353,7 +353,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Higher initial cost</strong> — RCBOs cost more than MCBs. A 10-way RCBO
                 board will typically cost £80 to £150 more in materials than an equivalent
@@ -363,7 +363,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Specifying the correct RCBO type</strong> — Type A RCBOs for most domestic
                 circuits; Type F for heat pump, EV charger supply, and inverter loads; Type B for
@@ -392,7 +392,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rewirable fuse carriers present</strong> — old-style fuse boards with fuse
                 wire are a strong indicator that the installation has not been significantly
@@ -401,7 +401,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rubber-insulated wiring throughout the property</strong> — if the property
                 wiring is rubber-insulated (indicating installation pre-1970s), the consumer unit is
@@ -410,7 +410,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No RCD protection on socket or outdoor circuits</strong> — if none of the
                 socket outlet circuits or outdoor circuits have RCD protection, the installation
@@ -419,7 +419,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wooden consumer unit or backboard</strong> — wooden boards were used in
                 older properties and represent a fire risk. They are consistently rated C2 or C1 on
@@ -427,7 +427,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR Unsatisfactory outcome</strong> — where an EICR returns an
                 Unsatisfactory result primarily because of the condition of the consumer unit,
@@ -460,7 +460,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Split-load board (8 to 12 ways, domestic)</strong> — £300 to £500 fitted.
                 Includes metal-clad board, MCBs, two RCDs, main switch, EIC, and Part P compliance
@@ -468,7 +468,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCBO board (8 to 12 ways, domestic)</strong> — £450 to £700 fitted. Higher
                 materials cost than split-load due to RCBOs replacing MCBs. Includes all RCBOs,
@@ -476,14 +476,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>High-integrity board (10 to 16 ways)</strong> — £500 to £900 fitted.
                 Includes three sections, additional MCBs and RCDs, EIC, and Part P compliance.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional works</strong> — main bonding conductor replacement (gas and
                 water) adds £50 to £150. Earth electrode testing on TT systems adds £50 to £100.
@@ -523,7 +523,7 @@ export default function ConsumerUnitTypesGuidePage() {
       heroTitle={
         <>
           Consumer Unit Types Guide{' '}
-          <span className="text-yellow-400">— Split-Load, RCBO, and High-Integrity</span>
+          <span className="text-elec-yellow">— Split-Load, RCBO, and High-Integrity</span>
         </>
       }
               noindex={true}

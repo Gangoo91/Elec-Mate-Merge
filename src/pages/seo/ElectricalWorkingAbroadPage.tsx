@@ -133,37 +133,37 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-4">Recognition at a Glance</h3>
           <div className="space-y-3">
-            <div className="grid grid-cols-3 gap-2 px-1 pb-1 border-b border-white/10 text-xs font-semibold uppercase tracking-wide text-white/50">
+            <div className="grid grid-cols-3 gap-2 px-1 pb-1 border-b border-white/10 text-xs font-semibold uppercase tracking-wide text-white">
               <span>Country</span>
               <span>Assessing body</span>
               <span>Local standard</span>
             </div>
             <div className="grid grid-cols-3 gap-2 p-3 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-sm">
               <span className="text-white font-medium">Australia</span>
-              <span className="text-white/80">
+              <span className="text-white">
                 Trades Recognition Australia (TRA), then state licensing
               </span>
-              <span className="text-yellow-400">AS/NZS 3000</span>
+              <span className="text-elec-yellow">AS/NZS 3000</span>
             </div>
             <div className="grid grid-cols-3 gap-2 p-3 rounded-xl bg-white/[0.04] border border-white/10 text-sm">
               <span className="text-white font-medium">New Zealand</span>
-              <span className="text-white/80">Electrical Workers Registration Board (EWRB)</span>
-              <span className="text-yellow-400">AS/NZS 3000</span>
+              <span className="text-white">Electrical Workers Registration Board (EWRB)</span>
+              <span className="text-elec-yellow">AS/NZS 3000</span>
             </div>
             <div className="grid grid-cols-3 gap-2 p-3 rounded-xl bg-white/[0.04] border border-white/10 text-sm">
               <span className="text-white font-medium">Canada</span>
-              <span className="text-white/80">Provincial bodies + Red Seal endorsement</span>
-              <span className="text-yellow-400">Canadian Electrical Code (CEC)</span>
+              <span className="text-white">Provincial bodies + Red Seal endorsement</span>
+              <span className="text-elec-yellow">Canadian Electrical Code (CEC)</span>
             </div>
             <div className="grid grid-cols-3 gap-2 p-3 rounded-xl bg-white/[0.04] border border-white/10 text-sm">
               <span className="text-white font-medium">Gulf states</span>
-              <span className="text-white/80">
+              <span className="text-white">
                 Employer verification (often no formal assessment)
               </span>
-              <span className="text-yellow-400">Local municipality rules (e.g. DEWA)</span>
+              <span className="text-elec-yellow">Local municipality rules (e.g. DEWA)</span>
             </div>
           </div>
-          <p className="text-xs text-white/50 mt-4">
+          <p className="text-xs text-white mt-4">
             Indicative guidance only — confirm current requirements with the relevant licensing
             authority before you apply.
           </p>
@@ -171,7 +171,7 @@ const sections = [
         <div className="space-y-4 mt-6">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-center gap-2 mb-3">
-              <MapPin className="w-5 h-5 text-yellow-400" />
+              <MapPin className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Australia</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -193,7 +193,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <MapPin className="w-5 h-5 text-yellow-400" />
+              <MapPin className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">New Zealand</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -207,7 +207,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <MapPin className="w-5 h-5 text-yellow-400" />
+              <MapPin className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Canada</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -222,7 +222,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <MapPin className="w-5 h-5 text-yellow-400" />
+              <MapPin className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">
                 Middle East (UAE, Qatar, Saudi Arabia)
               </h3>
@@ -325,9 +325,9 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Key Visa Types by Country</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Australia</strong> — Skills in Demand visa
+                <strong className="text-elec-yellow">Australia</strong> — Skills in Demand visa
                 (subclass 482, which replaced the Temporary Skill Shortage visa in December 2024),
                 Skilled Independent visa (subclass 189), Skilled Nominated visa (subclass 190).
                 Electrician is on the Core Skills Occupation List (CSOL) used by the 482, and on the
@@ -336,18 +336,18 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Canada</strong> — Temporary Foreign Worker
+                <strong className="text-elec-yellow">Canada</strong> — Temporary Foreign Worker
                 Program (employer-sponsored), Express Entry (Federal Skilled Trades Program).
                 Electricians are listed under NOC 72200. Provincial Nominee Programs (PNPs) also
                 target trades in specific provinces.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">New Zealand</strong> — Accredited Employer Work
+                <strong className="text-elec-yellow">New Zealand</strong> — Accredited Employer Work
                 Visa (employer must be accredited), Skilled Migrant Category Resident Visa
                 (points-based for permanent residency). Electrician is a Tier 2 Green List role,
                 which is a work-to-residence pathway: you must work in the role in New Zealand for
@@ -356,18 +356,18 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Middle East</strong> — Employer-sponsored work
+                <strong className="text-elec-yellow">Middle East</strong> — Employer-sponsored work
                 visas in all Gulf states. The employer handles the visa process and typically covers
                 the costs. Visas are tied to the employer, so changing jobs usually requires a new
                 visa.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">EU/EEA (post-Brexit)</strong> — Each EU country
+                <strong className="text-elec-yellow">EU/EEA (post-Brexit)</strong> — Each EU country
                 has its own work permit system. No automatic right to work. Employer sponsorship is
                 typically required. The process is significantly more complex than before Brexit,
                 particularly for self-employed or short-term contract work.
@@ -403,31 +403,31 @@ const sections = [
           <div className="space-y-3">
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
               <span className="text-white font-medium">UK (employed)</span>
-              <span className="text-yellow-400 font-bold">GBP 35,000 - 50,000</span>
+              <span className="text-elec-yellow font-bold">GBP 35,000 - 50,000</span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
               <span className="text-white font-medium">UK (self-employed)</span>
-              <span className="text-yellow-400 font-bold">GBP 45,000 - 70,000</span>
+              <span className="text-elec-yellow font-bold">GBP 45,000 - 70,000</span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
               <span className="text-white font-medium">Australia (city)</span>
-              <span className="text-yellow-400 font-bold">GBP 47,000 - 68,000</span>
+              <span className="text-elec-yellow font-bold">GBP 47,000 - 68,000</span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
               <span className="text-white font-medium">Australia (mining/FIFO)</span>
-              <span className="text-yellow-400 font-bold">GBP 68,000 - 110,000</span>
+              <span className="text-elec-yellow font-bold">GBP 68,000 - 110,000</span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
               <span className="text-white font-medium">Canada</span>
-              <span className="text-yellow-400 font-bold">GBP 41,000 - 59,000</span>
+              <span className="text-elec-yellow font-bold">GBP 41,000 - 59,000</span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
               <span className="text-white font-medium">New Zealand</span>
-              <span className="text-yellow-400 font-bold">GBP 35,000 - 50,000</span>
+              <span className="text-elec-yellow font-bold">GBP 35,000 - 50,000</span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
               <span className="text-white font-medium">UAE/Qatar (tax-free)</span>
-              <span className="text-yellow-400 font-bold">GBP 30,000 - 60,000</span>
+              <span className="text-elec-yellow font-bold">GBP 30,000 - 60,000</span>
             </div>
           </div>
         </div>
@@ -463,27 +463,27 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Pre-Departure Checklist</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Gather all qualification certificates</strong> —
+                <strong className="text-elec-yellow">Gather all qualification certificates</strong> —
                 Originals and certified copies of Level 3 NVQ, City & Guilds 2365/2357, 2391, BS
                 7671, AM2, ECS card, and any additional qualifications. Overseas assessors require
                 formal documentation, not just a card.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Compile work experience evidence</strong> —
+                <strong className="text-elec-yellow">Compile work experience evidence</strong> —
                 Employer references on headed paper detailing the type of work, duration, and level
                 of responsibility. Overseas licensing bodies weight experience heavily alongside
                 formal qualifications.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">
+                <strong className="text-elec-yellow">
                   Research the destination country thoroughly
                 </strong>{' '}
                 — Wiring standards, licensing requirements, cost of living, tax rules, healthcare
@@ -492,18 +492,18 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Maintain UK registrations</strong> — Keep your
+                <strong className="text-elec-yellow">Maintain UK registrations</strong> — Keep your
                 ECS card, competent person scheme membership, and{' '}
                 <SEOInternalLink href="/guides/cpd-for-electricians">CPD records</SEOInternalLink>{' '}
                 active while abroad. Letting them lapse makes re-entry to the UK market much harder.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Financial planning</strong> — Tax implications
+                <strong className="text-elec-yellow">Financial planning</strong> — Tax implications
                 in both countries, pension transfer options, currency exchange strategy, and
                 emergency funds for the first few months before regular income starts.
               </span>
@@ -532,7 +532,7 @@ const sections = [
         <div className="space-y-4 mt-6">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <BookOpen className="w-5 h-5 text-yellow-400" />
+              <BookOpen className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Different Standards and Practices</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -546,7 +546,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <Building className="w-5 h-5 text-yellow-400" />
+              <Building className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Work Culture Differences</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -560,7 +560,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <DollarSign className="w-5 h-5 text-yellow-400" />
+              <DollarSign className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Cost of Living Surprises</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -685,7 +685,7 @@ export default function ElectricalWorkingAbroadPage() {
       heroTitle={
         <>
           Working Abroad as a UK Electrician:{' '}
-          <span className="text-yellow-400">The Complete Guide</span>
+          <span className="text-elec-yellow">The Complete Guide</span>
         </>
       }
       heroSubtitle="Everything you need to know about taking your UK electrical qualifications overseas. Qualification recognition, visa pathways, earnings comparison, popular destinations, and how to prepare for a successful move abroad."
@@ -696,7 +696,7 @@ export default function ElectricalWorkingAbroadPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Build your overseas qualification portfolio with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for digital certificate management, CPD tracking, and professional documentation. Build the portfolio overseas licensing bodies want to see. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for digital certificate management, CPD tracking, and professional documentation. Build the portfolio overseas licensing bodies want to see. 7-day free trial, cancel anytime."
     />
   );
 }

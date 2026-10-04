@@ -182,21 +182,21 @@ const sections = [
                 <th className={`${tdCn} font-semibold`} scope="row">
                   Line
                 </th>
-                <td className={`${tdCn} font-semibold text-yellow-400`}>Brown</td>
+                <td className={`${tdCn} font-semibold text-elec-yellow`}>Brown</td>
                 <td className={tdCn}>Red</td>
               </tr>
               <tr>
                 <th className={`${tdCn} font-semibold`} scope="row">
                   Neutral
                 </th>
-                <td className={`${tdCn} font-semibold text-yellow-400`}>Blue</td>
+                <td className={`${tdCn} font-semibold text-elec-yellow`}>Blue</td>
                 <td className={tdCn}>Black</td>
               </tr>
               <tr>
                 <th className={`${tdCn} font-semibold`} scope="row">
                   Protective (CPC / earth)
                 </th>
-                <td className={`${tdCn} font-semibold text-yellow-400`}>Green-and-yellow</td>
+                <td className={`${tdCn} font-semibold text-elec-yellow`}>Green-and-yellow</td>
                 <td className={tdCn}>Green, or bare copper</td>
               </tr>
               <tr>
@@ -208,35 +208,35 @@ const sections = [
                 <th className={`${tdCn} font-semibold`} scope="row">
                   Line 1 (L1)
                 </th>
-                <td className={`${tdCn} font-semibold text-yellow-400`}>Brown</td>
+                <td className={`${tdCn} font-semibold text-elec-yellow`}>Brown</td>
                 <td className={tdCn}>Red</td>
               </tr>
               <tr>
                 <th className={`${tdCn} font-semibold`} scope="row">
                   Line 2 (L2)
                 </th>
-                <td className={`${tdCn} font-semibold text-yellow-400`}>Black</td>
+                <td className={`${tdCn} font-semibold text-elec-yellow`}>Black</td>
                 <td className={tdCn}>Yellow</td>
               </tr>
               <tr>
                 <th className={`${tdCn} font-semibold`} scope="row">
                   Line 3 (L3)
                 </th>
-                <td className={`${tdCn} font-semibold text-yellow-400`}>Grey</td>
+                <td className={`${tdCn} font-semibold text-elec-yellow`}>Grey</td>
                 <td className={tdCn}>Blue</td>
               </tr>
               <tr>
                 <th className={`${tdCn} font-semibold`} scope="row">
                   Neutral
                 </th>
-                <td className={`${tdCn} font-semibold text-yellow-400`}>Blue</td>
+                <td className={`${tdCn} font-semibold text-elec-yellow`}>Blue</td>
                 <td className={tdCn}>Black</td>
               </tr>
               <tr>
                 <th className={`${tdCn} font-semibold`} scope="row">
                   Protective (CPC / earth)
                 </th>
-                <td className={`${tdCn} font-semibold text-yellow-400`}>Green-and-yellow</td>
+                <td className={`${tdCn} font-semibold text-elec-yellow`}>Green-and-yellow</td>
                 <td className={tdCn}>Green, or bare copper</td>
               </tr>
             </tbody>
@@ -684,7 +684,7 @@ export default function CableColourCodesPage() {
         <>
           Cable Colour Codes UK
           <br />
-          <span className="text-yellow-400">Complete Reference for Electricians</span>
+          <span className="text-elec-yellow">Complete Reference for Electricians</span>
         </>
       }
       heroSubtitle="Every UK cable colour code in one reference — current harmonised colours, old UK colours, three-phase identification, flex colours, and BS 7671 requirements. Includes EICR observation guidance for common identification defects."
@@ -699,7 +699,7 @@ export default function CableColourCodesPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Identify Cable Colours with AI Board Scanner"
-      ctaSubheading="Elec-Mate's board scanner identifies cable colours from consumer unit photographs, flags missing sleeving, and auto-populates circuit data. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's board scanner identifies cable colours from consumer unit photographs, flags missing sleeving, and auto-populates circuit data. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

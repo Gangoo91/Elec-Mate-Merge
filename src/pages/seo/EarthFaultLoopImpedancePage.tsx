@@ -234,7 +234,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>TN-S (separate earth):</strong> the IET On-Site Guide gives 0.8 ohms as the
                 typical maximum Ze quoted by distributors; measured values are usually lower. The
@@ -243,7 +243,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>TN-C-S (PME):</strong> the typical maximum Ze quoted by distributors is 0.35
                 ohms — lower than TN-S, not higher — and measured values are usually well below it.
@@ -252,7 +252,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>TT (earth electrode):</strong> Ze can be very high — typically 20 ohms or
                 more — because the earth return path is through the general mass of earth via an
@@ -284,7 +284,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Cable className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">How R1+R2 Is Measured</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -346,7 +346,7 @@ const sections = [
           <h4 className="font-bold text-white mb-4">Temperature Correction Factors</h4>
           <ul className="space-y-3 text-white text-sm">
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PVC (thermoplastic) cables:</strong> Multiply measured R1+R2 by{' '}
                 <strong>1.20</strong> to correct from 20°C to the 70°C operating temperature. This
@@ -354,7 +354,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>XLPE (thermosetting) cables:</strong> Multiply measured R1+R2 by{' '}
                 <strong>1.28</strong> to correct from 20°C to a 90°C operating temperature. Note
@@ -480,7 +480,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-4">
-            <AlertTriangle className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-1">
                 BS 88 and BS 3036 fuses: lower Zs limits (Table 41.2)
@@ -695,7 +695,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Gauge className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Automatic Zs Verification</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -782,7 +782,7 @@ export default function EarthFaultLoopImpedancePage() {
       heroTitle={
         <>
           Earth Fault Loop Impedance:{' '}
-          <span className="text-yellow-400">The Zs Calculation Explained</span>
+          <span className="text-elec-yellow">The Zs Calculation Explained</span>
         </>
       }
       heroSubtitle="Zs determines whether the protective device will disconnect fast enough to prevent electric shock. If it is too high, the circuit is unsafe. This guide walks through the formula, Ze, R1+R2, temperature correction, the maximum Zs tables from BS 7671, and worked examples for real circuits."
@@ -798,7 +798,7 @@ export default function EarthFaultLoopImpedancePage() {
       faqHeading="Frequently Asked Questions About Earth Fault Loop Impedance"
       relatedPages={relatedPages}
       ctaHeading="Zs Calculator on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's 70+ calculators including Zs with automatic BS 7671 table lookup, cable sizing, voltage drop, PFC, and more. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate's 70+ calculators including Zs with automatic BS 7671 table lookup, cable sizing, voltage drop, PFC, and more. 7-day free trial, cancel anytime."
     />
   );
 }

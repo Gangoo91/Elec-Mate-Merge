@@ -153,6 +153,19 @@ export function useExamAttempt<Q>({
     setResumed(true);
   }, [examId, userId]);
 
+  // A submitted (or reset) attempt is over: forget it. Every paper passes
+  // `active = started && !submitted`, so live → not live is exactly that
+  // moment. Without this the save outlived the submit, and coming back to the
+  // paper within the hour dropped the learner straight back into the paper
+  // they had just finished — answers and all — and resubmitting it recorded
+  // the same sitting twice. Leaving the page mid-paper unmounts the hook
+  // instead, so the save is kept and the resume still works.
+  const wasActiveRef = useRef(active);
+  useEffect(() => {
+    if (wasActiveRef.current && !active) storageRemoveSync(examAttemptKey(examId));
+    wasActiveRef.current = active;
+  }, [active, examId]);
+
   // Persist while the attempt is live. Not throttled: the writes are small and
   // only fire when an answer, the position or a flag changes — and losing the
   // last answer before a crash is precisely what this exists to prevent.

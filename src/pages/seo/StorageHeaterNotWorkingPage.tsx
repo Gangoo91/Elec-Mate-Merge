@@ -153,7 +153,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Thermal bricks</strong> — dense clay or ceramic bricks that can store a
                 large amount of heat energy. They are heated overnight and slowly release that heat
@@ -161,7 +161,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Heating elements</strong> — resistive elements embedded in or between the
                 thermal bricks. Typically rated at 1.7kW to 3.4kW depending on the heater size.
@@ -169,7 +169,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Input control</strong> — determines how much heat is stored. A higher
                 setting allows more current to the elements during the off-peak period, storing more
@@ -177,7 +177,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Output control</strong> — a damper flap or, on modern units, a fan that
                 controls how quickly the stored heat is released into the room. A lower output makes
@@ -198,20 +198,20 @@ const sections = [
             <div className="bg-white/[0.06] p-3 font-bold text-white">Typical element load</div>
             <div className="bg-white/[0.06] p-3 font-bold text-white">Approx. current at 230 V</div>
 
-            <div className="bg-white/[0.02] p-3 text-white/90">Small (single room)</div>
-            <div className="bg-white/[0.02] p-3 text-white/90">1.7 kW</div>
-            <div className="bg-white/[0.02] p-3 text-white/90">~7.4 A</div>
+            <div className="bg-white/[0.02] p-3 text-white">Small (single room)</div>
+            <div className="bg-white/[0.02] p-3 text-white">1.7 kW</div>
+            <div className="bg-white/[0.02] p-3 text-white">~7.4 A</div>
 
-            <div className="bg-white/[0.02] p-3 text-white/90">Medium</div>
-            <div className="bg-white/[0.02] p-3 text-white/90">2.55 kW</div>
-            <div className="bg-white/[0.02] p-3 text-white/90">~11 A</div>
+            <div className="bg-white/[0.02] p-3 text-white">Medium</div>
+            <div className="bg-white/[0.02] p-3 text-white">2.55 kW</div>
+            <div className="bg-white/[0.02] p-3 text-white">~11 A</div>
 
-            <div className="bg-white/[0.02] p-3 text-white/90">Large</div>
-            <div className="bg-white/[0.02] p-3 text-white/90">3.4 kW</div>
-            <div className="bg-white/[0.02] p-3 text-white/90">~14.8 A</div>
+            <div className="bg-white/[0.02] p-3 text-white">Large</div>
+            <div className="bg-white/[0.02] p-3 text-white">3.4 kW</div>
+            <div className="bg-white/[0.02] p-3 text-white">~14.8 A</div>
           </div>
         </div>
-        <p className="text-sm text-white/70">
+        <p className="text-sm text-white">
           Several heaters are usually grouped on one off-peak distribution board, so the diversity
           and total connected load — not a single heater — determine the supply cable and main
           off-peak protective device.
@@ -288,20 +288,20 @@ const sections = [
             <div className="bg-white/[0.06] p-3 font-bold text-white">Input (charge) — set the night before</div>
             <div className="bg-white/[0.06] p-3 font-bold text-white">Output (release) — adjust through the day</div>
 
-            <div className="bg-blue-900/30 p-3 text-white/90">Cold / frosty</div>
-            <div className="bg-blue-900/30 p-3 text-white/90">4 to 5 (or max)</div>
-            <div className="bg-blue-900/30 p-3 text-white/90">Low in the morning, open up from midday</div>
+            <div className="bg-blue-900/30 p-3 text-white">Cold / frosty</div>
+            <div className="bg-blue-900/30 p-3 text-white">4 to 5 (or max)</div>
+            <div className="bg-blue-900/30 p-3 text-white">Low in the morning, open up from midday</div>
 
-            <div className="bg-white/[0.02] p-3 text-white/90">Mild</div>
-            <div className="bg-white/[0.02] p-3 text-white/90">2 to 3</div>
-            <div className="bg-white/[0.02] p-3 text-white/90">Low, open only when in the room</div>
+            <div className="bg-white/[0.02] p-3 text-white">Mild</div>
+            <div className="bg-white/[0.02] p-3 text-white">2 to 3</div>
+            <div className="bg-white/[0.02] p-3 text-white">Low, open only when in the room</div>
 
-            <div className="bg-white/[0.02] p-3 text-white/90">Warm / unoccupied</div>
-            <div className="bg-white/[0.02] p-3 text-white/90">0 to 1</div>
-            <div className="bg-white/[0.02] p-3 text-white/90">Closed</div>
+            <div className="bg-white/[0.02] p-3 text-white">Warm / unoccupied</div>
+            <div className="bg-white/[0.02] p-3 text-white">0 to 1</div>
+            <div className="bg-white/[0.02] p-3 text-white">Closed</div>
           </div>
         </div>
-        <p className="text-sm text-white/70">
+        <p className="text-sm text-white">
           Dial numbers vary by make and model — these are general guides, not precise temperatures.
           The golden rule: the input only affects the <em>next</em> overnight charge, so turning it
           up in the morning does nothing for that day.
@@ -309,7 +309,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Settings className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Input (charge) control</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -323,7 +323,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Thermometer className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Output (release) control</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -337,7 +337,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Zap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Boost (some models)</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -368,16 +368,16 @@ const sections = [
             <div className="bg-white/[0.06] p-3 font-bold text-white">Off-peak hours</div>
             <div className="bg-white/[0.06] p-3 font-bold text-white">How it suits storage heaters</div>
 
-            <div className="bg-white/[0.02] p-3 text-white/90">Economy 7</div>
-            <div className="bg-white/[0.02] p-3 text-white/90">7 hours overnight (often around midnight–7am)</div>
-            <div className="bg-white/[0.02] p-3 text-white/90">Single overnight charge — the classic storage heater tariff</div>
+            <div className="bg-white/[0.02] p-3 text-white">Economy 7</div>
+            <div className="bg-white/[0.02] p-3 text-white">7 hours overnight (often around midnight–7am)</div>
+            <div className="bg-white/[0.02] p-3 text-white">Single overnight charge — the classic storage heater tariff</div>
 
-            <div className="bg-white/[0.02] p-3 text-white/90">Economy 10</div>
-            <div className="bg-white/[0.02] p-3 text-white/90">10 hours split across night, afternoon and evening</div>
-            <div className="bg-white/[0.02] p-3 text-white/90">Allows an afternoon top-up charge as well as overnight</div>
+            <div className="bg-white/[0.02] p-3 text-white">Economy 10</div>
+            <div className="bg-white/[0.02] p-3 text-white">10 hours split across night, afternoon and evening</div>
+            <div className="bg-white/[0.02] p-3 text-white">Allows an afternoon top-up charge as well as overnight</div>
           </div>
         </div>
-        <p className="text-sm text-white/70">
+        <p className="text-sm text-white">
           Off-peak rates are typically cheaper than the standard daytime rate, but the peak-rate
           units on these tariffs are usually dearer than a single-rate tariff — they only pay off if
           most of your usage is genuinely off-peak. Check your latest tariff for the exact times and
@@ -387,7 +387,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Timer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Timer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Time switch</strong> — a clock-operated switch in or near the consumer unit
                 that connects the off-peak circuit during the programmed hours. If the clock is
@@ -395,7 +395,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Timer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Timer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Radio teleswitch</strong> — receives a signal from the energy supplier
                 (broadcast via BBC Radio 4 long wave) to switch the off-peak circuit on and off.
@@ -404,7 +404,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Timer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Timer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smart meter</strong> — modern smart meters can control off-peak switching
                 directly. If you have a smart meter and your off-peak supply is not working, contact
@@ -434,20 +434,20 @@ const sections = [
             <div className="bg-white/[0.06] p-3 font-bold text-white">Symptom</div>
             <div className="bg-white/[0.06] p-3 font-bold text-white">Most likely cause / first check</div>
 
-            <div className="bg-white/[0.02] p-3 text-white/90">One heater cold, others fine</div>
-            <div className="bg-white/[0.02] p-3 text-white/90">That heater's input dial, then element/thermostat — call an electrician to test</div>
+            <div className="bg-white/[0.02] p-3 text-white">One heater cold, others fine</div>
+            <div className="bg-white/[0.02] p-3 text-white">That heater's input dial, then element/thermostat — call an electrician to test</div>
 
-            <div className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3 text-white/90">All heaters cold, rest of the home has power</div>
-            <div className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3 text-white/90">Off-peak supply: off-peak MCB, time switch or teleswitch</div>
+            <div className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3 text-white">All heaters cold, rest of the home has power</div>
+            <div className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3 text-white">Off-peak supply: off-peak MCB, time switch or teleswitch</div>
 
-            <div className="bg-white/[0.02] p-3 text-white/90">Warm by morning, cold by afternoon</div>
-            <div className="bg-white/[0.02] p-3 text-white/90">Input set too low, or output opened too far too early</div>
+            <div className="bg-white/[0.02] p-3 text-white">Warm by morning, cold by afternoon</div>
+            <div className="bg-white/[0.02] p-3 text-white">Input set too low, or output opened too far too early</div>
 
-            <div className="bg-white/[0.02] p-3 text-white/90">Never warm despite high input setting</div>
-            <div className="bg-white/[0.02] p-3 text-white/90">Charge thermostat or element failure, or no off-peak charge reaching the heater</div>
+            <div className="bg-white/[0.02] p-3 text-white">Never warm despite high input setting</div>
+            <div className="bg-white/[0.02] p-3 text-white">Charge thermostat or element failure, or no off-peak charge reaching the heater</div>
 
-            <div className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3 text-white/90">Off-peak MCB trips when reset</div>
-            <div className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3 text-white/90">Circuit fault — stop and call an electrician</div>
+            <div className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3 text-white">Off-peak MCB trips when reset</div>
+            <div className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3 text-white">Circuit fault — stop and call an electrician</div>
           </div>
         </div>
         <div className="space-y-3 my-4">
@@ -525,7 +525,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New storage heater installation</strong> — storage heaters must be hardwired
                 to the off-peak circuit. This is electrical installation work requiring a qualified
@@ -549,7 +549,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Search className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">1. Off-Peak Supply Diagnosis</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -563,7 +563,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">2. Element Testing</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -577,7 +577,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">3. Replacement and Documentation</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -601,7 +601,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ShieldCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   4. Regulatory Requirements — Overheating and Building Regulations
@@ -622,7 +622,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Zap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">5. A4:2026 — AFDDs and Scope</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -668,7 +668,7 @@ export default function StorageHeaterNotWorkingPage() {
       badgeIcon={Thermometer}
       heroTitle={
         <>
-          Storage Heater Not Working: <span className="text-yellow-400">Causes and Fixes</span>
+          Storage Heater Not Working: <span className="text-elec-yellow">Causes and Fixes</span>
         </>
       }
       heroSubtitle="Cold storage heaters? This guide explains how they work, what the input and output controls do, why your off-peak supply might have failed, and when you need an electrician."
@@ -684,7 +684,7 @@ export default function StorageHeaterNotWorkingPage() {
       faqHeading="Frequently Asked Questions About Storage Heater Problems"
       relatedPages={relatedPages}
       ctaHeading="Diagnose and Document Heating Circuit Faults on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI fault diagnosis, test recording, and professional certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for AI fault diagnosis, test recording, and professional certificates. 7-day free trial, cancel anytime."
     />
   );
 }

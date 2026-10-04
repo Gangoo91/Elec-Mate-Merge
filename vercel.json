@@ -991,6 +991,17 @@
       "destination": "https://jtwygbeceundfgnkirof.supabase.co/functions/v1/calendar-oauth-callback"
     },
     {
+      "source": "/r/:code",
+      "has": [
+        {
+          "type": "header",
+          "key": "user-agent",
+          "value": ".*(WhatsApp|facebookexternalhit|Twitterbot|Slackbot|LinkedInBot|TelegramBot|Discordbot|Googlebot).*"
+        }
+      ],
+      "destination": "/api/og/referral?code=:code"
+    },
+    {
       "source": "/verify/:number",
       "has": [
         {

@@ -182,7 +182,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Employers liability insurance</strong> — minimum £5 million cover, required
                 by law from day one. Fine: up to £2,500 per day without it. The certificate must be
@@ -190,7 +190,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PAYE registration</strong> — register as an employer with HMRC before your
                 employee starts. Deduct income tax and National Insurance from their wages and
@@ -198,7 +198,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pension auto-enrolment</strong> — set up a qualifying workplace pension
                 scheme and enrol eligible employees. Minimum employer contribution: 3% of qualifying
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Employment contract</strong> — issue a written statement of employment
                 particulars on or before the first day of employment. This must include pay, hours,
@@ -214,7 +214,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Right to work check</strong> — verify that every employee has the legal
                 right to work in the UK before they start. Keep a copy of the relevant documents
@@ -222,7 +222,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Health and safety</strong> — provide a safe working environment, appropriate
                 PPE, and relevant training. If you have 5 or more employees, you must have a written
@@ -231,7 +231,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Holiday and statutory rights</strong> — employees are entitled to a minimum
                 of 5.6 weeks (28 days for full-time) paid annual leave, statutory sick pay (SSP),
@@ -256,7 +256,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1: Register with HMRC</strong> — register as an employer online at
                 gov.uk. You can register up to 4 weeks before your first employee starts. HMRC will
@@ -264,7 +264,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2: Choose payroll software</strong> — HMRC Basic PAYE Tools (free, for
                 up to 9 employees) or commercial software (Xero Payroll, QuickBooks, FreeAgent,
@@ -273,7 +273,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 3: Collect employee information</strong> — full name, address, date of
                 birth, National Insurance number, P45 (or starter checklist if no P45), and bank
@@ -281,7 +281,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 4: Run payroll each period</strong> — calculate gross pay, deduct
                 income tax (using the employee's tax code), deduct employee NI, deduct pension
@@ -290,7 +290,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 5: Pay HMRC</strong> — pay the total tax, employee NI, and employer NI
                 deductions to HMRC by the 22nd of the following month (19th if paying by cheque).
@@ -320,7 +320,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Who must be enrolled</strong> — eligible jobholders: aged between 22 and
                 State Pension age, earning more than £10,000 per year, and working in the UK. They
@@ -328,7 +328,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minimum contributions</strong> — employer minimum: 3% of qualifying earnings
                 (earnings between £6,240 and £50,270 for 2026/27). Employee minimum: 5%. Total
@@ -337,7 +337,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Choosing a pension provider</strong> — NEST (National Employment Savings
                 Trust) is the government-backed scheme and must accept any employer. Other options
@@ -346,7 +346,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Employee opt-out</strong> — employees can choose to opt out within one month
                 of enrolment. If they opt out, you must refund their contributions. However, you
@@ -431,7 +431,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Required on day one:</strong> employer and employee name, job title and
                 description, start date, pay rate and frequency, hours of work, holiday entitlement,
@@ -440,14 +440,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Required within 2 months:</strong> pension scheme details, collective
                 agreements, training requirements, disciplinary and grievance procedures.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional clauses to consider:</strong> van use policy, tool ownership (who
                 owns tools purchased by the business), social media policy, confidentiality,
@@ -538,7 +538,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Small business exemption</strong> — if your business has fewer than 50
                 employees, annual turnover under £10.2 million, and a balance sheet under £5.1
@@ -548,7 +548,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Medium/large business rules</strong> — if your business exceeds the small
                 business thresholds, you must assess the IR35 status of every contractor, provide a
@@ -557,7 +557,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Practical advice</strong> — most small electrical businesses do not need to
                 worry about IR35 in practice. If you are hiring a one-person limited company
@@ -610,7 +610,7 @@ const sections = [
                 <li>
                   Holiday cover (28 days at cost): <strong>£3,770</strong>
                 </li>
-                <li className="font-bold text-yellow-400 border-t border-white/20 pt-2">
+                <li className="font-bold text-elec-yellow border-t border-white/20 pt-2">
                   Total: approximately £48,600/year
                 </li>
               </ul>
@@ -645,7 +645,7 @@ const sections = [
                 <li>
                   CIS admin: <strong>£200</strong>
                 </li>
-                <li className="font-bold text-yellow-400 border-t border-white/20 pt-2">
+                <li className="font-bold text-elec-yellow border-t border-white/20 pt-2">
                   Total: approximately £44,200/year
                 </li>
               </ul>
@@ -677,7 +677,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <PoundSterling className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Consistent Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -753,7 +753,7 @@ export default function HiringFirstEmployeePage() {
       heroTitle={
         <>
           Hiring Your First Employee as an Electrician:{' '}
-          <span className="text-yellow-400">Everything You Need to Know</span>
+          <span className="text-elec-yellow">Everything You Need to Know</span>
         </>
       }
       heroSubtitle="Ready to grow? Hiring your first employee transforms your business — but it comes with PAYE, pensions, insurance, contracts, and costs that catch many electricians off guard. This guide covers every step, from legal obligations to the true cost of employment."
@@ -764,7 +764,7 @@ export default function HiringFirstEmployeePage() {
       faqHeading="Frequently Asked Questions About Hiring Employees"
       relatedPages={relatedPages}
       ctaHeading="Grow Your Team with Professional Tools"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Consistent quality across your team. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for quoting, certification, and job management. Consistent quality across your team. 7-day free trial, cancel anytime."
     />
   );
 }

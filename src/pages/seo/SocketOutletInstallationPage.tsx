@@ -138,7 +138,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ring final circuit</strong> — 2.5mm² twin and earth cable, 32A MCB or RCBO.
                 The circuit starts at the consumer unit, loops around the floor serving multiple
@@ -149,7 +149,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Radial circuit (up to 20A)</strong> — 2.5mm² twin and earth cable, 20A MCB.
                 A single cable run from the consumer unit to the final socket outlet. Maximum floor
@@ -158,7 +158,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Radial circuit (up to 32A)</strong> — 4mm² twin and earth cable, 32A MCB.
                 Maximum floor area 75m². Used for larger areas where a ring circuit would be
@@ -294,7 +294,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Open-plan properties</strong> — large open-plan living areas or properties
                 exceeding 100m² per floor may require two or more ring circuits per floor.
@@ -303,7 +303,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Kitchen circuits</strong> — the kitchen is typically served by its own ring
                 or radial circuit due to the high load of kitchen appliances. This is in addition to
@@ -330,7 +330,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>USB-A vs USB-C</strong> — USB-A ports (the rectangular type) have been the
                 standard in socket accessories for a decade. USB-C socket outlets are now widely
@@ -339,7 +339,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Charging current rating</strong> — USB ports in socket accessories are rated
                 in amps (typically 2.4A to 5A per port) or watts. A higher charging current allows
@@ -348,7 +348,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Heat output</strong> — USB charging circuits generate heat within the socket
                 accessory. Ensure the accessory is installed in a suitable backbox with adequate
@@ -357,7 +357,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Compatibility with surge protection</strong> — properties with SPDs (Surge
                 Protective Devices) installed at the consumer unit do not require additional surge
@@ -385,7 +385,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minimum IP44 for outdoor sockets</strong> — a minimum ingress protection
                 rating of IP44 (protected against solid objects greater than 1mm and protected
@@ -395,7 +395,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP55 or IP65 where water jets may be present</strong> — in garden areas
                 where hosepipes or pressure washers may be used near the socket, an IP55 (protected
@@ -404,7 +404,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>30mA RCD protection required — BS 7671 Regulation 411.3.3</strong> — all
                 socket outlet circuits rated up to 32A that may supply portable equipment for use
@@ -427,7 +427,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Underground cable for outbuilding sockets</strong> — where a socket outlet
                 is to be installed in a garden, shed, or garage served by a cable buried
@@ -455,7 +455,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Always notifiable</strong> — installing a new circuit anywhere in a
                 dwelling. Carrying out any electrical work in a kitchen, bathroom, or other special
@@ -464,7 +464,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Generally not notifiable</strong> — adding a socket outlet on an existing
                 ring final circuit in a bedroom, hallway, or living room (not a kitchen or special
@@ -472,7 +472,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person schemes</strong> — registered electricians working through
                 NICEIC, NAPIT, Elecsa, or other approved schemes can self-certify notifiable work.
@@ -504,7 +504,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Single socket outlet addition (spur, surface mount)</strong> — £80 to £150
                 including labour, materials, and Minor Works Certificate. Surface mounting avoids
@@ -512,7 +512,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Single socket outlet addition (spur, flush mount)</strong> — £120 to £220
                 including labour, materials, chasing, making good, and Minor Works Certificate.
@@ -520,7 +520,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Outdoor socket outlet (weatherproof, RCD protected)</strong> — £150 to £350
                 depending on cable run length, whether a new circuit is required, and the IP rating
@@ -528,7 +528,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New ring final circuit (e.g. for a new room)</strong> — £300 to £700
                 depending on the length of the ring, number of socket outlets, and whether the
@@ -560,7 +560,7 @@ export default function SocketOutletInstallationPage() {
       heroTitle={
         <>
           Socket Outlet Installation{' '}
-          <span className="text-yellow-400">— Ring Main, Spurs, and Outdoor</span>
+          <span className="text-elec-yellow">— Ring Main, Spurs, and Outdoor</span>
         </>
       }
       heroSubtitle="Adding socket outlets is one of the most common domestic electrical jobs. Ring main vs radial, the one-socket-per-spur rule, outdoor IP ratings, USB sockets, Part P notification — this guide covers everything electricians and homeowners need to know."

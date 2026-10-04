@@ -186,7 +186,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP65 (minimum recommended)</strong> — dust-tight and protected against water
                 jets from any direction. Suitable for most UK outdoor locations including patios,
@@ -195,7 +195,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP66 (recommended for exposed locations)</strong> — dust-tight and protected
                 against powerful water jets. Suitable for locations exposed to driving rain, coastal
@@ -203,7 +203,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP44 (minimum for sheltered locations)</strong> — protected against solid
                 objects greater than 1mm and splashing water. This is the absolute minimum for an
@@ -296,7 +296,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>500mm minimum depth</strong> — in a garden, flower bed, or open ground. The
                 cable must be laid on a 50mm bed of fine sand, covered with sand, and a cable
@@ -304,14 +304,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>600mm minimum depth</strong> — under a driveway, patio, path, or any area
                 subject to vehicle traffic or frequent foot traffic with heavy loads.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SWA cable</strong> — Steel Wire Armoured cable can be buried directly
                 without a duct. The armour provides mechanical protection and also serves as the
@@ -320,7 +320,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable in duct</strong> — standard PVC twin-and-earth cable can be used
                 underground if it is installed inside a protective duct (typically orange HDPE or
@@ -356,7 +356,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Section 702 — Swimming pools and fountains</strong> — if the outdoor socket
                 is near a swimming pool, hot tub, or garden fountain, Section 702 imposes zone
@@ -367,7 +367,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Section 705 — Agricultural and horticultural premises</strong> — if the
                 outdoor installation is on a farm or agricultural premises, Section 705 applies.
@@ -377,7 +377,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Section 708 — Caravan parks</strong> — outdoor sockets at caravan parks and
                 camping sites must comply with Section 708, which specifies the socket type (BS EN
@@ -386,7 +386,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Section 722 — Electric vehicle charging</strong> — if the outdoor socket
                 will be used for EV charging (even temporarily), Section 722 and the IET Code of
@@ -420,7 +420,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Socket enclosures</strong> — choose enclosures with spring-loaded lids that
                 close automatically when the socket is not in use. Screw-fixed lids that must be
@@ -428,7 +428,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable entries</strong> — use IP-rated cable glands or compression fittings.
                 Knock-out entries sealed with rubber grommets are acceptable if correctly sized.
@@ -436,7 +436,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mounting</strong> — mount the socket at a convenient height (typically 400mm
                 to 1200mm above ground level) to avoid standing water and reduce the risk of damage
@@ -445,7 +445,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Isolator switches</strong> — if the outdoor socket is remote from the
                 consumer unit, install a local isolator switch (IP65 rated) adjacent to the socket.
@@ -477,7 +477,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Through the wall</strong> — the simplest method for a socket on the external
                 wall directly behind an internal socket or near the consumer unit. Drill through the
@@ -486,7 +486,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Surface-mounted on external wall</strong> — run the cable in UV-resistant
                 PVC conduit (minimum IP55) along the external wall surface. Use saddle clips at
@@ -495,7 +495,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Underground SWA cable</strong> — for remote socket positions (garden walls,
                 sheds, pergolas), run SWA cable underground at the correct burial depth. Terminate
@@ -503,7 +503,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Spur from existing circuit</strong> — for a single outdoor socket close to
                 the house, a fused spur from an existing ring circuit may be appropriate. Use a
@@ -536,23 +536,23 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Continuity of protective conductors (including SWA armour if applicable)</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Insulation resistance (500V DC, minimum 1 megohm)</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Polarity at the outdoor socket</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Earth fault loop impedance (Zs)</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 RCD operation — 30mA trip test (must trip at or below 30mA) and trip time at 5 times
                 rated current (150mA, must trip within 40ms)
@@ -601,7 +601,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -645,7 +645,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify outdoor socket installations"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Quick jobs, professional results."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Quick jobs, professional results."
           icon={Sun}
         />
       </>
@@ -671,7 +671,7 @@ export default function OutdoorSocketsGuidePage() {
       heroTitle={
         <>
           Outdoor Sockets Regulations:{' '}
-          <span className="text-yellow-400">IP Rating and RCD Protection Guide</span>
+          <span className="text-elec-yellow">IP Rating and RCD Protection Guide</span>
         </>
       }
       heroSubtitle="Outdoor sockets need the right IP rating, 30mA RCD protection, and correctly buried cables. This guide covers the BS 7671 requirements for outdoor socket installations in UK domestic properties — from IP65 enclosures to cable burial depth and Part 7 special locations."
@@ -682,7 +682,7 @@ export default function OutdoorSocketsGuidePage() {
       faqHeading="Frequently Asked Questions About Outdoor Sockets"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Outdoor Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC and Minor Works certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC and Minor Works certificates. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -26,9 +26,9 @@ export default function LocationsIndexPage() {
       <section className="py-14 px-5">
         <div className="max-w-6xl mx-auto">
           <h1 className="text-3xl sm:text-4xl font-bold text-white">
-            Electrical guides by <span className="text-yellow-400">city</span>
+            Electrical guides by <span className="text-elec-yellow">city</span>
           </h1>
-          <p className="mt-4 text-white/75 leading-relaxed max-w-3xl">
+          <p className="mt-4 text-white leading-relaxed max-w-3xl">
             Costs and rules for electrical work vary around the UK — labour rates, DNO areas, and
             local demand all move the numbers. These pages cover the most-searched electrical jobs
             city by city. For the national picture, start with the{' '}
@@ -38,13 +38,13 @@ export default function LocationsIndexPage() {
           {LOCAL_PAGES_INDEX.map((series) => (
             <div key={series.heading} className="mt-10">
               <h2 className="text-xl sm:text-2xl font-bold text-white">{series.heading}</h2>
-              <p className="mt-1 text-[14px] text-white/60">{series.description}</p>
+              <p className="mt-1 text-[14px] text-white">{series.description}</p>
               <ul className="mt-4 columns-2 md:columns-3 lg:columns-4 gap-x-6">
                 {series.pages.map((page) => (
                   <li key={page.path} className="break-inside-avoid">
                     <Link
                       to={page.path}
-                      className="block py-1 text-[13px] leading-snug text-white/70 hover:text-yellow-300 transition-colors touch-manipulation"
+                      className="block py-1 text-[13px] leading-snug text-white hover:text-elec-yellow transition-colors touch-manipulation"
                     >
                       {page.city}
                     </Link>

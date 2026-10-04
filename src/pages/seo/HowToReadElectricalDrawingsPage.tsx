@@ -243,7 +243,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Single-Line (One-Line) Diagrams</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -256,7 +256,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CircuitBoard className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Wiring Diagrams</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -269,7 +269,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <PenTool className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PenTool className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Schematic (Circuit) Diagrams</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -327,7 +327,7 @@ const sections = [
               className="rounded-2xl bg-white/[0.04] border border-white/10 p-5"
             >
               <div className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <div>
                   <h4 className="font-bold text-white mb-1">{part.title}</h4>
                   <p className="text-white text-sm leading-relaxed">{part.description}</p>
@@ -410,7 +410,7 @@ const sections = [
               className="rounded-2xl bg-white/[0.04] border border-white/10 p-5"
             >
               <div className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <div>
                   <h4 className="font-bold text-white mb-1">{item.title}</h4>
                   <p className="text-white text-sm leading-relaxed">{item.description}</p>
@@ -471,7 +471,7 @@ const sections = [
               <thead>
                 <tr className="border-b border-white/10">
                   <th className="p-4 text-sm font-semibold text-white">Component</th>
-                  <th className="p-4 text-sm font-semibold text-yellow-400">Symbol Description</th>
+                  <th className="p-4 text-sm font-semibold text-elec-yellow">Symbol Description</th>
                 </tr>
               </thead>
               <tbody>
@@ -578,7 +578,7 @@ const sections = [
               key={row.column}
               className="rounded-2xl bg-white/[0.04] border border-white/10 p-5"
             >
-              <h4 className="font-bold text-yellow-400 mb-1 text-sm">{row.column}</h4>
+              <h4 className="font-bold text-elec-yellow mb-1 text-sm">{row.column}</h4>
               <p className="text-white text-sm leading-relaxed">{row.meaning}</p>
             </div>
           ))}
@@ -646,7 +646,7 @@ const sections = [
           ].map((tip) => (
             <div key={tip.title} className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
               <div className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <div>
                   <h4 className="font-bold text-white mb-1">{tip.title}</h4>
                   <p className="text-white text-sm leading-relaxed">{tip.description}</p>
@@ -682,7 +682,7 @@ export default function HowToReadElectricalDrawingsPage() {
       badgeIcon={FileText}
       heroTitle={
         <>
-          How to Read <span className="text-yellow-400">Electrical Drawings</span>
+          How to Read <span className="text-elec-yellow">Electrical Drawings</span>
         </>
       }
       heroSubtitle="Electrical drawings are the language of the trade. This guide covers the three main types of electrical drawing, the IEC 60617 symbol standard, and a quick reference of the most common symbols you will encounter in UK domestic and commercial work."

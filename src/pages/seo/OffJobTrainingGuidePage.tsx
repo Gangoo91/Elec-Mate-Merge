@@ -175,19 +175,19 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>30-hour week:</strong> 20% = 6 hours per week of off-the-job training
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>37.5-hour week:</strong> 20% = 7.5 hours per week of off-the-job training
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>40-hour week:</strong> 20% = 8 hours per week of off-the-job training
               </span>
@@ -351,32 +351,32 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Date and time</strong> — when the activity took place
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Duration</strong> — how many hours the activity lasted
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Description</strong> — what you did and what you learned
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Link to the standard</strong> — which apprenticeship standard criteria the
                 activity relates to
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Supporting evidence</strong> — certificates, screenshots, photographs, or
                 notes where available
@@ -448,7 +448,7 @@ const sections = [
             </div>
           </div>
           <div className="flex items-start gap-3 p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-            <GraduationCap className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
+            <GraduationCap className="w-5 h-5 text-elec-yellow shrink-0 mt-0.5" />
             <div>
               <h3 className="font-bold text-white text-base mb-1">
                 Evening: 45 Minutes on EPA Simulator
@@ -545,7 +545,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Clock className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Automatic Time Logging</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -627,7 +627,7 @@ export default function OffJobTrainingGuidePage() {
       heroTitle={
         <>
           Off-the-Job Training Hours:{' '}
-          <span className="text-yellow-400">Your Complete Apprentice Guide</span>
+          <span className="text-elec-yellow">Your Complete Apprentice Guide</span>
         </>
       }
       heroSubtitle="Every electrical apprentice must spend at least 20% of their paid working hours on off-the-job training. This guide explains what that means, what activities count, how to record evidence, your employer's obligations, and how Elec-Mate's OJT Tracker makes the whole thing effortless."

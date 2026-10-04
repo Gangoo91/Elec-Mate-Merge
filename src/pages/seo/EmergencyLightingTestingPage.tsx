@@ -245,7 +245,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test duration</strong> — the test must run for the full rated duration of
                 the fittings: 1 hour, 2 hours, or 3 hours. Installations with mixed duration ratings
@@ -254,7 +254,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Building must be unoccupied</strong> — the normal lighting must be switched
                 off to simulate true emergency conditions. This makes the emergency lighting the
@@ -264,7 +264,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>All luminaires must remain illuminated</strong> — any luminaire that fails
                 or extinguishes before the end of the rated duration fails the test. Walk the full
@@ -273,7 +273,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Recharge time</strong> — after the full-duration test, batteries require a
                 minimum recharge period before returning to full capacity. For most self-contained
@@ -344,7 +344,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What to record</strong> — date and time of test; type of test (monthly
                 function / annual duration / intermediate); test duration; reference numbers and
@@ -354,7 +354,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Log book format</strong> — BS 5266-1 does not prescribe a specific log book
                 format, but pre-printed log books aligned with the standard are available from
@@ -363,7 +363,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commissioning certificate</strong> — the BS 5266-1 Completion Certificate
                 issued at installation must be stored alongside the log book. This confirms the
@@ -371,7 +371,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire authority inspection</strong> — fire safety officers from the local
                 fire and rescue service may inspect the premises at any time. The log book is one of
@@ -454,7 +454,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Monthly tests</strong> — may be carried out by a trained member of staff who
                 understands the test procedure, knows how to identify failures, and can complete the
@@ -463,7 +463,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Annual tests and remedial work</strong> — should be carried out by a
                 qualified electrician with knowledge of BS 5266-1. Registration with a competent
@@ -475,7 +475,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commissioning certificates</strong> — may only be issued by the person
                 responsible for the installation — typically the installing electrician. The
@@ -555,7 +555,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Issue Certificates on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -588,7 +588,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage emergency lighting testing with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site electrical certification. Issue BS 5266-1 emergency lighting certificates, EICR reports…"
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site electrical certification. Issue BS 5266-1 emergency lighting certificates, EICR reports…"
           icon={FileCheck2}
         />
       </>
@@ -614,7 +614,7 @@ export default function EmergencyLightingTestingPage() {
       heroTitle={
         <>
           Emergency Lighting Testing Guide UK:{' '}
-          <span className="text-yellow-400">Monthly & Annual Tests</span>
+          <span className="text-elec-yellow">Monthly & Annual Tests</span>
         </>
       }
       heroSubtitle="Everything responsible persons and electricians need to know about emergency lighting testing — legal requirements under BS 5266-1, monthly function tests, annual full-duration discharge tests, log book records, and what to do when a luminaire fails."
@@ -625,7 +625,7 @@ export default function EmergencyLightingTestingPage() {
       faqHeading="Frequently Asked Questions About Emergency Lighting Testing"
       relatedPages={relatedPages}
       ctaHeading="Issue Emergency Lighting Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site electrical certification. BS 5266-1 emergency lighting certificates with instant PDF export and automatic client delivery. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site electrical certification. BS 5266-1 emergency lighting certificates with instant PDF export and automatic client delivery. 7-day free trial, cancel anytime."
     />
   );
 }

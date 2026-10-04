@@ -159,21 +159,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Total power loss (everything off)</strong> — fault is upstream: DNO supply,
                 main fuse, meter tails, or main switch. Check if neighbours are also affected.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ToggleRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ToggleRight className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Partial power loss (some circuits off)</strong> — an MCB or RCD has tripped.
                 Go to the consumer unit and look for the device in the off or tripped position.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Intermittent flickering or brownout</strong> — loose connection, failing
                 neutral, or{' '}
@@ -313,31 +313,31 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electric oven:</strong> 10-13A (2.4-3kW)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Kettle:</strong> 10-13A (2.2-3kW)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Washing machine:</strong> 8-10A (1.8-2.2kW)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tumble dryer:</strong> 10-13A (2.4-3kW)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fan heater:</strong> 8-13A (2-3kW)
               </span>
@@ -377,7 +377,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Planned maintenance or upgrades.</strong> DNOs schedule outages for network
                 maintenance. You should receive advance notice — check your DNO's website for
@@ -385,7 +385,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable fault on the distribution network.</strong> Underground cables can
                 fail due to age, water ingress, or third-party damage (someone digging through a
@@ -393,14 +393,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Substation fault.</strong> A transformer or switchgear failure at the local
                 substation can cause widespread outages.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Loose or corroded service cable connection.</strong> The DNO's service cable
                 connects to the cut-out — corrosion or a loose connection here can cause
@@ -486,7 +486,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Search className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Step 1: Visual Inspection</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -580,7 +580,7 @@ export default function PowerGoingOffPage() {
       heroTitle={
         <>
           Power Going Off Randomly?{' '}
-          <span className="text-yellow-400">Electrical Causes and How to Fix Them</span>
+          <span className="text-elec-yellow">Electrical Causes and How to Fix Them</span>
         </>
       }
       heroSubtitle="Random power loss is almost never random. Whether it is a tripping MCB, a loose main fuse, an overloaded circuit, or a DNO supply fault — this guide walks you through every cause, what to check, and when to call a qualified electrician."
@@ -591,7 +591,7 @@ export default function PowerGoingOffPage() {
       faqHeading="Frequently Asked Questions About Power Going Off"
       relatedPages={relatedPages}
       ctaHeading="Diagnose Electrical Faults Faster with AI"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI fault diagnosis, BS 7671 calculators, and digital certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for AI fault diagnosis, BS 7671 calculators, and digital certificates. 7-day free trial, cancel anytime."
     />
   );
 }

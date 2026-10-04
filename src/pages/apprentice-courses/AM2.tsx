@@ -73,7 +73,7 @@ const modules = [
   {
     moduleNumber: 8,
     title: 'Full mock AM2 assessment',
-    description: 'Simulated knowledge test with 30 questions from a 400-question bank.',
+    description: 'Simulated knowledge test: 30 questions, about a third of them worked calculations with new numbers every sitting.',
     icon: Award,
     duration: '1.5h',
     link: 'module8',

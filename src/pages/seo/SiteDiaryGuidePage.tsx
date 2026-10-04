@@ -177,7 +177,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FolderOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FolderOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Portfolio evidence:</strong> Each diary entry can provide evidence against
                 specific apprenticeship standard criteria. When you describe fitting your first
@@ -186,7 +186,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>OJT evidence:</strong> Activities recorded in your diary — learning new
                 skills, shadowing experienced electricians, practising techniques for the first time
@@ -198,7 +198,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reflective practice:</strong> Writing about what you learned forces you to
                 think about it. This reflective practice deepens understanding and helps you
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Professional habit:</strong> Keeping a site diary is standard practice on
                 large projects. Building the habit now prepares you for professional life as a
@@ -240,7 +240,7 @@ const sections = [
             </div>
           </div>
           <div className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <Wrench className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
+            <Wrench className="w-5 h-5 text-elec-yellow shrink-0 mt-0.5" />
             <div>
               <h3 className="font-bold text-white text-base mb-1">Tasks Performed</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -368,7 +368,7 @@ const sections = [
             </div>
           </div>
           <div className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow shrink-0 mt-0.5" />
             <div>
               <h3 className="font-bold text-white text-base mb-1">Hazards and Near Misses</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -518,7 +518,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <PenLine className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <PenLine className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Structured Daily Prompts</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -603,7 +603,7 @@ export default function SiteDiaryGuidePage() {
       heroTitle={
         <>
           Site Diary for Apprentices:{' '}
-          <span className="text-yellow-400">What to Record Every Day</span>
+          <span className="text-elec-yellow">What to Record Every Day</span>
         </>
       }
       heroSubtitle="A daily site diary is one of the most productive habits an electrical apprentice can build. It generates portfolio evidence, supports off-the-job training records, and helps you reflect on your progress. This guide explains exactly what to write and how Elec-Mate makes it effortless."

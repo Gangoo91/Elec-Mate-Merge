@@ -179,7 +179,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mains and distribution board</strong> — £1,000 to £4,000. Three-phase or
                 single-phase incoming supply, main switch, sub-circuit MCBs, and connection to the
@@ -187,7 +187,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Display and feature lighting circuits</strong> — £1,500 to £5,000. Track
                 lighting bus-bars or circuits, feature accent light wiring, window display lighting,
@@ -195,7 +195,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Till points and EPoS power and data</strong> — £300 to £700 per till
                 position. Counter outlets, floor boxes, Cat6 data to each position, and patch panel
@@ -203,14 +203,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency lighting</strong> — £150 to £350 per fitting fitted and
                 commissioned. A 100m² unit typically needs 8 to 15 emergency lighting units.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire alarm system</strong> — £1,500 to £5,000 for a small unit. Panel,
                 detectors, manual call points, sounders, and commissioning to{' '}
@@ -221,7 +221,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CCTV and security</strong> — £800 to £2,500 for a complete system. Cameras,
                 NVR, cabling, and configuration. Intruder alarm additional.
@@ -245,7 +245,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>LED track lighting systems</strong> — the most common retail lighting
                 solution. 1-metre or 2-metre track sections cost £60 to £180 per section plus
@@ -254,7 +254,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Recessed downlights</strong> — LED downlights with a CRI of 90+ for accurate
                 colour rendering of merchandise. Budget £80 to £200 per downlight fitted, depending
@@ -262,7 +262,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Window display lighting</strong> — high-output LED spots or strips to
                 attract attention from outside. Must be controllable independently of the main shop
@@ -270,7 +270,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lighting controls</strong> — Building Regulations Part L requires energy
                 controls including occupancy sensing and daylight linking in new commercial
@@ -296,7 +296,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShoppingCart className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShoppingCart className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Counter-mounted till point</strong> — six 13A socket outlets (two double and
                 one single) at counter level, one Cat6 data point, and one spare Cat6 for future
@@ -304,7 +304,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShoppingCart className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShoppingCart className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Freestanding counter or island till</strong> — floor box installation with
                 power and data. A quality floor box with four power outlets and two Cat6 data points
@@ -312,7 +312,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShoppingCart className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShoppingCart className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wireless EPoS considerations</strong> — even wireless EPoS tablets still
                 need charging points and a data connection for the Wi-Fi access point. Plan for
@@ -338,7 +338,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Camera className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Basic CCTV system (4–6 cameras)</strong> — £800 to £1,800. Four to six IP
                 cameras, an 8-channel NVR with 2TB storage, remote mobile viewing, and all cabling.
@@ -346,7 +346,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Camera className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mid-range CCTV system (8–12 cameras)</strong> — £1,800 to £3,500. Higher
                 resolution cameras (4K), larger NVR storage, and integration with access control at
@@ -354,7 +354,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Camera className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Intruder alarm</strong> — £600 to £1,500 for a Grade 2 system with PIR
                 sensors, door contacts, siren, and a monitoring centre connection. NACOSS or NSI
@@ -362,7 +362,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Camera className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EAS security tagging systems</strong> — electronic article surveillance
                 (EAS) antenna pedestals require a dedicated power supply at the entrance. Allow £200
@@ -484,7 +484,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Lightbulb className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Quote Lighting in Detail</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -543,7 +543,7 @@ export default function RetailElectricalCostPage() {
       heroTitle={
         <>
           Retail Shop Electrical Fit-Out Cost UK 2025:{' '}
-          <span className="text-yellow-400">Shop Wiring Costs</span>
+          <span className="text-elec-yellow">Shop Wiring Costs</span>
         </>
       }
       heroSubtitle="Detailed breakdown of retail shop electrical fit-out costs in the UK for 2025 — small retail unit from £3,000, display lighting, till points and EPoS power, CCTV and security, emergency lighting to BS 5266, fire alarm systems to BS 5839, and Building Regulations compliance."
@@ -554,7 +554,7 @@ export default function RetailElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Retail Shop Electrical Fit-Out Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Your Retail Electrical Fit-Out in Minutes"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to create professional retail electrical fit-out quotes with display lighting, till points, CCTV, and all certifications. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to create professional retail electrical fit-out quotes with display lighting, till points, CCTV, and all certifications. 7-day free trial, cancel anytime."
     />
   );
 }

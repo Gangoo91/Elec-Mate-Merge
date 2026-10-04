@@ -11,6 +11,7 @@ import { useCustomers, type Customer } from '@/hooks/inspection/useCustomers';
 import { useSiteVisitStorage } from '@/hooks/useSiteVisitStorage';
 import { SaveCustomerPrompt } from '@/components/electrician/shared/SaveCustomerPrompt';
 import type { SiteVisit, PropertyType } from '@/types/siteVisit';
+import { autoCompleteOff } from '@/lib/textEntry';
 
 interface PreviousVisitResult {
   id: string;
@@ -225,7 +226,7 @@ export const SiteVisitJobStep = ({
                   placeholder="Search name, phone or email"
                   className={cn(inputClass, 'pl-10')}
                   autoCapitalize="off"
-                  autoComplete="off"
+                  autoComplete={autoCompleteOff}
                   enterKeyHint="search"
                 />
               </div>

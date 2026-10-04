@@ -35,19 +35,27 @@ const quickCheckQuestions = [
   },
   {
     id: 'fill-factor',
-    question: 'What is the maximum fill factor for cables in trunking according to BS 7671?',
-    options: ['35%', '45%', '55%'],
+    question: 'What space factor does IET guidance give as the maximum fill for cables in trunking?',
+    options: [
+      '35%',
+      '45%',
+      '55%',
+    ],
     correctIndex: 1,
     explanation:
       'BS 7671 specifies a maximum fill factor of 45% for cables in trunking to ensure adequate heat dissipation and ease of installation.',
   },
   {
     id: 'fire-barriers',
-    question: 'Fire barriers in underfloor trunking must be installed at intervals of:',
-    options: ['10m maximum', '15m maximum', '20m maximum'],
+    question: 'Trunking passes through a fire-resisting wall. What is required?',
+    options: [
+      'Nothing, if the trunking is metal',
+      'Internal fire barriers and sealing to the fire resistance of the wall',
+      'Intumescent paint on the outside only',
+    ],
     correctIndex: 1,
     explanation:
-      'Fire barriers must be installed at maximum 15m intervals in underfloor trunking to prevent fire spread and maintain compartmentation.',
+      'Where a wiring system passes through a fire-resisting element, the opening must be sealed to the fire resistance of the element, and trunking needs internal fire barriers so fire cannot travel along it. Metal trunking alone, or paint on the outside, does not stop fire spreading inside it.',
   },
 ];
 
@@ -81,20 +89,20 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question: 'Fire barriers in underfloor trunking must be installed at intervals of:',
+    question: 'Trunking passes through a fire-resisting wall. What is required?',
     options: [
-      '10m',
-      '5m',
-      '20m',
-      '15m',
+      'Only where the run is longer than 20 m',
+      'Nothing, if the trunking is metal',
+      'Intumescent paint on the outside only',
+      'Internal fire barriers and sealing to the fire resistance of the wall',
     ],
     correctAnswer: 3,
     explanation:
-      'Fire barriers must be installed at maximum 15m intervals in underfloor trunking to prevent fire spread and maintain compartmentation.',
+      'Where a wiring system passes through a fire-resisting element, the opening must be sealed to the fire resistance of the element, and trunking needs internal fire barriers so fire cannot travel along it. Metal trunking alone, or paint on the outside, does not stop fire spreading inside it.',
   },
   {
     id: 4,
-    question: 'What is the maximum fill factor for cables in trunking according to BS 7671?',
+    question: 'What space factor does IET guidance give as the maximum fill for cables in trunking?',
     options: [
       '45%',
       '35%',
@@ -120,16 +128,16 @@ const quizQuestions = [
   },
   {
     id: 6,
-    question: 'What is the recommended spacing for access covers in dado trunking?',
+    question: 'Why are segregation barriers fitted in dado trunking that carries both power and data cables?',
     options: [
-      '1-2 metres',
-      '5-6 metres',
-      '3-4 metres',
-      '7-8 metres',
+      'So the trunking can be filled beyond its space factor',
+      "So data cables can share the power circuits' cpc",
+      'To segregate power circuits from data and communication circuits',
+      'So the power cables need no grouping factor',
     ],
     correctAnswer: 2,
     explanation:
-      'Access covers should be positioned every 3-4 metres to allow reasonable access for cable installation and future maintenance.',
+      "Barriers keep power circuits apart from data and communication circuits, which is a BS 7671 segregation requirement and also reduces interference. They do not change the space factor or grouping, and data cables never share a power circuit's cpc.",
   },
   {
     id: 7,

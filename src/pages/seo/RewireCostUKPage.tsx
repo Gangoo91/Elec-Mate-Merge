@@ -101,31 +101,31 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>1-bed flat:</strong> £2,500-£4,000 (3-5 days)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>2-bed terraced house:</strong> £3,500-£5,500 (5-7 days)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>3-bed semi-detached house:</strong> £5,000-£7,500 (6-8 days)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>4-bed detached house:</strong> £7,000-£10,000+ (8-12 days)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>5-bed+ large detached:</strong> £10,000-£15,000+ (10-15 days)
               </span>
@@ -169,7 +169,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Key Cost Factors</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Ruler className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Ruler className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Property size and number of rooms:</strong> More rooms mean more circuits,
                 more cable, more accessories, and more labour. A 4-bed house might have 12-16
@@ -177,7 +177,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Number of storeys:</strong> Multi-storey properties require more cable
                 (vertical runs between floors), more containment, and more time accessing different
@@ -186,7 +186,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Access and floor construction:</strong> Suspended timber floors allow cables
                 to be run through the void without disturbing the finish. Solid concrete floors
@@ -195,7 +195,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Property age and condition:</strong> Older properties may have lath and
                 plaster walls (harder to chase), limited or no floor voids, asbestos-containing
@@ -204,7 +204,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Specification:</strong> The number and type of accessories (sockets, light
                 fittings, switches, USB sockets, outdoor sockets), style of accessories (basic white
@@ -213,7 +213,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Location:</strong> Labour rates vary significantly by region. London
                 electricians charge £280-£350/day while rates in Wales or the North East might be
@@ -221,7 +221,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Making good:</strong> Whether plastering and decorating is included in the
                 quote or arranged separately. Some electricians include basic making good; others
@@ -247,7 +247,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">What a Rewire Includes</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>New consumer unit:</strong> A modern consumer unit with RCBOs (or dual-RCD
                 split-board) compliant with BS 7671:2018+A4:2026. RCBO boards are now the preferred
@@ -256,7 +256,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>All new circuit cables:</strong> Twin and earth (6242Y) in the appropriate
                 sizes — 2.5mm for socket circuits, 1.5mm for lighting, 6mm or 10mm for showers, 6mm
@@ -265,7 +265,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>New accessories:</strong> All sockets, light switches, ceiling roses, fused
                 connection units (spurs), cooker switches, shower pull cords, and any other
@@ -273,7 +273,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Earthing and bonding:</strong> Main protective bonding to gas, water, and
                 oil (if applicable), plus supplementary bonding where required. The earthing system
@@ -281,7 +281,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Smoke and heat detectors:</strong> Under the current Building Regulations, a
                 rewire triggers the requirement for a Grade D1 fire detection and alarm system —
@@ -290,7 +290,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Initial verification testing:</strong> Every circuit must be tested —
                 continuity of protective conductors (R1+R2), insulation resistance, polarity, earth
@@ -298,7 +298,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Electrical Installation Certificate (EIC):</strong> The formal certificate
                 confirming the new installation complies with BS 7671. This must be issued by the
@@ -395,33 +395,33 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Typical Rewire Durations</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>1-bed flat:</strong> 3-5 working days (2-3 first fix, 1-2 second fix)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>2-bed terraced house:</strong> 5-7 working days (3-5 first fix, 2 second
                 fix)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>3-bed semi-detached:</strong> 6-8 working days (4-6 first fix, 2-3 second
                 fix)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>4-bed detached:</strong> 8-12 working days (5-8 first fix, 3-4 second fix)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>5-bed+ large property:</strong> 10-15+ working days
               </span>
@@ -455,7 +455,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">What to Expect If You Stay</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Dust and debris:</strong> Chasing walls produces significant amounts of
                 dust. Even with dust sheets and extraction, the dust gets everywhere. If anyone in
@@ -464,14 +464,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Noise:</strong> Wall chasing and SDS drilling are extremely loud and can
                 last several hours per day during first fix.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Power outages:</strong> The electrician will need to disconnect the power
                 supply for periods during the work. They can sometimes arrange temporary supplies to
@@ -479,7 +479,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Restricted access:</strong> Rooms being worked on will have floorboards up,
                 cables hanging from ceilings, and tools and materials everywhere. You will need to
@@ -514,7 +514,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Certificates You Should Receive</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Electrical Installation Certificate (EIC):</strong> The primary certificate
                 confirming the new installation complies with BS 7671. It includes a schedule of
@@ -524,7 +524,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Building Regulation Compliance Certificate:</strong> If the electrician is
                 registered with a competent person scheme, they notify the scheme of the completed
@@ -597,7 +597,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Frequent blown fuses or tripped MCBs:</strong> Can indicate overloaded
                 circuits, deteriorating cable insulation, or poor connections — all of which may
@@ -605,7 +605,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Burning smells, scorch marks, or buzzing:</strong> These are serious warning
                 signs of overheating connections or cables. Switch off the affected circuit and call
@@ -613,7 +613,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>No RCD protection:</strong> If your installation has no RCD (residual
                 current device) protection at all, it lacks a critical safety feature. While an RCD
@@ -622,7 +622,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Unsatisfactory EICR:</strong> If an EICR has returned an Unsatisfactory
                 result with multiple C1 or C2 observations, and the remedial work would be
@@ -655,7 +655,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Rewire Pricing Checklist</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Survey the property thoroughly:</strong> Count every socket, switch, and
                 light fitting. Check the floor construction (suspended timber or solid concrete).
@@ -664,7 +664,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Cost materials accurately:</strong> Cable quantities (measure, do not
                 guess), consumer unit, accessories, back boxes, fixings, containment, bonding
@@ -673,7 +673,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Estimate labour realistically:</strong> Use your experience of similar jobs.
                 Add time for the unexpected — old properties always throw up surprises. If you are
@@ -681,7 +681,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Include overheads:</strong> Van costs, insurance, scheme membership, test
                 equipment calibration, accountancy — these must be covered by every job. Calculate
@@ -689,7 +689,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Add profit margin:</strong> You are running a business, not a charity. A
                 15-25% profit margin on top of costs is standard for domestic electrical work. This
@@ -784,7 +784,7 @@ export default function RewireCostUKPage() {
       heroTitle={
         <>
           House Rewire Cost UK 2026:{' '}
-          <span className="text-yellow-400">What You Should Actually Pay</span>
+          <span className="text-elec-yellow">What You Should Actually Pay</span>
         </>
       }
       heroSubtitle="Honest, detailed pricing for a full house rewire in the UK. Average costs by property size, what affects the price, what is included, how long it takes, and the certificates you must receive. Updated for 2026."

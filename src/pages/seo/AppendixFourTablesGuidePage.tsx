@@ -184,49 +184,49 @@ const sections = [
             </thead>
             <tbody className="divide-y divide-white/5">
               <tr>
-                <td className="py-3 pr-4 font-mono text-yellow-400">4A1/4A2</td>
+                <td className="py-3 pr-4 font-mono text-elec-yellow">4A1/4A2</td>
                 <td className="py-3 pr-4">Correction factors</td>
                 <td className="py-3 pr-4">Grouping (4A1) and ambient temperature (4A2)</td>
               </tr>
               <tr>
-                <td className="py-3 pr-4 font-mono text-yellow-400">4B1/4B2</td>
+                <td className="py-3 pr-4 font-mono text-elec-yellow">4B1/4B2</td>
                 <td className="py-3 pr-4">Correction factors</td>
                 <td className="py-3 pr-4">Thermal insulation corrections</td>
               </tr>
               <tr>
-                <td className="py-3 pr-4 font-mono text-yellow-400">4C1</td>
+                <td className="py-3 pr-4 font-mono text-elec-yellow">4C1</td>
                 <td className="py-3 pr-4">Reference methods</td>
                 <td className="py-3 pr-4">
                   Describes installation methods A1, A2, B, C, D, E, F, G
                 </td>
               </tr>
               <tr>
-                <td className="py-3 pr-4 font-mono text-yellow-400">4D1-4D2</td>
+                <td className="py-3 pr-4 font-mono text-elec-yellow">4D1-4D2</td>
                 <td className="py-3 pr-4">Single-core PVC (copper)</td>
                 <td className="py-3 pr-4">Cables in conduit or trunking</td>
               </tr>
               <tr>
-                <td className="py-3 pr-4 font-mono text-yellow-400">4D3-4D4</td>
+                <td className="py-3 pr-4 font-mono text-elec-yellow">4D3-4D4</td>
                 <td className="py-3 pr-4">Single-core PVC (aluminium)</td>
                 <td className="py-3 pr-4">Aluminium conductors in conduit/trunking</td>
               </tr>
               <tr>
-                <td className="py-3 pr-4 font-mono text-yellow-400">4D5</td>
+                <td className="py-3 pr-4 font-mono text-elec-yellow">4D5</td>
                 <td className="py-3 pr-4">Multicore PVC (copper)</td>
                 <td className="py-3 pr-4">Twin-and-earth — most common domestic cable</td>
               </tr>
               <tr>
-                <td className="py-3 pr-4 font-mono text-yellow-400">4E1-4E4</td>
+                <td className="py-3 pr-4 font-mono text-elec-yellow">4E1-4E4</td>
                 <td className="py-3 pr-4">Thermosetting (XLPE/SWA)</td>
                 <td className="py-3 pr-4">Armoured cables for submains and external runs</td>
               </tr>
               <tr>
-                <td className="py-3 pr-4 font-mono text-yellow-400">4F1-4F2</td>
+                <td className="py-3 pr-4 font-mono text-elec-yellow">4F1-4F2</td>
                 <td className="py-3 pr-4">Mineral insulated (copper sheath)</td>
                 <td className="py-3 pr-4">MI cable (MICC) for fire-rated circuits</td>
               </tr>
               <tr>
-                <td className="py-3 pr-4 font-mono text-yellow-400">4H1-4H5</td>
+                <td className="py-3 pr-4 font-mono text-elec-yellow">4H1-4H5</td>
                 <td className="py-3 pr-4">Flexible cables</td>
                 <td className="py-3 pr-4">Flexible cords and cables</td>
               </tr>
@@ -259,7 +259,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Method A (A1/A2)</strong> — cables enclosed in conduit in a thermally
                 insulating wall (e.g., PVC conduit chased into masonry). This gives the lowest
@@ -267,28 +267,28 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Method B</strong> — cables enclosed in conduit or trunking on a wall or
                 ceiling surface. Slightly better heat dissipation than Method A.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Method C</strong> — cables clipped directly to a surface. Good heat
                 dissipation, commonly used for T+E cable clipped to joists or walls.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Method D</strong> — cables installed directly in the ground. Used for buried
                 armoured cable runs.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Methods E, F, G</strong> — cables on open trays, ladders, or cleats with
                 free air circulation. These give the highest current-carrying capacities.
@@ -319,7 +319,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Thermometer className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Ca — Ambient Temperature (Table 4A2)</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -533,7 +533,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Automated Table Selection</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -614,7 +614,7 @@ export default function AppendixFourTablesGuidePage() {
       heroTitle={
         <>
           Appendix 4 Tables:{' '}
-          <span className="text-yellow-400">How to Use Them for Cable Sizing</span>
+          <span className="text-elec-yellow">How to Use Them for Cable Sizing</span>
         </>
       }
       heroSubtitle="Every cable size in every UK electrical installation is selected using the current-carrying capacity tables in Appendix 4 of BS 7671. This guide explains each table, how to select the right one, how to apply correction factors, and the common mistakes that lead to incorrectly sized cables."
@@ -625,7 +625,7 @@ export default function AppendixFourTablesGuidePage() {
       faqHeading="Frequently Asked Questions About BS 7671 Appendix 4 Tables"
       relatedPages={relatedPages}
       ctaHeading="Size Cables Correctly Every Time"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's 70+ calculators including cable sizing with automatic Appendix 4 table selection and correction factor application. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate's 70+ calculators including cable sizing with automatic Appendix 4 table selection and correction factor application. 7-day free trial, cancel anytime."
     />
   );
 }

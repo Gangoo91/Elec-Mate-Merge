@@ -157,7 +157,7 @@ const sections = [
           Already know which method applies and just need the number?{' '}
           <a
             href="#calculator"
-            className="inline-flex h-11 items-center rounded-full border border-elec-yellow/40 px-4 text-[13.5px] font-semibold text-elec-yellow touch-manipulation transition-colors hover:bg-elec-yellow/10"
+            className="inline-flex h-11 items-center rounded-full border border-elec-yellow/40 px-4 text-[13.5px] font-semibold text-elec-yellow touch-manipulation transition-colors hover:bg-white/[0.06]"
           >
             Use the free cable derating calculator
           </a>{' '}
@@ -223,7 +223,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Installation Method 1:</strong> Non-sheathed cables in conduit in a
                 thermally insulated wall. This is the most restrictive of the common reference
@@ -231,7 +231,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Installation Method 2:</strong> Multicore cable in conduit in a thermally
                 insulated wall. Installation Method 3 covers a multicore cable run direct in the
@@ -390,7 +390,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Method D1 — in a duct:</strong> Multicore armoured cable in conduit or cable
                 ducting in the ground (Table 4A2, Installation Method 70). The reference case is a
@@ -399,7 +399,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Method D2 — direct in the ground:</strong> Sheathed, armoured or multicore
                 cable laid direct in the ground, with or without added mechanical protection such as
@@ -407,7 +407,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reference conditions:</strong> Both D1 and D2 assume soil of thermal
                 resistivity 2.5 K.m/W at a depth of 0.7 m. Appendix 4 calls these conservative
@@ -418,7 +418,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable protection:</strong> SWA cable provides its own mechanical protection
                 via the steel wire armour. The cable is typically laid on a bed of fine sand or
@@ -459,7 +459,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Layers className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Method E: Multicore Cable in Free Air</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -539,7 +539,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Method 100:</strong> Flat twin-and-earth clipped direct to a wooden joist,
                 or touching the plasterboard ceiling surface, above a plasterboard ceiling with
@@ -548,7 +548,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Method 101:</strong> The same arrangement, but with the thermal insulation{' '}
                 <strong>exceeding 100 mm</strong> in thickness. The extra insulation depth is the
@@ -557,7 +557,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Method 102:</strong> Flat twin-and-earth in a stud wall containing thermal
                 insulation, with the cable <strong>touching the inner wall surface</strong> (or
@@ -566,7 +566,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Method 103:</strong> The same stud wall, but with the cable{' '}
                 <strong>not touching</strong> the inner wall surface. Guides that stop at 102 miss
@@ -761,7 +761,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Building2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Domestic Ring Final Circuit</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -849,7 +849,7 @@ export default function ReferenceMethodsGuidePage() {
       heroTitle={
         <>
           Reference Methods:{' '}
-          <span className="text-yellow-400">How Cable Installation Affects Capacity</span>
+          <span className="text-elec-yellow">How Cable Installation Affects Capacity</span>
         </>
       }
       heroSubtitle="The same cable can carry 20 A or 27 A depending on how it is installed. Reference methods A to G define the installation arrangement and directly determine the current-carrying capacity from the BS 7671 Appendix 4 tables. This guide explains each method, when it applies, and how to choose correctly."
@@ -865,7 +865,7 @@ export default function ReferenceMethodsGuidePage() {
       faqHeading="Frequently Asked Questions About Reference Methods"
       relatedPages={relatedPages}
       ctaHeading="Cable Sizing with Automatic Reference Methods"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's 70+ calculators. Select the installation method, enter the conditions — cable sizing is done in seconds with the correct Appendix 4 table applied automatically. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate's 70+ calculators. Select the installation method, enter the conditions — cable sizing is done in seconds with the correct Appendix 4 table applied automatically. 7-day free trial, cancel anytime."
     />
   );
 }

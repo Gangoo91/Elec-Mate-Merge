@@ -207,7 +207,7 @@ const sections = [
         </p>
         <div className="space-y-3 my-4">
           <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <HardHat className="w-8 h-8 text-yellow-400 shrink-0 mt-1" />
+            <HardHat className="w-8 h-8 text-elec-yellow shrink-0 mt-1" />
             <div>
               <h3 className="font-bold text-white text-lg mb-1">Independent Tied Scaffold</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -280,7 +280,7 @@ const sections = [
             </div>
           </div>
           <div className="flex gap-4 p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-            <Tag className="w-8 h-8 text-yellow-400 shrink-0 mt-1" />
+            <Tag className="w-8 h-8 text-elec-yellow shrink-0 mt-1" />
             <div>
               <h3 className="font-bold text-white text-lg mb-1">Yellow Tag — Restricted Use</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -324,7 +324,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckSquare className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckSquare className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use the designated access points.</strong> Always use the internal ladder or
                 stair access provided. Never climb the outside of a scaffold, and never use
@@ -332,7 +332,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckSquare className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckSquare className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Do not overload the platform.</strong> Check the maximum load stated on the
                 scaffold tag. Remember that the load includes people, tools, materials, and
@@ -340,7 +340,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckSquare className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckSquare className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Keep the platform clear.</strong> Good housekeeping prevents trips and
                 falls. Remove waste materials, keep cables tidy, and ensure the access points are
@@ -348,7 +348,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckSquare className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckSquare className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Never remove guardrails or toe boards.</strong> These are essential fall
                 protection. If a guardrail is in the way of your work, speak to the scaffold
@@ -356,7 +356,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckSquare className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckSquare className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Report any damage or changes.</strong> If you notice damage to the scaffold,
                 missing components, or anything that has changed since the last inspection, report
@@ -587,7 +587,7 @@ export default function ScaffoldingAwarenessCoursePage() {
       heroTitle={
         <>
           Scaffolding Awareness:{' '}
-          <span className="text-yellow-400">Safe Use Training for Electricians</span>
+          <span className="text-elec-yellow">Safe Use Training for Electricians</span>
         </>
       }
       heroSubtitle="Learn to recognise safe and unsafe scaffolding, understand the tag system, carry out pre-use checks, and know the regulations. 6 modules with video content, interactive quizzes, and AI-powered study tools."
@@ -605,7 +605,7 @@ export default function ScaffoldingAwarenessCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Complete your scaffolding awareness training today"
-      ctaSubheading="Join 1,600+ UK electricians studying smarter with Elec-Mate. Structured modules, interactive quizzes, video content, and an AI tutor for any site safety question. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians studying smarter with Elec-Mate. Structured modules, interactive quizzes, video content, and an AI tutor for any site safety question. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/scaffolding-awareness"
     />

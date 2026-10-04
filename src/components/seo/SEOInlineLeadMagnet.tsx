@@ -49,8 +49,15 @@ export function SEOInlineLeadMagnet({
   };
 
   return (
-    <section aria-labelledby="seo-lead-magnet-heading" className={`${CARD} my-10 p-5 sm:p-7`}>
-      <p className={`${LABEL} text-amber-300`}>Free download</p>
+    <section
+      aria-labelledby="seo-lead-magnet-heading"
+      className={`${CARD} relative my-10 overflow-hidden p-5 sm:p-7`}
+    >
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0"
+      />
+      <p className={`${LABEL} text-elec-yellow`}>Free download · PDF</p>
       <h3
         id="seo-lead-magnet-heading"
         className="mt-2.5 text-[20px] font-bold leading-snug tracking-[-0.015em] text-white sm:text-[23px]"

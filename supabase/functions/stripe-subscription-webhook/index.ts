@@ -12,7 +12,7 @@ import { Resend } from '../_shared/mailer.ts';
 import { renderDunningEmail } from '../_shared/email-templates/dunning.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
 import { captureException, captureMessage } from '../_shared/sentry.ts';
-import { fireCapiEvent } from '../_shared/meta-capi.ts';
+import { fireCapiEventIfConsented } from '../_shared/meta-capi.ts';
 import { capturePostHogEvent } from '../_shared/posthog-server.ts';
 import { getSubscriptionPeriodEnd } from '../_shared/stripe-helpers.ts';
 import { generateWaCodeForUser } from '../_shared/wa-onboarding.ts';
@@ -707,8 +707,30 @@ serve(async (req) => {
 
     let event: Stripe.Event;
 
-    // Verify webhook signature if secret is configured
-    if (webhookSecret && signature) {
+    // Fail CLOSED. This endpoint has verify_jwt = false, and the old fallback
+    // JSON.parse'd any request without a stripe-signature header. An unsigned
+    // `customer.subscription.updated` with a made-up customer id and
+    // `metadata.userId` = the caller's own id fell through findUserByCustomer
+    // (customers.retrieve throws → metadata trusted) and granted a paid tier.
+    // Real Stripe deliveries always carry a signature.
+    if (!webhookSecret) {
+      logger.error('STRIPE_SUBSCRIPTION_WEBHOOK_SECRET not configured — refusing event');
+      return new Response(JSON.stringify({ error: 'Server configuration error' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+    if (!signature) {
+      logger.warn('Rejected webhook request with no stripe-signature header', {
+        method: req.method,
+      });
+      return new Response(JSON.stringify({ error: 'Missing signature' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    {
       try {
         // Use constructEventAsync for Deno Deploy compatibility (async SubtleCrypto)
         event = await stripe.webhooks.constructEventAsync(
@@ -730,9 +752,6 @@ serve(async (req) => {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         });
       }
-    } else {
-      event = JSON.parse(body);
-      logger.warn('Processing webhook without signature verification (no secret configured)');
     }
 
     logger.info('Webhook event received', { eventType: event.type, eventId: event.id });
@@ -1912,7 +1931,7 @@ serve(async (req) => {
                 });
                 const [firstName, ...rest] = (customer.name || '').trim().split(/\s+/);
                 const lastName = rest.join(' ');
-                fireCapiEvent({
+                fireCapiEventIfConsented(userId, {
                   event_name: isTrial ? 'StartTrial' : 'Subscribe',
                   event_id: `stripe_sub_${subscription.id}_${event.id}`,
                   action_source: 'website',
@@ -2274,7 +2293,7 @@ serve(async (req) => {
             const renewCustomer = await stripe.customers.retrieve(customerId);
             if (!renewCustomer.deleted && 'email' in renewCustomer && renewCustomer.email) {
               const [rFirst, ...rRest] = (renewCustomer.name || '').trim().split(/\s+/);
-              fireCapiEvent({
+              fireCapiEventIfConsented(userId, {
                 event_name: 'Subscribe',
                 event_id: `stripe_invoice_${invoice.id}`,
                 action_source: 'website',

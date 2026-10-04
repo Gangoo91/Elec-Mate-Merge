@@ -200,7 +200,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tier I — Basic:</strong> Single non-redundant distribution path. UPS and
                 generator required but no redundancy. Susceptible to disruption from planned and
@@ -209,7 +209,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tier II — Redundant Components:</strong> N+1 redundancy on UPS modules,
                 generators, and cooling. Single distribution path. Annual downtime up to 22 hours.
@@ -217,7 +217,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tier III — Concurrently Maintainable:</strong> Multiple active distribution
                 paths with N+1 redundancy. All equipment can be maintained without shutting down the
@@ -226,7 +226,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tier IV — Fault Tolerant:</strong> 2N (fully duplicated) electrical and
                 mechanical systems. Any single failure of a component, system, or distribution path
@@ -312,7 +312,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Diverse supply paths:</strong> A-feed and B-feed must be physically
                 separated — different cable routes, different UPS systems, different Automatic
@@ -321,7 +321,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rack PDU types:</strong> Basic PDUs simply distribute power to outlets.
                 Metered PDUs add input current monitoring. Switched PDUs enable individual outlet
@@ -331,7 +331,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-phase balance:</strong> Data hall PDUs are typically three-phase 32A
                 or 63A with single-phase outlet circuits. Care must be taken during commissioning to
@@ -341,7 +341,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Busway systems:</strong> High-density data halls increasingly use overhead
                 busway (busbar trunking) systems rather than fixed cable runs to the racks. Busway
@@ -427,7 +427,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main LV switchboard (MLVS):</strong> The main LV switchboard receives the
                 incoming supply from the HV/LV transformer(s) and distributes power to UPS systems,
@@ -437,7 +437,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Horizontal busbar trunking:</strong> High-current busbar trunking (typically
                 1,600A to 6,300A) is used to distribute power from the MLVS to zone distribution
@@ -446,7 +446,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Generator sets:</strong> Standby generators are sized to carry the full data
                 centre load on generator power alone, including mechanical cooling plant. Step-load
@@ -456,7 +456,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fuel systems:</strong> Generator fuel storage must comply with the Dangerous
                 Substances and Explosive Atmospheres Regulations 2002 (DSEAR) and Environment Agency
@@ -528,7 +528,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IT load calculation:</strong> Total IT load is calculated from the sum of
                 rack power densities. Nameplate power ratings typically overstate actual consumption
@@ -537,7 +537,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mechanical and lighting load:</strong> Add cooling plant, UPS losses,
                 lighting, and building management systems to the IT load to determine the total
@@ -546,7 +546,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Diversity factor:</strong> Apply a diversity factor appropriate to the
                 facility type. Colocation facilities with diverse tenants typically use a diversity
@@ -555,7 +555,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable sizing to BS 7671:</strong> All data centre cables must be sized in
                 accordance with BS 7671 Appendix 4, accounting for grouping, ambient temperature,
@@ -586,7 +586,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <AlertTriangle className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Permit to Work Requirements</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -617,7 +617,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage data centre electrical projects with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site certification, quoting, and project management."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site certification, quoting, and project management."
           icon={FileCheck2}
         />
       </>
@@ -643,7 +643,7 @@ export default function DataCentreElectricalPage() {
       heroTitle={
         <>
           Data Centre Electrical Installation UK:{' '}
-          <span className="text-yellow-400">Critical Power Systems Guide</span>
+          <span className="text-elec-yellow">Critical Power Systems Guide</span>
         </>
       }
               noindex={true}
@@ -655,7 +655,7 @@ export default function DataCentreElectricalPage() {
       faqHeading="Frequently Asked Questions — Data Centre Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Manage Your Data Centre Electrical Projects with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. 7-day free trial, cancel anytime."
     />
   );
 }

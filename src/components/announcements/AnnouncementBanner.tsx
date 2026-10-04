@@ -1,11 +1,11 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useLayoutEffect, useRef } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
-import { X, Info, AlertTriangle, CheckCircle, Megaphone } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { AnimatePresence, motion } from 'framer-motion';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const DISMISSED_STORAGE_KEY = 'elec-dismissed-announcements';
 
@@ -20,32 +20,132 @@ interface Announcement {
   ends_at: string | null;
 }
 
-const typeStyles = {
+/*
+ * Volt (4 Oct 2026). Was a translucent green/blue/amber/red box with an icon —
+ * Andrew: "the little green success thing that pops up, can we design this
+ * better". Now the hub card material: neutral lit surface, gold hairline,
+ * type carried by the label word and edge colour, no icons. Volt is only a
+ * line or text here — a translucent fill goes muddy on this ground.
+ */
+const typeStyles: Record<
+  Announcement['type'],
+  { label: string; edge: string; tone: string; line: string }
+> = {
   info: {
-    bg: 'bg-blue-500/10 border-blue-500/20',
-    icon: Info,
-    iconColor: 'text-blue-400',
-    accent: 'bg-blue-400',
-  },
-  warning: {
-    bg: 'bg-amber-500/10 border-amber-500/20',
-    icon: AlertTriangle,
-    iconColor: 'text-amber-400',
-    accent: 'bg-amber-400',
+    label: 'From Elec-Mate',
+    edge: 'border-elec-yellow/35',
+    tone: 'text-elec-yellow',
+    line: 'via-elec-yellow/55',
   },
   success: {
-    bg: 'bg-green-500/10 border-green-500/20',
-    icon: CheckCircle,
-    iconColor: 'text-green-400',
-    accent: 'bg-green-400',
+    label: 'From Elec-Mate',
+    edge: 'border-elec-yellow/35',
+    tone: 'text-elec-yellow',
+    line: 'via-elec-yellow/55',
+  },
+  warning: {
+    label: 'Heads up',
+    edge: 'border-amber-400/50',
+    tone: 'text-amber-300',
+    line: 'via-amber-300/70',
   },
   error: {
-    bg: 'bg-red-500/10 border-red-500/20',
-    icon: Megaphone,
-    iconColor: 'text-red-400',
-    accent: 'bg-red-400',
+    label: 'Important',
+    edge: 'border-red-400/50',
+    tone: 'text-red-300',
+    line: 'via-red-300/70',
   },
 };
+
+/**
+ * One announcement. Long messages fold to three lines so the banner never
+ * pushes the page away — "Read more" appears only when the text is actually
+ * cut off at this width (a character count showed it on desktop for a
+ * message that already fitted).
+ */
+function AnnouncementCard({
+  announcement,
+  onDismiss,
+}: {
+  announcement: Announcement;
+  onDismiss: () => void;
+}) {
+  const style = typeStyles[announcement.type] || typeStyles.info;
+  const [open, setOpen] = useState(false);
+  const [clamped, setClamped] = useState(false);
+  const textRef = useRef<HTMLParagraphElement>(null);
+
+  useLayoutEffect(() => {
+    const el = textRef.current;
+    if (!el || open) return;
+    const measure = () => setClamped(el.scrollHeight > el.clientHeight + 1);
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [open, announcement.message]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, height: 0, y: -12 }}
+      animate={{ opacity: 1, height: 'auto', y: 0 }}
+      exit={{ opacity: 0, height: 0, y: -12 }}
+      transition={{ duration: 0.25 }}
+      className={cn('relative overflow-hidden rounded-2xl border', CARD_SURFACE, style.edge)}
+    >
+      <span
+        aria-hidden
+        className={cn(
+          'pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent to-transparent',
+          style.line
+        )}
+      />
+      <div className="px-4 pb-3 pt-3.5 sm:px-5">
+        <div className="flex items-start justify-between gap-3">
+          <p
+            className={cn(
+              'pt-0.5 text-[11px] font-semibold uppercase tracking-[0.14em]',
+              style.tone
+            )}
+          >
+            {style.label}
+          </p>
+          {announcement.is_dismissible && (
+            <button
+              type="button"
+              onClick={onDismiss}
+              className="-mr-2 -mt-2.5 h-11 shrink-0 px-2 text-[12.5px] font-semibold text-white touch-manipulation active:scale-[0.97]"
+              aria-label={`Dismiss: ${announcement.title}`}
+            >
+              Dismiss
+            </button>
+          )}
+        </div>
+        <h4 className="text-[15px] font-semibold leading-snug tracking-tight !text-white">
+          {announcement.title}
+        </h4>
+        <p
+          ref={textRef}
+          className={cn('mt-1 text-[14px] leading-relaxed !text-white', !open && 'line-clamp-3')}
+        >
+          {announcement.message}
+        </p>
+        {(clamped || open) && (
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            className={cn(
+              '-ml-1 h-9 px-1 text-[13px] font-semibold touch-manipulation',
+              style.tone
+            )}
+          >
+            {open ? 'Show less' : 'Read more'}
+          </button>
+        )}
+      </div>
+    </motion.div>
+  );
+}
 
 // Helper to get dismissed IDs from storage
 function getLocalDismissed(): string[] {
@@ -172,40 +272,12 @@ export default function AnnouncementBanner() {
     <div className="space-y-2 mb-4">
       <AnimatePresence mode="popLayout">
         {visibleAnnouncements.map((announcement: Announcement) => {
-          const style = typeStyles[announcement.type] || typeStyles.info;
-          const Icon = style.icon;
-
           return (
-            <motion.div
+            <AnnouncementCard
               key={announcement.id}
-              initial={{ opacity: 0, height: 0, y: -20 }}
-              animate={{ opacity: 1, height: 'auto', y: 0 }}
-              exit={{ opacity: 0, height: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-              className={cn('rounded-xl border overflow-hidden touch-manipulation', style.bg)}
-            >
-              {/* Accent line */}
-              <div className={cn('h-[2px]', style.accent)} />
-
-              <div className="p-4 flex items-start gap-3">
-                <div className={cn('mt-0.5 shrink-0', style.iconColor)}>
-                  <Icon className="h-5 w-5" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h4 className="font-semibold text-sm !text-white">{announcement.title}</h4>
-                  <p className="text-sm !text-white mt-1 leading-relaxed">{announcement.message}</p>
-                </div>
-                {announcement.is_dismissible && (
-                  <button
-                    onClick={() => dismissMutation.mutate(announcement.id)}
-                    className="shrink-0 h-8 w-8 flex items-center justify-center rounded-lg hover:bg-white/10 touch-manipulation active:scale-95 transition-transform"
-                    aria-label="Dismiss"
-                  >
-                    <X className="h-4 w-4 !text-white" />
-                  </button>
-                )}
-              </div>
-            </motion.div>
+              announcement={announcement}
+              onDismiss={() => dismissMutation.mutate(announcement.id)}
+            />
           );
         })}
       </AnimatePresence>

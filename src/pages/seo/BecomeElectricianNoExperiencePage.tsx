@@ -127,7 +127,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Main Routes into Electrical Work</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Adult apprenticeship (3-4 years):</strong> The most comprehensive route. You
                 work for an employer, attend college, earn a wage, and qualify with a full Level 3
@@ -135,7 +135,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Domestic installer course (12-25 weeks):</strong> Focused on Part P domestic
                 work. You pay for the course and train full-time or part-time. Qualifies you for
@@ -143,7 +143,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Electrical mate/labourer route:</strong> Start working on site as an
                 electrical labourer, learn the trade informally, then formalise your skills through
@@ -151,7 +151,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Military transition:</strong> Ex-forces personnel can access funded
                 retraining through the Career Transition Partnership (CTP) and Enhanced Learning
@@ -191,28 +191,28 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">What You Get from an Apprenticeship</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Level 3 NVQ in Electrotechnical Services:</strong> The industry-standard
                 qualification recognised by all employers and competent person schemes.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>18th Edition (BS 7671:2018+A4:2026):</strong> The current Wiring Regulations
                 qualification required for all electrical work in the UK.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>AM2 assessment:</strong> The practical assessment that demonstrates
                 competence and allows JIB registration as an Approved Electrician.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>3-4 years of practical experience:</strong> Working on real installations
                 under supervision, building genuine competence that no short course can replicate.
@@ -269,21 +269,21 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>C&G 2382 (18th Edition):</strong> Understanding of BS 7671:2018+A4:2026
                 Wiring Regulations — the foundation of all electrical work in the UK.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>C&G 2330 or equivalent:</strong> Domestic electrical installer theory
                 covering circuit design, cable selection, and installation methods.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>C&G 2391 (Inspection & Testing):</strong> How to inspect and test electrical
                 installations and complete certificates. See our{' '}
@@ -291,7 +291,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Practical workshops:</strong> Hands-on wiring, testing, and fault-finding
                 exercises in a workshop environment.
@@ -329,7 +329,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Realistic Timelines</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>12-16 weeks:</strong> Intensive full-time domestic installer course. You
                 will hold the qualifications but still need supervised practical experience before
@@ -337,7 +337,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>6-12 months:</strong> Realistic timeline from starting a course to being
                 accepted onto a competent person scheme and working independently on domestic
@@ -345,7 +345,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>3-4 years:</strong> Full apprenticeship to fully qualified electrician with
                 the broadest career options (domestic, commercial, industrial).
@@ -388,7 +388,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Funding Options for Career Changers</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Apprenticeship levy / co-investment:</strong> Apprenticeship training costs
                 are fully funded for employers who pay the levy, and 95% funded (government
@@ -396,7 +396,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Advanced learner loans:</strong> Available for Level 3+ qualifications if
                 you are 19 or over. Covers course fees with repayment only starting when you earn
@@ -404,7 +404,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Adult education budget:</strong> Some Level 2 qualifications are fully
                 funded for adults aged 19+ who do not already hold a Level 2 qualification. Check
@@ -412,14 +412,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Enhanced Learning Credits (ELC):</strong> Available to ex-military personnel
                 for approved courses. Can cover a significant portion of training costs.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Payment plans:</strong> Most training providers offer interest-free payment
                 plans, spreading the cost over 6-12 months. Always check the terms carefully.
@@ -451,7 +451,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Action Plan for Career Changers</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <span className="w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center shrink-0 text-sm font-bold text-yellow-400">
+              <span className="w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center shrink-0 text-sm font-bold text-elec-yellow">
                 1
               </span>
               <span className="flex-1 text-left">
@@ -464,7 +464,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center shrink-0 text-sm font-bold text-yellow-400">
+              <span className="w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center shrink-0 text-sm font-bold text-elec-yellow">
                 2
               </span>
               <span className="flex-1 text-left">
@@ -474,7 +474,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center shrink-0 text-sm font-bold text-yellow-400">
+              <span className="w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center shrink-0 text-sm font-bold text-elec-yellow">
                 3
               </span>
               <span className="flex-1 text-left">
@@ -484,7 +484,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center shrink-0 text-sm font-bold text-yellow-400">
+              <span className="w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center shrink-0 text-sm font-bold text-elec-yellow">
                 4
               </span>
               <span className="flex-1 text-left">
@@ -494,7 +494,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center shrink-0 text-sm font-bold text-yellow-400">
+              <span className="w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center shrink-0 text-sm font-bold text-elec-yellow">
                 5
               </span>
               <span className="flex-1 text-left">
@@ -521,7 +521,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Mistakes to Avoid</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Choosing the cheapest course:</strong> The cheapest course is rarely the
                 best value. Check what qualifications are included, how much practical workshop time
@@ -531,7 +531,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Expecting to earn immediately after the course:</strong> Completing a
                 domestic installer course gives you qualifications, not experience. Most career
@@ -540,7 +540,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Ignoring the business side:</strong> If your plan is to{' '}
                 <SEOInternalLink href="/guides/going-self-employed-electrician">
@@ -551,7 +551,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Not networking:</strong> The electrical trade runs on relationships.
                 Building a network of contacts — other electricians, suppliers, estate agents,
@@ -634,7 +634,7 @@ export default function BecomeElectricianNoExperiencePage() {
       badgeIcon={GraduationCap}
       heroTitle={
         <>
-          How to Become an Electrician <span className="text-yellow-400">with No Experience</span>
+          How to Become an Electrician <span className="text-elec-yellow">with No Experience</span>
         </>
       }
       heroSubtitle="A practical, honest guide for career changers. Whether you are 25 or 55, there is a proven route into the electrical trade — and the UK needs you. Here is exactly how to get started, what it costs, and how long it takes."

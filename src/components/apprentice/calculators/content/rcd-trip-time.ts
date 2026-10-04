@@ -11,7 +11,7 @@ export const rcdTripTimeContent: CalculatorContent = {
 
   whyItMatters: [
     'An RCD providing additional protection must disconnect fast enough to limit the duration of a shock current.',
-    'For a 30 mA RCD, the single AC test at 1× IΔn confirms it trips within 300 ms. BS 7671:2018+A4:2026 deleted Appendix 3 Table 3A and the 5× IΔn test — one test at rated residual current now verifies the device, whatever its Type.',
+    'For a 30 mA RCD, the single AC test at 1× IΔn confirms it trips within 300 ms. BS 7671:2018+A2:2022 deleted Appendix 3 Table 3A and the 5× IΔn test — one test at rated residual current now verifies the device, whatever its Type.',
     'Additional protection by a 30 mA RCD is mandatory for many socket-outlet and luminaire circuits in domestic premises.',
   ],
 
@@ -24,7 +24,7 @@ export const rcdTripTimeContent: CalculatorContent = {
 
   commonMistakes: [
     'Not proving the test instrument before and after the test',
-    'Still recording a 5× IΔn / 40 ms result — that test was deleted at A4:2026 and an assessor will query it',
+    'Still recording a 5× IΔn / 40 ms result — that test was deleted at A2:2022 and an assessor will query it',
     'Testing at only one phase angle — test at 0° and 180° and record the slower time',
     'Quoting AC-only trip behaviour where a Type A (or higher) device is required for the load',
     'Confusing the 300 ms general limit with the 130–500 ms window for ‘S’ (time-delayed) types',
@@ -71,7 +71,7 @@ export const rcdTripTimeContent: CalculatorContent = {
     columns: ['Test current', 'General (non-delayed)', '‘S’ (time-delayed)'],
     rows: [
       ['1× IΔn (30 mA), AC test', '≤ 300 ms', '130–500 ms'],
-      ['5× IΔn (150 mA)', 'Deleted at A4:2026', 'Deleted at A4:2026'],
+      ['5× IΔn (150 mA)', 'Deleted at A2:2022', 'Deleted at A2:2022'],
     ],
     footnote: 'Trip-time limits are set by the RCD product standards (BS EN 61008-1 / 61009-1).',
   },
@@ -80,6 +80,6 @@ export const rcdTripTimeContent: CalculatorContent = {
     status: 'verified',
     generatedAt: '2026-09-02',
     notes:
-      'Reg 411.3.3 and 411.3.4 verified against A4:2026 facets. Trip-time limits from the device product standards (BS EN 61008/61009). A4:2026 deletion of Appendix 3 Table 3A and the 5×IΔn test verified against the A4 facets (single AC test at IΔn regardless of Type) — explainer rewritten 2026-09-02 to match.',
+      'Reg 411.3.3 and 411.3.4 verified against A4:2026 facets. Trip-time limits from the device product standards (BS EN 61008/61009). A2:2022 deletion of Appendix 3 Table 3A and the 5×IΔn test verified against the A4 facets (single AC test at IΔn regardless of Type) — explainer rewritten 2026-09-02 to match.',
   },
 };

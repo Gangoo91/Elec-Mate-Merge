@@ -44,7 +44,7 @@ export default function FP200CableGuidePage() {
         <>
           FP200 Cable Guide
           <br />
-          <span className="text-yellow-400">Fire Performance Cable UK</span>
+          <span className="text-elec-yellow">Fire Performance Cable UK</span>
         </>
       }
       heroSubtitle="FP200 cable is the most widely used fire-resistant cable in UK electrical installations. This guide covers its construction, fire survival performance, where fire-resistant cable is required by regulations, installation methods, testing procedures, and how it compares to MICC and other fire performance cables."
@@ -114,18 +114,18 @@ export default function FP200CableGuidePage() {
                 </h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Solid copper conductors</strong> — Plain
+                      <strong className="text-elec-yellow">Solid copper conductors</strong> — Plain
                       annealed copper, typically 1.5 mm squared or 2.5 mm squared for fire alarm and
                       emergency lighting applications. Available up to 4.0 mm squared for higher
                       current circuits.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Silicone rubber insulation</strong> — Each
+                      <strong className="text-elec-yellow">Silicone rubber insulation</strong> — Each
                       conductor is insulated with silicone rubber. This is the key fire performance
                       layer — when exposed to fire, the silicone rubber does not burn but instead
                       converts to a ceramic (silicon dioxide) that maintains its insulating
@@ -134,9 +134,9 @@ export default function FP200CableGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Mica glass tape</strong> — A layer of mica
+                      <strong className="text-elec-yellow">Mica glass tape</strong> — A layer of mica
                       glass tape is wrapped around each insulated conductor. Mica is a natural
                       mineral that is chemically stable at temperatures exceeding 1,000 degrees
                       Celsius. This tape provides an additional fire barrier and mechanical support
@@ -144,25 +144,25 @@ export default function FP200CableGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Circuit protective conductor</strong> — A
+                      <strong className="text-elec-yellow">Circuit protective conductor</strong> — A
                       bare copper CPC is laid alongside the insulated conductors (similar to the
                       earth in twin and earth cable).
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Aluminium moisture barrier</strong> — A
+                      <strong className="text-elec-yellow">Aluminium moisture barrier</strong> — A
                       laminated aluminium tape wraps around the core assembly, providing a moisture
                       barrier and electromagnetic screening.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">LSZH outer sheath</strong> — The outermost
+                      <strong className="text-elec-yellow">LSZH outer sheath</strong> — The outermost
                       layer is a Low Smoke Zero Halogen (LSZH) thermoplastic sheath, coloured white
                       (standard) or red (for fire alarm circuits). LSZH sheaths produce minimal
                       smoke and no toxic halogen gases (such as hydrogen chloride) when exposed to
@@ -193,7 +193,7 @@ export default function FP200CableGuidePage() {
               </p>
               <div className="space-y-4 my-6">
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-2">
+                  <h3 className="font-bold text-elec-yellow text-lg mb-2">
                     Fire Detection and Alarm Systems (BS 5839)
                   </h3>
                   <p className="text-white text-sm leading-relaxed">
@@ -212,7 +212,7 @@ export default function FP200CableGuidePage() {
                   </p>
                 </div>
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-2">
+                  <h3 className="font-bold text-elec-yellow text-lg mb-2">
                     Emergency Lighting (BS 5266)
                   </h3>
                   <p className="text-white text-sm leading-relaxed">
@@ -273,9 +273,9 @@ export default function FP200CableGuidePage() {
                 </h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Cable clips and fixings</strong> — Use
+                      <strong className="text-elec-yellow">Cable clips and fixings</strong> — Use
                       fire-rated cable clips or cleats to ensure the cable remains in position
                       during a fire. Standard plastic cable clips will melt and release the cable,
                       potentially allowing it to fall and be damaged. Metal clips, fire-rated
@@ -283,9 +283,9 @@ export default function FP200CableGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Segregation from other cables</strong> —
+                      <strong className="text-elec-yellow">Segregation from other cables</strong> —
                       Where FP200 cables run alongside standard PVC cables, ensure adequate
                       segregation. In a fire, burning PVC cables can produce enough heat to damage
                       adjacent FP200 cables, and the mechanical collapse of melting PVC cables can
@@ -294,9 +294,9 @@ export default function FP200CableGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Bending radius</strong> — FP200 cable has
+                      <strong className="text-elec-yellow">Bending radius</strong> — FP200 cable has
                       a minimum bending radius of 6 times the overall cable diameter. The silicone
                       rubber insulation is less flexible than PVC, and sharp bends can crack the
                       insulation, compromising fire performance. Use gradual bends and avoid
@@ -304,9 +304,9 @@ export default function FP200CableGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Stripping and termination</strong> — Strip
+                      <strong className="text-elec-yellow">Stripping and termination</strong> — Strip
                       the LSZH outer sheath carefully to avoid damaging the aluminium tape and
                       silicone insulation beneath. Use a proper cable stripping tool set for the
                       correct diameter. The silicone insulation can be stripped using standard wire
@@ -314,9 +314,9 @@ export default function FP200CableGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Fire barriers</strong> — Where FP200
+                      <strong className="text-elec-yellow">Fire barriers</strong> — Where FP200
                       cables pass through fire compartment walls and floors, fire-rated penetration
                       seals (fire stops) must be used. The penetration seal must be tested and
                       certified for use with the specific cable type and size. Standard builders'
@@ -351,7 +351,7 @@ export default function FP200CableGuidePage() {
               </p>
               <div className="space-y-4 my-6">
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-2">
+                  <h3 className="font-bold text-elec-yellow text-lg mb-2">
                     BS EN 50200 — Circuit Integrity Under Fire
                   </h3>
                   <p className="text-white text-sm leading-relaxed">
@@ -426,9 +426,9 @@ export default function FP200CableGuidePage() {
                 <h3 className="font-bold text-white text-lg mb-4">FP200 Cable Test Sequence</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Continuity of protective conductors
                       </strong>{' '}
                       — Measure the continuity of the CPC (earth conductor) through the cable run.
@@ -438,9 +438,9 @@ export default function FP200CableGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Insulation resistance</strong> — Test
+                      <strong className="text-elec-yellow">Insulation resistance</strong> — Test
                       between all conductors and between each conductor and the CPC/screen at 500V
                       DC. New FP200 cable should read above 100 megaohms. Low readings may indicate
                       installation damage — check for nicks in the silicone insulation caused during
@@ -448,18 +448,18 @@ export default function FP200CableGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Earth fault loop impedance</strong> —
+                      <strong className="text-elec-yellow">Earth fault loop impedance</strong> —
                       Measure Zs for power circuits supplied by FP200 cable (emergency lighting
                       central battery supplies, smoke ventilation fan circuits). Verify against the
                       maximum permitted Zs for the protective device.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Functional testing</strong> — Test the
+                      <strong className="text-elec-yellow">Functional testing</strong> — Test the
                       fire alarm system to BS 5839 requirements (zone testing, cause and effect,
                       sounder levels) and emergency lighting to BS 5266 requirements (duration test,
                       illumination levels). Record results on the appropriate certificate forms.
@@ -616,7 +616,7 @@ export default function FP200CableGuidePage() {
         },
       ]}
       ctaHeading="Certify Fire-Critical Installations"
-      ctaSubheading="Elec-Mate's fire alarm and emergency lighting certificates document FP200 cable installations with full test results and compliance checks. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's fire alarm and emergency lighting certificates document FP200 cable installations with full test results and compliance checks. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

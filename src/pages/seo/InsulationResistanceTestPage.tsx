@@ -175,27 +175,27 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white leading-relaxed">
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">SELV/PELV (up to 50 V):</strong> Test at 250 V
+                <strong className="text-elec-yellow">SELV/PELV (up to 50 V):</strong> Test at 250 V
                 DC — minimum 0.5 MΩ. Used for separated extra-low voltage and protective extra-low
                 voltage circuits such as bathroom shaver supplies, garden lighting transformers, and
                 specialist ELV equipment.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Up to 500 V (standard circuits):</strong> Test
+                <strong className="text-elec-yellow">Up to 500 V (standard circuits):</strong> Test
                 at 500 V DC — minimum 1.0 MΩ. This covers all standard domestic and commercial
                 installations operating at 230 V single-phase and 400 V three-phase. This is the
                 test voltage you will use for the vast majority of insulation resistance testing.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Above 500 V:</strong> Test at 1000 V DC —
+                <strong className="text-elec-yellow">Above 500 V:</strong> Test at 1000 V DC —
                 minimum 1.0 MΩ. Used for high-voltage distribution systems and certain industrial
                 installations. Less common in everyday domestic work.
               </span>
@@ -204,7 +204,7 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-1">Important: 1 MΩ is the bare minimum</h4>
               <p className="text-white text-sm leading-relaxed">
@@ -220,7 +220,7 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 mt-4">
           <div className="flex items-start gap-3">
-            <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-1">
                 A4:2026 change — 250 V DC post-connection test (Reg 643.3)
@@ -283,7 +283,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
           <div className="flex items-start gap-3">
-            <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-2">
                 GN3 two-stage approach for new installations
@@ -295,7 +295,7 @@ const sections = [
               </p>
               <ul className="space-y-2 text-white text-sm leading-relaxed">
                 <li className="flex items-start gap-2">
-                  <span className="font-bold text-yellow-400 shrink-0">Stage (i):</span>
+                  <span className="font-bold text-elec-yellow shrink-0">Stage (i):</span>
                   <span>
                     Carried out when circuit cables are <em>first installed</em>, before accessories
                     or equipment are fitted. Tests are performed between line conductors (L-L) and
@@ -305,7 +305,7 @@ const sections = [
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="font-bold text-yellow-400 shrink-0">Stage (ii):</span>
+                  <span className="font-bold text-elec-yellow shrink-0">Stage (ii):</span>
                   <span>
                     Carried out on the complete circuit after the installation is finished, with
                     current-using equipment disconnected. This is the standard Table 64 test
@@ -343,7 +343,7 @@ const sections = [
         <div className="grid sm:grid-cols-2 gap-4 my-4">
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-3">
-              <span className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm">
+              <span className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm">
                 1
               </span>
               <h3 className="font-bold text-white text-lg">L+N Combined to Earth</h3>
@@ -358,7 +358,7 @@ const sections = [
           </div>
           <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <div className="flex items-center gap-2 mb-3">
-              <span className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm">
+              <span className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm">
                 2
               </span>
               <h3 className="font-bold text-white text-lg">Line to Neutral</h3>
@@ -402,17 +402,17 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white leading-relaxed">
             <li className="flex items-start gap-3">
-              <Gauge className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">New installations (less than 5 years):</strong>{' '}
+                <strong className="text-elec-yellow">New installations (less than 5 years):</strong>{' '}
                 Typically 200 MΩ or higher. Readings below 50 MΩ on a new installation should prompt
                 investigation — they may indicate installation damage to cables.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">
+                <strong className="text-elec-yellow">
                   Established installations (5 to 25 years):
                 </strong>{' '}
                 Typically 20 MΩ to 200 MΩ depending on cable type, environment, and loading history.
@@ -420,9 +420,9 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Older installations (over 25 years):</strong>{' '}
+                <strong className="text-elec-yellow">Older installations (over 25 years):</strong>{' '}
                 Readings above 2 MΩ are typical for aged wiring in reasonable condition. PVC
                 insulation degrades over decades, particularly in warm environments. Readings
                 between 1 MΩ and 2 MΩ suggest monitoring is needed — the insulation is close to the
@@ -430,9 +430,9 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Below 1 MΩ:</strong> Failure. The circuit must
+                <strong className="text-elec-yellow">Below 1 MΩ:</strong> Failure. The circuit must
                 not be energised until the fault is identified and rectified. Investigate by
                 splitting the circuit into sections.
               </span>
@@ -461,7 +461,7 @@ const sections = [
         <div className="space-y-4 mt-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <ThermometerSun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ThermometerSun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Moisture ingress</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -475,7 +475,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Heat-damaged insulation</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -489,7 +489,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Carbonised insulation</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -503,7 +503,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Mechanical damage to cables</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -517,7 +517,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Connected equipment not disconnected</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -547,24 +547,24 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Three-Phase Testing Sequence</h3>
           <ul className="space-y-3 text-white leading-relaxed">
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Step 1 — All live conductors to earth:</strong>{' '}
+                <strong className="text-elec-yellow">Step 1 — All live conductors to earth:</strong>{' '}
                 Link L1, L2, L3, and N together. Test to earth. This is the quickest check — if this
                 passes with a high reading, all four conductors have good insulation to earth.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Step 2 — Between conductors:</strong> Remove the
+                <strong className="text-elec-yellow">Step 2 — Between conductors:</strong> Remove the
                 links. Test L1-L2, L1-L3, L2-L3, L1-N, L2-N, L3-N. Each must read at least 1 MΩ.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Three-phase motors:</strong> Disconnect all
+                <strong className="text-elec-yellow">Three-phase motors:</strong> Disconnect all
                 three-phase motors, drives, and inverters before testing. These provide
                 low-impedance parallel paths and can be damaged by the test voltage. Test the motor
                 windings separately if required.
@@ -581,7 +581,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 mt-4">
           <div className="flex items-start gap-3">
-            <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-1">
                 Board-level vs circuit-level testing (Reg 643.3.2)
@@ -711,7 +711,7 @@ export default function InsulationResistanceTestPage() {
       heroTitle={
         <>
           Insulation Resistance Testing:{' '}
-          <span className="text-yellow-400">How to Test and Minimum Values</span>
+          <span className="text-elec-yellow">How to Test and Minimum Values</span>
         </>
       }
       heroSubtitle="The complete guide to insulation resistance testing for UK electricians. What insulation resistance is, test voltages per BS 7671 Table 64, minimum values (1 MΩ), how to perform the test, conductor combinations (L-N, L-E, N-E), typical good values by installation age, common causes of low readings, and three-phase testing."
@@ -724,7 +724,7 @@ export default function InsulationResistanceTestPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Auto-validate insulation resistance readings on site"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site testing and certification. Voice test entry, auto BS 7671 validation, board scanner, 70+ calculators. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site testing and certification. Voice test entry, auto BS 7671 validation, board scanner, 70+ calculators. 7-day free trial, cancel anytime."
     />
   );
 }

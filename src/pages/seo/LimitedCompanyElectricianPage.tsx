@@ -148,7 +148,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tax efficiency.</strong> A limited company pays corporation tax on its
                 profits (19-25%), and you extract income via a combination of salary and dividends.
@@ -157,7 +157,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Limited liability.</strong> If something goes wrong — a client does not pay
                 a large invoice, a liability claim exceeds your insurance cover, or the business
@@ -166,7 +166,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Professional image.</strong> Some commercial clients, main contractors, and
                 housing associations prefer to work with limited companies. Having "Ltd" after your
@@ -320,19 +320,19 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Small profits rate:</strong> 19% on profits up to £50,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main rate:</strong> 25% on profits over £250,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Marginal relief:</strong> Profits between £50,000 and £250,000 are taxed at
                 an effective rate between 19% and 25%, calculated using marginal relief.
@@ -370,7 +370,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Optimal Extraction Strategy 2025/26</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Salary:</strong> £12,570 per year (the personal allowance). This is tax-free
                 and keeps your NI record up to date. Your company deducts this as an expense,
@@ -378,7 +378,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dividends:</strong> Paid from post-tax profits. The first £1,000 is tax-free
                 (dividend allowance). Dividends above this are taxed at 8.75% (basic rate), 33.75%
@@ -420,11 +420,11 @@ const sections = [
             </li>
             <li className="flex justify-between border-t border-white/10 pt-2 mt-2">
               <span className="font-bold">Total tax paid</span>
-              <span className="font-bold text-yellow-400">£12,286</span>
+              <span className="font-bold text-elec-yellow">£12,286</span>
             </li>
             <li className="flex justify-between">
               <span className="font-bold">Take-home (salary + dividends)</span>
-              <span className="font-bold text-yellow-400">£47,714</span>
+              <span className="font-bold text-elec-yellow">£47,714</span>
             </li>
           </ul>
         </div>
@@ -451,7 +451,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Construction or trades experience.</strong> An accountant who understands
                 CIS, the VAT flat rate scheme for trades, capital allowances on tools and vans, and
@@ -460,7 +460,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fixed fees.</strong> Always agree a fixed annual fee upfront. This should
                 include: annual accounts, corporation tax return, personal Self Assessment return,
@@ -468,7 +468,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cloud accounting.</strong> A modern accountant will use cloud software
                 (Xero, FreeAgent, or QuickBooks) so you can see your financial position in real time
@@ -476,7 +476,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Proactive tax planning.</strong> A good accountant does not just file your
                 returns — they actively advise on how to minimise your tax bill, when to declare
@@ -484,7 +484,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Responsive communication.</strong> You need an accountant who answers
                 questions promptly — not one who takes 3 weeks to respond to an email. Ask about
@@ -514,7 +514,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Accountant fees:</strong> £1,000 to £2,500 per year. This is your biggest
                 additional cost and is non-negotiable — you cannot realistically run a limited
@@ -522,27 +522,27 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Companies House confirmation statement:</strong> £13 per year.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Business bank account:</strong> £0 to £15 per month depending on the
                 provider. Some offer free accounts for small businesses.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Accounting software:</strong> £10 to £30 per month for Xero, FreeAgent, or
                 QuickBooks. Often included in your accountant fee.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insurance:</strong> Similar to sole trader but policies must be in the
                 company name. Employers liability insurance is legally required even if you are the
@@ -652,7 +652,7 @@ export default function LimitedCompanyElectricianPage() {
       heroTitle={
         <>
           Limited Company for Electricians:{' '}
-          <span className="text-yellow-400">The Complete Setup Guide</span>
+          <span className="text-elec-yellow">The Complete Setup Guide</span>
         </>
       }
       heroSubtitle="Should you set up a limited company? How does it save tax? What does it cost to run? This guide covers everything — from sole trader vs ltd comparison to company formation, corporation tax, salary and dividend strategy, choosing an accountant, and the mistakes to avoid."

@@ -229,7 +229,7 @@ const faqs = [
   {
     question: 'Has anything in the headline list changed recently or is about to?',
     answer:
-      'Yes — three big things to be aware of. First, BS 7671 A4:2026 is the next amendment to the Wiring Regulations and brings in updated requirements around AFDDs (arc fault detection devices), TN-C-S protective earthing and several model-form changes. Second, the PPE at Work Regulations were amended in 2022 to extend duties to limb (b) workers (most casual / agency / gig-economy workers). Third, the Building Safety Act 2022 has reshaped responsibilities on higher-risk buildings — relevant if you end up working on residential blocks above 18 m. Keep an eye on legislation.gov.uk and HSE.gov.uk for the current text.',
+      'Yes — three big things to be aware of. First, BS 7671 A4:2026 is the current amendment to the Wiring Regulations, bringing protective neutral bonding (PNB) earthing, the cables-in-walls table (Table 52.1), a battery storage chapter and model-form changes. Second, the PPE at Work Regulations were amended in 2022 to extend duties to limb (b) workers (most casual / agency / gig-economy workers). Third, the Building Safety Act 2022 has reshaped responsibilities on higher-risk buildings — relevant if you end up working on residential blocks above 18 m. Keep an eye on legislation.gov.uk and HSE.gov.uk for the current text.',
   },
 ];
 
@@ -790,7 +790,7 @@ export default function Sub1() {
             'ESQCR 2002 sets the legal boundary at the cut-out fuse and meter. DNO equipment beyond that point is off-limits to electricians without specific authorisation.',
             'ACoPs have special evidential status under HASAWA s.16 — departure shifts the burden of proof onto you. HSG / INDG / GS guidance is strong evidence of best practice but without s.16 status. Either way, departing from HSE guidance without a documented alternative is a bad position to defend.',
             'Authoritative sources: legislation.gov.uk for statute, HSE.gov.uk for guidance, IET for BS 7671, GOV.UK for Building Regs Approved Documents. Forum chat and old training notes are not authoritative.',
-            'Three changes to watch: BS 7671 A4:2026 (AFDD, TN-C-S, schedule columns), PPE at Work Regs 2022 amendment (limb (b) workers), Building Safety Act 2022 (high-rise residential).',
+            'Three changes to watch: BS 7671 A4:2026 (PNB, Table 52.1, battery storage), PPE at Work Regs 2022 amendment (limb (b) workers), Building Safety Act 2022 (high-rise residential).',
           ]}
         />
 

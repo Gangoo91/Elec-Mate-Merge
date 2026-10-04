@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import { getRoomTypesForProperty } from '@/data/siteVisit/roomTypes';
 import type { RoomType, PropertyType, SiteVisitRoom } from '@/types/siteVisit';
 import { inputCn } from '@/components/forms/fieldStyles';
+import { autoCompleteOff } from '@/lib/textEntry';
 
 interface RoomSelectorProps {
   existingRooms: SiteVisitRoom[];
@@ -81,7 +82,7 @@ export const RoomSelector = ({ existingRooms, onAddRoom, propertyType }: RoomSel
             placeholder="e.g. Boot room, Plant room 2"
             className={cn(inputCn, 'flex-1')}
             autoCapitalize="words"
-            autoComplete="off"
+            autoComplete={autoCompleteOff}
             enterKeyHint="done"
             autoFocus
           />

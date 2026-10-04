@@ -885,7 +885,7 @@ export default function BS7671EighteenthEditionGuidePage() {
       badgeIcon={BookOpen}
       heroTitle={
         <>
-          BS 7671: 18th Edition <span className="text-yellow-400">Wiring Regulations Guide</span>
+          BS 7671: 18th Edition <span className="text-elec-yellow">Wiring Regulations Guide</span>
         </>
       }
       heroSubtitle="The complete guide to BS 7671:2018+A4:2026 — the 18th Edition of the IET Wiring Regulations. Every part of the standard explained, what each of the four amendments actually changed, and the A4:2026 additions: Chapter 57 for stationary secondary batteries, Section 716 for Power over Ethernet, Section 545 for ICT functional earthing, Chapter 81 for energy efficiency, and the redrafted Regulation 551.7.1 for bidirectional energy flow."
@@ -900,7 +900,7 @@ export default function BS7671EighteenthEditionGuidePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Every BS 7671 regulation, always in your pocket"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site regulation references, 70+ calculators, and 19 certificate types — all built to BS 7671:2018+A4:2026. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site regulation references, 70+ calculators, and 19 certificate types — all built to BS 7671:2018+A4:2026. 7-day free trial, cancel anytime."
     />
   );
 }

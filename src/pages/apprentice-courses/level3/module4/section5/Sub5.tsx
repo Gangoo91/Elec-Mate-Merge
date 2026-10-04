@@ -453,7 +453,7 @@ export default function Sub5() {
         <ConceptBlock
           title="The certificate is the headline; the schedule is the evidence"
           plainEnglish="An EIC or MEIWC without a Schedule of Test Results is half a certificate. The schedule captures the readings that justify the ‘satisfactory’ declaration and is what auditors and competent-person scheme assessors actually inspect."
-          onSite="A4:2026 changed several Schedule of Test Results columns — AFDD column on the schedule, RCD trip-time entries reflect the single AC test (no 5×IΔn column), TN-C-S identification now includes PNB. Use up-to-date model forms (2026 issue) rather than older A2:2022 templates."
+          onSite="A2:2022 changed several Schedule of Test Results columns — AFDD column on the schedule, RCD trip-time entries reflect the single AC test (no 5×IΔn column), TN-C-S identification now includes PNB. Use up-to-date model forms (2026 issue) rather than older A2:2022 templates."
         >
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>

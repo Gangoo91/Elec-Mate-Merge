@@ -300,7 +300,7 @@ export default function PlugInSolarDNOPage() {
       heroTitle={
         <>
           Plug-in Solar and Your DNO:{' '}
-          <span className="text-yellow-400">
+          <span className="text-elec-yellow">
             The {F.dnoNotificationWindowDays}-Day G98 Rule
           </span>
         </>
@@ -331,7 +331,7 @@ export default function PlugInSolarDNOPage() {
       faqHeading="Plug-in Solar DNO Notification — Frequently Asked Questions"
       relatedPages={relatedPages}
       ctaHeading="Never Miss the Notification Deadline"
-      ctaSubheading={`Elec-Mate's Plug-in Solar Suitability & Commissioning Certificate records the commissioning date and runs the ${F.dnoNotificationWindowDays}-day G98 clock from it, alongside the assessment, the remedial list and the handover record. Join 1,600+ UK electricians. 7-day free trial.`}
+      ctaSubheading={`Elec-Mate's Plug-in Solar Suitability & Commissioning Certificate records the commissioning date and runs the ${F.dnoNotificationWindowDays}-day G98 clock from it, alongside the assessment, the remedial list and the handover record. Join 2,100+ UK electricians. 7-day free trial.`}
     />
   );
 }

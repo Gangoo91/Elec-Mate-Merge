@@ -225,7 +225,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Light switch terminals:</strong> The most common location. Plate switches
                 with screw terminals can work loose over years of use. The flickering often worsens
@@ -234,7 +234,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lamp holder contacts:</strong> Bayonet (B22) and Edison screw (E27) lamp
                 holders have spring contacts that press against the lamp base. Over time, these
@@ -244,7 +244,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Junction boxes and ceiling roses:</strong> Screw terminals in junction boxes
                 and ceiling rose terminals can loosen over decades. Check all connections with the
@@ -252,7 +252,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Distribution board terminals:</strong> The MCB or RCBO terminal for the
                 lighting circuit can loosen. Check and re-tighten. Also check the neutral bar
@@ -287,7 +287,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Supply-side causes:</strong> Overhead line faults, loose connections on the
                 supply company's network, nearby industrial loads causing flicker, or a failing
@@ -295,7 +295,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Loose main connections:</strong> A loose connection at the supply cutout,
                 meter, or main switch causes voltage drop under load. This affects the entire
@@ -304,7 +304,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>How to check:</strong> Measure the supply voltage at the consumer unit with
                 a calibrated voltmeter. Take readings over a period of time — ideally with a
@@ -340,7 +340,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <Lightbulb className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Incompatible Dimmers</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -355,7 +355,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <Lightbulb className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Non-Dimmable LEDs on Dimmer Circuits</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -369,7 +369,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <Lightbulb className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">LED Drivers with Ghost Current</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -385,7 +385,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <Lightbulb className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Mixed Lamp Types on One Circuit</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -476,7 +476,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Power className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Power className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Normal:</strong> A momentary dip (less than 0.5 seconds) when a 3 kW kettle
                 or 10 kW shower switches on. The inrush current causes a brief voltage drop across
@@ -485,7 +485,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Power className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Power className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Investigate:</strong> A prolonged dip (several seconds or longer) or a
                 severe dip (lights visibly dim by more than 10 to 15 per cent) when an appliance
@@ -495,7 +495,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Power className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Power className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Action:</strong> If the PFC is low (below 1 kA at the origin on a typical
                 domestic supply), the supply impedance is high. This may be due to a long or
@@ -521,34 +521,34 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Flickering affects the entire property or multiple circuits simultaneously.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Lights are dimming and brightening (voltage fluctuation symptoms).</span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 There is a burning smell, buzzing sound, or warmth from any switch, socket, or the
                 consumer unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 The flickering started after a storm, power cut, or unusual electrical event.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>The flickering has been getting progressively worse over weeks or months.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Any light switch, socket, or faceplate shows signs of discolouration, melting, or
                 heat damage.
@@ -649,7 +649,7 @@ export default function LightsFlickeringPage() {
       heroTitle={
         <>
           Lights Flickering?{' '}
-          <span className="text-yellow-400">Electrical Causes and How to Fix Them</span>
+          <span className="text-elec-yellow">Electrical Causes and How to Fix Them</span>
         </>
       }
       heroSubtitle="Flickering lights range from a harmless LED compatibility issue to a dangerous neutral fault or arcing connection. This guide covers every common cause, explains which ones are urgent, and provides a systematic diagnosis approach for electricians."
@@ -660,7 +660,7 @@ export default function LightsFlickeringPage() {
       faqHeading="Frequently Asked Questions About Flickering Lights"
       relatedPages={relatedPages}
       ctaHeading="Diagnose Electrical Faults with AI"
-      ctaSubheading="AI fault diagnosis, digital EICR certificates, defect code suggestions, and calculators for voltage drop, Zs, and more. Join 1,600+ UK electricians using Elec-Mate. 7-day free trial."
+      ctaSubheading="AI fault diagnosis, digital EICR certificates, defect code suggestions, and calculators for voltage drop, Zs, and more. Join 2,100+ UK electricians using Elec-Mate. 7-day free trial."
     />
   );
 }

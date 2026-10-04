@@ -44,7 +44,7 @@ export default function AFDDGuidePage() {
         <>
           AFDD Arc Fault Detection
           <br />
-          <span className="text-yellow-400">BS 7671 Requirements Explained</span>
+          <span className="text-elec-yellow">BS 7671 Requirements Explained</span>
         </>
       }
       heroSubtitle="Arc Fault Detection Devices (AFDDs) are becoming increasingly important in UK electrical installations. This guide explains what AFDDs are, how they work, where BS 7671 requires them, the difference between AFDDs and RCBOs, installation requirements, and the practical considerations for electricians specifying them."
@@ -81,7 +81,7 @@ export default function AFDDGuidePage() {
               <p>There are two types of arc fault that AFDDs protect against:</p>
               <div className="grid sm:grid-cols-2 gap-4 my-6">
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-3">Series Arc Faults</h3>
+                  <h3 className="font-bold text-elec-yellow text-lg mb-3">Series Arc Faults</h3>
                   <p className="text-white text-sm leading-relaxed">
                     Occur when a conductor breaks or a connection loosens within the circuit,
                     creating a gap that current arcs across. The current is limited by the load
@@ -136,7 +136,7 @@ export default function AFDDGuidePage() {
               <p>The AFDD analyses several characteristics of the current waveform:</p>
               <ul className="space-y-3 my-4">
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">High-frequency noise content</strong> — Arcs
                     produce broadband high-frequency noise that normal loads do not. The AFDD
@@ -145,7 +145,7 @@ export default function AFDDGuidePage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Current irregularities at zero-crossing</strong>{' '}
                     — Arcs tend to extinguish momentarily as the AC waveform passes through zero and
@@ -154,7 +154,7 @@ export default function AFDDGuidePage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Duration and persistence</strong> — Normal
                     switching events are brief (milliseconds). Dangerous arc faults persist for
@@ -163,7 +163,7 @@ export default function AFDDGuidePage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Current amplitude changes</strong> — The AFDD
                     monitors for the random amplitude variations characteristic of an unstable arc,
@@ -202,9 +202,9 @@ export default function AFDDGuidePage() {
                 </h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Houses in Multiple Occupation (HMOs)
                       </strong>{' '}
                       — HMOs present a higher fire risk due to multiple independent households
@@ -214,9 +214,9 @@ export default function AFDDGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Buildings with sleeping accommodation above the fourth floor
                       </strong>{' '}
                       — In buildings over four storeys, escape in the event of fire takes longer and
@@ -225,26 +225,26 @@ export default function AFDDGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Care homes and residential homes</strong>{' '}
+                      <strong className="text-elec-yellow">Care homes and residential homes</strong>{' '}
                       — Occupants may have limited mobility or awareness, making them more
                       vulnerable in a fire. Electrical fire prevention is critical in these
                       settings.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Student accommodation</strong> — High
+                      <strong className="text-elec-yellow">Student accommodation</strong> — High
                       occupancy, high use of electrical equipment, and sleeping accommodation create
                       a combination of risk factors that AFDDs help to mitigate.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Premises with combustible construction
                       </strong>{' '}
                       — Timber-framed buildings, buildings with thatched roofs, and properties with
@@ -254,9 +254,9 @@ export default function AFDDGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Locations with a risk of fire due to stored materials
                       </strong>{' '}
                       — Premises where combustible materials, goods, or products are stored close to
@@ -301,7 +301,7 @@ export default function AFDDGuidePage() {
                     leakage.
                   </p>
                   <div className="text-white text-sm">
-                    <strong className="text-yellow-400">Detects:</strong> Overcurrent only
+                    <strong className="text-elec-yellow">Detects:</strong> Overcurrent only
                   </div>
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
@@ -312,19 +312,19 @@ export default function AFDDGuidePage() {
                     arcs and line-to-neutral parallel arcs.
                   </p>
                   <div className="text-white text-sm">
-                    <strong className="text-yellow-400">Detects:</strong> Overcurrent + earth
+                    <strong className="text-elec-yellow">Detects:</strong> Overcurrent + earth
                     leakage
                   </div>
                 </div>
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-3">AFDD/RCBO</h3>
+                  <h3 className="font-bold text-elec-yellow text-lg mb-3">AFDD/RCBO</h3>
                   <p className="text-white text-sm leading-relaxed mb-3">
                     Combines all three functions — arc fault detection, RCD, and MCB. Protects
                     against overcurrent, earth leakage, AND arc faults. Provides the most
                     comprehensive circuit protection currently available.
                   </p>
                   <div className="text-white text-sm">
-                    <strong className="text-yellow-400">Detects:</strong> Overcurrent + earth
+                    <strong className="text-elec-yellow">Detects:</strong> Overcurrent + earth
                     leakage + arc faults
                   </div>
                 </div>
@@ -361,7 +361,7 @@ export default function AFDDGuidePage() {
               </p>
               <ul className="space-y-3 my-4">
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Board compatibility</strong> — AFDD/RCBO devices
                     are wider than standard RCBOs (typically 2 modules instead of 1). The consumer
@@ -371,7 +371,7 @@ export default function AFDDGuidePage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Wiring method</strong> — Both the line and
                     neutral conductors for the protected circuit must pass through the AFDD. This is
@@ -380,7 +380,7 @@ export default function AFDDGuidePage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">One AFDD per circuit</strong> — Each final
                     circuit that requires AFDD protection must have its own device. AFDDs cannot
@@ -389,7 +389,7 @@ export default function AFDDGuidePage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Circuit length and cable type</strong> — Some
                     AFDD manufacturers specify maximum circuit lengths or restrictions on cable
@@ -399,7 +399,7 @@ export default function AFDDGuidePage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Testing</strong> — AFDDs have a built-in test
                     button that simulates an arc fault to verify the trip mechanism. This should be
@@ -489,7 +489,7 @@ export default function AFDDGuidePage() {
               <div className="space-y-4 my-4">
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-start gap-3">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <div>
                       <h3 className="font-bold text-white mb-1">Nuisance tripping</h3>
                       <p className="text-white text-sm leading-relaxed">
@@ -506,7 +506,7 @@ export default function AFDDGuidePage() {
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-start gap-3">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <div>
                       <h3 className="font-bold text-white mb-1">Board space</h3>
                       <p className="text-white text-sm leading-relaxed">
@@ -521,7 +521,7 @@ export default function AFDDGuidePage() {
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-start gap-3">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <div>
                       <h3 className="font-bold text-white mb-1">Client cost expectations</h3>
                       <p className="text-white text-sm leading-relaxed">
@@ -631,7 +631,7 @@ export default function AFDDGuidePage() {
         },
       ]}
       ctaHeading="Certify AFDD Installations Digitally"
-      ctaSubheading="Elec-Mate's certificate forms include AFDD fields, AI regulations lookup, and consumer unit design guidance. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's certificate forms include AFDD fields, AI regulations lookup, and consumer unit design guidance. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

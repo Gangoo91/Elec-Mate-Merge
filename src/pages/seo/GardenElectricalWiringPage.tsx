@@ -221,7 +221,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong>Cable type</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
@@ -233,7 +233,7 @@ const sections = [
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong>Termination</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
@@ -247,7 +247,7 @@ const sections = [
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong>Cable sizing</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
@@ -289,17 +289,17 @@ const sections = [
             <tbody className="divide-y divide-white/10">
               <tr>
                 <td className="py-3 pr-4">Garden (general)</td>
-                <td className="py-3 pr-4 text-yellow-400 font-semibold">0.5m (500mm)</td>
+                <td className="py-3 pr-4 text-elec-yellow font-semibold">0.5m (500mm)</td>
                 <td className="py-3">Cable tiles and warning tape above the cable</td>
               </tr>
               <tr>
                 <td className="py-3 pr-4">Under paved areas (patio, paths)</td>
-                <td className="py-3 pr-4 text-yellow-400 font-semibold">0.45m (450mm)</td>
+                <td className="py-3 pr-4 text-elec-yellow font-semibold">0.45m (450mm)</td>
                 <td className="py-3">Paving provides some mechanical protection</td>
               </tr>
               <tr>
                 <td className="py-3 pr-4">Under driveways (vehicles)</td>
-                <td className="py-3 pr-4 text-yellow-400 font-semibold">0.6m (600mm) preferred</td>
+                <td className="py-3 pr-4 text-elec-yellow font-semibold">0.6m (600mm) preferred</td>
                 <td className="py-3">Or use heavy steel conduit for additional protection</td>
               </tr>
               <tr>
@@ -311,7 +311,7 @@ const sections = [
           </table>
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4 flex items-start gap-4">
-          <Shovel className="w-6 h-6 text-yellow-400 shrink-0 mt-0.5" />
+          <Shovel className="w-6 h-6 text-elec-yellow shrink-0 mt-0.5" />
           <div>
             <p className="text-white text-sm leading-relaxed">
               <strong>Mark the cable route on an as-installed plan</strong> — cable routes should be
@@ -364,7 +364,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD at the socket:</strong> An RCD-protected socket outlet (with built-in
                 30mA RCD) can also be used, but only where a single outdoor socket is being added
@@ -388,7 +388,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minimum IP44</strong> — protection against solid particles and water
                 splashing from any direction. IP44 is the minimum for outdoor use in sheltered
@@ -397,7 +397,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protected at 30mA</strong> — mandatory under Regulation 411.3.3. The RCD
                 can be at the consumer unit (RCBO or RCD-protected way) or built into the socket
@@ -405,7 +405,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Weatherproof covers</strong> — all outdoor socket outlets should have
                 spring-loaded covers that close automatically when the socket is not in use. Some
@@ -414,7 +414,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mounting position</strong> — outdoor sockets should be mounted on a wall or
                 post at a convenient height (typically 0.75m to 1.2m from the ground), clear of
@@ -446,7 +446,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong>Dedicated circuit from main CU</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
@@ -459,7 +459,7 @@ const sections = [
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong>Consumer unit in the shed</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
@@ -471,7 +471,7 @@ const sections = [
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong>Earth electrode for TT systems</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
@@ -546,7 +546,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Cable Sizing and Voltage Drop</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -605,7 +605,7 @@ export default function GardenElectricalWiringPage() {
       heroTitle={
         <>
           Garden Electrical Wiring Regulations:{' '}
-          <span className="text-yellow-400">SWA Cable, RCD, and Compliance</span>
+          <span className="text-elec-yellow">SWA Cable, RCD, and Compliance</span>
         </>
       }
       heroSubtitle="Garden electrical installations require armoured cable, correct burial depths, mandatory 30mA RCD protection under Regulation 411.3.3, and IP-rated outdoor equipment. This guide covers everything from cable selection to Part P notification for outdoor circuits."

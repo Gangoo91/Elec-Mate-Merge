@@ -8,7 +8,7 @@
  *   - Forward to Sub 3 (the symbols those drawings use)
  *   - Forward to Sub 4 (reading scale on layout/floor plans)
  *
- * Reg sources cited: 514.9.2 (A4:2026 — diagrams shall comply with applicable
+ * Reg sources cited: 514.9.2 (A2:2022 — diagrams shall comply with applicable
  * standards), 132.13 (Documentation — paraphrased; see 132.13.1 Diagrams
  * and 132.13.2 Routine maintenance).
  */
@@ -66,10 +66,10 @@ const checks = [
     id: 'drawings-asbuilt-check',
     question: "What's the difference between an 'as-designed' drawing and an 'as-built' drawing?",
     options: [
-      'Before any testing — Reg 642 places visual inspection ahead of Reg 643 testing in Part 6 sequence.',
-      "A don't/do statement that addresses concerns about your intentions and confirms your actual purpose",
+      'As-designed is drawn to scale; as-built is a sketch with no scale',
+      "As-designed is the client's copy; as-built is the installer's own copy",
       'As-designed = before the job. As-built = updated to show what was actually installed (including any deviations)',
-      'How well and how often the contractor communicates progress, problems and costs — the technical work is assumed to be competent',
+      'There is no difference once the job has started',
     ],
     correctIndex: 2,
     explanation:
@@ -103,9 +103,9 @@ const quizQuestions = [
     question:
       'A floor plan drawing shows a kitchen with sockets marked at six positions on the wall. The drawing has a scale of 1:50 and a key in the bottom corner. What kind of drawing is this?',
     options: [
-      'Underestimating requirements',
-      'Sustainable Drainage Systems',
-      'All electronic components',
+      'Wiring diagram',
+      'Schematic diagram',
+      'Block diagram',
       'Layout drawing (floor plan)',
     ],
     correctAnswer: 3,
@@ -118,9 +118,9 @@ const quizQuestions = [
       'BS 3939 used to be the British Standard for electrical drawing symbols. What replaced it?',
     options: [
       'BS EN 60617 (now superseded by IEC 60617)',
-      'From day one, applied equally to everyone',
-      '1/R_total = 1/R1 + 1/R2 + 1/R3',
-      'Starting current which can be 6-8 times full load',
+      'BS 7671 Appendix 6',
+      'BS 1363',
+      'BS EN 60898',
     ],
     correctAnswer: 0,
     explanation:
@@ -130,10 +130,10 @@ const quizQuestions = [
     id: 5,
     question: 'Which of these statements about as-built drawings is TRUE?',
     options: [
-      'Matching task types to your natural energy levels throughout the day',
+      'They are drawn before work starts, from the design brief',
       'They reflect the final installed state including any site variations and are part of the handover',
-      'Batching similar tasks reduces attention residue by minimising context switches',
-      'Fire-rated circuits, high-temperature environments and applications requiring exceptional mechanical protection',
+      'They are needed only on commercial jobs above a set value',
+      'They replace the need for an Electrical Installation Certificate',
     ],
     correctAnswer: 1,
     explanation:
@@ -156,16 +156,16 @@ const quizQuestions = [
   {
     id: 7,
     question:
-      'A new regulation in BS 7671:2018+A4:2026 (514.9.2) clarified an expectation about drawings and charts on installations. What does it require?',
+      'Reg 514.9.2, added to BS 7671 by A2:2022, clarified an expectation about drawings and charts on installations. What does it require?',
     options: [
-      'There is no set minimum — readings should be taken to confirm the atmosphere is safe',
-      'Redundancy — two independent channels monitor the E-stop, detecting single faults',
-      'Below the front view, because you look down onto the object and the view falls below',
+      'Every drawing must carry a unique reference number and a revision letter',
+      'Symbols must be drawn at a minimum size for legibility on site',
+      'A symbol legend must appear on the same sheet as every layout',
       'Diagrams, charts and information notices shall comply with the applicable standards specified',
     ],
     correctAnswer: 3,
     explanation:
-      "514.9.2 (new in A4:2026) requires diagrams, charts and notices to comply with the applicable standards — symbols per IEC 60617, notices per BS EN 60073/60446 etc. It nailed down what 'a proper drawing' means.",
+      "514.9.2 (added by A2:2022) requires diagrams, charts and notices to comply with the applicable standards — BS EN 61082-1 and BS EN IEC/IEEE 82079-1 for diagrams, charts and instructions, BS ISO 3864-1 and BS EN ISO 7010 for warning notices and safety signs. The symbols themselves must comply with IEC 60617 under Reg 514.9.1. It nailed down what 'a proper drawing' means.",
   },
   {
     id: 8,
@@ -173,9 +173,9 @@ const quizQuestions = [
       "When a drawing is updated DURING a job to show a routing change (a sub-main is rerouted around a beam that wasn't on the original drawing), what's the conventional way of marking it?",
     options: [
       'Red-line the change on the working drawing — that becomes the basis for the as-built',
-      'Dangerous high voltages develop that can damage insulation and harm personnel',
-      'Dust-tight and protected against high-pressure, high-temperature wash-down',
-      "It's vague and may cause misunderstandings or incorrect action",
+      'Leave the drawing alone and tell the supervisor verbally',
+      'Rub out the old route and redraw it in pencil',
+      'Wait and draw a fresh sheet at the end of the job',
     ],
     correctAnswer: 0,
     explanation:
@@ -416,18 +416,17 @@ export default function Sub2() {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 7671 — Regulation 514.9.2 (new in A4:2026)"
-          clause="514.9.2 — All diagrams, charts, and information or instruction notices used in electrical installations shall comply with the applicable standards specified."
+          source="BS 7671:2018+A4:2026 — Regulation 514.9.2"
+          clause="All diagrams, charts, and information or instruction notices shall comply with BS EN 61082-1, BS EN IEC/IEEE 82079-1, and, where appropriate, BS EN 81346-1. All warning notices and other relevant safety signs shall comply with BS ISO 3864-1, BS EN ISO 7010, and BS EN IEC/IEEE 82079-1."
           meaning={
             <>
-              The regulatory anchor for the whole topic of drawings and symbols. The 'applicable
-              standards' for graphical symbols are now the IEC 60617 online database (the modern
-              continuation of BS EN 60617, which itself replaced BS 3939). Drawings using home-made
-              symbols, mixed conventions or out-of-date sets technically don't comply with this
-              regulation.
+              The regulatory anchor for drawings and notices. The symbols on them are covered by Reg
+              514.9.1, which requires IEC 60617 (the continuation of BS EN 60617, which itself
+              replaced BS 3939). Drawings using home-made symbols, mixed conventions or out-of-date
+              sets don't comply.
             </>
           }
-          cite="Reference: BS 7671:2018+A4:2026 Part 5, Section 514.9.2 (paraphrased)"
+          cite="Source: BS 7671:2018+A4:2026, Regulation 514.9.2 (added by A2:2022)."
         />
 
         <RegsCallout
@@ -722,7 +721,7 @@ export default function Sub2() {
           points={[
             'Six drawing types: block (system view), schematic (function), wiring (every conductor), circuit (function-with-components), layout (physical positions), as-built (final record).',
             "Schematic = drawn for understanding. Wiring diagram = drawn for wiring. Don't try to wire from a schematic.",
-            'BS EN 60617 (now maintained as IEC 60617) replaced BS 3939 as the standard symbol set. Reg 514.9.2 (A4:2026) requires diagrams to comply.',
+            'BS EN 60617 (now maintained as IEC 60617) replaced BS 3939 as the standard symbol set. Reg 514.9.2 (added by A2:2022) requires diagrams to comply.',
             'Layout drawings show position to scale; they do NOT show how things are wired.',
             'As-built drawings are the record of what was actually installed and are the basis for all future maintenance work.',
             'Red-lining (marking changes in red on the working drawing) is the conventional way to capture site variations as they happen.',

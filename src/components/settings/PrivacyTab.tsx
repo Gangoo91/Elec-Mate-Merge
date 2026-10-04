@@ -69,7 +69,9 @@ const PrivacyTab = () => {
   const [showRights, setShowRights] = useState(false);
   const [cookiePrefs, setCookiePrefs] = useState<CookiePreferences>({
     essential: true,
-    analytics: true,
+    // Off until the stored choice loads — showing "on" by default misstated
+    // what the person had agreed to (privacy-protective defaults, 4 Oct 2026).
+    analytics: false,
     marketing: false,
   });
   const [auditLog, setAuditLog] = useState<AuditEntry[]>([]);
@@ -167,42 +169,43 @@ const PrivacyTab = () => {
         headers: { Authorization: `Bearer ${session.access_token}` },
       });
 
-      if (response.error) throw new Error(response.error.message || 'Failed to export data');
+      if (response.error) {
+        // supabase-js hides the body behind "non-2xx status code" — read the
+        // server's own sentence (e.g. "you exported a moment ago").
+        let message = 'We couldn’t build your export. Please try again in a few minutes.';
+        try {
+          const body = await (response.error as { context?: Response }).context?.json();
+          if (body?.error) message = body.error;
+        } catch {
+          /* keep the default */
+        }
+        throw new Error(message);
+      }
 
-      const jsonStr = JSON.stringify(response.data, null, 2);
-      const fileName = `elec-mate-export-${new Date().toISOString().split('T')[0]}.json`;
+      // The server builds the ZIP (readable summary, a spreadsheet per kind
+      // of record, JSON, links to photos), stores it for 7 days and emails
+      // the link — ELE-1812. Here we just hand over the same file.
+      const { zipUrl, zipName } = (response.data ?? {}) as { zipUrl?: string; zipName?: string };
+      if (!zipUrl) throw new Error('We couldn’t build your export. Please try again in a few minutes.');
 
       if (isNative) {
-        const { Filesystem, Directory, Encoding } = await import('@capacitor/filesystem');
-        const { Share } = await import('@capacitor/share');
-        await Filesystem.writeFile({
-          path: fileName,
-          data: jsonStr,
-          directory: Directory.Cache,
-          encoding: Encoding.UTF8,
-        });
-        const { uri } = await Filesystem.getUri({ path: fileName, directory: Directory.Cache });
-        await Share.share({
-          title: 'Your Elec-Mate Data Export',
-          url: uri,
-          dialogTitle: 'Save or share your data export',
-        });
+        // Sharing a URL only shares the link; opening it lets Safari/Chrome
+        // download the ZIP to Files.
+        const { Browser } = await import('@capacitor/browser');
+        await Browser.open({ url: zipUrl });
       } else {
-        const blob = new Blob([jsonStr], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
-        a.href = url;
-        a.download = fileName;
+        a.href = zipUrl;
+        a.download = zipName || 'elec-mate-data.zip';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-        URL.revokeObjectURL(url);
       }
 
       addNotification({
         title: 'Data Exported',
         message:
-          'Your data has been exported. A confirmation email has been sent to your address.',
+          'Your data is downloading as a ZIP — open "Read me first" inside. We’ve emailed you the link too.',
         type: 'success',
       });
 
@@ -465,9 +468,7 @@ const PrivacyTab = () => {
                     Required
                   </span>
                 </div>
-                <div className="mt-0.5 text-[11.5px] text-white">
-                  Authentication and security
-                </div>
+                <div className="mt-0.5 text-[11.5px] text-white">Authentication and security</div>
               </div>
               <span className="text-[11px] font-medium uppercase tracking-[0.15em] text-emerald-400">
                 Always On
@@ -475,12 +476,8 @@ const PrivacyTab = () => {
             </div>
             <div className="flex items-center gap-4 px-5 sm:px-6 py-4">
               <div className="flex-1 min-w-0">
-                <div className="text-[15px] font-medium text-white truncate">
-                  Analytics Cookies
-                </div>
-                <div className="mt-0.5 text-[11.5px] text-white">
-                  Help us improve the platform
-                </div>
+                <div className="text-[15px] font-medium text-white truncate">Analytics Cookies</div>
+                <div className="mt-0.5 text-[11.5px] text-white">Help us improve the platform</div>
               </div>
               <Switch
                 checked={cookiePrefs.analytics}
@@ -489,9 +486,7 @@ const PrivacyTab = () => {
             </div>
             <div className="flex items-center gap-4 px-5 sm:px-6 py-4">
               <div className="flex-1 min-w-0">
-                <div className="text-[15px] font-medium text-white truncate">
-                  Marketing Cookies
-                </div>
+                <div className="text-[15px] font-medium text-white truncate">Marketing Cookies</div>
                 <div className="mt-0.5 text-[11.5px] text-white">
                   Meta &amp; Google ads measurement; Vector company identification
                 </div>
@@ -534,10 +529,7 @@ const PrivacyTab = () => {
         <motion.section variants={itemVariants} className="h-full">
           <SettingsCard eyebrow={isNative ? '03' : '04'} title="Activity">
             {auditLog.map((entry, i) => (
-              <div
-                key={i}
-                className="flex items-center justify-between gap-4 px-5 sm:px-6 py-4"
-              >
+              <div key={i} className="flex items-center justify-between gap-4 px-5 sm:px-6 py-4">
                 <div className="flex items-center gap-3 min-w-0">
                   <Dot tone="yellow" />
                   <span className="text-[13px] text-white truncate">
@@ -592,9 +584,7 @@ const PrivacyTab = () => {
                   contact info@elec-mate.com to cancel.
                 </div>
                 <p className="text-[13px]">
-                  Type{' '}
-                  <span className="font-mono font-bold text-red-400">DELETE</span>{' '}
-                  to confirm:
+                  Type <span className="font-mono font-bold text-red-400">DELETE</span> to confirm:
                 </p>
                 <Input
                   value={deleteConfirmText}

@@ -146,17 +146,17 @@ const sections = [
     content: (
       <>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 my-4 overflow-x-auto">
-          <p className="text-white/70 text-sm mb-3">
+          <p className="text-white text-sm mb-3">
             All salary figures are typical UK employed ranges for 2026. Self-employed earnings are
             typically 30&ndash;60% higher at the qualified and specialist stages.
           </p>
           <table className="w-full text-sm text-left text-white border-collapse min-w-[560px]">
             <thead>
               <tr className="border-b border-white/20">
-                <th className="py-2 pr-4 font-semibold text-yellow-400">Stage</th>
-                <th className="py-2 pr-4 font-semibold text-yellow-400">Typical salary</th>
-                <th className="py-2 pr-4 font-semibold text-yellow-400">Years to reach</th>
-                <th className="py-2 font-semibold text-yellow-400">Key qualification</th>
+                <th className="py-2 pr-4 font-semibold text-elec-yellow">Stage</th>
+                <th className="py-2 pr-4 font-semibold text-elec-yellow">Typical salary</th>
+                <th className="py-2 pr-4 font-semibold text-elec-yellow">Years to reach</th>
+                <th className="py-2 font-semibold text-elec-yellow">Key qualification</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-white/10">
@@ -206,12 +206,12 @@ const sections = [
           </table>
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4 flex items-start gap-4">
-          <ShieldCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+          <ShieldCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
           <div>
             <p className="text-white font-semibold text-sm mb-1">
               Reviewed by Andrew Moore, founder of Elec-Mate
             </p>
-            <p className="text-white/70 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               The career stages, salaries, and qualifications on this page have been reviewed by a
               JIB-registered Installation Electrician with 10+ years of UK site and domestic
               experience, including testing and inspection and self-employment. Content is kept
@@ -236,14 +236,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Duration:</strong> 3 to 4 years depending on the training provider and
                 employer.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Salary:</strong>{' '}
                 <SEOInternalLink href="/guides/apprentice-electrician-salary">
@@ -253,7 +253,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Key milestones:</strong> Level 2, Level 3, 18th Edition (C&G 2382), AM2
                 assessment, End-Point Assessment (EPA).
@@ -283,7 +283,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What you are doing:</strong> Working as a qualified electrician, tackling
                 jobs with increasing independence, building speed, and encountering situations your
@@ -291,14 +291,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Salary:</strong> £28,000 to £35,000 employed. You earn the qualified rate
                 from day one but you are still developing.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What to focus on:</strong> Get your C&G 2391 (Inspection and Testing), start
                 your{' '}
@@ -330,7 +330,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Employed salary:</strong>{' '}
                 <SEOInternalLink href="/guides/electrician-salary-uk">
@@ -340,14 +340,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Self-employed earnings:</strong> £45,000 to £65,000 for sole traders doing
                 domestic and small commercial work.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BarChart3 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart3 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Day rates:</strong>{' '}
                 <SEOInternalLink href="/guides/electrician-day-rates-uk">
@@ -380,7 +380,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Responsibilities:</strong> Allocating work to the team, quality control,
                 first fix and second fix programming, material ordering, liaising with the project
@@ -388,14 +388,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Salary:</strong> £42,000 to £55,000 employed. JIB Technician rate plus
                 supervisory allowance.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Qualifications needed:</strong> SMSTS (Site Management Safety Training
                 Scheme), First Aid at Work, ideally C&G 2391. Some employers require SSSTS (Site
@@ -431,7 +431,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Typical projects:</strong> Commercial fit-outs, new-build housing
                 developments, industrial installations, hospital and school refurbishments, data
@@ -439,7 +439,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Salary:</strong> £48,000 to £65,000 for project managers. Contracts managers
                 handling multiple projects earn £60,000 to £75,000. Senior commercial managers at
@@ -447,7 +447,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Useful qualifications:</strong> PRINCE2 or APM, construction management
                 HNC/HND or degree, NEBOSH, NEC contract management, SMSTS.
@@ -485,14 +485,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sole trader (domestic):</strong> £45,000 to £65,000 per year doing domestic
                 work — rewires, consumer unit changes, new builds, extensions, fault finding.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Contractor (commercial):</strong> £55,000 to £85,000 per year working on
                 commercial sites as a self-employed electrician, typically charging{' '}
@@ -501,7 +501,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Specialist contractor:</strong> Electricians specialising in testing and
                 inspection, EV charging, solar PV, or fire alarms can earn £70,000 to £100,000+
@@ -514,7 +514,7 @@ const sections = [
           <p className="text-orange-300 font-semibold text-sm mb-2">
             Part P: a legal requirement for domestic self-employed electricians
           </p>
-          <p className="text-white/80 text-sm leading-relaxed">
+          <p className="text-white text-sm leading-relaxed">
             If you carry out notifiable electrical work in domestic premises in England, you must
             either (a) join a government-authorised competent person scheme such as NICEIC, NAPIT,
             or ELECSA — which allows you to self-certify — or (b) notify your local building control
@@ -553,14 +553,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Small company (2-5 employees):</strong> Owner-operator earnings of £60,000
                 to £100,000 including salary and dividends. You are still on the tools part-time.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Medium company (5-20 employees):</strong> MD earnings of £80,000 to
                 £150,000. You are largely off the tools, managing the business, winning contracts,
@@ -568,7 +568,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large company (20+ employees):</strong> Director earnings of £100,000 to
                 £250,000+. At this scale, the business has significant value in its own right —
@@ -634,7 +634,7 @@ const sections = [
           <p className="text-blue-300 font-semibold text-sm mb-2">
             Regulatory requirements for specialist paths
           </p>
-          <ul className="space-y-2 text-white/80 text-sm leading-relaxed list-disc list-inside">
+          <ul className="space-y-2 text-white text-sm leading-relaxed list-disc list-inside">
             <li>
               <strong>EV charging (Section 722, BS&nbsp;7671:2018+A4:2026):</strong> EV charging
               installations must comply with Section 722, which includes specific requirements for
@@ -652,14 +652,14 @@ const sections = [
           </ul>
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
-          <p className="text-yellow-300 font-semibold text-sm mb-3">
+          <p className="text-elec-yellow font-semibold text-sm mb-3">
             Key regulatory updates — BS&nbsp;7671:2018+A4:2026
           </p>
-          <p className="text-white/80 text-sm leading-relaxed mb-2">
+          <p className="text-white text-sm leading-relaxed mb-2">
             A4:2026 introduces changes that every qualified electrician must know, particularly
             those working on domestic installations or EV charging:
           </p>
-          <ul className="space-y-2 text-white/80 text-sm leading-relaxed list-disc list-inside">
+          <ul className="space-y-2 text-white text-sm leading-relaxed list-disc list-inside">
             <li>
               <strong>AFDD — Reg 421.1.7:</strong> Arc fault detection devices (AFDDs) are now
               recommended for domestic final circuits supplying socket-outlets. The regulation uses
@@ -712,7 +712,7 @@ export default function ElectricianCareerProgressionPage() {
       heroTitle={
         <>
           Electrician Career Progression:{' '}
-          <span className="text-yellow-400">From Apprentice to Managing Director</span>
+          <span className="text-elec-yellow">From Apprentice to Managing Director</span>
         </>
       }
       heroSubtitle="The electrician career ladder runs from £14,000 as an apprentice to £150,000+ as a business owner. This guide maps every stage — the qualifications you need, the salaries you can expect, and how to accelerate your progression through specialisation and business skills."

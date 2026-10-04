@@ -147,7 +147,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main switch</strong> — isolates the entire installation. Available in single
                 pole (switches the live only) or double pole (switches live and neutral). A double
@@ -155,7 +155,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCBs</strong> — one per circuit, sized to the cable rating. They trip and
                 reset without requiring a fuse wire replacement. Common ratings: 6 A (lighting), 20
@@ -163,7 +163,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCDs and RCBOs</strong> — protect against electric shock by detecting earth
                 leakage current. Under Regulation 411.3.3 of{' '}
@@ -193,7 +193,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Victorian and Edwardian terraces</strong> — properties in EX1–EX4 postcodes
                 frequently have wiring installed in the 1960s and 1970s that may not have been
@@ -202,7 +202,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>University of Exeter rental market</strong> — Exeter has a significant
                 student rental market, particularly in the St David's, St James, and Heavitree
@@ -211,7 +211,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Holiday lets</strong> — Exeter's proximity to the Jurassic Coast and
                 Dartmoor means a proportion of EX properties are used as holiday lets. These are not
@@ -238,14 +238,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rewireable or cartridge fuses</strong> — older fuse boards with ceramic fuse
                 carriers. No RCD protection. A common finding in Exeter Victorian terraces.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Absent RCD protection on socket circuits</strong> — MCB-only boards or
                 split-load boards without RCD on socket outlets. C2 observation under Regulation
@@ -253,14 +253,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Plastic enclosure</strong> — non-compliant for any replacement work since
                 January 2016 under Regulation 421.1.201 of BS 7671.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insufficient circuit capacity</strong> — no spare ways for additional
                 circuits such as EV chargers, heat pumps, or additional sockets.
@@ -329,7 +329,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1–2 bedroom flat or terraced house</strong> — £450 to £580. Common in Exeter
                 city centre and the student rental areas. 8 to 12 circuits. Around half a day on
@@ -337,7 +337,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3–4 bedroom semi or detached</strong> — £580 to £750. Most typical Exeter
                 family home. 12 to 18 circuits. Allow 4 to 8 hours. More if wiring is older and
@@ -345,7 +345,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large Victorian terrace or HMO</strong> — £750 to £950+. High circuit count,
                 fire alarm testing, potentially multiple RCD sections or full RCBO board. Earthing
@@ -353,7 +353,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Included in all quotes</strong> — metal consumer unit, all labour, circuit
                 reconnection, bonding verification, full testing, EIC with schedule of test results,
@@ -432,7 +432,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Issue EICs On Site in Exeter</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -465,7 +465,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Exeter electrical business with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and professional certificate management."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and professional certificate management."
           icon={FileCheck2}
         />
       </>
@@ -491,7 +491,7 @@ export default function ConsumerUnitReplacementExeterPage() {
       heroTitle={
         <>
           Consumer Unit Replacement Exeter:{' '}
-          <span className="text-yellow-400">Costs, Regulations &amp; Process 2026</span>
+          <span className="text-elec-yellow">Costs, Regulations &amp; Process 2026</span>
         </>
       }
       heroSubtitle="Everything Exeter homeowners and landlords need to know about consumer unit replacement — 2026 costs from £450 to £800, the mandatory metal enclosure requirement, Part P Building Regulations, and older wiring in Exeter's Victorian and Edwardian terraced properties."
@@ -502,7 +502,7 @@ export default function ConsumerUnitReplacementExeterPage() {
       faqHeading="Frequently Asked Questions — Consumer Unit Replacement Exeter"
       relatedPages={relatedPages}
       ctaHeading="Complete Consumer Unit Certificates On Site in Exeter"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

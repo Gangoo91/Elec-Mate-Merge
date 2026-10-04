@@ -13,6 +13,7 @@ import { supabase } from '@/integrations/supabase/client';
 import type { SiteVisit } from '@/types/siteVisit';
 import { createSurveyFromSiteVisit } from '@/utils/siteVisitToSurvey';
 import { inputCn } from '@/components/forms/fieldStyles';
+import { autoCompleteOff } from '@/lib/textEntry';
 
 interface SiteVisitSignOffStepProps {
   visit: SiteVisit;
@@ -276,7 +277,7 @@ export const SiteVisitSignOffStep = ({
               placeholder="Who's signing — appears on the PDF"
               className={inputCn}
               autoCapitalize="words"
-              autoComplete="off"
+              autoComplete={autoCompleteOff}
               enterKeyHint="done"
             />
           </div>

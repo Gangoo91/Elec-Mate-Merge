@@ -45,7 +45,7 @@ export default function StaffCostCalculatorPage() {
       heroTitle={
         <>
           Staff Cost Calculator
-          <span className="block text-yellow-400 mt-1">For Electrical Employers</span>
+          <span className="block text-elec-yellow mt-1">For Electrical Employers</span>
         </>
       }
       heroSubtitle="An employee on £35,000 salary does not cost you £35,000. When you add employer NI, pension contributions, holiday pay, sick pay, training, tools, van costs, and management time, the true cost is typically 30% to 50% higher. Elec-Mate's Staff Cost Calculator shows you the full picture before you commit to hiring."
@@ -115,19 +115,19 @@ export default function StaffCostCalculatorPage() {
                 in addition to the employee's own NI, which is deducted from their pay.
               </p>
               <p>
-                <strong className="text-yellow-400">On a £30,000 salary:</strong> Employer NI =
+                <strong className="text-elec-yellow">On a £30,000 salary:</strong> Employer NI =
                 13.8% x (£30,000 - £9,100) = 13.8% x £20,900 = £2,884.20 per year.
               </p>
               <p>
-                <strong className="text-yellow-400">On a £35,000 salary:</strong> Employer NI =
+                <strong className="text-elec-yellow">On a £35,000 salary:</strong> Employer NI =
                 13.8% x (£35,000 - £9,100) = 13.8% x £25,900 = £3,574.20 per year.
               </p>
               <p>
-                <strong className="text-yellow-400">On a £40,000 salary:</strong> Employer NI =
+                <strong className="text-elec-yellow">On a £40,000 salary:</strong> Employer NI =
                 13.8% x (£40,000 - £9,100) = 13.8% x £30,900 = £4,264.20 per year.
               </p>
               <p>
-                <strong className="text-yellow-400">Employment Allowance:</strong> Small businesses
+                <strong className="text-elec-yellow">Employment Allowance:</strong> Small businesses
                 may be eligible for the Employment Allowance, which reduces your employer NI bill by
                 up to £5,000 per year. Most sole traders taking on their first employee will
                 qualify, effectively eliminating employer NI for a single employee on a salary up to
@@ -159,20 +159,20 @@ export default function StaffCostCalculatorPage() {
                 £10,000 per year, and working in the UK.
               </p>
               <p>
-                <strong className="text-yellow-400">Minimum contributions:</strong> The current
+                <strong className="text-elec-yellow">Minimum contributions:</strong> The current
                 minimum total contribution is 8% of qualifying earnings, of which the employer must
                 pay at least 3%. Qualifying earnings are those between £6,240 and £50,270 (2025/26).
                 On a salary of £35,000, qualifying earnings are £28,760, so the minimum employer
                 contribution is 3% x £28,760 = £862.80 per year.
               </p>
               <p>
-                <strong className="text-yellow-400">In practice:</strong> Many employers contribute
+                <strong className="text-elec-yellow">In practice:</strong> Many employers contribute
                 more than the minimum to attract and retain good staff. Offering 5% employer
                 contribution on a £35,000 salary costs £1,438 per year but can make a significant
                 difference in recruiting experienced electricians in a competitive market.
               </p>
               <p>
-                <strong className="text-yellow-400">Administration:</strong> You need to choose a
+                <strong className="text-elec-yellow">Administration:</strong> You need to choose a
                 pension provider, set up the scheme, communicate with employees, process monthly
                 contributions, and handle opt-outs and re-enrolment. The Pensions Regulator provides
                 free tools for small employers, and most payroll software handles the calculation
@@ -200,14 +200,14 @@ export default function StaffCostCalculatorPage() {
                 days.
               </p>
               <p>
-                <strong className="text-yellow-400">The productivity impact:</strong> If your
+                <strong className="text-elec-yellow">The productivity impact:</strong> If your
                 employee generates £300 per day in billable revenue, 28 days of holiday represents
                 £8,400 in lost billing opportunity. This must be factored into your job pricing and
                 revenue targets. Effectively, each productive day needs to generate enough revenue
                 to cover the cost of 1.12 days (232 productive days covering 260 paid days).
               </p>
               <p>
-                <strong className="text-yellow-400">Statutory Sick Pay (SSP):</strong> From 6 April
+                <strong className="text-elec-yellow">Statutory Sick Pay (SSP):</strong> From 6 April
                 2026 you must pay SSP from the first day of sickness to all employees — the old
                 three waiting days and the lower earnings limit were abolished. The 2026/27 rate is
                 £123.25 per week (or 80% of average weekly earnings if lower) for up to 28 weeks.
@@ -215,7 +215,7 @@ export default function StaffCostCalculatorPage() {
                 reorganise other jobs or hire temporary cover.
               </p>
               <p>
-                <strong className="text-yellow-400">Other statutory obligations:</strong> Maternity
+                <strong className="text-elec-yellow">Other statutory obligations:</strong> Maternity
                 pay, paternity pay, and shared parental pay are additional obligations. While less
                 common in small electrical businesses, they must be budgeted for. Most of the
                 statutory pay is reclaimable from HMRC, but the administrative burden and
@@ -244,7 +244,7 @@ export default function StaffCostCalculatorPage() {
                 direct costs and opportunity costs.
               </p>
               <p>
-                <strong className="text-yellow-400">Direct training costs:</strong> BS 7671
+                <strong className="text-elec-yellow">Direct training costs:</strong> BS 7671
                 amendment update courses (£150 to £300 each), specialist qualifications (EV charger
                 installation, solar PV, fire alarm — £300 to £800 each), health and safety refresher
                 courses (£100 to £250), and first aid training (£100 to £200). Budget £500 to £1,500
@@ -252,20 +252,20 @@ export default function StaffCostCalculatorPage() {
                 qualifications needed.
               </p>
               <p>
-                <strong className="text-yellow-400">Opportunity cost:</strong> Training days are
+                <strong className="text-elec-yellow">Opportunity cost:</strong> Training days are
                 non-billable. A 2-day course means 2 days of lost revenue (£600 to £800) plus the
                 course fee. This doubles the effective cost of training, but the long-term benefit
                 in capability and compliance justifies it.
               </p>
               <p>
-                <strong className="text-yellow-400">Tools and equipment:</strong> Each employee
+                <strong className="text-elec-yellow">Tools and equipment:</strong> Each employee
                 needs their own toolkit — hand tools, power tools, test equipment, and PPE. A basic
                 electrician's toolkit costs £2,000 to £4,000 to set up, with annual maintenance and
                 replacement costs of £500 to £1,000. Test equipment calibration adds another £200 to
                 £400 per year.
               </p>
               <p>
-                <strong className="text-yellow-400">Apprenticeship Levy:</strong> If your annual
+                <strong className="text-elec-yellow">Apprenticeship Levy:</strong> If your annual
                 payroll bill exceeds £3 million, you pay the Apprenticeship Levy at 0.5% of your
                 total payroll. For most small electrical businesses, this does not apply, but if you
                 are growing and adding employees, be aware of the threshold. Use Elec-Mate's{' '}
@@ -294,7 +294,7 @@ export default function StaffCostCalculatorPage() {
                 budget:
               </p>
               <p>
-                <strong className="text-yellow-400">Wages:</strong> Apprentice minimum wage rates
+                <strong className="text-elec-yellow">Wages:</strong> Apprentice minimum wage rates
                 for 2025/26 are £6.40 per hour for apprentices in their first year or under 19, and
                 the age-appropriate National Minimum Wage thereafter. A first-year apprentice
                 working 37.5 hours per week costs approximately £12,480 per year. A third-year
@@ -302,7 +302,7 @@ export default function StaffCostCalculatorPage() {
                 rate of £11.44 per hour).
               </p>
               <p>
-                <strong className="text-yellow-400">Training costs:</strong> The apprenticeship
+                <strong className="text-elec-yellow">Training costs:</strong> The apprenticeship
                 training itself may be funded through the Apprenticeship Levy (if applicable) or
                 government co-funding. For non-levy employers, the government pays 95% of training
                 costs with most approved training providers. Your contribution is 5% of the training
@@ -310,14 +310,14 @@ export default function StaffCostCalculatorPage() {
                 eligible for a £1,000 incentive payment for hiring an apprentice.
               </p>
               <p>
-                <strong className="text-yellow-400">Productivity:</strong> An apprentice is not
+                <strong className="text-elec-yellow">Productivity:</strong> An apprentice is not
                 immediately productive. In year one, they may contribute 20% to 30% of a qualified
                 electrician's output. By year three, this rises to 60% to 80%. You must factor in
                 the supervision time — a qualified electrician mentoring an apprentice works more
                 slowly themselves, reducing their personal productivity by 10% to 20%.
               </p>
               <p>
-                <strong className="text-yellow-400">Off-the-job training:</strong> Apprentices must
+                <strong className="text-elec-yellow">Off-the-job training:</strong> Apprentices must
                 spend 20% of their paid working hours on off-the-job training (college, online
                 learning, or workplace training that is not productive work). This is paid time, so
                 you are paying for 5 days but getting approximately 4 days of productive work.
@@ -381,7 +381,7 @@ export default function StaffCostCalculatorPage() {
                     <span>Recruitment and HR admin</span>
                     <span className="font-bold">£300</span>
                   </li>
-                  <li className="flex justify-between pt-2 text-yellow-400 font-bold">
+                  <li className="flex justify-between pt-2 text-elec-yellow font-bold">
                     <span>Total annual cost</span>
                     <span>£46,237</span>
                   </li>
@@ -530,7 +530,7 @@ export default function StaffCostCalculatorPage() {
         },
       ]}
       ctaHeading="Know the True Cost Before You Hire"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to calculate staff costs, plan capacity, and grow their teams profitably. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to calculate staff costs, plan capacity, and grow their teams profitably. 7-day free trial, cancel anytime."
       extraSchemas={[
         {
           '@type': 'SoftwareApplication',

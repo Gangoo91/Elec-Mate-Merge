@@ -173,7 +173,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Small extension — living room or utility (up to 15m²)</strong> — £1,200 to
                 £2,000. Lighting circuit, socket circuit, first-fix and second-fix labour, testing,
@@ -181,7 +181,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Medium extension — open-plan living (15–30m²)</strong> — £2,000 to £3,000.
                 Multiple circuits, potentially underfloor heating or bi-fold door lighting, more
@@ -189,7 +189,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large extension — kitchen-diner or two-storey (30m²+)</strong> — £2,800 to
                 £4,000+. Dedicated kitchen circuits (cooker, dishwasher, washing machine, fridge),
@@ -219,7 +219,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable routes from consumer unit</strong> — run new circuit cables from the
                 consumer unit to the extension. Route through the original house structure
@@ -230,7 +230,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Back boxes</strong> — install flush metal back boxes in blockwork or timber
                 stud walls before plasterboarding. Mark out socket, switch, and light switch
@@ -239,7 +239,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ceiling cables</strong> — for downlight installations, run cables in the
                 ceiling void above the plasterboard, dropping down at each downlight position. Mark
@@ -270,28 +270,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Fit socket faceplates, switch plates, and connect wiring to terminals</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Install light fittings or downlights; connect to ceiling roses or junction boxes
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Connect circuit cables at the consumer unit and fit MCBs or RCBOs</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Test all new circuits: continuity of CPCs, insulation resistance (500V DC, minimum 1
                 megohm), polarity, earth fault loop impedance, and RCD operation
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Complete and issue the{' '}
                 <SEOInternalLink href="/eic-certificate">
@@ -402,7 +402,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ShieldCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Survey Before Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -434,7 +434,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify house extension electrical work on your"
-          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification for house extension projects."
+          description="Join 2,100+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification for house extension projects."
           icon={Home}
         />
       </>
@@ -460,7 +460,7 @@ export default function ExtensionElectricalCostPage() {
       heroTitle={
         <>
           House Extension Electrical Cost:{' '}
-          <span className="text-yellow-400">First Fix, Second Fix and Part P</span>
+          <span className="text-elec-yellow">First Fix, Second Fix and Part P</span>
         </>
       }
       heroSubtitle="A house extension electrical package typically costs £1,200 to £4,000. This guide covers first and second fix stages, when to use new circuits versus extending existing rings, consumer unit considerations, and Part P notification."

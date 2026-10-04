@@ -212,7 +212,7 @@ const sections = [
               science (three-phase, power factor, impedance, transformers). Earthing arrangements in
               detail.
             </p>
-            <p className="text-white/80 text-xs leading-relaxed">
+            <p className="text-white text-xs leading-relaxed">
               <strong className="text-white">Cable sizing rating factors</strong> (Appendix 4) — the
               tabulated current-carrying capacity of a cable must be derated by all applicable rating
               factors before comparison with the design current. Under BS 7671 Reg 523.2, the
@@ -230,8 +230,8 @@ const sections = [
             </p>
           </div>
         </div>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-amber-500/30 p-5 my-4">
-          <h3 className="font-bold text-amber-300 text-base mb-2">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.1] p-5 my-4">
+          <h3 className="font-bold text-elec-yellow text-base mb-2">
             A4:2026 Updates — Exam-Relevant for Level 3
           </h3>
           <p className="text-white text-sm leading-relaxed mb-3">
@@ -280,7 +280,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Calendar className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calendar className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Apprenticeship route</strong> — one day per week at college over 4 years.
                 Level 2 units in years 1 and 2, Level 3 units in years 3 and 4. The remaining 4 days
@@ -289,7 +289,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calendar className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calendar className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full-time private study</strong> — typically 16 to 24 weeks for Level 2 and
                 20 to 30 weeks for Level 3. Full-time courses run 4 to 5 days per week and include
@@ -298,7 +298,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calendar className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calendar className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part-time and evening classes</strong> — one or two sessions per week,
                 typically taking 1 to 2 years per level. This suits people who need to work
@@ -326,52 +326,52 @@ const sections = [
           format varies by unit, but here is what to expect:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
-          <div className="grid grid-cols-12 bg-white/[0.06] text-white/70 text-xs font-semibold uppercase tracking-wide px-4 py-3">
+          <div className="grid grid-cols-12 bg-white/[0.06] text-white text-xs font-semibold uppercase tracking-wide px-4 py-3">
             <span className="col-span-4">Assessment</span>
             <span className="col-span-4 sm:col-span-3">Typical format</span>
             <span className="col-span-4 sm:col-span-5">What it tests</span>
           </div>
           <div className="grid grid-cols-12 items-start gap-2 px-4 py-3 border-t border-white/10 text-white text-sm">
             <span className="col-span-4 font-semibold flex items-center gap-2">
-              <FileCheck2 className="w-4 h-4 text-yellow-400 shrink-0" /> Multiple-choice
+              <FileCheck2 className="w-4 h-4 text-elec-yellow shrink-0" /> Multiple-choice
             </span>
-            <span className="col-span-4 sm:col-span-3 text-white/80">
+            <span className="col-span-4 sm:col-span-3 text-white">
               ~40–60 questions, 1–2 hours, pass mark usually 60–65%
             </span>
-            <span className="col-span-4 sm:col-span-5 text-white/80">
+            <span className="col-span-4 sm:col-span-5 text-white">
               Theory of regulations, electrical science and installation principles.
             </span>
           </div>
           <div className="grid grid-cols-12 items-start gap-2 px-4 py-3 border-t border-white/10 text-white text-sm">
             <span className="col-span-4 font-semibold flex items-center gap-2">
-              <FileCheck2 className="w-4 h-4 text-yellow-400 shrink-0" /> Short-answer
+              <FileCheck2 className="w-4 h-4 text-elec-yellow shrink-0" /> Short-answer
             </span>
-            <span className="col-span-4 sm:col-span-3 text-white/80">
+            <span className="col-span-4 sm:col-span-3 text-white">
               Written responses, some units only
             </span>
-            <span className="col-span-4 sm:col-span-5 text-white/80">
+            <span className="col-span-4 sm:col-span-5 text-white">
               Explaining concepts, describing procedures and showing working for calculations.
             </span>
           </div>
           <div className="grid grid-cols-12 items-start gap-2 px-4 py-3 border-t border-white/10 text-white text-sm">
             <span className="col-span-4 font-semibold flex items-center gap-2">
-              <FileCheck2 className="w-4 h-4 text-yellow-400 shrink-0" /> Practical assessment
+              <FileCheck2 className="w-4 h-4 text-elec-yellow shrink-0" /> Practical assessment
             </span>
-            <span className="col-span-4 sm:col-span-3 text-white/80">
+            <span className="col-span-4 sm:col-span-3 text-white">
               Timed workshop task, assessed by tutor/internal assessor
             </span>
-            <span className="col-span-4 sm:col-span-5 text-white/80">
+            <span className="col-span-4 sm:col-span-5 text-white">
               Wiring, testing or fault diagnosis judged on safety, quality, accuracy and completion.
             </span>
           </div>
           <div className="grid grid-cols-12 items-start gap-2 px-4 py-3 border-t border-white/10 text-white text-sm">
             <span className="col-span-4 font-semibold flex items-center gap-2">
-              <FileCheck2 className="w-4 h-4 text-yellow-400 shrink-0" /> Delivery mode
+              <FileCheck2 className="w-4 h-4 text-elec-yellow shrink-0" /> Delivery mode
             </span>
-            <span className="col-span-4 sm:col-span-3 text-white/80">
+            <span className="col-span-4 sm:col-span-3 text-white">
               Online or paper — same content
             </span>
-            <span className="col-span-4 sm:col-span-5 text-white/80">
+            <span className="col-span-4 sm:col-span-5 text-white">
               Many centres now use on-screen exams; results are often available immediately.
             </span>
           </div>
@@ -397,7 +397,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Level 2 practicals</strong> — installing wiring systems using different
                 methods (conduit bending and fitting, trunking installation, clipped direct
@@ -406,7 +406,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Level 3 practicals</strong> — more complex installations including consumer
                 unit wiring, full testing sequences, completing electrical certificates, and fault
@@ -414,7 +414,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Assessment criteria</strong> — you are assessed on safe working practices,
                 correct use of tools and equipment, quality of installation work, accuracy of test
@@ -442,26 +442,26 @@ const sections = [
           of them:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
-          <div className="grid grid-cols-12 bg-white/[0.06] text-white/70 text-xs font-semibold uppercase tracking-wide px-4 py-3">
+          <div className="grid grid-cols-12 bg-white/[0.06] text-white text-xs font-semibold uppercase tracking-wide px-4 py-3">
             <span className="col-span-4 sm:col-span-3">Component</span>
             <span className="col-span-3 sm:col-span-2">Type</span>
             <span className="col-span-5 sm:col-span-7">How it is assessed</span>
           </div>
           <div className="grid grid-cols-12 items-start gap-2 px-4 py-3 border-t border-white/10 text-white text-sm">
             <span className="col-span-4 sm:col-span-3 font-semibold flex items-center gap-2">
-              <Award className="w-4 h-4 text-yellow-400 shrink-0" /> 2365 Diploma (or 5357)
+              <Award className="w-4 h-4 text-elec-yellow shrink-0" /> 2365 Diploma (or 5357)
             </span>
             <span className="col-span-3 sm:col-span-2 text-blue-300">Knowledge</span>
-            <span className="col-span-5 sm:col-span-7 text-white/80">
+            <span className="col-span-5 sm:col-span-7 text-white">
               College-based exams and practical workshop assessments.
             </span>
           </div>
           <div className="grid grid-cols-12 items-start gap-2 px-4 py-3 border-t border-white/10 text-white text-sm">
             <span className="col-span-4 sm:col-span-3 font-semibold flex items-center gap-2">
-              <Award className="w-4 h-4 text-yellow-400 shrink-0" /> 2357 NVQ Diploma
+              <Award className="w-4 h-4 text-elec-yellow shrink-0" /> 2357 NVQ Diploma
             </span>
             <span className="col-span-3 sm:col-span-2 text-green-300">Competence</span>
-            <span className="col-span-5 sm:col-span-7 text-white/80">
+            <span className="col-span-5 sm:col-span-7 text-white">
               Workplace{' '}
               <SEOInternalLink href="/guides/nvq-level-2-electrical-portfolio">
                 portfolio evidence
@@ -471,10 +471,10 @@ const sections = [
           </div>
           <div className="grid grid-cols-12 items-start gap-2 px-4 py-3 border-t border-white/10 text-white text-sm">
             <span className="col-span-4 sm:col-span-3 font-semibold flex items-center gap-2">
-              <Award className="w-4 h-4 text-yellow-400 shrink-0" /> AM2
+              <Award className="w-4 h-4 text-elec-yellow shrink-0" /> AM2
             </span>
             <span className="col-span-3 sm:col-span-2 text-purple-300">Practical test</span>
-            <span className="col-span-5 sm:col-span-7 text-white/80">
+            <span className="col-span-5 sm:col-span-7 text-white">
               Timed independent assessment at a JIB-approved centre covering installation, testing
               and fault diagnosis.
             </span>
@@ -486,8 +486,8 @@ const sections = [
           workplace, and the AM2 tests it all under controlled conditions. They are designed to work
           together — what you learn in college should directly relate to what you do on site.
         </p>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-amber-500/30 p-5 my-4">
-          <h3 className="font-bold text-amber-300 text-base mb-2">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.1] p-5 my-4">
+          <h3 className="font-bold text-elec-yellow text-base mb-2">
             Off-the-job training hours
           </h3>
           <p className="text-white text-sm leading-relaxed">
@@ -511,7 +511,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>For apprentices (Level 2 entry)</strong> — GCSEs in maths and English at
                 grade 4/C or above (or equivalent functional skills). No prior electrical experience
@@ -520,7 +520,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>For adult learners (private study)</strong> — the same academic requirements
                 apply. If you do not have GCSEs in maths and English, you can take functional skills
@@ -529,7 +529,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>For Level 3 entry</strong> — you must have completed the 2365 Level 2 (or
                 equivalent) before starting Level 3. Some providers may accept relevant prior
@@ -557,21 +557,21 @@ const sections = [
           pay course fees. Costs vary significantly by provider, location, and study mode:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
-          <div className="grid grid-cols-3 bg-white/[0.06] text-white/70 text-xs font-semibold uppercase tracking-wide px-4 py-3">
+          <div className="grid grid-cols-3 bg-white/[0.06] text-white text-xs font-semibold uppercase tracking-wide px-4 py-3">
             <span className="col-span-2">Programme</span>
             <span className="text-right">Indicative fee</span>
           </div>
           <div className="grid grid-cols-3 items-center px-4 py-3 border-t border-white/10 text-white text-sm">
             <span className="col-span-2 flex items-center gap-2">
-              <PoundSterling className="w-4 h-4 text-yellow-400 shrink-0" /> Level 2 (full-time)
+              <PoundSterling className="w-4 h-4 text-elec-yellow shrink-0" /> Level 2 (full-time)
             </span>
-            <span className="text-right font-semibold text-yellow-300">£1,500 – £3,000</span>
+            <span className="text-right font-semibold text-elec-yellow">£1,500 – £3,000</span>
           </div>
           <div className="grid grid-cols-3 items-center px-4 py-3 border-t border-white/10 text-white text-sm">
             <span className="col-span-2 flex items-center gap-2">
-              <PoundSterling className="w-4 h-4 text-yellow-400 shrink-0" /> Level 3 (full-time)
+              <PoundSterling className="w-4 h-4 text-elec-yellow shrink-0" /> Level 3 (full-time)
             </span>
-            <span className="text-right font-semibold text-yellow-300">£2,000 – £4,000</span>
+            <span className="text-right font-semibold text-elec-yellow">£2,000 – £4,000</span>
           </div>
           <div className="grid grid-cols-3 items-center px-4 py-3 border-t border-white/10 text-white text-sm bg-green-900/20">
             <span className="col-span-2 flex items-center gap-2">
@@ -582,12 +582,12 @@ const sections = [
           </div>
           <div className="grid grid-cols-3 items-center px-4 py-3 border-t border-white/10 text-white text-sm">
             <span className="col-span-2 flex items-center gap-2">
-              <PoundSterling className="w-4 h-4 text-yellow-400 shrink-0" /> BS 7671 + On-Site Guide
+              <PoundSterling className="w-4 h-4 text-elec-yellow shrink-0" /> BS 7671 + On-Site Guide
               (books)
             </span>
-            <span className="text-right font-semibold text-yellow-300">~£80</span>
+            <span className="text-right font-semibold text-elec-yellow">~£80</span>
           </div>
-          <p className="px-4 py-3 border-t border-white/10 text-white/50 text-xs">
+          <p className="px-4 py-3 border-t border-white/10 text-white text-xs">
             Indicative market guidance only, not a quote. Fees vary by provider, location and study
             mode; full-time fees usually include tuition, workshop access, materials and exam
             entries. Budget separately for PPE, hand tools and travel.
@@ -662,7 +662,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Target className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Attend Every Session</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -740,7 +740,7 @@ export default function CityGuilds2365GuidePage() {
       heroTitle={
         <>
           City & Guilds 2365:{' '}
-          <span className="text-yellow-400">Electrical Installation Course Guide</span>
+          <span className="text-elec-yellow">Electrical Installation Course Guide</span>
         </>
       }
       heroSubtitle="The 2365 is the knowledge qualification every electrician needs. This guide covers Level 2 and Level 3 content, exam format, practical assessments, costs, and how it fits into the apprenticeship pathway."

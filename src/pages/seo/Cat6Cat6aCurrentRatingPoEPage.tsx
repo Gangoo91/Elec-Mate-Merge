@@ -66,7 +66,7 @@ function DataTable({
             {headers.map((h) => (
               <th
                 key={h}
-                className="text-left font-bold text-yellow-300 px-3 py-2.5 border-b border-white/10 align-bottom"
+                className="text-left font-bold text-elec-yellow px-3 py-2.5 border-b border-white/10 align-bottom"
               >
                 {h}
               </th>
@@ -80,7 +80,7 @@ function DataTable({
                 <td
                   key={ci}
                   className={`px-3 py-2.5 align-top text-white ${
-                    ci === 0 ? 'font-semibold' : 'text-white/90'
+                    ci === 0 ? 'font-semibold' : 'text-white'
                   }`}
                 >
                   {cell}
@@ -107,7 +107,7 @@ function Callout({
     info: { box: 'bg-blue-500/10 border-blue-500/20', title: 'text-blue-300' },
     warning: { box: 'bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-white/[0.14]', title: 'text-red-300' },
     success: { box: 'bg-emerald-500/10 border-emerald-500/20', title: 'text-emerald-300' },
-    pricing: { box: 'bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-white/[0.14]', title: 'text-yellow-300' },
+    pricing: { box: 'bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-white/[0.14]', title: 'text-elec-yellow' },
   } as const;
   const styles = map[tone];
   return (
@@ -609,33 +609,33 @@ const sections = [
         </p>
         <div className="grid sm:grid-cols-2 gap-4 my-6">
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <Calculator className="w-5 h-5 text-yellow-400 mb-2" />
+            <Calculator className="w-5 h-5 text-elec-yellow mb-2" />
             <h4 className="font-bold text-white mb-1">Cable sizing calculator</h4>
-            <p className="text-white/90 text-sm">
+            <p className="text-white text-sm">
               For the mains supply to PoE switches, sized to BS 7671:2018+A4:2026 — current-carrying
               capacity, voltage drop and earth fault loop impedance checks.
             </p>
           </div>
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <ClipboardCheck className="w-5 h-5 text-yellow-400 mb-2" />
+            <ClipboardCheck className="w-5 h-5 text-elec-yellow mb-2" />
             <h4 className="font-bold text-white mb-1">EIC certificate tool</h4>
-            <p className="text-white/90 text-sm">
+            <p className="text-white text-sm">
               For the mains supply circuits to PoE switches and network cabinets — BS
               7671:2018+A4:2026 model form, AFDD declaration, digital sign-off.
             </p>
           </div>
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <Network className="w-5 h-5 text-yellow-400 mb-2" />
+            <Network className="w-5 h-5 text-elec-yellow mb-2" />
             <h4 className="font-bold text-white mb-1">Quoting app</h4>
-            <p className="text-white/90 text-sm">
+            <p className="text-white text-sm">
               Itemised quotes for PoE-heavy commercial work including structured cabling,
               terminations, certification testing and the mains supply.
             </p>
           </div>
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <Zap className="w-5 h-5 text-yellow-400 mb-2" />
+            <Zap className="w-5 h-5 text-elec-yellow mb-2" />
             <h4 className="font-bold text-white mb-1">Mate, the in-app assistant</h4>
-            <p className="text-white/90 text-sm">
+            <p className="text-white text-sm">
               Ask design questions like "maximum bundle size for Cat6a Type 4 in a 40 °C ceiling
               void" and get a worked figure plus references.
             </p>
@@ -785,7 +785,7 @@ export default function Cat6Cat6aCurrentRatingPoEPage() {
       heroTitle={
         <>
           Cat6 vs Cat6a Current Rating{' '}
-          <span className="text-yellow-400">for PoE Installations</span> — Bundle De-rating Guide
+          <span className="text-elec-yellow">for PoE Installations</span> — Bundle De-rating Guide
         </>
       }
       heroSubtitle="Power over Ethernet has graduated from a low-current curiosity to a serious electrical load. IEEE 802.3bt Type 4 delivers up to 90 W per port across four pairs, and a fully-loaded 48-port switch into a ceiling-void bundle now draws continuous current comparable to a small lighting circuit. This guide explains the current carrying capacity of Cat6 and Cat6a in PoE service, how bundle de-rating works, how ambient temperature changes the maths, and what TIA TSB-184-A, BS EN 50173 and BS EN 50174 actually require."

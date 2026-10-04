@@ -160,7 +160,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Always provide a written quote.</strong> A verbal agreement is hard to
                 enforce. A written quote — even a simple one sent by email or WhatsApp — documents
@@ -170,14 +170,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Get written acceptance.</strong> Before starting work, get the customer to
                 accept the quote — by email, text, or signature. This creates a binding contract.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Take a deposit on larger jobs.</strong> A 25% to 50% deposit for jobs over
                 £500 covers your initial costs and demonstrates customer commitment. Customers who
@@ -185,7 +185,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Invoice immediately on completion.</strong> Do not wait days or weeks. Send
                 the invoice before you leave the property. The longer you wait, the less urgency the
@@ -215,7 +215,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Domestic customers:</strong> Payment on completion is the standard for
                 domestic electrical work. State clearly: "Payment due on completion of work." For
@@ -223,7 +223,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial customers:</strong> 14-day or 30-day payment terms are common.
                 State clearly: "Payment due within 14 days of invoice date." Be cautious with 60-day
@@ -231,7 +231,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Subcontract/CIS work:</strong> Payment terms are often set by the main
                 contractor — typically 14 to 30 days after you submit an application for payment.
@@ -281,7 +281,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Clock className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Day 7 to 14 Overdue: Firm Follow-Up</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -330,7 +330,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Interest rate:</strong> 8% above the Bank of England base rate (currently
                 4.5%, so the statutory interest rate is 12.5%). Interest accrues daily from the day
@@ -338,7 +338,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fixed compensation:</strong> £40 for debts up to £999.99, £70 for debts of
                 £1,000 to £9,999.99, £100 for debts of £10,000 or more. This is payable on top of
@@ -346,7 +346,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reasonable recovery costs:</strong> You can also claim the reasonable costs
                 of recovering the debt — for example, the cost of sending recorded delivery letters.
@@ -387,34 +387,34 @@ const sections = [
           <p className="text-white font-bold mb-4">Your Letter Before Action should include:</p>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Your full name and business details</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>The debtor's full name and address</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>The amount owed, including any interest and compensation</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>A summary of the debt (invoice number, date, work completed)</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>A deadline to pay (14 days from the date of the letter)</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 A statement that if payment is not received by the deadline, you will issue court
                 proceedings without further notice
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 A reference to the Late Payment of Commercial Debts Act 1998 (if applicable)
               </span>
@@ -443,7 +443,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1: File online.</strong> Go to Money Claims Online (MCOL) at
                 moneyclaims.service.gov.uk and file your claim. You will need the debtor's full name
@@ -453,7 +453,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2: Defendant responds.</strong> The defendant has 14 days to respond.
                 They can: admit the claim and offer to pay (in full or by instalments), defend the
@@ -461,7 +461,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 3: Default judgement or hearing.</strong> If they do not respond, you
                 apply for a default judgement — the court orders them to pay without a hearing. If
@@ -469,7 +469,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 4: Small claims hearing.</strong> An informal hearing before a district
                 judge. You present your evidence (invoices, quotes, photos, messages, certificates).
@@ -528,7 +528,7 @@ const sections = [
               <span>
                 <strong>Cost:</strong> The statutory demand itself is a form — there is no court fee
                 to serve it. However, if you proceed to a bankruptcy or winding-up petition, the
-                court fee is significant (£990 for bankruptcy, £1,600+ for winding up) and you may
+                court fee is significant (£990 for bankruptcy, £2,100+ for winding up) and you may
                 need legal advice.
               </span>
             </li>
@@ -561,7 +561,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Written quotes with clear payment terms.</strong> Every job should start
                 with a written quote that states the price, what is included, and when payment is
@@ -571,7 +571,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Invoice immediately on completion.</strong> Do not wait until the weekend to
                 do your invoicing. Send invoices from site, before you leave, using{' '}
@@ -582,7 +582,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Offer multiple payment methods.</strong> Bank transfer, card payment, and
                 cash. The easier you make it to pay, the faster you get paid. Consider a card reader
@@ -590,7 +590,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Review your aged debtors weekly.</strong> Check which invoices are overdue
                 and follow up immediately. Do not let debts age — the older a debt gets, the harder
@@ -642,7 +642,7 @@ export default function DebtRecoveryElectricianPage() {
       heroTitle={
         <>
           Debt Recovery for Electricians:{' '}
-          <span className="text-yellow-400">Getting Paid What You Are Owed</span>
+          <span className="text-elec-yellow">Getting Paid What You Are Owed</span>
         </>
       }
       heroSubtitle="Non-payment is one of the biggest frustrations for self-employed electricians. This guide covers everything — from prevention and payment terms to late payment interest, Letter Before Action, Small Claims Court, and statutory demand. Practical, step-by-step advice for getting your money."
@@ -653,7 +653,7 @@ export default function DebtRecoveryElectricianPage() {
       faqHeading="Frequently Asked Questions About Debt Recovery for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Send Professional Invoices and Get Paid Faster"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to send professional invoices on site, track payments in real time, and manage cash flow. Stop losing money to late payment. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to send professional invoices on site, track payments in real time, and manage cash flow. Stop losing money to late payment. 7-day free trial, cancel anytime."
     />
   );
 }

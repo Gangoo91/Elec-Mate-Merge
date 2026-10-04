@@ -159,7 +159,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Per-Station Electrical Requirements</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Socket outlets</strong> — Minimum 2 double sockets (4 outlets) per station
                 at counter height (1,000mm). Position to avoid cable drape across the client. Cost:
@@ -167,7 +167,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>USB charging points</strong> — 1 USB-A/USB-C socket per station for client
                 phone charging. Can be integrated into the socket outlet or a separate unit. Cost:
@@ -175,7 +175,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hood dryer connections</strong> — Free-standing hood dryers draw 2 to 3kW
                 and should be on dedicated radial circuits. A 20A radial circuit can serve 2 to 3
@@ -183,7 +183,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mirror lighting</strong> — Illuminated mirror surrounds or vanity lighting
                 strips provide shadow-free face lighting. LED strip (CRI 90+, 4000K to 5000K): £40
@@ -287,7 +287,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Small salon, 3 chairs (£3,000 to £5,000)</strong> — Consumer unit, 6 to 8
                 double sockets at stations, 2 to 4 general sockets, basic LED downlight lighting,
@@ -296,7 +296,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Medium salon, 6 to 8 chairs (£5,000 to £7,500)</strong> — Consumer unit with
                 RCBOs and SPD, 12 to 16 double sockets at stations, hood dryer circuits, feature
@@ -305,7 +305,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large salon, 10+ chairs (£7,500 to £10,000+)</strong> — Full distribution
                 with sub-board, 20+ double sockets at stations, multiple hood dryer circuits,
@@ -339,7 +339,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection (Regulation 411.3.3)</strong> — All socket outlets up to 32A
                 require 30mA RCD protection. This is particularly important in the wash area where
@@ -347,7 +347,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP ratings near water</strong> — Accessories near wash basins must be
                 appropriately IP rated. Whilst the salon wash area is not classified as a bathroom
@@ -355,14 +355,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency lighting (BS 5266-1)</strong> — Required in all commercial
                 premises to illuminate escape routes in the event of mains failure.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Part P notification</strong> — Does not apply to commercial premises.
                 However, the installation must comply with the Building Regulations and an EIC must
@@ -386,7 +386,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Scissors className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Scissors className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Work from the Salon Layout</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -455,7 +455,7 @@ export default function HairSalonElectricalCostPage() {
       heroTitle={
         <>
           Hair Salon Electrical Cost:{' '}
-          <span className="text-yellow-400">UK Salon Fit-Out Guide 2026</span>
+          <span className="text-elec-yellow">UK Salon Fit-Out Guide 2026</span>
         </>
       }
       heroSubtitle="What does hair salon electrical installation cost? This guide covers styling station outlets, wash station wiring with IP ratings, salon lighting for colour accuracy, and realistic pricing from £3,000 to £10,000 — for salon owners and electrical contractors."
@@ -466,7 +466,7 @@ export default function HairSalonElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Hair Salon Electrical Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Hair Salon Fit-Outs with Per-Station Pricing"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for salon quoting with station-by-station pricing, lighting specifications, and professional PDF output. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for salon quoting with station-by-station pricing, lighting specifications, and professional PDF output. 7-day free trial."
     />
   );
 }

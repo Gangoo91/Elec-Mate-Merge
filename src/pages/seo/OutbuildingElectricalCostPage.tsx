@@ -173,7 +173,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Garden shed</strong> — £800 to £1,200 total. Typically one lighting circuit,
                 four double socket outlets, and a consumer unit. Armoured cable run of up to 15
@@ -181,7 +181,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Summerhouse or leisure room</strong> — £1,000 to £1,800. Lighting, multiple
                 socket outlets, electric heater circuit, and data point for Wi-Fi extender or Cat6
@@ -189,7 +189,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Garden office (home working)</strong> — £1,500 to £2,500. Multiple power
                 circuits, dedicated data points (Cat6), USB outlets, electric panel heater or air
@@ -197,7 +197,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Workshop or hobby room</strong> — £1,500 to £2,800. Dedicated circuits for
                 power tools and machinery, stronger overhead lighting (fluorescent or LED strips),
@@ -221,7 +221,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Underground (preferred)</strong> — SWA cable buried at 500mm depth in a
                 garden, on a bed of sharp sand with cable covers above. Invisible once reinstated.
@@ -229,7 +229,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Overhead catenary</strong> — SWA cable suspended on a catenary wire between
                 the house and outbuilding. Minimum height of 3.5 metres above ground (5.2 metres
@@ -238,7 +238,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Surface-mounted on fence or wall</strong> — SWA cable clipped to a fence or
                 wall surface is acceptable in some situations and avoids both trenching and aerial
@@ -270,14 +270,14 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>4-way split-load board</strong> — £250 to £400 fitted. Two MCB slots each
                 side of a dual RCD. Suitable for shed or simple garden room (lighting + sockets).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>6–8 way RCBO board</strong> — £350 to £550 fitted. Individual RCBO per
                 circuit for better discrimination. Preferred for garden offices where a single fault
@@ -285,7 +285,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Isolation facility</strong> — the main switch on the sub-board must be
                 lockable or the sub-board door must be lockable, to satisfy the requirements of
@@ -311,7 +311,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wifi className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Data connectivity</strong> — Cat6 data cable from the house router or a
                 dedicated Wi-Fi access point. Running a single Cat6 cable underground in the same
@@ -319,7 +319,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Heating</strong> — electric panel heater (500W to 2kW depending on floor
                 area), infrared heating, or air source heat pump. Dedicated circuit per heater.
@@ -327,7 +327,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Power circuits</strong> — minimum of six double socket outlets in a typical
                 home office, plus USB outlets. Separate circuit for IT equipment (computers,
@@ -335,7 +335,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lighting</strong> — LED downlights or a high-quality LED strip for even task
                 lighting. Bias lighting behind monitors reduces eye strain. External security light
@@ -360,7 +360,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Through lawn or garden (per metre)</strong> — £15 to £25 per metre,
                 including digging, cable laying, sand bedding, cable covers, and reinstatement. A
@@ -368,7 +368,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Through block paving (per metre)</strong> — £25 to £40 per metre. Blocks
                 must be carefully lifted, stored, and relaid. More labour-intensive than grass
@@ -376,7 +376,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Under concrete or tarmac driveway (per metre)</strong> — £40 to £60 per
                 metre. Requires breaking out, core drilling, or boring. Concrete reinstatement adds
@@ -384,7 +384,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mini-digger hire (long runs)</strong> — for runs over 20 metres through a
                 lawn, hiring a mini-digger for half a day (£150 to £300) can reduce labour time
@@ -452,7 +452,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Cable className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Quote Trenching Separately</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -510,7 +510,7 @@ export default function OutbuildingElectricalCostPage() {
       heroTitle={
         <>
           Outbuilding Electrical Installation Cost UK 2025:{' '}
-          <span className="text-yellow-400">Garden Office Wiring Prices</span>
+          <span className="text-elec-yellow">Garden Office Wiring Prices</span>
         </>
       }
       heroSubtitle="Detailed breakdown of outbuilding electrical installation costs in the UK for 2025 — garden shed wiring from £800, garden office from £1,500, SWA armoured cable and trenching costs, sub-board requirements, and Part P compliance."
@@ -521,7 +521,7 @@ export default function OutbuildingElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Outbuilding Electrical Installation Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Your Outbuilding Electrical Installation in Minutes"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to create professional outbuilding electrical quotes with armoured cable, trenching, and optional extras clearly priced. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to create professional outbuilding electrical quotes with armoured cable, trenching, and optional extras clearly priced. 7-day free trial, cancel anytime."
     />
   );
 }

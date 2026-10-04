@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { formatDistanceToNow, format } from 'date-fns';
-import { Loader2, RotateCcw } from 'lucide-react';
+import { ChevronDown, Loader2, RotateCcw } from 'lucide-react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import {
   AlertDialog,
@@ -51,7 +51,36 @@ interface Props {
   reportId: string;
   /** Receives the certificate's data after a restore; the form replaces its state with it. */
   onRestored: (data: Record<string, unknown>) => void;
+  /** The certificate as it is now, so an opened revision can show "was → now". */
+  current?: Record<string, unknown>;
 }
+
+/**
+ * A revision stores the values a save OVERWROTE. Opening one fetches that
+ * payload (`get_report_revision`, owner only) and lays each field out as
+ * "was X — now Y", Y being the certificate as it stands today. That is the
+ * change summary ELE-1432 asked for, without snapshotting whole certificates.
+ */
+const formatValue = (v: unknown): string => {
+  if (v === null || v === undefined || v === '') return 'blank';
+  if (typeof v === 'boolean') return v ? 'yes' : 'no';
+  if (typeof v === 'number') return String(v);
+  if (typeof v === 'string') return v.length > 160 ? `${v.slice(0, 157)}…` : v;
+  if (Array.isArray(v)) return `${v.length} item${v.length === 1 ? '' : 's'}`;
+  if (typeof v === 'object') {
+    const keys = Object.keys(v as Record<string, unknown>);
+    return keys.length === 0 ? 'blank' : `${keys.length} field${keys.length === 1 ? '' : 's'}`;
+  }
+  return String(v);
+};
+
+/** Saves that mark a milestone get a badge; the trigger records them like any other. */
+const milestoneFor = (keys: string[]): string | null => {
+  if (keys.includes('certificateGenerated') || keys.includes('certificateGeneratedAt')) return 'Generated';
+  if (keys.includes('qsReviewStatus') || keys.includes('qsApprovedAt')) return 'QS review';
+  if (keys.includes('lockedAt') || keys.includes('issuedAt')) return 'Issued';
+  return null;
+};
 
 const LABELS: Record<string, string> = {
   scheduleOfTests: 'Schedule of tests',
@@ -90,13 +119,29 @@ const describeKeys = (rawKeys: string[]): string => {
   return rest > 0 ? `${shown.join(', ')} and ${rest} more` : shown.join(', ');
 };
 
-const CertificateHistorySheet: React.FC<Props> = ({ open, onOpenChange, reportId, onRestored }) => {
+const CertificateHistorySheet: React.FC<Props> = ({ open, onOpenChange, reportId, onRestored, current }) => {
   const { toast } = useToast();
   const haptic = useHaptic();
   const [rows, setRows] = useState<RevisionRow[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState<RevisionRow | null>(null);
   const [restoring, setRestoring] = useState(false);
+  const [openId, setOpenId] = useState<number | null>(null);
+  const [details, setDetails] = useState<Record<number, Record<string, unknown> | 'loading' | 'error'>>({});
+
+  const toggleDetail = (id: number) => {
+    haptic.light();
+    if (openId === id) {
+      setOpenId(null);
+      return;
+    }
+    setOpenId(id);
+    if (details[id]) return;
+    setDetails((d) => ({ ...d, [id]: 'loading' }));
+    db.rpc('get_report_revision', { p_revision_id: id }).then(({ data, error: err }) => {
+      setDetails((d) => ({ ...d, [id]: err ? 'error' : ((data as Record<string, unknown>) || {}) }));
+    });
+  };
 
   useEffect(() => {
     if (!open) return;
@@ -183,30 +228,80 @@ const CertificateHistorySheet: React.FC<Props> = ({ open, onOpenChange, reportId
                 <ul className="divide-y divide-white/[0.08]">
                   {rows.map((r) => {
                     const at = new Date(r.saved_at);
+                    const milestone = milestoneFor(r.keys);
+                    const isOpen = openId === r.id;
+                    const detail = details[r.id];
+                    const shownKeys = r.keys.filter((k) => !k.startsWith('_'));
                     return (
-                      <li key={r.id} className="flex items-center gap-3 py-3">
-                        <div className="min-w-0 flex-1">
-                          <p className="text-[14px] font-semibold text-white">
-                            {formatDistanceToNow(at, { addSuffix: true })}
-                            <span className="ml-2 text-[11.5px] font-medium text-white">
-                              {format(at, 'd MMM, HH:mm')}
-                            </span>
-                          </p>
-                          <p className="mt-0.5 truncate text-[12.5px] text-white">
-                            Before this save: {describeKeys(r.keys)}
-                          </p>
+                      <li key={r.id} className="py-3">
+                        <div className="flex items-center gap-3">
+                          <button
+                            type="button"
+                            onClick={() => toggleDetail(r.id)}
+                            aria-expanded={isOpen}
+                            className="flex min-w-0 flex-1 items-center gap-2 text-left touch-manipulation"
+                          >
+                            <ChevronDown
+                              className={`h-4 w-4 shrink-0 text-white transition-transform ${isOpen ? 'rotate-180' : ''}`}
+                            />
+                            <div className="min-w-0 flex-1">
+                              <p className="text-[14px] font-semibold text-white">
+                                {formatDistanceToNow(at, { addSuffix: true })}
+                                <span className="ml-2 text-[11.5px] font-medium text-white">
+                                  {format(at, 'd MMM, HH:mm')}
+                                </span>
+                                {milestone && (
+                                  <span className="ml-2 rounded-md bg-elec-yellow/15 px-1.5 py-0.5 text-[10.5px] font-semibold text-elec-yellow">
+                                    {milestone}
+                                  </span>
+                                )}
+                              </p>
+                              <p className="mt-0.5 truncate text-[12.5px] text-white">
+                                Before this save: {describeKeys(r.keys)}
+                              </p>
+                            </div>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              haptic.light();
+                              setPending(r);
+                            }}
+                            className="flex h-11 shrink-0 items-center gap-1.5 rounded-xl border border-white/[0.14] bg-white/[0.05] px-3 text-[12.5px] font-semibold text-white touch-manipulation active:scale-[0.98]"
+                          >
+                            <RotateCcw className="h-3.5 w-3.5" />
+                            Restore
+                          </button>
                         </div>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            haptic.light();
-                            setPending(r);
-                          }}
-                          className="flex h-11 shrink-0 items-center gap-1.5 rounded-xl border border-white/[0.14] bg-white/[0.05] px-3 text-[12.5px] font-semibold text-white touch-manipulation active:scale-[0.97]"
-                        >
-                          <RotateCcw className="h-3.5 w-3.5" />
-                          Restore
-                        </button>
+                        {isOpen && (
+                          <div className="mt-2 ml-6 rounded-xl border border-white/[0.1] bg-white/[0.04] px-3 py-2">
+                            {detail === 'loading' || detail === undefined ? (
+                              <p className="flex items-center gap-2 py-1 text-[12.5px] text-white">
+                                <Loader2 className="h-3.5 w-3.5 animate-spin" /> Loading what changed
+                              </p>
+                            ) : detail === 'error' ? (
+                              <p className="py-1 text-[12.5px] text-orange-300">Could not load this version.</p>
+                            ) : (
+                              <ul className="divide-y divide-white/[0.06]">
+                                {shownKeys.map((k) => (
+                                  <li key={k} className="py-1.5 text-[12.5px]">
+                                    <span className="font-semibold text-white">{humanise(k)}</span>
+                                    <span className="mt-0.5 block text-white">
+                                      was <span className="text-white/90">{formatValue(detail[k])}</span>
+                                      {current ? (
+                                        <>
+                                          {' '}
+                                          · now{' '}
+                                          <span className="font-medium text-elec-yellow">{formatValue(current[k])}</span>
+                                        </>
+                                      ) : null}
+                                    </span>
+                                  </li>
+                                ))}
+                              </ul>
+                            )}
+                          </div>
+                        )}
                       </li>
                     );
                   })}

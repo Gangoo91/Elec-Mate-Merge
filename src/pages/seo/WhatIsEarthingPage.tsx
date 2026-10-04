@@ -241,7 +241,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit Protective Conductor (CPC).</strong> The earth wire in each circuit
                 cable — the bare copper conductor in twin-and-earth cable, or the green/yellow
@@ -250,7 +250,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing conductor.</strong> The main conductor that connects the consumer
                 unit's earth bar to the main earthing terminal (MET). Typically 10mm² or 16mm²
@@ -258,7 +258,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth return path.</strong> The path from the main earthing terminal back to
                 the transformer star point. This varies depending on the earthing arrangement —
@@ -295,7 +295,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Cable className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">TN-S — Separate Earth</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -371,7 +371,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Main Protective Bonding</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -423,7 +423,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main earthing terminal (MET).</strong> Usually located near the consumer
                 unit or electricity meter. All earthing and bonding conductors connect here. Check
@@ -431,7 +431,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing conductor.</strong> The green/yellow cable from the MET to the
                 consumer unit earth bar. Check it is the correct size (at least 16mm² for PME, 10mm²
@@ -439,7 +439,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main bonding conductors.</strong> Green/yellow cables from the MET to the
                 gas pipe, water pipe, and any other incoming metallic services. Check they are
@@ -448,7 +448,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth electrode (TT systems).</strong> Usually a copper rod driven into the
                 ground outside the property. Check the electrode is in good condition, the
@@ -457,7 +457,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bonding labels.</strong> All bonding connections should have a warning label
                 stating "Safety Electrical Connection — Do Not Remove." Missing labels are a C3
@@ -481,7 +481,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ze measurement.</strong> The external earth fault loop impedance is measured
                 at the origin of the installation. This confirms the earthing arrangement and
@@ -490,7 +490,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Zs measurement on each circuit.</strong> The earth fault loop impedance at
                 the furthest point of each circuit confirms the CPC is intact and the total loop
@@ -498,7 +498,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>R1+R2 continuity test.</strong> Measures the combined resistance of the line
                 and protective conductors end-to-end. This is the installation's contribution to Zs
@@ -506,7 +506,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main bonding continuity.</strong> The resistance of each main bonding
                 conductor is measured to confirm it is continuous and of low resistance. A reading
@@ -514,7 +514,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth electrode resistance (TT systems).</strong> On TT systems, the
                 resistance of the earth electrode is measured using the fall-of-potential method or
@@ -560,7 +560,7 @@ export default function WhatIsEarthingPage() {
       badgeIcon={Cable}
       heroTitle={
         <>
-          What Is Earthing? <span className="text-yellow-400">Why Electrical Earthing Matters</span>
+          What Is Earthing? <span className="text-elec-yellow">Why Electrical Earthing Matters</span>
         </>
       }
       heroSubtitle="Earthing is the single most important safety measure in any electrical installation. It provides a safe path for fault current, ensures protective devices operate, and prevents metal parts from sitting at mains voltage. This guide explains how earthing works, the three UK earthing arrangements, and what gets tested during an EICR."

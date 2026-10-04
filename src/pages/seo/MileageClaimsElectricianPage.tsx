@@ -184,10 +184,10 @@ const sections = [
               </h4>
               <ul className="space-y-2">
                 <li>
-                  First 10,000 miles: <strong className="text-yellow-400">45p per mile</strong>
+                  First 10,000 miles: <strong className="text-elec-yellow">45p per mile</strong>
                 </li>
                 <li>
-                  After 10,000 miles: <strong className="text-yellow-400">25p per mile</strong>
+                  After 10,000 miles: <strong className="text-elec-yellow">25p per mile</strong>
                 </li>
                 <li className="text-white text-xs mt-2">
                   Covers fuel, insurance, road tax, MOT, servicing, depreciation
@@ -200,10 +200,10 @@ const sections = [
               </h4>
               <ul className="space-y-2">
                 <li>
-                  Simplified rate: <strong className="text-yellow-400">NOT available</strong>
+                  Simplified rate: <strong className="text-elec-yellow">NOT available</strong>
                 </li>
                 <li>
-                  Must use: <strong className="text-yellow-400">Actual costs</strong>
+                  Must use: <strong className="text-elec-yellow">Actual costs</strong>
                 </li>
                 <li className="text-white text-xs mt-2">
                   Claim real costs x business-use percentage
@@ -216,10 +216,10 @@ const sections = [
               </h4>
               <ul className="space-y-2">
                 <li>
-                  Advisory fuel rate: <strong className="text-yellow-400">7p per mile</strong>
+                  Advisory fuel rate: <strong className="text-elec-yellow">7p per mile</strong>
                 </li>
                 <li>
-                  Or use: <strong className="text-yellow-400">Actual costs</strong>
+                  Or use: <strong className="text-elec-yellow">Actual costs</strong>
                 </li>
                 <li className="text-white text-xs mt-2">
                   Actual costs with capital allowances usually better
@@ -308,7 +308,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mixed journeys:</strong> If you make a personal stop during a business
                 journey (for example, dropping off children at school on the way to a customer
@@ -333,7 +333,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Home as business base</strong> — most self-employed electricians operate
                 from home. Your home is your business base, not your permanent workplace (assuming
@@ -342,7 +342,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Workshop or storage unit</strong> — if you rent a workshop, storage unit, or
                 office that you attend regularly, that is a permanent workplace. Travel between home
@@ -351,7 +351,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>The 24-month rule</strong> — if you attend the same site regularly and
                 expect to do so for more than 24 months, HMRC considers it a permanent workplace
@@ -378,7 +378,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>For every business journey, record:</strong> the date, starting point (for
                 example, "Home"), destination (for example, "14 Oak Road, Bristol — consumer unit
@@ -387,7 +387,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>For actual costs (vans):</strong> keep all fuel receipts, insurance renewal
                 documents, road tax confirmation, MOT certificate, service and repair invoices, tyre
@@ -397,7 +397,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Retention period:</strong> HMRC requires you to keep records for at least 5
                 years after the 31 January filing deadline for the relevant tax year. For the
@@ -453,14 +453,14 @@ const sections = [
               <p className="font-bold mb-2">Simplified (Car, 15,000 business miles)</p>
               <p>(10,000 x 45p) + (5,000 x 25p)</p>
               <p>= £4,500 + £1,250</p>
-              <p className="font-bold text-yellow-400">= £5,750 deduction</p>
+              <p className="font-bold text-elec-yellow">= £5,750 deduction</p>
             </div>
             <div>
               <p className="font-bold mb-2">Actual Costs (Van, 15,000 of 18,000 total miles)</p>
               <p>Total costs: £7,200/year</p>
               <p>Business %: 83%</p>
               <p>Capital allowance: £2,000</p>
-              <p className="font-bold text-yellow-400">= £7,976 deduction</p>
+              <p className="font-bold text-elec-yellow">= £7,976 deduction</p>
             </div>
           </div>
         </div>
@@ -486,7 +486,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Advisory electricity rate</strong> — HMRC's advisory fuel rate for fully
                 electric vehicles is 7p per mile (2026/27). This is used when an employer reimburses
@@ -495,7 +495,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Simplified mileage for EVs</strong> — if you use the simplified mileage rate
                 (45p/25p) for an electric car, the full rate applies — the same as a petrol or
@@ -504,7 +504,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Actual costs for electric vans</strong> — if you drive an electric van, you
                 claim actual costs (fuel/electricity, insurance, etc.) plus capital allowances. New
@@ -514,7 +514,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Home charging costs</strong> — if you charge your EV at home for business
                 use, the electricity cost is an allowable business expense (proportioned by business
@@ -544,7 +544,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Track Every Journey</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -615,7 +615,7 @@ export default function MileageClaimsElectricianPage() {
       heroTitle={
         <>
           Mileage Claims for Electricians UK 2026:{' '}
-          <span className="text-yellow-400">Claim Every Mile, Keep More Money</span>
+          <span className="text-elec-yellow">Claim Every Mile, Keep More Money</span>
         </>
       }
       heroSubtitle="Most self-employed electricians drive 10,000 to 25,000 business miles per year. Claiming mileage correctly can save you £1,000 to £3,000+ in tax annually. This guide covers HMRC rates, van vs car rules, what qualifies as business travel, record keeping, and EV mileage."
@@ -626,7 +626,7 @@ export default function MileageClaimsElectricianPage() {
       faqHeading="Frequently Asked Questions About Mileage Claims"
       relatedPages={relatedPages}
       ctaHeading="Save Time and Mileage with On-Site Tools"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Complete everything on site, reduce return trips, and keep more of what you earn. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for quoting, certification, and job management. Complete everything on site, reduce return trips, and keep more of what you earn. 7-day free trial, cancel anytime."
     />
   );
 }

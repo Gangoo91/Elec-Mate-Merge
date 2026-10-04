@@ -283,7 +283,7 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-4">
-            <AlertTriangle className="w-6 h-6 text-amber-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-1">
                 Arc Fault Detection Devices (AFDDs) — Regulation 421.1.7
@@ -333,7 +333,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Separate lighting and power across RCDs.</strong> In dual-RCD boards, put at
                 least one lighting circuit on each RCD so that if one trips, the building is not
@@ -342,7 +342,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smoke alarm on a dedicated circuit or the lighting circuit.</strong> The
                 smoke alarm supply should be on a circuit that is unlikely to be switched off
@@ -352,7 +352,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated circuits for high-current appliances.</strong>{' '}
                 <SEOInternalLink href="/guides/cooker-circuit-guide">Cookers</SEOInternalLink>,{' '}
@@ -368,7 +368,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Logical grouping.</strong> Group circuits by area (upstairs/downstairs) or
                 by function (lighting/power/dedicated) for easy identification and maintenance. The
@@ -462,7 +462,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardList className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit chart (Regulation 514.9.1)</strong> — a durable chart or table must
                 be provided at or near the distribution board. It must identify each circuit by
@@ -474,7 +474,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardList className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Warning notices</strong> — the "SAFETY ELECTRICAL CONNECTION — DO NOT
                 REMOVE" notice must be permanently fixed at or near every earthing conductor
@@ -487,7 +487,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardList className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SPD notice (Regulation 514.16.1)</strong> — where an SPD is installed, a
                 label must indicate its presence so that anyone working on the installation knows
@@ -540,7 +540,7 @@ const sections = [
               </tbody>
             </table>
           </div>
-          <p className="px-4 py-3 text-xs text-white/60 border-t border-white/10">
+          <p className="px-4 py-3 text-xs text-white border-t border-white/10">
             A4:2026 introduced exceptions to Regulations 514.9.1, 514.12.1 and 514.12.2 for domestic
             (household) premises — check the current amended text before recording an observation on
             a domestic EICR.
@@ -571,7 +571,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What type testing covers</strong> — temperature rise verification,
                 dielectric properties, short-circuit withstand, effectiveness of protective
@@ -580,7 +580,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What this means in practice</strong> — you must use a complete consumer unit
                 system from a single manufacturer. The enclosure, busbars, MCBs, RCBOs, and RCDs
@@ -590,7 +590,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consequences of non-compliance</strong> — installing a non-type-tested
                 consumer unit fails to meet BS 7671 requirements. It may be identified during an
@@ -625,7 +625,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rating</strong> — typically 100A for a domestic installation with a standard
                 single-phase 100A supply. For larger properties or three-phase supplies, the main
@@ -633,7 +633,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Accessibility</strong> — the main switch must be readily accessible for
                 emergency switching. For new dwellings, Approved Document M of the Building
@@ -643,7 +643,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Locking</strong> — the main switch should be lockable in the off position
                 for{' '}
@@ -690,7 +690,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type 2 SPD</strong> — the standard choice for domestic installations.
                 Installed at the consumer unit on the supply side of the circuit protective devices.
@@ -698,7 +698,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SPD overcurrent protection</strong> — the SPD must have its own overcurrent
                 protection, typically a dedicated MCB rated between 20A and 40A (check the SPD
@@ -707,7 +707,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Connecting conductor length</strong> — under BS 7671 Section 534, the total
                 wiring length of the conductors between the connection points of the SPD assembly
@@ -716,7 +716,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Status indicator</strong> — the SPD must have a visible status indicator
                 showing whether it is operational or has failed. A notice should be provided
@@ -746,7 +746,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable entry</strong> — use cable glands or grommets at the entry points.
                 Cables should enter the board neatly and be dressed (arranged) to follow the inside
@@ -754,7 +754,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Stripping and termination</strong> — strip the correct length of insulation
                 (not too much, not too little). The conductor should be fully inserted into the
@@ -763,7 +763,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth and neutral connections</strong> — earth conductors to the earth bar,
                 neutral conductors to the neutral bar. For RCBO boards, the neutral for each circuit
@@ -772,7 +772,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CPC sleeving</strong> — all circuit protective conductors (bare copper earth
                 wires) must be sleeved with green/yellow striped sleeving from the point where they
@@ -878,7 +878,7 @@ export default function DistributionBoardWiringPage() {
       heroTitle={
         <>
           Distribution Board Wiring Guide:{' '}
-          <span className="text-yellow-400">Consumer Unit Layout</span>
+          <span className="text-elec-yellow">Consumer Unit Layout</span>
         </>
       }
       heroSubtitle="The distribution board is the heart of every electrical installation. This guide covers split load vs dual RCD vs RCBO board configurations, circuit arrangement and allocation, BS 7671 labelling requirements, type testing under BS EN 61439, SPD installation, wiring best practice, and the common mistakes found during EICR inspections."
@@ -889,7 +889,7 @@ export default function DistributionBoardWiringPage() {
       faqHeading="Frequently Asked Questions About Distribution Board Wiring"
       relatedPages={relatedPages}
       ctaHeading="Design and Certify Board Changes on Your Phone"
-      ctaSubheading="Elec-Mate's AI circuit designer generates board layouts, the cable sizing calculator verifies every circuit, and the EIC app certifies the finished work. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's AI circuit designer generates board layouts, the cable sizing calculator verifies every circuit, and the EIC app certifies the finished work. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

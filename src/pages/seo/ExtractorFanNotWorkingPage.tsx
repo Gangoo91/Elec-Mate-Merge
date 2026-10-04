@@ -224,7 +224,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ToggleRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ToggleRight className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Isolator switch fault</strong> — the switch itself may have failed
                 internally. Pull cord switches are mechanical and wear out over thousands of
@@ -234,7 +234,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Timer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Timer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Timer relay failure</strong> — in fans wired to run on after the light is
                 switched off, the internal timer relay controls the overrun period. When this relay
@@ -244,7 +244,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Humidity sensor failure</strong> — humidistat fans have an internal sensor
                 that activates the fan when moisture levels rise. These sensors degrade over time,
@@ -254,7 +254,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wiring fault</strong> — a broken conductor in the cable between the switch
                 and the fan, or a loose connection at a junction box in the ceiling void, will
@@ -392,7 +392,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ToggleRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ToggleRight className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ceiling pull cord switch</strong> — the most common type in bathrooms. The
                 pull cord mechanically toggles an internal switch. These wear out over time — the
@@ -402,7 +402,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ToggleRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ToggleRight className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fused connection unit (FCU) with switch</strong> — a switched FCU outside
                 the bathroom provides both isolation and fuse protection. The internal 3A fuse can
@@ -411,7 +411,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ToggleRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ToggleRight className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Linked to light switch</strong> — many bathroom fans are wired so that the
                 light switch provides the switched live to trigger the fan. The fan has a separate
@@ -422,7 +422,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ToggleRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ToggleRight className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Humidistat/PIR automatic control</strong> — some fans have built-in humidity
                 sensors or PIR motion detectors that activate the fan automatically. These have no
@@ -519,7 +519,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Routine (within a week or two)</strong> — the fan works but the timer
                 overrun has stopped, or the fan is noisier than usual. The fan is still providing
@@ -549,7 +549,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Zap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">1. Test Voltage at Fan Terminals</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -565,7 +565,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">2. Check the Timer and Sensor</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -580,7 +580,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Cable className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">3. Insulation Resistance and Earth</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -598,7 +598,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">4. Replace and Certify</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -641,7 +641,7 @@ export default function ExtractorFanNotWorkingPage() {
       badgeIcon={Fan}
       heroTitle={
         <>
-          Extractor Fan Not Working: <span className="text-yellow-400">Troubleshooting Guide</span>
+          Extractor Fan Not Working: <span className="text-elec-yellow">Troubleshooting Guide</span>
         </>
       }
       heroSubtitle="Your extractor fan has stopped working. This guide covers every common cause — from a switched-off isolator to motor burnout — tells you what to check yourself, and explains when you need an electrician."
@@ -652,7 +652,7 @@ export default function ExtractorFanNotWorkingPage() {
       faqHeading="Frequently Asked Questions About Extractor Fan Problems"
       relatedPages={relatedPages}
       ctaHeading="Certify Fan Replacements on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for Minor Works Certificates, EICR reports, and AI-powered fault diagnosis. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for Minor Works Certificates, EICR reports, and AI-powered fault diagnosis. 7-day free trial, cancel anytime."
     />
   );
 }

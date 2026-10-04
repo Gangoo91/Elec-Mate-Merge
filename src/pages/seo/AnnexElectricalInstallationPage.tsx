@@ -232,28 +232,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lighting circuits (x2)</strong> — separate circuits for bedrooms/living area
                 and kitchen/bathroom. 6A MCB/RCBO, 1.0mm² or 1.5mm² twin and earth.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Socket circuits (x2)</strong> — one for the living area and bedroom, one for
                 the kitchen. 32A ring final circuit or 20A radial in 2.5mm².
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cooker circuit</strong> — 32A or 45A radial in 6.0mm² or 10.0mm², depending
                 on the cooker rating.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Shower circuit</strong> — if an electric shower is specified, 40A to 50A
                 radial in 10.0mm². Consider the total demand — an electric shower on a sub-main may
@@ -261,28 +261,28 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Heating circuit</strong> — dedicated circuit for panel heaters, underfloor
                 heating, or heat pump. Size depends on heating type and load.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Immersion heater</strong> — 16A radial in 2.5mm² if the hot water is
                 provided by an immersion heater in a cylinder.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smoke detection</strong> — dedicated circuit or fed from the lighting
                 circuit depending on the alarm type and Building Control preference.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Spare ways (x2 minimum)</strong> — always provide spare ways for future
                 additions (EV charger, additional appliances, external lighting).
@@ -308,7 +308,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CookingPot className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CookingPot className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cooker circuit</strong> — a dedicated radial circuit for the cooker. For a
                 standard domestic electric cooker, 32A in 6.0mm² is usually adequate (applying
@@ -316,7 +316,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CookingPot className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CookingPot className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Socket outlets</strong> — worktop sockets must be at least 300mm above the
                 worktop surface. Provide a minimum of 4 double sockets above the worktop for small
@@ -324,7 +324,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CookingPot className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CookingPot className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated appliance points</strong> — fused spurs or dedicated sockets for
                 washing machine, dishwasher, fridge-freezer, and boiler (if an electric combi-boiler
@@ -332,7 +332,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CookingPot className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CookingPot className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Extract fan</strong> — a cooker hood or extract fan is required in kitchens
                 for Part F ventilation compliance. Wire from a fused spur (3A or 5A).
@@ -418,7 +418,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electric panel heaters</strong> — the simplest option. Wall-mounted heaters
                 (1kW to 2kW each) on a dedicated radial circuit per room or a shared circuit. Modern
@@ -426,7 +426,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electric underfloor heating</strong> — excellent for annexes built on a new
                 concrete slab. Install heating mats under the floor finish with zone thermostats.
@@ -434,7 +434,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Air source heat pump</strong> — increasingly common in new-build annexes for
                 Part L compliance. The electrician provides the outdoor unit supply (typically 20A
@@ -443,7 +443,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hot water</strong> — if the annex has its own hot water cylinder, provide a
                 dedicated 16A circuit for the immersion heater. If using an electric combi-boiler or
@@ -508,7 +508,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Self-certified</strong> — by a registered electrician (NICEIC, NAPIT,
                 ELECSA, etc.) who submits the EIC to Building Control via their competent person
@@ -516,7 +516,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Building Control notification</strong> — if the electrician is not
                 registered, the homeowner must apply to Building Control before work starts.
@@ -550,39 +550,39 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Continuity of protective conductors on all circuits</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Ring final circuit continuity (if ring circuits are used)</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Insulation resistance on all circuits (500V DC, minimum 1 megohm)</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Polarity at every termination point</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Earth electrode resistance (if TT earthing with earth rod)</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Earth fault loop impedance (Zs) on every circuit</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>RCD operation on all RCD/RCBO protected circuits</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Prospective fault current at the annex consumer unit origin</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Functional testing of smoke/heat alarms, heating controls, and extract fans
               </span>
@@ -651,28 +651,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Studio annex (open plan, no kitchen)</strong> — lighting, sockets, heating,
                 shower circuit, smoke detection: £3,000 to £4,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>One-bedroom annex (standard spec)</strong> — full kitchen, bathroom, living
                 area, bedroom, heating: £4,000 to £6,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Two-bedroom annex (high spec)</strong> — two bathrooms, large kitchen, UFH,
                 air source heat pump feed, data cabling: £6,000 to £8,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Add-ons</strong> — new DNO connection: £500 to £2,000+. Earth rod
                 installation: £80 to £150. Sub-main trench (per metre): £15 to £30. EV charger
@@ -699,7 +699,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -728,7 +728,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify annex electrics"
-          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification."
           icon={Home}
         />
       </>
@@ -754,7 +754,7 @@ export default function AnnexElectricalInstallationPage() {
       heroTitle={
         <>
           Granny Annex Electrical Installation:{' '}
-          <span className="text-yellow-400">Complete Wiring Guide for UK Electricians</span>
+          <span className="text-elec-yellow">Complete Wiring Guide for UK Electricians</span>
         </>
       }
       heroSubtitle="Everything you need to know about wiring a granny annex — separate supply vs sub-main, consumer unit design, kitchen and bathroom circuits, heating, fire separation, Building Control approval, and realistic 2026 pricing from £3,000 to £8,000."
@@ -765,7 +765,7 @@ export default function AnnexElectricalInstallationPage() {
       faqHeading="Frequently Asked Questions About Annex Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Annex Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certificates for annex installations. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certificates for annex installations. 7-day free trial, cancel anytime."
     />
   );
 }

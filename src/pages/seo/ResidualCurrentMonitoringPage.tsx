@@ -265,7 +265,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BarChart3 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart3 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Data centres:</strong> server power must be maintained 24/7. An RCM alarm
                 allows the operations team to schedule maintenance during a planned window rather
@@ -273,7 +273,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BarChart3 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart3 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hospitals and medical locations:</strong> Group 2 medical locations
                 (operating theatres, ICU) use IT earthing systems with insulation monitoring devices
@@ -281,7 +281,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BarChart3 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart3 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Industrial process lines:</strong> sudden disconnection of a chemical
                 process, food production line, or metal smelting operation could cause safety
@@ -289,7 +289,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BarChart3 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart3 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charging:</strong> integrated RCMUs in EV chargers monitor for DC fault
                 currents, allowing the use of less expensive Type A RCDs upstream. This is the most
@@ -297,7 +297,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BarChart3 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart3 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Renewable energy systems:</strong> solar PV inverters and battery storage
                 systems can produce DC fault currents that require monitoring.
@@ -334,7 +334,7 @@ const sections = [
           <div className="grid sm:grid-cols-2 gap-4">
             <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10">
               <p className="text-white font-bold mb-1">Type B RCD (external)</p>
-              <p className="text-2xl font-bold text-yellow-400">£200 to £350+</p>
+              <p className="text-2xl font-bold text-elec-yellow">£200 to £350+</p>
               <p className="text-white text-sm mt-1">
                 Detects all fault types. Expensive. Takes DIN rail space. Always required if charger
                 has no built-in DC detection.
@@ -342,7 +342,7 @@ const sections = [
             </div>
             <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10">
               <p className="text-white font-bold mb-1">Type A RCD + charger RCMU</p>
-              <p className="text-2xl font-bold text-yellow-400">£25 to £40</p>
+              <p className="text-2xl font-bold text-elec-yellow">£25 to £40</p>
               <p className="text-white text-sm mt-1">
                 Type A RCD cost only. RCMU is built into the charger at no additional cost.
                 Acceptable per IET CoP when charger has integrated DC detection.
@@ -379,7 +379,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 411.6 (IT Systems):</strong> requires an insulation monitoring
                 device (IMD) to monitor the insulation resistance of the installation and generate
@@ -387,14 +387,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 531.3:</strong> covers the selection and erection of RCDs,
                 including guidance applicable to residual current monitoring devices.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 722 (EV Charging):</strong> Section 722 specifically addresses
                 electric vehicle charging installations and references the need for appropriate
@@ -402,7 +402,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IET Code of Practice for EV Charging (5th Edition):</strong> provides
                 detailed guidance on RCMU requirements, acceptable alternatives to Type B RCDs, and
@@ -543,7 +543,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Correct positioning:</strong> the RCM current transformer must encircle all
                 live and neutral conductors of the circuit being monitored. The protective earth
@@ -551,7 +551,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Threshold setting:</strong> set the alarm threshold based on the normal
                 background leakage and the protection level required. Too low and the alarm will
@@ -559,7 +559,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Alarm routing:</strong> ensure the alarm output is connected to a monitoring
                 system that is attended 24/7 (building management system, alarm panel, or
@@ -567,7 +567,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing and verification:</strong> RCM devices should be tested during
                 commissioning and during periodic inspections. Verify the alarm threshold, test
@@ -592,7 +592,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">RCM on Electrical Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -645,7 +645,7 @@ export default function ResidualCurrentMonitoringPage() {
       heroTitle={
         <>
           Residual Current Monitoring:{' '}
-          <span className="text-yellow-400">The Complete RCM Guide for UK Electricians</span>
+          <span className="text-elec-yellow">The Complete RCM Guide for UK Electricians</span>
         </>
       }
       heroSubtitle="Everything you need to know about residual current monitoring. RCM vs RCD differences, EV charger RCMU requirements, BS 7671 regulations, Type A vs Type B monitoring, DC fault detection, and documentation requirements for electrical certificates."
@@ -656,7 +656,7 @@ export default function ResidualCurrentMonitoringPage() {
       faqHeading="Frequently Asked Questions About Residual Current Monitoring"
       relatedPages={relatedPages}
       ctaHeading="Document Protection Devices Professionally"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for electrical certificates with full protection device documentation. RCM, RCD, RCMU, and AFDD details captured correctly every time. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for electrical certificates with full protection device documentation. RCM, RCD, RCMU, and AFDD details captured correctly every time. 7-day free trial, cancel anytime."
     />
   );
 }

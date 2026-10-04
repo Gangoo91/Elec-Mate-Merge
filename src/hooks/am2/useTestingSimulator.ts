@@ -15,6 +15,7 @@ import type {
   EICCircuitDetail,
   EICTestResult,
   EICScheduleState,
+  DialPosition,
 } from '@/types/am2-testing-simulator';
 import { AM2_RIG_CIRCUITS, AM2_ZE } from '@/data/am2RigCircuits';
 import { getIRTestVoltage } from '@/data/mftReadingEngine';

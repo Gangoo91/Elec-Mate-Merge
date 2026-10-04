@@ -324,14 +324,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cca</strong> — limited flame spread. Required for fire alarm and emergency
                 lighting cables in many applications.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-300 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dca</strong> — flame spread limited. Common specification for commercial
                 installations. Standard LSOH cables are often Dca-s1,d1,a1.
@@ -425,7 +425,7 @@ export default function PVCvsXLPECablePage() {
       heroTitle={
         <>
           PVC vs XLPE vs LSOH Cable:{' '}
-          <span className="text-yellow-400">
+          <span className="text-elec-yellow">
             Temperature Ratings, CPR Fire Classes and When to Use Each
           </span>
         </>

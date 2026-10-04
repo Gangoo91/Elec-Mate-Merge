@@ -200,7 +200,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Air handling units (AHUs)</strong> — the BMS controls AHU supply air
                 temperature, fan speed (via VSD), heating and cooling coil valves, humidification,
@@ -210,7 +210,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Chiller plant</strong> — the BMS sequences multiple chillers to match
                 the building's cooling load — running one chiller at high efficiency rather than
@@ -219,7 +219,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Boiler plant</strong> — lead/lag boiler sequencing, weather compensation
                 of flow temperature, and optimum start (starting the boiler the minimum time
@@ -228,7 +228,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>VAV and FCU control</strong> — variable air volume (VAV) boxes and fan
                 coil units (FCUs) in individual zones are controlled by local direct digital
@@ -255,7 +255,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sub-metering strategy</strong> — as a minimum, meter the HVAC plant,
                 lighting, and general power as separate circuits. For multi-tenant buildings,
@@ -265,7 +265,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Modbus sub-meters</strong> — most electrical sub-meters communicate via
                 Modbus RTU over RS-485 or Modbus TCP over Ethernet. The BMS polls each meter
@@ -275,7 +275,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Half-hourly data</strong> — for buildings with a maximum demand over
                 100kVA, the Distribution Network Operator (DNO) requires half-hourly metering
@@ -358,7 +358,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>First-in/last-out signals</strong> — the access control system sends a
                 signal to the BMS when the first person enters the building in the morning
@@ -368,7 +368,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Zone occupancy</strong> — in larger buildings, access control per floor
                 or zone provides zone-level occupancy signals to the BMS. The HVAC system
@@ -377,7 +377,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Integration method</strong> — most modern access control systems provide
                 an API or BACnet/Modbus interface for BMS integration. Alternatively, a dry
@@ -475,7 +475,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Real-time energy dashboard</strong> — the BMS displays real-time power
                 consumption (kW) and cumulative energy (kWh) by system and zone. Energy intensity
@@ -485,7 +485,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Automatic reporting</strong> — the BMS scheduler generates monthly
                 energy reports automatically, showing kWh by system, cost analysis (applying
@@ -495,7 +495,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fault detection and diagnostics (FDD)</strong> — advanced BMS platforms
                 include FDD algorithms that compare actual system performance to expected
@@ -523,7 +523,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Stage 1: Point-to-point (P2P) testing</strong> — every sensor, actuator,
                 and field device is tested individually. Temperature sensors are verified against
@@ -533,7 +533,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Stage 2: Functional testing</strong> — control sequences are tested
                 end-to-end. The commissioning engineer simulates conditions (overriding sensor
@@ -543,7 +543,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Stage 3: Witnessed commissioning</strong> — the client or their appointed
                 representative witnesses key functional tests. The commissioning report is signed
@@ -554,7 +554,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Seasonal commissioning</strong> — for HVAC systems, full performance
                 can only be verified under both heating and cooling conditions. A system
@@ -582,7 +582,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Quote BMS Electrical Work Accurately</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -648,7 +648,7 @@ export default function BuildingManagementSystemPage() {
       heroTitle={
         <>
           Building Management Systems (BMS) UK:{' '}
-          <span className="text-yellow-400">Electrical Integration Guide</span>
+          <span className="text-elec-yellow">Electrical Integration Guide</span>
         </>
       }
       heroSubtitle="The complete UK guide to Building Management Systems — HVAC integration, energy sub-metering, smart lighting control, access control integration, BACnet and Modbus protocols, energy monitoring and reporting, and the BMS commissioning process."

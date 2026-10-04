@@ -524,7 +524,7 @@ const TEMPLATES: ChecklistTemplate[] = [
         /*
          * This was the ½× / 1× / 5× IΔn sequence — trip at 5×IΔn within 40 ms,
          * no-trip at 50% IΔn. That sequence came from Table 3A, which
-         * BS 7671:2018+A4:2026 DELETED. It is no longer how an RCD is verified.
+         * BS 7671:2018+A2:2022 DELETED. It is no longer how an RCD is verified.
          *
          * 643.8 is now explicit: "Regardless of RCD Type, effectiveness is
          * deemed to have been verified where an RCD disconnects within the time

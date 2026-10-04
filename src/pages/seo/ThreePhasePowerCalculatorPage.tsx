@@ -144,15 +144,15 @@ export default function ThreePhasePowerCalculatorPage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
-        <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-elec-yellow text-sm font-medium mb-6">
             <Zap className="w-4 h-4" />
             Part of 70 Electrical Calculators
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             Three Phase Power Calculator
-            <span className="block text-yellow-400 mt-1">Star, Delta & Power Factor</span>
+            <span className="block text-elec-yellow mt-1">Star, Delta & Power Factor</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             Calculate three-phase power, current, and voltage for balanced and unbalanced loads.
@@ -168,7 +168,7 @@ export default function ThreePhasePowerCalculatorPage() {
             </Link>
             <a
               href="#how-it-works"
-              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-yellow-500/40 touch-manipulation transition-colors"
+              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-white/[0.1] touch-manipulation transition-colors"
             >
               See How It Works
               <ArrowDown className="w-4 h-4 ml-1" />
@@ -189,7 +189,7 @@ export default function ThreePhasePowerCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Lightbulb className="w-5 h-5 text-yellow-400" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               What Is Three-Phase Power?
@@ -238,7 +238,7 @@ export default function ThreePhasePowerCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <BookOpen className="w-5 h-5 text-yellow-400" />
+              <BookOpen className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Star vs Delta Configurations
@@ -253,59 +253,59 @@ export default function ThreePhasePowerCalculatorPage() {
             </p>
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                <h3 className="font-bold text-yellow-400 text-lg mb-3">Star (Wye) Connection</h3>
+                <h3 className="font-bold text-elec-yellow text-lg mb-3">Star (Wye) Connection</h3>
                 <ul className="space-y-2 text-white text-sm">
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
                       V<sub>L</sub> = V<sub>P</sub> x root 3
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
                       I<sub>L</sub> = I<sub>P</sub>
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>Neutral point available (4-wire system)</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>Two voltages: 230 V and 400 V</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>Used for: distribution, mixed loads</span>
                   </li>
                 </ul>
               </div>
               <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                <h3 className="font-bold text-yellow-400 text-lg mb-3">Delta Connection</h3>
+                <h3 className="font-bold text-elec-yellow text-lg mb-3">Delta Connection</h3>
                 <ul className="space-y-2 text-white text-sm">
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
                       V<sub>L</sub> = V<sub>P</sub>
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
                       I<sub>L</sub> = I<sub>P</sub> x root 3
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>No neutral point (3-wire system)</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>Single voltage: 400 V only</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>Used for: motors, transformers</span>
                   </li>
                 </ul>
@@ -320,7 +320,7 @@ export default function ThreePhasePowerCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Calculator className="w-5 h-5 text-yellow-400" />
+              <Calculator className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Three-Phase Power Formulas
@@ -329,34 +329,34 @@ export default function ThreePhasePowerCalculatorPage() {
           <div className="space-y-4 text-white leading-relaxed">
             <p>The fundamental power formula for a balanced three-phase load is:</p>
             <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center my-6">
-              <p className="text-xl sm:text-2xl font-mono font-bold text-yellow-400">
+              <p className="text-xl sm:text-2xl font-mono font-bold text-elec-yellow">
                 P = root 3 x V<sub>L</sub> x I<sub>L</sub> x cos phi
               </p>
               <div className="mt-4 text-left max-w-md mx-auto space-y-1 text-sm text-white">
                 <p>
-                  <strong className="text-yellow-400">P</strong> = total three-phase real power in
+                  <strong className="text-elec-yellow">P</strong> = total three-phase real power in
                   watts
                 </p>
                 <p>
-                  <strong className="text-yellow-400">
+                  <strong className="text-elec-yellow">
                     V<sub>L</sub>
                   </strong>{' '}
                   = line-to-line voltage (400 V in UK)
                 </p>
                 <p>
-                  <strong className="text-yellow-400">
+                  <strong className="text-elec-yellow">
                     I<sub>L</sub>
                   </strong>{' '}
                   = line current in amperes
                 </p>
                 <p>
-                  <strong className="text-yellow-400">cos phi</strong> = power factor (0 to 1)
+                  <strong className="text-elec-yellow">cos phi</strong> = power factor (0 to 1)
                 </p>
               </div>
             </div>
             <p>To find the line current when you know the power:</p>
             <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center my-6">
-              <p className="text-xl sm:text-2xl font-mono font-bold text-yellow-400">
+              <p className="text-xl sm:text-2xl font-mono font-bold text-elec-yellow">
                 I<sub>L</sub> = P / (root 3 x V<sub>L</sub> x cos phi)
               </p>
             </div>
@@ -376,13 +376,13 @@ export default function ThreePhasePowerCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <BarChart3 className="w-5 h-5 text-yellow-400" />
+              <BarChart3 className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">Worked Examples</h2>
           </div>
           <div className="space-y-6">
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <h3 className="font-bold text-yellow-400 text-lg mb-3">
+              <h3 className="font-bold text-elec-yellow text-lg mb-3">
                 Example 1: Balanced Three-Phase Motor
               </h3>
               <div className="space-y-2 text-white leading-relaxed text-sm">
@@ -394,7 +394,7 @@ export default function ThreePhasePowerCalculatorPage() {
                 <p className="font-mono text-white">Input power = 15,000 / 0.9 = 16,667 W</p>
                 <p className="font-mono text-white">
                   I<sub>L</sub> = 16,667 / (1.732 x 400 x 0.85) = 16,667 / 588.9 ={' '}
-                  <strong className="text-yellow-400">28.3 A</strong>
+                  <strong className="text-elec-yellow">28.3 A</strong>
                 </p>
                 <p>
                   The motor draws 28.3 A per phase from the supply. This determines the cable size,
@@ -404,7 +404,7 @@ export default function ThreePhasePowerCalculatorPage() {
             </div>
 
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <h3 className="font-bold text-yellow-400 text-lg mb-3">
+              <h3 className="font-bold text-elec-yellow text-lg mb-3">
                 Example 2: Unbalanced Three-Phase Distribution Board
               </h3>
               <div className="space-y-2 text-white leading-relaxed text-sm">
@@ -424,7 +424,7 @@ export default function ThreePhasePowerCalculatorPage() {
                 </p>
                 <p className="font-mono text-white">
                   Total = 8,050 + 6,440 + 9,660 ={' '}
-                  <strong className="text-yellow-400">24,150 W (24.15 kW)</strong>
+                  <strong className="text-elec-yellow">24,150 W (24.15 kW)</strong>
                 </p>
                 <p>
                   The imbalance between L2 (28 A) and L3 (42 A) is 14 A. The sub-main cable must be
@@ -436,7 +436,7 @@ export default function ThreePhasePowerCalculatorPage() {
             </div>
 
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <h3 className="font-bold text-yellow-400 text-lg mb-3">
+              <h3 className="font-bold text-elec-yellow text-lg mb-3">
                 Example 3: Three-Phase EV Charging Installation
               </h3>
               <div className="space-y-2 text-white leading-relaxed text-sm">
@@ -446,7 +446,7 @@ export default function ThreePhasePowerCalculatorPage() {
                 </p>
                 <p className="font-mono text-white">
                   I<sub>L</sub> = 22,000 / (1.732 x 400 x 0.99) = 22,000 / 685.9 ={' '}
-                  <strong className="text-yellow-400">32.1 A</strong>
+                  <strong className="text-elec-yellow">32.1 A</strong>
                 </p>
                 <p>
                   A 32 A Type C MCB and 6 mm² 5-core SWA cable would be appropriate (subject to
@@ -490,7 +490,7 @@ export default function ThreePhasePowerCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <HelpCircle className="w-5 h-5 text-yellow-400" />
+              <HelpCircle className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Frequently Asked Questions
@@ -503,7 +503,7 @@ export default function ThreePhasePowerCalculatorPage() {
                 className="group p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-white/[0.14] transition-colors"
               >
                 <summary className="flex items-start gap-3 cursor-pointer touch-manipulation list-none [&::-webkit-details-marker]:hidden">
-                  <ChevronRight className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0 transition-transform group-open:rotate-90" />
+                  <ChevronRight className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0 transition-transform group-open:rotate-90" />
                   <h3 className="font-bold text-white text-lg">{faq.question}</h3>
                 </summary>
                 <div className="mt-3 pl-8">
@@ -559,7 +559,7 @@ export default function ThreePhasePowerCalculatorPage() {
 
       <SEOCTASection
         heading="Calculate Three-Phase Power in Seconds"
-        subheading="Join 1,600+ UK electricians using Elec-Mate for on-site calculations. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians using Elec-Mate for on-site calculations. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

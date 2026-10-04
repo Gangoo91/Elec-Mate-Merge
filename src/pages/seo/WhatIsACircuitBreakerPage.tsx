@@ -173,7 +173,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Thermometer className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Thermal Trip (Overload Protection)</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -232,14 +232,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Safety.</strong> Replacing fuse wire involves working near live parts. MCBs
                 are reset by flipping a switch — no exposure to live conductors.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Correct rating.</strong> With rewirable fuses, people frequently fitted the
                 wrong rating of fuse wire — using 30A wire in a 5A holder, for example, which
@@ -247,7 +247,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Speed.</strong> MCBs trip faster than rewirable fuses, especially under
                 short circuit conditions. Faster disconnection means less energy released into the
@@ -255,7 +255,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Convenience.</strong> A tripped MCB is reset in seconds. A blown fuse
                 requires finding the correct fuse wire, threading it through the holder, and
@@ -263,7 +263,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Accuracy.</strong> The trip characteristics of an MCB are precisely defined
                 by the manufacturer. Rewirable fuse wire has less predictable characteristics,
@@ -298,7 +298,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Zap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Type B — 3 to 5 Times Rated Current</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -364,14 +364,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>B6 — Lighting circuits.</strong> 6A is the standard rating for domestic
                 lighting circuits wired in 1.0mm² or 1.5mm² twin-and-earth cable.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>B16 — Immersion heater, single socket spur.</strong> 16A is used for
                 dedicated circuits supplying a fixed load up to 3.68kW, or for radial socket
@@ -379,14 +379,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>B20 — Radial socket circuit.</strong> 20A radials wired in 2.5mm² cable are
                 used for areas serving up to 50m² floor area (On-Site Guide Appendix H, standard circuit arrangements).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>B32 — Ring final circuit, cooker circuit.</strong> 32A is the standard for
                 ring final circuits (socket outlets) wired in 2.5mm² and for cooker circuits wired
@@ -394,7 +394,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>B40 or B50 — Electric shower.</strong> High-power electric showers (9.5kW to
                 10.8kW) require a dedicated circuit with a 40A or 50A MCB, wired in 10mm² cable.
@@ -417,7 +417,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Thermometer className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Overload</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -477,7 +477,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Prospective Fault Current (PFC).</strong> Measured at the origin and at each
                 distribution board. The PFC must not exceed the breaking capacity (Icn) of the MCBs.
@@ -486,7 +486,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth Fault Loop Impedance (Zs).</strong> Measured at the furthest point of
                 each circuit. The measured Zs must be below the{' '}
@@ -500,7 +500,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Visual inspection.</strong> Check that the MCB type and rating match the
                 cable size and circuit type. A B32 on a lighting circuit wired in 1.0mm² would be
@@ -592,7 +592,7 @@ export default function WhatIsACircuitBreakerPage() {
       badgeIcon={ShieldCheck}
       heroTitle={
         <>
-          What Is a Circuit Breaker? <span className="text-yellow-400">MCBs Explained Simply</span>
+          What Is a Circuit Breaker? <span className="text-elec-yellow">MCBs Explained Simply</span>
         </>
       }
       heroSubtitle="Circuit breakers protect every circuit in every installation. This guide explains how MCBs work, the difference between Type B, C, and D, why they replaced fuses, and what it means when one keeps tripping."

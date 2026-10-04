@@ -230,7 +230,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EPA gateway</strong> — before you can take the EPA, you must meet gateway
                 requirements: AM2 pass, Level 3 Diploma, 18th Edition, functional skills, and a
@@ -238,7 +238,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Practical observation</strong> — an assessor watches you complete a real or
                 simulated electrical task. They assess your technical competence, safety awareness,
@@ -246,7 +246,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Professional discussion</strong> — a structured conversation (typically 60
                 to 90 minutes) where the assessor asks about your portfolio evidence, work
@@ -255,7 +255,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Knowledge test</strong> — a written or online test covering the knowledge
                 requirements of the apprenticeship standard. If you have been keeping up with your
@@ -286,31 +286,31 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">Portfolio Checklist</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Evidence of domestic electrical work (rewires, consumer unit changes, new circuits)</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Evidence of commercial or industrial work (containment, distribution boards, three-phase if possible)</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Photographic evidence: before, during, and after shots with clear descriptions</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Witness testimonies from supervisors covering different work types</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Copies of test results, certificates, and commissioning records you contributed to</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Risk assessments, method statements, and safe isolation records</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Reflective accounts explaining what you learned and how you developed</span>
             </li>
           </ul>
@@ -345,7 +345,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Rocket className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Rocket className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Collect all certificates</strong> — ensure you have your AM2 pass
                 certificate, Level 3 Diploma certificate, 18th Edition certificate, EPA result, and
@@ -355,7 +355,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Rocket className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Rocket className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Apply for your ECS card</strong> — the Electrotechnical Certification Scheme
                 card is the industry-recognised ID card for electricians. With an AM2 pass and 18th
@@ -364,7 +364,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Rocket className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Rocket className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Negotiate your new rate</strong> — if staying with your employer, your pay
                 should move to qualified electrician rates immediately. JIB-graded employers have
@@ -373,7 +373,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Rocket className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Rocket className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Plan your next qualification</strong> — many newly qualified electricians
                 go straight into the{' '}
@@ -402,7 +402,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC</strong> — the most widely recognised scheme. Domestic Installer
                 registration requires the AM2 (or equivalent), 18th Edition, and evidence of
@@ -411,7 +411,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NAPIT</strong> — a well-respected alternative to NICEIC with similar
                 requirements and fees. Some electricians prefer NAPIT for its customer service and
@@ -419,7 +419,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ELECSA</strong> — another competent person scheme option. Compare fees,
                 assessment requirements, and support before choosing. All schemes allow you to
@@ -495,7 +495,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Briefcase className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Update Your CV</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -557,14 +557,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Book your AM2 early</strong> — assessment centre slots book up quickly. Do
                 not leave it until the last minute and end up with a date months away.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Complete your portfolio well before the EPA</strong> — last-minute portfolio
                 panic is avoidable. Set a deadline of 8 weeks before your expected EPA date to have
@@ -572,7 +572,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Practise under timed conditions</strong> — for the AM2, time is your enemy.
                 Set up practice installations and time yourself. Identify where you lose time and
@@ -580,7 +580,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Prepare for the professional discussion</strong> — review your portfolio and
                 be ready to talk about specific jobs in detail. Why did you make certain decisions?
@@ -589,7 +589,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Look after yourself</strong> — year 4 is stressful. Exams, assessments,
                 portfolio deadlines, and the pressure of transitioning to a qualified role can take
@@ -627,7 +627,7 @@ export default function Year4ElectricalApprenticePage() {
       heroTitle={
         <>
           Year 4 Electrical Apprentice:{' '}
-          <span className="text-yellow-400">Final Year Guide 2026</span>
+          <span className="text-elec-yellow">Final Year Guide 2026</span>
         </>
       }
       heroSubtitle="Your final year. AM2 assessment, End-Point Assessment, portfolio completion, and the transition from apprentice to qualified electrician. Everything you need to finish strong and start your career."

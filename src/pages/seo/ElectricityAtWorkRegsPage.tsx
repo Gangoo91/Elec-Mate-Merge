@@ -187,7 +187,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <UserCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <UserCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Employers</strong> — must ensure that their employees are not exposed to
                 danger from electrical systems or equipment. This includes providing safe systems of
@@ -196,7 +196,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <UserCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <UserCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Self-employed persons</strong> — have the same duties as employers in
                 relation to their own safety and the safety of others who may be affected by their
@@ -205,7 +205,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <UserCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <UserCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Employees</strong> — must cooperate with their employer to comply with the
                 regulations. An employee who deliberately breaches safe working practices (for
@@ -214,7 +214,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <UserCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <UserCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Duty holders for premises</strong> — building owners, landlords, and
                 managing agents have a duty under Regulation 4 to ensure that the fixed electrical
@@ -266,7 +266,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Construction</strong> — the installation must be designed and installed in
                 accordance with a recognised standard (BS 7671). Cables must be correctly sized,
@@ -275,7 +275,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maintenance</strong> — the installation must be periodically inspected and
                 tested by a competent person. Defects must be rectified promptly, and records of
@@ -288,7 +288,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use</strong> — the installation must be used safely. Overloading circuits,
                 using damaged equipment, and bypassing protective devices are all breaches of
@@ -298,11 +298,11 @@ const sections = [
           </ul>
         </div>
         <div className="overflow-hidden rounded-2xl border border-white/10 my-4">
-          <div className="bg-white/[0.06] px-4 py-2 text-xs uppercase tracking-wide text-white/70">
+          <div className="bg-white/[0.06] px-4 py-2 text-xs uppercase tracking-wide text-white">
             Indicative maximum periodic inspection intervals (assessed under Reg 652.1)
           </div>
           <table className="w-full text-left text-sm text-white">
-            <thead className="bg-white/[0.04] text-xs uppercase tracking-wide text-white/60">
+            <thead className="bg-white/[0.04] text-xs uppercase tracking-wide text-white">
               <tr>
                 <th className="px-3 py-2 font-semibold">Installation type</th>
                 <th className="px-3 py-2 font-semibold">Typical interval</th>
@@ -327,7 +327,7 @@ const sections = [
               </tr>
             </tbody>
           </table>
-          <p className="px-3 py-2 text-xs text-white/60 bg-white/[0.02] border-t border-white/10">
+          <p className="px-3 py-2 text-xs text-white bg-white/[0.02] border-t border-white/10">
             Indicative guidance only — the inspector sets the actual interval under Reg 652.1.
             See the{' '}
             <SEOInternalLink href="/guides/eicr-for-landlords">EICR for landlords</SEOInternalLink>{' '}
@@ -335,7 +335,7 @@ const sections = [
           </p>
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
-          <p className="text-yellow-300 font-semibold mb-2">
+          <p className="text-elec-yellow font-semibold mb-2">
             A4:2026 Update — New construction requirements
           </p>
           <p className="text-white text-sm leading-relaxed mb-2">
@@ -359,7 +359,7 @@ const sections = [
           </ul>
           <div className="mt-4 overflow-hidden rounded-xl border border-white/10">
             <table className="w-full text-left text-sm text-white">
-              <thead className="bg-white/[0.06] text-xs uppercase tracking-wide text-white/70">
+              <thead className="bg-white/[0.06] text-xs uppercase tracking-wide text-white">
                 <tr>
                   <th className="px-3 py-2 font-semibold">Premises type (Reg 421.1.7)</th>
                   <th className="px-3 py-2 font-semibold">AFDD on socket circuits &le;32 A</th>
@@ -384,12 +384,12 @@ const sections = [
                 </tr>
                 <tr className="border-t border-white/10 bg-white/[0.02]">
                   <td className="px-3 py-2">All other premises (including standard dwellings)</td>
-                  <td className="px-3 py-2 font-semibold text-yellow-300">Recommended</td>
+                  <td className="px-3 py-2 font-semibold text-elec-yellow">Recommended</td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <p className="text-white/70 text-xs mt-3">
+          <p className="text-white text-xs mt-3">
             Source: BS 7671:2018+A4:2026 Regs 421.1.7 and 411.3.4
           </p>
         </div>
@@ -430,7 +430,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Isolate</strong> — switch off and disconnect the circuit or equipment from
                 all sources of electrical energy. This may require switching off the MCB, RCBO, or
@@ -439,7 +439,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Secure the isolation</strong> — lock off the isolating device with a
                 personal padlock (lock-off kit) so that nobody else can re-energise the circuit.
@@ -448,7 +448,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Prove dead</strong> — use an approved voltage indicator (complying with GS38
                 requirements) to test between all conductors (line-line, line-neutral, line-earth,
@@ -555,7 +555,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <UserCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <UserCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Qualifications</strong> — C&G 2382 (18th Edition IET Wiring Regulations),
                 C&G 2391 (Inspection and Testing), NVQ Level 3 in Electrical Installation, and
@@ -563,7 +563,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <UserCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <UserCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Experience</strong> — practical experience of carrying out the type of work
                 in question. A newly qualified electrician with limited experience may be competent
@@ -571,7 +571,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <UserCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <UserCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Registration</strong> — registration with a competent person scheme (NICEIC,
                 NAPIT, ELECSA) demonstrates that the electrician's competence has been independently
@@ -579,7 +579,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <UserCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <UserCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CPD</strong> — continuing professional development ensures that competence
                 is maintained as standards, technology, and regulations evolve. Elec-Mate provides
@@ -656,7 +656,7 @@ const sections = [
         </div>
         <div className="overflow-hidden rounded-2xl border border-white/10 my-4">
           <table className="w-full text-left text-sm text-white">
-            <thead className="bg-white/[0.06] text-xs uppercase tracking-wide text-white/70">
+            <thead className="bg-white/[0.06] text-xs uppercase tracking-wide text-white">
               <tr>
                 <th className="px-3 py-2 font-semibold">Enforcement route</th>
                 <th className="px-3 py-2 font-semibold">Maximum fine</th>
@@ -676,7 +676,7 @@ const sections = [
               </tr>
             </tbody>
           </table>
-          <p className="px-3 py-2 text-xs text-white/60 bg-white/[0.02] border-t border-white/10">
+          <p className="px-3 py-2 text-xs text-white bg-white/[0.02] border-t border-white/10">
             Fines became unlimited following the Legal Aid, Sentencing and Punishment of Offenders
             Act 2012 (in force 2015). Both the organisation and named individuals can be prosecuted.
           </p>
@@ -702,7 +702,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Brain className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI Health and Safety Agent</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -792,7 +792,7 @@ export default function ElectricityAtWorkRegsPage() {
       heroTitle={
         <>
           Electricity at Work Regulations 1989:{' '}
-          <span className="text-yellow-400">What Every Electrician Must Know</span>
+          <span className="text-elec-yellow">What Every Electrician Must Know</span>
         </>
       }
       heroSubtitle="The Electricity at Work Regulations 1989 are the primary UK legislation governing electrical safety in the workplace. They impose legal duties on employers, employees, and self-employed persons. This guide explains the key regulations — Regulation 4, 12, 14, and 16 — and what they mean for your daily work."

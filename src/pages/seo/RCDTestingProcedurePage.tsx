@@ -53,7 +53,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Amendment 4 changed the test. Table 3A of Appendix 3 (time/current performance criteria for RCDs) has been deleted, and Regulations 643.7.1 (fault protection) and 643.8 (additional protection) now verify an RCD with a single alternating current test at the rated residual operating current, IΔn — whatever the device type, AC, A, F or B.',
+  'Amendment 2 (2022) changed the test. Table 3A of Appendix 3 (time/current performance criteria for RCDs) has been deleted, and Regulations 643.7.1 (fault protection) and 643.8 (additional protection) now verify an RCD with a single alternating current test at the rated residual operating current, IΔn — whatever the device type, AC, A, F or B.',
   'A general (non-delay) RCD must operate within 300 ms at IΔn — that is the acceptance figure the A4 NOTE states, and it is what goes on the certificate. For a Type S (time-delayed) device the NOTE to Regulation 643.7.1 gives a band of 130 ms minimum to 500 ms maximum; the NOTE to Regulation 643.8 (additional protection) states only the 300 ms general non-delay figure.',
   'The half-rated and five-times tests are no longer part of the required verification. They remain genuinely useful for fault-finding, and 40 ms at 5x IΔn is still a device characteristic under BS EN 61008/61009 — but that is the product standard describing the device, not BS 7671 telling you what to test.',
   'Test on both positive (0 degree) and negative (180 degree) half-cycles — the worst-case (longest) trip time is the value recorded.',
@@ -65,7 +65,7 @@ const faqs = [
   {
     question: 'What are the RCD trip time limits for a 30 mA general-type RCD?',
     answer:
-      'Two different things get muddled here, and Amendment 4 makes the distinction matter. What BS 7671 requires you to verify: Regulations 643.7.1 (fault protection) and 643.8 (additional protection) call for a single alternating current test at the rated residual operating current (IΔn = 30 mA for a 30 mA device), regardless of RCD type. The NOTE to Regulation 643.7.1 gives the acceptance times: a general (non-delay) device must operate within 300 milliseconds; a Type S between 130 milliseconds minimum and 500 milliseconds maximum. That is the test, and that trip time is what goes on the certificate. What the product standards say about the device: BS EN 61008 (RCCBs) and BS EN 61009 (RCBOs) give 40 milliseconds at five times rated current for a general device, and 50 to 200 milliseconds for a Type S. Those describe how the device must be built, not what BS 7671 asks you to measure — Table 3A of Appendix 3 has been deleted, so the half-rated and five-times tests are no longer part of the required sequence. Whichever test you run, do it on both the positive (0 degree) and negative (180 degree) half-cycles and record the worst-case (longest) trip time.',
+      'Two different things get muddled here, and Amendment 2 (2022) makes the distinction matter. What BS 7671 requires you to verify: Regulations 643.7.1 (fault protection) and 643.8 (additional protection) call for a single alternating current test at the rated residual operating current (IΔn = 30 mA for a 30 mA device), regardless of RCD type. The NOTE to Regulation 643.7.1 gives the acceptance times: a general (non-delay) device must operate within 300 milliseconds; a Type S between 130 milliseconds minimum and 500 milliseconds maximum. That is the test, and that trip time is what goes on the certificate. What the product standards say about the device: BS EN 61008 (RCCBs) and BS EN 61009 (RCBOs) give 40 milliseconds at five times rated current for a general device, and 50 to 200 milliseconds for a Type S. Those describe how the device must be built, not what BS 7671 asks you to measure — Table 3A of Appendix 3 has been deleted, so the half-rated and five-times tests are no longer part of the required sequence. Whichever test you run, do it on both the positive (0 degree) and negative (180 degree) half-cycles and record the worst-case (longest) trip time.',
   },
   {
     question: 'Why must RCDs be tested on both half-cycles?',
@@ -75,7 +75,7 @@ const faqs = [
   {
     question: 'What is the difference between a general-type RCD and a Type S (time-delayed) RCD?',
     answer:
-      'A general-type RCD is designed to trip as quickly as possible when it detects a fault current at or above its rated residual operating current. Note that Type AC and Type A are distinct device types (Reg 531.3.3): Type AC operates only on alternating sinusoidal residual current; Type A additionally responds to residual pulsating DC current. Critically, also under Reg 531.3.3, Type AC shall only be used to serve fixed equipment where it is known that the load current contains no DC components — circuits supplying inverters, EV chargers, or variable-speed drives must use Type A or higher. A Type S (selective or time-delayed) RCD has an intentional time delay built in — it will NOT trip within a certain minimum time, even if the fault current exceeds its rated value. This delay is designed to achieve discrimination with a downstream general-type RCD. For example, if a 100 mA Type S RCCB is installed upstream of a 30 mA general-type RCBO, a fault on a circuit protected by the 30 mA RCBO should trip the RCBO first without tripping the upstream 100 mA Type S device. This prevents unnecessary disconnection of other circuits. Tested at IΔn, a Type S device should operate between 130 ms minimum and 500 ms maximum — the NOTE to Regulation 643.7.1 states that band in BS 7671 itself. The lower bound matters as much as the upper one, because a Type S that trips too fast has lost its discrimination. Note that the NOTE to Regulation 643.8, covering additional protection, states only the 300 ms maximum for a general non-delay device. (BS EN 61008/61009 additionally gives 50 to 200 ms at five times rated current, but since Amendment 4 deleted Table 3A that is a device characteristic rather than a test BS 7671 requires.)',
+      'A general-type RCD is designed to trip as quickly as possible when it detects a fault current at or above its rated residual operating current. Note that Type AC and Type A are distinct device types (Reg 531.3.3): Type AC operates only on alternating sinusoidal residual current; Type A additionally responds to residual pulsating DC current. Critically, also under Reg 531.3.3, Type AC shall only be used to serve fixed equipment where it is known that the load current contains no DC components — circuits supplying inverters, EV chargers, or variable-speed drives must use Type A or higher. A Type S (selective or time-delayed) RCD has an intentional time delay built in — it will NOT trip within a certain minimum time, even if the fault current exceeds its rated value. This delay is designed to achieve discrimination with a downstream general-type RCD. For example, if a 100 mA Type S RCCB is installed upstream of a 30 mA general-type RCBO, a fault on a circuit protected by the 30 mA RCBO should trip the RCBO first without tripping the upstream 100 mA Type S device. This prevents unnecessary disconnection of other circuits. Tested at IΔn, a Type S device should operate between 130 ms minimum and 500 ms maximum — the NOTE to Regulation 643.7.1 states that band in BS 7671 itself. The lower bound matters as much as the upper one, because a Type S that trips too fast has lost its discrimination. Note that the NOTE to Regulation 643.8, covering additional protection, states only the 300 ms maximum for a general non-delay device. (BS EN 61008/61009 additionally gives 50 to 200 ms at five times rated current, but since Amendment 2 (2022) deleted Table 3A that is a device characteristic rather than a test BS 7671 requires.)',
   },
   {
     question: 'Is the push-button test sufficient for BS 7671 compliance?',
@@ -118,7 +118,7 @@ const howToSteps = [
   },
   {
     name: 'Optional: diagnostic tests when investigating a problem',
-    text: 'The half-rated and five-times tests are no longer part of the required verification — Amendment 4 deleted Table 3A of Appendix 3 — but they remain useful diagnostics. A half-rated test (15 mA for a 30 mA device, must not trip) helps confirm an over-sensitive device when chasing nuisance tripping, and a ramp test identifies the actual trip current. Run them when you are investigating something, not as a matter of routine.',
+    text: 'The half-rated and five-times tests are no longer part of the required verification — Amendment 2 (2022) deleted Table 3A of Appendix 3 — but they remain useful diagnostics. A half-rated test (15 mA for a 30 mA device, must not trip) helps confirm an over-sensitive device when chasing nuisance tripping, and a ramp test identifies the actual trip current. Run them when you are investigating something, not as a matter of routine.',
   },
   {
     name: 'Record the result on the schedule of test results',
@@ -174,7 +174,7 @@ const sections = [
         <p>
           <a
             href="#calculator"
-            className="inline-flex h-11 items-center rounded-full border border-elec-yellow/40 bg-elec-yellow/10 px-5 text-[13.5px] font-semibold text-elec-yellow transition-colors hover:bg-elec-yellow/20 touch-manipulation"
+            className="inline-flex h-11 items-center rounded-full border border-elec-yellow/40 bg-white/[0.06] px-5 text-[13.5px] font-semibold text-elec-yellow transition-colors hover:bg-white/[0.06] touch-manipulation"
           >
             Got a reading already? Check it against the limit
           </a>
@@ -188,7 +188,7 @@ const sections = [
     content: (
       <>
         <p>
-          Amendment 4 made this shorter than most electricians expect. Table 3A of Appendix 3 — the
+          Amendment 2 (2022) made this shorter than most electricians expect. Table 3A of Appendix 3 — the
           time/current performance criteria table that drove the old half-rated, rated and
           five-times routine — has been deleted. Regulations 643.7.1 and 643.8 now verify an RCD
           with a{' '}
@@ -201,24 +201,24 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white leading-relaxed">
             <li className="flex items-start gap-3">
-              <Timer className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Timer className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Push-button test:</strong> Press the test button
+                <strong className="text-elec-yellow">Push-button test:</strong> Press the test button
                 on the RCD — must trip mechanically. Reset. (A mechanical check, not a substitute
                 for the instrument test.)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Timer className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Timer className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">IΔn (30 mA) at 0 degrees:</strong> Must operate
+                <strong className="text-elec-yellow">IΔn (30 mA) at 0 degrees:</strong> Must operate
                 within 300 ms. Record time.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Timer className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Timer className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">IΔn (30 mA) at 180 degrees:</strong> Must
+                <strong className="text-elec-yellow">IΔn (30 mA) at 180 degrees:</strong> Must
                 operate within 300 ms. Record time.
               </span>
             </li>
@@ -289,7 +289,7 @@ const sections = [
         <p>
           Use the worst-case (longest) of your 0 degree and 180 degree readings, and check it at IΔn
           — that is the value that goes on the certificate. The five-times option is kept for
-          reference only, since Amendment 4 deleted Table 3A and that test is now a diagnostic
+          reference only, since Amendment 2 (2022) deleted Table 3A and that test is now a diagnostic
           rather than part of the required verification.
         </p>
         <CalculatorSurface>
@@ -309,7 +309,7 @@ const sections = [
     content: (
       <>
         <p>
-          These three tests used to be part of the routine. Amendment 4 deleted Table 3A of Appendix
+          These three tests used to be part of the routine. Amendment 2 (2022) deleted Table 3A of Appendix
           3, which is what required them, so they are no longer part of verifying an RCD. They have
           not become useless — they have become diagnostic tools you reach for when investigating
           something specific.
@@ -448,20 +448,20 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Type S RCD Trip Time Limits</h3>
           <ul className="space-y-3 text-white leading-relaxed">
             <li className="flex items-start gap-3">
-              <Timer className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Timer className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">At IΔn — the required test:</strong> Should
+                <strong className="text-elec-yellow">At IΔn — the required test:</strong> Should
                 operate between 130 ms minimum and 500 ms maximum — the band stated in the NOTE to
                 Regulation 643.7.1. The device must NOT operate faster than 130 ms — that minimum is
                 the delay that makes discrimination possible.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Timer className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Timer className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">At 5x IΔn — device characteristic:</strong> 50
+                <strong className="text-elec-yellow">At 5x IΔn — device characteristic:</strong> 50
                 ms to 200 ms under BS EN 61008/61009. This is the product standard describing the
-                device, not a BS 7671 test — Amendment 4 deleted Table 3A of Appendix 3, so the
+                device, not a BS 7671 test — Amendment 2 (2022) deleted Table 3A of Appendix 3, so the
                 five-times test is not part of the required verification for a Type S any more than
                 it is for a general device.
               </span>
@@ -498,25 +498,25 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Testing Discrimination</h3>
           <ul className="space-y-3 text-white leading-relaxed">
             <li className="flex items-start gap-3">
-              <Layers className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Step 1:</strong> Perform the full test sequence
+                <strong className="text-elec-yellow">Step 1:</strong> Perform the full test sequence
                 on the downstream (general-type) RCD. During all tests, the upstream (Type S) RCD
                 must NOT trip.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Layers className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Step 2:</strong> If the upstream RCD trips
+                <strong className="text-elec-yellow">Step 2:</strong> If the upstream RCD trips
                 during any downstream test, discrimination has failed. This means a fault on one
                 circuit will disconnect all circuits protected by the upstream device.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Layers className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Step 3:</strong> Record whether discrimination
+                <strong className="text-elec-yellow">Step 3:</strong> Record whether discrimination
                 was achieved on the certificate. Failure of discrimination is typically classified
                 as C3 (improvement recommended) unless the loss of supply poses a safety risk.
               </span>
@@ -575,7 +575,7 @@ const sections = [
         <div className="space-y-4 mt-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Background earth leakage</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -590,7 +590,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Testing from the wrong circuit</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -604,7 +604,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Worn RCD contacts</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -619,7 +619,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <RotateCcw className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <RotateCcw className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Not resetting between tests</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -707,15 +707,15 @@ export default function RCDTestingProcedurePage() {
       heroTitle={
         <>
           RCD Testing Procedure:{' '}
-          <span className="text-yellow-400">How to Test RCDs per BS 7671</span>
+          <span className="text-elec-yellow">How to Test RCDs per BS 7671</span>
         </>
       }
-      heroSubtitle="The complete RCD testing procedure for UK electricians, updated for Amendment 4 — which deleted Table 3A and reduced verification to a single AC test at IΔn. Testing at 0 and 180 degree phase angle. Ramp test, button test, Type S time-delayed testing, and discrimination testing. BS 7671 compliant."
+      heroSubtitle="The complete RCD testing procedure for UK electricians, updated for Amendment 2 (2022) — which deleted Table 3A and reduced verification to a single AC test at IΔn. Testing at 0 and 180 degree phase angle. Ramp test, button test, Type S time-delayed testing, and discrimination testing. BS 7671 compliant."
       readingTime={22}
       answerBox={{
         question: 'How do you test an RCD to BS 7671?',
         answer:
-          "Under BS 7671:2018+A4:2026, an RCD's effectiveness is verified by an alternating-current test at its rated residual operating current (IΔn), whatever the device type — a general (non-delay) type must disconnect within 300 ms, a Type S between 130 ms and 500 ms (Regs 643.7.1 and 643.8), using test equipment to BS EN 61557-6 — and the integral test button is operated to confirm the test facility works (Reg 643.10). Run the test on both half-cycles (0° and 180°) and record the longer time. Amendment 4 deleted Table 3A of Appendix 3, so the old ½× and 5× tests are no longer part of the required verification — they remain useful diagnostics only.",
+          "Under BS 7671:2018+A4:2026, an RCD's effectiveness is verified by an alternating-current test at its rated residual operating current (IΔn), whatever the device type — a general (non-delay) type must disconnect within 300 ms, a Type S between 130 ms and 500 ms (Regs 643.7.1 and 643.8), using test equipment to BS EN 61557-6 — and the integral test button is operated to confirm the test facility works (Reg 643.10). Run the test on both half-cycles (0° and 180°) and record the longer time. Amendment 2 (2022) deleted Table 3A of Appendix 3, so the old ½× and 5× tests are no longer part of the required verification — they remain useful diagnostics only.",
       }}
       keyTakeaways={keyTakeaways}
       sections={sections}
@@ -725,7 +725,7 @@ export default function RCDTestingProcedurePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Validate RCD trip times automatically on site"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site testing and certification. Auto-validated RCD trip times, voice test entry, EICR and EIC forms, 70+ calculators. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site testing and certification. Auto-validated RCD trip times, voice test entry, EICR and EIC forms, 70+ calculators. 7-day free trial, cancel anytime."
     />
   );
 }

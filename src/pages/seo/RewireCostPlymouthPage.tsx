@@ -143,7 +143,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>One-bedroom flat</strong> — £1,800 to £2,500. Common in city centre
                 conversions, waterfront developments in the Barbican, and purpose-built blocks
@@ -151,14 +151,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Two-bedroom terraced house</strong> — £2,200 to £3,500. Found throughout
                 Mutley, Lipson, St Judes, and Keyham. Typically 8 to 12 circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom semi-detached</strong> — £3,000 to £4,500. Very common across
                 Plymouth's post-war estates in Plymstock, Plympton, Honicknowle, and Whitleigh.
@@ -166,14 +166,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Four-bedroom detached</strong> — £4,000 to £5,500. Larger properties in
                 Mannamead, Hartley, and Derriford.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Victorian and Edwardian properties</strong> — add 20 to 30 per cent for
                 pre-1940 properties in Mutley, Stoke, and Greenbank with solid granite or brick
@@ -267,7 +267,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>First fix</strong> — removal of existing wiring, routing new cables through
                 floors, walls, and ceiling voids, and installing back boxes and containment.
@@ -275,7 +275,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Second fix</strong> — fitting the consumer unit, connecting all circuits,
                 installing sockets, switches, and light fittings. Power is restored at the end of
@@ -283,7 +283,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing and inspection</strong> — comprehensive circuit testing to BS 7671
                 Chapter 64 including insulation resistance, earth continuity, and RCD testing. All
@@ -291,7 +291,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Certification and notification</strong> — EIC issued and Part P notification
                 submitted to Plymouth City Council building control or via the competent person
@@ -315,28 +315,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Two-bedroom terrace</strong> — 2 to 3 days. Plymouth terraces with timber
                 floors and accessible ceiling voids are generally straightforward to rewire.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom semi-detached</strong> — 3 to 5 days. Post-war semi-detached
                 houses in Plympton and Plymstock are typically straightforward.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Four-bedroom detached</strong> — 5 to 7 days. Larger properties with more
                 circuits and complex layouts.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Victorian granite-built properties</strong> — add 1 to 3 days. Mutley,
                 Stoke, and Greenbank properties built from Dartmoor granite are particularly
@@ -405,7 +405,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC or NAPIT registration</strong> — confirm current registration status
                 using the online registers. Registration confirms qualifications, insurance, and
@@ -413,21 +413,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three written quotes</strong> — each should itemise circuits, consumer unit
                 specification, accessories, EIC, and Part P notification. Compare like for like.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Verify insurance</strong> — public liability insurance of at least £1
                 million is required. Scheme members maintain this as a condition of registration.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Local reviews</strong> — check Google and Checkatrade for recent Plymouth
                 rewire reviews. Ask for references from the contractor if you require additional
@@ -451,28 +451,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical Installation Certificate (EIC)</strong> — primary BS 7671
                 compliance document including signed schedules of inspections and test results.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Building Regulations Compliance Certificate</strong> — confirms Part P
                 compliance, issued by Plymouth City Council or the competent person scheme.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Workmanship guarantee</strong> — confirm scope and duration in your contract
                 before work begins. Reputable Devon contractors typically offer 1 to 5 years.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Next inspection date</strong> — owner-occupied properties: EICR in 10 years.
                 Rental properties: EICR every 5 years under the Electrical Safety Standards in the
@@ -497,7 +497,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete EICs On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -529,7 +529,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Plymouth rewire business with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, professional quoting, and job management. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion, professional quoting, and job management. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -555,7 +555,7 @@ export default function RewireCostPlymouthPage() {
       heroTitle={
         <>
           House Rewire Cost Plymouth:{' '}
-          <span className="text-yellow-400">2025 Prices & Devon Guide</span>
+          <span className="text-elec-yellow">2025 Prices & Devon Guide</span>
         </>
       }
       heroSubtitle="Everything you need to know about house rewire costs in Plymouth and Devon — property size price breakdowns, Part P compliance, finding NICEIC and NAPIT registered contractors, signs your property needs rewiring, and the certification you should receive."
@@ -566,7 +566,7 @@ export default function RewireCostPlymouthPage() {
       faqHeading="Frequently Asked Questions About House Rewiring in Plymouth"
       relatedPages={relatedPages}
       ctaHeading="Issue Electrical Installation Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, auto-populated test schedules, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion, auto-populated test schedules, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

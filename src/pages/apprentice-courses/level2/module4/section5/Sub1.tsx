@@ -7,7 +7,7 @@
  * disturbing the install (where practicable). Pre-energisation — install fully
  * complete but not yet powered. Comprehensive checklist tied to BS 7671 chapters:
  * 526 (connections), 514 (identification), 522 (routing), 524 (CSA), 412 + 416
- * (barriers + enclosures), 514.16 + 537.2.2 (single-pole devices), 510s
+ * (barriers + enclosures), 132.14.1 (single-pole devices), 510s
  * (selection of accessories). Schedule of Inspections form (Appendix 6).
  */
 
@@ -248,7 +248,7 @@ const inspectionChecklist = [
       'Cable CSA matches the design on the schedule — 1.5 mm² lighting, 2.5 mm² rings, 4 mm² 32 A radials, 6 mm² showers, 10 / 16 / 25 mm² bonding. CSA matches device rating per Reg 433.1.1.',
   },
   {
-    chapter: '514.16 / 537.2.2',
+    chapter: '132.14.1',
     item: 'Single-pole devices in line conductors only',
     visual:
       'Every fuse, MCB, single-pole switch is in the line conductor — never the neutral. Includes switched FCUs, lighting switches, and any in-line fuses on appliance circuits.',
@@ -306,7 +306,7 @@ export default function Sub1() {
         <TLDR
           points={[
             'Reg 642.1 — inspection precedes testing and is normally carried out with the install disconnected. You inspect what is visible and accessible without disturbing the install where that is impracticable.',
-            'Reg 642.3 lists the inspection items — each one maps back to a BS 7671 chapter (526 connections, 514 identification, 522 routing, 524 CSA, 514.16 single-pole devices, 410 / 415 shock protection, 514.12 / 514.13 labels, 443 / 534 SPDs).',
+            'Reg 642.3 lists the inspection items — each one maps back to a BS 7671 chapter (526 connections, 514 identification, 522 routing, 524 CSA, 132.14.1 single-pole devices, 410 / 415 shock protection, 514.12 / 514.13 labels, 443 / 534 SPDs).',
             'AC 5.1 — verify wiring systems conform to IET standards — is exactly this Section 642 inspection. The Schedule of Inspections (Appendix 6, walked in Sub 5.2) is the form you fill in to evidence it.',
           ]}
         />
@@ -784,10 +784,10 @@ export default function Sub1() {
             'BS 7671 Section 642 governs inspection. Reg 642.1 fixes the order — inspection precedes testing, both done dead, before energisation.',
             'AC 5.1 — verify wiring systems conform to IET standards — is exactly this Section 642 inspection, evidenced on the IET model Schedule of Inspections.',
             'Reg 642.2 sets the three verification objectives — equipment compliant with Section 511, correctly selected and erected per BS 7671 and manufacturers’ instructions, not visibly damaged.',
-            'Reg 642.3 lists twenty inspection items, each mapping to a BS 7671 chapter — 526 connections, 514 identification, 522 routing, 524 CSA, 514.16 single-pole devices, 410 / 415 shock protection, 514.12 / 514.13 labels, 443 / 534 SPDs.',
+            'Reg 642.3 lists twenty inspection items, each mapping to a BS 7671 chapter — 526 connections, 514 identification, 522 routing, 524 CSA, 132.14.1 single-pole devices, 410 / 415 shock protection, 514.12 / 514.13 labels, 443 / 534 SPDs.',
             'Inspection is what you can see and access without dismantling the install. Where access is limited, record LIM. Where non-compliant, record ✗ and fix before energising.',
             'Inspection rhythm follows the install — origin → distribution → circuit walk → bonding → notices. Pick the same order every time.',
-            'Fuses, MCBs and single-pole switches in line conductors only — Reg 514.16 / 537.2.2. A fuse or switch in the neutral is a fail.',
+            'Fuses, MCBs and single-pole switches in line conductors only — Reg 132.14.1. A fuse or switch in the neutral is a fail.',
             'At Level 2 you assist and learn the rhythm. By Level 3 portfolio time you are leading inspections on small installs under supervision. Independent sign-off comes once qualified.',
           ]}
         />

@@ -169,7 +169,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Income Tax rates (2025/26):</strong> 0% on the first £12,570 (personal
                 allowance), 20% on £12,571 to £50,270, 40% on £50,271 to £125,140, 45% above
@@ -177,14 +177,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Class 2 National Insurance:</strong> £3.45 per week if profits exceed the
                 Small Profits Threshold (£6,725). Paid through Self-Assessment.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Class 4 National Insurance:</strong> 6% on profits between £12,570 and
                 £50,270, plus 2% on profits above £50,270.
@@ -213,7 +213,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tools and test equipment:</strong> Multifunction testers, hand tools, drill
                 bits, fixings, PPE, hi-vis, safety boots. If a single item costs under £1,000, you
@@ -223,7 +223,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Receipt className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Receipt className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Materials:</strong> Cable, trunking, back boxes, switches, sockets, consumer
                 units, RCDs, MCBs — anything you purchase for a job. If you include materials in
@@ -232,7 +232,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Truck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Truck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Van costs:</strong> Fuel, insurance, road tax, MOT, servicing, repairs,
                 tyres, breakdown cover, parking, tolls, congestion charges. If the van is used
@@ -240,14 +240,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insurance:</strong> Public liability, professional indemnity, employers
                 liability, tools cover, van insurance. All fully deductible as business expenses.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Training and qualifications:</strong> 18th Edition (C&G 2382), Inspection
                 and Testing (C&G 2391), AM2, EV charging, solar PV, fire alarm courses. CPD courses,
@@ -255,14 +255,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Briefcase className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Professional memberships:</strong> NICEIC, NAPIT, ELECSA, JIB, IET, ECA
                 registration fees, competent person scheme fees, CSCS card renewal.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Software and subscriptions:</strong> Elec-Mate, accounting software,
                 certification apps, design software, cloud storage. All allowable.
@@ -347,7 +347,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Items under £1,000:</strong> Deduct the full cost as a revenue expense in
                 the year of purchase. This covers most hand tools, drill bits, fixings, PPE, and
@@ -355,7 +355,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Items over £1,000:</strong> These are capital items. Claim them through the
                 Annual Investment Allowance (AIA), which lets you deduct the full cost (up to £1
@@ -364,7 +364,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Replacement tools:</strong> If you replace a tool on a like-for-like basis,
                 the cost of the replacement is an allowable expense. If you upgrade to a
@@ -403,7 +403,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>20% deduction:</strong> You are registered with HMRC for CIS. The contractor
                 deducts 20% from the labour element of your payment (not materials) and pays it to
@@ -411,7 +411,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>30% deduction:</strong> You are not registered with HMRC for CIS. The
                 contractor must deduct 30% from the labour element. Registering is free and takes a
@@ -419,7 +419,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>0% deduction (gross payment status):</strong> If you meet HMRC's criteria
                 (minimum £30,000 annual turnover, clean compliance record, up-to-date tax returns),
@@ -457,7 +457,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard VAT accounting:</strong> Charge 20% VAT on your invoices. Reclaim
                 VAT on all business purchases. Submit quarterly VAT returns. The difference between
@@ -465,7 +465,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Flat Rate Scheme (FRS):</strong> Charge 20% VAT to customers but pay HMRC a
                 fixed percentage of your gross (VAT-inclusive) turnover. There is no electrician
@@ -478,7 +478,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Domestic Reverse Charge (DRC):</strong> If you supply CIS-regulated services
                 to another VAT-registered contractor, the DRC applies. You do not charge VAT on the
@@ -573,7 +573,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Receipt className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Receipt className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Expenses Tracker</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -658,7 +658,7 @@ export default function ElectricianTaxGuidePage() {
       heroTitle={
         <>
           Electrician Tax Guide UK 2026:{' '}
-          <span className="text-yellow-400">Self-Employed and Limited Company</span>
+          <span className="text-elec-yellow">Self-Employed and Limited Company</span>
         </>
       }
       heroSubtitle="Every self-employed electrician needs to understand self-assessment, allowable expenses, CIS deductions, and VAT. This guide covers everything — from registering with HMRC to choosing between sole trader and limited company, with practical advice on reducing your tax bill legally."
@@ -669,7 +669,7 @@ export default function ElectricianTaxGuidePage() {
       faqHeading="Frequently Asked Questions About Electrician Tax"
       relatedPages={relatedPages}
       ctaHeading="Track Expenses and Invoices in One App"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to track expenses, send invoices, and manage cash flow. Every receipt captured, every invoice tracked, every penny accounted for. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to track expenses, send invoices, and manage cash flow. Every receipt captured, every invoice tracked, every penny accounted for. 7-day free trial, cancel anytime."
     />
   );
 }

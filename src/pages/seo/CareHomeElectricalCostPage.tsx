@@ -187,7 +187,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Bell className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Bell className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Room call points</strong> — each bedroom requires at minimum a combined call
                 unit with a call button (accessible from the bed), an over-door light (red when call
@@ -196,7 +196,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Bell className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Bell className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bathroom and shower room pull cords</strong> — mandatory in all assisted
                 bathrooms and shower rooms. Pull cord must hang to within 100mm of the floor. The
@@ -205,7 +205,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Bell className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Bell className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Central monitoring</strong> — BS 8670 requires a central monitoring point
                 (nurses' station or duty room) with a visual and audible indication of all active
@@ -215,7 +215,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Bell className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Bell className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical installation costs</strong> — nurse call installation for a
                 40-bed care home: £15,000–£35,000 depending on system tier (conventional versus
@@ -244,7 +244,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hoist track power supply</strong> — ceiling hoists require a dedicated
                 circuit, typically 13A or 16A single-phase. The hoist track must be positioned to
@@ -254,7 +254,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Height-adjustable bath electrical</strong> — powered height-adjustable baths
                 (Arjo, Gainsborough, and similar) draw 1–3kW and require a 13A or 16A supply with
@@ -264,7 +264,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Supplementary equipotential bonding</strong> — Regulation 701.415.2 requires
                 supplementary bonding of all simultaneously accessible conductive parts in bathroom
@@ -274,7 +274,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency nurse call pull cord</strong> — mandatory in every assisted
                 bathing room. Pull cord must be accessible from the floor. The call unit's
@@ -410,7 +410,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Anti-ligature light fittings</strong> — flush or semi-flush LED panels with
                 tamper-resistant fixings. No surface-mounted pendants, chains, or downlighters with
@@ -419,7 +419,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Switch and socket covers</strong> — tamper-resistant switch and socket
                 outlets with concealed screw fixings. Some specifications require key-operated or
@@ -428,7 +428,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pull cord end pieces</strong> — nurse call emergency pull cords must use
                 anti-ligature end fittings that eliminate horizontal projections. Specialist
@@ -437,7 +437,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Concealed containment</strong> — cables are run in concealed conduit within
                 the wall structure or in solid-fill cable ducts flush with the surface. No
@@ -463,7 +463,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Recommended EICR interval</strong> — five years maximum. Many care home
                 operators use a 3–4 year cycle to allow remedial work to be completed well before
@@ -471,7 +471,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Scope of EICR in a care home</strong> — the EICR must cover all fixed
                 electrical installations including nurse call wiring (insulation resistance only —
@@ -481,7 +481,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cost</strong> — EICR for a 40-bed care home: £800–£2,000. Larger nursing
                 homes (80+ beds) with multiple distribution boards: £1,500–£3,500. EICRs should be
@@ -490,7 +490,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Remedial work</strong> — C1 or C2 observations must be remedied before the
                 installation can be deemed satisfactory. In an occupied care home, circuit outages
@@ -516,7 +516,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>General power and lighting (bedrooms and communal)</strong> —
                 £60,000–£110,000. Includes DALI lighting control, socket outlets, and all wiring to
@@ -524,44 +524,44 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Nurse call system (IP-based, 40 beds)</strong> — £15,000–£35,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Assisted bathing room electrical (per room)</strong> — £3,000–£6,000. Hoist
                 supply, height-adjustable bath circuit, supplementary bonding, pull cord.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire alarm to BS 5839-1 Category L1</strong> — £18,000–£40,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency lighting to BS 5266-1 (3-hour)</strong> — £8,000–£18,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Kitchen and laundry electrical</strong> — £8,000–£20,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CCTV and access control</strong> — £5,000–£12,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Total — 40-bed residential care home</strong> —{' '}
                 <strong>£180,000–£350,000</strong>. Nursing homes with clinical rooms and medical
@@ -587,7 +587,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Issue Certificates That Satisfy CQC</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -604,7 +604,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage care home electrical contracts with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for healthcare sector quoting, EICR completion, and EIC certification. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for healthcare sector quoting, EICR completion, and EIC certification. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -630,7 +630,7 @@ export default function CareHomeElectricalCostPage() {
       heroTitle={
         <>
           Care Home Electrical Installation Cost UK 2025:{' '}
-          <span className="text-yellow-400">Healthcare Electrical Guide</span>
+          <span className="text-elec-yellow">Healthcare Electrical Guide</span>
         </>
       }
       heroSubtitle="Complete cost guide for UK care home and nursing home electrical installations. Nurse call systems to BS 8670, assisted bathing electrical, emergency lighting, fire alarm to BS 5839-1 Category L1, anti-ligature design, and EICR compliance. Typical 40-bed home: £180,000–£350,000."
@@ -641,7 +641,7 @@ export default function CareHomeElectricalCostPage() {
       faqHeading="Frequently Asked Questions: Care Home Electrical Installation Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certificate Care Home Electrical Work on Site"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for healthcare sector quoting, EICR completion, and EIC certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for healthcare sector quoting, EICR completion, and EIC certification. 7-day free trial, cancel anytime."
     />
   );
 }

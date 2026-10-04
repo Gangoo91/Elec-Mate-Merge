@@ -104,8 +104,8 @@ const TONE_STYLES: Record<Verdict['tone'], { card: string; icon: JSX.Element }> 
     icon: <CheckCircle2 className="h-5 w-5 shrink-0 text-green-400" aria-hidden />,
   },
   watch: {
-    card: 'border-yellow-500/30 bg-yellow-500/10',
-    icon: <AlertTriangle className="h-5 w-5 shrink-0 text-yellow-400" aria-hidden />,
+    card: 'border-white/[0.1] bg-white/[0.06]',
+    icon: <AlertTriangle className="h-5 w-5 shrink-0 text-elec-yellow" aria-hidden />,
   },
   high: {
     card: 'border-orange-500/30 bg-orange-500/10',

@@ -432,7 +432,7 @@ export default function AIWiringInstructionsPage() {
       heroTitle={
         <>
           AI Wiring Instructions:{' '}
-          <span className="text-yellow-400">Step-by-Step for Every Circuit Type</span>
+          <span className="text-elec-yellow">Step-by-Step for Every Circuit Type</span>
         </>
       }
       heroSubtitle="Get clear, step-by-step wiring instructions for any circuit type found in UK electrical installations. Cable selection, routing guidance, connection diagrams, and BS 7671 regulation references — all specific to UK wiring practices."
@@ -455,7 +455,7 @@ export default function AIWiringInstructionsPage() {
       faqHeading="Frequently Asked Questions About AI Wiring Instructions"
       relatedPages={relatedPages}
       ctaHeading="Wire Every Circuit with Confidence"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's AI Wiring Instructions. Step-by-step guidance, connection diagrams, and BS 7671 references. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate's AI Wiring Instructions. Step-by-step guidance, connection diagrams, and BS 7671 references. 7-day free trial, cancel anytime."
       toolPath="/tools/ai-wiring-instructions"
     />
   );

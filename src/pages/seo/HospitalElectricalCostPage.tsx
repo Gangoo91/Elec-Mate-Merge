@@ -204,7 +204,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Distribution system design</strong> — HTM 06-01 requires a ring-main or
                 dual-fed distribution architecture for essential services to ensure continuity of
@@ -214,7 +214,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Switchgear and automatic transfer</strong> — all essential services panels
                 must have automatic transfer switching (ATS) with a maximum changeover time to
@@ -223,7 +223,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing and bonding</strong> — hospitals require multiple earthing systems:
                 TN-S (utility supply), IT (Medical IT in Group 2 locations), and equipotential
@@ -232,7 +232,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Documentation and handover</strong> — HTM 06-01 requires comprehensive
                 as-built drawings, test results, commissioning records, O&M manuals, and a formal
@@ -259,7 +259,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Medical IT panel (IPS)</strong> — contains the isolation transformer, line
                 insulation monitor (LIM), and distribution to medical outlets. The LIM continuously
@@ -269,7 +269,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Surgical pendants (electrical infrastructure)</strong> — surgical and
                 anaesthetic pendants deliver electrical power, medical gas, data, and lighting to
@@ -279,7 +279,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Medical outlets</strong> — IEC 60309 (BS EN 60309) blue 16A or 32A
                 industrial outlets are used in clinical areas for medical equipment connection.
@@ -288,7 +288,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Equipotential bonding rail</strong> — a copper equipotential bonding rail is
                 installed in each clinical area, connected to the hospital earth bar. All metal
@@ -370,7 +370,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>General acute ward (28–32 beds)</strong> — £80,000–£140,000. Group 1 medical
                 location requirements. Nurse call, bedhead trunking with IEC 60309 outlets, staff
@@ -378,7 +378,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>High dependency unit (HDU, 8–12 beds)</strong> — £120,000–£220,000. Elevated
                 outlet density, enhanced monitoring infrastructure, partial Group 2 requirements at
@@ -386,7 +386,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Intensive Care Unit (ICU, 8–12 beds)</strong> — £180,000–£380,000. Full
                 Group 2 requirements, Medical IT systems, UPS, extensive bedhead infrastructure,
@@ -394,21 +394,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Outpatient department (per suite)</strong> — £40,000–£90,000. Consultation
                 rooms, waiting areas, reception, basic clinical rooms. Group 1 requirements.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pharmacy</strong> — £35,000–£80,000. Controlled drug security systems, cold
                 storage monitoring circuits, laboratory lighting, UPS for dispensing systems.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Radiology / imaging department</strong> — £90,000–£200,000. High-power
                 imaging equipment (MRI, CT — kVA loads requiring dedicated 3-phase supply), RF
@@ -545,59 +545,59 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HV/LV distribution and main switchgear</strong> — £800,000–£2,000,000. HV
                 substation, main LV switchboards, essential services switchgear, cable routes.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standby generation (2 x 1MVA generators)</strong> — £600,000–£1,200,000.
                 Includes generators, fuel storage, ATS panels, and containment.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>UPS systems (theatre suite and ICU)</strong> — £400,000–£900,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Medical IT systems (IPS panels)</strong> — £150,000–£350,000. Operating
                 theatres, ICU, cardiac labs.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ward and clinical electrical (8 wards, 2 ICU)</strong> —
                 £1,200,000–£2,500,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Operating theatres (4 theatres complete)</strong> — £600,000–£1,600,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire alarm (Cat L1, addressable)</strong> — £300,000–£700,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency lighting (CBS, 3-hour)</strong> — £200,000–£500,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Total — 200-bed district general hospital</strong> —{' '}
                 <strong>£8,000,000–£18,000,000</strong>. Per m²: £270–£600. New-build 500-bed acute
@@ -623,7 +623,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Document Complex Installations</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -642,7 +642,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage healthcare electrical contracts with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for healthcare sector quoting, EIC and EICR completion, and multi-board inspection management."
+          description="Join 2,100+ UK electricians using Elec-Mate for healthcare sector quoting, EIC and EICR completion, and multi-board inspection management."
           icon={FileCheck2}
         />
       </>
@@ -668,7 +668,7 @@ export default function HospitalElectricalCostPage() {
       heroTitle={
         <>
           Hospital Electrical Installation Cost UK:{' '}
-          <span className="text-yellow-400">Healthcare Electrical Guide 2025</span>
+          <span className="text-elec-yellow">Healthcare Electrical Guide 2025</span>
         </>
       }
       heroSubtitle="Complete cost guide for UK hospital and NHS healthcare electrical installations. HTM 06-01 compliance, Medical IT systems (IPS), essential services, UPS, standby generation, operating theatre electrical, and costs per ward and department. 200-bed district general hospital: £8,000,000–£18,000,000."
@@ -679,7 +679,7 @@ export default function HospitalElectricalCostPage() {
       faqHeading="Frequently Asked Questions: Hospital Electrical Installation Costs"
       relatedPages={relatedPages}
       ctaHeading="Document Healthcare Electrical Projects with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for healthcare sector quoting, EIC and EICR completion, and multi-board inspection management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for healthcare sector quoting, EIC and EICR completion, and multi-board inspection management. 7-day free trial, cancel anytime."
     />
   );
 }

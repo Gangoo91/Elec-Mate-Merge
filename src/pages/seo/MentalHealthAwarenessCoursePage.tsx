@@ -432,7 +432,7 @@ export default function MentalHealthAwarenessCoursePage() {
       badgeIcon={Heart}
       heroTitle={
         <>
-          Mental Health Awareness: <span className="text-yellow-400">Construction Industry</span>
+          Mental Health Awareness: <span className="text-elec-yellow">Construction Industry</span>
         </>
       }
       heroSubtitle="Essential mental health awareness training for UK electricians and construction workers. Understand the scale of the problem, recognise the signs in colleagues and yourself, learn to start supportive conversations, and know where to get help. 4 modules with video content, reflective exercises, and scenario-based learning."
@@ -450,7 +450,7 @@ export default function MentalHealthAwarenessCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Look out for your mates — it could save a life"
-      ctaSubheading="Join 1,600+ UK electricians training smarter with Elec-Mate. 4 essential modules, real-world scenarios, and CPD certificate. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians training smarter with Elec-Mate. 4 essential modules, real-world scenarios, and CPD certificate. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/mental-health-awareness"
     />

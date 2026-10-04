@@ -697,7 +697,7 @@ export default function ElectricalSymbolsChartPage() {
       heroTitle={
         <>
           Electrical Symbols Chart:{' '}
-          <span className="text-yellow-400">IEC 60617 Reference for UK Electricians</span>
+          <span className="text-elec-yellow">IEC 60617 Reference for UK Electricians</span>
         </>
       }
       heroSubtitle="Every electrical symbol you need to know for circuit diagrams, installation drawings, and certificates. Switches, sockets, lights, protection devices, and circuit elements — all following IEC 60617 (BS EN 60617 has been withdrawn and replaced by IEC 60617 per BS 7671:2018+A4:2026)."

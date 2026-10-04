@@ -191,7 +191,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Newly qualified electrician (0–2 years post-qualification)</strong> —
                 £38,000 to £44,000 per year. Typically working on residential or light commercial
@@ -200,7 +200,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Experienced electrician (3–7 years)</strong> — £44,000 to £55,000. Working
                 on larger commercial or residential schemes for established M&amp;E contractors. JIB
@@ -208,7 +208,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Senior electrician / working foreman</strong> — £55,000 to £65,000. Leading
                 a small team on a section of a large project. Often SSSTS qualified. May receive
@@ -216,14 +216,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical foreman / site supervisor</strong> — £60,000 to £75,000.
                 Supervising multiple electricians on a major project. SMSTS qualification common.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Contracts supervisor / project manager</strong> — £65,000 to £85,000.
                 Managing the electrical scope of a project commercially and technically, from
@@ -350,7 +350,7 @@ const sections = [
             </table>
           </div>
         </div>
-        <p className="text-white/70 text-sm">
+        <p className="text-white text-sm">
           Specialist routes are covered in depth in our{' '}
           <SEOInternalLink href="/guides/specialist-electrician-routes-uk">
             guide to specialist electrician routes
@@ -369,7 +369,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Higher cost of doing business</strong> — congestion zone charges (£15 per
                 day in the central zone), higher van insurance, more expensive parking, higher
@@ -379,7 +379,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Supply and demand</strong> — London has a structural shortage of skilled
                 trades. Despite higher wages, many electricians choose not to work in London because
@@ -388,7 +388,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Project complexity</strong> — London projects are often more complex than
                 equivalent regional work. High-rise residential, deep basement parking, heritage
@@ -397,7 +397,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Client wealth</strong> — domestic clients in prime London postcodes have
                 higher budgets and higher expectations. A high-net-worth client in Mayfair or
@@ -450,7 +450,7 @@ const sections = [
               </tbody>
             </table>
           </div>
-          <p className="text-white/70 text-xs mt-3">
+          <p className="text-white text-xs mt-3">
             The JIB London Zone figure reflects the 2026 determination effective 5 January 2026
             (London Electrician £20.58, Approved Electrician £22.48, Site or Installation Technician
             £25.47 per hour, Transport Provided). The allowance and consolidated-rate rows are
@@ -535,7 +535,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <GraduationCap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Gain specialist qualifications</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -610,7 +610,7 @@ export default function ElectricianSalaryLondonPage() {
       heroTitle={
         <>
           Electrician Salary London:{' '}
-          <span className="text-yellow-400">What You Can Earn in 2026</span>
+          <span className="text-elec-yellow">What You Can Earn in 2026</span>
         </>
       }
       heroSubtitle="London electricians earn 20 to 40% above the UK average. This guide covers realistic employed and self-employed earnings, specialist role premiums, and practical advice on maximising your income in the capital."

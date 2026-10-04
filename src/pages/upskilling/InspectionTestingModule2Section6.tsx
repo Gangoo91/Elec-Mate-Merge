@@ -100,7 +100,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'Under A4:2026, Appendix 3 Table 3A and the IΔn × 5 (40 ms) test have been deleted. Effectiveness — for both fault protection (Reg 643.7.3) and additional protection (Reg 643.8) — is now verified by a single AC test at the rated residual operating current (1×IΔn): a general non-delay type RCD must disconnect within 300 ms. A trip time of 410 ms fails that limit, so the device must be replaced.',
+      'Since A2:2022, Appendix 3 Table 3A and the IΔn × 5 (40 ms) test have been deleted. Effectiveness — for both fault protection (Reg 643.7.3) and additional protection (Reg 643.8) — is now verified by a single AC test at the rated residual operating current (1×IΔn): a general non-delay type RCD must disconnect within 300 ms. A trip time of 410 ms fails that limit, so the device must be replaced.',
   },
   {
     id: 7,
@@ -201,7 +201,7 @@ const inlineChecks = [
     ],
     correctIndex: 1,
     explanation:
-      'A4:2026 deleted Appendix 3 Table 3A and the IΔn × 5 (40 ms) test. There is now one acceptance criterion for the RCD test: an AC test at the rated residual operating current (1×IΔn), with a general non-delay type required to disconnect within 300 ms (Reg 643.8 NOTE; the same 1×IΔn test verifies effectiveness for fault protection under Reg 643.7.3). A trip time of 360 ms fails that single limit — replace the device.',
+      'A2:2022 deleted Appendix 3 Table 3A and the IΔn × 5 (40 ms) test. There is now one acceptance criterion for the RCD test: an AC test at the rated residual operating current (1×IΔn), with a general non-delay type required to disconnect within 300 ms (Reg 643.8 NOTE; the same 1×IΔn test verifies effectiveness for fault protection under Reg 643.7.3). A trip time of 360 ms fails that single limit — replace the device.',
   },
   {
     id: 'mod2-s6-defect-on-existing',
@@ -255,7 +255,7 @@ const InspectionTestingModule2Section6 = () => {
             'Apply the energise-and-monitor first-close sequence — main switch OFF outgoing ways, then one circuit at a time — and explain why this bounds fault risk',
             'Respond correctly to a breaker tripping on first close: investigate, not reset; isolate, diagnose dead, correct, re-test',
             'Carry out the post-energisation live tests in the right order — polarity at origin, Zs at the furthest point of each final circuit, RCD trip times — and apply the BS 7671 / A4 acceptance criteria',
-            'Apply the single A4:2026 RCD test — an AC test at the rated residual operating current (1×IΔn) that verifies both fault-protection effectiveness (Reg 643.7.3) and additional protection (Reg 643.8), with a 300 ms maximum for a general non-delay type — and act on a fail',
+            'Apply the single RCD test (since A2:2022) — an AC test at the rated residual operating current (1×IΔn) that verifies both fault-protection effectiveness (Reg 643.7.3) and additional protection (Reg 643.8), with a 300 ms maximum for a general non-delay type — and act on a fail',
             'Hand over the energised installation to the duty holder with the live readings explained, and record correctly on the A4:2026 certificate forms per Reg 644',
           ]}
         />
@@ -788,8 +788,8 @@ const InspectionTestingModule2Section6 = () => {
         </ConceptBlock>
 
         <ConceptBlock
-          title="RCD verification — a single AC test at 1×IΔn under A4:2026"
-          plainEnglish="Under A4:2026 there is one RCD test, not two. An AC test at the rated residual operating current (1×IΔn) verifies the device, regardless of RCD Type. For a general non-delay type the device must disconnect within 300 ms; the same single test covers both fault-protection effectiveness (Reg 643.7.3) and additional protection (Reg 643.8). The old IΔn × 5 (40 ms) test and Appendix 3 Table 3A have been deleted."
+          title="RCD verification — a single AC test at 1×IΔn (since A2:2022)"
+          plainEnglish="Since A2:2022 there is one RCD test, not two. An AC test at the rated residual operating current (1×IΔn) verifies the device, regardless of RCD Type. For a general non-delay type the device must disconnect within 300 ms; the same single test covers both fault-protection effectiveness (Reg 643.7.3) and additional protection (Reg 643.8). The old IΔn × 5 (40 ms) test and Appendix 3 Table 3A have been deleted."
           onSite="The test is run from the load side using a multifunction tester at 1×IΔn. A compliant general type RCD trips well within 300 ms (commonly 20–40 ms in practice, but 300 ms is the regulatory limit, not 40 ms). For a delay 'S' type, the device must trip between 130 ms and 500 ms. Record the trip time."
         >
           <p>
@@ -799,7 +799,7 @@ const InspectionTestingModule2Section6 = () => {
             delay 'S' type, between 130 ms and 500 ms.
           </p>
           <p>
-            The A4:2026 amendment changed Reg 643.3 and simplified RCD testing: regardless of RCD
+            The A2:2022 amendment changed Reg 643.3 and simplified RCD testing: regardless of RCD
             Type, a single alternating-current test at 1×IΔn is used to verify effectiveness, and
             Appendix 3 Table 3A (the historical time/current performance criteria) together with the
             IΔn × 5 (40 ms) test have been deleted. One trip-time reading at 1×IΔn against the 300
@@ -1086,7 +1086,7 @@ const InspectionTestingModule2Section6 = () => {
               question:
                 'During RCD testing the device trips at IΔn but takes 60 ms — is that a fail?',
               answer:
-                'No — 60 ms at 1×IΔn passes. Under A4:2026 the RCD is verified by a single AC test at the rated residual operating current (1×IΔn): a general non-delay type must disconnect within 300 ms (Reg 643.8 NOTE), so 60 ms is well inside the limit. The same single test covers both fault-protection effectiveness (Reg 643.7.3) and additional protection (Reg 643.8). The old IΔn × 5 (40 ms) test and Appendix 3 Table 3A were deleted in A4:2026, so there is no separate 40 ms criterion to apply. (A delay ‘S’ type must trip between 130 ms and 500 ms.)',
+                'No — 60 ms at 1×IΔn passes. Under A4:2026 the RCD is verified by a single AC test at the rated residual operating current (1×IΔn): a general non-delay type must disconnect within 300 ms (Reg 643.8 NOTE), so 60 ms is well inside the limit. The same single test covers both fault-protection effectiveness (Reg 643.7.3) and additional protection (Reg 643.8). The old IΔn × 5 (40 ms) test and Appendix 3 Table 3A were deleted in A2:2022, so there is no separate 40 ms criterion to apply. (A delay ‘S’ type must trip between 130 ms and 500 ms.)',
             },
             {
               question:

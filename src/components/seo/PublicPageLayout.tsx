@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import { JsonLd } from '@/components/seo/JsonLd';
-import { Button } from '@/components/ui/button';
-import { ArrowRight, Menu, X } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
-import { useState, useEffect } from 'react';
+import { useUserCount } from '@/hooks/useUserCount';
+import { useState, useEffect, useMemo } from 'react';
+import { APP_STORE_URL, PLAY_STORE_URL } from '@/constants/social-proof';
 import { useLocation } from 'react-router-dom';
 import { RelatedMockExamCta } from '@/components/seo/RelatedMockExamCta';
 import { GUIDE_TO_MOCK_EXAM } from '@/data/seo/guideToMockExam';
@@ -245,6 +245,24 @@ const organizationWebsiteSchema = {
 
 export function PublicPageLayout({ children }: PublicPageLayoutProps) {
   const { user } = useAuth();
+  const userCount = useUserCount({ realtime: false });
+  const storeBadge = useMemo(() => {
+    if (typeof navigator === 'undefined') return null;
+    const ua = navigator.userAgent;
+    if (/android/i.test(ua))
+      return {
+        href: PLAY_STORE_URL,
+        src: '/images/google-play-badge.svg',
+        alt: 'Get it on Google Play',
+      };
+    if (/iphone|ipad|ipod/i.test(ua))
+      return {
+        href: APP_STORE_URL,
+        src: '/images/app-store-badge.svg',
+        alt: 'Download on the App Store',
+      };
+    return null;
+  }, []);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   // Trailing slashes and query strings must not defeat the lookup — a visitor
@@ -279,7 +297,7 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
   }, [user]);
 
   return (
-    <div className="bg-[#0a0a0a] text-white min-h-screen">
+    <div className="min-h-screen bg-background text-white">
       {/* Body-inline JSON-LD — react-helmet never rendered this (see JsonLd.tsx). */}
       <JsonLd data={organizationWebsiteSchema} />
 
@@ -288,8 +306,8 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
         {/* Flat ground + a straight hairline. The old bar had a yellow glow
             blurred behind the logo and a gradient-fade rule — both read as
             generic/AI. Quiet separators, no decoration. */}
-        <div className="absolute inset-0 bg-[#0a0a0a]/95 backdrop-blur-xl" />
-        <div className="absolute inset-x-0 bottom-0 h-px bg-white/[0.12]" />
+        <div className="absolute inset-0 bg-background/95 backdrop-blur-xl" />
+        <div className="absolute inset-x-0 bottom-0 h-px bg-white/[0.08]" />
 
         <div className="relative mx-auto flex h-16 max-w-6xl items-center justify-between px-5 lg:px-8">
           <Link to="/" className="flex touch-manipulation items-center gap-2.5">
@@ -303,16 +321,16 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
           <div className="hidden md:flex items-center gap-6">
             {navSections.map((section) => (
               <div key={section.label} className="group relative">
-                <button className="text-sm font-medium text-white hover:text-yellow-400 transition-colors touch-manipulation py-2">
+                <button className="py-2 text-sm font-medium text-white transition-colors hover:text-elec-yellow touch-manipulation">
                   {section.label}
                 </button>
                 <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                  <div className="bg-[#141414] border border-white/10 rounded-xl p-2 min-w-[200px] shadow-2xl shadow-black/50">
+                  <div className="min-w-[220px] rounded-xl border border-white/[0.1] bg-[hsl(0_0%_8%)] p-2 shadow-2xl shadow-black/50">
                     {section.links.map((link) => (
                       <Link
                         key={link.to}
                         to={link.to}
-                        className="block px-4 py-2.5 text-sm text-white hover:text-yellow-400 hover:bg-white/5 rounded-lg transition-colors touch-manipulation"
+                        className="block rounded-lg px-4 py-2.5 text-sm text-white transition-colors hover:bg-white/[0.06] hover:text-elec-yellow touch-manipulation"
                       >
                         {link.label}
                       </Link>
@@ -325,45 +343,43 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
 
           <div className="flex items-center gap-3">
             {user ? (
-              <Button
-                asChild
-                size="sm"
-                className="h-11 px-5 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold rounded-xl touch-manipulation"
+              <Link
+                to="/dashboard"
+                className="inline-flex h-10 items-center rounded-xl bg-elec-yellow px-4 text-[14px] font-bold text-black touch-manipulation"
               >
-                <Link to="/dashboard">Dashboard</Link>
-              </Button>
+                Dashboard
+              </Link>
             ) : (
               <>
                 <Link
                   to="/auth/signin"
-                  className="hidden sm:inline text-sm font-medium text-white hover:text-yellow-400 px-4 py-2 transition-colors touch-manipulation"
+                  className="inline-flex h-11 items-center px-2 text-[14px] font-semibold text-white transition-colors hover:text-elec-yellow touch-manipulation sm:px-3"
                 >
                   Sign in
                 </Link>
-                <Button
-                  asChild
-                  size="sm"
-                  className="hidden h-11 touch-manipulation rounded-xl bg-elec-yellow px-5 font-semibold text-black hover:brightness-95 sm:inline-flex"
+                <Link
+                  to="/auth/signup"
+                  className="hidden h-10 items-center rounded-xl bg-elec-yellow px-4 text-[14px] font-bold text-black touch-manipulation sm:inline-flex"
                 >
-                  <Link to="/auth/signup">Start free trial</Link>
-                </Button>
+                  Start free
+                </Link>
               </>
             )}
 
             {/* Mobile hamburger */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden inline-flex items-center justify-center w-11 h-11 rounded-xl bg-white/5 border border-white/10 text-white touch-manipulation"
-              aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+              className="inline-flex h-10 items-center rounded-xl border border-white/[0.14] px-3.5 text-[14px] font-semibold text-white touch-manipulation md:hidden"
+              aria-expanded={mobileMenuOpen}
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileMenuOpen ? 'Close' : 'Menu'}
             </button>
           </div>
         </div>
 
         {/* Mobile menu drawer */}
         {mobileMenuOpen && (
-          <div className="relative max-h-[calc(100vh-4rem)] overflow-y-auto border-t border-white/[0.12] bg-[#0a0a0a] md:hidden">
+          <div className="relative max-h-[calc(100vh-4rem)] overflow-y-auto border-t border-white/[0.08] bg-background md:hidden">
             {navSections.map((section) => (
               <div key={section.label} className="border-b border-white/[0.12]">
                 <p className="px-5 pb-2 pt-5 text-[11px] font-semibold uppercase tracking-[0.2em] text-white">
@@ -413,9 +429,7 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
           bar itself (see body.exam-active in index.css). */}
       <main
         data-sticky-cta-pad={!user ? '' : undefined}
-        className={`pt-[calc(4rem+env(safe-area-inset-top,0px))] ${
-          !user ? 'pb-28 sm:pb-0' : ''
-        }`}
+        className={`pt-[calc(4rem+env(safe-area-inset-top,0px))] ${!user ? 'pb-28 sm:pb-0' : ''}`}
       >
         {children}
       </main>
@@ -429,7 +443,7 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
           ends on two distinct bands (light strip, then the dark footer) rather
           than one flat run of black. Figures carry the emphasis. */}
       <section
-        className="border-t border-white/[0.12] bg-gradient-to-b from-white/[0.06] to-white/[0.02]"
+        className="border-t border-white/[0.08] bg-[hsl(0_0%_8%)]"
         aria-label="What's in Elec-Mate"
       >
         <div className="mx-auto max-w-6xl px-5 py-9 sm:px-6 lg:px-8">
@@ -442,11 +456,7 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
             ].map(([figure, label], i) => (
               <div
                 key={label}
-                className={
-                  i > 0
-                    ? 'sm:border-l sm:border-white/[0.12] sm:pl-7'
-                    : ''
-                }
+                className={i > 0 ? 'sm:border-l sm:border-white/[0.12] sm:pl-7' : ''}
               >
                 <dt className="sr-only">{label}</dt>
                 <dd>
@@ -465,14 +475,18 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
           headings carry the SAME category accents used on the related-page
           cards and the component eyebrows, so a colour means the same thing
           everywhere on the site. Surfaces stay neutral; only type is coloured. */}
-      <footer className="border-t border-white/[0.12] bg-[#070707]">
+      <footer className="border-t border-white/[0.08] bg-[hsl(0_0%_8%)]">
         <div className="mx-auto max-w-6xl px-5 pb-12 pt-14 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 gap-x-6 gap-y-11 md:grid-cols-3 lg:grid-cols-12 lg:gap-x-8">
             {[
               { heading: 'Certificates', links: footerCertificates, accent: 'text-violet-300' },
               { heading: 'Calculators', links: footerCalculators, accent: 'text-sky-300' },
-              { heading: 'Training and mock exams', links: footerTraining, accent: 'text-emerald-300' },
-              { heading: 'AI and guides', links: footerAIAndGuides, accent: 'text-amber-300' },
+              {
+                heading: 'Training and mock exams',
+                links: footerTraining,
+                accent: 'text-emerald-300',
+              },
+              { heading: 'AI and guides', links: footerAIAndGuides, accent: 'text-elec-yellow' },
             ].map((col) => (
               <div key={col.heading} className="lg:col-span-2">
                 <h4 className={`${FOOTER_LABEL} ${col.accent}`}>{col.heading}</h4>
@@ -571,9 +585,7 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
               ].map(([label, value], i) => (
                 <div
                   key={label}
-                  className={
-                    i > 0 ? 'sm:ml-7 sm:border-l sm:border-white/[0.14] sm:pl-7' : ''
-                  }
+                  className={i > 0 ? 'sm:ml-7 sm:border-l sm:border-white/[0.14] sm:pl-7' : ''}
                 >
                   <dt className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white">
                     {label}
@@ -597,31 +609,38 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
       {!user && (
         <div
           data-exam-obstructs
-          className="fixed bottom-0 left-0 right-0 sm:hidden z-50 px-4 pt-6 pb-[max(0.75rem,env(safe-area-inset-bottom))] bg-gradient-to-t from-black via-black/95 to-transparent">
-          <p className="text-center text-[11px] text-white mb-2">
-            <span className="text-green-400 font-semibold">1,600+ electricians</span>
-            {' · '}From £6.99/mo after trial
+          className="fixed bottom-0 left-0 right-0 z-50 border-t border-white/[0.08] bg-background/95 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-2.5 backdrop-blur-md sm:hidden"
+        >
+          {/* Volt (4 Oct 2026): live count instead of a hard-coded "2,100+",
+              no green text, no arrow, one action. */}
+          <p className="mb-2 text-center text-[12px] text-white">
+            <span className="font-semibold text-elec-yellow">{userCount}</span> electricians and
+            apprentices · from £6.99 a month
           </p>
           <div className="flex items-center gap-2">
-            <Link to="/auth/signup" className="flex-1">
-              <Button className="w-full h-12 text-sm font-semibold bg-yellow-500 hover:bg-yellow-400 active:scale-[0.97] text-black rounded-xl shadow-lg shadow-yellow-500/25 touch-manipulation transition-transform">
-                Start Free Trial
-                <ArrowRight className="w-4 h-4 ml-1" />
-              </Button>
-            </Link>
-            <a
-              href="https://apps.apple.com/gb/app/elec-mate/id6758948665"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="shrink-0"
+            <Link
+              to="/auth/signup"
+              className="flex h-12 flex-1 items-center justify-center rounded-xl bg-elec-yellow text-[15px] font-bold text-black touch-manipulation active:scale-[0.98]"
             >
-              <img
-                src="/images/app-store-badge.svg"
-                alt="App Store"
-                className="h-10"
-                loading="lazy"
-              />
-            </a>
+              Start your free week
+            </Link>
+            {/* The store for THIS phone — an App Store badge on an Android
+                was half the visitors' wrong store (Andrew asked for Google). */}
+            {storeBadge && (
+              <a
+                href={storeBadge.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="shrink-0 touch-manipulation"
+              >
+                <img
+                  src={storeBadge.src}
+                  alt={storeBadge.alt}
+                  className="h-11 w-auto"
+                  loading="lazy"
+                />
+              </a>
+            )}
           </div>
         </div>
       )}

@@ -199,7 +199,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Calculating your EBITDA</strong> — start with your net profit. Add back:
                 depreciation (on vehicles, equipment, etc.); amortisation (on intangible assets);
@@ -209,7 +209,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Multiple applied</strong> — buyers multiply normalised EBITDA by a multiple
                 to arrive at an enterprise value. For small electrical contractors, the multiple is
@@ -218,7 +218,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Example</strong> — a sole trader electrical contractor with normalised
                 EBITDA of £80,000 per year might be valued at £80,000 to £240,000 (1x to 3x). A
@@ -244,7 +244,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>When revenue multiples are used</strong> — revenue multiples are useful
                 early in negotiations (before detailed profit analysis is complete), for businesses
@@ -253,7 +253,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Limitations</strong> — revenue tells you nothing about profitability. A
                 business with £600,000 turnover and 5% net margin is worth far less than one with
@@ -262,7 +262,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Recurring vs project revenue</strong> — recurring maintenance and service
                 contract revenue attracts a higher multiple than project revenue. If 40% of your
@@ -289,7 +289,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tangible assets included</strong> — vehicles (current market value, not book
                 value), tools and test equipment, stock (materials and spares), trade debtors
@@ -297,7 +297,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Intangible assets</strong> — goodwill (the value of customer relationships
                 and brand), trained and certificated workforce, and certifications (NICEIC, NAPIT,
@@ -306,7 +306,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>When asset value is relevant</strong> — asset value is the primary method
                 when a business is loss-making or when a buyer is primarily interested in the
@@ -332,7 +332,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Recurring maintenance contracts</strong> — annual or multi-year contracts
                 for periodic inspection and maintenance provide predictable revenue. This is the
@@ -340,7 +340,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Trained and certificated staff</strong> — a team that holds current
                 qualifications (18th Edition, inspection and testing C&G 2391, EV charging, solar
@@ -349,7 +349,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Plant and vehicles</strong> — owned (not leased) vehicles and
                 well-maintained test equipment add to asset value. Buyers prefer businesses where
@@ -358,7 +358,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Strong online reputation</strong> — Google reviews, Trustpilot, NICEIC or
                 NAPIT "find an electrician" profile, and a professional website. Buyers acquire
@@ -366,7 +366,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Growth market diversification</strong> — electrical businesses with
                 established EV charging installation, solar PV, battery storage, or smart home
@@ -375,7 +375,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Systems and processes</strong> — documented job management systems, standard
                 operating procedures, and use of job management software demonstrate a business that
@@ -400,7 +400,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BarChart2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1x EBITDA — Owner-operator, no recurring contracts</strong> — a sole trader
                 who personally carries out most of the work, with no recurring contracts and
@@ -409,7 +409,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BarChart2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1.5–2x EBITDA — Small team, some recurring revenue</strong> — a business
                 with 2 to 5 employees or subcontractors, some recurring maintenance contracts, and a
@@ -418,7 +418,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BarChart2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>2–3x EBITDA — Established business with strong recurring revenue</strong>— a
                 business with significant recurring maintenance contracts (representing 30% or more
@@ -427,7 +427,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BarChart2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3x+ EBITDA — Specialist or high-growth business</strong> — specialist
                 electrical businesses (data centres, healthcare, commercial with significant
@@ -506,7 +506,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Typical structure</strong> — 50 to 70% of the agreed price paid on
                 completion. The remaining 30 to 50% paid over 12 to 24 months, tied to the business
@@ -515,7 +515,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>When earn-outs are negotiated down</strong> — the more systemised and
                 contract-based your business is, the less earn-out a buyer needs. If 60% of your
@@ -524,7 +524,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Key considerations for sellers</strong> — ensure earn-out targets are
                 realistic and based on factors within your control during the handover period. Agree
@@ -552,7 +552,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <BarChart2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Professional Systems That Buyers Value
@@ -592,7 +592,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Build a more valuable electrical business with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting, invoicing, and electrical certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for professional quoting, invoicing, and electrical certification."
           icon={BarChart2}
         />
       </>
@@ -618,7 +618,7 @@ export default function ElectricalBusinessValuationPage() {
       heroTitle={
         <>
           Electrical Business Valuation UK:{' '}
-          <span className="text-yellow-400">How Much Is My Electrical Company Worth?</span>
+          <span className="text-elec-yellow">How Much Is My Electrical Company Worth?</span>
         </>
       }
       heroSubtitle="Everything UK electrical contractors need to know about business valuation — EBITDA multiples for small contractors (1–3x), revenue multiples, asset value, what increases your business value, typical multiples for electrical businesses, preparing for sale, and how earn-out structures work."
@@ -629,7 +629,7 @@ export default function ElectricalBusinessValuationPage() {
       faqHeading="Frequently Asked Questions About Electrical Business Valuation"
       relatedPages={relatedPages}
       ctaHeading="Build a More Valuable Electrical Business"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for professional quoting, invoicing, and certification. Build the systems and records that make your business more valuable and easier to sell. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for professional quoting, invoicing, and certification. Build the systems and records that make your business more valuable and easier to sell. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -162,7 +162,7 @@ const sections = [
           remember what the rest were for.
         </p>
         <p>
-          <strong className="text-yellow-400">
+          <strong className="text-elec-yellow">
             The solution is simple: record expenses as they happen.
           </strong>{' '}
           Elec-Mate's{' '}
@@ -200,7 +200,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Key Deductible Expense Categories</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Materials and stock:</strong> Cable, accessories, consumer units, MCBs,
                 RCBOs, SPDs, trunking, conduit, fixings, fire hoods, labels, and all other materials
@@ -208,7 +208,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Tools and equipment:</strong> Hand tools, power tools, test instruments,
                 ladders, access equipment, and calibration costs. Covered by Annual Investment
@@ -216,7 +216,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Vehicle costs:</strong> Either HMRC mileage rates (45p/25p) or actual costs
                 including fuel, insurance, servicing, MOT, road tax, finance, and depreciation.
@@ -224,21 +224,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Insurance:</strong> Public liability, professional indemnity, employers
                 liability, tool and equipment cover, commercial van insurance.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Professional fees:</strong> Certification body membership (NICEIC, NAPIT,
                 ELECSA), accountancy fees, legal costs, and subscription fees for business software.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Training and CPD:</strong> 18th Edition updates, 2391 courses, AM2,
                 manufacturer training, and any course that maintains or improves your existing
@@ -272,7 +272,7 @@ const sections = [
           mileage records are essential.
         </p>
         <p>
-          <strong className="text-yellow-400">HMRC simplified mileage rates</strong> are the easier
+          <strong className="text-elec-yellow">HMRC simplified mileage rates</strong> are the easier
           option. You record every business journey (date, start mileage, end mileage, destination,
           and reason for the trip) and claim 45p per mile for the first 10,000 business miles in the
           tax year, and 25p per mile after that. For an electrician driving 15,000 business miles
@@ -280,7 +280,7 @@ const sections = [
           basic-rate tax, that saves GBP 1,668 in tax.
         </p>
         <p>
-          <strong className="text-yellow-400">Actual vehicle costs</strong> may give a larger
+          <strong className="text-elec-yellow">Actual vehicle costs</strong> may give a larger
           deduction if you drive a newer van with high finance payments. You claim the business-use
           proportion of total vehicle costs: fuel, insurance, servicing, MOT, road tax, finance or
           lease payments, breakdown cover, and depreciation (or capital allowances). If your van
@@ -322,7 +322,7 @@ const sections = [
           reconcile all purchases at once.
         </p>
         <p>
-          <strong className="text-yellow-400">Tool expenses</strong> work slightly differently
+          <strong className="text-elec-yellow">Tool expenses</strong> work slightly differently
           depending on the cost. Small tools (screwdrivers, side cutters, drill bits) are claimed as
           a revenue expense in the year of purchase. Larger items -- a{' '}
           <SEOInternalLink href="/guides/electrician-tool-list-uk">
@@ -363,14 +363,14 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Camera className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Photograph immediately:</strong> Snap the receipt the moment you receive it.
                 Do not wait until you get home -- it will be lost or forgotten by then.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FolderOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FolderOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Categorise at capture:</strong> Select the correct HMRC category when you
                 photograph the receipt. Sorting hundreds of uncategorised receipts at year-end is
@@ -378,14 +378,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Link to jobs:</strong> Tag each expense with the relevant job so you can
                 track job-level profitability and provide your accountant with a clear breakdown.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Cloud backup:</strong> Ensure your receipt images are backed up to the
                 cloud. If your phone is lost or damaged, your records must survive.
@@ -419,23 +419,23 @@ const sections = [
           </p>
           <ul className="space-y-2 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">Materials: GBP 8,000</span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">Vehicle (mileage at 15,000 miles): GBP 5,750</span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">Insurance: GBP 1,200</span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">Tools and calibration: GBP 800</span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 Training, phone, software, accountancy: GBP 2,250
               </span>
@@ -519,7 +519,7 @@ export default function ExpensesManagerPage() {
       badgeIcon={Receipt}
       heroTitle={
         <>
-          Expenses Manager <span className="text-yellow-400">for UK Electricians</span>
+          Expenses Manager <span className="text-elec-yellow">for UK Electricians</span>
         </>
       }
       heroSubtitle="Track every business expense on your phone as it happens. Snap receipts, log mileage, categorise for HMRC, and see your running tax liability in real time. Stop handing money to HMRC by missing deductible expenses."
@@ -534,7 +534,7 @@ export default function ExpensesManagerPage() {
       faqHeading="Frequently Asked Questions About Expense Tracking"
       relatedPages={relatedPages}
       ctaHeading="Stop Missing Deductible Expenses"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to track expenses, maximise tax deductions, and keep HMRC-compliant records. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to track expenses, maximise tax deductions, and keep HMRC-compliant records. 7-day free trial, cancel anytime."
       pagePath="/tools/expenses-manager-electrician"
     />
   );

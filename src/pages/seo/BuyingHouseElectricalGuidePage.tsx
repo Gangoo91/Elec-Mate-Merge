@@ -205,7 +205,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Modern split-load or RCBO board (post-2016)</strong> — compliant with the
                 17th Amendment to BS 7671. Look for a metal-clad consumer unit (required since 2016
@@ -214,7 +214,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>White plastic split-load board (2000s–2016)</strong> — has RCD protection
                 but may have a plastic casing that does not comply with current regulations.
@@ -224,7 +224,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Older MCB-only board (1980s–1990s)</strong> — has miniature circuit breakers
                 but no RCD protection. Regulation 411.3.3 of BS 7671 requires RCD protection on
@@ -233,7 +233,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rewirable fuse board (pre-1980s)</strong> — ceramic fuse holders with
                 rewirable fuse wire. No RCD protection. The board itself is serviceable, but its
@@ -260,7 +260,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Round-pin sockets</strong> — two-pin round-pin sockets indicate pre-1947
                 wiring. Three-pin round-pin sockets indicate 1940s to early 1960s wiring. Both are
@@ -268,7 +268,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Modern 13A rectangular sockets</strong> — these have been standard since
                 approximately 1947. The style and brand can indicate when they were installed.
@@ -276,7 +276,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Surface-mounted trunking</strong> — flat plastic surface-mounted cable
                 trunking added on top of skirting boards is common when sockets have been added
@@ -285,7 +285,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Visible cables in loft and under floors</strong> — grey PVC-insulated twin
                 and earth cable (T&amp;E) is modern and fine. Older cloth or rubber-sheathed cable
@@ -370,7 +370,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rubber-insulated wiring (VIR)</strong> — vulcanised india rubber insulation
                 becomes brittle and cracks with age. The earthed conductors in early
@@ -380,7 +380,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No earth on lighting circuits</strong> — pre-1966 lighting circuits often
                 have no earth conductor. This means metal light fittings cannot be safely earthed.
@@ -389,7 +389,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>TT earthing systems</strong> — older rural and some suburban properties may
                 have a TT (earth electrode) earthing system rather than the modern TN-S or TN-C-S
@@ -398,7 +398,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No main equipotential bonding</strong> — properties of this age frequently
                 lack main protective bonding conductors to gas and water services. These are
@@ -486,7 +486,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Get two or three quotes</strong> — before approaching the vendor, obtain
                 written quotes for the remedial work from qualified electricians. This gives you a
@@ -494,7 +494,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Price reduction vs vendor remediation</strong> — a price reduction is
                 usually preferable. Vendor-managed remediation may be rushed or carried out by the
@@ -503,7 +503,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Retention</strong> — in some cases, your solicitor can arrange a retention —
                 part of the purchase price held back at completion and released only when the
@@ -512,7 +512,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>When to walk away</strong> — if the vendor refuses any concession and the
                 remedial cost is significant (for example, a full rewire at £7,000 on a property
@@ -538,7 +538,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>One-bedroom flat</strong> — £2,500 to £4,000. Typically 1 to 2 days' work
                 with a team of two. Includes consumer unit replacement, new circuits, sockets, and
@@ -546,7 +546,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Two-bedroom house or flat</strong> — £3,500 to £5,500. Two to three days.
                 Redecoration after chasing channels in walls is an additional cost — budget £1,000
@@ -554,7 +554,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom house</strong> — £4,500 to £7,000. The most common rewire
                 scenario. Three to four days. Prices in London and the South East are typically
@@ -562,7 +562,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Four-bedroom house</strong> — £6,000 to £10,000. Four to five days. Complex
                 Victorian properties with solid masonry walls cost more due to the difficulty of
@@ -570,7 +570,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacement only</strong> — £400 to £900. If the wiring is in
                 good condition but the consumer unit is outdated, replacement alone is a much
@@ -578,7 +578,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD retrofit and bonding</strong> — £300 to £700. Fitting a new consumer
                 unit with RCDs plus main bonding conductors, if the wiring itself is otherwise
@@ -609,7 +609,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete EICRs on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -644,7 +644,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win house purchase EICR work with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -670,7 +670,7 @@ export default function BuyingHouseElectricalGuidePage() {
       heroTitle={
         <>
           Buying a House Electrical Checklist UK:{' '}
-          <span className="text-yellow-400">What to Check Before You Buy</span>
+          <span className="text-elec-yellow">What to Check Before You Buy</span>
         </>
       }
       heroSubtitle="Most buyers focus on kitchens and roof condition — but the electrical installation can be one of the most expensive things to put right. This guide covers what to check at viewings, how to read a consumer unit, pre-1966 wiring dangers, commissioning an EICR during purchase, and using the findings to negotiate."
@@ -681,7 +681,7 @@ export default function BuyingHouseElectricalGuidePage() {
       faqHeading="Frequently Asked Questions About Electrical Checks When Buying a House"
       relatedPages={relatedPages}
       ctaHeading="Complete House Purchase EICRs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. Send the report to buyers before you leave the property. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. Send the report to buyers before you leave the property. 7-day free trial."
     />
   );
 }

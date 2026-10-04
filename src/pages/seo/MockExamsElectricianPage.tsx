@@ -541,7 +541,7 @@ export default function MockExamsElectricianPage() {
       heroTitle={
         <>
           Mock Exams for Electricians:{' '}
-          <span className="text-yellow-400">Practice Tests That Work</span>
+          <span className="text-elec-yellow">Practice Tests That Work</span>
         </>
       }
       heroSubtitle="Prepare for the 18th Edition, 2391, and AM2 exams with unlimited AI-powered mock exams. Instant marking, detailed explanations for every answer, and intelligent progress tracking that targets your weak areas."
@@ -558,7 +558,7 @@ export default function MockExamsElectricianPage() {
       relatedPages={relatedPages}
       embeddedTool={<MockExamIndexLinks />}
       ctaHeading="Start practising with unlimited mock exams today"
-      ctaSubheading="Join 1,600+ UK electricians preparing for their exams with Elec-Mate. AI-powered mock exams that adapt to your weak areas, flashcards with spaced repetition, and structured study courses. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians preparing for their exams with Elec-Mate. AI-powered mock exams that adapt to your weak areas, flashcards with spaced repetition, and structured study courses. 7-day free trial, cancel anytime."
     />
   );
 }

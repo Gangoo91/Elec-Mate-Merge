@@ -45,7 +45,7 @@ export default function OfflineElectricalAppPage() {
       badgeIcon={WifiOff}
       heroTitle={
         <>
-          <span className="text-yellow-400">Offline Electrical App</span> — Work Without Signal,
+          <span className="text-elec-yellow">Offline Electrical App</span> — Work Without Signal,
           Never Lose Data
         </>
       }

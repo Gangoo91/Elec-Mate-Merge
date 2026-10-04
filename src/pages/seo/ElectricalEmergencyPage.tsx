@@ -447,7 +447,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Power className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Power className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Call 105 — Power Cut or Network Fault</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -498,7 +498,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Know where your consumer unit is.</strong> It is typically in the hallway,
                 under the stairs, in a cupboard, or in the garage. Find it now, before you need it
@@ -506,7 +506,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>The main switch</strong> is the large switch (usually red or labelled
                 "MAIN") at the top or side of the consumer unit. Switching this off disconnects the
@@ -514,7 +514,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Individual circuit breakers (MCBs)</strong> control individual circuits. If
                 you know which circuit is affected, you can switch off just that MCB without losing
@@ -522,7 +522,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>If the RCD has tripped,</strong> try resetting it once. If it trips again
                 immediately, there is a fault on one of the circuits it protects. Do not keep
@@ -552,7 +552,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fault finding and repair</strong> — the electrician will systematically test
                 the installation to locate the fault. This may involve insulation resistance
@@ -560,7 +560,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Certificate issued</strong> — the electrician will issue a Minor Works
                 Certificate or Electrical Installation Certificate for the repair work. If a full
@@ -570,7 +570,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insurance claim</strong> — if the emergency caused damage, contact your home
                 insurance provider. Keep the electrician's report, photographs, and any receipts as
@@ -601,7 +601,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Camera className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Document the Fault</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -628,7 +628,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Handle emergency call-outs professionally"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site certificates, fault documentation, and instant invoicing."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site certificates, fault documentation, and instant invoicing."
           icon={Zap}
         />
       </>
@@ -653,7 +653,7 @@ export default function ElectricalEmergencyPage() {
       badgeIcon={AlertTriangle}
       heroTitle={
         <>
-          Electrical Emergency: <span className="text-yellow-400">What to Do and Who to Call</span>
+          Electrical Emergency: <span className="text-elec-yellow">What to Do and Who to Call</span>
         </>
       }
       heroSubtitle="Power cut, burning smell, electric shock, flooding — electrical emergencies require fast, correct action. This guide explains exactly what to do in each situation, who to call, and how to keep yourself and your family safe until help arrives."
@@ -664,7 +664,7 @@ export default function ElectricalEmergencyPage() {
       faqHeading="Frequently Asked Questions About Electrical Emergencies"
       relatedPages={relatedPages}
       ctaHeading="Professional Emergency Certificates on Site"
-      ctaSubheading="Join 1,600+ UK electricians completing certificates, fault documentation, and invoices on their phones — even on emergency call-outs. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians completing certificates, fault documentation, and invoices on their phones — even on emergency call-outs. 7-day free trial, cancel anytime."
     />
   );
 }

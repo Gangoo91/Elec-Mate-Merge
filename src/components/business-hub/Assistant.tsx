@@ -16,6 +16,7 @@ import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { Capacitor } from '@capacitor/core';
 import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics';
+import { hapticsEnabled } from '@/lib/haptics';
 import { Network } from '@capacitor/network';
 import type {
   SparkTask,
@@ -944,7 +945,7 @@ export function Assistant({
       });
 
       // Native haptic feedback on success — heavier for destructive actions.
-      if (Capacitor.isNativePlatform()) {
+      if (Capacitor.isNativePlatform() && hapticsEnabled()) {
         try {
           if (isDestructive(action)) {
             await Haptics.notification({ type: NotificationType.Warning });
@@ -989,7 +990,7 @@ export function Assistant({
       console.error('[Assistant] apply failed', err);
       // Release the idempotency lock so retry is possible.
       appliedActionKeysRef.current.delete(key);
-      if (Capacitor.isNativePlatform()) {
+      if (Capacitor.isNativePlatform() && hapticsEnabled()) {
         try {
           await Haptics.notification({ type: NotificationType.Error });
         } catch {

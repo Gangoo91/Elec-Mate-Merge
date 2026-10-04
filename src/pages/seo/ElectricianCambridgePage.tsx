@@ -228,7 +228,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Student accommodation</strong> — each college provides accommodation for
                 hundreds of students. Rooms require periodic inspection, PAT testing of provided
@@ -238,7 +238,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Kitchens and catering</strong> — college kitchens serve hundreds of meals
                 daily during term. Commercial kitchen electrical work includes three-phase cooking
@@ -248,7 +248,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Chapels and historic halls</strong> — college chapels (King's College Chapel
                 is Grade I listed and a Scheduled Ancient Monument) and dining halls require
@@ -259,7 +259,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Laboratories and IT</strong> — university departments and college libraries
                 have significant power and data requirements. Server rooms, teaching laboratories,
@@ -292,7 +292,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Landmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Grade I challenges</strong> — Cambridge has an exceptionally high number of
                 Grade I listed buildings (the highest category, buildings of exceptional interest).
@@ -304,7 +304,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Landmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Clunch and Cambridge brick</strong> — many historic Cambridge buildings are
                 constructed from clunch (a soft chalk stone) or Cambridge brick (a distinctive
@@ -315,7 +315,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Landmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Concealment techniques</strong> — in Cambridge listed buildings, common
                 concealment approaches include routing through existing floor and ceiling voids,
@@ -354,7 +354,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Microscope className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Microscope className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Laboratory fit-outs</strong> — research and pharmaceutical laboratories
                 require clean power supplies, isolated earth systems to prevent interference with
@@ -364,7 +364,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Microscope className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Microscope className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Clean rooms</strong> — pharmaceutical and biotech manufacturing clean rooms
                 require HEPA-filtered air handling with dedicated electrical supplies, lighting that
@@ -375,7 +375,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Microscope className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Microscope className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>UPS and resilience</strong> — many biotech facilities require
                 uninterruptible power supply systems to protect biological samples, ongoing
@@ -385,7 +385,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Microscope className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Microscope className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Office and mixed-use</strong> — the broader Cambridge commercial market
                 includes office fit-outs, retail units (particularly on the rapidly developing North
@@ -528,7 +528,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EICR Certificate App</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -574,7 +574,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional certification for Cambridge electricians"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting."
           icon={MapPin}
         />
       </>
@@ -601,7 +601,7 @@ export default function ElectricianCambridgePage() {
       heroTitle={
         <>
           Electrician in Cambridge:{' '}
-          <span className="text-yellow-400">Local Guide for UK Electricians</span>
+          <span className="text-elec-yellow">Local Guide for UK Electricians</span>
         </>
       }
       heroSubtitle="Cambridge's world-famous university, thriving biotech corridor, and concentration of listed buildings create exceptional opportunities for skilled electricians. This guide covers the DNO, college work, heritage requirements, commercial demand, and realistic pricing."
@@ -612,7 +612,7 @@ export default function ElectricianCambridgePage() {
       faqHeading="Frequently Asked Questions About Electrical Work in Cambridge"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Electrical Work in Cambridge — On Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting. Heritage, biotech, or new builds — certify it all on site. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting. Heritage, biotech, or new builds — certify it all on site. 7-day free trial."
     />
   );
 }

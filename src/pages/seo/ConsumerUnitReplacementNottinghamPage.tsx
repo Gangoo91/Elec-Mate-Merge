@@ -255,7 +255,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dual-RCD consumer unit</strong> — splits circuits into two groups, each on a
                 30mA RCD. Economic option but a fault on any circuit in a group trips all circuits
@@ -264,7 +264,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>All-RCBO consumer unit</strong> — each circuit has an individual RCBO
                 combining MCB and RCD functions in one device. A fault on one circuit trips only
@@ -273,7 +273,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Legacy wiring and nuisance tripping</strong> — Nottingham rental properties
                 with older wiring may experience nuisance RCD tripping due to deteriorated cable
@@ -323,7 +323,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Landlord obligations</strong> — Nottingham City Council actively enforces
                 the Electrical Safety Standards in the Private Rented Sector (England) Regulations
@@ -394,21 +394,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Small flat or terrace (1–2 bed)</strong> — £360 to £500. Very common across
                 Lenton, Radford, Forest Fields, and St Ann's. Typically 6 to 10 circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom semi or terrace</strong> — £450 to £630. The most common
                 Nottingham property type. Up to 12 circuits, full testing included.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Larger detached property</strong> — £600 to £850. Wollaton, Beeston, and
                 West Bridgford detached properties typically have more circuits and may require
@@ -416,7 +416,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional work</strong> — earthing upgrades, main equipotential bonding,
                 smoke alarm installation, or meter tails replacement can add £100 to £350 depending
@@ -442,7 +442,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Victorian and Edwardian terraces (NG1, NG2, NG7)</strong> — some properties
                 in inner Nottingham retain rubber-insulated or aluminium wiring from pre-1970s
@@ -452,7 +452,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Student letting market</strong> — Lenton and Dunkirk have extremely dense
                 concentrations of student letting properties serving the University of Nottingham.
@@ -462,7 +462,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>TT earthing (rural fringe)</strong> — properties on the rural fringes of the
                 Nottingham urban area (Lambley, Woodborough, Calverton) may use TT earthing with an
@@ -490,7 +490,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Paperless EICs in Nottingham</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -524,7 +524,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Nottingham electrical business with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting."
           icon={FileCheck2}
         />
       </>
@@ -550,7 +550,7 @@ export default function ConsumerUnitReplacementNottinghamPage() {
       heroTitle={
         <>
           Consumer Unit Replacement Nottingham:{' '}
-          <span className="text-yellow-400">Fuse Box Guide 2026</span>
+          <span className="text-elec-yellow">Fuse Box Guide 2026</span>
         </>
       }
       heroSubtitle="Everything Nottingham homeowners and landlords need to know about consumer unit replacement — the metal enclosure requirement, Part P Building Regulations, RCD protection, costs of £380 to £700, and how to find a qualified NICEIC or NAPIT registered electrician in the East Midlands."
@@ -561,7 +561,7 @@ export default function ConsumerUnitReplacementNottinghamPage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Replacement in Nottingham"
       relatedPages={relatedPages}
       ctaHeading="Complete Consumer Unit Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion with instant PDF export and schedule of test results. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion with instant PDF export and schedule of test results. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -36,6 +36,7 @@ import {
   Eyebrow,
 } from '@/components/employer/editorial';
 import { SelectField } from '@/components/forms';
+import { autoCompleteOff } from '@/lib/textEntry';
 
 /* ==========================================================================
    AddEmployeeDialog — stepped bottom sheet for adding a team member.
@@ -474,7 +475,7 @@ export function AddEmployeeDialog({
                         }
                         placeholder="John Smith"
                         className={inputClass}
-                        autoComplete="off"
+                        autoComplete={autoCompleteOff}
                       />
                     </Field>
                     <Field label="Email">
@@ -488,7 +489,7 @@ export function AddEmployeeDialog({
                         }
                         placeholder="john@example.com"
                         className={inputClass}
-                        autoComplete="off"
+                        autoComplete={autoCompleteOff}
                       />
                     </Field>
                     <Field label="Phone">
@@ -502,7 +503,7 @@ export function AddEmployeeDialog({
                         }
                         placeholder="07700 900000"
                         className={inputClass}
-                        autoComplete="off"
+                        autoComplete={autoCompleteOff}
                       />
                     </Field>
                   </FormCard>

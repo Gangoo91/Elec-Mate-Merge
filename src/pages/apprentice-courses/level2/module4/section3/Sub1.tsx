@@ -67,7 +67,7 @@ const checks = [
     question:
       'You measure 95 m of T&E across all the circuits on a small rewire. Your normal routing allowance is 15 % and you keep 10 % for offcuts/spares. How many metres do you order?',
     options: [
-      '~120 m (15 % routing + 10 % spares stacked multiplicatively).',
+      '~105 m (10 % spares only)',
       '95 m exactly.',
       '~119 m (95 × 1.25).',
       '~109 m (15 % only).',
@@ -173,7 +173,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'A4:2026 makes AFDDs a mandatory requirement for single-phase AC final circuits supplying socket-outlets ≤ 32 A in Higher-Risk Residential Buildings, Houses in Multiple Occupation, purpose-built student accommodation and care homes. In ordinary dwellings they are recommended rather than required. AFDD/RCBO combo devices are roughly twice the cost of plain RCBOs, so the take-off must allow for them where these premises types apply.',
+      'BS 7671 Reg 421.1.7 (since A2:2022) makes AFDDs a mandatory requirement for single-phase AC final circuits supplying socket-outlets ≤ 32 A in Higher-Risk Residential Buildings, Houses in Multiple Occupation, purpose-built student accommodation and care homes. In ordinary dwellings they are recommended rather than required. AFDD/RCBO combo devices are roughly twice the cost of plain RCBOs, so the take-off must allow for them where these premises types apply.',
   },
   {
     id: 8,
@@ -210,7 +210,7 @@ const faqs = [
   {
     question: 'When does a CU schedule need to specify AFDD vs RCBO?',
     answer:
-      'BS 7671 A4:2026 Reg 421.1.7 RECOMMENDS AFDDs for AC final circuits supplying socket-outlets ≤ 32 A in dwellings. The recommendation strengthens to a requirement in Higher-Risk Residential Buildings (HRRBs) under the Building Safety Act 2022 framework. In HMOs / Houses in Multiple Occupation, sleeping accommodation and care homes, supporting fire-safety guidance treats them as effectively required practice. The CU schedule should show device type per way — RCBO Type AC vs Type A vs AFDD/RCBO combo — because the device cost gap is significant and an AFDD/RCBO is twice the cost of a plain RCBO. Where AFDDs are specified, missing them on take-off is a budget killer.',
+      'BS 7671 Reg 421.1.7 REQUIRES AFDDs on single-phase socket-outlet circuits ≤ 32 A in high rise residential buildings, HMOs, purpose-built student accommodation and care homes, and RECOMMENDS them on those circuits in all other premises. The CU schedule should show device type per way — RCBO Type AC vs Type A vs AFDD/RCBO combo — because the device cost gap is significant and an AFDD/RCBO is twice the cost of a plain RCBO. Where AFDDs are specified, missing them on take-off is a budget killer.',
   },
   {
     question: 'How do I take off conduit and trunking quantities?',
@@ -258,7 +258,7 @@ export default function Sub1() {
             'Cross-reference cable schedule against the 1:50 layout drawing and the single-line schematic, identifying any discrepancies that require an RFI.',
             'Take off accessory quantities (back-boxes, faceplates, FCUs, fixings, grommets, sleeving) for a complete circuit, not just the visible end items.',
             'Apply routing and spares allowances correctly so that one site order delivers everything needed for the install — no second trip.',
-            'Identify A4:2026-introduced requirements that affect the take-off — AFDDs recommended in dwellings under Reg 421.1.7 (strengthening to required in HRRBs and effectively required practice in HMOs / sleeping accommodation / care homes), labelling and diagrams (Reg 514.9.2), TN-C-S/PNB documentation.',
+            'Identify the current BS 7671 rules that affect the take-off — AFDDs required in HRRBs, HMOs, student accommodation and care homes (Reg 421.1.7), RCD type per way (Reg 531.3.3), SPDs (Section 443), and the earthing arrangement including PNB.',
           ]}
           initialVisibleCount={3}
         />
@@ -326,19 +326,18 @@ export default function Sub1() {
 
         <RegsCallout
           source="BS 7671:2018+A4:2026 — Regulation 514.9.2 (Diagrams, charts, instructions)"
-          clause="Diagrams, charts, information notices and instruction notices shall comply with the applicable standards specified."
+          clause="All diagrams, charts, and information or instruction notices shall comply with BS EN 61082-1, BS EN IEC/IEEE 82079-1, and, where appropriate, BS EN 81346-1. All warning notices and other relevant safety signs shall comply with BS ISO 3864-1, BS EN ISO 7010, and BS EN IEC/IEEE 82079-1."
           meaning={
             <>
-              Reg 514.9.2 (introduced A4:2026) ties every drawing, schedule, label and notice in the
-              documentation pack to the relevant standard that governs it. The CU schedule has to
-              follow BS EN 61439-3 conventions; warning notices have to follow the BS standard for
-              that notice type; circuit charts have to match the actual installation. As a take-off
+              Reg 514.9.2 (added by A2:2022) ties every drawing, chart and notice in the
+              documentation pack to a named standard: BS EN 61082-1 for diagrams, BS EN ISO 7010 for
+              safety signs. Circuit charts also have to match the actual installation. As a take-off
               exercise this means: trust the document, but also cross-check that the drawings
               actually look like compliant drawings — out-of-date templates or non-standard notation
-              are a sign that the pack has not been updated to A4:2026.
+              are a sign that the pack has not been kept up to date.
             </>
           }
-          cite="Source: BS 7671:2018+A4:2026 Part 5, Chapter 51, Regulation 514.9.2 (introduced A4:2026)."
+          cite="Source: BS 7671:2018+A4:2026, Regulation 514.9.2 (added by A2:2022)."
         />
 
         <InlineCheck {...checks[0]} />
@@ -617,62 +616,61 @@ export default function Sub1() {
           </ul>
           <p>
             The CU itself is also on this schedule — manufacturer (Hager, Wylex, Crabtree,
-            Schneider), enclosure (metal under A4:2026 expectations), number of ways including 25 %
-            spare capacity, surge protection device (SPD Type 2 strongly recommended, mandatory in
-            some scenarios), main switch rating.
+            Schneider), enclosure (non-combustible in domestic premises, Reg 421.1.201), number of
+            ways including 25 % spare capacity, surge protection device (SPD Type 2 strongly
+            recommended, mandatory in some scenarios), main switch rating.
           </p>
         </ConceptBlock>
 
         <ConceptBlock
-          title="A4:2026 changes that affect the CU schedule"
-          plainEnglish="The A4:2026 amendment recommends AFDDs for AC final circuits supplying socket-outlets ≤ 32 A in dwellings, tightened SPD requirements, and clarified TN-C-S/PNB documentation. All of these affect what goes on the CU schedule and therefore what you order."
-          onSite="If the CU schedule was drawn pre-A4:2026 it may be missing AFDDs that are now recommended (or effectively required in HRRBs / HMOs / sleeping accommodation / care homes). Check the issue date of the drawing pack — if it is older than 2026, raise an RFI to confirm AFDD coverage on socket-outlet and lighting circuits before ordering."
+          title="Current rules that change the CU schedule"
+          plainEnglish="Several rules in the current BS 7671 change what goes on the CU schedule, and so what you order: AFDDs on socket circuits in some building types, the RCD type for each way, whether an SPD is needed, and the earthing arrangement. Most arrived before A4:2026, so an older drawing pack can still be correct."
+          onSite="Check the building type before you price the board. In an HMO, care home, purpose-built student accommodation or high rise residential building, the socket-outlet circuits need AFDDs. If the CU schedule does not show them, raise an RFI before ordering."
         >
-          <p>The headline A4:2026 changes for take-off:</p>
+          <p>The rules that most often change a CU take-off:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
-              <strong>AFDDs (Reg 421.1.7)</strong> — RECOMMENDED for AC final circuits supplying
-              socket-outlets ≤ 32 A in dwellings. The recommendation strengthens to a REQUIREMENT in
-              Higher-Risk Residential Buildings (HRRBs) under the Building Safety Act 2022
-              framework. In HMOs / Houses in Multiple Occupation, sleeping accommodation and care
-              homes, supporting fire-safety guidance treats them as effectively required practice.
-              Combo AFDD/RCBO devices roughly double the per-way cost.
+              <strong>AFDDs (Reg 421.1.7)</strong> — REQUIRED on single-phase socket-outlet circuits
+              up to 32 A in high rise residential buildings, HMOs, purpose-built student
+              accommodation and care homes (since A2:2022); recommended on those circuits in all
+              other premises. Combo AFDD/RCBO devices roughly double the per-way cost.
             </li>
             <li>
-              <strong>SPDs (Section 443)</strong> — Type 2 SPD strongly recommended at the origin of
-              installations supplying critical or vulnerable loads; Type 1+2 at the origin of
-              installations with overhead supply or known lightning exposure.
+              <strong>RCD type (Reg 531.3.3)</strong> — Type AC may only serve fixed equipment where
+              the load current is known to contain no DC components (since A2:2022), so most ways
+              need Type A or better. The schedule should state the type for every RCD or RCBO.
             </li>
             <li>
-              <strong>TN-C-S / PNB (Reg 411.4)</strong> — tighter documentation requirements for
-              installations with combined neutral-earth supplies, including labelling of the PEN
-              conductor and the bonding arrangement.
+              <strong>SPDs (Section 443)</strong> — protection against transient overvoltages is
+              required where the consequence could be serious injury or loss of life, or significant
+              financial or data loss, and otherwise unless the owner declares the risk tolerable. If
+              an SPD is needed it is a line on the CU schedule.
             </li>
             <li>
-              <strong>Diagrams and notices (Reg 514.9.2)</strong> — every diagram, chart and notice
-              must comply with the standard for that document type.
+              <strong>Earthing arrangement (Reg 312.2.1.1)</strong> — A4:2026 added protective
+              neutral bonding (PNB) as a TN-C-S arrangement. Confirm on the drawing which earthing
+              system the board is designed for.
+            </li>
+            <li>
+              <strong>Diagrams and notices (Reg 514.9.2)</strong> — since A2:2022, diagrams and
+              charts must comply with BS EN 61082-1 and safety signs with BS EN ISO 7010.
             </li>
           </ul>
         </ConceptBlock>
 
         <RegsCallout
           source="BS 7671:2018+A4:2026 — Regulation 421.1.7 (Arc Fault Detection Devices)"
-          clause="(Paraphrased — see BS 7671:2018+A4:2026 for full published text.) Arc Fault Detection Devices (AFDDs) conforming to BS EN 62606 are RECOMMENDED for the protection against fire of AC final circuits supplying socket-outlets with rated current not exceeding 32 A in dwellings. The recommendation strengthens to a requirement in Higher-Risk Residential Buildings (HRRBs) under the Building Safety Act 2022 framework. In HMOs (Houses in Multiple Occupation), sleeping accommodation and care homes, supporting fire-safety guidance treats AFDDs as effectively required practice."
+          clause="Arc fault detection devices (AFDD) conforming to BS EN 62606 shall be provided for single-phase AC final circuits supplying socket-outlets with a rated current not exceeding 32 A in: (a) high rise residential buildings (HRRBs); (b) houses in multiple occupation (HMOs); (c) purpose-built student accommodation; (d) care homes. For all other premises, the use of AFDDs conforming to BS EN 62606 is recommended for single-phase AC final circuits supplying socket-outlets not exceeding 32 A."
           meaning={
             <>
-              The A4:2026 wording for Reg 421.1.7 uses RECOMMENDING language for AFDDs on
-              socket-outlet circuits ≤ 32 A in dwellings — not mandatory. The recommendation
-              strengthens to a requirement only via supporting building-safety legislation (the
-              Building Safety Act 2022 framework for HRRBs). In HMOs, sleeping accommodation and
-              care homes, fire-safety guidance treats AFDDs as effectively required practice. This
-              is still the single biggest CU-schedule change in the amendment — an AFDD/RCBO combo
-              device is roughly twice the cost of a plain RCBO, and a typical 14-way HMO board
-              carrying AFDDs needs 4-6 of them. Always check the issue date of the drawing pack and
-              confirm AFDD allocation with the designer for any premises that may fall under 421.1.7
-              or HRRB legislation.
+              In the four building types listed, AFDDs on socket-outlet circuits up to 32 A are a
+              requirement of BS 7671 itself. Everywhere else, including an ordinary house, they are
+              recommended. This is often the single biggest cost line on a CU schedule — an
+              AFDD/RCBO combo device is roughly twice the cost of a plain RCBO. Always confirm the
+              building type and the AFDD allocation with the designer before ordering.
             </>
           }
-          cite="Source: BS 7671:2018+A4:2026 Part 4, Chapter 42, Regulation 421.1.7 (paraphrased — see BS 7671:2018+A4:2026 published text)."
+          cite="Source: BS 7671:2018+A4:2026, Regulation 421.1.7."
         />
 
         <SectionRule />
@@ -852,19 +850,19 @@ export default function Sub1() {
         />
 
         <RegsCallout
-          source="BS 7671:2018+A4:2026 — Regulation 132.12 (Documentation)"
-          clause="(Paraphrased.) The design of the installation shall be documented in such a way that the operator can install, operate and maintain the installation correctly. Documentation shall include the type and composition of every circuit (points supplied, conductor cross-sectional area, type of wiring, route length and protective device) and any information necessary for the identification and verification of every circuit."
+          source="BS 7671:2018+A4:2026 — Regulation 132.13 (Documentation for the electrical installation)"
+          clause="Every electrical installation shall be provided with appropriate documentation, including that required by Regulations 313.1, 422.1, 512.1.5, 514.9, 536.5, Part 6 and, where applicable, Part 7 and Part 8."
           meaning={
             <>
-              132.12 is the regulation behind every drawing pack you ever read. The pack must give
-              the installer enough information to install the circuit correctly, and the same pack
-              must give the future inspector enough information to verify the circuit at periodic
-              inspection. If the pack you receive is missing any of points-supplied / CSA / wiring
-              type / route length / protective device, raise an RFI — that is not a documentation
-              gap, that is a 132.12 non-compliance.
+              132.13 is the regulation behind every drawing pack you ever read. It pulls in the
+              supply characteristics (313.1), the circuit charts (514.9) and the Part 6 certificates
+              and schedules. Reg 514.9.1 adds that the charts must show the type and composition of
+              each circuit and the devices for protection, isolation and switching. If the pack you
+              receive is missing what you need to install a circuit, or what an inspector would need
+              to verify it later, raise an RFI.
             </>
           }
-          cite="Source: BS 7671:2018+A4:2026 Part 1, Chapter 13, Regulation 132.12 (paraphrased)."
+          cite="Source: BS 7671:2018+A4:2026, Regulations 132.13 and 514.9.1."
         />
 
         <SectionRule />
@@ -878,8 +876,8 @@ export default function Sub1() {
             'A drawing pack has six pieces of paper — schematic, layout, and four schedules (cable, accessory, containment, CU). Read them in that order.',
             'Schedules are estimates. Verify every length and quantity against the layout before ordering. RFI any disagreement — never pick a winner unilaterally.',
             'Add 10–20 % routing allowance on cable, 10 % spare, round up to standard drum size. Containment in whole 3 m sticks. Accessories +5 % breakage; consumables +20 %.',
-            'CU schedule is the parts list for the panel — way, circuit, device type, rating, characteristic, RCD/RCBO type, kA, pole arrangement. A4:2026 Reg 421.1.7 RECOMMENDS AFDDs for AC final circuits supplying socket-outlets ≤ 32 A in dwellings (strengthening to required in HRRBs; effectively required practice in HMOs / sleeping accommodation / care homes) — significant cost impact where specified.',
-            'Reg 514.9.2 (A4:2026) requires diagrams, charts and notices to comply with the applicable standards. Out-of-date templates are a sign the pack has not been updated.',
+            'CU schedule is the parts list for the panel — way, circuit, device type, rating, characteristic, RCD/RCBO type, kA, pole arrangement. Reg 421.1.7 REQUIRES AFDDs on socket-outlet circuits ≤ 32 A in HRRBs, HMOs, student accommodation and care homes, and recommends them elsewhere — significant cost impact where specified.',
+            'Reg 514.9.2 (added by A2:2022) requires diagrams, charts and notices to comply with named standards (BS EN 61082-1, BS EN ISO 7010). Out-of-date templates are a sign the pack has not been updated.',
             'Reg 526.1 means accessory choice is a connection-quality decision, not just a finish decision. Wrong box depth = bad termination = 526.1 fail.',
             'Take-off is not a one-off — every variation triggers an addendum. Customer changes mid-job get logged, priced, ordered, then installed.',
             'Half a day of careful take-off saves three days of chasing missing parts. The skill is consistency, not speed.',

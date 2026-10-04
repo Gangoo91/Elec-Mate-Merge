@@ -135,7 +135,7 @@ const quizQuestions = [
       'To prevent confusion that could lead to misuse on live work',
       'Because insulated tools must be kept at a fixed temperature',
       'Because insulated handles react badly with steel surfaces',
-      'To allow the insulation to recharge between uses',
+      'So their insulation can be retested before every use',
     ],
     correctAnswer: 0,
     explanation:

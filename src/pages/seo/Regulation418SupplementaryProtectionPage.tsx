@@ -173,7 +173,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Socket outlets with a rated current not exceeding 32A</strong> — this covers
                 all standard 13A socket outlets (both ring and radial circuits), 16A industrial
@@ -182,7 +182,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>
                   Mobile equipment with a rated current not exceeding 32A for use outdoors
@@ -220,44 +220,44 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>All socket-outlet circuits rated up to 32A (Regulation 411.3.3)</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Mobile equipment up to 32A for outdoor use (Regulation 411.3.3)</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 All AC final circuits supplying luminaires in domestic premises (Regulation 411.3.4,
                 Amendment 4)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 All circuits in bathrooms and shower rooms — zones 0, 1 and 2 (Section 701,
                 Regulation 701.411.3.3)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Circuits in swimming pools and hot tubs (Section 702)</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Circuits in caravans, caravan parks, and marinas (Sections 708, 709, 710)</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 All circuits in TT installations where the RCD provides fault protection (Regulation
                 411.5.2)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Cables concealed in walls at a depth less than 50mm (Regulation 522.6.202) — must be
                 protected by a 30mA RCD or have earthed metallic covering or be enclosed in earthed
@@ -286,21 +286,21 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Tag className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <Tag className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 The socket outlet is for connection of a{' '}
                 <strong>particular item of equipment</strong> (not general use)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Tag className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <Tag className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 The socket outlet is <strong>suitably labelled or otherwise identified</strong> to
                 indicate the specific equipment it supplies
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Tag className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <Tag className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 A <strong>documented risk assessment</strong> determines that the exclusion is
                 appropriate — weighing the risk of loss of supply (nuisance tripping) against the
@@ -484,7 +484,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Accumulated earth leakage</strong> — every electrical appliance and cable
                 has some natural earth leakage current (typically 0.5 to 5mA per appliance). If many
@@ -495,7 +495,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Faulty appliances</strong> — a single appliance with degraded insulation can
                 leak enough current to trip the RCD. This is particularly common with old washing
@@ -505,7 +505,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Damp and moisture</strong> — water ingress into outdoor sockets, light
                 fittings, junction boxes, or buried cables causes earth leakage. Particularly common
@@ -515,7 +515,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Long cable runs</strong> — very long cables (particularly in agricultural or
                 rural installations) have higher capacitive leakage to earth. This is a distributed
@@ -525,7 +525,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Surge events</strong> — lightning strikes or switching surges on the supply
                 network can cause brief earth leakage spikes that trip RCDs. Solution: install surge
@@ -556,7 +556,7 @@ const sections = [
           <h4 className="font-bold text-white mb-3">RCD Test Sequence (for a 30mA RCD)</h4>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>50% rated current (15mA)</strong> — the RCD must NOT trip. This confirms the
                 RCD does not have an excessively low trip threshold (which would cause nuisance
@@ -564,14 +564,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>100% rated current (30mA)</strong> — the RCD must trip within 300ms (for a
                 general-purpose RCD without intentional time delay). Record the actual trip time.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>5x rated current (150mA)</strong> — the RCD must trip within 40ms. This
                 confirms the RCD provides additional protection against electric shock. The 40ms
@@ -580,7 +580,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test button</strong> — press the integral test button on the RCD. It must
                 trip. This is a functional test only (it does not confirm the trip current or time)
@@ -621,7 +621,7 @@ export default function Regulation418SupplementaryProtectionPage() {
       badgeIcon={BookOpen}
       heroTitle={
         <>
-          Regulation 418: <span className="text-yellow-400">Supplementary Protection by RCDs</span>
+          Regulation 418: <span className="text-elec-yellow">Supplementary Protection by RCDs</span>
         </>
       }
       heroSubtitle="Additional protection by 30mA RCD is mandatory for most circuits in modern installations. This guide covers which circuits need RCDs, the exemptions, RCD types AC/A/F/B, RCBO vs split-load boards, nuisance tripping causes and solutions, and RCD testing procedures."
@@ -632,7 +632,7 @@ export default function Regulation418SupplementaryProtectionPage() {
       faqHeading="Frequently Asked Questions About RCD Additional Protection"
       relatedPages={relatedPages}
       ctaHeading="Record RCD Tests and Issue Certificates on Site"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for RCD test recording, automatic validation, and on-site EIC/EICR certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for RCD test recording, automatic validation, and on-site EIC/EICR certificates. 7-day free trial, cancel anytime."
     />
   );
 }

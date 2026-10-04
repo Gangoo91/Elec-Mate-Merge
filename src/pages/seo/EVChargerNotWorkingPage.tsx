@@ -210,7 +210,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <WifiOff className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <WifiOff className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Damaged Type 2 cable</strong> — the most common EVSE communication fault.
                 Inspect the cable along its full length for cuts, crushing, or heat damage. Pay
@@ -219,7 +219,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <WifiOff className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <WifiOff className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Corroded or contaminated connectors</strong> — the Type 2 connector pins can
                 corrode or accumulate contamination in outdoor installations. Inspect the connector
@@ -228,7 +228,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <WifiOff className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <WifiOff className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Faulty EVSE control board</strong> — if the cable tests good and the vehicle
                 charges normally on another EVSE, the fault is in the charger's control electronics.
@@ -237,7 +237,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <WifiOff className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <WifiOff className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Vehicle-side faults</strong> — some charge failures are caused by the
                 vehicle's on-board charger (OBC) rather than the EVSE. Test with a different vehicle
@@ -263,7 +263,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Low incoming voltage</strong> — voltage below 216 V at the charger terminals
                 (under BS EN 50160 limits) can trigger under-voltage protection. Measure the voltage
@@ -273,7 +273,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>High earth-neutral voltage</strong> — on a TN-C-S (PME) supply, the
                 earth-neutral voltage should be less than 1 V. A higher value may indicate a poor
@@ -282,7 +282,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Voltage transients and harmonics</strong> — switching loads (inverters,
                 VFDs) on the same distribution network can introduce voltage transients. Smart
@@ -368,7 +368,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Broken or missing earth conductor</strong> — the earth conductor in the EV
                 charger circuit must have low resistance continuity from the charger back plate to
@@ -378,7 +378,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>TT supply earthing</strong> — properties with a TT earthing system (common
                 in rural areas) require a local earth electrode. The electrode resistance must be
@@ -387,7 +387,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PME prohibition on outdoor sockets</strong> — BS 7671:2018+A2:2022
                 Regulation 722.411.4 prohibits the use of the PME earthing terminal (TN-C-S) for
@@ -396,7 +396,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Corrosion at earth connections</strong> — outdoor EV charger installations
                 are exposed to weather. Earth terminal connections within the charger enclosure and
@@ -468,7 +468,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Settings className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EV Charger Installation Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -504,7 +504,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certificate EV charger installations with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate to certificate EV charger installations, complete EICRs, and generate BS 7671-compliant documentation on site."
+          description="Join 2,100+ UK electricians using Elec-Mate to certificate EV charger installations, complete EICRs, and generate BS 7671-compliant documentation on site."
           icon={Zap}
         />
       </>
@@ -530,7 +530,7 @@ export default function EVChargerNotWorkingPage() {
       heroTitle={
         <>
           EV Charger Not Working:{' '}
-          <span className="text-yellow-400">Home EV Charger Fault Finding</span>
+          <span className="text-elec-yellow">Home EV Charger Fault Finding</span>
         </>
       }
       heroSubtitle="Your home EV charger has stopped working, is showing an error, or keeps tripping the RCD. This guide explains the five most common fault categories — error codes, EVSE communication, supply voltage, RCD tripping, and earthing — and tells you when to call an OZEV-approved installer."
@@ -541,7 +541,7 @@ export default function EVChargerNotWorkingPage() {
       faqHeading="Frequently Asked Questions About EV Charger Faults"
       relatedPages={relatedPages}
       ctaHeading="Certificate EV Charger Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EV charger installation certificates, EICRs, and BS 7671-compliant documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for EV charger installation certificates, EICRs, and BS 7671-compliant documentation. 7-day free trial, cancel anytime."
     />
   );
 }

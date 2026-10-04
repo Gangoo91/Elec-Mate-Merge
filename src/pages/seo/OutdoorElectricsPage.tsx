@@ -50,7 +50,7 @@ export default function OutdoorElectricsPage() {
         <>
           Outdoor Electrical Installations UK
           <br />
-          <span className="text-yellow-400">Garden Wiring, IP Ratings & Cable Selection</span>
+          <span className="text-elec-yellow">Garden Wiring, IP Ratings & Cable Selection</span>
         </>
       }
       heroSubtitle="Outdoor electrical work is increasingly common — garden lighting, outdoor sockets, hot tubs, outbuilding supplies, and EV chargers. This guide covers BS 7671 Section 714, IP ratings, RCD protection, SWA cable installation, burial depths, and Part P requirements for every type of outdoor electrical installation."
@@ -109,9 +109,9 @@ export default function OutdoorElectricsPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Protection against electric shock (714.411)
                       </strong>{' '}
                       — Automatic disconnection of supply with 30mA RCD protection is required for
@@ -121,18 +121,18 @@ export default function OutdoorElectricsPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">External influences (714.512)</strong> —
+                      <strong className="text-elec-yellow">External influences (714.512)</strong> —
                       Equipment and cables must be suitable for the external influences they will be
                       exposed to — water (AD4 minimum for rain), temperature (AA range for the
                       location), UV radiation, wind, impact, and corrosion.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Cable selection (714.521)</strong> —
+                      <strong className="text-elec-yellow">Cable selection (714.521)</strong> —
                       Cables for outdoor use must be suitable for the environmental conditions.
                       Underground cables must have mechanical protection (SWA or equivalent) and be
                       buried at an appropriate depth. Above-ground cables must be UV-resistant and
@@ -140,9 +140,9 @@ export default function OutdoorElectricsPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Isolation and switching (714.537)</strong>{' '}
+                      <strong className="text-elec-yellow">Isolation and switching (714.537)</strong>{' '}
                       — Outdoor circuits must have a means of isolation accessible from inside the
                       building. This allows the outdoor circuit to be disconnected without going
                       outside — important for emergency situations.
@@ -184,7 +184,7 @@ export default function OutdoorElectricsPage() {
                         Protected against objects over 1mm and splashing water
                       </p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-sm">Minimum outdoor</span>
+                    <span className="font-bold text-elec-yellow text-sm">Minimum outdoor</span>
                   </div>
                   <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
                     <div>
@@ -193,7 +193,7 @@ export default function OutdoorElectricsPage() {
                         Dust-protected and protected against water jets
                       </p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-sm">
+                    <span className="font-bold text-elec-yellow text-sm">
                       Good for exposed locations
                     </span>
                   </div>
@@ -204,7 +204,7 @@ export default function OutdoorElectricsPage() {
                         Dust-tight and protected against water jets
                       </p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-sm">Recommended outdoor</span>
+                    <span className="font-bold text-elec-yellow text-sm">Recommended outdoor</span>
                   </div>
                   <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
                     <div>
@@ -213,7 +213,7 @@ export default function OutdoorElectricsPage() {
                         Dust-tight and protected against powerful water jets
                       </p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-sm">Heavy-duty outdoor</span>
+                    <span className="font-bold text-elec-yellow text-sm">Heavy-duty outdoor</span>
                   </div>
                   <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
                     <div>
@@ -222,7 +222,7 @@ export default function OutdoorElectricsPage() {
                         Dust-tight and protected against immersion
                       </p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-sm">
+                    <span className="font-bold text-elec-yellow text-sm">
                       In-ground / submersible
                     </span>
                   </div>
@@ -254,7 +254,7 @@ export default function OutdoorElectricsPage() {
               </p>
               <ul className="space-y-2 my-4">
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Regulation 411.3.3</strong> — Requires 30mA RCD
                     protection for all socket outlets rated up to 32A and all circuits supplying
@@ -262,7 +262,7 @@ export default function OutdoorElectricsPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Section 714</strong> — Requires additional
                     protection by RCD (not exceeding 30mA residual operating current) for all
@@ -270,7 +270,7 @@ export default function OutdoorElectricsPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Section 722</strong> — Requires 30mA RCD
                     protection (Type A minimum with DC detection, or Type B) for EV charging
@@ -308,7 +308,7 @@ export default function OutdoorElectricsPage() {
               </p>
               <div className="grid sm:grid-cols-2 gap-4 my-6">
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-3">
+                  <h3 className="font-bold text-elec-yellow text-lg mb-3">
                     SWA Cable (Steel Wire Armoured)
                   </h3>
                   <p className="text-white text-sm leading-relaxed mb-3">
@@ -374,21 +374,21 @@ export default function OutdoorElectricsPage() {
                       <h4 className="font-bold text-white">Garden / landscaped areas</h4>
                       <p className="text-white text-sm">SWA cable in standard garden soil</p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-lg">500mm min</span>
+                    <span className="font-bold text-elec-yellow text-lg">500mm min</span>
                   </div>
                   <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
                     <div>
                       <h4 className="font-bold text-white">Under driveways / paths</h4>
                       <p className="text-white text-sm">Areas subject to vehicle traffic</p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-lg">600mm min</span>
+                    <span className="font-bold text-elec-yellow text-lg">600mm min</span>
                   </div>
                   <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
                     <div>
                       <h4 className="font-bold text-white">Under agricultural land</h4>
                       <p className="text-white text-sm">Areas subject to ploughing</p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-lg">1000mm min</span>
+                    <span className="font-bold text-elec-yellow text-lg">1000mm min</span>
                   </div>
                 </div>
               </div>
@@ -397,7 +397,7 @@ export default function OutdoorElectricsPage() {
               </p>
               <ul className="space-y-2 my-4">
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Cable covers (tiles)</strong> — Rigid cable
                     covers (typically red or yellow plastic) placed directly over the cable provide
@@ -405,7 +405,7 @@ export default function OutdoorElectricsPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Route marker tape</strong> — Warning tape
                     (typically yellow with "CAUTION — ELECTRIC CABLE BELOW" text) buried
@@ -414,7 +414,7 @@ export default function OutdoorElectricsPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Sand surround</strong> — A bed of fine sand
                     (approximately 50mm) below and above the cable provides a uniform thermal
@@ -461,7 +461,7 @@ export default function OutdoorElectricsPage() {
                   </p>
                 </div>
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-3">
+                  <h3 className="font-bold text-elec-yellow text-lg mb-3">
                     Extra-Low Voltage (12V/24V) Garden Lighting
                   </h3>
                   <p className="text-white text-sm leading-relaxed mb-3">
@@ -508,35 +508,35 @@ export default function OutdoorElectricsPage() {
                 <h3 className="font-bold text-white text-lg mb-4">Outdoor Socket Requirements</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">IP rating</strong> — Minimum IP44 for
+                      <strong className="text-elec-yellow">IP rating</strong> — Minimum IP44 for
                       wall-mounted sockets under a porch or overhang. IP66 recommended for fully
                       exposed locations. The IP rating must be maintained with the socket cover
                       closed (between uses) and ideally when a plug is inserted.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">RCD protection</strong> — 30mA RCD
+                      <strong className="text-elec-yellow">RCD protection</strong> — 30mA RCD
                       protection is mandatory for all outdoor socket outlets (BS 7671 Regulation
                       411.3.3). An individual RCBO in the consumer unit is the preferred approach.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Dedicated circuit</strong> — Best practice
+                      <strong className="text-elec-yellow">Dedicated circuit</strong> — Best practice
                       is to install outdoor sockets on a dedicated circuit from the consumer unit,
                       separate from indoor socket circuits. This prevents an outdoor RCD trip from
                       affecting indoor sockets.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Height and position</strong> — Mount at a
+                      <strong className="text-elec-yellow">Height and position</strong> — Mount at a
                       convenient height (typically 450mm to 1200mm above ground level) in a location
                       protected from direct rain where possible. Ensure the cable entry is from
                       below or from the back to prevent water tracking into the socket.
@@ -622,7 +622,7 @@ export default function OutdoorElectricsPage() {
               </p>
               <ul className="space-y-2 my-4">
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">IP rating</strong> — Most EV charger wallboxes
                     are rated IP54 or IP65, which is adequate for wall-mounted outdoor installation.
@@ -630,7 +630,7 @@ export default function OutdoorElectricsPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Cable type</strong> — SWA cable is required for
                     any underground section of the cable route (for example, from the house to a
@@ -639,7 +639,7 @@ export default function OutdoorElectricsPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Earth rod</strong> — On PME supplies, a separate
                     TT earth electrode is required for the EV circuit (BS 7671 Regulation
@@ -648,7 +648,7 @@ export default function OutdoorElectricsPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Mounting height</strong> — The charger should be
                     mounted at a height that is accessible for plugging in the vehicle but high
@@ -684,7 +684,7 @@ export default function OutdoorElectricsPage() {
               </p>
               <ul className="space-y-2 my-4">
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">New outdoor circuits</strong> — Any new circuit
                     from the consumer unit to outdoor equipment (garden lighting, outdoor sockets,
@@ -692,7 +692,7 @@ export default function OutdoorElectricsPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Consumer unit modifications</strong> — Adding a
                     new way to the consumer unit for an outdoor circuit, or replacing the consumer
@@ -700,7 +700,7 @@ export default function OutdoorElectricsPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Special locations</strong> — Swimming pool and
                     hot tub installations are considered special locations under BS 7671 and are

@@ -169,7 +169,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>An earth fault current path</strong> — a low-impedance path from the point
                 of the fault, through the protective conductor, back to the source (transformer
@@ -179,7 +179,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Timer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Timer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>A protective device that disconnects within the required time</strong> — an
                 MCB, fuse, RCBO, or RCD that will operate within the maximum disconnection time
@@ -235,7 +235,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3 flex items-center gap-2">
-              <Timer className="w-5 h-5 text-amber-400" />5 Seconds
+              <Timer className="w-5 h-5 text-elec-yellow" />5 Seconds
             </h3>
             <p className="text-white text-sm leading-relaxed">
               Regulation 411.3.2.3 permits a maximum disconnection time of 5 seconds for
@@ -305,7 +305,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type C</strong> — instantaneous trip between 5 and 10 times In. Used for
                 moderately inductive loads (small motors, fluorescent lighting, air conditioning).
@@ -466,7 +466,7 @@ const sections = [
           <h4 className="font-bold text-white mb-3">Testing Procedure</h4>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1 — Confirm safe to test.</strong> Earth fault loop impedance testing
                 is a live test. Confirm that RCDs are in circuit (the test instrument may trip them
@@ -475,7 +475,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2 — Test at the furthest point.</strong> Connect the tester at the
                 furthest point of the circuit. For a ring final circuit, test at each socket outlet
@@ -484,7 +484,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 3 — Record and compare.</strong> Record the measured Zs. If testing at
                 ambient temperature (which is the normal case), the measured Zs must not exceed 80%
@@ -494,7 +494,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 4 — Assess compliance.</strong> If the measured Zs (corrected for
                 temperature) exceeds the maximum tabulated value, the circuit does not comply with
@@ -684,7 +684,7 @@ export default function Regulation411AutoDisconnectionPage() {
       heroTitle={
         <>
           Regulation 411:{' '}
-          <span className="text-yellow-400">Automatic Disconnection of Supply Explained</span>
+          <span className="text-elec-yellow">Automatic Disconnection of Supply Explained</span>
         </>
       }
       heroSubtitle="ADS is the most important protective measure in BS 7671. This guide explains the principle, disconnection times, maximum Zs values for MCB types B/C/D, earthing system differences, practical loop impedance testing, and worked examples."
@@ -695,7 +695,7 @@ export default function Regulation411AutoDisconnectionPage() {
       faqHeading="Frequently Asked Questions About Regulation 411 and ADS"
       relatedPages={relatedPages}
       ctaHeading="Test, Record and Verify ADS Compliance on Site"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for loop impedance recording, automatic Zs validation, and on-site EIC/EICR certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for loop impedance recording, automatic Zs validation, and on-site EIC/EICR certificates. 7-day free trial, cancel anytime."
     />
   );
 }

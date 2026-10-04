@@ -100,7 +100,7 @@ const sections = [
           <div className="space-y-4">
             <div className="flex items-start gap-3">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center shrink-0">
-                <GraduationCap className="w-5 h-5 text-yellow-400" />
+                <GraduationCap className="w-5 h-5 text-elec-yellow" />
               </div>
               <div>
                 <h4 className="font-bold text-white">Apprenticeship (3-4 years)</h4>
@@ -165,7 +165,7 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Year 1:</strong> Learning the basics — health and safety, tool use, basic
                 wiring, conduit and trunking, cable types, regulations fundamentals. Mostly
@@ -173,7 +173,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Year 2:</strong> Completing Level 2 Diploma. First fix installation work
                 (chasing, cabling, back boxes), circuit theory, earthing and bonding, basic fault
@@ -181,7 +181,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Year 3:</strong> Level 3 Diploma. Second fix, consumer unit installation,
                 testing and inspection, three-phase systems, more complex fault diagnosis. 18th
@@ -189,7 +189,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Year 4:</strong> Completing Level 3, final portfolio, preparation for AM2
                 assessment, End-Point Assessment (EPA) for those on the new apprenticeship standard.
@@ -238,42 +238,42 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Adult Retraining: Step by Step</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Step 1:</strong> Enrol on a Level 2 Diploma in Electrical Installations at a
                 college or training provider (3-6 months full-time, or 6-12 months part-time)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Step 2:</strong> Progress to the Level 3 Diploma (6-12 months full-time, or
                 12-18 months part-time)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Step 3:</strong> Complete the 18th Edition BS 7671 qualification (typically
                 a 3-5 day course + exam)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Step 4:</strong> Gain practical experience — work as an electrical mate,
                 volunteer on projects, or arrange supervised work placements
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Step 5:</strong> Pass the AM2 practical assessment at a NET assessment
                 centre
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Step 6:</strong> Apply for JIB Approved Electrician grading and join a
                 competent person scheme
@@ -305,7 +305,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Core Qualifications</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>
                   Level 2 Diploma in Electrical Installations (C&G 2365-02 or equivalent):
@@ -316,7 +316,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>
                   Level 3 Diploma in Electrical Installations (C&G 2365-03, 2357, or the newer
@@ -329,7 +329,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>18th Edition IET Wiring Regulations (C&G 2382-22):</strong> The
                 qualification covering BS 7671:2018+A4:2026, the standard that all electrical
@@ -338,7 +338,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>AM2 Assessment:</strong> The practical end-point assessment that
                 demonstrates you can install, inspect, test, and certify an electrical installation
@@ -414,7 +414,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">What the AM2 Assessment Covers</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Installation:</strong> Wiring a small installation including a consumer
                 unit, ring final circuit, radial circuit, lighting circuit (often two-way
@@ -423,14 +423,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Safe isolation:</strong> Demonstrating the correct safe isolation procedure
                 before working on the installation. Failure to safely isolate is an automatic fail.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Initial verification testing:</strong> Continuity of protective conductors
                 (R1+R2), continuity of ring final circuit conductors, insulation resistance,
@@ -439,7 +439,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Certification:</strong> Completing an Electrical Installation Certificate
                 (EIC) or Minor Works Certificate with accurate test results, circuit details, and
@@ -447,7 +447,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Fault finding:</strong> Diagnosing and rectifying a fault that has been
                 introduced into a pre-wired installation. Common faults include reversed polarity,
@@ -488,7 +488,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">The Main Schemes</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>
                   NICEIC (National Inspection Council for Electrical Installation Contracting):
@@ -500,7 +500,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>
                   NAPIT (National Association of Professional Inspectors and Testers):
@@ -511,7 +511,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>ELECSA:</strong> Part of the Certsure group (which also includes NICEIC).
                 Offers a Registered Electrician category at lower cost. A good option for sole
@@ -611,13 +611,13 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>07:30:</strong> Load van, check materials list, drive to first job
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>08:00:</strong> Arrive on site. Today: consumer unit upgrade in a 3-bed
                 semi. Safe isolation, disconnect old board, install new dual-RCD or RCBO board,
@@ -625,35 +625,35 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>12:00:</strong> Lunch break. Check emails, respond to enquiries, send a
                 quote for a rewire job next week
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>12:30:</strong> Complete installation, carry out initial verification
                 testing (continuity, insulation resistance, polarity, Zs, PFC, RCD tests)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>15:00:</strong> Complete EIC certificate, explain work to homeowner, send
                 invoice
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>15:30:</strong> Drive to second job. Quick call-back to fix a faulty socket
                 in a flat. Diagnose loose connection, repair, test, done in 45 minutes
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>17:00:</strong> Head home. Order materials for tomorrow's jobs. Update job
                 records.
@@ -687,13 +687,13 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Career Paths After Qualifying</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Self-employment:</strong> Set up your own domestic or commercial business.
                 Highest earning potential but requires business skills. See our{' '}
                 <a
                   href="/guides/going-self-employed-electrician"
-                  className="text-yellow-400 underline underline-offset-2"
+                  className="text-elec-yellow underline underline-offset-2"
                 >
                   self-employment guide
                 </a>
@@ -701,35 +701,35 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Specialisation:</strong> EV chargers, solar PV, fire alarms, data cabling,
                 high voltage, control panels. Each specialism commands higher rates.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Testing and inspection:</strong> Become an EICR specialist. C&G 2391
                 qualification required. Highly profitable with the growing landlord EICR market.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Site supervisor / project manager:</strong> Move into managing teams and
                 projects on larger commercial and industrial sites. Higher pay, less tool work.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Contracts management:</strong> Manage multiple projects and client
                 relationships. Typically £50,000-£70,000+ with a large contractor.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Building your own team:</strong> Employ apprentices and other electricians,
                 take on larger projects, and scale your business.
@@ -807,7 +807,7 @@ export default function HowToBecomeElectricianPage() {
       heroTitle={
         <>
           How to Become an Electrician in the UK:{' '}
-          <span className="text-yellow-400">The Complete 2026 Guide</span>
+          <span className="text-elec-yellow">The Complete 2026 Guide</span>
         </>
       }
       heroSubtitle="Everything you need to know about becoming a qualified electrician — from choosing your route (apprenticeship or adult retraining) to passing the AM2, joining a scheme, and building a career. Written by Andrew Moore, founder of Elec-Mate and a qualified electrician."

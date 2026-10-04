@@ -145,14 +145,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>One-bedroom flat</strong> — £1,800 to £2,800. Apartment blocks and
                 conversions in Cardiff Bay, Roath, and the city centre are common at this size.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Two-bedroom terraced house</strong> — £2,800 to £4,000. The classic Cardiff
                 terrace found across Roath, Adamsdown, Splott, Llanrumney, and Ely. Typically 8 to
@@ -160,7 +160,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom semi-detached</strong> — £3,500 to £5,000. Widespread across
                 suburbs such as Rhiwbina, Whitchurch, Llandaff, and Pontprennau. Typically 12 to 16
@@ -168,14 +168,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Four-bedroom detached</strong> — £4,500 to £6,500. Larger properties in
                 Lisvane, Cyncoed, and Radyr command the higher end of this range.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Victorian and Edwardian properties</strong> — add 20 to 35 per cent for
                 pre-1940 properties in Cathays, Canton, Pontcanna, and Llandaff North, where solid
@@ -316,7 +316,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>First fix</strong> — removal of existing wiring, cable routing through
                 floors, walls, and ceiling voids, installation of back boxes and containment. The
@@ -325,7 +325,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Second fix</strong> — fitting the consumer unit, connecting all circuits,
                 installing sockets, switches, and luminaires, and making off the mains connection.
@@ -333,7 +333,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing and inspection</strong> — full testing of all circuits per BS 7671
                 Chapter 64 including insulation resistance, earth continuity, and RCD operation.
@@ -341,7 +341,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Certification</strong> — EIC issued and Part P notification submitted. You
                 receive both the EIC and the compliance certificate.
@@ -370,28 +370,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Two-bedroom terrace</strong> — 2 to 3 days. Cardiff terraces in Roath,
                 Splott, and Adamsdown are generally straightforward with accessible timber floors.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom semi-detached</strong> — 3 to 5 days. The standard duration
                 for the most common Cardiff rewire project.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Four-bedroom detached</strong> — 5 to 7 days. More circuits, longer cable
                 runs, and additional floors increase the programme duration.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Victorian stone-built properties</strong> — add 2 to 4 days. Cathays,
                 Canton, and Pontcanna properties with solid stone walls often require surface-run
@@ -463,7 +463,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check NICEIC or NAPIT registration</strong> — use the online registers to
                 confirm current registration status. Both schemes assess technical competence,
@@ -471,7 +471,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Get three written quotes</strong> — obtain detailed itemised quotes from at
                 least three contractors. Each should confirm the number of circuits, consumer unit
@@ -479,7 +479,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Verify insurance</strong> — confirm the contractor holds public liability
                 insurance of at least £1 million. Scheme members are required to maintain cover as a
@@ -487,7 +487,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Read recent reviews</strong> — check Google, Checkatrade, and Which? Trusted
                 Traders for independent reviews from Cardiff customers. Recent reviews from rewire
@@ -511,28 +511,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical Installation Certificate (EIC)</strong> — the primary BS 7671
                 compliance document including schedules of inspections and test results.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Building Regulations Compliance Certificate</strong> — from Building Control
                 Wales or the competent person scheme confirming Part P compliance.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Workmanship guarantee</strong> — most reputable Cardiff contractors offer 1
                 to 5 years. Confirm the scope and duration in your written contract.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Next inspection date</strong> — for owner-occupied properties, a new
                 installation typically requires a next periodic inspection in 10 years. For rental
@@ -557,7 +557,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Issue EICs On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -589,7 +589,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Cardiff rewire business with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, professional quoting, and job management. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion, professional quoting, and job management. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -615,7 +615,7 @@ export default function RewireCostCardiffPage() {
       heroTitle={
         <>
           House Rewire Cost Cardiff:{' '}
-          <span className="text-yellow-400">2025 Prices & Wales Guide</span>
+          <span className="text-elec-yellow">2025 Prices & Wales Guide</span>
         </>
       }
       heroSubtitle="Everything you need to know about house rewire costs in Cardiff and Wales — property size price breakdowns, BS 7671 and Part P compliance, finding NICEIC and NAPIT registered contractors, signs your property needs rewiring, and what certification you should receive."
@@ -626,7 +626,7 @@ export default function RewireCostCardiffPage() {
       faqHeading="Frequently Asked Questions About House Rewiring in Cardiff"
       relatedPages={relatedPages}
       ctaHeading="Issue Electrical Installation Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, auto-populated test schedules, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion, auto-populated test schedules, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

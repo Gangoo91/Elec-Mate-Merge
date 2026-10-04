@@ -141,7 +141,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Housing types</strong> — post-war housing ranges from prefabricated "prefab"
                 homes (temporary structures many of which are still occupied) through to substantial
@@ -151,7 +151,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>The ring main revolution</strong> — the ring main circuit (a circuit loop
                 returning to the consumer unit rather than a radial spur) was introduced in 1947
@@ -161,7 +161,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Condition today</strong> — post-war wiring is better than rubber-insulated
                 wiring but is not without significant issues. The wiring regulations of the 1950s
@@ -190,7 +190,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Plasticiser migration</strong> — early PVC insulation contains plasticisers
                 that give it flexibility. Over time these plasticisers migrate out of the PVC
@@ -200,7 +200,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Conductor sizing</strong> — post-war ring main circuits were typically wired
                 in 1.5mm² or early 2.5mm² cable, often at the lower end of what is acceptable for a
@@ -209,7 +209,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Colours (pre-harmonisation)</strong> — post-war wiring used the old UK
                 colour convention: red for live, black for neutral, and green for earth (later
@@ -219,7 +219,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rodent damage</strong> — PVC insulation is attractive to rodents as a
                 gnawing material. Properties with a history of rodent activity (common in rural
@@ -306,7 +306,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>TN-S vs TN-C-S</strong> — many post-war properties were originally connected
                 to TN-S supplies (earthing via the lead sheath of the incoming supply cable). As
@@ -316,7 +316,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Missing main bonding</strong> — main equipotential bonding conductors to gas
                 and water services were not always installed in post-war properties to the standard
@@ -327,7 +327,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth electrode systems</strong> — some rural post-war properties have TT
                 earthing systems (earth electrode rather than a supply earth). TT earthing requires
@@ -354,7 +354,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No RCD button on the consumer unit</strong> — if the fuse box or consumer
                 unit has no test button for an RCD (a button marked "T" or "Test"), the installation
@@ -363,7 +363,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rewirable fuses</strong> — if the fuse board requires fuse wire to be
                 replaced when a circuit trips (rather than a switch or button to reset), it is a
@@ -371,7 +371,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Scorch marks or burn smell</strong> — any discolouration around sockets,
                 switches, or the consumer unit, or any smell of burning from the consumer unit, is
@@ -380,7 +380,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Old-colour wiring visible</strong> — if you can see cables with red and
                 black insulation (old UK colours, used before 2006) in the loft, under floorboards,
@@ -390,7 +390,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Persistent tripping</strong> — if circuit breakers or RCDs trip frequently
                 without obvious cause, this may indicate insulation breakdown in the wiring. Do not
@@ -415,7 +415,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacement only</strong> — £400 to £900 for a standard
                 3-bedroom post-war house. Includes a modern metal-clad consumer unit with dual RCD
@@ -423,7 +423,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit plus bonding and remedials</strong> — £700 to £1,500. Consumer
                 unit replacement plus installation of missing main equipotential bonding to gas and
@@ -431,7 +431,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full rewire — two-bedroom post-war house</strong> — £2,500 to £4,500.
                 Includes consumer unit, all new circuits, sockets, switches, and lighting points.
@@ -440,7 +440,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full rewire — three or four-bedroom post-war house</strong> — £3,500 to
                 £6,000. Larger properties at the higher end. Council-built properties with
@@ -471,7 +471,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C2 — No RCD protection on socket circuits</strong> — the single most common
                 C2 finding in post-war properties. Absence of 30mA RCD protection as required by
@@ -479,7 +479,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C2 — Missing main equipotential bonding</strong> — bonding conductors to gas
                 and water services absent or undersized relative to the main earth conductor.
@@ -487,7 +487,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C2 — Rewirable fuse board</strong> — the presence of rewirable fuses without
                 any RCD protection is typically recorded as a C2 making the installation
@@ -496,7 +496,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C3 — Insufficient socket outlets</strong> — a recommendation to increase
                 socket provision to reduce reliance on extension leads and adaptors.
@@ -521,7 +521,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EICR Before Consumer Unit Replacement</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -558,7 +558,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete post-war property EICRs and quotes with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion, consumer unit replacement paperwork, and professional quoting."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion, consumer unit replacement paperwork, and professional quoting."
           icon={FileCheck2}
         />
       </>
@@ -584,7 +584,7 @@ export default function PostWarPropertyElectricalPage() {
       heroTitle={
         <>
           1940s &amp; 1950s House Electrical Guide:{' '}
-          <span className="text-yellow-400">Post-War Property Electrical</span>
+          <span className="text-elec-yellow">Post-War Property Electrical</span>
         </>
       }
       heroSubtitle="Post-war properties built between 1945 and 1965 introduced early PVC wiring and the ring main circuit — a significant improvement over rubber insulation, but now 60 to 80 years old. This guide covers the specific hazards of post-war electrical installations, rewirable fuse boxes, earthing issues, and the signs that your installation needs upgrading, with upgrade costs of £400 to £6,000."
@@ -595,7 +595,7 @@ export default function PostWarPropertyElectricalPage() {
       faqHeading="Frequently Asked Questions About Post-War Property Electrical Installations"
       relatedPages={relatedPages}
       ctaHeading="Complete Post-War Property EICRs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

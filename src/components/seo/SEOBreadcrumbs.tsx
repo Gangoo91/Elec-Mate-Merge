@@ -28,7 +28,7 @@ export function SEOBreadcrumbs({ items }: SEOBreadcrumbsProps) {
           >
             <Link
               to="/"
-              className="text-white hover:text-yellow-400 transition-colors touch-manipulation flex items-center gap-1"
+              className="text-white hover:text-elec-yellow transition-colors touch-manipulation flex items-center gap-1"
               itemProp="item"
             >
               <Home className="w-3.5 h-3.5" />
@@ -46,10 +46,10 @@ export function SEOBreadcrumbs({ items }: SEOBreadcrumbsProps) {
                 itemType="https://schema.org/ListItem"
                 itemProp="itemListElement"
               >
-                <ChevronRight className="w-3.5 h-3.5 text-white/50" aria-hidden="true" />
+                <ChevronRight className="w-3.5 h-3.5 text-white" aria-hidden="true" />
                 {isLast ? (
                   <span
-                    className="text-yellow-400 font-medium"
+                    className="text-elec-yellow font-medium"
                     aria-current="page"
                     itemProp="name"
                   >
@@ -58,7 +58,7 @@ export function SEOBreadcrumbs({ items }: SEOBreadcrumbsProps) {
                 ) : (
                   <Link
                     to={item.href}
-                    className="text-white hover:text-yellow-400 transition-colors touch-manipulation"
+                    className="text-white hover:text-elec-yellow transition-colors touch-manipulation"
                     itemProp="item"
                   >
                     <span itemProp="name">{item.label}</span>

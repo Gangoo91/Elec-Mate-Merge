@@ -45,7 +45,7 @@ export default function EmployerElectricalPlatformPage() {
       badgeIcon={Building}
       heroTitle={
         <>
-          <span className="text-yellow-400">Employer Platform</span> for Electrical Companies
+          <span className="text-elec-yellow">Employer Platform</span> for Electrical Companies
         </>
       }
       heroSubtitle="5 employer hubs in one dashboard. Track apprentice progress, manage staff qualifications, oversee certificate production, monitor compliance, and analyse business performance. Built for electrical contractors who need visibility across their entire operation — from apprentice portfolios to completed EICRs."

@@ -149,7 +149,7 @@ export default function ElectricalControlsSymbolsPage() {
       heroTitle={
         <>
           Controls + BMS Symbols:{' '}
-          <span className="text-yellow-400">Building management + smart lighting references</span>
+          <span className="text-elec-yellow">Building management + smart lighting references</span>
         </>
       }
       heroSubtitle="Every BMS, lighting control and sensor symbol — drawn to IEC 60617 with BS EN 62386 (DALI), KNX and Lutron protocol cross-references."

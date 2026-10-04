@@ -33,10 +33,15 @@ import {
 } from 'lucide-react';
 import { Quote, QuoteItem } from '@/types/quote';
 import { supabase } from '@/integrations/supabase/client';
+import { buildTermsList } from '@/utils/quoteTerms';
 import { toast } from '@/hooks/use-toast';
 import SignaturePad from '@/components/forms/SignaturePad';
 import { diffQuoteItems, formatDeltaCurrency, QuoteDiff } from '@/utils/quote-diff';
-import { buildCategoryBreakdowns, computeQuoteTotals, getDisplayItems } from '@/utils/quote-calculations';
+import {
+  buildCategoryBreakdowns,
+  computeQuoteTotals,
+  getDisplayItems,
+} from '@/utils/quote-calculations';
 import { cn } from '@/lib/utils';
 
 // Brand defaults match the shared email design system fallbacks.
@@ -105,6 +110,7 @@ const PublicQuoteView = () => {
   const viewTrackedRef = useRef(false);
   const [quote, setQuote] = useState<Quote | null>(null);
   const [brand, setBrand] = useState<CompanyBrand>(DEFAULT_BRAND_PROFILE);
+  const [terms, setTerms] = useState<string[] | null>(null);
 
   const categoryBreakdowns = useMemo(
     () => (quote ? buildCategoryBreakdowns(quote.items || [], quote.settings) : []),
@@ -113,10 +119,7 @@ const PublicQuoteView = () => {
   // CIS / VAT reverse charge. Quotes don't apply overhead/profit (see
   // useQuoteBuilder), so match that so cisT.total === quote.total.
   const cisT = useMemo(
-    () =>
-      quote
-        ? computeQuoteTotals(quote.items || [], quote.settings)
-        : null,
+    () => (quote ? computeQuoteTotals(quote.items || [], quote.settings) : null),
     [quote]
   );
   const [loading, setLoading] = useState(true);
@@ -134,6 +137,7 @@ const PublicQuoteView = () => {
     if (token) {
       loadQuote();
       loadBrand();
+      loadTerms();
       loadDepositInvoice();
     }
   }, [token]);
@@ -155,6 +159,25 @@ const PublicQuoteView = () => {
     }
   }, [quote, brand.primaryColor]);
 
+  /*
+   * ELE-1149 — the terms the client agrees to by accepting. The page said
+   * "the terms set out above" and showed none; they were only on the PDF.
+   * Built from the same Settings as the PDF, by the same list (quoteTerms).
+   * null = not loaded, so the wording falls back to the quote document.
+   */
+  const loadTerms = async () => {
+    if (!token) return;
+    try {
+      const { data, error } = await supabase.rpc('get_quote_terms_by_token', {
+        token_param: token,
+      });
+      if (error) return;
+      setTerms(buildTermsList(typeof data === 'string' && data ? data : null));
+    } catch {
+      // Non-fatal — the accept wording then points at the quote document.
+    }
+  };
+
   const loadBrand = async () => {
     if (!token) return;
     try {
@@ -163,8 +186,7 @@ const PublicQuoteView = () => {
       });
       if (error || !data || (Array.isArray(data) && data.length === 0)) return;
       const row = (Array.isArray(data) ? data[0] : data) as Record<string, unknown>;
-      const str = (v: unknown): string | null =>
-        typeof v === 'string' && v.length > 0 ? v : null;
+      const str = (v: unknown): string | null => (typeof v === 'string' && v.length > 0 ? v : null);
       const rawBank = row.bank_details as
         | { bankName?: string; accountName?: string; accountNumber?: string; sortCode?: string }
         | null
@@ -303,7 +325,7 @@ const PublicQuoteView = () => {
           void (async () => {
             try {
               await (
-                (supabase.rpc.bind(supabase) as unknown) as (
+                supabase.rpc.bind(supabase) as unknown as (
                   fn: string,
                   args: Record<string, unknown>
                 ) => PromiseLike<{ error: unknown }>
@@ -324,9 +346,7 @@ const PublicQuoteView = () => {
           .eq('id', convertedQuote.supersedes_id)
           .maybeSingle();
         if (prevQuote?.items) {
-          setVariationDiff(
-            diffQuoteItems(prevQuote.items as QuoteItem[], convertedQuote.items)
-          );
+          setVariationDiff(diffQuoteItems(prevQuote.items as QuoteItem[], convertedQuote.items));
         }
       }
     } catch {
@@ -904,8 +924,7 @@ const PublicQuoteView = () => {
                       className="w-1.5 h-1.5 rounded-full"
                       style={{ backgroundColor: brandHex }}
                     />
-                    {category}{' '}
-                    <span className="text-slate-400 font-normal">({items.length})</span>
+                    {category} <span className="text-slate-400 font-normal">({items.length})</span>
                   </h4>
                   <div className="space-y-2.5">
                     {items.map((item) => (
@@ -954,34 +973,35 @@ const PublicQuoteView = () => {
               {/* ELE-891 / ELE-973 — per-category adjustment lines with live £ delta.
                   Hidden when the electrician has opted to bake markup into the line
                   items via settings.hideMarkupFromCustomer. */}
-              {!hideMarkup && categoryBreakdowns
-                .filter((b) => b.categoryAdjustmentDelta !== 0)
-                .map((b) => {
-                  const isMarkup = b.categoryAdjustmentDelta > 0;
-                  return (
-                    <div key={b.category} className="flex justify-between text-[12px]">
-                      <span
-                        className={cn(
-                          'capitalize',
-                          isMarkup ? 'text-amber-700' : 'text-emerald-700'
-                        )}
-                      >
-                        {b.category} {isMarkup ? 'markup' : 'discount'} (
-                        {b.categoryAdjustmentPercent > 0 ? '+' : ''}
-                        {b.categoryAdjustmentPercent}%)
-                      </span>
-                      <span
-                        className={cn(
-                          'tabular-nums font-medium',
-                          isMarkup ? 'text-amber-700' : 'text-emerald-700'
-                        )}
-                      >
-                        {isMarkup ? '+' : '-'}
-                        {formatCurrency(Math.abs(b.categoryAdjustmentDelta))}
-                      </span>
-                    </div>
-                  );
-                })}
+              {!hideMarkup &&
+                categoryBreakdowns
+                  .filter((b) => b.categoryAdjustmentDelta !== 0)
+                  .map((b) => {
+                    const isMarkup = b.categoryAdjustmentDelta > 0;
+                    return (
+                      <div key={b.category} className="flex justify-between text-[12px]">
+                        <span
+                          className={cn(
+                            'capitalize',
+                            isMarkup ? 'text-amber-700' : 'text-emerald-700'
+                          )}
+                        >
+                          {b.category} {isMarkup ? 'markup' : 'discount'} (
+                          {b.categoryAdjustmentPercent > 0 ? '+' : ''}
+                          {b.categoryAdjustmentPercent}%)
+                        </span>
+                        <span
+                          className={cn(
+                            'tabular-nums font-medium',
+                            isMarkup ? 'text-amber-700' : 'text-emerald-700'
+                          )}
+                        >
+                          {isMarkup ? '+' : '-'}
+                          {formatCurrency(Math.abs(b.categoryAdjustmentDelta))}
+                        </span>
+                      </div>
+                    );
+                  })}
               {quote.overhead > 0 && (
                 <div className="flex justify-between text-slate-600">
                   <span>Overhead ({quote.settings?.overheadPercentage || 0}%)</span>
@@ -1013,7 +1033,9 @@ const PublicQuoteView = () => {
               {cisT && cisT.cisAmount > 0 && (
                 <div className="flex justify-between text-slate-600 pt-1">
                   <span>Less: CIS ({cisT.cisRate}% on labour)</span>
-                  <span className="tabular-nums text-red-600">−{formatCurrency(cisT.cisAmount)}</span>
+                  <span className="tabular-nums text-red-600">
+                    −{formatCurrency(cisT.cisAmount)}
+                  </span>
                 </div>
               )}
               {/* ELE-1571 — grant sits BELOW the total because it is deducted
@@ -1023,7 +1045,9 @@ const PublicQuoteView = () => {
               {cisT && cisT.grantAmount > 0 && (
                 <div className="flex justify-between text-slate-600 pt-1">
                   <span>Less: {cisT.grantLabel}</span>
-                  <span className="tabular-nums text-red-600">−{formatCurrency(cisT.grantAmount)}</span>
+                  <span className="tabular-nums text-red-600">
+                    −{formatCurrency(cisT.grantAmount)}
+                  </span>
                 </div>
               )}
               {cisT && (cisT.cisAmount > 0 || cisT.grantAmount > 0) && (
@@ -1034,7 +1058,8 @@ const PublicQuoteView = () => {
               )}
               {cisT?.reverseCharge && (
                 <p className="text-[11px] text-slate-500 mt-2 leading-relaxed">
-                  Reverse charge: customer to account to HMRC for the VAT — {formatCurrency(cisT.notionalVat)} @ {quote.settings?.vatRate ?? 20}%.
+                  Reverse charge: customer to account to HMRC for the VAT —{' '}
+                  {formatCurrency(cisT.notionalVat)} @ {quote.settings?.vatRate ?? 20}%.
                 </p>
               )}
             </div>
@@ -1053,7 +1078,8 @@ const PublicQuoteView = () => {
                 Accept or decline
               </h2>
               <p className="mt-1 text-[13px] text-slate-600 leading-relaxed">
-                Please review the details above, then add your details and signature below to accept.
+                Please review the details above, then add your details and signature below to
+                accept.
               </p>
 
               <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1106,6 +1132,25 @@ const PublicQuoteView = () => {
                 )}
               </div>
 
+              {terms && terms.length > 0 && (
+                <details className="group mt-6 rounded-xl border border-slate-200 bg-slate-50">
+                  <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 text-[14px] font-semibold text-slate-900 touch-manipulation [&::-webkit-details-marker]:hidden">
+                    Terms and conditions
+                    <span className="text-[12px] font-medium text-slate-500 group-open:hidden">
+                      {terms.length} · tap to read
+                    </span>
+                    <span className="hidden text-[12px] font-medium text-slate-500 group-open:inline">
+                      Hide
+                    </span>
+                  </summary>
+                  <ol className="list-decimal space-y-1.5 border-t border-slate-200 px-4 py-3 pl-9 text-[13px] leading-relaxed text-slate-700">
+                    {terms.map((t, i) => (
+                      <li key={i}>{t}</li>
+                    ))}
+                  </ol>
+                </details>
+              )}
+
               <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <Button
                   onClick={handleAcceptQuote}
@@ -1133,8 +1178,10 @@ const PublicQuoteView = () => {
               </div>
 
               <p className="mt-4 text-[12px] text-slate-500 leading-relaxed">
-                By accepting, you agree to the quoted amount and terms set out above. Your
-                signature is stored securely against your job record.
+                {terms && terms.length > 0
+                  ? 'By accepting, you agree to the quoted amount and the terms and conditions above.'
+                  : 'By accepting, you agree to the quoted amount and the terms in the quote document.'}{' '}
+                Your signature is stored securely against your job record.
               </p>
             </div>
           </section>
@@ -1201,8 +1248,8 @@ const PublicQuoteView = () => {
                     One step left · pay deposit
                   </p>
                   <p className="mt-2 text-[15px] text-slate-700 leading-relaxed">
-                    To confirm your booking with {brand.companyName}, please pay the deposit
-                    below. The remainder is payable on completion.
+                    To confirm your booking with {brand.companyName}, please pay the deposit below.
+                    The remainder is payable on completion.
                   </p>
                   <div className="mt-4 flex items-baseline gap-2">
                     <span className="text-[28px] font-bold text-slate-900 tabular-nums">
@@ -1273,9 +1320,9 @@ const PublicQuoteView = () => {
                       </table>
                       <p className="mt-3 text-[12px] text-slate-600">
                         Use{' '}
-                        <strong className="font-mono text-slate-900">{quote.quoteNumber}</strong>{' '}
-                        as the payment reference. Once {brand.companyName} sees the deposit
-                        they'll confirm and book a time with you.
+                        <strong className="font-mono text-slate-900">{quote.quoteNumber}</strong> as
+                        the payment reference. Once {brand.companyName} sees the deposit they'll
+                        confirm and book a time with you.
                       </p>
                     </div>
                   ) : (
@@ -1362,7 +1409,12 @@ const PublicQuoteView = () => {
               <p className="text-[12px] text-slate-500 leading-relaxed">{contactParts}</p>
             )}
             {legalParts && (
-              <p className={cn('text-[11px] text-slate-400 leading-relaxed', contactParts && 'mt-1.5')}>
+              <p
+                className={cn(
+                  'text-[11px] text-slate-400 leading-relaxed',
+                  contactParts && 'mt-1.5'
+                )}
+              >
                 {legalParts}
               </p>
             )}

@@ -189,13 +189,13 @@ export default function Level2ElectricalPage() {
       <section className="py-16 sm:py-24 px-5">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-6">
-            <GraduationCap className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium text-yellow-400">C&G 2365-02 Level 2</span>
+            <GraduationCap className="w-4 h-4 text-elec-yellow" />
+            <span className="text-sm font-medium text-elec-yellow">C&G 2365-02 Level 2</span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
             Level 2 Electrical
             <br />
-            <span className="text-yellow-400">Installation Course</span>
+            <span className="text-elec-yellow">Installation Course</span>
           </h1>
           <p className="text-lg text-white max-w-2xl mx-auto leading-relaxed mb-8">
             Build your foundation in electrical installation. AI-powered study materials covering
@@ -211,7 +211,7 @@ export default function Level2ElectricalPage() {
             </a>
             <a
               href="#what-is-level-2"
-              className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-yellow-500/40 text-white font-semibold rounded-xl touch-manipulation transition-colors"
+              className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-white/[0.1] text-white font-semibold rounded-xl touch-manipulation transition-colors"
             >
               What Does Level 2 Cover?
             </a>
@@ -315,7 +315,7 @@ export default function Level2ElectricalPage() {
                 key={item.step}
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                   {item.step}
                 </div>
                 <div>
@@ -344,7 +344,7 @@ export default function Level2ElectricalPage() {
           <div className="mt-6 rounded-2xl bg-white/[0.04] border border-white/10 p-6">
             <ul className="space-y-4 text-white">
               <li className="flex items-start gap-3">
-                <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <span>
                   <strong>New apprentices:</strong> If you have just started an electrical
                   apprenticeship, the Level 2 Diploma forms the theory component of your first year.
@@ -354,7 +354,7 @@ export default function Level2ElectricalPage() {
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <span>
                   <strong>Career changers:</strong> Adults transitioning from other trades or
                   industries into electrical work often start with the Level 2 as a full-time or
@@ -363,7 +363,7 @@ export default function Level2ElectricalPage() {
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <span>
                   <strong>Existing tradespeople:</strong> Plumbers, gas engineers, and other
                   building services professionals sometimes study Level 2 to add electrical skills
@@ -373,7 +373,7 @@ export default function Level2ElectricalPage() {
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <span>
                   <strong>DIY enthusiasts (knowledge only):</strong> Some individuals study Level 2
                   to understand the electrical installations in their own properties, even without
@@ -486,7 +486,7 @@ export default function Level2ElectricalPage() {
                 key={item.step}
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                   {item.step}
                 </div>
                 <div>
@@ -518,17 +518,17 @@ export default function Level2ElectricalPage() {
         <div className="max-w-4xl mx-auto">
           <div className="grid sm:grid-cols-3 gap-6 text-center">
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <Layers className="w-8 h-8 text-yellow-400 mx-auto mb-3" />
+              <Layers className="w-8 h-8 text-elec-yellow mx-auto mb-3" />
               <p className="text-2xl font-bold text-white mb-1">36+</p>
               <p className="text-sm text-white">Training Courses</p>
             </div>
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <Award className="w-8 h-8 text-yellow-400 mx-auto mb-3" />
+              <Award className="w-8 h-8 text-elec-yellow mx-auto mb-3" />
               <p className="text-2xl font-bold text-white mb-1">70+</p>
               <p className="text-sm text-white">Electrical Calculators</p>
             </div>
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <Zap className="w-8 h-8 text-yellow-400 mx-auto mb-3" />
+              <Zap className="w-8 h-8 text-elec-yellow mx-auto mb-3" />
               <p className="text-2xl font-bold text-white mb-1">8 AI Agents</p>
               <p className="text-sm text-white">Plus 12 AI Tools</p>
             </div>
@@ -563,7 +563,7 @@ export default function Level2ElectricalPage() {
               >
                 <summary className="flex items-center justify-between p-4 min-h-[44px] touch-manipulation cursor-pointer text-white font-medium">
                   <span>{faq.question}</span>
-                  <ChevronDown className="w-5 h-5 text-yellow-400 group-open:rotate-180 transition-transform shrink-0 ml-4" />
+                  <ChevronDown className="w-5 h-5 text-elec-yellow group-open:rotate-180 transition-transform shrink-0 ml-4" />
                 </summary>
                 <div className="px-4 pb-4 text-white text-sm leading-relaxed">{faq.answer}</div>
               </details>
@@ -595,7 +595,7 @@ export default function Level2ElectricalPage() {
 
       <SEOCTASection
         heading="Start your electrical career today"
-        subheading="Join 1,600+ UK electricians and apprentices learning smarter. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians and apprentices learning smarter. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

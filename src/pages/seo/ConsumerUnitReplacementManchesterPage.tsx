@@ -189,14 +189,14 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Manchester Pricing Breakdown (2026)</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Small flat (6-way board, split-load RCDs)</strong> — £450 to £650 total.
                 Materials: £150 to £250. Labour: £250 to £350. Part P and EIC: £50 to £80.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard terraced house (10-way with RCBOs and SPD)</strong> — £750 to
                 £1,200 total. The most common job in Manchester. Materials: £350 to £550. Labour:
@@ -204,7 +204,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large semi or detached (14-way high-integrity with SPD)</strong> — £1,200 to
                 £1,800 total. Materials: £650 to £950. Labour: £400 to £650. Part P and EIC: £50 to
@@ -212,7 +212,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-phase property</strong> — £1,800 to £2,300+ total. Materials: £800 to
                 £1,200. Labour: £600 to £900. Part P and EIC: £50 to £80.
@@ -329,35 +329,35 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Survey and isolation</strong> — the electrician identifies all circuits and
                 safely isolates the mains supply. All power to the property is switched off.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Remove old board</strong> — the existing consumer unit is disconnected and
                 removed. In older Manchester terraces, expect some remedial cable work.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Install new consumer unit</strong> — the new metal board is mounted, fitted
                 with RCBOs and SPD, and all circuits reconnected and labelled.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full testing</strong> — every circuit tested to BS 7671 including insulation
                 resistance, earth fault loop impedance, RCD trip times, and polarity.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Certification</strong> — the electrician completes the{' '}
                 <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> and submits
@@ -415,14 +415,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person scheme registration</strong> — verify NICEIC, NAPIT, or
                 ELECSA registration. Essential for Part P self-certification.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Local to your borough</strong> — choose an electrician in your part of
                 Greater Manchester to minimise travel costs. A Bolton electrician working in
@@ -430,21 +430,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Itemised quote</strong> — materials, labour, Part P, and VAT listed
                 separately. Get at least three quotes.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EIC and Part P included</strong> — confirm the quote covers the Electrical
                 Installation Certificate and Building Regulations notification.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Public liability insurance</strong> — minimum £2 million. Ask for proof
                 before work begins.
@@ -480,7 +480,7 @@ export default function ConsumerUnitReplacementManchesterPage() {
       heroTitle={
         <>
           Consumer Unit Replacement Manchester:{' '}
-          <span className="text-yellow-400">Cost Guide 2026</span>
+          <span className="text-elec-yellow">Cost Guide 2026</span>
         </>
       }
       heroSubtitle="What does a fuse board upgrade cost in Manchester? This guide covers local pricing across Greater Manchester — from city centre flats to Victorian terraces in Didsbury and Chorlton — including Part P notification, what to expect during the work, and how to choose a registered electrician."
@@ -491,7 +491,7 @@ export default function ConsumerUnitReplacementManchesterPage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Replacement in Manchester"
       relatedPages={relatedPages}
       ctaHeading="Quote Consumer Unit Replacements in Manchester"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
     />
   );
 }

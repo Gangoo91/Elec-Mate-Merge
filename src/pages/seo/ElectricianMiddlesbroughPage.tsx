@@ -234,7 +234,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New connections</strong> — apply through Northern Powergrid's connections
                 portal for new supplies, service upgrades, and temporary supplies for construction.
@@ -244,7 +244,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98/G99 notifications</strong> — solar PV and battery storage. G98 for
                 systems up to 16A per phase is processed online and is increasingly relevant as
@@ -255,7 +255,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Power outages</strong> — report and track power cuts on the Northern
                 Powergrid website or by calling 105. Emergency number covers all Middlesbrough
@@ -333,7 +333,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacements</strong> — the highest-volume domestic job in
                 Middlesbrough. Driven by the large stock of 1960s and 1970s properties in Berwick
@@ -343,7 +343,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full house rewires</strong> — essential on pre-1970s Victorian and Edwardian
                 terraces in Linthorpe, Newport, and Gresham. Mixed wiring from successive partial
@@ -352,7 +352,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rental property EICRs</strong> — consistent demand throughout the year from
                 Middlesbrough's large private rented sector. Five-yearly obligation under the 2020
@@ -361,7 +361,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger installations</strong> — growing demand in the suburban areas of
                 Nunthorpe, Marton, Coulby Newham, and Acklam. Northern Powergrid notification
@@ -370,7 +370,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>South Tees Development Corporation work</strong> — the STDC regeneration
                 zone is creating substantial electrical infrastructure demand through 2025–2030. New
@@ -380,7 +380,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>James Cook University Hospital and NHS estates</strong> — the largest
                 hospital in the North East is a major employer of directly contracted electrical
@@ -476,7 +476,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EIC and EICR Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -510,7 +510,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Middlesbrough electricians"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -538,7 +538,7 @@ export default function ElectricianMiddlesbroughPage() {
       heroTitle={
         <>
           Electrician in Middlesbrough:{' '}
-          <span className="text-yellow-400">Local Electricians 2026</span>
+          <span className="text-elec-yellow">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="From the Victorian terraces of Linthorpe and Newport to the 1970s estates of Berwick Hills, Park End, and Ormesby, and the South Tees Development Corporation regeneration zone — Middlesbrough's ageing housing stock, large rental sector, and major industrial pipeline create steady demand for rewires, EICRs, and consumer unit upgrades. Find NICEIC and NAPIT registered electricians across the Tees Valley."
@@ -549,7 +549,7 @@ export default function ElectricianMiddlesbroughPage() {
       faqHeading="Frequently Asked Questions About Electricians in Middlesbrough"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Middlesbrough Electricians"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for electricians working across Teesside and the North East. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for electricians working across Teesside and the North East. 7-day free trial."
     />
   );
 }

@@ -179,7 +179,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sellafield (Cumbria)</strong> — the UK's largest and most complex nuclear
                 site, covering reprocessing, waste management, and decommissioning. Thousands of
@@ -187,7 +187,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hinkley Point C (Somerset)</strong> — the UK's first new nuclear power
                 station in a generation, under construction by EDF Energy. The largest infrastructure
@@ -195,7 +195,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Heysham 1 and 2, Hartlepool, Torness</strong> — operational EDF
                 Advanced Gas-cooled Reactor stations with regular outage maintenance contractor
@@ -204,7 +204,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>AWE Aldermaston and Burghfield (Berkshire)</strong> — nuclear weapons
                 establishment operated for the Ministry of Defence. Requires additional MOD security
@@ -212,7 +212,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Decommissioning sites</strong> — Dungeness B, Hunterston B, Bradwell, and
                 others are in various stages of defuelling and decommissioning. Decommissioning work
@@ -285,7 +285,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Material traceability</strong> — all materials used in safety-classified
                 systems must be traceable back to their manufacturer certification. No substitution
@@ -293,7 +293,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inspection hold points</strong> — the installation process is divided into
                 stages with formal hold points where a quality inspector must sign off before work
@@ -301,7 +301,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Quality records</strong> — test results, inspection records, and as-built
                 drawings must be retained for the life of the installation — which on a nuclear site
@@ -309,7 +309,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Seismic qualification</strong> — on new-build nuclear stations (Hinkley
                 Point C), safety-classified electrical equipment and cable installations must be
@@ -384,7 +384,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BadgeCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BadgeCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ECS (Electrotechnical Certification Scheme) card</strong> — the standard
                 card for qualified electricians in the UK. Must reflect your current role and
@@ -392,7 +392,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BadgeCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BadgeCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CCNSG Safety Passport</strong> — Client Contractor National Safety Group
                 site safety card. Valid for three years. Required for most nuclear and major
@@ -400,7 +400,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BadgeCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BadgeCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SHEA Nuclear card</strong> — Safety, Health and Environment Awareness in the
                 Nuclear Industry. Issued by Cogent Skills. Required for site access at Sellafield,
@@ -408,7 +408,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BadgeCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BadgeCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Site-specific induction</strong> — each site has its own induction covering
                 site rules, emergency procedures, radiation zones, and permit to work system.
@@ -416,7 +416,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BadgeCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BadgeCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CompEx (if applicable)</strong> — if the role involves work in ATEX
                 hazardous areas on the nuclear site (for example, in certain process buildings),
@@ -445,21 +445,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrician (PAYE, new to nuclear):</strong> £55–£65 per hour. Hinkley
                 Point C and Sellafield outage work. CCNSG and SHEA Nuclear required.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrician (experienced, SC cleared):</strong> £65–£80 per hour. Sellafield
                 decommissioning, safety-classified work, nuclear new build.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Authorised Person / HV Electrical:</strong> £80–£90+ per hour. HV
                 authorisation, switching programmes, outage management. See the{' '}
@@ -518,7 +518,7 @@ export default function NuclearSiteElectricalWorkPage() {
       heroTitle={
         <>
           Nuclear Site Electrical Work:{' '}
-          <span className="text-yellow-400">The UK Electrician's Complete Guide</span>
+          <span className="text-elec-yellow">The UK Electrician's Complete Guide</span>
         </>
       }
       heroSubtitle="Working on UK nuclear licensed sites pays £55–90+/hr but demands security vetting, specialist training cards, and a safety culture unlike any other sector. This guide covers everything you need to make the transition."

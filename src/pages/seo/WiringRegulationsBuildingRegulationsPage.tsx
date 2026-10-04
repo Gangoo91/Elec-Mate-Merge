@@ -145,7 +145,7 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 A British Standard published by the IET (Institution of Engineering and Technology)
                 and BSI. Sets the technical requirements for the design, selection, erection,
@@ -153,7 +153,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Not itself legislation. A voluntary standard that is referenced in law — compliance
                 is the recognised way of demonstrating that electrical work is safe. Applies to all
@@ -161,7 +161,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Updated periodically. The current edition is BS 7671:2018+A4:2026 (Amendment 4,
                 published 2026). Previous editions (16th and 17th editions) remain relevant for
@@ -177,7 +177,7 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Legislation — part of the Building Regulations 2010 (England). Creates a legal
                 obligation to ensure that certain electrical installation work in dwellings is
@@ -185,7 +185,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Applies only to dwellings in England. The Approved Document P states that electrical
                 installation work must comply with BS 7671, making BS 7671 effectively mandatory for
@@ -193,7 +193,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Compliance can be demonstrated either by using a registered competent person
                 (self-certification) or by going through the local authority building control route
@@ -221,26 +221,26 @@ const sections = [
           </h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Installation of a new circuit (any circuit back to the consumer unit)</span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Replacement of a consumer unit (fuse board)</span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 All electrical work in a room containing a bath or shower (including adding a light
                 fitting or switching a socket to a shaver socket)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>All electrical work in a kitchen — whether a new circuit or an addition</span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 All electrical work in an outdoor location (garden, shed, detached garage,
                 outbuilding)
@@ -252,21 +252,21 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-3">
             Why Bathroom Work Is Always Notifiable — BS 7671 Zones
           </h3>
-          <p className="text-white/80 text-sm mb-3">
+          <p className="text-white text-sm mb-3">
             BS 7671 Section 701 designates three hazard zones around bath and shower locations,
             explaining why Part P treats all bathroom electrical work as notifiable regardless of
             scope:
           </p>
           <ul className="space-y-2 text-white text-sm">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Zone 0</strong> — the interior of the bath tub or shower basin (Reg
                 701.32.4). Only IPX7-rated equipment may be installed here.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Zone 1</strong> — above the finished floor to 2.25 m (or the highest fixed
                 shower head if higher), within the lateral boundary of the bath or shower basin (Reg
@@ -274,7 +274,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Zone 2</strong> — beyond Zone 1 within the same room. Switchgear and
                 socket-outlets incorporating switches are prohibited in Zone 2, with limited
@@ -282,7 +282,7 @@ const sections = [
               </span>
             </li>
           </ul>
-          <p className="text-white/80 text-sm mt-3">
+          <p className="text-white text-sm mt-3">
             The elevated risk of electric shock from proximity to water is the regulatory basis for
             the Part P requirement that all electrical work in a bathroom or shower room is
             notifiable — even replacing a light fitting.
@@ -292,21 +292,21 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-3">Non-Notifiable Work</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Adding extra sockets or lighting points to existing circuits in main living areas
                 (living room, bedroom, hallway) — where no new circuit is created
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Like-for-like replacement of accessories (socket outlets, light switches, ceiling
                 roses) in non-special locations
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Replacing a damaged or deteriorated cable where the existing cable route and circuit
                 protection are unchanged
@@ -337,7 +337,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC</strong> (National Inspection Council for Electrical Installation
                 Contracting) — the largest competent person scheme provider in the UK. Requires NVQ
@@ -345,7 +345,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NAPIT</strong> (National Association of Professional Inspectors and Testers)
                 — government approved scheme, well established in domestic and commercial sectors.
@@ -353,7 +353,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ELECSA</strong> — part of the NICEIC group, focused on domestic and small
                 commercial electrical contractors. Combined membership with NICEIC is available.
@@ -385,7 +385,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Building notice:</strong> Submit a building notice form to the local
                 authority before starting work. Pay the inspection fee (typically \u00a3100 to
@@ -394,7 +394,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full plans application:</strong> Submit detailed drawings and a
                 specification for approval before starting. Approval is given in principle.
@@ -402,7 +402,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Completion certificate:</strong> On satisfactory completion, the authority
                 issues a completion certificate. This is equivalent to the BRCC issued by a
@@ -427,7 +427,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Misconception: "Part P applies to all electrical work."</strong> Part P only
                 applies to certain notifiable work in dwellings in England. Adding a socket to a
@@ -435,7 +435,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>
                   Misconception: "Only a registered electrician can do domestic work."
@@ -445,7 +445,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Misconception: "Part P applies in Scotland."</strong> Part P applies only in
                 England. Scotland, Wales, and Northern Ireland each have their own building
@@ -453,7 +453,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Misconception: "An EICR satisfies Part P notification."</strong>
                 An EICR documents the condition of an existing installation — it does not certify
@@ -479,7 +479,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Scotland:</strong> Governed by Scottish Building Standards (Building
                 (Scotland) Regulations 2004). Section 4 (Safety) and Section 4.5 (Electrical safety)
@@ -490,7 +490,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wales:</strong> Wales uses the Building Regulations 2010 but with
                 Wales-specific amendments. Part P applies in Wales with broadly similar scope to
@@ -499,7 +499,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Northern Ireland:</strong> Governed by the Building Regulations (Northern
                 Ireland) 2000 (as amended). A series of Technical Booklets provides guidance on
@@ -525,7 +525,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <SEOAppBridge href="/eic-certificate" label="Electrical Installation Certificate" />{' '}
                 — generate Part P-compliant EICs on your phone with circuit schedules, test results,
@@ -533,7 +533,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <SEOAppBridge href="/minor-works-certificate" label="Minor Works Certificate" /> —
                 issue minor works certificates for non-notifiable additions and alterations to give
@@ -565,7 +565,7 @@ export default function WiringRegulationsBuildingRegulationsPage() {
       heroTitle={
         <>
           Wiring Regulations and Building Regulations{' '}
-          <span className="text-yellow-400">— BS 7671 and Part P Explained</span>
+          <span className="text-elec-yellow">— BS 7671 and Part P Explained</span>
         </>
       }
       heroSubtitle="How BS 7671:2018+A4:2026 relates to Part P Building Regulations, notifiable vs non-notifiable work, competent person schemes, building control route, and common misconceptions."

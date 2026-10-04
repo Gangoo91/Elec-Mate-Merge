@@ -552,7 +552,7 @@ export default function DomesticInstallerCoursePage() {
       badgeIcon={Home}
       heroTitle={
         <>
-          Domestic Installer Course: <span className="text-yellow-400">Part P Certification</span>
+          Domestic Installer Course: <span className="text-elec-yellow">Part P Certification</span>
         </>
       }
       heroSubtitle="Master domestic electrical installation with comprehensive Part P training. Building regulations, notifiable work, competent person schemes, consumer units, special locations, and certification. 12 modules with video content, interactive quizzes, and AI-powered study tools."
@@ -570,7 +570,7 @@ export default function DomesticInstallerCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Ready to master domestic electrical installation?"
-      ctaSubheading="Join 1,600+ UK electricians studying smarter with Elec-Mate. 12 structured modules, interactive quizzes, video content, and an AI tutor for any Part P or domestic wiring question. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians studying smarter with Elec-Mate. 12 structured modules, interactive quizzes, video content, and an AI tutor for any Part P or domestic wiring question. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/domestic-installer"
     />

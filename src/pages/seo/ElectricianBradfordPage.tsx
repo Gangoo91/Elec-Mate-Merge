@@ -296,7 +296,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Landlord EICRs</strong> — Bradford has a large and active private rental
                 market, including substantial HMO and student accommodation sectors. Letting agents
@@ -305,7 +305,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacements</strong> — old rewirable fuse boards are common
                 across Bradford's Victorian terrace and 1960s housing stock. Consumer unit upgrades
@@ -313,7 +313,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full and partial rewires</strong> — Bradford's stone terrace housing stock
                 includes many properties with ageing rubber or early PVC wiring. Rewires triggered
@@ -321,7 +321,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger installations</strong> — growing steadily across Bradford's
                 residential areas. NPG G98 notifications are required for solar PV generation; EV
@@ -330,7 +330,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial and City of Culture regeneration</strong> — Bradford city centre
                 regeneration projects associated with the 2025 City of Culture designation are
@@ -459,7 +459,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EIC and EICR Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -492,7 +492,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Bradford electricians"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -520,7 +520,7 @@ export default function ElectricianBradfordPage() {
       heroTitle={
         <>
           Electrician in Bradford:{' '}
-          <span className="text-yellow-400">Find Qualified Electricians 2026</span>
+          <span className="text-elec-yellow">Find Qualified Electricians 2026</span>
         </>
       }
       heroSubtitle="Bradford's large stock of Victorian stone terraces and post-war housing creates consistent demand for qualified electricians specialising in EICRs, consumer unit upgrades, and rewires. Find NICEIC and NAPIT registered electricians in Bradford with Part P compliance expertise."
@@ -531,7 +531,7 @@ export default function ElectricianBradfordPage() {
       faqHeading="Frequently Asked Questions About Electricians in Bradford"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Bradford Electricians"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the residential and rental electrical market in Bradford and West Yorkshire. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the residential and rental electrical market in Bradford and West Yorkshire. 7-day free trial."
     />
   );
 }

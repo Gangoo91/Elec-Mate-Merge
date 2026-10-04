@@ -234,7 +234,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Age and condition</strong> — properties built between 1950 and 1965 are now
                 60 to 75 years old. The original wiring — whether rubber-insulated (TRS/VIR) in the
@@ -245,7 +245,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer units</strong> — the original consumer units are typically surface-
                 mounted metal boxes with rewirable fuses (BS 3036) — Wylex, MEM, or Crabtree units.
@@ -256,7 +256,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Asbestos awareness</strong> — post-war Coventry houses commonly contain
                 asbestos-containing materials: Artex textured coatings on ceilings, asbestos cement
@@ -269,7 +269,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Construction simplicity</strong> — the upside of post-war housing is that it
                 is straightforward to work on. Cavity walls with plasterboard and skim on the inner
@@ -356,7 +356,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HMO licensing requirements</strong> — Coventry City Council operates
                 mandatory and additional HMO licensing schemes. Licensed HMOs require a satisfactory{' '}
@@ -368,7 +368,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire alarm installations</strong> — converting a house to an HMO typically
                 requires upgrading from domestic smoke alarms to an LD2 or LD1 fire alarm system
@@ -379,7 +379,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional circuits</strong> — HMO conversions often require additional
                 circuits for individual room heaters (where central heating is not provided to each
@@ -415,7 +415,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Factory className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Factory className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Industrial electrical demand</strong> — the gigafactory and its supply chain
                 require massive electrical infrastructure: high-voltage power distribution, three-
@@ -426,7 +426,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Domestic EV charger demand</strong> — as the local automotive workforce
                 transitions to electric vehicles (many manufacturers offer employee EV schemes), the
@@ -442,7 +442,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial EV infrastructure</strong> — workplace EV charging is expanding
                 rapidly. Office parks, industrial estates, and retail car parks across Coventry are
@@ -452,7 +452,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Skills pipeline</strong> — the EV sector is creating demand for electricians
                 with specific skills: EV charger installation (C&G 2919 or equivalent), three-phase
@@ -542,7 +542,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EICR Certificate App</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -588,7 +588,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional certification for Coventry electricians"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting."
           icon={MapPin}
         />
       </>
@@ -615,7 +615,7 @@ export default function ElectricianCoventryPage() {
       heroTitle={
         <>
           Electrician in Coventry:{' '}
-          <span className="text-yellow-400">Local Guide for UK Electricians</span>
+          <span className="text-elec-yellow">Local Guide for UK Electricians</span>
         </>
       }
       heroSubtitle="Coventry's post-war housing stock needs rewiring, the student HMO market needs EICRs, and the EV gigafactory is driving new demand. This guide covers the DNO, rewiring challenges, ring vs radial circuits, and realistic pricing for electricians in Coventry."
@@ -626,7 +626,7 @@ export default function ElectricianCoventryPage() {
       faqHeading="Frequently Asked Questions About Electrical Work in Coventry"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Electrical Work in Coventry — On Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting. Rewires, EV chargers, or HMOs — certify it all on site. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting. Rewires, EV chargers, or HMOs — certify it all on site. 7-day free trial."
     />
   );
 }

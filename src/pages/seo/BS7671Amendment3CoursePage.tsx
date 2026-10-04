@@ -212,7 +212,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <div className="flex items-start gap-4">
-            <AlertTriangle className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h3 className="font-bold text-white text-lg mb-2">Why This Matters</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -270,7 +270,7 @@ const sections = [
             </div>
           </div>
           <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <Zap className="w-8 h-8 text-yellow-400 shrink-0 mt-1" />
+            <Zap className="w-8 h-8 text-elec-yellow shrink-0 mt-1" />
             <div>
               <h3 className="font-bold text-white text-lg mb-1">Devices to Check</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -421,7 +421,7 @@ const sections = [
             </div>
           </div>
           <div className="flex gap-4 p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
               A3
             </div>
             <div>
@@ -563,7 +563,7 @@ export default function BS7671Amendment3CoursePage() {
       badgeIcon={BookMarked}
       heroTitle={
         <>
-          BS 7671 Amendment 3: <span className="text-yellow-400">A3:2024 Update Training</span>
+          BS 7671 Amendment 3: <span className="text-elec-yellow">A3:2024 Update Training</span>
         </>
       }
       heroSubtitle="Master the latest amendment to the 18th Edition wiring regulations. New Section 530 bidirectional device requirements, practical impact on solar PV, battery storage, and V2G installations. 6 modules with video content, quizzes, and AI tutor."
@@ -581,7 +581,7 @@ export default function BS7671Amendment3CoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Get up to speed on Amendment 3"
-      ctaSubheading="Join 1,600+ UK electricians staying current with Elec-Mate. Structured modules, interactive quizzes, video content, and an AI tutor for any BS 7671 question. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians staying current with Elec-Mate. Structured modules, interactive quizzes, video content, and an AI tutor for any BS 7671 question. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/bs-7671-amendment-3-course"
     />

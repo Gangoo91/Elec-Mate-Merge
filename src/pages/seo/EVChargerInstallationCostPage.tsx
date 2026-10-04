@@ -186,7 +186,7 @@ const sections = [
           </h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Budget (no-name or basic brands)</strong> — £250 to £400. These units are
                 functional but may lack smart features, app control, or integrated DC protection.
@@ -194,7 +194,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mid-range (Zappi, Pod Point, Wallbox Pulsar)</strong> — £400 to £700. Smart
                 charging, app control, solar PV diversion (Zappi), and integrated DC fault
@@ -202,7 +202,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Premium (Andersen A2, Tesla Wall Connector, Easee One)</strong> — £700 to
                 £1,100. Design-led units, advanced load management, dynamic tariff integration, and
@@ -215,7 +215,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Commercial and Three-Phase Chargers</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>22kW three-phase (workplace/commercial)</strong> — £1,000 to £2,500 per
                 unit. Faster charging for company fleets and workplace car parks. Requires a
@@ -223,7 +223,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DC rapid chargers (50kW+)</strong> — £15,000 to £50,000+ per unit.
                 Commercial installations for forecourts, service stations, and fleet depots. These
@@ -301,7 +301,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>7kW single-phase, simple installation</strong> — £800 to £1,200 total.
                 Mid-range charger (£450 to £650), short cable run, existing consumer unit has a
@@ -309,7 +309,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>7kW single-phase, complex installation</strong> — £1,200 to £2,000 total.
                 Longer cable run (underground SWA), consumer unit upgrade, earthing improvements.
@@ -317,7 +317,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>22kW three-phase, workplace</strong> — £2,500 to £5,000 per charge point.
                 Three-phase charger unit, dedicated sub-distribution board, load management
@@ -325,7 +325,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Multi-point commercial installation</strong> — £3,000 to £8,000+ per charge
                 point depending on infrastructure requirements. Load balancing, back-office
@@ -357,7 +357,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated circuit (Regulation 722.533.101)</strong> — each EV charger must
                 be supplied by a dedicated circuit from the consumer unit or distribution board. The
@@ -366,7 +366,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection (Regulation 722.531.3.101)</strong> — the EV charger circuit
                 must be protected by an appropriate RCD. Where the EVSE can produce DC residual
@@ -376,7 +376,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing (Regulation 722.411.4.1)</strong> — particular attention is
                 required for earthing arrangements. On PME (TN-C-S) supplies, a local earth
@@ -385,7 +385,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PME considerations</strong> — where the supply is PME (which is the majority
                 of UK domestic supplies), there are specific requirements for EV charging. The IET
@@ -458,7 +458,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable run length</strong> — the single biggest variable. A 3-metre cable run
                 costs virtually nothing extra; a 25-metre underground SWA cable run can add £300 to
@@ -466,7 +466,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit capacity</strong> — if the existing consumer unit has no spare
                 ways or insufficient capacity for a 32A circuit, a board upgrade or replacement adds
@@ -474,7 +474,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing system</strong> — TT systems require earth electrode testing and
                 may need a new earth rod. PME systems require compliance with the IET Code of
@@ -482,7 +482,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Civil works</strong> — underground cable runs require trenching (minimum
                 500mm depth with cable tiles or markers). If the trench crosses a driveway, the cost
@@ -490,7 +490,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Charger choice</strong> — the price difference between a budget and premium
                 charger unit is £400 to £600. Most electricians recommend mid-range units with smart
@@ -516,7 +516,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI-Powered Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -565,7 +565,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more EV charger installations"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
           icon={Car}
         />
       </>
@@ -591,7 +591,7 @@ export default function EVChargerInstallationCostPage() {
       heroTitle={
         <>
           EV Charger Installation Cost:{' '}
-          <span className="text-yellow-400">Complete UK Price Guide 2026</span>
+          <span className="text-elec-yellow">Complete UK Price Guide 2026</span>
         </>
       }
       heroSubtitle="How much does it really cost to install an EV charger at home or at work? This guide breaks down charger unit prices, installation labour, Section 722 compliance, RCD selection, DNO notification, and the factors that affect the final bill."
@@ -602,7 +602,7 @@ export default function EVChargerInstallationCostPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify EV Charger Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates for EV charger installations. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates for EV charger installations. 7-day free trial, cancel anytime."
     />
   );
 }

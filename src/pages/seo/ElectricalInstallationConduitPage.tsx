@@ -141,7 +141,7 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-4">Steel Conduit</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Material:</strong> Hot-dip galvanised or stove-enamelled mild steel.
                 Standard sizes: 16mm, 20mm, 25mm, 32mm, 38mm, 50mm outside diameter. Conforms to BS
@@ -149,7 +149,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Advantages:</strong> Superior mechanical protection, fire resistance, can
                 serve as CPC, EMC shielding for sensitive circuits, suitable for hazardous areas
@@ -157,7 +157,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Disadvantages:</strong> Heavier, more time-consuming to install, requires
                 screwed fittings, susceptible to corrosion in wet environments unless stainless
@@ -165,7 +165,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Typical applications:</strong> Industrial premises, plant rooms, exposed
                 runs in commercial buildings, areas subject to mechanical impact.
@@ -177,7 +177,7 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-4">PVC (Rigid Plastic) Conduit</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Material:</strong> Unplasticised PVC (UPVC). Standard sizes: 16mm, 20mm,
                 25mm, 32mm outside diameter. Conforms to BS EN 61386-22 (rigid non-metallic
@@ -185,7 +185,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Advantages:</strong> Lightweight, corrosion-resistant, faster to install,
                 lower material cost, push-fit or solvent-welded fittings available, no metallic
@@ -193,7 +193,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Disadvantages:</strong> Cannot serve as CPC (separate CPC required), less
                 impact-resistant than steel, becomes brittle at low temperatures, melts in fire,
@@ -201,7 +201,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Typical applications:</strong> Domestic surface wiring, office
                 installations, concealed runs in dry environments, underground ducts (heavy-duty
@@ -233,7 +233,7 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-3">How to Calculate Conduit Fill</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1:</strong> Identify the cable type and conductor size for each cable
                 to be installed. Look up the cable factor from On-Site Guide Appendix E, Table E1
@@ -241,14 +241,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2:</strong> Add up the cable factors for all cables to be installed in
                 the conduit. This gives the total cable factor.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 3:</strong> Compare the total cable factor against the conduit factor
                 from Table 5C. Use the straight run column for runs without bends, or the bend
@@ -257,7 +257,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Example:</strong> Six 2.5mm\u00b2 single-core PVC cables (factor 30 each) in
                 a straight run = total factor 180. A 20mm conduit has a straight-run factor of 460.
@@ -270,7 +270,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Derating for grouping:</strong> Where cables are grouped together, the
                 current-carrying capacity of each cable must be derated using BS 7671 Table 4C1 (for
@@ -279,7 +279,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Trunking space factor:</strong> For cable trunking, On-Site Guide Appendix E
                 specifies that the ratio of the sum of cable cross-sectional areas to the internal
@@ -315,7 +315,7 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-3">Steel Conduit Bending</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Use a purpose-made conduit bender (hickey bender) for 20mm and 25mm. For 32mm and
                 above, a hydraulic bender is recommended. The minimum bending radius is 2.5 times
@@ -323,7 +323,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Mark set distances accurately with a chinagraph pencil or felt tip. For a
                 right-angle bend, measure from the end of the conduit to the centre of the bend,
@@ -331,7 +331,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Cut steel conduit with a pipe slice or junior hacksaw. Deburr all cut ends with a
                 conduit reamer before drawing cables — sharp edges will damage cable insulation.
@@ -344,7 +344,7 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-3">PVC Conduit Bending</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Insert a correctly sized conduit spring inside the conduit before bending. For cold
                 bending, lever the conduit gently over your knee — do not rush or the conduit will
@@ -353,7 +353,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 For warm bending, apply a hot air gun evenly along the bend area (approximately
                 100mm length for 20mm conduit). Rotate the conduit to heat evenly. When pliable,
@@ -361,7 +361,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Cut PVC conduit with a junior hacksaw or pipe cutter. Deburr with a file or
                 deburring tool. Use solvent cement or push-fit couplers for jointing. Ensure
@@ -388,7 +388,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Screwed fittings only:</strong> Every joint in a conduit system used as a
                 CPC must be made with screwed couplers and screwed-entry boxes. Push-fit or
@@ -397,7 +397,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Flexible conduit sections:</strong> Flexible conduit (also known as Anaconda
                 or SWA flexible) does not provide reliable CPC continuity. A separate insulated CPC
@@ -405,7 +405,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Continuity testing:</strong> After installation, verify end-to-end
                 continuity of the conduit system as a CPC. The resistance measured should be
@@ -414,7 +414,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cross-sectional area check:</strong> Verify that the steel conduit provides
                 sufficient CPC cross-sectional area per BS 7671 Table 54.7 for the phase conductor
@@ -451,14 +451,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP2X:</strong> Protection against fingers and solid objects over 12mm.
                 Minimum requirement for accessible indoor wiring accessories.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP44:</strong> Dust protection (solid objects over 1mm) and splash
                 protection from any direction. Minimum for outdoor above-ground conduit fittings and
@@ -466,7 +466,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP65:</strong> Complete dust exclusion and protection against water jets
                 from any direction. Required for conduit boxes in car washes, external walls exposed
@@ -474,7 +474,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP67/IP68:</strong> Complete dust exclusion and temporary/permanent
                 submersion protection. Required for underground junction boxes and conduit systems
@@ -506,7 +506,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Steel conduit penetrations:</strong> Steel conduit does not melt or combust,
                 so the main concern is any annular gap around the conduit. Pack with mineral wool
@@ -515,7 +515,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PVC conduit penetrations:</strong> PVC melts in fire, leaving an open hole.
                 Intumescent collars must be fitted around PVC conduit at every penetration through a
@@ -525,7 +525,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Record keeping:</strong> Retain product data sheets, installation
                 instructions, and photographs as evidence of compliance. Building control may
@@ -551,7 +551,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <SEOAppBridge
                   href="/eic-certificate"
@@ -562,7 +562,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <SEOAppBridge href="/tools/eicr-certificate" label="EICR Certificate" /> — document
                 overfilled conduit, missing earth continuity, or absent fire stopping as C2 or C3
@@ -570,7 +570,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <SEOAppBridge href="/minor-works-certificate" label="Minor Works Certificate" /> — issue
                 minor electrical installation works certificates for small conduit extensions or
@@ -602,7 +602,7 @@ export default function ElectricalInstallationConduitPage() {
       heroTitle={
         <>
           Electrical Installation Conduit{' '}
-          <span className="text-yellow-400">— Complete UK Guide</span>
+          <span className="text-elec-yellow">— Complete UK Guide</span>
         </>
       }
       heroSubtitle="Steel vs PVC conduit, BS EN 61386 classification, trunking fill calculations per the On-Site Guide Appendix E, earthing requirements, IP ratings, and fire stopping — everything electricians need for compliant conduit installations."

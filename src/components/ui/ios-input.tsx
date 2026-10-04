@@ -2,6 +2,7 @@ import * as React from 'react';
 import { cn } from '@/lib/utils';
 import { Eye, EyeOff, Check, AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { isAndroidNative } from '@/lib/textEntry';
 
 export interface IOSInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
@@ -37,8 +38,10 @@ const IOSInput = React.forwardRef<HTMLInputElement, IOSInputProps>(
     // Always use type="text" for password fields — use pw-masked CSS class instead
     // of type="password" to control dot masking. This bypasses iOS Safari's native
     // password masking pipeline which ignores CSS colour on dark backgrounds.
-    const inputType = isPasswordType ? 'text' : type;
-    const isPwMasked = isPasswordType && !showPassword;
+    // Native Android keeps a real password field so Gboard never learns the
+    // password as a word (ELE-1802); the CSS mask is for iOS Safari's dots.
+    const inputType = isPasswordType ? (isAndroidNative && !showPassword ? 'password' : 'text') : type;
+    const isPwMasked = isPasswordType && !showPassword && !isAndroidNative;
 
     React.useEffect(() => {
       setHasValue(!!value && String(value).length > 0);

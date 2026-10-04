@@ -267,7 +267,7 @@ const sections = [
           the start rather than squeezing it into the final day.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
-          <div className="grid grid-cols-12 gap-0 bg-white/[0.06] px-4 py-3 text-xs font-semibold uppercase tracking-wide text-white/70">
+          <div className="grid grid-cols-12 gap-0 bg-white/[0.06] px-4 py-3 text-xs font-semibold uppercase tracking-wide text-white">
             <div className="col-span-5">Installation type</div>
             <div className="col-span-3">Typical duration</div>
             <div className="col-span-4">Main driver</div>
@@ -276,22 +276,22 @@ const sections = [
             <div className="grid grid-cols-12 gap-0 px-4 py-3">
               <div className="col-span-5 font-medium">Consumer unit change / single new circuit</div>
               <div className="col-span-3">2&ndash;4 hours</div>
-              <div className="col-span-4 text-white/80">Dead and live testing</div>
+              <div className="col-span-4 text-white">Dead and live testing</div>
             </div>
             <div className="grid grid-cols-12 gap-0 px-4 py-3">
               <div className="col-span-5 font-medium">Full domestic rewire</div>
               <div className="col-span-3">Half a day to a day</div>
-              <div className="col-span-4 text-white/80">Volume of circuits to test</div>
+              <div className="col-span-4 text-white">Volume of circuits to test</div>
             </div>
             <div className="grid grid-cols-12 gap-0 px-4 py-3">
               <div className="col-span-5 font-medium">Office / retail fit-out</div>
               <div className="col-span-3">2&ndash;5 days</div>
-              <div className="col-span-4 text-white/80">Multiple boards, controls, emergency systems</div>
+              <div className="col-span-4 text-white">Multiple boards, controls, emergency systems</div>
             </div>
             <div className="grid grid-cols-12 gap-0 px-4 py-3">
               <div className="col-span-5 font-medium">Industrial / motor control</div>
               <div className="col-span-3">A week or more</div>
-              <div className="col-span-4 text-white/80">MCC, PLC logic, standby power proving</div>
+              <div className="col-span-4 text-white">MCC, PLC logic, standby power proving</div>
             </div>
           </div>
         </div>
@@ -323,14 +323,14 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Functional Checks Checklist</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Switchgear.</strong> Operate every MCB, RCBO, RCD, and isolator. Confirm
                 they trip and reset cleanly. Check that no-volt release devices operate correctly.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency switching.</strong> Test fireman's switches, emergency stop
                 buttons, and any emergency disconnection devices. Confirm they de-energise the
@@ -338,7 +338,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lighting controls.</strong> Test dimmer switches, occupancy sensors,
                 daylight sensors, time switches, and scene-setting controls. Confirm each operates
@@ -346,7 +346,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Interlocks.</strong> Confirm that interlocked devices operate in the correct
                 sequence — for example, an extractor fan that starts when a light switch is
@@ -354,7 +354,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Motor control.</strong> Start and stop motors. Check rotation direction.
                 Verify overload protection operates. Confirm emergency stop buttons de-energise the
@@ -362,7 +362,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency lighting.</strong> Simulate a mains failure and confirm emergency
                 luminaires illuminate. Check that maintained fittings switch from mains to battery
@@ -370,7 +370,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire alarm integration.</strong> If the electrical installation interfaces
                 with the fire alarm system (for example, cause-and-effect programming, fire damper
@@ -378,7 +378,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>AFDD verification.</strong> Under A4:2026, Regulation 421.1.7 makes AFDDs a
                 requirement for socket-outlet final circuits rated up to 32&nbsp;A in Higher-Risk
@@ -417,7 +417,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical Installation Certificate (EIC).</strong> The formal certificate
                 issued under BS 7671 Regulation 644.1, based on the model in Appendix 6.
@@ -426,7 +426,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Schedule of test results.</strong> Every test value for every circuit —
                 R1+R2, IR, Zs, PFC, RCD trip times — recorded on the Appendix 6 model form. Under
@@ -436,7 +436,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit charts and labels.</strong> Clear identification of every circuit at
                 the distribution board. Required by BS 7671 Regulation 514.9.1. Note: A4:2026
@@ -445,7 +445,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>As-built drawings.</strong> For larger installations, updated drawings
                 showing the actual installed layout, cable routes, distribution board locations, and
@@ -453,7 +453,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Warning notices.</strong> All required warning labels fitted — RCD quarterly
                 test notice, dual supply warning, periodic inspection notice (next inspection date),
@@ -468,7 +468,7 @@ const sections = [
           shows the typical split:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
-          <div className="grid grid-cols-12 gap-0 bg-white/[0.06] px-4 py-3 text-xs font-semibold uppercase tracking-wide text-white/70">
+          <div className="grid grid-cols-12 gap-0 bg-white/[0.06] px-4 py-3 text-xs font-semibold uppercase tracking-wide text-white">
             <div className="col-span-6">Handover item</div>
             <div className="col-span-3 text-center">Domestic</div>
             <div className="col-span-3 text-center">Commercial</div>
@@ -486,8 +486,8 @@ const sections = [
             ].map(([item, dom, com]) => (
               <div key={item} className="grid grid-cols-12 gap-0 px-4 py-3 items-center">
                 <div className="col-span-6 font-medium">{item}</div>
-                <div className="col-span-3 text-center text-white/80">{dom}</div>
-                <div className="col-span-3 text-center text-white/80">{com}</div>
+                <div className="col-span-3 text-center text-white">{dom}</div>
+                <div className="col-span-3 text-center text-white">{com}</div>
               </div>
             ))}
           </div>
@@ -572,21 +572,21 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">O&M Manual Contents</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Installation description — an overview of the electrical system, its design basis,
                 and its key components.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Equipment data sheets — manufacturer information, model numbers, ratings, and
                 specifications for all major equipment.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Maintenance schedules — recommended maintenance intervals and procedures for each
                 piece of equipment (for example, annual thermographic survey of distribution boards,
@@ -594,21 +594,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Spare parts lists — critical spare parts and their suppliers, so replacements can be
                 sourced quickly.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Warranty information — warranty periods, conditions, and contact details for each
                 manufacturer.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Test certificates — copies of the EIC, schedule of test results, and any specialist
                 certificates (fire alarm, emergency lighting).
@@ -637,11 +637,11 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Visual inspection completed per BS 7671 Part 6, Chapter 64 (Reg 641)</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 All{' '}
                 <SEOInternalLink href="/guides/dead-vs-live-testing">dead tests</SEOInternalLink>{' '}
@@ -649,7 +649,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 All live tests completed: Zs, PFC, RCD operation, phase sequence (if 3-phase).
                 Remember the tabulated maximum Zs values assume the conductor at its normal operating
@@ -658,58 +658,58 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>All test results within BS 7671 limits — no failures outstanding</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Functional checks completed on all switchgear, controls, and interlocks (Reg
                 643.10)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 AFDD operational status confirmed where fitted — manufacturer test operated, reset
                 verified, and outcome recorded on the schedule (Reg 421.1.7 / 643.10)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Emergency systems tested (emergency lighting, fire alarm interfaces)</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Circuit charts installed at distribution boards</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>All warning notices and labels fitted</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed and signed
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Snagging items rectified and signed off</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Documentation package complete and handed to client</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Client walkthrough and demonstration completed</span>
             </li>
           </ul>
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <p className="text-white">
               <strong>Pro tip:</strong> Take photographs of the completed installation — the
               consumer unit (cover on and off), cable routing, earthing and bonding connections, and
@@ -734,7 +734,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Camera className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI Board Scanner</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -803,7 +803,7 @@ export default function CommissioningGuidePage() {
       heroTitle={
         <>
           Commissioning an Electrical Installation:{' '}
-          <span className="text-yellow-400">From Testing to Handover</span>
+          <span className="text-elec-yellow">From Testing to Handover</span>
         </>
       }
       heroSubtitle="Commissioning is the final stage before an electrical installation is put into service. It covers initial verification testing, functional checks of every device, snagging, documentation, and formal handover to the client. This guide explains the complete process for domestic and commercial installations."
@@ -815,7 +815,7 @@ export default function CommissioningGuidePage() {
       faqHeading="Frequently Asked Questions About Commissioning"
       relatedPages={relatedPages}
       ctaHeading="Commission and Certify from Your Phone"
-      ctaSubheading="Elec-Mate handles the EIC, schedule of test results, and PDF export so you can focus on the testing and functional checks. Join 1,600+ UK electricians. 7-day free trial, cancel anytime."
+      ctaSubheading="Elec-Mate handles the EIC, schedule of test results, and PDF export so you can focus on the testing and functional checks. Join 2,100+ UK electricians. 7-day free trial, cancel anytime."
     />
   );
 }

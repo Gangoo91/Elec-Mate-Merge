@@ -230,7 +230,7 @@ const sections = [
                 <span className="text-white text-sm block">Up to 50V nominal</span>
               </div>
               <div className="text-right">
-                <span className="text-yellow-400 font-bold">250V DC</span>
+                <span className="text-elec-yellow font-bold">250V DC</span>
                 <span className="text-white text-sm block">Min: 0.5 megohms</span>
               </div>
             </div>
@@ -240,7 +240,7 @@ const sections = [
                 <span className="text-white text-sm block">Including 230V and 400V circuits</span>
               </div>
               <div className="text-right">
-                <span className="text-yellow-400 font-bold">500V DC</span>
+                <span className="text-elec-yellow font-bold">500V DC</span>
                 <span className="text-white text-sm block">Min: 1.0 megohms</span>
               </div>
             </div>
@@ -250,7 +250,7 @@ const sections = [
                 <span className="text-white text-sm block">HV circuits</span>
               </div>
               <div className="text-right">
-                <span className="text-yellow-400 font-bold">1000V DC</span>
+                <span className="text-elec-yellow font-bold">1000V DC</span>
                 <span className="text-white text-sm block">Min: 1.0 megohms</span>
               </div>
             </div>
@@ -293,18 +293,18 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Test Voltage Selection</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">250V DC</strong> — used for SELV (Separated
+                <strong className="text-elec-yellow">250V DC</strong> — used for SELV (Separated
                 Extra Low Voltage) and PELV (Protective Extra Low Voltage) circuits. These include
                 doorbell transformers, some LED lighting drivers, bathroom shaver socket supplies,
                 and fire alarm circuits operating at 24V or 48V.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">500V DC</strong> — the standard test voltage for
+                <strong className="text-elec-yellow">500V DC</strong> — the standard test voltage for
                 the vast majority of circuits in domestic and commercial installations. All 230V
                 single-phase circuits, 400V three-phase circuits, and circuits up to 500V nominal
                 use this test voltage. This covers lighting, power, cooker, shower, immersion
@@ -314,9 +314,9 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">1000V DC</strong> — used for circuits above 500V
+                <strong className="text-elec-yellow">1000V DC</strong> — used for circuits above 500V
                 nominal. This is uncommon in domestic work but may be encountered in industrial
                 installations, motor circuits with higher voltage ratings, or HV distribution
                 systems.
@@ -485,42 +485,42 @@ const sections = [
         </p>
         <ul className="space-y-3 my-4">
           <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
-              <strong className="text-yellow-400">Discharge capacitance</strong> — after each IR
+              <strong className="text-elec-yellow">Discharge capacitance</strong> — after each IR
               test, allow the instrument to discharge the capacitance stored in the cable before
               disconnecting. Most modern MFTs do this automatically, but on longer cable runs the
               stored charge can give a noticeable jolt if you disconnect immediately.
             </span>
           </li>
           <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
-              <strong className="text-yellow-400">Close all switches</strong> — ensure all switches
+              <strong className="text-elec-yellow">Close all switches</strong> — ensure all switches
               on the circuit under test are in the closed (on) position. Open switches exclude the
               wiring downstream from the test, potentially masking a fault.
             </span>
           </li>
           <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
-              <strong className="text-yellow-400">Remove lamps</strong> — lamp filaments (and
+              <strong className="text-elec-yellow">Remove lamps</strong> — lamp filaments (and
               especially LED driver circuits) provide a parallel path that reduces the IR reading.
               Remove all lamps from lamp holders before testing lighting circuits.
             </span>
           </li>
           <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
-              <strong className="text-yellow-400">Disconnect SPDs</strong> — surge protective
+              <strong className="text-elec-yellow">Disconnect SPDs</strong> — surge protective
               devices connected between live conductors and earth will give a low IR reading. Many
               SPDs have a disconnect feature for testing; others need to be physically disconnected.
             </span>
           </li>
           <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
-              <strong className="text-yellow-400">Warn occupants</strong> — the 500V DC test voltage
+              <strong className="text-elec-yellow">Warn occupants</strong> — the 500V DC test voltage
               can give a significant electric shock. Ensure no one can access or touch any part of
               the circuit under test. Use warning notices at the{' '}
               <SEOInternalLink href="/guides/safe-isolation-procedure">
@@ -554,7 +554,7 @@ export default function InsulationResistanceMinValuesPage() {
         <>
           Insulation Resistance Minimum Values
           <br />
-          <span className="text-yellow-400">BS 7671 Table 64 Complete Reference</span>
+          <span className="text-elec-yellow">BS 7671 Table 64 Complete Reference</span>
         </>
       }
       heroSubtitle="Know the minimum insulation resistance values for every circuit type under BS 7671. This guide covers test voltages, minimum acceptable values, what to do when readings are too low, factors that affect IR, and how to record results correctly on the schedule of test results."
@@ -564,7 +564,7 @@ export default function InsulationResistanceMinValuesPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Auto-Validate Every IR Reading"
-      ctaSubheading="Elec-Mate compares every insulation resistance reading against BS 7671 Table 64 minimum values in real time. Readings below minimum are flagged instantly. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate compares every insulation resistance reading against BS 7671 Table 64 minimum values in real time. Readings below minimum are flagged instantly. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

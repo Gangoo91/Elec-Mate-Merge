@@ -543,7 +543,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <HelpCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <HelpCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>"What type of work will I be doing day to day?"</strong> — This clarifies
                 whether the role is domestic, commercial, maintenance, installation, or a mix. It
@@ -551,7 +551,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <HelpCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <HelpCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>
                   "Do you provide a van and tools, or am I expected to supply my own?"
@@ -561,7 +561,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <HelpCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <HelpCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>"What training and CPD opportunities do you offer?"</strong> — Good
                 employers invest in their electricians' development. Ask about paid training days,
@@ -569,7 +569,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <HelpCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <HelpCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>"What progression opportunities are there?"</strong> — Shows ambition and
                 forward thinking. Ask about supervisor roles, project management, or design
@@ -577,7 +577,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <HelpCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <HelpCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>"Which competent person scheme are you registered with?"</strong> — This
                 tells you about the company's approach to compliance and quality.
@@ -600,7 +600,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <MessageSquare className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MessageSquare className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Send a follow-up message.</strong> A brief email or text thanking the
                 interviewer, confirming your interest, and referencing something specific from the
@@ -608,7 +608,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MessageSquare className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MessageSquare className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Review your answers.</strong> Note any questions you struggled with and
                 research the correct answers. This prepares you for future interviews, even if this
@@ -616,7 +616,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MessageSquare className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MessageSquare className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Keep your options open.</strong> Do not stop looking until you have a
                 written offer. Verbal offers can fall through, and keeping momentum in your search
@@ -654,7 +654,7 @@ export default function ElectricianInterviewQuestionsPage() {
       heroTitle={
         <>
           Electrician Interview Questions:{' '}
-          <span className="text-yellow-400">Top 25 Questions and How to Answer Them</span>
+          <span className="text-elec-yellow">Top 25 Questions and How to Answer Them</span>
         </>
       }
       heroSubtitle="From safe isolation procedures to BS 7671 regulation references, from behavioural scenarios to questions you should ask the employer — this guide covers every question you are likely to face in an electrician interview, with model answers that show you know your stuff."

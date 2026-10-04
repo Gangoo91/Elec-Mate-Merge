@@ -220,7 +220,7 @@ const sections = [
             Type B MCBs — Maximum Zs for 0.4-Second Disconnection
           </h3>
           <div className="space-y-2 text-white leading-relaxed">
-            <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/10 font-bold text-yellow-400 text-sm">
+            <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/10 font-bold text-elec-yellow text-sm">
               <span>Rating</span>
               <span>Max Zs (Table)</span>
               <span>Max Zs (x 0.8)</span>
@@ -297,7 +297,7 @@ const sections = [
             Type C MCBs — Maximum Zs for 0.4-Second Disconnection
           </h3>
           <div className="space-y-2 text-white leading-relaxed">
-            <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/10 font-bold text-yellow-400 text-sm">
+            <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/10 font-bold text-elec-yellow text-sm">
               <span>Rating</span>
               <span>Max Zs (Table)</span>
               <span>Max Zs (x 0.8)</span>
@@ -370,7 +370,7 @@ const sections = [
             BS 3036 Fuses — Maximum Zs for 0.4-Second Disconnection
           </h3>
           <div className="space-y-2 text-white leading-relaxed">
-            <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/10 font-bold text-yellow-400 text-sm">
+            <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/10 font-bold text-elec-yellow text-sm">
               <span>Rating</span>
               <span>Max Zs (Table)</span>
               <span>Max Zs (x 0.8)</span>
@@ -484,7 +484,7 @@ const sections = [
           </p>
           <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
             <p className="text-white text-sm leading-relaxed">
-              <strong className="text-yellow-400">Example — B32 MCB:</strong>
+              <strong className="text-elec-yellow">Example — B32 MCB:</strong>
             </p>
             <p className="text-white text-sm leading-relaxed mt-1">
               Tabulated maximum Zs = 1.37 Ω (at 70 degrees Celsius)
@@ -526,34 +526,34 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
           <ul className="space-y-4 text-white leading-relaxed">
             <li className="flex items-start gap-3">
-              <Search className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Step 1 — Identify the device:</strong> Determine
+                <strong className="text-elec-yellow">Step 1 — Identify the device:</strong> Determine
                 the type (B, C, D, or fuse) and rating of the protective device for the circuit.
                 Check the front of the MCB or RCBO.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Table2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Table2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Step 2 — Find the table:</strong> Use Table 41.2
+                <strong className="text-elec-yellow">Step 2 — Find the table:</strong> Use Table 41.2
                 for fuses at 0.4 s, Table 41.3 for circuit-breakers — every curve, B, C and D, is in
                 that one table — and Table 41.4 for fuses at 5 s. Use the 0.4 s column for final
                 circuits or the 5 s column for distribution circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ThermometerSun className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <ThermometerSun className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Step 3 — Apply the 0.8 factor:</strong> Multiply
+                <strong className="text-elec-yellow">Step 3 — Apply the 0.8 factor:</strong> Multiply
                 the tabulated value by 0.8. This gives the maximum Zs your measured value should not
                 exceed when testing at ambient temperature.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Step 4 — Compare:</strong> Compare your measured
+                <strong className="text-elec-yellow">Step 4 — Compare:</strong> Compare your measured
                 Zs against the corrected maximum. If the measured value is below the corrected
                 maximum, the circuit passes. If it exceeds the corrected maximum, investigate
                 further.
@@ -588,7 +588,7 @@ const sections = [
         <div className="space-y-4 mt-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Verify the measurement</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -602,7 +602,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Reduce R1+R2</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -615,7 +615,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Change the protective device type</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -629,7 +629,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Add RCD protection</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -672,7 +672,7 @@ const sections = [
           </h3>
           <div className="space-y-3 text-white leading-relaxed text-sm">
             <p>
-              <strong className="text-yellow-400">Type B and Type C MCBs — no difference.</strong>{' '}
+              <strong className="text-elec-yellow">Type B and Type C MCBs — no difference.</strong>{' '}
               Table 41.3(a) and 41.3(b) each print a <em>single</em> row of Zs values that is valid
               for both 0.4 s and 5 s. This is not an omission. An MCB clears an earth fault on its
               magnetic trip, which is effectively instantaneous — so the fault current needed does
@@ -680,13 +680,13 @@ const sections = [
               is a final circuit or a distribution circuit.
             </p>
             <p>
-              <strong className="text-yellow-400">Type D MCBs — the exception.</strong> Table
+              <strong className="text-elec-yellow">Type D MCBs — the exception.</strong> Table
               41.3(c) is the only circuit-breaker table that prints two rows: a 0.4 s row computed
               at 20 × In, and a 5 s row at 10 × In. The 5 s values are exactly double the 0.4 s
               ones.
             </p>
             <p>
-              <strong className="text-yellow-400">Fuses — genuinely different.</strong> Fuses clear
+              <strong className="text-elec-yellow">Fuses — genuinely different.</strong> Fuses clear
               on a thermal characteristic, so time really does matter. Table 41.2 gives the 0.4 s
               values and <strong>Table 41.4</strong> gives the 5 s values — a separate table, not a
               separate column.
@@ -805,7 +805,7 @@ export default function MaximumZsValuesPage() {
       badgeIcon={Table2}
       heroTitle={
         <>
-          Maximum Zs Values BS 7671: <span className="text-yellow-400">Complete Table Guide</span>
+          Maximum Zs Values BS 7671: <span className="text-elec-yellow">Complete Table Guide</span>
         </>
       }
       heroSubtitle="The complete reference to maximum Zs values per BS 7671 for UK electricians. Tables 41.2, 41.3, and 41.4 with values for Type B MCBs, Type C MCBs, and BS 3036 fuses. The 0.8 temperature correction factor, how to use the tables, and what to do when Zs exceeds the maximum permitted value."
@@ -822,7 +822,7 @@ export default function MaximumZsValuesPage() {
       leadMagnet={false}
       heroCtaLabel="Check every Zs reading automatically"
       ctaHeading="Look up maximum Zs values instantly on site"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site testing and certification. Instant Zs lookup, auto-validation, voice test entry, 70+ calculators. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site testing and certification. Instant Zs lookup, auto-validation, voice test entry, 70+ calculators. 7-day free trial, cancel anytime."
     />
   );
 }

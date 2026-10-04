@@ -228,7 +228,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Early stage</strong> — the shower works but trips occasionally, perhaps once
                 every few days. The insulation is marginal and only fails under specific conditions
@@ -236,7 +236,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mid stage</strong> — the shower works for a few minutes then trips. The
                 insulation holds when the element is cold but breaks down as it heats up. The hotter
@@ -244,7 +244,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Late stage</strong> — the RCD trips as soon as the shower is switched on.
                 The insulation has failed completely and current leaks to earth even when the
@@ -282,7 +282,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Damaged cable entry grommet</strong> — the grommet where the supply cable
                 enters the shower unit provides a watertight seal. If it is cracked, missing, or not
@@ -291,7 +291,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cracked shower case</strong> — physical damage to the shower enclosure
                 allows water spray to enter the unit directly. Even a hairline crack can admit
@@ -299,7 +299,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Failed internal seals</strong> — the shower unit contains internal seals
                 between the water path and the electrical compartment. Over time, these seals can
@@ -307,7 +307,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Condensation</strong> — in poorly ventilated bathrooms, condensation can
                 form inside the shower unit, particularly on cold surfaces. Over time, this moisture
@@ -342,7 +342,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Damaged cable</strong> — if the supply cable has been nicked or crushed (for
                 example, by a screw or nail during building work), the neutral conductor insulation
@@ -350,7 +350,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Termination error</strong> — if the neutral and earth conductors are crossed
                 at the shower terminal block or at the consumer unit, current will flow on the wrong
@@ -358,7 +358,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Borrowed neutral</strong> — in some older installations, circuits share
                 neutral conductors. If the shower circuit shares a neutral with another circuit, the
@@ -393,7 +393,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Zone system</strong> — bathrooms are divided into zones (0, 1, and 2) based
                 on proximity to the bath or shower tray. Each zone has specific requirements for
@@ -402,7 +402,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection</strong> — Regulation 411.3.3 requires additional protection
                 by RCDs not exceeding 30mA for circuits in bathrooms and shower rooms. This applies
@@ -411,7 +411,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Supplementary equipotential bonding</strong> — Regulation 701.415.2 requires
                 supplementary bonding in bathrooms to reduce touch voltages between exposed
@@ -420,7 +420,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Switches and controls</strong> — Regulation 132.14 governs the selection and
                 placement of switches in bathrooms. Pull-cord switches or switches outside the
@@ -566,7 +566,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">1. Isolate and Disconnect</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -579,7 +579,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">2. Test Circuit Wiring</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -594,7 +594,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">3. Test Shower Unit</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -609,7 +609,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ShieldCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">4. Verify Protection and Bonding</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -654,7 +654,7 @@ export default function ElectricShowerTrippingRCDPage() {
       heroTitle={
         <>
           Electric Shower Keeps Tripping RCD:{' '}
-          <span className="text-yellow-400">Causes and Solutions</span>
+          <span className="text-elec-yellow">Causes and Solutions</span>
         </>
       }
       heroSubtitle="Your shower trips the RCD every time you use it. This guide explains why — from degraded heating elements to water ingress and neutral-earth faults — covers the Section 701 bathroom regulations, and walks through the diagnostic process step by step."
@@ -665,7 +665,7 @@ export default function ElectricShowerTrippingRCDPage() {
       faqHeading="Frequently Asked Questions About Electric Showers Tripping the RCD"
       relatedPages={relatedPages}
       ctaHeading="Diagnose and Certify Shower Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI fault diagnosis, insulation resistance guidance, and professional certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for AI fault diagnosis, insulation resistance guidance, and professional certificates. 7-day free trial, cancel anytime."
     />
   );
 }

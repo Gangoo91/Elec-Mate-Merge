@@ -178,7 +178,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BadgeCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BadgeCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EX01 — Fundamentals.</strong> Principles of explosion protection, legislation
                 (ATEX Directive, DSEAR 2002), zone classification, Ex equipment markings, temperature
@@ -187,7 +187,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BadgeCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BadgeCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EX02 — Installation and Inspection (Zone 1 and Zone 2).</strong> Practical
                 installation and inspection of Ex equipment in gas/vapour Zone 1 and Zone 2 areas.
@@ -196,7 +196,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BadgeCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BadgeCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EX03 — Zone 0 Equipment.</strong> Additional requirements for working with
                 Category 1 equipment (Zone 0). Ex ia intrinsic safety in particular. Zener barriers,
@@ -204,7 +204,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BadgeCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BadgeCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EX04 — Testing and Verification.</strong> Testing, verification, and
                 certification of hazardous area electrical installations. Completing inspection
@@ -212,7 +212,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BadgeCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BadgeCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EX05–EX07 — Instrumentation.</strong> Instrument loop checking, process
                 instrumentation in hazardous areas, data communications, and fieldbus systems in
@@ -278,19 +278,19 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Cogent Skills</strong> — multiple locations including North East England. The sector skills body for the nuclear and process industries. Highly regarded for CompEx delivery.</span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>STC (Safety Training Centre), Aberdeen</strong> — primary centre for offshore-focused CompEx. Well connected with North Sea operators and contractors.</span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Emco Training</strong> — multiple UK locations. Offers EX01–EX04 as a packaged 5-day course with assessment.</span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>ECS Training</strong> — various UK locations. CompEx alongside broader electrical training programmes.</span>
             </li>
           </ul>
@@ -315,19 +315,19 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>5-day preparation and assessment course:</strong> £1,500–£2,500 at most training centres. This is the most common route and includes all four units.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Workplace assessment only (if you already have experience):</strong> £800–£1,500, depending on the assessor and number of units. Requires a portfolio of workplace evidence.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>EAL registration and certification fees:</strong> Included in most training centre packages. Typically £200–£400 if paying separately.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>5-year renewal assessment:</strong> £500–£1,000. Less extensive than the initial assessment.</span>
             </li>
           </ul>
@@ -387,7 +387,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Offshore oil and gas:</strong> ATEX zones are pervasive on offshore
                 platforms. CompEx-certified offshore electricians earn £600–£1,200 per day. See the{' '}
@@ -398,14 +398,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Onshore refineries and chemical plants:</strong> Long-term contract work at
                 major UK sites. Rates of £45–£70 per hour for competent ATEX electricians.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Nuclear sites with ATEX zones:</strong> Many nuclear licensed sites include
                 ATEX-classified areas. CompEx plus nuclear clearance is a powerful combination for
@@ -417,7 +417,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Distilleries, pharmaceuticals, and food processing:</strong> Growing sectors
                 with consistent demand for ATEX maintenance. Often more accessible for electricians
@@ -449,7 +449,7 @@ export default function CompExQualificationGuidePage() {
       heroTitle={
         <>
           CompEx Qualification Guide:{' '}
-          <span className="text-yellow-400">Explosive Atmospheres Competency for UK Electricians</span>
+          <span className="text-elec-yellow">Explosive Atmospheres Competency for UK Electricians</span>
         </>
       }
       heroSubtitle="CompEx is the industry-standard qualification for working in explosive atmospheres. This guide covers all units (EX01–EX07), the 5-day assessment process, approved training centres, costs, and the career opportunities CompEx unlocks."

@@ -8,6 +8,7 @@ import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
 import { safeAll } from '../_shared/safe-parallel.ts';
 import { captureException } from '../_shared/sentry.ts';
+import { fetchChatCompletions, fetchEmbeddings } from '../_shared/llm-direct.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -19,8 +20,8 @@ serve(async (req) => {
 
   try {
     const { messages, context, userContext } = await req.json();
-    const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
-    if (!lovableApiKey) throw new ValidationError('LOVABLE_API_KEY not configured');
+    const aiApiKey = Deno.env.get('OPENAI_API_KEY');
+    if (!aiApiKey) throw new ValidationError('OPENAI_API_KEY not configured');
 
     logger.info('Inspector Agent processing', { messageCount: messages?.length });
 
@@ -35,14 +36,14 @@ serve(async (req) => {
     logger.debug('RAG query for inspection knowledge', { query: ragQuery });
 
     // Generate embedding for inspection knowledge search with retry + timeout
-    const embeddingResponse = await logger.time('Lovable AI embedding generation', () =>
+    const embeddingResponse = await logger.time('AI embedding generation', () =>
       withRetry(
         () =>
           withTimeout(
-            fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
+            fetchEmbeddings({
               method: 'POST',
               headers: {
-                Authorization: `Bearer ${lovableApiKey}`,
+                Authorization: `Bearer ${aiApiKey}`,
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({
@@ -51,7 +52,7 @@ serve(async (req) => {
               }),
             }),
             Timeouts.STANDARD,
-            'Lovable AI embedding generation'
+            'AI embedding generation'
           ),
         RetryPresets.STANDARD
       )
@@ -266,10 +267,10 @@ Use professional language with UK English spelling. Cite specific regulations an
 
     systemPrompt += `\n\n💬 Guide them through the inspection & testing process like you're mentoring an apprentice on their first EICR.`;
 
-    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+    const response = await fetchChatCompletions({
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${lovableApiKey}`,
+        Authorization: `Bearer ${aiApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({

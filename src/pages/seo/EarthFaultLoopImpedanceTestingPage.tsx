@@ -298,14 +298,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Table 41.3</strong> — maximum Zs for BS 88-2 and BS 88-3 fuses (industrial
                 cartridge fuses). Values at 0.4s and 5s disconnection times.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reg 411.4.4 (Zs × Ia ≤ Uo × Cmin, Cmin = 0.95)</strong> — maximum Zs for
                 Type B MCBs to BS EN 60898 and BS EN 61009. At 32A, maximum Zs is 1.37Ω (0.4s). At
@@ -313,7 +313,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Table 41.5</strong> — maximum Zs for Type C MCBs. Values are lower than Type
                 B because Type C devices require a higher fault current to operate in the
@@ -321,7 +321,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Table 41.6</strong> — maximum Zs for Type D MCBs. At 32A, maximum Zs is
                 0.36Ω (0.4s). Type D devices are used for high-inrush loads and require very low Zs
@@ -329,7 +329,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ambient temperature correction</strong> — all table values assume conductors
                 at maximum operating temperature. For measurements at ambient temperature (~20°C),
@@ -378,7 +378,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Borderline</strong> — if the measured value is close to (but below) the
                 corrected limit, consider whether measurement uncertainty in the instrument
@@ -466,7 +466,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Zap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Measure Ze First</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -532,7 +532,7 @@ export default function EarthFaultLoopImpedanceTestingPage() {
       heroTitle={
         <>
           Earth Fault Loop Impedance Testing:{' '}
-          <span className="text-yellow-400">Zs Testing Procedure and Accepted Values</span>
+          <span className="text-elec-yellow">Zs Testing Procedure and Accepted Values</span>
         </>
       }
       heroSubtitle="A complete guide to measuring and assessing earth fault loop impedance (Zs) for UK electricians. Covers Ze vs Zs, the measurement procedure, BS 7671 Appendix 3 table values, temperature correction, and common causes of high Zs readings."
@@ -543,7 +543,7 @@ export default function EarthFaultLoopImpedanceTestingPage() {
       faqHeading="Frequently Asked Questions About Earth Fault Loop Impedance Testing"
       relatedPages={relatedPages}
       ctaHeading="Record Zs Test Results and Complete EICs on Your Phone"
-      ctaSubheading="Elec-Mate automatically checks Zs readings against BS 7671 Appendix 3 tables and generates professional test schedules on site. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate automatically checks Zs readings against BS 7671 Appendix 3 tables and generates professional test schedules on site. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

@@ -189,7 +189,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Solar PV generation</strong> — the primary generation source for most UK
                 off-grid installations. Size is determined by annual energy yield calculations using
@@ -198,7 +198,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Battery bank</strong> — stores solar generation for use when the sun is not
                 shining. Must be sized for 3–5 days of autonomy at average daily consumption,
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Backup generator</strong> — petrol or diesel generator (5–15 kW) for
                 extended periods of low irradiance. The generator charges the battery bank via the
@@ -215,7 +215,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inverter/charger</strong> — the central management device that converts DC
                 battery power to AC for use in the property, manages solar charging via MPPT
@@ -287,7 +287,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Victron Energy Quattro</strong> — the market-leading inverter/charger for UK
                 off-grid installations. Available in 3–15 kVA sizes. Dual AC input (generator +
@@ -296,7 +296,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SMA Sunny Island</strong> — German-engineered off-grid inverter, 3.7–6 kW
                 per unit with master/slave parallel capability for larger loads. Pairs with SMA
@@ -304,7 +304,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Peak load sizing</strong> — size the inverter for peak simultaneous demand,
                 not average. A typical UK home may have a peak demand of 6–10 kW (oven, kettle,
@@ -314,7 +314,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Transfer switch time</strong> — when switching between generator and
                 inverter power, the transfer switch introduces a brief interruption (typically 20–40
@@ -389,7 +389,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Voltage and frequency synthesis</strong> — the grid-forming inverter
                 maintains 230V AC at 50 Hz regardless of grid presence. Standard appliances and
@@ -397,7 +397,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Black start capability</strong> — a grid-forming inverter can start up from
                 a fully discharged battery (once minimum voltage is reached) without any external
@@ -405,7 +405,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Generator synchronisation</strong> — a good inverter/charger (Victron
                 Quattro, SMA Sunny Island) automatically synchronises with a connected generator,
@@ -434,7 +434,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Grid connection costs (typical range)</strong> — £5,000–£15,000 for
                 properties within 100 m of the nearest point of connection; £15,000–£60,000+ for
@@ -443,14 +443,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Small off-grid system (cabin, 2–3 kW)</strong> — £15,000–£25,000 installed
                 including solar, LFP battery bank, inverter/charger, and generator.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full domestic off-grid system (5–10 kW)</strong> — £30,000–£60,000
                 installed. This figure includes 4–8 kW solar, 30–50 kWh LFP battery, Victron Quattro
@@ -458,7 +458,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ongoing costs</strong> — generator fuel and servicing (£500–£1,500/year),
                 battery replacement after 10–15 years (LFP), and periodic inverter maintenance.
@@ -484,7 +484,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Certificate On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -519,7 +519,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage off-grid installations with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for certificates, quoting, and job management. Complete EIC and commissioning documents on your phone."
+          description="Join 2,100+ UK electricians using Elec-Mate for certificates, quoting, and job management. Complete EIC and commissioning documents on your phone."
           icon={Sun}
         />
       </>
@@ -545,7 +545,7 @@ export default function OffGridElectricalSystemPage() {
       heroTitle={
         <>
           Off-Grid Electrical Systems UK:{' '}
-          <span className="text-yellow-400">Off-Grid Power Design Guide</span>
+          <span className="text-elec-yellow">Off-Grid Power Design Guide</span>
         </>
       }
       heroSubtitle="A complete guide to designing and installing off-grid electrical systems in the UK — from narrowboats to remote rural properties. System design, DC voltage selection, inverter/charger choice, battery sizing, and a realistic cost comparison with grid connection."
@@ -556,7 +556,7 @@ export default function OffGridElectricalSystemPage() {
       faqHeading="Frequently Asked Questions About Off-Grid Electrical Systems"
       relatedPages={relatedPages}
       ctaHeading="Certificate Off-Grid Electrical Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC certificates, test schedules, and commissioning records. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC certificates, test schedules, and commissioning records. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -292,7 +292,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICRs for landlords</strong> — Chester has a large private rental market.
                 EICRs every five years (or at change of tenancy) are a legal requirement.
@@ -301,7 +301,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacements</strong> — Chester's older housing stock
                 frequently has outdated fuse boards that need upgrading to modern consumer units
@@ -310,7 +310,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger installations</strong> — demand for home and commercial EV
                 chargers is growing across Chester. New-build estates are a particular growth area.
@@ -319,7 +319,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full and partial rewires</strong> — Chester's Victorian and Edwardian
                 housing stock generates significant rewiring work. Partial rewires are common where
@@ -464,7 +464,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EIC and EICR Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -513,7 +513,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Chester electricians"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -540,7 +540,7 @@ export default function ElectricianChesterPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Chester: <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Chester: <span className="text-elec-yellow">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Chester's unique mix of Roman walls, medieval timber-framed buildings, Victorian terraces, and modern new-builds demands electricians who understand Part P compliance, Electricity North West connections, and heritage property challenges."
@@ -551,7 +551,7 @@ export default function ElectricianChesterPage() {
       faqHeading="Frequently Asked Questions About Electricians in Chester"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Chester Electricians"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Part P compliance and the realities of Chester's heritage property stock. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Part P compliance and the realities of Chester's heritage property stock. 7-day free trial."
     />
   );
 }

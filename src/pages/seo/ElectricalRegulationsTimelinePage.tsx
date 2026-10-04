@@ -443,7 +443,7 @@ const sections = [
                 implemented immediately; the previous text
                 (BS 7671:2018+A2:2022+Corrigendum (May 2023)+A3:2024) is withdrawn on 15 October
                 2026. See the{' '}
-                <a href="#amendment-four" className="text-yellow-400 underline underline-offset-2">
+                <a href="#amendment-four" className="text-elec-yellow underline underline-offset-2">
                   Amendment 4 section below
                 </a>{' '}
                 for the full detail.
@@ -749,7 +749,7 @@ export default function ElectricalRegulationsTimelinePage() {
       heroTitle={
         <>
           UK Electrical Regulations Timeline:{' '}
-          <span className="text-yellow-400">140 Years of Wiring Standards</span>
+          <span className="text-elec-yellow">140 Years of Wiring Standards</span>
         </>
       }
       heroSubtitle="From a handful of fire-prevention rules in 1882 to BS 7671:2018+A4:2026, the UK's electrical wiring regulations have evolved through 18 editions. This timeline traces every key milestone, amendment, and regulatory change."

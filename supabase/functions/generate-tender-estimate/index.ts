@@ -3,6 +3,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { ingestTenderDocuments } from './documentIngest.ts';
 
 import { withSentry } from '../_shared/sentry.ts';
+import { fetchChatCompletions, fetchEmbeddings } from '../_shared/llm-direct.ts';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers':
@@ -80,7 +81,7 @@ interface LabourTimeResult {
  */
 async function generateEmbedding(text: string, apiKey: string): Promise<number[] | null> {
   try {
-    const response = await fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
+    const response = await fetchEmbeddings({
       method: 'POST',
       headers: {
         Authorization: `Bearer ${apiKey}`,
@@ -642,9 +643,9 @@ Deno.serve(withSentry('generate-tender-estimate', async (req) => {
       `[TENDER-ESTIMATE] Team size: ${teamSize.electricians} electricians, ${teamSize.mates} mates, ${teamSize.supervisors} supervisors`
     );
 
-    // Get Lovable API key for AI
-    const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
-    if (!lovableApiKey) {
+    // AI key (OpenAI / Gemini direct — ELE-1812)
+    const aiApiKey = Deno.env.get('OPENAI_API_KEY');
+    if (!aiApiKey) {
       console.log('[TENDER-ESTIMATE] No API key, using fallback estimation');
       const fallbackEstimate = generateFallbackEstimate(
         projectValue,
@@ -679,7 +680,7 @@ Deno.serve(withSentry('generate-tender-estimate', async (req) => {
 
     // Generate embedding for semantic search
     const ragQuery = `${projectTitle} ${projectDescription.substring(0, 500)} ${projectCategories.join(' ')} ${scopeKeywords.join(' ')} electrical installation`;
-    const embedding = await generateEmbedding(ragQuery, lovableApiKey);
+    const embedding = await generateEmbedding(ragQuery, aiApiKey);
 
     // Parallel RAG searches with enhanced multi-pass strategy
     const [pricingResults, labourResults, regional, docIngest] = await Promise.all([
@@ -844,10 +845,10 @@ RESPONSE FORMAT (JSON only - include team_size and team_composition):
     // Call AI for estimation
     console.log(`[TENDER-ESTIMATE] Calling AI (max_tokens: ${maxTokens})...`);
 
-    const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+    const aiResponse = await fetchChatCompletions({
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${lovableApiKey}`,
+        Authorization: `Bearer ${aiApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({

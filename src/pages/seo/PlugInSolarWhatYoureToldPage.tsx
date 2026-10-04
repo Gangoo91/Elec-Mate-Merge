@@ -409,7 +409,7 @@ export default function PlugInSolarWhatYoureToldPage() {
       heroTitle={
         <>
           What a Plug-in Solar Kit Must Tell You —{' '}
-          <span className="text-yellow-400">and When You Get to Read It</span>
+          <span className="text-elec-yellow">and When You Get to Read It</span>
         </>
       }
       heroSubtitle="The specification puts heavy information duties on the product, the plug and the documentation in the box: network notification, one device per circuit, the cladding warnings, a label for your consumer unit and a conformity statement. What it does not reach is the shop listing — so nearly all of it arrives after you have paid."
@@ -440,7 +440,7 @@ export default function PlugInSolarWhatYoureToldPage() {
       faqHeading="What You Must Be Told — Frequently Asked Questions"
       relatedPages={relatedPages}
       ctaHeading="Answering This for a Customer in Writing"
-      ctaSubheading="Elec-Mate's Plug-in Solar Suitability & Commissioning Certificate assesses the installation, marks every finding as a requirement or as advice with the source against each, and produces a plain-English decision sheet for a landlord or managing agent. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's Plug-in Solar Suitability & Commissioning Certificate assesses the installation, marks every finding as a requirement or as advice with the source against each, and produces a plain-English decision sheet for a landlord or managing agent. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

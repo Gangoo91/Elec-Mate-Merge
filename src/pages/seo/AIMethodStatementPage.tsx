@@ -260,7 +260,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Health and Safety at Work etc. Act 1974</strong> — General duties on
                 employers and the self-employed to ensure the health and safety of workers and
@@ -268,7 +268,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Management of Health and Safety at Work Regulations 1999</strong> —
                 Regulation 3 requires suitable and sufficient risk assessments for all work
@@ -276,7 +276,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electricity at Work Regulations 1989</strong> — Specific duties for work on
                 or near electrical systems, including safe isolation (Regulation 12) and live
@@ -284,7 +284,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>COSHH Regulations 2002</strong> — Assessment of exposure to hazardous
                 substances encountered during electrical work.
@@ -348,14 +348,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <HardHat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <HardHat className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Isolation and testing:</strong> Insulated gloves to BS EN 60903, safety
                 glasses, GS38-compliant voltage indicator, lock-off devices, warning notices.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <HardHat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <HardHat className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Chasing and drilling:</strong> Safety goggles, FFP3 dust mask (for silica
                 dust), hearing protection if using SDS drill or angle grinder, dust extraction
@@ -363,7 +363,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <HardHat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <HardHat className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Working at height:</strong> Appropriate access equipment (step platform,
                 podium steps, or tower scaffold as specified), tool tether where dropping tools
@@ -371,7 +371,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <HardHat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <HardHat className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hot works:</strong> Fire extinguisher (CO2 for electrical fires), fire
                 blanket, fire-retardant mat, fire watch period of 60 minutes after completion.
@@ -464,7 +464,7 @@ export default function AIMethodStatementPage() {
       heroTitle={
         <>
           AI Method Statement Generator:{' '}
-          <span className="text-yellow-400">Professional RAMS in Under 60 Seconds</span>
+          <span className="text-elec-yellow">Professional RAMS in Under 60 Seconds</span>
         </>
       }
       heroSubtitle="Describe your electrical job in plain English. The AI generates a complete, site-specific method statement with risk assessment, control measures, PPE requirements, and permits. CDM 2015 compliant. Export as a branded PDF."
@@ -487,7 +487,7 @@ export default function AIMethodStatementPage() {
       faqHeading="Frequently Asked Questions About the Method Statement Generator"
       relatedPages={relatedPages}
       ctaHeading="Generate Professional RAMS in Seconds"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI-powered method statements and risk assessments. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for AI-powered method statements and risk assessments. 7-day free trial, cancel anytime."
       toolPath="/tools/ai-method-statement-generator"
     />
   );

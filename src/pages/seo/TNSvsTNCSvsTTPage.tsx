@@ -582,7 +582,7 @@ export default function TNSvsTNCSvsTTPage() {
       heroTitle={
         <>
           Earthing Systems Explained:{' '}
-          <span className="text-yellow-400">TN-S, TN-C-S and TT for UK Electricians</span>
+          <span className="text-elec-yellow">TN-S, TN-C-S and TT for UK Electricians</span>
         </>
       }
       heroSubtitle="The earthing system decides your Zs limit, your disconnection time and whether an MCB or an RCD provides fault protection. This guide compares TN-S, TN-C-S (PME) and TT against BS 7671:2018+A4:2026, covers the PME open-PEN restrictions, and shows how to identify each system on site."

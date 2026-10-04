@@ -44,7 +44,7 @@ export default function ElectricalCustomerServicePage() {
       heroTitle={
         <>
           Customer Service for Electricians:{' '}
-          <span className="text-yellow-400">Win Repeat Work and Referrals</span>
+          <span className="text-elec-yellow">Win Repeat Work and Referrals</span>
         </>
       }
       heroSubtitle="Technical skill gets you qualified, but customer service builds your business. The electricians who are fully booked months in advance are not always the most skilled — they are the ones who communicate well, turn up on time, leave properties clean, and make customers feel valued. This guide covers every aspect of customer service that turns one-off jobs into lifelong clients."
@@ -71,41 +71,41 @@ export default function ElectricalCustomerServicePage() {
               <div className="space-y-4 mt-6">
                 <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
                   <div className="flex items-center gap-2 mb-3">
-                    <Sparkles className="w-5 h-5 text-yellow-400" />
+                    <Sparkles className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">The First 30 Seconds</h3>
                   </div>
                   <ul className="space-y-2 text-white text-sm leading-relaxed">
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>
                         Arrive on time. If you are going to be late, call ahead with a realistic
                         revised time.
                       </span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>
                         Park considerately. Do not block the customer's drive or their neighbour's
                         access.
                       </span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Introduce yourself by name and confirm what you are there to do.</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Wear clean, branded workwear. First impressions are visual.</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>
                         Put on shoe covers or ask the customer if they would like you to remove your
                         boots.
                       </span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Ask where you can set up and where the consumer unit is located.</span>
                     </li>
                   </ul>
@@ -186,31 +186,31 @@ export default function ElectricalCustomerServicePage() {
                 <h3 className="font-bold text-white text-lg mb-3">Cleanliness Standards</h3>
                 <ul className="space-y-2 text-white text-sm leading-relaxed">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>Use dust sheets under every work area, even for small jobs</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>Vacuum and wipe down after chasing, drilling, or cutting</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>Remove all waste, cable offcuts, packaging, and old components</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>Wipe fingerprints off walls, light switches, and socket faceplates</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>Leave new accessories level, clean, and properly aligned</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>If you have moved furniture, put it back exactly where it was</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>Take your rubbish with you — never leave it for the customer</span>
                   </li>
                 </ul>
@@ -241,7 +241,7 @@ export default function ElectricalCustomerServicePage() {
                   <h3 className="font-bold text-white text-lg mb-3">What Customers Expect</h3>
                   <ul className="space-y-2 text-white text-sm leading-relaxed">
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>
                         <SEOInternalLink href="/guides/electrical-certificate-types-uk">
                           Electrical certificates
@@ -250,15 +250,15 @@ export default function ElectricalCustomerServicePage() {
                       </span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Clear, itemised quotes before work begins</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Professional invoices with multiple payment options</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Written confirmation of warranty and guarantees</span>
                     </li>
                   </ul>
@@ -267,19 +267,19 @@ export default function ElectricalCustomerServicePage() {
                   <h3 className="font-bold text-white text-lg mb-3">What Sets You Apart</h3>
                   <ul className="space-y-2 text-white text-sm leading-relaxed">
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Certificates emailed before you leave site</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Branded documents with your logo and company details</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>Online payment links for instant card payment</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>A summary of what was done in plain English</span>
                     </li>
                   </ul>
@@ -399,37 +399,37 @@ export default function ElectricalCustomerServicePage() {
               <div className="space-y-4 mt-6">
                 <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
                   <div className="flex items-center gap-2 mb-3">
-                    <MessageSquare className="w-5 h-5 text-yellow-400" />
+                    <MessageSquare className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">The LAST Framework</h3>
                   </div>
                   <ul className="space-y-3 text-white text-sm leading-relaxed">
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>
-                        <strong className="text-yellow-400">Listen</strong> — let the customer
+                        <strong className="text-elec-yellow">Listen</strong> — let the customer
                         explain the problem fully without interrupting. They need to feel heard.
                       </span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>
-                        <strong className="text-yellow-400">Acknowledge</strong> — show that you
+                        <strong className="text-elec-yellow">Acknowledge</strong> — show that you
                         understand their frustration. "I can see why that is concerning" or "I
                         appreciate you letting me know" validates their feelings.
                       </span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>
-                        <strong className="text-yellow-400">Solve</strong> — propose a solution and
+                        <strong className="text-elec-yellow">Solve</strong> — propose a solution and
                         agree a timeline. "I will come back on Thursday to sort this out at no
                         additional cost" is what the customer needs to hear.
                       </span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                       <span>
-                        <strong className="text-yellow-400">Thank</strong> — thank the customer for
+                        <strong className="text-elec-yellow">Thank</strong> — thank the customer for
                         bringing the issue to your attention. This reframes the complaint as helpful
                         feedback rather than an attack.
                       </span>
@@ -582,7 +582,7 @@ export default function ElectricalCustomerServicePage() {
         },
       ]}
       ctaHeading="Deliver Five-Star Service With Elec-Mate"
-      ctaSubheading="Professional certificates, instant quotes, branded invoices, and automatic re-inspection reminders. Every customer touchpoint reflects the quality of your work. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Professional certificates, instant quotes, branded invoices, and automatic re-inspection reminders. Every customer touchpoint reflects the quality of your work. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

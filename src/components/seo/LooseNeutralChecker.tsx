@@ -115,9 +115,9 @@ export default function LooseNeutralChecker() {
       ) : count === 1 ? (
         <div
           role="status"
-          className="mt-4 flex items-start gap-3 rounded-xl border border-yellow-500/30 bg-yellow-500/10 p-4"
+          className="mt-4 flex items-start gap-3 rounded-xl border border-white/[0.1] bg-white/[0.06] p-4"
         >
-          <CheckCircle2 className="h-5 w-5 shrink-0 text-yellow-400" aria-hidden />
+          <CheckCircle2 className="h-5 w-5 shrink-0 text-elec-yellow" aria-hidden />
           <div>
             <p className="font-semibold leading-snug text-white">
               One symptom on its own is not conclusive

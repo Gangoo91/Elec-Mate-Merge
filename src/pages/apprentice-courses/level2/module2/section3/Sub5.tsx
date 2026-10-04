@@ -45,9 +45,9 @@ const checks = [
     question:
       'A 70°C PVC-insulated cable run is left in a hot loft. The ambient is 45°C and the cable is also bunched with three other circuits. What does BS 7671 want you to do?',
     options: [
-      'By evaluating whether the space is substantially enclosed and whether there is a foreseeable risk of serious injury from hazardous conditions',
-      'Golden thread of digital information including electrical certification, accountability through dutyholder roles, and AFDD-related design considerations',
-      'Could be a short circuit (L-N), an earth fault (L-PE), or both — depends what the nail bridges',
+      'Nothing — the 70 °C rating is above the 45 °C ambient, so the cable is fine',
+      'Use the tabulated current rating directly, as correction factors only apply to buried cables',
+      'Swap to a lower-rated MCB without checking the cable',
       'Apply Appendix 4 correction factors (ambient + grouping) and check the corrected rating still covers the design current',
     ],
     correctIndex: 3,
@@ -100,9 +100,9 @@ const quizQuestions = [
     question: 'Why does grouping cables together reduce their current rating?',
     options: [
       "Bunched cables can't dissipate heat as well, so they run hotter for the same current",
-      'Apply for supply upgrade, consider on-site generation, or implement load management',
-      'A target for total primary energy consumption including generation and distribution losses',
-      'To take reasonable care of themselves and others, and cooperate with employers',
+      'The cables share the current between them, so each carries less',
+      'The magnetic fields cancel and raise the cable resistance',
+      'Grouped cables have a higher voltage drop, which the rating allows for',
     ],
     correctAnswer: 0,
     explanation:
@@ -112,10 +112,10 @@ const quizQuestions = [
     id: 5,
     question: 'A circuit-protective device (fuse or MCB) trips on overload because:',
     options: [
-      'Evaluating and prioritising risks by plotting likelihood against severity',
+      'The voltage rises above the rating of the device',
       'Current creates heat in the device, which triggers the trip mechanism above the rated value',
-      'Activating event, Beliefs (about the event), Consequences (emotional and behavioural)',
-      'Location, type, condition, pressure gauge reading (if applicable), seal integrity, and any damage or obstruction',
+      'The device detects current flowing to earth',
+      'The supply frequency changes under heavy load',
     ],
     correctAnswer: 1,
     explanation:
@@ -125,10 +125,10 @@ const quizQuestions = [
     id: 6,
     question: 'A loose terminal in a junction box typically causes:',
     options: [
-      'After every practice test, with a formal review every 2-3 weeks',
-      'Gradually increase lighting based on time of day',
+      'A drop in circuit resistance, so the MCB trips instantly',
+      'An earth fault that the RCD clears straight away',
       'High contact resistance, localised I²R heating and possible fire',
-      'A solar system connected to the mains grid, exporting excess generation',
+      'No effect until the cable is next tested',
     ],
     correctAnswer: 2,
     explanation:

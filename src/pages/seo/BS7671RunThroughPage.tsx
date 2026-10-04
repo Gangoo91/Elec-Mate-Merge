@@ -367,7 +367,7 @@ const sections = [
             </div>
           </div>
           <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <BookMarked className="w-8 h-8 text-yellow-400 shrink-0 mt-1" />
+            <BookMarked className="w-8 h-8 text-elec-yellow shrink-0 mt-1" />
             <div>
               <h3 className="font-bold text-white text-lg mb-1">Section 722 — EV Charging</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -400,7 +400,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tab your book before the exam.</strong> Use colour-coded tab stickers for
                 key tables: Table 41.1, Appendix 3, Appendix 4, Table 52.3, and each Part 7 section.
@@ -409,7 +409,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Answer the easy questions first.</strong> Go through the paper and answer
                 every question you know immediately. Then go back and tackle the questions that
@@ -418,7 +418,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Practise with mock exams under timed conditions.</strong> The exam is about
                 speed as much as knowledge. Complete at least 5 full mock papers before the real
@@ -427,7 +427,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Do not leave any question blank.</strong> There is no negative marking. If
                 you cannot find the answer, eliminate the obviously wrong options and make your best
@@ -514,7 +514,7 @@ export default function BS7671RunThroughPage() {
       badgeIcon={BookOpen}
       heroTitle={
         <>
-          BS 7671 Run-Through: <span className="text-yellow-400">Part by Part Study Guide</span>
+          BS 7671 Run-Through: <span className="text-elec-yellow">Part by Part Study Guide</span>
         </>
       }
       heroSubtitle="Walk through every part of BS 7671:2018+A4:2026 with this structured study guide. Key regulations highlighted, exam focus areas identified, and study strategy for the C&G 2382 exam. Use alongside your copy of the brown book."
@@ -525,7 +525,7 @@ export default function BS7671RunThroughPage() {
       faqHeading="Frequently Asked Questions About Studying BS 7671"
       relatedPages={relatedPages}
       ctaHeading="Study BS 7671 smarter with AI-powered tools"
-      ctaSubheading="Join 1,600+ UK electricians preparing for the 18th Edition exam with Elec-Mate. AI tutor, flashcards, unlimited mock exams, and structured study modules. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians preparing for the 18th Edition exam with Elec-Mate. AI tutor, flashcards, unlimited mock exams, and structured study modules. 7-day free trial, cancel anytime."
     />
   );
 }

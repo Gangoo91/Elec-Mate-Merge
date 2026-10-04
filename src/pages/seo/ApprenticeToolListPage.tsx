@@ -247,7 +247,7 @@ export default function ApprenticeToolListPage() {
       heroTitle={
         <>
           Apprentice Electrician Tool List:{' '}
-          <span className="text-yellow-400">What You Actually Need</span>
+          <span className="text-elec-yellow">What You Actually Need</span>
         </>
       }
       heroSubtitle="The honest first-year kit — 12 to 15 hand tools around £150 to £250 — plus what to buy later, what to skip entirely, where quality matters, and how tool allowances work. Written for people starting their apprenticeship this September."

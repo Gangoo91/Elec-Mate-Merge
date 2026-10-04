@@ -195,7 +195,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Qualifications needed:</strong> FIA (Fire Industry Association) approved
                 training, BS 5839 Parts 1 and 6 courses, manufacturer-specific training, plus your
@@ -203,7 +203,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earning potential:</strong> £35,000 - £50,000 employed; £45,000 - £70,000+
                 self-employed or as a specialist subcontractor. Senior fire alarm design engineers
@@ -211,7 +211,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Registration:</strong> Companies typically need to be BAFE-registered
                 (SP203-1 for design/installation, SP203-4 for maintenance) or hold NSI/SSAIB
@@ -251,7 +251,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Qualifications needed:</strong> C&G 2919 (Electric Vehicle Charging
                 Equipment Installation), 18th Edition, and ideally Part P scheme registration.
@@ -259,7 +259,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earning potential:</strong> A typical domestic EV charger installation takes
                 2 to 4 hours and can be charged at £300 to £600 (labour only). An efficient
@@ -267,7 +267,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Market outlook:</strong> The UK ban on new petrol and diesel car sales from
                 2035, combined with rapidly growing EV adoption, means demand for EV charger
@@ -293,7 +293,7 @@ const sections = [
       <>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-4">
-            <Sun className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+            <Sun className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-2">Overview</h4>
               <p className="text-white text-sm leading-relaxed">
@@ -308,7 +308,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Qualifications needed:</strong> C&G 2399 (Solar PV Installation), MCS
                 certification (required for Smart Export Guarantee eligibility), 18th Edition, and
@@ -317,7 +317,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earning potential:</strong> A typical domestic 4kW PV installation generates
                 £1,500 to £3,000 in labour and margin for the installer. Experienced solar PV
@@ -326,7 +326,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Market outlook:</strong> UK solar installations hit record levels in 2025,
                 driven by rising energy costs and improving battery storage technology. The trend is
@@ -362,7 +362,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Qualifications needed:</strong> City & Guilds 3667 (Data Communications
                 Cabling), BICSI RCDD or RTPM certifications, manufacturer-specific training (e.g.,
@@ -371,7 +371,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earning potential:</strong> £30,000 - £45,000 employed; £40,000 - £60,000+
                 as a specialist subcontractor. Fibre optic specialists and those with BICSI
@@ -379,7 +379,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Market outlook:</strong> Data cabling demand is driven by office fit-outs,
                 Wi-Fi infrastructure, AV installations, and the growth of smart building technology.
@@ -413,7 +413,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Qualifications needed:</strong> Electrical qualifications (18th Edition),
                 controls and automation training, manufacturer-specific BMS training (Trend,
@@ -422,7 +422,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earning potential:</strong> £40,000 - £60,000 employed; £55,000 - £75,000+
                 as a senior BMS engineer or commissioning specialist. Contract rates for experienced
@@ -430,7 +430,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Market outlook:</strong> With the UK government's net-zero targets and
                 increasing focus on building energy performance, BMS engineers are in extremely high
@@ -455,7 +455,7 @@ const sections = [
       <>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
           <div className="flex items-start gap-4">
-            <Factory className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+            <Factory className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-2">Overview</h4>
               <p className="text-white text-sm leading-relaxed">
@@ -470,7 +470,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Qualifications needed:</strong> 18th Edition, CompEx (for hazardous areas),
                 HV switching and safety training, PLC programming courses, and manufacturer-specific
@@ -479,7 +479,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earning potential:</strong> £38,000 - £55,000 employed; £45,000 - £70,000+
                 for HV-qualified or CompEx-qualified engineers. Shutdown and outage work on
@@ -488,7 +488,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Market outlook:</strong> Industrial electricians are in steady demand across
                 manufacturing, food processing, pharmaceuticals, and energy sectors. The transition
@@ -508,7 +508,7 @@ const sections = [
       <>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
           <div className="flex items-start gap-4">
-            <ShieldCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+            <ShieldCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-2">Overview</h4>
               <p className="text-white text-sm leading-relaxed">
@@ -525,7 +525,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Qualifications needed:</strong>{' '}
                 <SEOInternalLink href="/city-guilds2391">C&G 2391</SEOInternalLink>{' '}
@@ -535,7 +535,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earning potential:</strong> A testing specialist completing 2 to 3 EICRs per
                 day can generate £300 to £750 in daily revenue. Annual earnings of £50,000 to
@@ -544,7 +544,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Market outlook:</strong> The 5-year EICR cycle for rented properties under
                 the 2020 Regulations creates a permanent, recurring demand for testing specialists.
@@ -574,7 +574,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What do you enjoy?</strong> If you hate being on roofs, solar PV is not for
                 you. If you love fault finding and systematic testing, become a testing specialist.
@@ -583,7 +583,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What does your local market need?</strong> Research demand in your area. If
                 your area has a high proportion of rented properties, testing specialisation makes
@@ -593,7 +593,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What is the investment?</strong> Some specialisations require minimal
                 investment (EV charging: one course and basic tooling). Others require significant
@@ -602,7 +602,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What is the long-term trajectory?</strong> Consider where the industry is
                 heading. EV charging, solar PV, BMS, and battery storage are all growth areas tied
@@ -640,7 +640,7 @@ export default function ElectricalSpecialisationsPage() {
       heroTitle={
         <>
           Electrical Specialisations:{' '}
-          <span className="text-yellow-400">Career Options for UK Electricians</span>
+          <span className="text-elec-yellow">Career Options for UK Electricians</span>
         </>
       }
       heroSubtitle="General electrical work pays the bills. Specialist skills build a career. From fire alarm engineering to EV charging, solar PV to BMS, this guide covers the seven most in-demand electrical specialisations in the UK — what they involve, what qualifications you need, and what you can earn."

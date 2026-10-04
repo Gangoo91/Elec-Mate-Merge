@@ -226,7 +226,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Plane className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plane className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Salary range</strong> — AUD $80,000 to $120,000 (approximately £40,000
                 to £62,000 at 2026 exchange rates). Higher for supervisory and specialist roles.
@@ -234,7 +234,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plane className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plane className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Skills assessment</strong> — VETASSESS or the relevant state training
                 authority assesses UK qualifications. NVQ Level 3 and AM2 are generally recognised
@@ -242,7 +242,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plane className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plane className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical licence</strong> — each state and territory issues its own
                 electrical worker's licence. TAFE (Technical and Further Education) colleges offer
@@ -250,7 +250,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plane className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plane className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Visa</strong> — Skilled Worker (Subclass 482) or Employer Sponsored
                 (Subclass 186). Electrician (ANZSCO 341111) is on the skills shortage list and
@@ -275,7 +275,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Globe className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Globe className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Salary range</strong> — CAD $70,000 to $110,000 (approximately £40,000
                 to £64,000 at 2026 exchange rates). Alberta oil sands and BC mining sectors pay
@@ -283,7 +283,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Globe className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Globe className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Qualification assessment</strong> — UK qualifications are assessed by the
                 provincial authority (e.g., BCSA in BC, OACETT in Ontario). The assessment
@@ -291,7 +291,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Globe className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Globe className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical standard</strong> — Canada uses the Canadian Electrical Code
                 (CEC), which is closely related to the US NEC but with Canadian amendments.
@@ -299,7 +299,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Globe className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Globe className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Visa</strong> — Express Entry (Federal Skilled Trades), Provincial Nominee
                 Programme (PNP), or Temporary Foreign Worker Programme. Electricians (NOC 72200)
@@ -370,7 +370,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>UAE</strong> — employment visa tied to employer (kafala system). Your
                 employer sponsors your residency visa. No path to citizenship for most expatriates.
@@ -378,7 +378,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Australia</strong> — Employer Sponsored (Subclass 482, valid 2–4 years,
                 pathway to 186 permanent), Skilled Independent (Subclass 189), or State Nominated
@@ -386,7 +386,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Canada</strong> — Temporary Foreign Worker (employer-led), Express Entry
                 Federal Skilled Trades, or Provincial Nominee Programme. ITA (Invitation to Apply)
@@ -394,7 +394,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Qatar / Saudi Arabia</strong> — work visa tied to employer sponsor.
                 Government-managed process, typically employer-handled. Saudi Arabia introduced
@@ -417,7 +417,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <PoundSterling className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">UK tax obligations</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -484,7 +484,7 @@ export default function ElectricianWorkingAbroadPage() {
       heroTitle={
         <>
           UK Electricians Working Abroad:{' '}
-          <span className="text-yellow-400">UAE, Australia & Canada Guide</span>
+          <span className="text-elec-yellow">UAE, Australia & Canada Guide</span>
         </>
       }
               noindex={true}

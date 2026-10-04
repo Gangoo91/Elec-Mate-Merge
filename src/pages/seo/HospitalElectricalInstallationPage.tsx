@@ -193,7 +193,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Group 0 locations:</strong> Medical electrical equipment is not used in
                 contact with the patient, or only equipment not classified as an applied part is
@@ -203,7 +203,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Group 1 locations:</strong> Applied parts are intended for external use
                 only, or internal use in parts of the body other than the heart. Examples:
@@ -213,7 +213,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Group 2 locations:</strong> Applied parts are intended for procedures where
                 interruption of supply could be immediately life-threatening. Examples: operating
@@ -362,7 +362,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Category 1 — No-break supply (0 to 0.5 seconds):</strong> Supplied by a UPS
                 system. Covers life support equipment, cardiac monitors, critical alarm systems, and
@@ -371,7 +371,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Category 2 — Short-break supply (up to 15 seconds):</strong> Supplied via
                 Automatic Transfer Switches (ATS) from the generator. Covers emergency lighting,
@@ -381,7 +381,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Category 3 — Delayed supply (up to 60 seconds):</strong> General essential
                 services including ward lighting, general power outlets outside patient areas,
@@ -390,7 +390,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Essential supply testing:</strong> HTM 06-01 requires regular full-load
                 tests of the essential supply system, including simulated mains failure, generator
@@ -418,7 +418,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Authorising Engineer (Electrical):</strong> HTM 06-01 requires NHS trusts to
                 appoint an Authorising Engineer (Electrical) — an independent, suitably qualified
@@ -427,7 +427,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Permit to Work system:</strong> All electrical maintenance and modification
                 work in hospitals must be carried out under a formal Permit to Work system. The PTW
@@ -437,7 +437,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Periodic inspection:</strong> HTM 06-01 specifies inspection frequencies for
                 all categories of electrical installation in healthcare premises. Group 2 medical
@@ -447,7 +447,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Asset register:</strong> HTM 06-01 requires a comprehensive asset register
                 for all electrical plant, including switchgear, transformers, generators, UPS
@@ -520,7 +520,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Supplementary bonding:</strong> All simultaneously accessible conductive
                 parts within the patient environment (1.5m horizontal, 2.5m vertical from the
@@ -531,7 +531,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bonding conductor sizing:</strong> Supplementary bonding conductors must be
                 sized in accordance with Regulation 544.2 of BS 7671, with a minimum cross-sectional
@@ -539,7 +539,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bonding verification:</strong> The resistance of each supplementary bonding
                 connection must be measured on commissioning and periodically thereafter. BS 7671
@@ -566,7 +566,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <AlertTriangle className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Infection Control and Site Rules</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -597,7 +597,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage healthcare electrical projects with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. Complete EICs and EICRs on your phone."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. Complete EICs and EICRs on your phone."
           icon={FileCheck2}
         />
       </>
@@ -623,7 +623,7 @@ export default function HospitalElectricalInstallationPage() {
       heroTitle={
         <>
           Hospital Electrical Installation UK:{' '}
-          <span className="text-yellow-400">Healthcare Systems Guide</span>
+          <span className="text-elec-yellow">Healthcare Systems Guide</span>
         </>
       }
       heroSubtitle="The complete technical guide to hospital and healthcare electrical installation in the UK — covering IEC 60364-7-710, BS 7671 Section 710, Group 1 and 2 medical locations, isolated power supplies, insulation monitoring, essential services, HTM 06-01, and patient environment earthing."
@@ -634,7 +634,7 @@ export default function HospitalElectricalInstallationPage() {
       faqHeading="Frequently Asked Questions — Hospital Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Manage Your Healthcare Electrical Projects with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site certification, quoting, and project management in healthcare environments. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site certification, quoting, and project management in healthcare environments. 7-day free trial, cancel anytime."
     />
   );
 }

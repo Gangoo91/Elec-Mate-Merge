@@ -134,11 +134,11 @@ export default function ToolsHubPage() {
       <section className="py-16 sm:py-24 px-5">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-6">
-            <Wrench className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium text-yellow-400">All Elec-Mate Tools</span>
+            <Wrench className="w-4 h-4 text-elec-yellow" />
+            <span className="text-sm font-medium text-elec-yellow">All Elec-Mate Tools</span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
-            Electrical Tools for <span className="text-yellow-400">UK Electricians</span>
+            Electrical Tools for <span className="text-elec-yellow">UK Electricians</span>
           </h1>
           <p className="text-lg text-white max-w-3xl mx-auto leading-relaxed mb-8">
             Find the right Elec-Mate tool for certificates, testing, calculations, quoting,
@@ -154,7 +154,7 @@ export default function ToolsHubPage() {
             </a>
             <a
               href="#tool-collections"
-              className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-yellow-500/40 text-white font-semibold rounded-xl transition-colors"
+              className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-white/[0.1] text-white font-semibold rounded-xl transition-colors"
             >
               Explore Tool Categories
             </a>
@@ -193,10 +193,10 @@ export default function ToolsHubPage() {
                     <Link
                       key={link.href}
                       to={link.href}
-                      className="flex items-center justify-between rounded-xl border border-white/8 bg-black/20 px-4 py-3 text-white hover:border-white/[0.14] hover:text-yellow-300 transition-colors"
+                      className="flex items-center justify-between rounded-xl border border-white/8 bg-black/20 px-4 py-3 text-white hover:border-white/[0.14] hover:text-elec-yellow transition-colors"
                     >
                       <span>{link.label}</span>
-                      <Sparkles className="w-4 h-4 text-yellow-400" />
+                      <Sparkles className="w-4 h-4 text-elec-yellow" />
                     </Link>
                   ))}
                 </div>

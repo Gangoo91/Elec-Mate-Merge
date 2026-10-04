@@ -155,7 +155,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Any person or company can call themselves a "master electrician" in marketing
                 materials. The term has no regulatory meaning and provides no legal assurance to
@@ -163,7 +163,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 There is no examination, licence, or registration process that grants the title in
                 the UK. No government body, trade association, or awarding organisation issues a
@@ -171,7 +171,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 The meaningful credentials in the UK are scheme memberships (NICEIC, NAPIT, ECA),
                 JIB grading (Approved Electrician, Electrician Technician), professional body
@@ -201,7 +201,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <GraduationCap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Advanced qualifications</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -259,14 +259,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>18th Edition (BS 7671:2018+A2:2022)</strong> — mandatory baseline.
                 Renewal required on each amendment.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C&amp;G 2391 / 2394 + 2395 Inspection and Testing</strong> — the standard
                 qualification for inspection, testing, and certification work. Essential for
@@ -274,7 +274,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C&amp;G 2396 Design and Verification of Electrical Installations</strong> —
                 covers the design principles of BS 7671, fault current calculations, and
@@ -283,7 +283,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NVQ Level 4 Electrical Installation (or C&amp;G 8030 Electrical Technician)</strong>
                 — awards the JIB Electrician Technician grade, the highest operative grade in the
@@ -291,14 +291,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HNC or HND in Electrical Engineering</strong> — degree-foundation level
                 technical knowledge. Often required for Chartered Engineer applications.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Specialist qualifications</strong> — CompEx (explosive atmospheres), HV
                 authorisation, BMS programming, fire detection, solar PV / battery storage — one or
@@ -323,7 +323,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <Globe className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Globe className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Germany — Elektromeister</strong> — a state-regulated examination required
                 to run an electrical business and train apprentices. Covers advanced technical,
@@ -333,7 +333,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Globe className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Globe className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>USA — Master Electrician licence</strong> — state-regulated (varies by
                 state). Typically requires a journeyman licence (equivalent to UK qualified
@@ -344,7 +344,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Globe className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Globe className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Canada — Master Electrician licence</strong> — provincially regulated.
                 Requires journeyman red seal certification plus additional experience and
@@ -354,7 +354,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Globe className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Globe className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Australia — Electrical Contractor Licence</strong> — state/territory
                 regulated. A contractor licence is required to run an electrical business. UK
@@ -385,7 +385,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Scheme membership and audit record</strong> — NICEIC or NAPIT Approved
                 Contractor status with a clean audit history signals reliable, inspected competence
@@ -393,7 +393,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Client references and portfolio</strong> — for commercial and specialist
                 work, a track record of completed projects (documented with EICs and handover
@@ -401,7 +401,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CEng or EngTech registration</strong> — for those in design or management
                 roles, IET Chartered or Engineering Technician registration provides formal
@@ -433,7 +433,7 @@ export default function MasterElectricianUKPage() {
       heroTitle={
         <>
           Master Electrician UK:{' '}
-          <span className="text-yellow-400">What It Means and How to Prove It</span>
+          <span className="text-elec-yellow">What It Means and How to Prove It</span>
         </>
       }
       heroSubtitle="The UK has no formal Master Electrician title. This guide explains what mastery actually means in the UK context, which qualifications signal it to clients and employers, and how the UK system compares to Europe and the USA."

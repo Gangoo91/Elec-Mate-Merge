@@ -50,8 +50,8 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Why must cable fill capacity be considered in trunking systems?',
     options: [
-      'For aesthetic appearance',
-      'For cost reasons',
+      'So that no grouping factor needs to be applied',
+      'So the trunking lid can be fitted without tools',
       'To reduce voltage drop',
       'To prevent overheating',
     ],
@@ -117,7 +117,7 @@ const quizQuestions = [
     options: [
       'Cable ties',
       'Grommets or bushes',
-      'Wooden blocks',
+      'Heat-shrink sleeving on the cable',
       'Insulation tape',
     ],
     correctAnswer: 1,
@@ -167,10 +167,10 @@ const quizQuestions = [
     id: 9,
     question: 'When using steel conduit, what must be tested to ensure safety?',
     options: [
-      'Cable colour coding',
+      'Insulation resistance of the conduit to earth',
       'Earth continuity',
-      'Cable flexibility',
-      'Installation speed',
+      'Voltage drop along the conduit',
+      'Polarity at each conduit box',
     ],
     correctAnswer: 1,
     explanation:
@@ -178,23 +178,23 @@ const quizQuestions = [
   },
   {
     id: 10,
-    question: 'What is the recommended support spacing for 20mm PVC conduit?',
+    question: 'What is the maximum horizontal support spacing for 20 mm rigid PVC conduit?',
     options: [
-      '500mm',
-      '1250mm',
-      '750mm',
-      '1000mm',
+      '750 mm',
+      '1.0 m',
+      '1.5 m',
+      '2.0 m',
     ],
     correctAnswer: 2,
     explanation:
-      '20mm PVC conduit should be supported at maximum 750mm intervals to prevent sagging.',
+      'On-Site Guide Table D3 gives 1.5 m horizontal (1.75 m vertical) for rigid insulating conduit over 16 mm and up to 25 mm. 750 mm is the figure for conduit up to 16 mm; 2.0 m is the vertical figure for rigid metal conduit of that size.',
   },
   {
     id: 11,
     question: 'Which pulling technique is recommended for long conduit runs?',
     options: [
       'Pull all cables at once',
-      'Install without pulling',
+      'Pull on the conductors, not the draw wire',
       'Push from both ends',
       'Use pulling compound',
     ],

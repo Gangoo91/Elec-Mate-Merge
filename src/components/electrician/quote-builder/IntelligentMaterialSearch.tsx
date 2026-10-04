@@ -26,6 +26,7 @@ import { toast } from '@/hooks/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { MaterialToQuoteItem } from '@/hooks/useQuoteMaterialIntegration';
 import { useMaterialsAutocomplete } from '@/hooks/useMaterialsAutocomplete';
+import { autoCompleteOff } from '@/lib/textEntry';
 
 interface IntelligentMaterialSearchProps {
   onAddToQuote?: (material: MaterialToQuoteItem, quantity?: number) => void;
@@ -270,7 +271,7 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
                   }}
                   className="h-12 text-base touch-manipulation"
                   disabled={isSearching}
-                  autoComplete="off"
+                  autoComplete={autoCompleteOff}
                 />
 
                 {/* Autocomplete Dropdown */}

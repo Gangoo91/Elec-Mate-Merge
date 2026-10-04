@@ -182,7 +182,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>2025 — Industry consultation.</strong> The IET consults with electrical
                 contractors, manufacturers, competent person schemes (NICEIC, NAPIT, ELECSA),
@@ -191,7 +191,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>2026 — Publication.</strong> The amendment (or new edition) is published by
                 the IET. A PDF supplement or new book becomes available. The IET typically announces
@@ -199,7 +199,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>2026-2027 — Transition period.</strong> There is typically a 6 to 12 month
                 transition period during which both the current and amended versions are acceptable.
@@ -208,7 +208,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>2027 onwards — Full compliance required.</strong> After the transition
                 period, all new work must comply with the amended standard. Existing installations
@@ -241,7 +241,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Battery energy storage systems (BESS)</strong> — expanded requirements for
                 domestic and commercial battery storage, including safety requirements for
@@ -250,7 +250,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charging infrastructure</strong> — updated guidance on load management,
                 vehicle-to-grid (V2G) technology, dynamic load balancing, and the electrical
@@ -258,7 +258,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smart home installations</strong> — guidance on networked electrical
                 devices, home automation systems, cybersecurity considerations for internet-
@@ -267,7 +267,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>AFDD requirements</strong> — potential expansion of Arc Fault Detection
                 Device requirements beyond the current recommendations in{' '}
@@ -276,7 +276,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SPD requirements</strong> — updated{' '}
                 <SEOInternalLink href="/guides/spd-surge-protection">
@@ -287,7 +287,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>European harmonisation</strong> — alignment with the latest versions of HD
                 60364 (the harmonised European standard from which BS 7671 derives) and updated
@@ -319,7 +319,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Location requirements — where can a battery be safely installed? Current guidance
                 from manufacturers varies. A BS 7671 regulation on minimum clearances, ventilation
@@ -328,7 +328,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Fire safety — lithium-ion battery fires are a known risk. Requirements for fire
                 barriers, smoke detection, and thermal runaway management in domestic and commercial
@@ -336,7 +336,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 DC circuit protection — BESS installations involve DC circuits between the battery
                 modules and the inverter. Clear requirements for DC protective devices, cable
@@ -344,7 +344,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Labelling and documentation — standardised labelling requirements for battery
                 installations, including safety warnings, system capacity, and emergency
@@ -390,7 +390,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Vehicle-to-grid (V2G) technology</strong> — EV chargers that can feed energy
                 from the vehicle battery back into the installation. This creates bidirectional
@@ -399,7 +399,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dynamic load management</strong> — systems that automatically adjust the
                 charging current based on the available capacity of the supply. A4 may include
@@ -408,7 +408,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Multi-charger installations</strong> — commercial car parks and fleet depots
                 with multiple EV chargers. Requirements for distribution board design, cable sizing
@@ -416,7 +416,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DC rapid chargers</strong> — high-power DC charging installations (50kW+)
                 raise specific issues around fault current levels, earthing, and protective device
@@ -450,7 +450,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Extra-low voltage control systems</strong> — ELV wiring for smart devices,
                 KNX/DALI bus systems, and PoE (Power over Ethernet) installations. These systems
@@ -459,7 +459,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cybersecurity considerations</strong> — internet-connected electrical
                 devices (smart switches, smart meters, EV chargers) can be targets for cyber
@@ -468,7 +468,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Energy management systems</strong> — automated systems that manage energy
                 consumption, solar PV generation, battery storage, and EV charging. These systems
@@ -500,7 +500,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Master the current standard.</strong> Read and understand{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
@@ -512,7 +512,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Get practical experience with emerging technologies.</strong> Install solar
                 PV, battery storage, and EV chargers. The hands-on experience will make the A4
@@ -521,7 +521,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Keep your qualifications current.</strong> If your{' '}
                 <SEOInternalLink href="/city-guilds2391">C&G 2391</SEOInternalLink> or
@@ -531,7 +531,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Follow IET publications.</strong> The IET regularly publishes guidance
                 notes, codes of practice, and technical articles that signal the direction of future
@@ -539,7 +539,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use Elec-Mate for continuous CPD.</strong> The platform includes 46+
                 training courses covering BS 7671, solar PV, battery storage, EV charging, and more.
@@ -569,7 +569,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Brain className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI Agents — Updated for A4</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -623,7 +623,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Be ready for Amendment 4 on day one"
-          description="Join 1,600+ UK electricians using Elec-Mate for certificates, calculations, AI agents, and CPD."
+          description="Join 2,100+ UK electricians using Elec-Mate for certificates, calculations, AI agents, and CPD."
           icon={ShieldCheck}
         />
       </>
@@ -648,7 +648,7 @@ export default function BS7671Amendment4Page() {
       badgeIcon={Scale}
       heroTitle={
         <>
-          BS 7671 Amendment 4: <span className="text-yellow-400">What to Expect in 2026</span>
+          BS 7671 Amendment 4: <span className="text-elec-yellow">What to Expect in 2026</span>
         </>
       }
       heroSubtitle="Amendment 4 to BS 7671:2018 is expected in 2026. It is anticipated to address energy storage systems, EV charging infrastructure, smart home installations, and harmonised European standards. This guide covers everything we know so far and how to prepare."

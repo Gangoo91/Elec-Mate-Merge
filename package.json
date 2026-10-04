@@ -38,6 +38,7 @@
     "check:ai-cost": "deno test supabase/functions/_shared/ai-cost.test.ts",
     "check:citation-guard": "deno test supabase/functions/_shared/citation-guard.test.ts",
     "check:building-regs-rag": "deno test supabase/functions/_shared/building-regs-citation.test.ts",
+    "check:cable-select": "node scripts/sync-edge-bs7671-data.mjs --check && deno check supabase/functions/_shared/bs7671-cable-select.ts && deno test --no-check supabase/functions/_shared/bs7671-cable-select.test.ts",
     "check:local-draft-guard": "node scripts/check-local-draft-guard.mjs",
     "check:part-p-verdict": "node scripts/check-part-p-verdict.mjs",
     "check:minor-works-validation": "node scripts/check-minor-works-validation.mjs",
@@ -104,10 +105,16 @@
     "check:three-phase": "node scripts/check-three-phase-siblings.mjs",
     "check:invoice-prompts": "node scripts/check-invoice-prompts.mjs",
     "check:time-allowance": "node scripts/check-time-allowance.mjs",
+    "check:supplier-request": "node scripts/check-supplier-request.mjs",
+    "check:am2-generated": "node scripts/check-am2-generated.mjs",
+    "check:haptics": "node scripts/check-haptics.mjs",
+    "check:quote-terms": "node scripts/check-quote-terms.mjs",
     "check:quote-lifecycle": "node scripts/check-quote-lifecycle.mjs",
     "check:credit-note": "node scripts/check-credit-note.mjs",
     "check:credit-note-pdf": "node scripts/check-credit-note-pdf.mjs",
-    "build:credit-note-template": "node scripts/build-credit-note-template.mjs"
+    "build:credit-note-template": "node scripts/build-credit-note-template.mjs",
+    "legal:static": "node scripts/build-legal-static.mjs",
+    "check:legal-static": "node scripts/build-legal-static.mjs --check"
   },
   "dependencies": {
     "@capacitor-community/contacts": "^7.2.0",
@@ -131,6 +138,7 @@
     "@capacitor/share": "^8.0.1",
     "@capacitor/splash-screen": "^8.0.1",
     "@capacitor/status-bar": "^8.0.1",
+    "@capgo/capacitor-app-tracking-transparency": "^8.1.16",
     "@capgo/capacitor-native-biometric": "^8.4.2",
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/sortable": "^10.0.0",

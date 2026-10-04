@@ -44,7 +44,7 @@ export default function TransformerSizingCalculatorPage() {
       badgeIcon={Zap}
       heroTitle={
         <>
-          <span className="text-yellow-400">Transformer Sizing Calculator</span> — Get the Right kVA
+          <span className="text-elec-yellow">Transformer Sizing Calculator</span> — Get the Right kVA
           Rating Every Time
         </>
       }
@@ -108,29 +108,29 @@ export default function TransformerSizingCalculatorPage() {
                 kilowatts and the power factor of the load:
               </p>
               <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4 text-center">
-                <p className="text-xl font-mono font-bold text-yellow-400">
+                <p className="text-xl font-mono font-bold text-elec-yellow">
                   kVA = kW / Power Factor
                 </p>
                 <div className="mt-4 text-left max-w-md mx-auto space-y-1 text-sm text-white">
                   <p>
-                    <strong className="text-yellow-400">kW</strong> = total diversified load in
+                    <strong className="text-elec-yellow">kW</strong> = total diversified load in
                     kilowatts
                   </p>
                   <p>
-                    <strong className="text-yellow-400">Power Factor</strong> = overall power factor
+                    <strong className="text-elec-yellow">Power Factor</strong> = overall power factor
                     of the load (typically 0.8 to 0.95)
                   </p>
                 </div>
               </div>
               <p>The current drawn from a single-phase transformer is:</p>
               <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4 text-center">
-                <p className="text-xl font-mono font-bold text-yellow-400">I = kVA x 1000 / V</p>
+                <p className="text-xl font-mono font-bold text-elec-yellow">I = kVA x 1000 / V</p>
                 <div className="mt-4 text-left max-w-md mx-auto space-y-1 text-sm text-white">
                   <p>
-                    <strong className="text-yellow-400">I</strong> = current in amperes
+                    <strong className="text-elec-yellow">I</strong> = current in amperes
                   </p>
                   <p>
-                    <strong className="text-yellow-400">V</strong> = secondary voltage (typically
+                    <strong className="text-elec-yellow">V</strong> = secondary voltage (typically
                     230V or 110V)
                   </p>
                 </div>
@@ -153,21 +153,21 @@ export default function TransformerSizingCalculatorPage() {
                 relationship between real power and apparent power:
               </p>
               <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4 text-center">
-                <p className="text-xl font-mono font-bold text-yellow-400">
+                <p className="text-xl font-mono font-bold text-elec-yellow">
                   kVA = kW / Power Factor
                 </p>
               </div>
               <p>The line current drawn from a three-phase transformer is:</p>
               <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4 text-center">
-                <p className="text-xl font-mono font-bold text-yellow-400">
+                <p className="text-xl font-mono font-bold text-elec-yellow">
                   I = kVA x 1000 / (root 3 x V<sub>L</sub>)
                 </p>
                 <div className="mt-4 text-left max-w-md mx-auto space-y-1 text-sm text-white">
                   <p>
-                    <strong className="text-yellow-400">I</strong> = line current in amperes
+                    <strong className="text-elec-yellow">I</strong> = line current in amperes
                   </p>
                   <p>
-                    <strong className="text-yellow-400">
+                    <strong className="text-elec-yellow">
                       V<sub>L</sub>
                     </strong>{' '}
                     = line-to-line voltage (typically 400V)
@@ -207,28 +207,28 @@ export default function TransformerSizingCalculatorPage() {
                 <h3 className="font-bold text-white text-lg mb-4">Diversity Considerations</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Lighting loads</strong> — typically 90% diversity for commercial
                       buildings (not all areas are illuminated simultaneously).
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Socket outlet loads</strong> — typically 40-60% diversity depending on
                       the number of outlets and building use.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Motor loads</strong> — the largest motor is taken at 100%, with
                       remaining motors at 80% or as determined by the process requirements.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>Heating/cooling loads</strong> — typically 100% for the dominant
                       system (heating or cooling, not both simultaneously).
@@ -240,21 +240,21 @@ export default function TransformerSizingCalculatorPage() {
                 <h3 className="font-bold text-white text-lg mb-3">Oversize Factors</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>20% oversize</strong> — standard allowance for future load growth and
                       normal operational headroom.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>25% oversize</strong> — recommended where significant motor loads
                       exist (motor starting currents can be 6-8 times full load current).
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
                       <strong>30% or more</strong> — for installations with high harmonic content
                       (VFDs, UPS systems, LED drivers) where the transformer must handle additional
@@ -315,7 +315,7 @@ export default function TransformerSizingCalculatorPage() {
                       key={rating}
                       className="text-center p-3 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]"
                     >
-                      <span className="text-lg font-bold text-yellow-400">{rating}</span>
+                      <span className="text-lg font-bold text-elec-yellow">{rating}</span>
                       <span className="text-sm text-white ml-1">kVA</span>
                     </div>
                   ))}
@@ -343,7 +343,7 @@ export default function TransformerSizingCalculatorPage() {
             <>
               <div className="space-y-6">
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-3">
+                  <h3 className="font-bold text-elec-yellow text-lg mb-3">
                     Example 1: Small Commercial Unit
                   </h3>
                   <div className="space-y-2 text-white leading-relaxed text-sm">
@@ -359,21 +359,21 @@ export default function TransformerSizingCalculatorPage() {
                       After diversity (estimated 0.7): 60 x 0.7 = 42kW
                     </p>
                     <p className="font-mono text-white">
-                      kVA = 42 / 0.85 = <strong className="text-yellow-400">49.4 kVA</strong>
+                      kVA = 42 / 0.85 = <strong className="text-elec-yellow">49.4 kVA</strong>
                     </p>
                     <p className="font-mono text-white">
                       With 20% oversize: 49.4 x 1.2 ={' '}
-                      <strong className="text-yellow-400">59.3 kVA</strong>
+                      <strong className="text-elec-yellow">59.3 kVA</strong>
                     </p>
                     <p>
                       Select the next standard rating:{' '}
-                      <strong className="text-yellow-400">100 kVA</strong> (or 63 kVA if available
+                      <strong className="text-elec-yellow">100 kVA</strong> (or 63 kVA if available
                       from the manufacturer).
                     </p>
                   </div>
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-3">
+                  <h3 className="font-bold text-elec-yellow text-lg mb-3">
                     Example 2: Industrial Workshop
                   </h3>
                   <div className="space-y-2 text-white leading-relaxed text-sm">
@@ -393,15 +393,15 @@ export default function TransformerSizingCalculatorPage() {
                       Total diversified load = 66 + 34.4 = 100.4kW
                     </p>
                     <p className="font-mono text-white">
-                      kVA = 100.4 / 0.8 = <strong className="text-yellow-400">125.5 kVA</strong>
+                      kVA = 100.4 / 0.8 = <strong className="text-elec-yellow">125.5 kVA</strong>
                     </p>
                     <p className="font-mono text-white">
                       With 25% oversize (motors): 125.5 x 1.25 ={' '}
-                      <strong className="text-yellow-400">156.9 kVA</strong>
+                      <strong className="text-elec-yellow">156.9 kVA</strong>
                     </p>
                     <p>
                       Select the next standard rating:{' '}
-                      <strong className="text-yellow-400">200 kVA</strong>.
+                      <strong className="text-elec-yellow">200 kVA</strong>.
                     </p>
                   </div>
                 </div>
@@ -562,7 +562,7 @@ export default function TransformerSizingCalculatorPage() {
         },
       ]}
       ctaHeading="Size Transformers in Seconds on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site calculations. 70+ calculators, 19 certificate types, and AI tools. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site calculations. 70+ calculators, 19 certificate types, and AI tools. 7-day free trial, cancel anytime."
     />
   );
 }

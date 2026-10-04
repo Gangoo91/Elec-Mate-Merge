@@ -20,6 +20,7 @@ import {
   endOfDay,
   format,
   isSameDay,
+  isToday,
   max as maxDate,
   min as minDate,
   startOfDay,
@@ -488,4 +489,146 @@ export function needsTelling(event: CalendarEvent): boolean {
   if (isSyntheticEvent(event)) return false;
   if (!event.client_id || event.confirmation_sent_at) return false;
   return new Date(event.start_at) > new Date();
+}
+
+/**
+ * Hours booked on ONE day, each booking clamped to that day.
+ *
+ * `totalHours` measures whole events, which is right for a list of bookings
+ * and wrong for a day: a rewire running Tuesday to Thursday is 50-odd hours
+ * end to end, and summing it per day put "37h" under Tuesday. All-day work and
+ * anything filling the day count as a working day, never more.
+ */
+export function hoursOnDay(
+  events: CalendarEvent[],
+  day: Date,
+  workStart: number,
+  workEnd: number
+): number {
+  const workingDayHours = Math.max(1, workEnd - workStart);
+  const open = new Date(day.getFullYear(), day.getMonth(), day.getDate(), workStart, 0, 0);
+  const close = new Date(day.getFullYear(), day.getMonth(), day.getDate(), workEnd, 0, 0);
+  return events.reduce((sum, e) => {
+    if (e.all_day) return sum + workingDayHours;
+    let { start, end } = clampToDay(e, day);
+    // A job running across days is on site for the working day, not until
+    // midnight. A one-day booking keeps its real length — an evening callout
+    // is real hours.
+    if (isMultiDay(e)) {
+      start = maxDate([start, open]);
+      end = minDate([end, close]);
+    }
+    const h = Math.max(0, end.getTime() - start.getTime()) / 3_600_000;
+    return sum + Math.min(h, workingDayHours);
+  }, 0);
+}
+
+/** One day, summed up for a heading: what is on it and where it has room. */
+export interface DaySummary {
+  /** Real bookings that take up time — the count the week strip shows. */
+  booked: CalendarEvent[];
+  /** Hours those bookings fill, all-day work counted as a working day. */
+  hours: number;
+  /** Not one of the working days in settings. */
+  dayOff: boolean;
+  /** The whole day is behind us. */
+  past: boolean;
+  /** Today, after the working day has closed — nothing left to offer. */
+  closed: boolean;
+  /**
+   * The next stretch with room for another job, still ahead of now.
+   * `toClose` when it runs to the end of the working day, so it can read
+   * "free from 13:00" rather than a range that ends where the day does.
+   */
+  nextFree: { start: Date; end: Date; toClose: boolean } | null;
+  /** Wall-clock minutes still free in the working day, from now on. */
+  freeMinutes: number;
+}
+
+/**
+ * The line under a day's heading in the week list and the day view.
+ *
+ * Answers the two questions asked of a day at a glance — how full is it, and
+ * when could someone else be fitted in — off the same `buildDayShape` walk the
+ * day sheet uses, so the two can never disagree about where the gaps are.
+ *
+ * Today only offers time that has not gone yet: "free from 08:00" read at
+ * three in the afternoon is not an offer anyone can take up.
+ */
+export function summariseDay(
+  events: CalendarEvent[],
+  day: Date,
+  workStart: number,
+  workEnd: number,
+  workingDays: number[],
+  capacity = 1,
+  now: Date = new Date()
+): DaySummary {
+  const onDay = eventsOnDay(events, day);
+  const booked = onDay.filter((e) => !isSyntheticEvent(e) && occupiesTime(e));
+  const hours = hoursOnDay(booked, day, workStart, workEnd);
+  const dayOff = !workingDays.includes(day.getDay());
+  const past = endOfDay(day) < now;
+
+  const shape = buildDayShape(events, day, workStart, workEnd, 30, capacity);
+  // An all-day job fills the day for a one-job outfit. The day sheet still
+  // offers the rail under it (a 20-minute call can go anywhere), but a week
+  // heading saying "free from 08:00" over an all-day rewire is wrong.
+  const allDayFull = shape.allDay.length >= shape.capacity;
+  const closeAt = new Date(day.getFullYear(), day.getMonth(), day.getDate(), workEnd, 0, 0);
+
+  // From now, rounded up to the next half hour — slots are offered on the half.
+  const halfHour = 30 * 60_000;
+  const nowSlot = new Date(Math.ceil(now.getTime() / halfHour) * halfHour);
+
+  let nextFree: DaySummary['nextFree'] = null;
+  let freeMinutes = 0;
+  // A day off offers nothing, even when a job has been put on it anyway.
+  if (!past && !allDayFull && !dayOff) {
+    for (const block of shape.blocks) {
+      if (block.kind !== 'free') continue;
+      const start = block.start < nowSlot ? nowSlot : block.start;
+      if (start >= block.end) continue;
+      freeMinutes += (block.end.getTime() - start.getTime()) / 60_000;
+      if (!nextFree) {
+        // Back-to-back free blocks at different loads (empty, then one job on
+        // with a seat spare) are one offer as far as a heading is concerned.
+        let end = block.end;
+        const idx = shape.blocks.indexOf(block);
+        for (let i = idx + 1; i < shape.blocks.length && shape.blocks[i].kind === 'free'; i++) {
+          end = shape.blocks[i].end;
+        }
+        nextFree = { start, end, toClose: end.getTime() >= closeAt.getTime() };
+      }
+    }
+  }
+
+  return { booked, hours, dayOff, past, closed: !past && now >= closeAt, nextFree, freeMinutes };
+}
+
+/** "6h", "5h 15m" — booked hours as an electrician would say them. */
+export function hoursLabel(hours: number): string {
+  return humanMinutes(hours * 60);
+}
+
+/** "3 booked · 6h · free from 14:00" — the line under a day's heading. */
+export function summaryLine(s: DaySummary): string {
+  const parts: string[] = [];
+  if (s.booked.length > 0) parts.push(`${s.booked.length} booked · ${hoursLabel(s.hours)}`);
+  if (s.past) return parts[0] ?? 'Nothing booked';
+  if (s.dayOff && s.booked.length === 0) return 'Day off';
+  if (s.booked.length === 0) parts.push('Nothing booked');
+  if (s.nextFree) {
+    const from = format(s.nextFree.start, 'HH:mm');
+    parts.push(
+      s.booked.length === 0 && s.nextFree.toClose && !isToday(s.nextFree.start)
+        ? 'free all day'
+        : s.nextFree.toClose
+          ? `free from ${from}`
+          : `free ${from}–${format(s.nextFree.end, 'HH:mm')}`
+    );
+  } else if (!s.dayOff && !s.closed) {
+    parts.push('fully booked');
+  }
+  return parts.join(' · ');
 }

@@ -110,7 +110,7 @@ const sections = [
         <div className="space-y-4 mt-6">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-center gap-2 mb-3">
-              <DollarSign className="w-5 h-5 text-yellow-400" />
+              <DollarSign className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Material Take-Off</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -124,7 +124,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <Users className="w-5 h-5 text-yellow-400" />
+              <Users className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Labour Estimation</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -171,50 +171,50 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Pre-Construction Activities</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Design review and RFIs</strong> — Review the
+                <strong className="text-elec-yellow">Design review and RFIs</strong> — Review the
                 design in detail, raise requests for information (RFIs) for any ambiguities or
                 clashes, and resolve design issues before work starts. Discovering a problem in the
                 office costs a fraction of discovering it on site.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Programme development</strong> — Create a
+                <strong className="text-elec-yellow">Programme development</strong> — Create a
                 detailed electrical installation programme linked to the main contractor's
                 programme. Identify critical path activities, milestones, and dependencies.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Long-lead procurement</strong> — Identify items
+                <strong className="text-elec-yellow">Long-lead procurement</strong> — Identify items
                 with extended lead times and place orders immediately. Switchboards, MCCs,
                 transformers, and generators must be ordered months in advance.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">RAMS preparation</strong> — Develop risk
+                <strong className="text-elec-yellow">RAMS preparation</strong> — Develop risk
                 assessments and method statements for all major work activities. Submit to the
                 principal contractor for review and approval before work starts.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Labour mobilisation</strong> — Confirm the
+                <strong className="text-elec-yellow">Labour mobilisation</strong> — Confirm the
                 workforce for the start date. Ensure all operatives have current CSCS cards, ECS
                 cards, site-specific inductions, and any project-specific training.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Subcontractor engagement</strong> — If using
+                <strong className="text-elec-yellow">Subcontractor engagement</strong> — If using
                 specialist subcontractors (fire alarm, data, security, BMS), agree scope, price,
                 programme, and quality requirements before the project starts.
               </span>
@@ -247,42 +247,42 @@ const sections = [
           <div className="space-y-3">
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
               <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-yellow-400" />
+                <Calendar className="w-4 h-4 text-elec-yellow" />
                 <span className="text-white font-medium">Containment start</span>
               </div>
               <span className="text-white text-sm">First fix begins</span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
               <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-yellow-400" />
+                <Calendar className="w-4 h-4 text-elec-yellow" />
                 <span className="text-white font-medium">Cable pulling start</span>
               </div>
               <span className="text-white text-sm">After containment complete</span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
               <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-yellow-400" />
+                <Calendar className="w-4 h-4 text-elec-yellow" />
                 <span className="text-white font-medium">Panel installation</span>
               </div>
               <span className="text-white text-sm">After builder's work complete</span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
               <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-yellow-400" />
+                <Calendar className="w-4 h-4 text-elec-yellow" />
                 <span className="text-white font-medium">Second fix start</span>
               </div>
               <span className="text-white text-sm">After ceiling/wall finishes</span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
               <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-yellow-400" />
+                <Calendar className="w-4 h-4 text-elec-yellow" />
                 <span className="text-white font-medium">Testing start</span>
               </div>
               <span className="text-white text-sm">After termination complete</span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <div className="flex items-center gap-2">
-                <Target className="w-4 h-4 text-yellow-400" />
+                <Target className="w-4 h-4 text-elec-yellow" />
                 <span className="text-white font-medium">Handover</span>
               </div>
               <span className="text-white text-sm">After commissioning complete</span>
@@ -312,7 +312,7 @@ const sections = [
         <div className="space-y-4 mt-6">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-center gap-2 mb-3">
-              <Truck className="w-5 h-5 text-yellow-400" />
+              <Truck className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Long-Lead Items</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -326,7 +326,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <Package className="w-5 h-5 text-yellow-400" />
+              <Package className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Bulk Materials</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -340,7 +340,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Specification Compliance</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -410,39 +410,39 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Mobilisation Checklist</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Secure material storage container — lockable, weatherproof, and accessible
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Tool inventory — power tools, hand tools, test equipment, access equipment
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Temporary electrical supply for tools and lighting in work areas</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>PPE stock — hard hats, hi-vis, safety boots, gloves, eye protection</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Site office space with drawings, specifications, and IT access</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Welfare arrangements confirmed with the principal contractor</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>First aid kit, fire extinguisher, and emergency procedures displayed</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 {' '}
                 <SEOInternalLink href="/guides/permit-to-work-electrician">
@@ -520,7 +520,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Handover Documentation Package</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <SEOInternalLink href="/eic-certificate">
                   Electrical Installation Certificate (EIC)
@@ -529,27 +529,27 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Schedule of test results for every circuit, every distribution board</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>As-built drawings reflecting the final installed arrangement</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Commissioning records for all systems</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Manufacturer product data and maintenance schedules</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Warranty certificates for all major equipment</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Health and safety file contribution covering residual risks</span>
             </li>
           </ul>
@@ -628,7 +628,7 @@ export default function ElectricalProjectPlanningPage() {
       heroTitle={
         <>
           Electrical Project Planning:{' '}
-          <span className="text-yellow-400">From Tender to Completion</span>
+          <span className="text-elec-yellow">From Tender to Completion</span>
         </>
       }
       heroSubtitle="The complete guide to planning and managing electrical installation projects. Tender review, pricing, programming, material procurement, labour planning, testing coordination, and professional handover — everything an electrical contractor needs to deliver projects successfully."
@@ -638,7 +638,7 @@ export default function ElectricalProjectPlanningPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Professional project tools for electrical contractors"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI-powered cost engineering, professional testing and certification, and digital documentation. Plan better, deliver better. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for AI-powered cost engineering, professional testing and certification, and digital documentation. Plan better, deliver better. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -12,7 +12,7 @@ const HeroCTA = () => {
       transition={{ duration: 0.25, delay: 0.05 }}
     >
       <button
-        onClick={() => navigate('/electrician/inspection-testing/new')}
+        onClick={() => navigate('/electrician/inspection-testing')}
         className="block w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-2xl touch-manipulation"
       >
         <div className="group relative overflow-hidden card-surface-interactive active:scale-[0.98] transition-all duration-200">

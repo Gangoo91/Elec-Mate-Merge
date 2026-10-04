@@ -198,7 +198,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CAT6 — standard for IP CCTV</strong> — supports 1Gbps data and PoE/PoE+
                 to 100 metres. Use solid-conductor CAT6 (not stranded) for fixed installations.
@@ -208,7 +208,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CAT6A — for runs over 70 metres</strong> — CAT6A (Augmented Category 6)
                 has better noise immunity and is preferred for runs approaching the 90-metre
@@ -219,7 +219,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RG59 coaxial — standard definition analogue</strong> — 75-ohm coaxial
                 cable for CVBS analogue CCTV. Maximum effective range approximately 200 metres
@@ -229,7 +229,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RG6 coaxial — HD analogue (HDTVI/HDCVI/AHD)</strong> — supports HD
                 analogue video at 1080p, 4MP, and 4K (HDTVI 3.0) over distances of 300–500
@@ -259,7 +259,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Camera power draw</strong> — typical IP cameras draw 5–15W. Cameras
                 with IR illuminators draw 10–25W. PTZ cameras draw 15–30W or more. Multi-sensor
@@ -268,7 +268,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PoE switch budget calculation</strong> — multiply the maximum camera power
                 draw by the number of cameras. Add 20 per cent headroom. A 16-camera system with
@@ -278,7 +278,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NVR and storage power</strong> — an NVR unit draws 15–40W. Each 3.5-inch
                 surveillance-grade HDD draws approximately 6–8W active, 3W standby. A 16-channel
@@ -288,7 +288,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>UPS sizing</strong> — the UPS must power the NVR, all switches, and any
                 local camera PSUs for the required runtime. Total the continuous load and divide
@@ -315,7 +315,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP65</strong> — dust-tight and protected against low-pressure water jets
                 from any direction. Minimum for sheltered outdoor locations (under a canopy,
@@ -324,7 +324,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP66 — standard for UK outdoor installation</strong> — dust-tight and
                 protected against powerful water jets from any direction. Suitable for exposed
@@ -333,7 +333,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP67</strong> — dust-tight and protected against temporary immersion
                 to 1 metre for 30 minutes. Suitable for cameras in positions where water
@@ -343,7 +343,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IK10 impact resistance</strong> — the IK code (BS EN 62262) rates a
                 camera's resistance to mechanical impact, separate from its IP rating. IK10
@@ -432,7 +432,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated circuit and socket</strong> — power the NVR or DVR from a
                 dedicated circuit with a clearly labelled outlet. Do not share with other
@@ -441,7 +441,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>UPS — mandatory for commercial systems</strong> — connect the NVR,
                 all PoE switches, and managed network switches to a UPS. A power interruption
@@ -450,7 +450,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ventilation</strong> — NVRs and DVRs generate heat from HDDs and
                 processing. Ensure adequate ventilation in the equipment cabinet. Do not stack
@@ -459,7 +459,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Surge protection</strong> — fit a surge protection device (SPD) on the
                 mains supply to the CCTV equipment cabinet. Lightning or switching transients on
@@ -485,7 +485,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Domestic system (4 cameras)</strong> — £600–£1,200 for a four-camera
                 IP system with 2MP cameras, 4-channel PoE NVR, and 1TB HDD. Includes installation,
@@ -493,7 +493,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Small commercial (8 cameras)</strong> — £1,500–£3,000 for an eight-camera
                 system with 4MP or 4K cameras, managed PoE switch, 8-channel NVR, 4TB RAID
@@ -501,7 +501,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Medium commercial (16–32 cameras)</strong> — £3,000–£10,000+. Includes
                 fibre backbone for long runs, multiple PoE switches, 16TB+ NVR storage, and
@@ -510,7 +510,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Per additional camera (incremental)</strong> — £100–£250 per additional
                 IP camera once infrastructure is in place, including camera, mounting, cable, and
@@ -537,7 +537,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Quote CCTV Jobs Accurately</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -601,7 +601,7 @@ export default function CCTVInstallationElectricalPage() {
       heroTitle={
         <>
           CCTV Installation Electrical Requirements UK:{' '}
-          <span className="text-yellow-400">Camera Wiring Guide</span>
+          <span className="text-elec-yellow">Camera Wiring Guide</span>
         </>
       }
       heroSubtitle="The complete electrical guide to CCTV installation in the UK — PoE vs local power, CAT6 vs coaxial cable, power consumption calculations, IP ratings for external cameras, GDPR obligations, NVR/DVR power supply design, and realistic 2026 costs."

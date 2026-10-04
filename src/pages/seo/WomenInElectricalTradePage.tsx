@@ -181,7 +181,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Approximately 2% of UK electricians are women.</strong> This is the lowest
                 representation of any construction trade. Plumbing is around 3%, painting and
@@ -189,7 +189,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Female apprenticeship starts in electrical are increasing.</strong> CITB
                 data shows a steady year-on-year rise in women starting electrical apprenticeships,
@@ -198,7 +198,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>The UK needs over 10,000 additional qualified electricians.</strong> The
                 electrification of heating (heat pumps), transport (EV chargers), and energy (solar
@@ -207,7 +207,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Retention is the bigger challenge.</strong> Getting women into the trade is
                 one thing; keeping them is another. Site culture, lack of facilities (changing
@@ -238,7 +238,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Being the only woman on site.</strong> Many women report being the only
                 female electrician — or the only woman in any trade role — on their site. This can
@@ -247,7 +247,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Outdated attitudes.</strong> Most tradespeople are supportive and
                 professional. However, some individuals still hold outdated views. The Equality Act
@@ -256,7 +256,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Practical challenges.</strong> Inadequate facilities on site (no female
                 changing rooms or toilets), PPE that does not fit properly (designed for male body
@@ -266,7 +266,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Having to prove yourself more.</strong> Many women in the trade report
                 feeling they have to demonstrate competence more than their male colleagues before
@@ -299,7 +299,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Social media communities.</strong> Instagram, TikTok, and YouTube have
                 active communities of female electricians sharing their daily work, study tips,
@@ -308,7 +308,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Industry awards.</strong> The Electrical Industry Awards, the NICEIC Awards,
                 and the Women in Construction Awards regularly recognise female electricians for
@@ -317,7 +317,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mentoring programmes.</strong> The JIB, Women Into Construction, and some
                 competent person schemes offer formal mentoring programmes that pair experienced
@@ -352,7 +352,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Research employers carefully.</strong> Before accepting an apprenticeship,
                 ask about the company culture, whether they have or have had female apprentices, and
@@ -361,7 +361,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Try a taster session first.</strong> Many colleges and training providers
                 offer short taster courses in electrical installation. These let you experience the
@@ -370,7 +370,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use all available study resources.</strong> The{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
@@ -382,7 +382,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Build your portfolio from day one.</strong> Document your work with photos,
                 descriptions, and evidence of competence. The{' '}
@@ -394,7 +394,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Connect with other female apprentices.</strong> Whether through social
                 media, Women Into Construction events, or your college, find other women going
@@ -465,7 +465,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Users className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   CITB — Construction Industry Training Board
@@ -500,7 +500,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Specialisation.</strong> After gaining your core qualifications, you can
                 specialise in{' '}
@@ -516,7 +516,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Self-employment.</strong> Many electricians — men and women — eventually go
                 self-employed. Running your own business gives you control over your schedule, your
@@ -528,7 +528,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Training and education.</strong> Experienced electricians can move into
                 training roles — teaching at colleges, delivering in-house training for contractors,
@@ -536,7 +536,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Management and leadership.</strong> Site supervisor, contracts manager,
                 project manager, and director-level roles are all achievable. The electrical
@@ -566,7 +566,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Heart className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Heart className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Provide proper facilities.</strong> Separate changing rooms, clean toilets,
                 and correctly sized PPE. These are basic requirements under CDM 2015 and the
@@ -574,7 +574,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Heart className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Heart className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Zero-tolerance policy on harassment.</strong> Have a clear, enforced policy.
                 Make sure all employees know what constitutes harassment and what the consequences
@@ -582,7 +582,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Heart className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Heart className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Invest in training and progression.</strong> Fund qualifications, provide
                 mentoring, and create clear progression paths. Women — like all employees — are more
@@ -590,7 +590,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Heart className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Heart className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Review your recruitment.</strong> Look at your job adverts, your interview
                 panels, and your selection criteria. Are they inadvertently filtering out female
@@ -600,7 +600,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Heart className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Heart className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Flexible working where possible.</strong> Construction is not always
                 compatible with flexible working, but where it is possible — for example, office
@@ -639,7 +639,7 @@ export default function WomenInElectricalTradePage() {
       heroTitle={
         <>
           Women in the Electrical Trade:{' '}
-          <span className="text-yellow-400">Breaking Barriers, Building Careers</span>
+          <span className="text-elec-yellow">Breaking Barriers, Building Careers</span>
         </>
       }
       heroSubtitle="Women make up just 2% of UK electricians — but the number is growing. This guide covers everything from apprenticeship routes and support networks to career progression and earning potential. The electrical trade needs more qualified people, and that means everyone."
@@ -650,7 +650,7 @@ export default function WomenInElectricalTradePage() {
       faqHeading="Frequently Asked Questions About Women in the Electrical Trade"
       relatedPages={relatedPages}
       ctaHeading="Professional Tools for Every Electrician"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for digital certificates, AI study tools, and business management. The same professional platform for everyone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for digital certificates, AI study tools, and business management. The same professional platform for everyone. 7-day free trial, cancel anytime."
     />
   );
 }

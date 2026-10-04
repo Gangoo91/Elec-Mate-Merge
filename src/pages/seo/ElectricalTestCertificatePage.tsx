@@ -42,7 +42,7 @@ export default function ElectricalTestCertificatePage() {
         <>
           Electrical Test Certificate
           <br />
-          <span className="text-yellow-400">What It Is & When You Need One</span>
+          <span className="text-elec-yellow">What It Is & When You Need One</span>
         </>
       }
       heroSubtitle="Electrical test certificates are legal documents that confirm an installation has been designed, installed, inspected, and tested to BS 7671. Whether you are a homeowner checking paperwork after an electrician has been, or a qualified electrician issuing certificates on site, this guide explains every certificate type in plain language."
@@ -81,7 +81,7 @@ export default function ElectricalTestCertificatePage() {
               </p>
               <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mt-4">
                 <div className="flex items-center gap-2 mb-2">
-                  <AlertTriangle className="w-5 h-5 text-yellow-400" />
+                  <AlertTriangle className="w-5 h-5 text-elec-yellow" />
                   <h3 className="font-bold text-white text-lg">Important Note</h3>
                 </div>
                 <p className="text-white text-sm leading-relaxed">
@@ -106,7 +106,7 @@ export default function ElectricalTestCertificatePage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <FileText className="w-5 h-5 text-yellow-400" />
+                    <FileText className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">
                       Electrical Installation Certificate (EIC)
                     </h3>
@@ -124,7 +124,7 @@ export default function ElectricalTestCertificatePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <ClipboardCheck className="w-5 h-5 text-yellow-400" />
+                    <ClipboardCheck className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Minor Works Certificate (MWC)</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -142,7 +142,7 @@ export default function ElectricalTestCertificatePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <ShieldCheck className="w-5 h-5 text-yellow-400" />
+                    <ShieldCheck className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">
                       Electrical Installation Condition Report (EICR)
                     </h3>
@@ -179,20 +179,20 @@ export default function ElectricalTestCertificatePage() {
                 <h3 className="font-bold text-white text-lg mb-4">Certificate Selection Guide</h3>
                 <div className="space-y-4">
                   <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                    <h4 className="font-bold text-yellow-400 mb-2">Full EIC Required</h4>
+                    <h4 className="font-bold text-elec-yellow mb-2">Full EIC Required</h4>
                     <ul className="space-y-2 text-white text-sm">
                       <li className="flex items-start gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                        <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                         <span>Full or partial rewire</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                        <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                         <span>
                           New circuit installation (e.g., new radial for shower or cooker)
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                        <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                         <span>
                           <SEOInternalLink href="/guides/consumer-unit-change">
                             Consumer unit change
@@ -200,7 +200,7 @@ export default function ElectricalTestCertificatePage() {
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                        <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                         <span>
                           <SEOInternalLink href="/guides/ev-charger-installation">
                             EV charger installation
@@ -208,34 +208,34 @@ export default function ElectricalTestCertificatePage() {
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                        <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                         <span>
                           Electrical work in bathrooms and kitchens involving new circuits
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                        <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                         <span>Garden office or outbuilding supply</span>
                       </li>
                     </ul>
                   </div>
                   <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                    <h4 className="font-bold text-yellow-400 mb-2">Minor Works Certificate</h4>
+                    <h4 className="font-bold text-elec-yellow mb-2">Minor Works Certificate</h4>
                     <ul className="space-y-2 text-white text-sm">
                       <li className="flex items-start gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                        <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                         <span>Adding a socket to an existing ring final circuit</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                        <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                         <span>Replacing a light fitting like-for-like</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                        <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                         <span>Adding a spur from an existing socket</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                        <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                         <span>
                           Replacing accessories (switches, sockets) without altering the circuit
                         </span>
@@ -243,22 +243,22 @@ export default function ElectricalTestCertificatePage() {
                     </ul>
                   </div>
                   <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                    <h4 className="font-bold text-yellow-400 mb-2">EICR Required</h4>
+                    <h4 className="font-bold text-elec-yellow mb-2">EICR Required</h4>
                     <ul className="space-y-2 text-white text-sm">
                       <li className="flex items-start gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                        <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                         <span>Landlord periodic inspection (every 5 years in England)</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                        <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                         <span>Pre-purchase property survey</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                        <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                         <span>Insurance requirements</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                        <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                         <span>
                           Periodic inspection at recommended intervals (typically 5 or 10 years
                           domestic)
@@ -283,7 +283,7 @@ export default function ElectricalTestCertificatePage() {
               </p>
               <div className="space-y-3 mt-4">
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     1
                   </span>
                   <div>
@@ -296,7 +296,7 @@ export default function ElectricalTestCertificatePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     2
                   </span>
                   <div>
@@ -309,7 +309,7 @@ export default function ElectricalTestCertificatePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     3
                   </span>
                   <div>
@@ -322,7 +322,7 @@ export default function ElectricalTestCertificatePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     4
                   </span>
                   <div>
@@ -335,7 +335,7 @@ export default function ElectricalTestCertificatePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     5
                   </span>
                   <div>
@@ -380,7 +380,7 @@ export default function ElectricalTestCertificatePage() {
               </p>
               <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mt-4">
                 <div className="flex items-center gap-2 mb-2">
-                  <ShieldCheck className="w-5 h-5 text-yellow-400" />
+                  <ShieldCheck className="w-5 h-5 text-elec-yellow" />
                   <h3 className="font-bold text-white text-lg">Tip for Homeowners</h3>
                 </div>
                 <p className="text-white text-sm leading-relaxed">
@@ -405,7 +405,7 @@ export default function ElectricalTestCertificatePage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">
                       Using a Minor Works for New Circuits
                     </h3>
@@ -422,7 +422,7 @@ export default function ElectricalTestCertificatePage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">
                       Missing or Incomplete Test Results
                     </h3>
@@ -440,7 +440,7 @@ export default function ElectricalTestCertificatePage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Not Issuing Any Certificate</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -477,41 +477,41 @@ export default function ElectricalTestCertificatePage() {
                 </h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Automatic validation</strong> — Test
+                      <strong className="text-elec-yellow">Automatic validation</strong> — Test
                       results are checked against BS 7671 limits as they are entered, reducing
                       errors and ensuring compliance.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Professional presentation</strong> — PDF
+                      <strong className="text-elec-yellow">Professional presentation</strong> — PDF
                       certificates are consistently formatted, legible, and branded — unlike
                       handwritten carbon copies that can be difficult to read.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Cloud storage</strong> — Certificates are
+                      <strong className="text-elec-yellow">Cloud storage</strong> — Certificates are
                       stored securely in the cloud, accessible from any device, and cannot be lost,
                       damaged, or destroyed by water or fire.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Instant delivery</strong> — Certificates
+                      <strong className="text-elec-yellow">Instant delivery</strong> — Certificates
                       can be emailed to the customer, letting agent, or landlord immediately on
                       completion. No waiting for postal delivery.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Time savings</strong> — Auto-populated
+                      <strong className="text-elec-yellow">Time savings</strong> — Auto-populated
                       fields, saved templates, and calculation assistance reduce certificate
                       completion time from 30+ minutes to under 10 minutes per job.
                     </span>

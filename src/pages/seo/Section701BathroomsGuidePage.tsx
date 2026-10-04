@@ -186,7 +186,7 @@ const sections = [
             Zone Requirements at a Glance (Section 701)
           </h3>
           <div className="space-y-2.5">
-            <div className="grid grid-cols-3 gap-2 px-1 text-[11px] uppercase tracking-wide text-white/50 font-semibold">
+            <div className="grid grid-cols-3 gap-2 px-1 text-[11px] uppercase tracking-wide text-white font-semibold">
               <span>Zone</span>
               <span>Min. IP rating</span>
               <span>Permitted supply</span>
@@ -201,7 +201,7 @@ const sections = [
               <span>IPX4 (IPX5 water jets)</span>
               <span>LV with 30mA RCD; SELV ≤ 25V AC / 60V DC</span>
             </div>
-            <div className="grid grid-cols-3 gap-2 items-center p-3 rounded-xl bg-yellow-900/30 border border-yellow-700/40 text-white text-sm">
+            <div className="grid grid-cols-3 gap-2 items-center p-3 rounded-xl bg-white/[0.06] border border-yellow-700/40 text-white text-sm">
               <span className="font-semibold">Zone 2</span>
               <span>IPX4 (IPX5 water jets)</span>
               <span>LV with 30mA RCD; shaver / SELV sockets</span>
@@ -212,7 +212,7 @@ const sections = [
               <span>LV with 30mA RCD; sockets &gt; 2.5m from Zone 1</span>
             </div>
           </div>
-          <p className="text-white/50 text-xs mt-4">
+          <p className="text-white text-xs mt-4">
             IP minimums per Reg 701.512.2; 30mA RCD additional protection per Reg 701.411.3.3;
             Zone 0/switch SELV limits per Reg 701.512.3; Zone 1 SELV/PELV equipment limit per Reg
             701.55.
@@ -300,7 +300,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Zone 2 — IPX4 minimum</strong>: same as Zone 1. Again, IPX5 where water jets
                 are used for cleaning. In most domestic bathrooms, IPX4 is sufficient.
@@ -321,7 +321,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 sm:p-6 my-4">
           <div className="space-y-2.5">
-            <div className="grid grid-cols-[auto_1fr] gap-3 px-1 text-[11px] uppercase tracking-wide text-white/50 font-semibold">
+            <div className="grid grid-cols-[auto_1fr] gap-3 px-1 text-[11px] uppercase tracking-wide text-white font-semibold">
               <span>Code</span>
               <span>Water protection (second digit)</span>
             </div>
@@ -338,7 +338,7 @@ const sections = [
               <span>Temporary immersion (Zone 0 minimum)</span>
             </div>
           </div>
-          <p className="text-white/50 text-xs mt-4">
+          <p className="text-white text-xs mt-4">
             IP codes are defined in BS EN 60529; an &ldquo;X&rdquo; means the solid-object digit is
             not specified.
           </p>
@@ -427,7 +427,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type AC, A, or F RCD?</strong> — for most bathroom circuits, a Type AC or
                 Type A RCD is suitable. If the circuit supplies equipment with electronic controls
@@ -437,7 +437,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Shared circuits</strong> — if a lighting circuit serves both a bathroom and
                 other rooms, the entire circuit must be 30mA RCD-protected. This is why many modern
@@ -446,7 +446,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional protection</strong> — the 30mA RCD provides additional protection
                 against direct contact and is not a substitute for basic protection (insulation) or
@@ -475,21 +475,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Zone 0</strong>: SELV not exceeding 12V AC rms or 30V ripple-free DC. The
                 safety source (transformer) must be installed outside Zones 0, 1, and 2.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Zone 1</strong>: SELV not exceeding 25V AC rms or 60V ripple-free DC. The
                 safety source must be installed outside Zones 0, 1, and 2.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Zones 2 and outside</strong>: SELV up to 50V AC or 120V DC is permitted as
                 per the general SELV requirements of Section 414.
@@ -518,7 +518,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Info className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Zone 0</strong>: no switchgear or accessories may be installed. The only
                 exceptions throughout Section 701 are switches and controls incorporated in fixed
@@ -527,7 +527,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Info className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Zone 1</strong>: only switches of SELV circuits supplied at a nominal voltage
                 not exceeding 12V AC rms or 30V ripple-free DC may be installed, with the safety
@@ -536,7 +536,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Info className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Zone 2</strong>: switchgear, accessories incorporating switches and
                 socket-outlets must not be installed, with two exceptions in Regulation 701.512.3 —
@@ -546,7 +546,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Info className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Outside zones</strong>: all switchgear and accessories permitted (subject to
                 normal rules). Pull-cord switches are commonly used at ceiling level, with the
@@ -581,7 +581,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Info className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Shaver supply units</strong>: units conforming to BS EN 61558-2-5
                 (incorporating an isolating transformer) may be installed in Zone 2 or outside the
@@ -589,7 +589,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Info className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SELV socket outlets</strong>: socket outlets supplied by SELV may be
                 installed in Zone 2 or outside the zones, provided the voltage does not exceed the
@@ -622,7 +622,7 @@ const sections = [
             Indicative Shower Loads at 230V
           </h3>
           <div className="space-y-2.5">
-            <div className="grid grid-cols-3 gap-2 px-1 text-[11px] uppercase tracking-wide text-white/50 font-semibold">
+            <div className="grid grid-cols-3 gap-2 px-1 text-[11px] uppercase tracking-wide text-white font-semibold">
               <span>Rating</span>
               <span>Approx. current</span>
               <span>Typical device</span>
@@ -648,7 +648,7 @@ const sections = [
               <span>50 A</span>
             </div>
           </div>
-          <p className="text-white/50 text-xs mt-4">
+          <p className="text-white text-xs mt-4">
             Indicative only. The protective device and cable size must be calculated for the actual
             installation method, length and grouping, and verified against the manufacturer&rsquo;s
             instructions and BS 7671 Appendix 4 current-carrying capacities.
@@ -657,7 +657,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated circuit</strong>: an electric shower must be on its own dedicated
                 circuit from the consumer unit. Cable is commonly 10mm² for shorter runs and 16mm²
@@ -670,21 +670,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection</strong>: mandatory 30mA RCD protection per Regulation
                 701.411.3.3.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Local isolation</strong>: a 45A or 50A double-pole isolator switch should be
                 installed outside the zones (or outside the bathroom), accessible to the user.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable routing</strong>: the cable within the bathroom should ideally be
                 routed outside the zones or, if crossing zones, should be of sufficient IP rating or
@@ -713,7 +713,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Continuity</strong> (Regulation 643.2) — confirm the continuity of any
                 supplementary bonding conductors and protective conductors. Where supplementary
@@ -723,7 +723,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD operation</strong> (Regulation 643.8) — the 30mA RCDs providing
                 additional protection on bathroom circuits must operate within the required times.
@@ -732,7 +732,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insulation resistance</strong> (Regulation 643.3.2, Table 64) — a 500V DC
                 test, minimum 1.0 MΩ for circuits up to 500V. Pay attention to moisture in bathroom
@@ -740,7 +740,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Verification of IP ratings — inspect all equipment in zones to confirm the IP rating
                 is appropriate and has not been compromised during installation.
@@ -828,7 +828,7 @@ export default function Section701BathroomsGuidePage() {
       heroTitle={
         <>
           Section 701 Bathrooms:{' '}
-          <span className="text-yellow-400">Complete BS 7671 Bathroom Zones Guide</span>
+          <span className="text-elec-yellow">Complete BS 7671 Bathroom Zones Guide</span>
         </>
       }
       heroSubtitle="Everything you need to know about bathroom electrical installations under BS 7671. Zone definitions, IP ratings, supplementary bonding under Regulation 701.415.2, RCD protection, SELV, switching, socket outlets, and electric shower circuits."
@@ -844,7 +844,7 @@ export default function Section701BathroomsGuidePage() {
       faqHeading="Frequently Asked Questions About Section 701 Bathroom Regulations"
       relatedPages={relatedPages}
       ctaHeading="Certify Bathroom Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for digital EIC and Minor Works certificates with bathroom zone diagrams and supplementary bonding records. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for digital EIC and Minor Works certificates with bathroom zone diagrams and supplementary bonding records. 7-day free trial."
     />
   );
 }

@@ -256,7 +256,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DALI (IEC 62386):</strong> Digital addressable protocol. Each luminaire has
                 an individual DALI address — can be controlled, dimmed, and monitored individually.
@@ -265,7 +265,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>0-10V / 1-10V:</strong> Analogue dimming signal from 0V (off/minimum) to 10V
                 (full output). Simple wiring, low cost, compatible with most dimming controllers.
@@ -273,7 +273,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Phase-cut dimming (leading or trailing edge):</strong> Standard dimmer
                 switch compatible. Trailing edge (electronic) dimmers work best with LED drivers.
@@ -297,7 +297,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
-            <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <p className="font-bold text-white mb-2">Commercial LED Specification Requirements</p>
               <ul className="space-y-1 text-white text-sm">
@@ -377,7 +377,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671:2018+A4:2026</strong> — governs the electrical installation.
                 Lighting circuits must comply with all relevant sections including overcurrent
@@ -385,7 +385,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Building Regulations Part L</strong> — energy efficiency requirements for
                 lighting in commercial buildings. Minimum efficacy thresholds for installed
@@ -393,7 +393,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CIBSE SLL Code for Lighting</strong> — guidance on maintained illuminance
                 levels for different task areas. Lux levels must be maintained throughout the
@@ -401,7 +401,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>WEEE Regulations 2013</strong> — fluorescent lamps and LED luminaires are
                 WEEE. Mercury-containing fluorescent lamps are hazardous WEEE and must be disposed
@@ -452,7 +452,7 @@ export default function LEDVsFluorescentCommercialPage() {
       heroTitle={
         <>
           LED vs Fluorescent Commercial Lighting:{' '}
-          <span className="text-yellow-400">Energy Savings, Controls and Installation Guide</span>
+          <span className="text-elec-yellow">Energy Savings, Controls and Installation Guide</span>
         </>
       }
       heroSubtitle="LED luminaires use 50–70% less energy than the fluorescent fittings they replace, last three to five times longer, and eliminate mercury-containing lamps. This guide covers the technical differences, replacement options, dimming controls, power factor, and the regulations that apply to commercial LED projects."

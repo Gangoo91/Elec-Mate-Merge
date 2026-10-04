@@ -185,7 +185,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Overloaded circuits</strong> — a cable carrying more current than its rating
                 runs hotter than properly loaded neighbours. Thermal imaging shows which circuits on
@@ -583,7 +583,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Camera className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>True sensor resolution</strong> — ignore "enhanced" or "SuperResolution"
                 numbers. The true sensor resolution is what determines actual thermal detail.
@@ -592,7 +592,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NETD (thermal sensitivity)</strong> — this measures the smallest temperature
                 difference the camera can detect. Under 70mK (0.07 degrees C) is good. Under 50mK is
@@ -601,7 +601,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Image fusion or MSX</strong> — the ability to overlay visible light detail
                 onto the thermal image is extremely useful. Without it, a thermal image of a
@@ -610,7 +610,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Total cost</strong> — factor in the camera body, any required accessories
                 (case, lanyard, screen protector), software subscriptions (FLIR Ignite has free and
@@ -619,7 +619,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Recording results</strong> — GN3 8.2 states that thermographic survey
                 results shall be recorded and anomalies addressed. Choose a camera whose app or
@@ -760,7 +760,7 @@ export default function BestThermalImagingCameraElectricianPage() {
       heroTitle={
         <>
           Best Thermal Imaging Camera for Electricians:{' '}
-          <span className="text-yellow-400">2026 Buyers Guide</span>
+          <span className="text-elec-yellow">2026 Buyers Guide</span>
         </>
       }
       heroSubtitle="Find loose connections, overloaded circuits, and hidden faults before they cause fires. Five thermal cameras compared for resolution, battery life, connectivity, and real-world value on site."
@@ -776,7 +776,7 @@ export default function BestThermalImagingCameraElectricianPage() {
       faqHeading="Frequently Asked Questions About Thermal Imaging for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Add Thermal Evidence to Your EICR Reports"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EICR certificates with photo attachments, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for EICR certificates with photo attachments, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

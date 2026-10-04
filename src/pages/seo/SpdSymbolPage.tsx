@@ -31,7 +31,7 @@ const sections = [
           showCategoryHeadings={false}
           showImageObjectSchema={true}
         />
-        <p className="text-sm text-white/70 mt-4">
+        <p className="text-sm text-white mt-4">
           Right-click the symbol above to save the SVG, or use the{' '}
           <SEOInternalLink href="/ai-diagram-builder">AI Diagram Builder</SEOInternalLink> to drop
           it into a working drawing.
@@ -58,29 +58,29 @@ const sections = [
         <div className="mt-3 grid gap-3 sm:grid-cols-2">
           <div className="rounded-2xl bg-red-900/20 border border-red-700/40 p-4">
             <div className="text-xs font-mono text-red-300/80">Reg 443.4.1(a)</div>
-            <p className="mt-1 text-sm text-white/85">
+            <p className="mt-1 text-sm text-white">
               Serious injury to, or loss of, human life
             </p>
           </div>
           <div className="rounded-2xl bg-red-900/20 border border-red-700/40 p-4">
             <div className="text-xs font-mono text-red-300/80">Reg 443.4.1(c)</div>
-            <p className="mt-1 text-sm text-white/85">
+            <p className="mt-1 text-sm text-white">
               Significant financial or data loss
             </p>
           </div>
         </div>
-        <p className="mt-3 text-xs text-white/55">
+        <p className="mt-3 text-xs text-white">
           Limb (b) was deleted by the BS 7671:2018+A2:2022 Corrigendum (May 2023) and remains absent in BS 7671:2018+A4:2026.
         </p>
-        <div className="mt-4 rounded-2xl bg-amber-900/20 border border-amber-700/40 p-4">
-          <p className="text-sm text-white/85">
+        <div className="mt-4 rounded-2xl bg-white/[0.06] border border-amber-700/40 p-4">
+          <p className="text-sm text-white">
             <strong className="text-amber-200">For all other cases</strong>, protection against
             transient overvoltages shall be provided unless the owner of the installation declares
             it is not required due to any loss or damage being tolerable and they accept the risk of
             damage to equipment and any consequential loss. Record the decision on the certificate.
           </p>
         </div>
-        <p className="mt-4 text-sm text-white/60 italic">
+        <p className="mt-4 text-sm text-white italic">
           Section 534 (selection and erection of SPDs) was substantially revised in the BS
           7671:2018+A4:2026 amendment, including the voltage protection level (Up) selection
           criteria covered further down this page.
@@ -104,7 +104,7 @@ const sections = [
               <h4 className="font-semibold text-blue-100">Type 1</h4>
               <span className="text-xs font-mono text-blue-300/80">LPZ 0/1 boundary</span>
             </div>
-            <p className="mt-2 text-sm text-white/85">
+            <p className="mt-2 text-sm text-white">
               Handles partial <strong>direct lightning current</strong> (10/350&nbsp;µs waveform).
               Required at the origin where the structure has an external lightning protection system
               or otherwise needs protection against direct lightning. Bigger connecting conductors
@@ -116,7 +116,7 @@ const sections = [
               <h4 className="font-semibold text-blue-100">Type 2</h4>
               <span className="text-xs font-mono text-blue-300/80">LPZ 1/2 boundary</span>
             </div>
-            <p className="mt-2 text-sm text-white/85">
+            <p className="mt-2 text-sm text-white">
               Handles <strong>transient overvoltage</strong> (8/20&nbsp;µs waveform) at the consumer
               unit or main distribution board origin. The most common device on a UK domestic or
               light-commercial drawing.
@@ -127,14 +127,14 @@ const sections = [
               <h4 className="font-semibold text-blue-100">Type 3</h4>
               <span className="text-xs font-mono text-blue-300/80">point of use</span>
             </div>
-            <p className="mt-2 text-sm text-white/85">
+            <p className="mt-2 text-sm text-white">
               Fine protection at, or close to, <strong>sensitive final equipment</strong>. Always
               installed downstream of, and coordinated with, a Type 1 and/or Type 2 device — never
               on its own.
             </p>
           </div>
         </div>
-        <p className="mt-4 text-sm text-white/70">
+        <p className="mt-4 text-sm text-white">
           Type 2 or Type 3 SPDs may also be placed in sub-distribution boards or close to the
           equipment to be protected to achieve the required voltage protection level, coordinated
           with the device(s) at the origin (Reg 534.4.1.5; Figure 534.2).
@@ -153,23 +153,23 @@ const sections = [
         </p>
         <div className="mt-4 space-y-3">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
-            <div className="text-xs font-mono text-yellow-300/80">Reg 534.4.1.4</div>
-            <p className="mt-1 text-sm text-white/85">
+            <div className="text-xs font-mono text-elec-yellow/80">Reg 534.4.1.4</div>
+            <p className="mt-1 text-sm text-white">
               <strong>No external lightning protection</strong> (or no need for direct-lightning
               protection): install <strong>Type 2 SPDs</strong> as close as possible to the origin
               of the installation — the consumer unit or main distribution board.
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
-            <div className="text-xs font-mono text-yellow-300/80">Reg 534.4.1.3</div>
-            <p className="mt-1 text-sm text-white/85">
+            <div className="text-xs font-mono text-elec-yellow/80">Reg 534.4.1.3</div>
+            <p className="mt-1 text-sm text-white">
               <strong>External lightning protection fitted</strong> (or direct-lightning protection
               required): install <strong>Type 1 SPDs</strong> as close as possible to the origin, at
               the LPZ&nbsp;0/1 boundary on the incoming service.
             </p>
           </div>
         </div>
-        <p className="mt-4 text-sm text-white/85">
+        <p className="mt-4 text-sm text-white">
           <strong>SPDs with RCDs (Reg 534.4.7):</strong> where an SPD sits on the load side of an
           RCD, that RCD shall have an immunity to surge currents of at least{' '}
           <strong>3&nbsp;kA&nbsp;8/20</strong> — a Type&nbsp;S time-delayed RCD satisfies this.
@@ -204,7 +204,7 @@ const sections = [
         <div className="mt-4 overflow-hidden rounded-2xl border border-white/10">
           <table className="w-full text-sm">
             <thead>
-              <tr className="bg-white/[0.06] text-left text-white/70">
+              <tr className="bg-white/[0.06] text-left text-white">
                 <th className="p-3 font-medium">SPD type (at/near origin)</th>
                 <th className="p-3 font-medium">PE / earthing conductor</th>
                 <th className="p-3 font-medium">Live conductor</th>
@@ -212,25 +212,25 @@ const sections = [
             </thead>
             <tbody className="divide-y divide-white/10">
               <tr className="bg-blue-900/20">
-                <td className="p-3 font-medium text-white/90">Type 2</td>
-                <td className="p-3 text-white/85">≥ 6&nbsp;mm² copper or equivalent</td>
-                <td className="p-3 text-white/85">≥ 2.5&nbsp;mm² copper or equivalent</td>
+                <td className="p-3 font-medium text-white">Type 2</td>
+                <td className="p-3 text-white">≥ 6&nbsp;mm² copper or equivalent</td>
+                <td className="p-3 text-white">≥ 2.5&nbsp;mm² copper or equivalent</td>
               </tr>
               <tr className="bg-blue-900/30">
-                <td className="p-3 font-medium text-white/90">Type 1</td>
-                <td className="p-3 text-white/85">≥ 16&nbsp;mm² copper or equivalent</td>
-                <td className="p-3 text-white/85">≥ 6&nbsp;mm² copper or equivalent</td>
+                <td className="p-3 font-medium text-white">Type 1</td>
+                <td className="p-3 text-white">≥ 16&nbsp;mm² copper or equivalent</td>
+                <td className="p-3 text-white">≥ 6&nbsp;mm² copper or equivalent</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <p className="mt-3 text-sm text-white/70">
+        <p className="mt-3 text-sm text-white">
           The live-side conductors connecting the SPD and its overcurrent protective device must
           also be rated to withstand the prospective short-circuit current expected at that point
           (Reg 534.4.10, referring to Reg 433.3.1(b)).
         </p>
         <div className="mt-4 rounded-2xl bg-white/[0.04] border border-white/10 p-4">
-          <p className="text-sm text-white/85">
+          <p className="text-sm text-white">
             <strong>Keep the leads short.</strong> Reg 534.4.8 requires all conductors and
             interconnections between the SPD, the line to be protected and any external overcurrent
             device to be kept as short and straight as possible, with unnecessary loops avoided.
@@ -253,14 +253,14 @@ const sections = [
           a standard <strong>230/400&nbsp;V</strong> installation the installed SPD assembly's
           voltage protection level shall not exceed <strong>2.5&nbsp;kV</strong>.
         </p>
-        <p className="mt-4 text-sm text-white/70">
+        <p className="mt-4 text-sm text-white">
           The 2.5&nbsp;kV ceiling lines up with the Category&nbsp;II rated impulse voltage for a
           230/400&nbsp;V system in Table&nbsp;443.2:
         </p>
         <div className="mt-3 overflow-hidden rounded-2xl border border-white/10">
           <table className="w-full text-sm">
             <thead>
-              <tr className="bg-white/[0.06] text-left text-white/70">
+              <tr className="bg-white/[0.06] text-left text-white">
                 <th className="p-3 font-medium">Overvoltage category</th>
                 <th className="p-3 font-medium">Example equipment</th>
                 <th className="p-3 font-medium">Rated impulse voltage (Uw)</th>
@@ -268,33 +268,33 @@ const sections = [
             </thead>
             <tbody className="divide-y divide-white/10">
               <tr>
-                <td className="p-3 font-medium text-white/90">Category IV</td>
-                <td className="p-3 text-white/85">Origin of installation, energy meter</td>
-                <td className="p-3 text-white/85">6&nbsp;kV</td>
+                <td className="p-3 font-medium text-white">Category IV</td>
+                <td className="p-3 text-white">Origin of installation, energy meter</td>
+                <td className="p-3 text-white">6&nbsp;kV</td>
               </tr>
               <tr>
-                <td className="p-3 font-medium text-white/90">Category III</td>
-                <td className="p-3 text-white/85">Distribution boards, fixed wiring</td>
-                <td className="p-3 text-white/85">4&nbsp;kV</td>
+                <td className="p-3 font-medium text-white">Category III</td>
+                <td className="p-3 text-white">Distribution boards, fixed wiring</td>
+                <td className="p-3 text-white">4&nbsp;kV</td>
               </tr>
               <tr className="bg-blue-900/30">
-                <td className="p-3 font-medium text-white/90">Category II</td>
-                <td className="p-3 text-white/85">Appliances, tools (SPD target)</td>
-                <td className="p-3 text-white/85">2.5&nbsp;kV</td>
+                <td className="p-3 font-medium text-white">Category II</td>
+                <td className="p-3 text-white">Appliances, tools (SPD target)</td>
+                <td className="p-3 text-white">2.5&nbsp;kV</td>
               </tr>
               <tr>
-                <td className="p-3 font-medium text-white/90">Category I</td>
-                <td className="p-3 text-white/85">Sensitive electronic equipment</td>
-                <td className="p-3 text-white/85">1.5&nbsp;kV</td>
+                <td className="p-3 font-medium text-white">Category I</td>
+                <td className="p-3 text-white">Sensitive electronic equipment</td>
+                <td className="p-3 text-white">1.5&nbsp;kV</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <p className="mt-3 text-xs text-white/55">
+        <p className="mt-3 text-xs text-white">
           Values for a 230/400&nbsp;V nominal installation, Table 443.2.
         </p>
-        <div className="mt-4 rounded-2xl bg-amber-900/20 border border-amber-700/40 p-4">
-          <p className="text-sm text-white/85">
+        <div className="mt-4 rounded-2xl bg-white/[0.06] border border-amber-700/40 p-4">
+          <p className="text-sm text-white">
             <strong className="text-amber-200">Protective distance &gt; 10&nbsp;m.</strong> If the
             distance between the SPD and the equipment it protects exceeds 10&nbsp;m, oscillation can
             raise the voltage at the equipment terminals to as much as twice the SPD's voltage
@@ -372,7 +372,7 @@ export default function SpdSymbolPage() {
       heroTitle={
         <>
           SPD (Surge Protection Device) Symbol{' '}
-          <span className="text-yellow-400">IEC 60617 reference</span>
+          <span className="text-elec-yellow">IEC 60617 reference</span>
         </>
       }
       heroSubtitle="SPD surge protection device electrical symbol IEC 60617 — what it represents, where it appears in UK electrical drawings, and how it relates to the rest of the symbol library."

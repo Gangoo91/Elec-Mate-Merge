@@ -230,7 +230,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Design current (Ib):</strong> The maximum operating current from the
                 manufacturer data sheet. For a typical domestic ASHP, this is between 10A and 20A on
@@ -238,7 +238,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Starting current:</strong> Compressors draw a high inrush current at
                 start-up, typically 3 to 5 times the running current for a fraction of a second.
@@ -247,7 +247,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>External cable run:</strong> The cable from the building to the outdoor heat
                 pump unit is typically SWA (steel wire armoured) to provide mechanical protection.
@@ -260,7 +260,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Voltage drop:</strong> Long runs from the consumer unit through the building
                 and externally to the heat pump can result in significant voltage drop. Maximum 5%
@@ -320,7 +320,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type C MCB:</strong> Most heat pump manufacturers specify a Type C MCB
                 because the compressor starting current (typically 3-5 times running current) would
@@ -329,7 +329,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCB rating:</strong> The MCB rating (In) must be equal to or greater than
                 the design current (Ib). Common ratings for domestic heat pumps are 20A (for units
@@ -338,7 +338,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection:</strong> A 30mA RCD is required under BS 7671 Regulation
                 411.3.3. An RCBO (combined MCB and RCD) is the preferred device. Some manufacturers
@@ -347,7 +347,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SPD protection:</strong> Surge protection is recommended for heat pump
                 circuits, as the electronic control boards are sensitive to voltage spikes. BS 7671
@@ -376,7 +376,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Local isolator:</strong> A lockable isolator switch must be installed within
                 arm's reach of the outdoor unit. This allows safe isolation for maintenance and
@@ -385,7 +385,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable route:</strong> The cable typically runs from the consumer unit
                 through the building (T&E in walls/ceiling voids), exits the building through a wall
@@ -395,7 +395,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth electrode:</strong> If the SWA armour is used as the circuit
                 protective conductor for the external section, it must be terminated correctly at
@@ -408,7 +408,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Controls wiring:</strong> In addition to the power supply, the heat pump
                 typically needs a low-voltage controls connection to the indoor controller, room
@@ -494,7 +494,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Continuity:</strong> Test R1+R2 for the dedicated circuit, including both
                 the internal T&E section and the external SWA section. If SWA armour is used as the
@@ -502,7 +502,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insulation resistance:</strong> Test at 500V DC between L-E, N-E, and L-N.
                 Minimum 1M ohm. Disconnect the heat pump before testing to avoid damage to the
@@ -510,7 +510,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth fault loop impedance:</strong> Measure Zs at the heat pump isolator to
                 confirm the circuit meets the maximum Zs value for the protective device. This is
@@ -518,7 +518,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD test:</strong> Test the RCBO at the consumer unit — confirm trip at
                 rated current (30mA) and within the required time (300ms for general type, 40ms for
@@ -526,7 +526,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Polarity:</strong> Confirm correct polarity at the heat pump isolator and
                 connection point.
@@ -557,7 +557,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Circuit Design Tools</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -604,7 +604,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Design, certify, and invoice heat pump electrical work"
-          description="Cable sizing, max demand, EIC certificates, quoting, and invoicing — all on your phone. Join 1,600+ UK electricians using Elec-Mate. 7-day free trial."
+          description="Cable sizing, max demand, EIC certificates, quoting, and invoicing — all on your phone. Join 2,100+ UK electricians using Elec-Mate. 7-day free trial."
           icon={Wind}
         />
       </>
@@ -630,7 +630,7 @@ export default function HeatPumpElectricalPage() {
       heroTitle={
         <>
           Heat Pump Electrical Requirements:{' '}
-          <span className="text-yellow-400">Supply, Circuit, and Certification Guide</span>
+          <span className="text-elec-yellow">Supply, Circuit, and Certification Guide</span>
         </>
       }
       heroSubtitle="Every heat pump installation needs a dedicated electrical circuit designed and certified to BS 7671. This guide covers single-phase vs three-phase supply, cable sizing, MCB selection, circuit protection, BUS grant requirements, and the EIC certification that MCS installers need from you."
@@ -641,7 +641,7 @@ export default function HeatPumpElectricalPage() {
       faqHeading="Frequently Asked Questions About Heat Pump Electrical Requirements"
       relatedPages={relatedPages}
       ctaHeading="Design and Certify Heat Pump Circuits on Your Phone"
-      ctaSubheading="Cable sizing calculators, max demand tools, EIC certificates, and invoicing — all in one app. Join 1,600+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
+      ctaSubheading="Cable sizing calculators, max demand tools, EIC certificates, and invoicing — all in one app. Join 2,100+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
     />
   );
 }

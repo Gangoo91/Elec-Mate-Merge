@@ -513,7 +513,7 @@ export default function RenewableEnergyCoursePage() {
       heroTitle={
         <>
           Renewable Energy Course:{' '}
-          <span className="text-yellow-400">Solar PV & Battery Storage</span>
+          <span className="text-elec-yellow">Solar PV & Battery Storage</span>
         </>
       }
       heroSubtitle="Master solar PV and battery storage installation with comprehensive training. System design, string sizing, inverter types, G98/G99 grid connection, MCS certification, and BS 7671 Section 712 compliance. 10 modules with video content, interactive quizzes, and AI-powered study tools."
@@ -531,7 +531,7 @@ export default function RenewableEnergyCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Ready to enter the renewable energy market?"
-      ctaSubheading="Join 1,600+ UK electricians studying smarter with Elec-Mate. 10 structured modules, interactive quizzes, video content, and an AI tutor for any solar PV or battery storage question. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians studying smarter with Elec-Mate. 10 structured modules, interactive quizzes, video content, and an AI tutor for any solar PV or battery storage question. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/renewable-energy"
     />

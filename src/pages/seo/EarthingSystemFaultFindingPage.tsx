@@ -146,7 +146,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth electrode</strong> — a buried conductor (typically a copper-clad steel
                 rod) that makes electrical contact with the general mass of earth. Required on TT
@@ -154,14 +154,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing conductor</strong> — connects the main earthing terminal to the
                 earth electrode (TT) or to the PME terminal provided by the distributor (TN-C-S).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main earthing terminal (MET)</strong> — the central connection point in the
                 installation to which all protective conductors, bonding conductors, and the
@@ -169,14 +169,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main protective bonding conductors</strong> — connect metallic services
                 entering the building (gas, water, oil pipes) to the MET.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit protective conductors (CPCs)</strong> — run with each circuit and
                 connect exposed metalwork of equipment and accessories back to the MET.
@@ -259,7 +259,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MET connections</strong> — corroded or loose connections at the main
                 earthing terminal. Inspect and retighten all connections. Clean any corrosion with
@@ -269,7 +269,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrode rod connection clamp</strong> — the brass or stainless steel clamp
                 connecting the earthing conductor to the electrode rod can corrode, particularly in
@@ -278,7 +278,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PME terminal connection</strong> — the connection at the distributor's
                 cut-out (the sealed fuse unit) includes a PME earthing terminal. The earthing
@@ -472,7 +472,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Measure Ze at the Origin Every Time</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -523,7 +523,7 @@ export default function EarthingSystemFaultFindingPage() {
       heroTitle={
         <>
           Earthing System Fault Finding:{' '}
-          <span className="text-yellow-400">
+          <span className="text-elec-yellow">
             Open Circuit Earth, Electrode Resistance, and PME Dangers
           </span>
         </>
@@ -536,7 +536,7 @@ export default function EarthingSystemFaultFindingPage() {
       faqHeading="Frequently Asked Questions About Earthing System Fault Finding"
       relatedPages={relatedPages}
       ctaHeading="Record Earthing System Test Results and Complete EICRs on Your Phone"
-      ctaSubheading="Elec-Mate's EICR app captures Ze, electrode resistance, and bonding test results, and generates coded observations for any earthing deficiencies. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's EICR app captures Ze, electrode resistance, and bonding test results, and generates coded observations for any earthing deficiencies. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

@@ -206,11 +206,11 @@ export default function InspectionTestingCoursePage() {
       <section className="py-16 sm:py-24 px-5">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-6">
-            <GraduationCap className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium text-yellow-400">C&G 2391 Preparation</span>
+            <GraduationCap className="w-4 h-4 text-elec-yellow" />
+            <span className="text-sm font-medium text-elec-yellow">C&G 2391 Preparation</span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
-            Study for the <span className="text-yellow-400">C&G 2391</span> Online
+            Study for the <span className="text-elec-yellow">C&G 2391</span> Online
           </h1>
           <p className="text-lg text-white max-w-2xl mx-auto leading-relaxed mb-8">
             AI-powered study assistant, mock exams, scenario walkthroughs, and regulation lookup.
@@ -225,7 +225,7 @@ export default function InspectionTestingCoursePage() {
             </a>
             <a
               href="#how-it-works"
-              className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-yellow-500/40 text-white font-semibold rounded-xl touch-manipulation transition-colors"
+              className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-white/[0.1] text-white font-semibold rounded-xl touch-manipulation transition-colors"
             >
               See How It Works
             </a>
@@ -298,7 +298,7 @@ export default function InspectionTestingCoursePage() {
           <div className="mt-6 rounded-2xl bg-white/[0.04] border border-white/10 p-6">
             <ul className="space-y-4 text-white">
               <li className="flex items-start gap-3">
-                <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <span>
                   <strong>NICEIC/NAPIT/ELECSA membership:</strong> All major competent person
                   schemes require the 2391 (or equivalent) for qualified supervisors. Without scheme
@@ -307,7 +307,7 @@ export default function InspectionTestingCoursePage() {
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <span>
                   <strong>Signing off EICRs:</strong> To issue an Electrical Installation Condition
                   Report, you must be competent in periodic inspection and testing. The 2391 is the
@@ -316,7 +316,7 @@ export default function InspectionTestingCoursePage() {
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <span>
                   <strong>JIB Approved Electrician (Grade Card):</strong> The Grade Card requires
                   the 2391 in addition to the Gold Card qualifications. It demonstrates a higher
@@ -324,7 +324,7 @@ export default function InspectionTestingCoursePage() {
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <span>
                   <strong>Career advancement:</strong> Many electrical contracting firms require the
                   2391 for senior electrician roles, site supervisor positions, and contracts
@@ -396,7 +396,7 @@ export default function InspectionTestingCoursePage() {
           </div>
           <div className="space-y-4">
             <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                 1
               </div>
               <div>
@@ -413,7 +413,7 @@ export default function InspectionTestingCoursePage() {
               </div>
             </div>
             <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                 2
               </div>
               <div>
@@ -430,7 +430,7 @@ export default function InspectionTestingCoursePage() {
               </div>
             </div>
             <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                 3
               </div>
               <div>
@@ -446,7 +446,7 @@ export default function InspectionTestingCoursePage() {
               </div>
             </div>
             <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                 4
               </div>
               <div>
@@ -461,7 +461,7 @@ export default function InspectionTestingCoursePage() {
               </div>
             </div>
             <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                 5
               </div>
               <div>
@@ -479,7 +479,7 @@ export default function InspectionTestingCoursePage() {
               </div>
             </div>
             <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                 6
               </div>
               <div>
@@ -496,7 +496,7 @@ export default function InspectionTestingCoursePage() {
               </div>
             </div>
             <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                 7
               </div>
               <div>
@@ -602,7 +602,7 @@ export default function InspectionTestingCoursePage() {
                 key={step.name}
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                   {index + 1}
                 </div>
                 <div>
@@ -642,7 +642,7 @@ export default function InspectionTestingCoursePage() {
               >
                 <summary className="flex items-center justify-between p-4 min-h-[44px] touch-manipulation cursor-pointer text-white font-medium">
                   <span>{faq.question}</span>
-                  <ChevronDown className="w-5 h-5 text-yellow-400 group-open:rotate-180 transition-transform" />
+                  <ChevronDown className="w-5 h-5 text-elec-yellow group-open:rotate-180 transition-transform" />
                 </summary>
                 <div className="px-4 pb-4 text-white text-sm leading-relaxed">{faq.answer}</div>
               </details>
@@ -674,7 +674,7 @@ export default function InspectionTestingCoursePage() {
 
       <SEOCTASection
         heading="Pass the 2391 with confidence"
-        subheading="Join 1,600+ UK electricians studying for qualifications and growing their careers. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians studying for qualifications and growing their careers. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

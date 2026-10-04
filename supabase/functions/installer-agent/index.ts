@@ -15,6 +15,7 @@ import {
 } from '../shared/bs7671InstallationMethods.ts';
 import { ContextEnvelope, mergeContext } from '../_shared/agent-context.ts';
 import { captureException } from '../_shared/sentry.ts';
+import { fetchChatCompletions, fetchEmbeddings } from '../_shared/llm-direct.ts';
 
 // corsHeaders imported from shared deps
 
@@ -37,8 +38,8 @@ serve(async (req) => {
       previousAgentOutputs,
       requestSuggestions,
     } = await req.json();
-    const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
-    if (!lovableApiKey) throw new ValidationError('LOVABLE_API_KEY not configured');
+    const aiApiKey = Deno.env.get('OPENAI_API_KEY');
+    if (!aiApiKey) throw new ValidationError('OPENAI_API_KEY not configured');
 
     logger.info('Installer Agent processing', {
       jobScale,
@@ -118,14 +119,14 @@ serve(async (req) => {
       logger.info('⚡ Reusing cached embedding from previous agent');
     } else {
       // Generate embedding for installation knowledge search with retry + timeout
-      const embeddingResponse = await logger.time('Lovable AI embedding generation', () =>
+      const embeddingResponse = await logger.time('AI embedding generation', () =>
         withRetry(
           () =>
             withTimeout(
-              fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
+              fetchEmbeddings({
                 method: 'POST',
                 headers: {
-                  Authorization: `Bearer ${lovableApiKey}`,
+                  Authorization: `Bearer ${aiApiKey}`,
                   'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
@@ -134,7 +135,7 @@ serve(async (req) => {
                 }),
               }),
               Timeouts.STANDARD,
-              'Lovable AI embedding generation'
+              'AI embedding generation'
             ),
           RetryPresets.STANDARD
         )
@@ -432,14 +433,14 @@ EXAMPLE PHASES:
     systemPrompt += `\n\n💬 Guide them step-by-step like you're walking an apprentice through their first install.`;
 
     // Use structured tool calling with retry + timeout (60s for complex installations)
-    const response = await logger.time('Lovable AI installation generation', () =>
+    const response = await logger.time('AI installation generation', () =>
       withRetry(
         () =>
           withTimeout(
-            fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+            fetchChatCompletions({
               method: 'POST',
               headers: {
-                Authorization: `Bearer ${lovableApiKey}`,
+                Authorization: `Bearer ${aiApiKey}`,
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({
@@ -542,7 +543,7 @@ EXAMPLE PHASES:
               }),
             }),
             Timeouts.LONG,
-            'Lovable AI installation generation'
+            'AI installation generation'
           ),
         RetryPresets.STANDARD
       )

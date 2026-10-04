@@ -20,6 +20,7 @@
  * unconditionally and let its own state decide when it appears. Every field is
  * re-sanitised server-side; nothing here is trusted by the edge function.
  */
+import { inputCn, labelCn } from '@/components/forms/fieldStyles';
 import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { getStoredAttribution } from '@/lib/attribution';
@@ -102,7 +103,7 @@ export function CalculatorResultEmail({ result }: Props) {
   if (state === 'sent') {
     return (
       <section className={`${PANEL} mt-6 px-4 py-5 sm:px-5`}>
-        <h2 className={`${LABEL} mb-2 text-white`}>Sent</h2>
+        <h2 className={`${LABEL} mb-2 text-elec-yellow`}>Sent</h2>
         <p className="text-[14.5px] leading-relaxed text-white">
           Your {result.calculatorName.toLowerCase()} result is on its way to {email}. It includes
           what you entered, so it stands up as a record against the job.
@@ -112,8 +113,15 @@ export function CalculatorResultEmail({ result }: Props) {
   }
 
   return (
-    <section className={`${PANEL} mt-6 px-4 py-5 sm:px-5`} aria-labelledby="calc-email-heading">
-      <h2 id="calc-email-heading" className={`${LABEL} mb-2 text-white`}>
+    <section
+      className={`${PANEL} relative mt-6 overflow-hidden px-4 py-5 sm:px-5`}
+      aria-labelledby="calc-email-heading"
+    >
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0"
+      />
+      <h2 id="calc-email-heading" className={`${LABEL} mb-2 text-elec-yellow`}>
         Email me this calculation
       </h2>
       <p className="mb-4 text-[14.5px] leading-relaxed text-white">
@@ -121,28 +129,30 @@ export function CalculatorResultEmail({ result }: Props) {
         file.
       </p>
 
-      <form onSubmit={submit} className="flex flex-col gap-3 sm:flex-row">
-        <label htmlFor="calc-email" className="sr-only">
-          Email address
-        </label>
-        <input
-          id="calc-email"
-          type="email"
-          inputMode="email"
-          autoComplete="email"
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-            if (state === 'error') setState('idle');
-          }}
-          placeholder="you@example.com"
-          className="h-12 flex-1 touch-manipulation rounded-xl border border-white/[0.14] bg-white/[0.04] px-4 text-base text-white placeholder:text-white/40 caret-elec-yellow transition-colors focus:border-elec-yellow focus:outline-none focus:ring-0 [color-scheme:dark]"
-          required
-        />
+      <form onSubmit={submit} className="flex flex-col gap-3 sm:flex-row sm:items-end">
+        <div className="min-w-0 flex-1">
+          <label htmlFor="calc-email" className={labelCn}>
+            Your email
+          </label>
+          <input
+            id="calc-email"
+            type="email"
+            inputMode="email"
+            autoComplete="email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              if (state === 'error') setState('idle');
+            }}
+            placeholder="you@example.com"
+            className={inputCn}
+            required
+          />
+        </div>
         <button
           type="submit"
           disabled={state === 'sending'}
-          className="h-12 touch-manipulation rounded-xl bg-elec-yellow px-6 text-[15px] font-bold text-black transition-colors hover:brightness-95 disabled:bg-white/[0.08] disabled:text-white/70"
+          className="h-12 touch-manipulation rounded-xl bg-elec-yellow px-6 text-[15px] font-bold text-black transition-colors hover:brightness-95 disabled:bg-white/[0.08] disabled:text-white"
         >
           {state === 'sending' ? 'Sending…' : 'Send it'}
         </button>

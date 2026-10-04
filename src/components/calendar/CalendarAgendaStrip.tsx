@@ -3,7 +3,8 @@ import { format, isToday, isTomorrow, isYesterday } from 'date-fns';
 import { ChevronRight, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { cardCn, eyebrowCn, rowCn } from './calendarStyles';
-import { clampToDay, displayColour, effectiveEnd, eventsOnDay, isMultiDay } from './eventUtils';
+import { eventsOnDay } from './eventUtils';
+import CalendarEventRow from './CalendarEventRow';
 import type { CalendarEvent } from '@/types/calendar';
 
 interface CalendarAgendaStripProps {
@@ -34,12 +35,6 @@ const CalendarAgendaStrip = ({
   onOpenDayView,
 }: CalendarAgendaStripProps) => {
   const dayEvents = useMemo(() => eventsOnDay(events, date), [events, date]);
-
-  // Only meaningful on today, and only worth recomputing when the day changes —
-  // a minute-accurate "on now" would need a ticking clock the agenda doesn't
-  // otherwise want. The day view is where the live line lives.
-  const now = new Date();
-  const showingToday = isToday(date);
 
   return (
     <div className={cn(cardCn, 'overflow-hidden')}>
@@ -76,55 +71,9 @@ const CalendarAgendaStrip = ({
         </button>
       ) : (
         <div className="divide-y divide-white/[0.08]">
-          {dayEvents.map((event) => {
-            const { start, end } = clampToDay(event, date);
-            const continues = isMultiDay(event) && start.getTime() > new Date(event.start_at).getTime();
-            const runsOn = isMultiDay(event) && end.getTime() < effectiveEnd(event).getTime();
-            const onNow = showingToday && !event.all_day && start <= now && effectiveEnd(event) >= now;
-            const meta = [event.customer?.name, event.location].filter(Boolean).join(' · ');
-
-            return (
-              <button key={event.id} type="button" onClick={() => onEventTap(event)} className={rowCn}>
-                {/* Time column — fixed width so every title lines up */}
-                <span className="w-[54px] shrink-0 pt-0.5">
-                  <span className="block text-[12px] font-semibold tabular-nums text-white">
-                    {event.all_day ? 'All day' : continues ? 'Cont.' : format(start, 'HH:mm')}
-                  </span>
-                  {!event.all_day && (
-                    <span className="block text-[11px] tabular-nums text-white">
-                      {runsOn ? '→' : format(end, 'HH:mm')}
-                    </span>
-                  )}
-                </span>
-
-                {/* Colour spine — a bar, not a dot, so it reads as a block of time */}
-                <span
-                  className="mt-0.5 w-[3px] shrink-0 self-stretch rounded-full"
-                  style={{ backgroundColor: displayColour(event) }}
-                />
-
-                <span className="min-w-0 flex-1">
-                  <span className="flex items-center gap-2">
-                    <span className="truncate text-[14px] font-semibold leading-snug tracking-tight text-white">
-                      {event.title || 'Untitled event'}
-                    </span>
-                    {onNow && (
-                      <span className="shrink-0 rounded-full bg-elec-yellow px-1.5 py-[1px] text-[9px] font-bold uppercase tracking-[0.1em] text-black">
-                        Now
-                      </span>
-                    )}
-                  </span>
-                  {meta && (
-                    <span className="mt-0.5 block truncate text-[12px] leading-snug text-white">
-                      {meta}
-                    </span>
-                  )}
-                </span>
-
-                <ChevronRight className="mt-1 h-4 w-4 shrink-0 text-elec-yellow" />
-              </button>
-            );
-          })}
+          {dayEvents.map((event) => (
+            <CalendarEventRow key={event.id} event={event} day={date} onTap={onEventTap} />
+          ))}
         </div>
       )}
     </div>

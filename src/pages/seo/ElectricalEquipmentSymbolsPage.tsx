@@ -149,7 +149,7 @@ export default function ElectricalEquipmentSymbolsPage() {
       heroTitle={
         <>
           Equipment Symbols:{' '}
-          <span className="text-yellow-400">Motor, transformer + plant references</span>
+          <span className="text-elec-yellow">Motor, transformer + plant references</span>
         </>
       }
       heroSubtitle="Every plant + equipment symbol — motors to UPS, transformers to MCCs — drawn to IEC 60617 for UK installation, design and maintenance drawings."

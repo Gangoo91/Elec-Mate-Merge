@@ -41,7 +41,7 @@ export default function ElectricalLoadSchedulePage() {
       badgeIcon={Grid3X3}
       heroTitle={
         <>
-          <span className="text-yellow-400">Electrical Load Schedule Calculator</span> —
+          <span className="text-elec-yellow">Electrical Load Schedule Calculator</span> —
           Circuit-by-Circuit Demand Analysis
         </>
       }
@@ -155,13 +155,13 @@ export default function ElectricalLoadSchedulePage() {
               </p>
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-6">
                 <div className="grid grid-cols-3 gap-px bg-white/10">
-                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                     Column
                   </div>
-                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                     Description
                   </div>
-                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                     Example
                   </div>
                 </div>

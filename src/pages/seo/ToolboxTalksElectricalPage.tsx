@@ -156,14 +156,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Megaphone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Megaphone className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Short and focused:</strong> 5 to 15 minutes, one topic, no waffle. Workers
                 remember a focused 5-minute talk far better than a rambling 30-minute lecture.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Megaphone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Megaphone className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Relevant to today's work:</strong> The most effective toolbox talks address
                 the specific hazards of the day's tasks. A talk on{' '}
@@ -175,7 +175,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Megaphone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Megaphone className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Interactive:</strong> Encourage questions and discussion. Ask workers about
                 their experiences. A two-way conversation is more effective than a one-way
@@ -183,7 +183,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Megaphone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Megaphone className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Recorded:</strong> Every toolbox talk must be documented with the date,
                 topic, presenter, key points, and a signed attendance register.
@@ -233,23 +233,23 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">Regular Topics</h3>
             <ul className="space-y-2 text-white text-sm">
               <li className="flex items-start gap-2">
-                <Shield className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <Shield className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>PPE requirements and condition checks</span>
               </li>
               <li className="flex items-start gap-2">
-                <Shield className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <Shield className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>Manual handling (cable drums, DBs)</span>
               </li>
               <li className="flex items-start gap-2">
-                <Shield className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <Shield className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>Tool and equipment inspections</span>
               </li>
               <li className="flex items-start gap-2">
-                <Shield className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <Shield className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>Asbestos awareness (pre-1999 buildings)</span>
               </li>
               <li className="flex items-start gap-2">
-                <Shield className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <Shield className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>Permit to work procedures</span>
               </li>
             </ul>
@@ -323,7 +323,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What to record:</strong> Date, time, and location; topic or title of the
                 talk; name of the person delivering the talk; brief summary of key points covered;
@@ -332,7 +332,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>How long to keep records:</strong> There is no specific legal requirement
                 for how long toolbox talk records must be kept, but best practice is to retain them
@@ -341,7 +341,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Digital vs paper:</strong> Paper attendance sheets work but are easily lost.
                 Digital records (photos, signed PDFs, app-based attendance tracking) are
@@ -374,7 +374,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Zap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Talk 1: Safe Isolation — Getting It Right Every Time
@@ -446,7 +446,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Health and Safety at Work Act 1974 (Section 2):</strong> Employers must
                 provide information, instruction, training, and supervision to ensure the health and
@@ -454,14 +454,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CDM 2015 (Regulation 15):</strong> Contractors must provide workers with
                 appropriate supervision, instructions, and information to carry out the work safely.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>
                   Management of Health and Safety at Work Regulations 1999 (Regulation 10):
@@ -471,7 +471,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electricity at Work Regulations 1989 (Regulation 16):</strong> Persons
                 working on electrical systems must be competent or under adequate supervision. A
@@ -506,7 +506,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Make it relevant.</strong> Link the topic to the actual work being done
                 today. "We are pulling cable through the ceiling void this morning — let us talk
@@ -515,7 +515,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use real examples.</strong> Anonymised incident reports, near miss stories
                 from your own experience, and news reports of electrical incidents all make the
@@ -524,7 +524,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Demonstrate physically.</strong> If you are talking about{' '}
                 <SEOInternalLink href="/guides/ppe-for-electricians">PPE</SEOInternalLink>, hold up
@@ -534,7 +534,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Vary the presenter.</strong> Rotate who delivers the toolbox talk. Getting
                 different team members to present builds ownership of safety across the whole team,
@@ -571,7 +571,7 @@ export default function ToolboxTalksElectricalPage() {
       heroTitle={
         <>
           Toolbox Talks for Electricians:{' '}
-          <span className="text-yellow-400">Topics, Templates, and How to Deliver Them</span>
+          <span className="text-elec-yellow">Topics, Templates, and How to Deliver Them</span>
         </>
       }
       heroSubtitle="A good toolbox talk takes 5 minutes to deliver and can prevent a serious injury. This guide covers what a toolbox talk is, the most important topics for electricians, a proven delivery format, record keeping requirements, and sample talks you can use on site tomorrow."

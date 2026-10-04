@@ -38,6 +38,7 @@ import {
   Eyebrow,
 } from '@/components/employer/editorial';
 import { SelectField } from '@/components/forms';
+import { autoCompleteOff } from '@/lib/textEntry';
 
 interface LineItem {
   id: string;
@@ -513,7 +514,7 @@ export function CreateInvoiceDialog({
                         value={client}
                         onChange={(e) => setClient(e.target.value)}
                         className={inputClass}
-                        autoComplete="off"
+                        autoComplete={autoCompleteOff}
                       />
                     </Field>
                     <FormGrid cols={2}>
@@ -524,7 +525,7 @@ export function CreateInvoiceDialog({
                           value={clientEmail}
                           onChange={(e) => setClientEmail(e.target.value)}
                           className={inputClass}
-                          autoComplete="off"
+                          autoComplete={autoCompleteOff}
                         />
                       </Field>
                       <Field label="Client phone">
@@ -534,7 +535,7 @@ export function CreateInvoiceDialog({
                           value={clientPhone}
                           onChange={(e) => setClientPhone(e.target.value)}
                           className={inputClass}
-                          autoComplete="off"
+                          autoComplete={autoCompleteOff}
                         />
                       </Field>
                     </FormGrid>
@@ -544,7 +545,7 @@ export function CreateInvoiceDialog({
                         value={project}
                         onChange={(e) => setProject(e.target.value)}
                         className={inputClass}
-                        autoComplete="off"
+                        autoComplete={autoCompleteOff}
                       />
                     </Field>
                     <FormGrid cols={2}>
@@ -706,7 +707,7 @@ export function CreateInvoiceDialog({
                       value={newItem.description}
                       onChange={(e) => setNewItem({ ...newItem, description: e.target.value })}
                       className={inputClass}
-                      autoComplete="off"
+                      autoComplete={autoCompleteOff}
                     />
                     <div className="grid grid-cols-3 gap-3">
                       <Field label="Qty">

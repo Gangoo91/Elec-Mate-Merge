@@ -543,7 +543,7 @@ export default function Sub1() {
               owns the duty to co-ordinate the construction phase. The Principal Contractor&apos;s
               Site Manager is who does this on the ground &mdash; the morning brief, the safety
               walks, the trade-clash resolution. As an apprentice you co-operate with the PC&apos;s
-              arrangements under Reg 15 (covered in Sub 4). The PC&apos;s management chain is
+              arrangements under Reg 8(4) (covered in Sub 4). The PC&apos;s management chain is
               therefore not just a contractual hierarchy &mdash; it&apos;s a statutory one.
             </>
           }
@@ -566,7 +566,7 @@ export default function Sub1() {
               safety information to operatives joining the site. As an apprentice this is the
               briefing where you find out who&apos;s the Site Manager, what the site rules are,
               where the welfare is and what the emergency arrangements are. Skipping or sleeping
-              through the induction is a CDM Reg 15 breach by you and puts you outside the site
+              through the induction is a CDM Reg 8 breach by you and puts you outside the site
               H&amp;S system on day one.
             </>
           }

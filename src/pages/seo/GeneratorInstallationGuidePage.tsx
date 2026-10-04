@@ -170,7 +170,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Load assessment</strong> — before specifying generator kVA, calculate the
                 maximum coincident demand including motor starting (which can draw 6–8× running
@@ -199,7 +199,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Open transition ATS</strong> — the most common type. Load is disconnected
                 from the mains before being connected to the generator (break-before-make). There is
@@ -209,7 +209,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Closed transition ATS</strong> — the generator is synchronised to the mains
                 supply (matched voltage, frequency, and phase angle) before the transfer, allowing a
@@ -230,7 +230,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mains monitoring</strong> — the ATS controller monitors voltage on all three
                 phases (configurable thresholds, typically trip below 85% and above 110% of nominal
@@ -248,7 +248,7 @@ const sections = [
               <p className="font-bold text-white mb-1">
                 A4:2026 — Reg 551.7.1(d): Connecting a Source to the Load Side of a Shared RCD
               </p>
-              <p className="text-white/90 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Amendment 4 redrafted Reg 551.7.1 and added indents (c) and (d). Section 551.7
                 applies where a generating set may operate in parallel with another source, so it
                 catches closed-transition (make-before-break) ATS arrangements. Indent (d) states
@@ -284,7 +284,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Break-before-make operation</strong> — the changeover switch must have a
                 centre-off position (Mains — Off — Generator) or a mechanical interlock that
@@ -294,7 +294,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rating</strong> — the changeover switch must be rated for the full
                 prospective load current on both the mains and generator sides. Use a purpose- made
@@ -304,7 +304,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Temporary generator connections</strong> — temporary connections to rental
                 generators (via a Ceeform inlet or MK7 inlet connector) must use a purpose-made
@@ -314,7 +314,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Notification and labelling</strong> — the changeover panel must be clearly
                 labelled to indicate the mains and generator positions and the changeover procedure.
@@ -358,7 +358,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Permitted permutation (b) — one Class I item only</strong>: a portable
                 generator isolated from earth may supply a single item of Class I equipment (which
@@ -370,7 +370,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Permitted permutation (c) — Class II items plus one Class I item</strong>: a
                 portable generator isolated from earth may supply one or more Class II items
@@ -544,7 +544,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Secondary containment bund</strong> — must contain at least 110% of the
                 capacity of the largest tank, or 25% of the total capacity of all tanks, whichever
@@ -554,7 +554,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pipework and valves</strong> — all fill points must be within the bunded
                 area or have a drip tray. Vent pipes must discharge safely. Sight gauges must be
@@ -564,7 +564,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Planning permission threshold</strong> — diesel storage above 1,500 litres
                 typically requires Planning Permission as permitted development rights do not extend
@@ -573,7 +573,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire safety</strong> — diesel (Class C2 liquid, flash point above 55°C) has
                 a relatively high flash point and is less volatile than petrol, but storage areas
@@ -602,7 +602,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Weekly automated test</strong> — modern ATS controllers include a
                 programmable exerciser clock that starts and runs the generator for 15–30 minutes
@@ -612,7 +612,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Monthly mains failure simulation test</strong> — physically simulate a mains
                 failure (by opening the mains incomer) and verify the ATS operates correctly, the
@@ -622,7 +622,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Quarterly service</strong> — check engine oil level, coolant level and
                 inhibitor concentration, battery state of charge and electrolyte level (flooded
@@ -633,7 +633,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Annual service and load bank test</strong> — full engine service per
                 manufacturer schedule, alternator insulation resistance test, ATS protection relay
@@ -652,7 +652,7 @@ const sections = [
                 Safety Sources: Reg 560.6.13 and BS ISO 8528-12 (Hospitals, Fire Systems, Emergency
                 Lighting)
               </p>
-              <p className="text-white/90 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Where a rotary generating set is used as a safety source — supplying emergency
                 lighting, fire detection, evacuation systems, or other life-safety services — BS
                 7671:2018+A4:2026 Reg 560.6.13 imposes a mandatory requirement: the generating set
@@ -715,7 +715,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Load bank connection</strong> — connect the load bank at the generator
                 output terminals (or at the ATS generator bus when the ATS is in generator position
@@ -744,12 +744,12 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
           <div className="flex items-start gap-3">
-            <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <p className="font-bold text-white mb-1">
                 A4:2026 Certification Requirements — Reg 133.1.3 and the Schedule of Inspections
               </p>
-              <p className="text-white/90 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 BS 7671:2018+A4:2026 Reg 133.1.3 requires that where equipment is not in accordance
                 with Reg 133.1.1, or is used outside the scope of its standard, the designer or other
                 person specifying the installation confirms it provides at least the same degree of
@@ -768,12 +768,12 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
           <div className="flex items-start gap-3">
-            <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <p className="font-bold text-white mb-1">
                 A4:2026 Reg 421.1.7 — AFDDs Are Now Required in Four Premises Types
               </p>
-              <p className="text-white/90 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Amendment 4 redrafted Reg 421.1.7. It is no longer purely a recommendation: AFDDs
                 conforming to BS EN 62606 <strong>shall</strong> be provided for single-phase AC
                 final circuits supplying socket-outlets with a rated current not exceeding 32 A in
@@ -795,7 +795,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete the EIC on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -813,7 +813,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certificate generator installations with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, generator commissioning records, and instant PDF export. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion, generator commissioning records, and instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -839,7 +839,7 @@ export default function GeneratorInstallationGuidePage() {
       heroTitle={
         <>
           Generator Installation Guide UK:{' '}
-          <span className="text-yellow-400">Standby Generator Electrical</span>
+          <span className="text-elec-yellow">Standby Generator Electrical</span>
         </>
       }
       heroSubtitle="Everything UK electricians need to know about standby generator installation — standby vs prime power ratings, automatic transfer switches, manual changeover, G99 DNO requirements, generator earthing in TN-S systems, fuel storage regulations, testing schedules, and load bank testing."
@@ -855,7 +855,7 @@ export default function GeneratorInstallationGuidePage() {
       faqHeading="Frequently Asked Questions About Generator Installation"
       relatedPages={relatedPages}
       ctaHeading="Complete Generator Installation EICs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site electrical installation certification, commissioning test records, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site electrical installation certification, commissioning test records, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

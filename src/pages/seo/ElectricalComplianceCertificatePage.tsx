@@ -182,7 +182,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Electrical Installation Certificate (EIC)
@@ -240,7 +240,7 @@ const sections = [
               <p className="font-bold text-white text-sm mb-1">
                 A4:2026 — Domestic lighting circuits: RCD protection now mandatory (Reg 411.3.4)
               </p>
-              <p className="text-white/80 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 BS 7671:2018+A4:2026 introduced Reg 411.3.4, which requires all AC final circuits
                 supplying luminaires in domestic premises to have additional protection by an RCD
                 rated at or below 30 mA. For new work, the EIC must record that RCD protection is
@@ -287,7 +287,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Notifiable work</strong> — must be notified to building control. This
                 includes installing a new circuit, work in bathrooms (zone 0, 1, or 2), work in
@@ -296,7 +296,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Non-notifiable work</strong> — does not require notification to building
                 control. This includes replacing accessories (sockets, switches, light fittings) on
@@ -329,7 +329,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Main Competent Person Schemes</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC</strong> — the largest scheme, with Domestic Installer and Approved
                 Contractor levels. Regular assessment of competence, record-keeping, and quality of
@@ -337,21 +337,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NAPIT</strong> — offers domestic and commercial registration. Includes
                 competence assessment, ongoing support, and access to technical advice.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ELECSA</strong> — part of the ECA (Electrical Contractors Association).
                 Registration includes regular assessment and access to the ECA's technical support.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BRE Certification</strong> — offers competent person registration for
                 electrical work, along with other building trades.
@@ -423,7 +423,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New electrical installations:</strong> EIC required. If notifiable under
                 Part P, building control notification also required (via competent person scheme or
@@ -431,7 +431,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additions and alterations:</strong> EIC required for new circuits. MEIWC
                 acceptable for minor additions to existing circuits that do not involve a new
@@ -439,7 +439,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacement:</strong> EIC required (not MEIWC — Reg 644.4
                 expressly excludes consumer unit replacement from the MEIWC scope), plus Part P
@@ -447,21 +447,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rental properties:</strong> EICR required at least every 5 years under the
                 Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial premises:</strong> EICR required under the Electricity at Work
                 Regulations 1989 and the Health and Safety at Work Act 1974.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Change of use or property sale:</strong> Solicitors routinely request copies
                 of recent electrical certificates as part of conveyancing.
@@ -535,7 +535,7 @@ const sections = [
           paperwork into an on-site, real-time workflow:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
-          <p className="text-white/80 text-sm leading-relaxed">
+          <p className="text-white text-sm leading-relaxed">
             <strong className="text-white">Who gets the certificate?</strong> Under Reg 644.4, the
             original EIC or MEIWC must be issued to the person who ordered the work. The contractor
             must retain a duplicate. Failing to retain your duplicate — or issuing the certificate
@@ -547,7 +547,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">All Certificate Types in One App</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -590,12 +590,12 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <p className="font-bold text-white text-sm mb-1">
                 A4:2026 — Updated Appendix 6 model forms (Reg 722.826.3.201)
               </p>
-              <p className="text-white/80 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 The BS 7671:2018+A4:2026 amendment updated the Appendix 6 model forms (EIC and EICR)
                 to include mandatory fields for recording SPDs (surge protective devices) and AFDDs
                 (arc fault detection devices). Where these devices are installed, installers must
@@ -608,7 +608,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Issue every certificate from your phone"
-          description="Join 1,600+ UK electricians producing professional compliance certificates on site. AI board scanner, voice test entry, auto-validation…"
+          description="Join 2,100+ UK electricians producing professional compliance certificates on site. AI board scanner, voice test entry, auto-validation…"
           icon={FileCheck2}
         />
       </>
@@ -634,7 +634,7 @@ export default function ElectricalComplianceCertificatePage() {
       heroTitle={
         <>
           Electrical Compliance Certificate:{' '}
-          <span className="text-yellow-400">What You Need to Know</span>
+          <span className="text-elec-yellow">What You Need to Know</span>
         </>
       }
       heroSubtitle="Every piece of electrical work in the UK must be certified. This guide explains the different types of electrical compliance certificates, when each is required, how Part P building regulations apply, and how competent person self-certification works."
@@ -645,7 +645,7 @@ export default function ElectricalComplianceCertificatePage() {
       faqHeading="Frequently Asked Questions About Electrical Compliance Certificates"
       relatedPages={relatedPages}
       ctaHeading="Produce Every Certificate on Your Phone"
-      ctaSubheading="EIC, MEIWC, EICR — all in one app with AI assistance, voice test entry, and instant delivery to clients. Join 1,600+ UK electricians using Elec-Mate. 7-day free trial."
+      ctaSubheading="EIC, MEIWC, EICR — all in one app with AI assistance, voice test entry, and instant delivery to clients. Join 2,100+ UK electricians using Elec-Mate. 7-day free trial."
     />
   );
 }

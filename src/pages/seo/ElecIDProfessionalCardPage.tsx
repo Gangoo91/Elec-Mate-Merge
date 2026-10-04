@@ -401,7 +401,7 @@ export default function ElecIDProfessionalCardPage() {
       heroTitle={
         <>
           ElecID Professional Card:{' '}
-          <span className="text-yellow-400">Your Digital Electrician ID</span>
+          <span className="text-elec-yellow">Your Digital Electrician ID</span>
         </>
       }
       heroSubtitle="Display your verified qualifications and certifications on a professional digital card. Clients and contractors scan the QR code to verify your credentials instantly. Always current, always with you."

@@ -44,7 +44,7 @@ export default function ElectricalRetrofitGuidePage() {
         <>
           Electrical Retrofit Guide
           <br />
-          <span className="text-yellow-400">Upgrading Older Properties Safely</span>
+          <span className="text-elec-yellow">Upgrading Older Properties Safely</span>
         </>
       }
       heroSubtitle="Older UK properties present unique electrical challenges — from degraded rubber-insulated cabling and missing earth conductors to outdated consumer units and inadequate bonding. This guide explains how to assess what needs upgrading, whether a full rewire is necessary or a targeted retrofit will suffice, and how to handle Part P notification for the work."
@@ -72,7 +72,7 @@ export default function ElectricalRetrofitGuidePage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Cable className="w-5 h-5 text-yellow-400" />
+                    <Cable className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">
                       Degraded Rubber Insulation (VIR Cable)
                     </h3>
@@ -92,7 +92,7 @@ export default function ElectricalRetrofitGuidePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Missing Earth Conductors</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -107,7 +107,7 @@ export default function ElectricalRetrofitGuidePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Zap className="w-5 h-5 text-yellow-400" />
+                    <Zap className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Rewirable Fuse Boards</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -125,7 +125,7 @@ export default function ElectricalRetrofitGuidePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <ShieldCheck className="w-5 h-5 text-yellow-400" />
+                    <ShieldCheck className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Inadequate Bonding</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -139,7 +139,7 @@ export default function ElectricalRetrofitGuidePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Plug className="w-5 h-5 text-yellow-400" />
+                    <Plug className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Overloaded Circuits</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -176,9 +176,9 @@ export default function ElectricalRetrofitGuidePage() {
                 </h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         VIR or lead-sheathed cable throughout
                       </strong>{' '}
                       — If the majority of circuits use degraded rubber or lead-sheathed insulation,
@@ -187,9 +187,9 @@ export default function ElectricalRetrofitGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Multiple C1/C2 observations across all circuits
                       </strong>{' '}
                       — An <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>{' '}
@@ -198,9 +198,9 @@ export default function ElectricalRetrofitGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         No earth conductors on any circuit
                       </strong>{' '}
                       — If the entire installation lacks CPCs, the cost of retrofitting earth
@@ -215,27 +215,27 @@ export default function ElectricalRetrofitGuidePage() {
                 </h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">PVC cable in acceptable condition</strong>{' '}
+                      <strong className="text-elec-yellow">PVC cable in acceptable condition</strong>{' '}
                       — If the existing PVC-insulated cable passes insulation resistance tests and
                       is correctly sized, it can be retained while upgrading the consumer unit and
                       bonding.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Localised issues only</strong> — If the
+                      <strong className="text-elec-yellow">Localised issues only</strong> — If the
                       EICR identifies problems on specific circuits (e.g., one lighting circuit with
                       failing insulation) while others are satisfactory, targeted replacement is
                       appropriate.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Budget constraints with phased plan
                       </strong>{' '}
                       — A consumer unit upgrade now, followed by circuit replacement over time, can
@@ -273,7 +273,7 @@ export default function ElectricalRetrofitGuidePage() {
               </p>
               <div className="space-y-3 mt-4">
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     1
                   </span>
                   <div>
@@ -287,7 +287,7 @@ export default function ElectricalRetrofitGuidePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     2
                   </span>
                   <div>
@@ -302,7 +302,7 @@ export default function ElectricalRetrofitGuidePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     3
                   </span>
                   <div>
@@ -337,7 +337,7 @@ export default function ElectricalRetrofitGuidePage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <ShieldCheck className="w-5 h-5 text-yellow-400" />
+                    <ShieldCheck className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Main Earthing Terminal</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -351,7 +351,7 @@ export default function ElectricalRetrofitGuidePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Cable className="w-5 h-5 text-yellow-400" />
+                    <Cable className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Main Bonding Conductors</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -366,7 +366,7 @@ export default function ElectricalRetrofitGuidePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Wrench className="w-5 h-5 text-yellow-400" />
+                    <Wrench className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Supplementary Bonding</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -407,31 +407,31 @@ export default function ElectricalRetrofitGuidePage() {
                 <h3 className="font-bold text-white text-lg mb-4">Notifiable Retrofit Work</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Consumer unit change</strong> — Always
+                      <strong className="text-elec-yellow">Consumer unit change</strong> — Always
                       notifiable, regardless of how minor the change appears.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">New circuits</strong> — Adding any new
+                      <strong className="text-elec-yellow">New circuits</strong> — Adding any new
                       circuit to the installation requires notification.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Work in special locations</strong> — Any
+                      <strong className="text-elec-yellow">Work in special locations</strong> — Any
                       electrical work in bathrooms (zones 0, 1, 2), swimming pools, saunas, or
                       similar special locations.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">New outdoor circuits</strong> — Including
+                      <strong className="text-elec-yellow">New outdoor circuits</strong> — Including
                       garden lighting, external socket outlets, and outbuilding supplies.
                     </span>
                   </li>
@@ -441,24 +441,24 @@ export default function ElectricalRetrofitGuidePage() {
                 <h3 className="font-bold text-white text-lg mb-4">Non-Notifiable Retrofit Work</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Like-for-like replacement</strong> —
+                      <strong className="text-elec-yellow">Like-for-like replacement</strong> —
                       Replacing accessories (sockets, switches, light fittings) on existing circuits
                       with equivalent items.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Bonding upgrades</strong> — Adding or
+                      <strong className="text-elec-yellow">Bonding upgrades</strong> — Adding or
                       upgrading main bonding and supplementary bonding conductors.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Adding to existing circuits outside special locations
                       </strong>{' '}
                       — Adding a socket to an existing ring final or radial circuit (e.g., adding a
@@ -496,7 +496,7 @@ export default function ElectricalRetrofitGuidePage() {
               </p>
               <div className="space-y-3 mt-4">
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     1
                   </span>
                   <div>
@@ -511,7 +511,7 @@ export default function ElectricalRetrofitGuidePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     2
                   </span>
                   <div>
@@ -526,7 +526,7 @@ export default function ElectricalRetrofitGuidePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     3
                   </span>
                   <div>
@@ -541,7 +541,7 @@ export default function ElectricalRetrofitGuidePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     4
                   </span>
                   <div>

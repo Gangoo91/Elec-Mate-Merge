@@ -220,7 +220,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Requirements:</strong> You must be registered on a recognised electrical
                 apprenticeship programme (typically Level 3 Electrotechnical or Level 2 Electrical
@@ -228,14 +228,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Validity:</strong> Valid for the duration of your apprenticeship, up to a
                 maximum of 5 years.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>On site:</strong> You must work under the supervision of a qualified
                 electrician at all times. The Apprentice card does not authorise you to work
@@ -259,7 +259,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Requirements:</strong> You must be enrolled on a formal training programme
                 leading to a recognised electrotechnical qualification and have passed the ECS
@@ -267,14 +267,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Validity:</strong> Covers you while you are in training, but you should aim
                 to complete your NVQ and AM2 and upgrade to the full gold card as soon as possible.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Already experienced?</strong> The Experienced Worker card covers those
                 working towards the Level 3 NVQ via the Experienced Worker route — note that new
@@ -300,7 +300,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Requirements:</strong> Level 3 NVQ in Electrotechnical Services (or
                 equivalent), C&G 2382 (18th Edition), AM2 assessment, and the ECS Health, Safety and
@@ -308,7 +308,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What it proves:</strong> That you are a fully qualified installation
                 electrician who can work unsupervised on electrical installation projects. You have
@@ -316,7 +316,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>JIB grade:</strong> Corresponds to JIB Electrician grade, which determines
                 your minimum pay rate under JIB terms.
@@ -343,7 +343,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Requirements:</strong> Level 3 NVQ in Electrotechnical Services (Maintenance
                 pathway), C&G 2382 (18th Edition), and the ECS Health, Safety and Environmental
@@ -351,7 +351,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Typical roles:</strong> Building maintenance electricians, facilities
                 management, industrial maintenance, and planned preventive maintenance (PPM)
@@ -376,7 +376,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Requirements:</strong> Everything needed for the Installation Electrician
                 card PLUS additional qualifications and experience. Typically this means{' '}
@@ -396,7 +396,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What it proves:</strong> That you are qualified to install, inspect, and
                 test electrical installations. It is the highest electrician grading on the scheme
@@ -404,7 +404,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Benefits:</strong> Higher{' '}
                 <SEOInternalLink href="/guides/jib-grading-explained">JIB grading</SEOInternalLink>{' '}
@@ -426,7 +426,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ArrowUpRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ArrowUpRight className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1:</strong> Pass the ECS Health, Safety and Environmental Assessment if
                 you have not already. This is a computer-based test available at test centres
@@ -434,7 +434,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ArrowUpRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ArrowUpRight className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2:</strong> Gather your qualification certificates — NVQ Level 3, C&G
                 2382, AM2 certificate, and any additional qualifications for the Approved
@@ -442,7 +442,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ArrowUpRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ArrowUpRight className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 3:</strong> Apply online through the JIB/ECS website. Upload scanned
                 copies of your certificates, provide a passport-style photo, and pay the application
@@ -450,7 +450,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ArrowUpRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ArrowUpRight className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 4:</strong> Your application will be verified by the JIB. If everything
                 is in order, your card will be posted to you within 2 to 4 weeks.
@@ -485,7 +485,7 @@ export default function ECSCardTypesExplainedPage() {
       badgeIcon={CreditCard}
       heroTitle={
         <>
-          ECS Card Types Explained: <span className="text-yellow-400">Which Card Do You Need?</span>
+          ECS Card Types Explained: <span className="text-elec-yellow">Which Card Do You Need?</span>
         </>
       }
       heroSubtitle="The ECS card is your electrician's passport to UK construction sites. This guide explains every card type — Apprentice, Trainee, Installation, Maintenance, and Approved Electrician — with the qualifications needed for each."
@@ -496,7 +496,7 @@ export default function ECSCardTypesExplainedPage() {
       faqHeading="Frequently Asked Questions About ECS Cards"
       relatedPages={relatedPages}
       ctaHeading="Build Your Electrical Career With Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for training, certification, and career development. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for training, certification, and career development. 7-day free trial, cancel anytime."
     />
   );
 }

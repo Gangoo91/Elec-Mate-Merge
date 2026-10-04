@@ -83,9 +83,9 @@ export const advancedInspection: FlashcardData[] = [
   },
   {
     id: 'ai10',
-    question: 'Describe the full RCD test sequence including x1, x5, ramp, and phase angle tests.',
+    question: 'What does BS 7671 require for RCD testing, and where do the x5, ramp and phase-angle tests fit?',
     answer:
-      'Per GN3 and BS 7671:2018+A4:2026 Regulation 643.10, the full RCD test sequence for a 30mA general-type RCD is: (1) at rated residual current (x1 or 30mA), the RCD must trip within 300ms; (2) at five times rated residual current (x5 or 150mA), the RCD must trip within 40ms; (3) a ramp test gradually increases the current to determine the actual tripping current, which must be between 50% and 100% of IΔn (15–30mA for a 30mA device). All tests should be carried out at both 0° and 180° phase angle to check operation on both positive and negative half-cycles of the waveform, as the RCD must operate reliably regardless of fault inception point.',
+      'BS 7671 requires one test (NOTE to Reg 643.8, since A2:2022 deleted Table 3A): an AC test at the rated residual current, IΔn — a 30 mA general non-delay RCD must trip within 300 ms. The x5 test is no longer a BS 7671 requirement; 40 ms at 5×IΔn is the BS EN 61008/61009 product figure. A ramp test is an optional diagnostic that shows the actual trip current. Testing at both 0° and 180° is good practice, recording the longer time. Reg 643.10 separately requires the test button to be operated.',
     category: 'Live Tests',
     difficulty: 'hard',
   },

@@ -148,7 +148,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Safe isolation first</strong> — switch off the outdoor lighting circuit MCB
                 at the consumer unit. If there is a dedicated outdoor circuit, this will be
@@ -158,7 +158,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Never assume plug-in is safe</strong> — garden lights connected via a plug
                 to an outdoor socket are still live at mains voltage (230V) to the point of the
@@ -166,7 +166,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Low-voltage systems still require care</strong> — 12V garden lighting
                 systems are safer than mains voltage, but the transformer primary side is still
@@ -313,7 +313,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Water-ingressed fitting</strong> — water inside the fitting creates a
                 leakage path to earth. The RCD trips when the circuit is energised. Disconnect each
@@ -323,7 +323,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Damaged underground cable</strong> — a nick, cut, or crush in the cable
                 insulation allows moisture to penetrate and create an earth fault. The RCD trips
@@ -332,7 +332,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Failed transformer</strong> — if the transformer insulation has broken down,
                 leakage current from the primary winding to the casing (earth) will trip the RCD.
@@ -341,7 +341,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Nuisance tripping from natural capacitance</strong> — long outdoor cable
                 runs have significant capacitance to earth. In wet conditions, this capacitance can
@@ -422,7 +422,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Overloaded transformer</strong> — the transformer is rated for a maximum
                 total wattage of connected lamps. Adding more lamps than the rated capacity causes
@@ -432,7 +432,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Transformer not resetting</strong> — most transformers have internal thermal
                 protection that cuts out when overloaded or overheated. Allow the transformer to
@@ -442,7 +442,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing a plug-in transformer</strong> — plug the transformer into a known
                 working indoor socket (not the outdoor socket, in case that is the fault). Measure
@@ -452,7 +452,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Transformer replacement</strong> — plug-in garden lighting transformers cost
                 £20 to £80 depending on capacity and quality. Hard-wired transformers require an
@@ -525,14 +525,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Transformer replacement (plug-in)</strong> — £20 to £80 for the part. DIY
                 replacement is possible for plug-in units. No electrician required.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Transformer replacement (hard-wired)</strong> — £80 to £200 all-in.
                 Transformer £30 to £80, labour £50 to £120. A Minor Works Certificate must be
@@ -540,7 +540,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Luminaire replacement</strong> — £20 to £150 per fitting depending on type
                 and quality. Lamp replacements for LED fittings are typically £5 to £25 per lamp.
@@ -548,7 +548,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Underground cable repair</strong> — £150 to £400 for a simple repair.
                 Excavating to find and repair a cable fault, fitting an underground junction box,
@@ -556,7 +556,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD installation on existing circuit</strong> — £80 to £200. Adding RCD
                 protection to an existing outdoor circuit, including an RCBO or RCD at the consumer
@@ -564,7 +564,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New outdoor lighting circuit</strong> — £300 to £700 from consumer unit to
                 garden positions. Includes armoured cable, consumer unit connection, RCD protection,
@@ -634,7 +634,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Issue Certificates On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -655,7 +655,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete outdoor electrical certificates on your phone"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site Minor Works certificates, EICs, and instant quoting. No evening paperwork. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site Minor Works certificates, EICs, and instant quoting. No evening paperwork. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -681,7 +681,7 @@ export default function GardenLightingFaultFindingPage() {
       heroTitle={
         <>
           Garden Lighting Not Working:{' '}
-          <span className="text-yellow-400">Outdoor Electrical Fault Finding</span>
+          <span className="text-elec-yellow">Outdoor Electrical Fault Finding</span>
         </>
       }
       heroSubtitle="Complete fault finding guide for garden and outdoor lighting — RCD protection requirements under BS 7671, IP ratings explained, RCD tripping diagnosis, cable damage, transformer faults, waterproofing failures, and typical repair costs for 2026."
@@ -692,7 +692,7 @@ export default function GardenLightingFaultFindingPage() {
       faqHeading="Frequently Asked Questions — Garden Lighting Faults"
       relatedPages={relatedPages}
       ctaHeading="Complete Outdoor Electrical Certificates On Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for Minor Works certificates, EICs, and on-site quoting. No evening paperwork. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for Minor Works certificates, EICs, and on-site quoting. No evening paperwork. 7-day free trial, cancel anytime."
     />
   );
 }

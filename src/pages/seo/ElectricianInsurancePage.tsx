@@ -147,7 +147,7 @@ const sections = [
     content: (
       <>
         <div className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 mb-5 flex items-start gap-3">
-          <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+          <ShieldCheck className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
           <p className="text-sm text-white m-0">
             <strong className="text-white">Written and reviewed by Andrew Moore, founder of
             Elec-Mate</strong> — a qualified electrician (18th Edition, C&amp;G 2391 inspection and
@@ -199,7 +199,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What it covers:</strong> Injury to a third party caused by your work (for
                 example, a customer receives an electric shock from a faulty installation). Damage
@@ -209,7 +209,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cover levels:</strong> £2 million is the standard minimum for domestic work
                 and is required by most competent person schemes. £5 million is recommended if you
@@ -218,7 +218,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Typical cost:</strong> £150 to £400 per year for a sole trader electrician
                 with £2 million cover. £250 to £600 for £5 million cover. Premiums depend on your
@@ -250,7 +250,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR errors:</strong> You carry out an EICR and mark the installation as
                 Satisfactory. Six months later, a fire starts due to a fault you should have
@@ -259,7 +259,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Design errors:</strong> You design an electrical installation and specify
                 undersized cable or incorrect protection. The installation fails, causing damage.
@@ -267,7 +267,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Advice errors:</strong> You advise a client that their existing installation
                 is adequate when it is not. They rely on your advice and suffer a loss. PI insurance
@@ -341,7 +341,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Typical cost:</strong> £50 to £200 per year for a small electrical business
                 with 1 to 3 employees. The cost increases with the number of employees and the
@@ -374,7 +374,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Notifiable work:</strong> New circuits, consumer unit replacements, and work
                 in certain special locations (bathrooms, kitchens near sinks) are typically
@@ -383,7 +383,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Self-certification:</strong> Membership of a competent persons scheme allows
                 you to self-certify notifiable work and issue a building regulations compliance
@@ -393,7 +393,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dual exposure on notifiable jobs:</strong> A certification error on a
                 notifiable job does not just create a BS 7671 professional negligence claim — it can
@@ -428,7 +428,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What it covers:</strong> Theft, accidental damage, and loss of hand tools,
                 power tools, test equipment, and other work equipment. Cover applies whether the
@@ -445,7 +445,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Typical cost:</strong> £100 to £300 per year for £5,000 to £10,000 of tools
                 cover. Some insurers offer combined van and tools policies. The excess (the amount
@@ -480,7 +480,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Truck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Truck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Class 1 (Social, Domestic, Pleasure):</strong> Personal use only. Does not
                 cover any business use — including driving to and from work. Not suitable for
@@ -488,14 +488,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Truck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Truck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Class 2 (SDP + Commuting):</strong> Covers driving to a fixed place of work.
                 Not suitable if you drive to different sites each day.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Truck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Truck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Class 3 (Business Use):</strong> Covers driving for business purposes,
                 including travelling between sites, visiting customers, and collecting materials.
@@ -503,7 +503,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Truck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Truck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hire and Reward / Carriage of Goods:</strong> Needed if you carry materials
                 or goods for other people as part of a commercial delivery service. Most
@@ -538,39 +538,39 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Public liability (£2 million):</strong> £150 to £400 per year
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Professional indemnity (£250,000):</strong> £80 to £200 per year
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Employers liability (£10 million):</strong> £50 to £200 per year (1 to 3
                 employees)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tools cover (£5,000 to £10,000):</strong> £100 to £300 per year
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Van insurance (business use):</strong> £600 to £1,500 per year (depending on
                 vehicle, age, location, NCB)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Total (excluding van):</strong> £380 to £1,100 per year for a sole trader
               </span>
@@ -609,7 +609,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Specialist trade insurer vs general insurer.</strong> Specialist trade
                 insurers (like Hiscox, Markel, Zurich, or Rhino Trade Insurance) understand
@@ -618,7 +618,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Policy wording.</strong> Read the exclusions carefully. Does the policy
                 cover work at height? Underground work? Work in occupied properties? Hot works
@@ -627,7 +627,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Excess amount.</strong> The excess is the amount you pay towards each claim
                 before the insurance kicks in. A £250 excess on a £500 tools claim means the insurer
@@ -635,7 +635,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Claims process.</strong> How easy is it to make a claim? Is there a 24-hour
                 claims line? How long does settlement typically take? Check reviews from other
@@ -667,7 +667,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Make the situation safe.</strong> If there is an immediate danger (fire,
                 live exposed conductors, water leak), take steps to make it safe. Isolate the supply
@@ -675,7 +675,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Document everything.</strong> Take photographs of the damage, the work you
                 were doing, and the surrounding area. Write down exactly what happened, when, and
@@ -684,7 +684,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Notify your insurer immediately.</strong> Most policies require you to
                 notify the insurer within a set period (24 to 48 hours for some claims). Do not
@@ -736,7 +736,7 @@ export default function ElectricianInsurancePage() {
       heroTitle={
         <>
           Electrician Insurance UK 2026:{' '}
-          <span className="text-yellow-400">What Cover Do You Actually Need?</span>
+          <span className="text-elec-yellow">What Cover Do You Actually Need?</span>
         </>
       }
       heroSubtitle="Public liability, professional indemnity, employers liability, tools cover, and van insurance — which policies do you need, how much do they cost, and what do they actually cover? This guide explains every type of insurance for UK electricians with real costs and practical advice."
@@ -747,7 +747,7 @@ export default function ElectricianInsurancePage() {
       faqHeading="Frequently Asked Questions About Electrician Insurance"
       relatedPages={relatedPages}
       ctaHeading="Track All Business Expenses Including Insurance"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to track expenses, send invoices, and manage their business. Every insurance payment captured, every tool purchase logged, every receipt stored. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to track expenses, send invoices, and manage their business. Every insurance payment captured, every tool purchase logged, every receipt stored. 7-day free trial, cancel anytime."
     />
   );
 }

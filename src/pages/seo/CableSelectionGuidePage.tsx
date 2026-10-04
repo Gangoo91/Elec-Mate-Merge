@@ -203,7 +203,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Common sizes</strong> — 1.0mm² for lighting circuits (protected by 6A MCB),
                 1.5mm² for lighting circuits where voltage drop is a concern, 2.5mm² for socket
@@ -212,7 +212,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CPC sizing</strong> — in standard T&E cable, the CPC is one size smaller
                 than the live conductors. For 1.0mm² live conductors, the CPC is 1.0mm² (same size).
@@ -222,7 +222,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Suitable for</strong> — surface or concealed installation in domestic and
                 commercial buildings in normal environments. Not suitable for external use without
@@ -258,7 +258,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Construction</strong> — SWA cable has XLPE or PVC insulated conductors
                 (individual or multicore), an inner bedding, galvanised steel wire armour, and a PVC
@@ -268,7 +268,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Armour as CPC</strong> — the steel wire armour can be used as the circuit
                 protective conductor, but its resistance is higher than a copper conductor of the
@@ -278,7 +278,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Outbuilding supplies</strong> — SWA is the standard cable for underground
                 supplies to outbuildings, though the armour must not be bonded to both the main
@@ -288,7 +288,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Burial depth</strong> — SWA cables for direct burial should be installed at
                 a depth of at least 500mm in gardens and areas unlikely to be disturbed, and at
@@ -371,7 +371,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit integrity ratings</strong> — fire-resistant cables are tested to
                 specific temperature/time profiles defined in BS EN 50200 and related standards.
@@ -382,7 +382,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Easier to install than MICC</strong> — FP200 and similar fire-resistant
                 cables use standard cable terminations (screw terminals) and do not require
@@ -391,7 +391,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Colour coding</strong> — FP200 cables are typically red-sheathed to
                 distinguish them from standard wiring cables, reflecting their life-safety function
@@ -417,7 +417,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SY cable</strong> — multi-core PVC flexible cable with galvanised steel wire
                 braid screen and clear PVC outer sheath. Provides mechanical protection (the steel
@@ -427,7 +427,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CY cable</strong> — similar to SY but uses tinned copper wire braid instead
                 of steel, providing better electromagnetic shielding. Used for instrumentation,
@@ -435,7 +435,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rubber flexible cords</strong> — heat-resistant rubber or silicone rubber
                 flexible cords are used for connections to equipment operating at elevated
@@ -518,7 +518,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Recommended maximum voltage drop</strong> — 3% for lighting circuits and 5%
                 for power/other circuits, measured from the origin of the installation (typically
@@ -527,7 +527,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Voltage drop formula</strong> — voltage drop (mV) = (mV/A/m) × Ib × L, where
                 (mV/A/m) is the millivolt drop per ampere per metre from BS 7671 Appendix 4, Ib is
@@ -536,7 +536,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>When to upsize</strong> — if the calculated voltage drop exceeds the limit,
                 increase the conductor size. For example, upgrading from 2.5mm² to 4mm² T&E
@@ -607,7 +607,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Info className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>UV exposure</strong> — standard PVC insulation and sheath degrades under
                 prolonged UV exposure, becoming brittle and cracking. For external or roof-mounted
@@ -616,7 +616,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Info className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Chemical environments</strong> — PVC is resistant to many common chemicals
                 but is attacked by certain solvents, acids, and oils. In garages, workshops, and
@@ -626,7 +626,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Info className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>High-temperature environments</strong> — for cables near boilers, ovens, or
                 industrial heat sources, select cables with appropriate temperature ratings. XLPE is
@@ -635,7 +635,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Info className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Damp and wet locations</strong> — cables in bathrooms, swimming pools,
                 agricultural buildings, and other damp locations must have insulation and sheath
@@ -664,7 +664,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Record Cable Details on EIC</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -682,7 +682,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICs and EICRs with full cable documentation on"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC and EICR completion with conductor size recording, AI board scanning, and instant PDF export."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EIC and EICR completion with conductor size recording, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -708,7 +708,7 @@ export default function CableSelectionGuidePage() {
       heroTitle={
         <>
           Cable Selection Guide BS 7671:{' '}
-          <span className="text-yellow-400">Choosing the Right Cable for UK Installations</span>
+          <span className="text-elec-yellow">Choosing the Right Cable for UK Installations</span>
         </>
       }
       heroSubtitle="A complete practical guide to cable selection for UK electrical installations — T&E, SWA, MICC, FP200, SY and CY cables explained with BS 7671 current capacity requirements, voltage drop limits, mechanical protection, environmental considerations, and correction factors."
@@ -719,7 +719,7 @@ export default function CableSelectionGuidePage() {
       faqHeading="Frequently Asked Questions About Cable Selection"
       relatedPages={relatedPages}
       ctaHeading="Document Cable Selections and Complete EICs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC and EICR completion with full circuit documentation, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC and EICR completion with full circuit documentation, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

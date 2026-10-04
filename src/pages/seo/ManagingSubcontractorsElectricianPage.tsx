@@ -187,7 +187,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Verify before payment</strong> — before paying a subcontractor for the first
                 time, verify their CIS status online via HMRC's CIS Online service or ask your
@@ -196,7 +196,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Deduction and payment to HMRC</strong> — deduct the appropriate rate from
                 the subcontractor's labour element (not materials). Pay the deduction to HMRC by the
@@ -205,7 +205,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CIS deduction statements</strong> — issue the subcontractor with a written
                 deduction statement within 14 days of the end of each tax month. This shows the
@@ -214,7 +214,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Penalties for non-compliance</strong> — HMRC can charge penalties of £100 to
                 £3,000 per return for late or incorrect CIS returns, and can also hold you liable
@@ -240,7 +240,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Scope of works</strong> — define precisely what is included and excluded.
                 "First fix wiring on the ground floor" is better than "electrical work". Ambiguous
@@ -248,7 +248,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Payment terms</strong> — specify the rate (day rate, price per unit, or
                 fixed price), payment intervals (weekly, monthly, or on milestones), and the date by
@@ -257,7 +257,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Retention</strong> — state the retention percentage (typically 5%), the
                 amount held (of labour and materials, or labour only), and the release dates (half
@@ -266,7 +266,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Termination rights</strong> — specify the grounds on which either party can
                 terminate (e.g., persistent poor quality, failure to maintain programme, or
@@ -335,7 +335,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inspection checklist</strong> — carry out a site inspection at key
                 milestones (first fix completion, before boarding, second fix, test and
@@ -344,7 +344,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test results review</strong> — require the subcontractor to provide test
                 results (Schedule of Test Results, IR tests, RCD tests) as the job progresses. Do
@@ -354,7 +354,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Photographic records</strong> — take photographs at key stages (consumer
                 unit before and after, earthing arrangement, any buried cables before boarding
@@ -381,7 +381,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Typical retention rate</strong> — 5% of the contract value is standard for
                 most electrical subcontracts. On a £20,000 subcontract, £1,000 is retained. Half
@@ -390,7 +390,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Must be in the contract</strong> — you can only withhold retention if it is
                 stated in the subcontract agreement. Withholding retention without a contractual
@@ -399,7 +399,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Using retention for defects</strong> — if the subcontractor fails to rectify
                 defects after written notice, you can use the withheld retention to fund a third
@@ -471,7 +471,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Who determines status?</strong> — since April 2021, medium and large
                 businesses (turnover above £10.2m or more than 50 employees) must determine the IR35
@@ -481,7 +481,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Key IR35 indicators</strong> — HMRC looks at: whether you control how, when,
                 and where the work is done (control); whether the subcontractor can send a
@@ -491,7 +491,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Practical steps</strong> — use HMRC's Check Employment Status for Tax (CEST)
                 tool before engaging a limited company subcontractor. Keep a record of your
@@ -520,7 +520,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Allocate Jobs to Subcontractors</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -576,7 +576,7 @@ export default function ManagingSubcontractorsElectricianPage() {
       heroTitle={
         <>
           Managing Electrical Subcontractors UK:{' '}
-          <span className="text-yellow-400">Complete Guide</span>
+          <span className="text-elec-yellow">Complete Guide</span>
         </>
       }
       heroSubtitle="How to check competency and insurance, verify CIS registration, set up written subcontract agreements, manage day rates vs measure-and-value, control quality on site, withhold retention, deal with poor performance, and navigate IR35."
@@ -587,7 +587,7 @@ export default function ManagingSubcontractorsElectricianPage() {
       faqHeading="Frequently Asked Questions About Managing Electrical Subcontractors"
       relatedPages={relatedPages}
       ctaHeading="Manage your jobs and subcontractors with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for job scheduling, electrical certificates, quoting, and invoicing. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for job scheduling, electrical certificates, quoting, and invoicing. 7-day free trial, cancel anytime."
     />
   );
 }

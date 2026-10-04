@@ -179,7 +179,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire-rated downlights are required</strong> wherever the ceiling is a fire
                 barrier: between floors in a multi-storey house, between a habitable room and a loft
@@ -189,7 +189,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Non-fire-rated downlights are acceptable</strong> in ceilings that are not
                 fire barriers: ground-floor ceilings in bungalows (with only a cold loft above),
@@ -283,7 +283,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ThermometerSun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ThermometerSun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Thermal cut-out</strong> — most quality IC-rated LED downlights include a
                 thermal cut-out (resettable fuse) that disconnects the fitting if the temperature
@@ -293,7 +293,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ThermometerSun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ThermometerSun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ventilation</strong> — even IC-rated downlights benefit from some airflow.
                 In sealed ceiling voids with no ventilation and high ambient temperatures (such as
@@ -302,7 +302,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ThermometerSun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ThermometerSun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable temperature</strong> — the heat from the downlight can affect the
                 cable connected to it. Use heat-resistant flex (butyl rubber or silicone insulation)
@@ -329,7 +329,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Integrated vs separate driver</strong> — modern LED downlights are available
                 with an integrated driver (built into the fitting) or a separate driver (mounted in
@@ -340,7 +340,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Constant current vs constant voltage</strong> — LED downlights are typically
                 constant-current devices. The driver must output the correct current (e.g., 350mA,
@@ -349,7 +349,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dimmable vs non-dimmable driver</strong> — if the downlight will be dimmed,
                 the driver must be specifically rated as dimmable and must be compatible with the
@@ -379,7 +379,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Trailing-edge dimmer</strong> — the standard choice for LED dimming.
                 Trailing-edge (also called ELV or electronic) dimmers work by controlling the
@@ -388,7 +388,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Leading-edge dimmer</strong> — the traditional dimmer type used for halogen
                 and incandescent lamps. Some LED downlights are compatible with leading-edge
@@ -397,7 +397,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minimum and maximum load</strong> — LED dimmers have a minimum and maximum
                 load rating. The total wattage of all LED downlights on the dimmer circuit must fall
@@ -406,7 +406,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DALI and 0-10V dimming</strong> — for commercial installations, DALI
                 (Digital Addressable Lighting Interface) and 0-10V dimming systems provide more
@@ -442,7 +442,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit cable</strong> — 1.0mm{'\u00B2'} or 1.5mm{'\u00B2'} twin and earth
                 (6242Y), protected by a 6A MCB. The total load of LED downlights on a typical
@@ -450,7 +450,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Loop-in method</strong> — the supply cable loops from one downlight to the
                 next. Each fitting has loop-in terminals for the incoming and outgoing supply. The
@@ -458,7 +458,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Junction box method</strong> — junction boxes in the ceiling void distribute
                 the supply to each fitting via individual cables. This is common when the downlight
@@ -466,7 +466,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Connector blocks</strong> — Wago-style connectors or plug-in connector
                 systems are increasingly used to connect LED downlights. These provide quick,
@@ -495,7 +495,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Approved Document B (Fire Safety)</strong> — requires fire-rated fittings in
                 ceilings that form fire barriers. The fire rating of the fitting must match the
@@ -503,7 +503,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Approved Document L (Energy Efficiency)</strong> — requires lighting in new
                 dwellings to achieve a minimum efficacy of 45 lumens per circuit watt. LED
@@ -513,7 +513,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>
                   <SEOInternalLink href="/part-p-building-regulations">
@@ -612,7 +612,7 @@ export default function LEDDownlightGuidePage() {
       heroTitle={
         <>
           LED Downlight Installation:{' '}
-          <span className="text-yellow-400">Fire Rating and IC Guide</span>
+          <span className="text-elec-yellow">Fire Rating and IC Guide</span>
         </>
       }
       heroSubtitle="LED downlights are the most common lighting fixture in UK installations, but getting the specification wrong can compromise fire safety, cause premature failure, or create dimming problems. This guide covers fire-rated vs non-fire-rated, IC rating for insulation contact, driver compatibility, dimming, and the installation mistakes that catch electricians out."

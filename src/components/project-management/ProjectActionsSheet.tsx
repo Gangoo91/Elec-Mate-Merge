@@ -111,7 +111,7 @@ const ProjectActionsSheet = ({
   const quoteUrl = `/electrician/quote-builder/create?projectId=${projectId}`;
   const variationUrl = `${quoteUrl}&variation=1`;
   const invoiceUrl = `/electrician/invoice-builder/create?projectId=${projectId}`;
-  const certificateUrl = `/electrician/inspection-testing/new?projectId=${projectId}&clientName=${enc(customerName)}&address=${enc(location)}`;
+  const certificateUrl = `/electrician/inspection-testing?projectId=${projectId}&clientName=${enc(customerName)}&address=${enc(location)}`;
   const ramsUrl = `/electrician-tools/site-safety?projectId=${projectId}&location=${enc(location)}&clientName=${enc(customerName)}`;
   const siteVisitUrl = (() => {
     const params = new URLSearchParams();

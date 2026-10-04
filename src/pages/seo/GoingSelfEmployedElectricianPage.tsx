@@ -153,7 +153,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>You have the qualifications.</strong> 18th Edition (C&G 2382), Inspection
                 and Testing (C&G 2391), NVQ Level 3, and ideally AM2. Without these, getting onto a
@@ -162,7 +162,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>You have experience.</strong> At least 3 to 5 years working as a qualified
                 electrician, ideally across a range of work types — domestic, commercial, testing,
@@ -171,7 +171,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>You have contacts.</strong> People who will give you work — builders,
                 project managers, property managers, former colleagues, friends and family who need
@@ -180,7 +180,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>You have a financial buffer.</strong> At least 2 to 3 months of living
                 expenses saved. Income is unpredictable in the early months, and you need to cover
@@ -188,7 +188,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>You can handle the business side.</strong> Pricing, quoting, invoicing,
                 chasing payments, bookkeeping, scheduling. This is where many technically excellent
@@ -414,7 +414,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Users className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Word of Mouth and Referrals</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -541,7 +541,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Separate business bank account.</strong> Open a dedicated business account
                 and put all business income and expenses through it. This makes bookkeeping
@@ -549,7 +549,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Set aside tax money.</strong> As a rule of thumb, put 25% to 30% of every
                 payment you receive into a separate savings account for tax. Do not touch this money
@@ -558,7 +558,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Invoice promptly.</strong> Send invoices the same day you complete the work
                 — or before you leave the property. The longer you wait, the slower you get paid.
@@ -566,7 +566,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Track every expense.</strong> Every receipt is a potential tax deduction.
                 Photograph receipts immediately and log them digitally. Do not throw receipts in the
@@ -595,7 +595,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Month 1 to 2:</strong> Adrenaline and momentum. You have your first few jobs
                 lined up, you are excited, and the freedom feels incredible. Enjoy it — but stay
@@ -604,7 +604,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Month 3 to 4:</strong> The initial work pipeline dries up and you have a
                 quiet week or two. This is normal. Use the quiet time to market yourself, follow up
@@ -613,7 +613,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Month 5 to 6:</strong> Referrals start coming in. Customers you did good
                 work for recommend you to others. Your online reviews are building. Work becomes
@@ -653,7 +653,7 @@ export default function GoingSelfEmployedElectricianPage() {
       heroTitle={
         <>
           Going Self-Employed as an Electrician:{' '}
-          <span className="text-yellow-400">The Complete Guide</span>
+          <span className="text-elec-yellow">The Complete Guide</span>
         </>
       }
       heroSubtitle="Everything you need to know about setting up as a self-employed electrician in the UK. From registering with HMRC and joining a competent person scheme to pricing your work, getting customers, and managing your finances. A practical guide from electricians who have done it."
@@ -664,7 +664,7 @@ export default function GoingSelfEmployedElectricianPage() {
       faqHeading="Frequently Asked Questions About Going Self-Employed"
       relatedPages={relatedPages}
       ctaHeading="The Business App Built for Self-Employed Electricians"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to manage their business. Quotes, invoices, expenses, cash flow, certificates, and AI-powered job pricing — all from your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to manage their business. Quotes, invoices, expenses, cash flow, certificates, and AI-powered job pricing — all from your phone. 7-day free trial, cancel anytime."
     />
   );
 }

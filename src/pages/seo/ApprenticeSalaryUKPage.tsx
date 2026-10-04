@@ -149,21 +149,21 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">NMW / NLW Rates (from 1 April 2026)</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Apprentice rate:</strong> £8.00 per hour — applies to apprentices under 19,
                 or aged 19+ in their first year of the apprenticeship.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Aged 18-20:</strong> £10.85 per hour — applies once you turn 19 and have
                 completed your first apprenticeship year.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Aged 21 and over (NLW):</strong> £12.71 per hour — the National Living Wage
                 applies to all workers aged 21 and over, including apprentices past their first
@@ -246,7 +246,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Clock className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Year 4: £22,000 to £28,000</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -280,7 +280,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>London:</strong> £18,000 to £24,000 (Year 1 to Year 4). London weighting of
                 £2,000 to £4,000 is common. Large contractors like Balfour Beatty, NG Bailey, and
@@ -288,35 +288,35 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>South East:</strong> £16,000 to £22,000. Close to London rates, particularly
                 in areas like Reading, Brighton, and the M4 corridor.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Midlands:</strong> £14,000 to £20,000. Birmingham and Coventry pay above
                 average; rural Midlands areas pay less.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>North West:</strong> £14,000 to £20,000. Manchester and Liverpool offer
                 competitive rates, especially on large commercial projects.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>North East and Yorkshire:</strong> £13,000 to £19,000. Lower cost of living
                 offsets lower wages to some extent.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Scotland:</strong> £14,000 to £20,000. Edinburgh and Glasgow pay above the
                 Scottish average. SJIB rates (Scottish equivalent of JIB) apply to registered
@@ -324,7 +324,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wales:</strong> £13,000 to £18,000. Cardiff and Swansea pay above the Welsh
                 average. Rural Wales pays the least.
@@ -353,14 +353,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Weekday overtime:</strong> Typically paid at 1.5x your normal rate. Working
                 an extra 2 hours per day at time and a half adds roughly £100 to £150 per week.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Weekend work:</strong> Saturday work is usually 1.5x, Sunday and bank
                 holidays are often 2x (double time). A full Saturday at double time can be worth
@@ -368,7 +368,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Travel and lodging allowances:</strong> If you work away from your normal
                 base, many employers pay travel time and mileage. Some commercial and industrial
@@ -377,7 +377,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Shift allowances:</strong> Night shifts and early morning starts on
                 industrial sites often attract a premium of 15-30% on top of the base rate.
@@ -477,28 +477,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <BarChart3 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart3 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Stage 1 (Year 1):</strong> £8.16 per hour (£9.14 London) — just above the
                 apprentice NMW rate, with the real gains coming as you progress.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BarChart3 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart3 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Stage 2 (Year 2):</strong> £10.60 per hour (£11.88 London) — a rise of
                 around 30% on Stage 1.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BarChart3 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart3 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Stage 3 (Year 3):</strong> £13.05 per hour (£14.62 London) — above the
                 National Living Wage.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BarChart3 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart3 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Stage 4 (Year 4):</strong> £14.03 per hour (£15.72 London) — the final step
                 before the qualified JIB electrician rate.
@@ -532,7 +532,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Say yes to overtime.</strong> Every hour of overtime earns you more per hour
                 than your base rate. It also shows your employer you are committed, which leads to
@@ -540,14 +540,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Get your CSCS/ECS card early.</strong> Having the right site card means you
                 can work on commercial and industrial sites, which pay more and offer more overtime.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Study hard and pass first time.</strong> Failing exams costs time and money.
                 Use the{' '}
@@ -559,7 +559,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Keep records of everything you learn.</strong> Build your{' '}
                 <SEOInternalLink href="/apprentice-portfolio-guide">
@@ -570,7 +570,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consider switching employers if underpaid.</strong> There is a shortage of
                 apprentices in the electrical trade. If your employer is paying NMW with no overtime
@@ -602,21 +602,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Newly qualified (improver):</strong> £28,000 to £35,000. You are qualified
                 but still building speed and experience.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>2 to 5 years qualified:</strong> £35,000 to £45,000. You are fully
                 productive and may be supervising apprentices yourself.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Self-employed:</strong> £45,000 to £75,000+. Many electricians go{' '}
                 <SEOInternalLink href="/guides/going-self-employed-electrician">
@@ -627,7 +627,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Award className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Specialist roles:</strong> Electricians who add{' '}
                 <SEOInternalLink href="/guides/cpd-for-electricians">
@@ -668,7 +668,7 @@ export default function ApprenticeSalaryUKPage() {
       heroTitle={
         <>
           Apprentice Electrician Salary UK:{' '}
-          <span className="text-yellow-400">What You Will Actually Earn in 2026</span>
+          <span className="text-elec-yellow">What You Will Actually Earn in 2026</span>
         </>
       }
       noindex={true}

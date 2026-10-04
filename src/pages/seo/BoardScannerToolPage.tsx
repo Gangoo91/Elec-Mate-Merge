@@ -45,7 +45,7 @@ export default function BoardScannerToolPage() {
       badgeIcon={Camera}
       heroTitle={
         <>
-          <span className="text-yellow-400">AI Board Scanner</span> — Photograph a Consumer Unit,
+          <span className="text-elec-yellow">AI Board Scanner</span> — Photograph a Consumer Unit,
           Auto-Fill Your Certificate
         </>
       }

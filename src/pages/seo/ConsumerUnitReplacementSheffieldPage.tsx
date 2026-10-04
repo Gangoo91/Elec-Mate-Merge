@@ -256,7 +256,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dual-RCD consumer unit</strong> — circuits are divided into two groups, each
                 protected by a 30mA RCD. This is the most economical option. The limitation is that
@@ -265,7 +265,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCBO consumer unit</strong> — each circuit has an individual RCBO combining
                 MCB and RCD functions. A fault trips only the affected circuit. This is the
@@ -274,7 +274,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Nuisance tripping</strong> — older Sheffield properties may have appliances
                 or wiring that causes nuisance RCD tripping. An RCBO arrangement limits the impact
@@ -330,7 +330,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Unregistered electricians</strong> — using an unregistered electrician means
                 you must notify Sheffield City Council building control before work begins and
@@ -404,28 +404,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Small terrace (1–2 bed)</strong> — £380 to £520. Very common in Sheffield's
                 inner suburbs. Usually 6 to 10 circuits, straightforward job.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom semi or terrace</strong> — £480 to £680. The most common
                 Sheffield property type. Up to 12 circuits typically.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Larger detached property</strong> — £650 to £900. More ways required,
                 potentially RCBO-per-circuit arrangement, longer on-site time.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional work</strong> — earthing upgrades, main bonding, meter tails
                 replacement, or smoke alarm installation can add £100 to £400 depending on the
@@ -455,7 +455,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Original wiring</strong> — some Sheffield terraces in areas such as Sharrow
                 or Burngreave retain rubber-insulated or lead-sheathed wiring from pre-1950 rewires.
@@ -465,7 +465,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>TT earthing systems</strong> — some Sheffield properties, particularly in
                 outlying or rural areas of the city boundary, use TT earthing (earth electrode
@@ -475,7 +475,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Student letting properties</strong> — Sheffield has a very large student
                 population due to the University of Sheffield and Sheffield Hallam University. Many
@@ -502,7 +502,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Paperless EICs on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -536,7 +536,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Sheffield electrical business with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting."
           icon={FileCheck2}
         />
       </>
@@ -562,7 +562,7 @@ export default function ConsumerUnitReplacementSheffieldPage() {
       heroTitle={
         <>
           Consumer Unit Replacement Sheffield:{' '}
-          <span className="text-yellow-400">Fuse Box Guide 2026</span>
+          <span className="text-elec-yellow">Fuse Box Guide 2026</span>
         </>
       }
       heroSubtitle="Your complete guide to consumer unit replacement in Sheffield — the metal enclosure requirement, Part P notification, RCD and RCBO protection, costs of £400 to £750, and how to find a qualified NICEIC or NAPIT registered electrician in South Yorkshire."
@@ -573,7 +573,7 @@ export default function ConsumerUnitReplacementSheffieldPage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Replacement in Sheffield"
       relatedPages={relatedPages}
       ctaHeading="Complete Consumer Unit Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion with instant PDF export and schedule of test results. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion with instant PDF export and schedule of test results. 7-day free trial, cancel anytime."
     />
   );
 }

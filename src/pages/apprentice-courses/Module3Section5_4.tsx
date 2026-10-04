@@ -83,8 +83,8 @@ const quizQuestions = [
     id: 6,
     question: 'Which is the best first step when selecting materials for a damp plant room?',
     options: [
-      'Choose the cheapest enclosure available',
-      'Match the colours to the existing equipment',
+      'Specify IP20 enclosures with silicone round the lid',
+      'Use the same enclosures as the dry rooms',
       'Assess the environmental influences and duty (BS 7671)',
       'Order the same materials used on the last job',
     ],
@@ -124,9 +124,9 @@ const quizQuestions = [
 const quickCheckQuestions = [
   {
     id: 'materials-chem',
-    question: 'Which plastic enclosure is often preferred in chemical washdown areas?',
+    question: 'Which enclosure material is often preferred in chemical washdown areas?',
     options: [
-      'MDF',
+      'Painted mild steel',
       'GRP',
       'ABS',
       'Polystyrene',
@@ -155,7 +155,7 @@ const quickCheckQuestions = [
       'Bond the dissimilar metals tightly together',
       'Use the highest torque the fixings allow',
       'Isolate dissimilar metals and use compatible fasteners',
-      'Choose the cheapest fasteners available',
+      'Paint only the steel part of the joint',
     ],
     correctIndex: 2,
     explanation:

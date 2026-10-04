@@ -46,7 +46,9 @@ import CalendarTidyStrip from './CalendarTidyStrip';
 import WeekDayStrip from './WeekDayStrip';
 import { printWeek } from './printWeek';
 import CalendarLegend from './CalendarLegend';
-import { eventsOnDay, isSyntheticEvent, occupiesTime, totalHours } from './eventUtils';
+import { isSyntheticEvent, occupiesTime, summariseDay } from './eventUtils';
+import CalendarWeekList from './CalendarWeekList';
+import CalendarDayHeading from './CalendarDayHeading';
 import { DIARY_TIDY_KEY } from './useDiaryTidy';
 import StartDateRequestsCard from '@/components/electrician/booking/StartDateRequestsCard';
 import { useStartDateRequests } from '@/hooks/useStartDateRequests';
@@ -221,20 +223,12 @@ const CalendarPageContent = () => {
         return { dateFrom: ts.toISOString(), dateTo: te.toISOString() };
       }
       case 'day': {
-        const ds = new Date(
-          currentDate.getFullYear(),
-          currentDate.getMonth(),
-          currentDate.getDate()
-        );
-        const de = new Date(
-          currentDate.getFullYear(),
-          currentDate.getMonth(),
-          currentDate.getDate(),
-          23,
-          59,
-          59
-        );
-        return { dateFrom: ds.toISOString(), dateTo: de.toISOString() };
+        // The whole week, not the one day: the week strip above the rail
+        // draws every day's load from these events, and with only today
+        // loaded the other six bars sat empty however busy they were.
+        const ws = startOfWeek(currentDate, { weekStartsOn: 1 });
+        const we = endOfWeek(currentDate, { weekStartsOn: 1 });
+        return { dateFrom: ws.toISOString(), dateTo: we.toISOString() };
       }
     }
   }, [view, currentDate]);
@@ -242,7 +236,13 @@ const CalendarPageContent = () => {
   // Real events plus the three synthetic sources — tasks, project dates and
   // booked site visits. Composed in one hook so the diary panels on the hub and
   // the dashboard cannot answer "what is on today" differently from this page.
-  const { events: allEvents } = useDiaryEvents(dateFrom, dateTo);
+  const {
+    events: allEvents,
+    isLoading: diaryLoading,
+    isError: diaryError,
+    refetch: refetchDiary,
+  } = useDiaryEvents(dateFrom, dateTo);
+  const diaryStatus = diaryLoading ? 'loading' : diaryError ? 'error' : 'ready';
 
   const pulse = useCalendarPulse();
   const { data: startRequests = [], isLoading: requestsLoading } = useStartDateRequests();
@@ -990,7 +990,7 @@ const CalendarPageContent = () => {
         clientName: job.customerName ?? '',
         address: job.location ?? '',
       });
-      navigate(`/electrician/inspection-testing/new?${params.toString()}`);
+      navigate(`/electrician/inspection-testing?${params.toString()}`);
     },
     [navigate]
   );
@@ -1281,6 +1281,27 @@ const CalendarPageContent = () => {
     [editingEvent, editingJobRows, createMutation, updateMutation, splitJobMutation, queryClient]
   );
 
+  /** The day view's heading: how full the day is and where the next gap is. */
+  const daySummary = useMemo(
+    () =>
+      summariseDay(
+        allEvents,
+        currentDate,
+        settings.workingHoursStart,
+        settings.workingHoursEnd,
+        settings.workingDays,
+        settings.jobsAtOnce
+      ),
+    [
+      allEvents,
+      currentDate,
+      settings.workingHoursStart,
+      settings.workingHoursEnd,
+      settings.workingDays,
+      settings.jobsAtOnce,
+    ]
+  );
+
   // Agenda target — the selected day in month view, the shown day otherwise.
   const agendaDate = view === 'month' ? (selectedDate ?? new Date()) : currentDate;
 
@@ -1351,6 +1372,23 @@ const CalendarPageContent = () => {
             <StartDateRequestsCard requests={startRequests} isLoading={requestsLoading} />
           </motion.div>
 
+          {/* A failed load said nothing at all: the grid drew empty and every
+              day read as free. Say so, and offer the retry. */}
+          {diaryError && (
+            <div className="flex items-center gap-3 rounded-xl border border-orange-500/30 bg-orange-500/10 px-4 py-2.5">
+              <p className="min-w-0 flex-1 text-[13px] font-medium text-orange-300">
+                Could not load your diary — bookings may be missing below.
+              </p>
+              <button
+                type="button"
+                onClick={() => refetchDiary()}
+                className="h-11 shrink-0 rounded-full border border-orange-500/40 px-4 text-[13px] font-semibold text-orange-300 touch-manipulation active:scale-[0.97]"
+              >
+                Try again
+              </button>
+            </div>
+          )}
+
           {/* The grid is ALWAYS rendered. It used to be swapped out for an
               empty state whenever the range held no events, so an empty month
               lost its dates, its today marker and its navigation — the calendar
@@ -1381,56 +1419,26 @@ const CalendarPageContent = () => {
             {view === 'week' && (
               <>
                 {/* A phone cannot show a week of detail in seven 48px columns —
-                    every title read "M20…". It shows the week's shape and one
-                    day's detail: the day strip, then that day's rail. Next
-                    week keeps the weekday. From `sm` the time grid is legible
-                    and takes over. */}
-                <div className="space-y-3 sm:hidden">
-                  <WeekDayStrip
+                    every title read "M20…". It lists the week instead, a day
+                    per heading, the way a paper diary reads (ELE-1804: the
+                    old day-rail version looked identical to Day view). From
+                    `sm` the time grid is legible and takes over. */}
+                <div className="sm:hidden">
+                  <CalendarWeekList
                     currentDate={currentDate}
                     events={allEvents}
                     workingHoursStart={settings.workingHoursStart}
                     workingHoursEnd={settings.workingHoursEnd}
                     workingDays={settings.workingDays}
-                    onSelect={(d) => {
-                      haptic.selection();
-                      setCurrentDate(d);
-                    }}
-                  />
-                  {/* Which day the rail is showing — the header says the
-                      week, the chip is highlighted, and this says it in words. */}
-                  {(() => {
-                    const onDay = eventsOnDay(allEvents, currentDate).filter(
-                      (e) => !isSyntheticEvent(e) && occupiesTime(e)
-                    );
-                    const hours = totalHours(
-                      onDay,
-                      settings.workingHoursEnd - settings.workingHoursStart
-                    );
-                    return (
-                      <p className="flex items-baseline gap-2 px-1 text-[15px] font-semibold tracking-tight text-white">
-                        {currentDate.toLocaleDateString('en-GB', {
-                          weekday: 'long',
-                          day: 'numeric',
-                          month: 'long',
-                        })}
-                        <span className="text-[12px] font-medium tabular-nums text-white">
-                          {onDay.length === 0
-                            ? 'nothing booked'
-                            : `${onDay.length} booked · ${hours % 1 === 0 ? hours : hours.toFixed(1)}h`}
-                        </span>
-                      </p>
-                    );
-                  })()}
-                  <CalendarDayView
-                    currentDate={currentDate}
-                    events={allEvents}
-                    workingHoursStart={settings.workingHoursStart}
-                    workingHoursEnd={settings.workingHoursEnd}
+                    capacity={settings.jobsAtOnce}
                     onEventTap={handleEventTap}
-                    onTimeSlotTap={handleTimeSlotTap}
+                    onOpenDay={handleGoToDay}
+                    onBookSlot={handlePickSlot}
+                    onBookDay={openNewEvent}
                     onSwipeLeft={goNext}
                     onSwipeRight={goPrevious}
+                    onHaptic={haptic.selection}
+                    status={diaryStatus}
                   />
                 </div>
                 <div className="hidden sm:block">
@@ -1445,6 +1453,7 @@ const CalendarPageContent = () => {
                     onSwipeRight={goPrevious}
                     workingDays={settings.workingDays}
                     onMoveEvent={handleMoveEvent}
+                    onOpenDay={handleGoToDay}
                   />
                 </div>
               </>
@@ -1464,6 +1473,7 @@ const CalendarPageContent = () => {
                 onSwipeLeft={goNext}
                 onSwipeRight={goPrevious}
                 onMoveEvent={handleMoveEvent}
+                onOpenDay={handleGoToDay}
               />
             )}
 
@@ -1481,6 +1491,13 @@ const CalendarPageContent = () => {
                     haptic.selection();
                     setCurrentDate(d);
                   }}
+                />
+                <CalendarDayHeading
+                  date={currentDate}
+                  summary={daySummary}
+                  onBook={handlePickSlot}
+                  onBookDay={openNewEvent}
+                  status={diaryStatus}
                 />
                 <CalendarDayView
                   currentDate={currentDate}
@@ -1502,6 +1519,7 @@ const CalendarPageContent = () => {
                 would only repeat itself. On a phone the week view IS a day
                 rail too, so the agenda only earns its place there from `sm`. */}
             {view !== 'day' && (
+              // On a phone the week list already lists every day.
               <div className={view === 'week' ? 'hidden sm:block' : undefined}>
                 <CalendarAgendaStrip
                   date={agendaDate}

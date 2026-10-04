@@ -162,7 +162,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Typical Cost Ranges (2026)</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Grade II 2-bed cottage</strong> — £8,000 to £12,000. Surface-mount wiring
                 with period clips, basic heritage accessories, standard consumer unit with RCBOs and
@@ -170,7 +170,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Grade II 4-bed period house</strong> — £14,000 to £20,000. Combination of
                 surface-mount and concealed wiring through floor voids, heritage brass accessories
@@ -179,7 +179,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Grade I / II* large property</strong> — £20,000 to £25,000+. Extensive
                 conservation requirements, bespoke heritage accessories, MICC cable in sensitive
@@ -272,7 +272,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Surface-mount on period clips</strong> — Round PVC or lead-sheathed cable
                 fixed with brass or black japanned clips. The cheapest method at £8 to £15 per metre
@@ -280,7 +280,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mini trunking painted to match</strong> — Small-section PVC trunking (16mm x
                 16mm or similar) fixed to the surface and painted to match the wall colour. £12 to
@@ -288,7 +288,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MICC (mineral-insulated) cable</strong> — Slim profile, can be surface
                 mounted or buried in shallow chases. Paintable. £25 to £45 per metre installed.
@@ -297,7 +297,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Concealed through existing voids</strong> — Routing cables through floor
                 voids, above ceilings, behind skirting boards and architraves, and through existing
@@ -359,7 +359,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Paintbrush className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Paintbrush className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lime plaster repairs</strong> — £40 to £80 per square metre for a specialist
                 plasterer using lime putty or hydraulic lime. Multiple coats with drying time
@@ -367,7 +367,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Paintbrush className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Paintbrush className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lath and plaster ceiling repairs</strong> — £60 to £120 per square metre
                 where ceiling lath has been disturbed. New lath must be oak or chestnut (not
@@ -375,7 +375,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Paintbrush className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Paintbrush className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Decorative plasterwork</strong> — Cornices, ceiling roses, and mouldings
                 damaged during cable routing may require specialist repair at £80 to £200 per linear
@@ -437,7 +437,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Landmark className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Landmark className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Survey with the Conservation Officer</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -506,7 +506,7 @@ export default function ListedBuildingRewireCostPage() {
       heroTitle={
         <>
           Listed Building Rewire Cost:{' '}
-          <span className="text-yellow-400">UK Heritage Guide 2026</span>
+          <span className="text-elec-yellow">UK Heritage Guide 2026</span>
         </>
       }
       heroSubtitle="What does it cost to rewire a listed building? This guide covers conservation officer requirements, surface-mount and concealed wiring methods, heritage accessories, lime plaster making good, and realistic pricing from £8,000 to £25,000+ — for homeowners and electricians."
@@ -517,7 +517,7 @@ export default function ListedBuildingRewireCostPage() {
       faqHeading="Frequently Asked Questions About Listed Building Rewire Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Heritage Electrical Work with Confidence"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for specialist quoting, on-site EIC certificates, and photographic records of heritage installations. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for specialist quoting, on-site EIC certificates, and photographic records of heritage installations. 7-day free trial."
     />
   );
 }

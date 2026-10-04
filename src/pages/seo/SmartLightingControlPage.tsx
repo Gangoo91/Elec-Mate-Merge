@@ -203,7 +203,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>KNX bus</strong> — a two-wire twisted pair bus (KNX TP) runs throughout
                 the building, carrying both power (24V DC, 640mA per segment) and data. KNX
@@ -213,7 +213,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ETS software</strong> — KNX systems are configured using ETS (Engineering
                 Tool Software), a proprietary tool supplied by the KNX Association. ETS is used
@@ -223,7 +223,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>KNX IP</strong> — KNX over IP (KNXnet/IP) allows KNX devices to
                 communicate over an Ethernet/IP backbone, which is useful for connecting
@@ -233,7 +233,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>When to specify KNX</strong> — KNX is most cost-effective on large
                 projects where whole-building integration is required from the outset. For a
@@ -260,7 +260,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lutron Caseta</strong> — a wireless system for domestic and small
                 commercial applications. Caseta uses Lutron's Clear Connect RF protocol for
@@ -271,7 +271,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lutron RadioRA 2</strong> — a larger residential and boutique commercial
                 system supporting up to 200 devices per main repeater. Used in high-end
@@ -282,7 +282,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lutron Vive</strong> — Lutron's commercial wireless lighting control
                 platform for offices, education, and healthcare. Vive uses wireless area
@@ -355,7 +355,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PIR sensors</strong> — detect movement via changes in infrared radiation
                 from body heat. Suitable for spaces where occupants move frequently (open offices,
@@ -364,7 +364,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Microwave/ultrasonic sensors</strong> — detect minor movements (typing,
                 reading) that PIR sensors may miss. Better for spaces where occupants are
@@ -373,7 +373,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Daylight harvesting setup</strong> — position the photocell to measure
                 the daylight contribution to the working plane, not the luminaire output directly
@@ -455,7 +455,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New build — wired DALI or KNX</strong> — new construction allows wired
                 systems to be installed before plastering and finishing. DALI is the standard
@@ -466,7 +466,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Retrofit — wireless systems or relay-based control</strong> — in occupied
                 buildings, wireless systems (Lutron Vive, DALI wireless, Casambi) avoid the
@@ -477,7 +477,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Luminaire replacement</strong> — retrofitting smart control often
                 provides the opportunity to replace existing luminaires with LED equivalents
@@ -503,7 +503,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Basic scene control (relay-based)</strong> — £500–£2,000 for a small
                 commercial space with push-button scene selection and time scheduling. Does not
@@ -512,7 +512,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DALI system</strong> — £50–£150 per luminaire for DALI driver, DALI bus
                 cable, sensors, and commissioning. A 50-luminaire open-plan office system
@@ -521,7 +521,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>KNX system</strong> — £80–£200 per device plus £2,000–£5,000 for
                 engineering and commissioning on a typical project. KNX is more expensive than
@@ -530,7 +530,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lutron Caseta (domestic/small commercial)</strong> — £60–£120 per
                 dimmer or switch, plus £100–£300 for the SmartBridge hub. A four-room domestic
@@ -556,7 +556,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Quote Smart Lighting Projects Accurately</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -617,7 +617,7 @@ export default function SmartLightingControlPage() {
       heroTitle={
         <>
           Smart Lighting Control Systems UK:{' '}
-          <span className="text-yellow-400">DALI, KNX & Lutron Guide</span>
+          <span className="text-elec-yellow">DALI, KNX & Lutron Guide</span>
         </>
       }
       heroSubtitle="The complete UK guide to intelligent lighting control — DALI (IEC 62386), KNX, and Lutron systems explained. Scene setting, occupancy sensing, daylight harvesting, emergency lighting integration under BS 5266, retrofit vs new build options, and 2026 costs."

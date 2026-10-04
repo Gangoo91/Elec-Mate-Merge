@@ -189,7 +189,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Known voltage output</strong> — the proving unit must generate a reliable,
                 known voltage within the detection range of your voltage indicator. Most produce
@@ -197,7 +197,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Compatibility</strong> — the proving unit must be compatible with your
                 specific voltage indicator. Some indicators have matching proving units from the
@@ -205,7 +205,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Battery condition</strong> — check the battery before each use. A proving
                 unit with a flat battery will not produce the required test voltage. Carry spare
@@ -213,7 +213,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Portability</strong> — the proving unit must be portable enough to carry to
                 the point of work. You need it at the point of isolation, not back in the van.
@@ -237,7 +237,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No battery dependency for basic function</strong> — most two-pole voltage
                 indicators use the voltage being measured to power the indication (LEDs or neon
@@ -246,7 +246,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No range selector</strong> — multimeters require the user to select the
                 correct range and function. Selecting the wrong function can give a misleading
@@ -254,7 +254,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No internal fuse dependency</strong> — multimeters have internal fuses that
                 can blow without the user noticing, potentially giving a false dead reading.
@@ -262,7 +262,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Clear indication</strong> — voltage indicators provide an unambiguous
                 live/dead indication (usually LEDs and an audible tone). No need to interpret a
@@ -291,7 +291,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fused leads</strong> — each test lead must contain a fuse rated at no more
                 than 500 mA (HBC). The fuse must be located as close as possible to the probe tip.
@@ -299,7 +299,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Finger guards</strong> — test probes must have barriers that prevent the
                 user's fingers from sliding forward and contacting live parts. The guard must
@@ -307,7 +307,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insulation</strong> — test leads must be fully insulated along their entire
                 length. No exposed metal other than the probe tip. No cracks, cuts, abrasion, or
@@ -315,7 +315,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lead length</strong> — keep test leads as short as practical. Most GS 38
                 compliant leads are approximately 1.2 metres in length.
@@ -346,7 +346,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maximum 4 mm exposed metal</strong> — the conductive tip must not extend
                 more than 4 mm beyond the insulating shroud. This limits probe penetration into a
@@ -354,7 +354,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Spring-loaded shrouds</strong> — the probe tips should have spring-loaded
                 insulating shrouds that cover the exposed metal when not being pressed against a
@@ -362,7 +362,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Robust construction</strong> — probe tips must withstand normal use without
                 bending, breaking, or becoming loose. Damaged probe tips must be replaced
@@ -425,8 +425,8 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-yellow-500/20 flex items-center justify-center shrink-0">
-                <span className="text-yellow-400 font-bold text-sm">2</span>
+              <div className="w-8 h-8 rounded-full bg-white/[0.06] flex items-center justify-center shrink-0">
+                <span className="text-elec-yellow font-bold text-sm">2</span>
               </div>
               <div>
                 <h4 className="font-bold text-white mb-1">TEST — Test the Circuit</h4>
@@ -561,7 +561,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Visual inspection before every use</strong> — check the voltage indicator
                 body, test leads for insulation damage, probe tips for wear, fuses for presence, and
@@ -569,7 +569,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Calibration</strong> — voltage indicators and multifunction testers should
                 be calibrated at the manufacturer-recommended intervals, typically every 12 months.
@@ -577,14 +577,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Spare fuses and batteries</strong> — always carry spare fuses for test leads
                 (500 mA HBC) and spare batteries for the proving unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Storage</strong> — store test equipment in a protective case away from damp,
                 dust, extreme temperatures, and mechanical damage.
@@ -628,7 +628,7 @@ export default function GS38ProvingDeadPage() {
       badgeIcon={ShieldCheck}
       heroTitle={
         <>
-          GS 38 Proving Dead: <span className="text-yellow-400">Test Equipment Requirements</span>
+          GS 38 Proving Dead: <span className="text-elec-yellow">Test Equipment Requirements</span>
         </>
       }
       heroSubtitle="HSE Guidance Note GS 38 sets the standard for electrical test equipment. Proving units, voltage indicators, fused probes, the 4 mm probe tip rule, and the prove-test-prove procedure. This guide covers everything electricians need to know about safe testing."
@@ -644,7 +644,7 @@ export default function GS38ProvingDeadPage() {
       faqHeading="Frequently Asked Questions About GS 38 and Proving Dead"
       relatedPages={relatedPages}
       ctaHeading="Stay Safe with Proper Test Procedures"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI-powered RAMS generation, safety training courses, and professional certification tools. GS 38 procedures are built into every assessment. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for AI-powered RAMS generation, safety training courses, and professional certification tools. GS 38 procedures are built into every assessment. 7-day free trial, cancel anytime."
     />
   );
 }

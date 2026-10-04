@@ -46,7 +46,7 @@ export default function BatteryBackupCalculatorPage() {
       badgeIcon={Battery}
       heroTitle={
         <>
-          <span className="text-yellow-400">Battery Backup Calculator</span> — Size Your UPS and
+          <span className="text-elec-yellow">Battery Backup Calculator</span> — Size Your UPS and
           Battery Bank Correctly
         </>
       }
@@ -127,9 +127,9 @@ export default function BatteryBackupCalculatorPage() {
                 most electrical loads have a power factor less than 1.0.
               </p>
               <p>
-                <strong className="text-yellow-400">Watts (W)</strong> is the real power consumed by
+                <strong className="text-elec-yellow">Watts (W)</strong> is the real power consumed by
                 the load — the power that does useful work and generates heat.{' '}
-                <strong className="text-yellow-400">Volt-amperes (VA)</strong> is the apparent power
+                <strong className="text-elec-yellow">Volt-amperes (VA)</strong> is the apparent power
                 — the product of voltage and current. The relationship is: W = VA x Power Factor.
               </p>
               <p>
@@ -161,7 +161,7 @@ export default function BatteryBackupCalculatorPage() {
                 current, and the UPS inverter efficiency.
               </p>
               <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center my-6">
-                <p className="text-xl sm:text-2xl font-mono font-bold text-yellow-400">
+                <p className="text-xl sm:text-2xl font-mono font-bold text-elec-yellow">
                   Runtime (hrs) = (Battery Ah x Battery V x Efficiency) / Load (W)
                 </p>
                 <p className="mt-3 text-sm text-white">
@@ -208,7 +208,7 @@ export default function BatteryBackupCalculatorPage() {
               </p>
               <p>The formula to calculate the required battery capacity is:</p>
               <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center my-6">
-                <p className="text-xl sm:text-2xl font-mono font-bold text-yellow-400">
+                <p className="text-xl sm:text-2xl font-mono font-bold text-elec-yellow">
                   Ah = (Load W x Runtime hrs) / (Battery V x Efficiency x Ageing Factor)
                 </p>
                 <p className="mt-3 text-sm text-white">
@@ -288,10 +288,10 @@ export default function BatteryBackupCalculatorPage() {
                 backup system.
               </p>
               <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] my-6 space-y-3">
-                <p className="font-semibold text-yellow-400">
+                <p className="font-semibold text-elec-yellow">
                   What is excluded from Chapter 57 (Reg 570.4)
                 </p>
-                <ul className="list-disc pl-5 space-y-2 text-sm text-white/90">
+                <ul className="list-disc pl-5 space-y-2 text-sm text-white">
                   <li>
                     Pluggable UPS units whose batteries are <strong>wholly within</strong> a product
                     conforming to BS EN IEC 62040 — the typical desktop or rack-mount UPS that plugs

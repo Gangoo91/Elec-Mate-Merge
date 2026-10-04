@@ -142,7 +142,7 @@ export function SEOStickyMobileCTA({
       className="fixed inset-x-0 bottom-0 z-50 sm:hidden pointer-events-none"
       style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
     >
-      <div className="mx-3 mb-3 rounded-2xl bg-elec-gray/95 backdrop-blur border border-yellow-500/30 shadow-2xl pointer-events-auto">
+      <div className="mx-3 mb-3 rounded-2xl bg-elec-gray/95 backdrop-blur border border-white/[0.1] shadow-2xl pointer-events-auto">
         <div className="flex items-center gap-2 p-3">
           <a
             href={href}
@@ -155,7 +155,7 @@ export function SEOStickyMobileCTA({
             type="button"
             onClick={handleDismiss}
             aria-label="Dismiss"
-            className="flex items-center justify-center h-12 w-12 rounded-xl text-white/70 hover:text-white hover:bg-white/5 touch-manipulation transition-colors"
+            className="flex items-center justify-center h-12 w-12 rounded-xl text-white hover:bg-white/[0.06] touch-manipulation transition-colors"
           >
             <X className="w-4 h-4" />
           </button>

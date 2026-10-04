@@ -431,7 +431,7 @@ export default function StartingElectricalApprenticeshipPage() {
       heroTitle={
         <>
           Starting Your Electrical Apprenticeship:{' '}
-          <span className="text-yellow-400">The Complete Guide</span>
+          <span className="text-elec-yellow">The Complete Guide</span>
         </>
       }
       heroSubtitle="The Level 3 Installation and Maintenance Electrician apprenticeship explained properly: the three routes in, what you actually study, what you get paid in 2026, what each year looks like, and how it ends with the AM2. Written for school leavers, career changers and everyone starting this September."

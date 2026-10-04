@@ -155,14 +155,14 @@ export default function ElectricalQuotingAppPage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
-        <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-elec-yellow text-sm font-medium mb-6">
             <Zap className="w-4 h-4" />8 Elec-AI Agents + 12 AI Tools
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             Electrical Quoting App
-            <span className="block text-yellow-400 mt-1">Smart Quotes for UK Electricians</span>
+            <span className="block text-elec-yellow mt-1">Smart Quotes for UK Electricians</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-4 leading-relaxed">
             An electrical quoting app helps UK electricians produce accurate, professional quotes
@@ -171,7 +171,7 @@ export default function ElectricalQuotingAppPage() {
             with compliance-aware templates for consumer unit upgrades, rewires, EICR inspections,
             and EV charger installations.
           </p>
-          <p className="text-base text-white/70 max-w-2xl mx-auto mb-8 leading-relaxed">
+          <p className="text-base text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             Stop guessing job costs and spending hours on spreadsheets. Elec-Mate's AI-powered
             quoting tool produces accurate, professional quotes in minutes — with real UK trade
             pricing and labour data built in.
@@ -186,7 +186,7 @@ export default function ElectricalQuotingAppPage() {
             </Link>
             <a
               href="#why-quoting-matters"
-              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-yellow-500/40 touch-manipulation transition-colors"
+              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-white/[0.1] touch-manipulation transition-colors"
             >
               Why Quoting Matters
               <ArrowDown className="w-4 h-4 ml-1" />
@@ -210,7 +210,7 @@ export default function ElectricalQuotingAppPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <FileText className="w-5 h-5 text-yellow-400" />
+              <FileText className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Why Electricians Need Quoting Software
@@ -235,7 +235,7 @@ export default function ElectricalQuotingAppPage() {
               how they feel about the client.
             </p>
             <p>
-              <strong className="text-yellow-400">The cost of underquoting</strong> is immediate:
+              <strong className="text-elec-yellow">The cost of underquoting</strong> is immediate:
               you do the work and make less profit than expected, or worse, you lose money. The cost
               of overquoting is also significant but less visible: you lose the job to a competitor.
               The sweet spot is an accurate quote that covers all costs, includes a fair profit
@@ -243,7 +243,7 @@ export default function ElectricalQuotingAppPage() {
               — which is exactly what quoting software provides.
             </p>
             <p>
-              <strong className="text-yellow-400">Speed matters too.</strong> The electrician who
+              <strong className="text-elec-yellow">Speed matters too.</strong> The electrician who
               sends a professional quote within an hour of a site visit wins the job more often than
               the one who sends a handwritten estimate three days later. Clients associate speed and
               professionalism with competence. If your quote arrives quickly, is well-presented, and
@@ -259,7 +259,7 @@ export default function ElectricalQuotingAppPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Brain className="w-5 h-5 text-yellow-400" />
+              <Brain className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               The Elec-Mate Smart Quote Builder
@@ -273,21 +273,21 @@ export default function ElectricalQuotingAppPage() {
               one of 8 Elec-AI agents, supported by 12 AI tools, that power the Elec-Mate platform.
             </p>
             <p>
-              <strong className="text-yellow-400">Describe the job:</strong> Start by describing the
+              <strong className="text-elec-yellow">Describe the job:</strong> Start by describing the
               work in plain language — "Consumer unit upgrade, 10 ways, SPD, RCBO board, existing
               wiring in good condition" or "Full rewire, 3-bed detached, 14 circuits, all new
               accessories". The AI analyses the description and produces an itemised breakdown of
               materials and labour.
             </p>
             <p>
-              <strong className="text-yellow-400">Review and adjust:</strong> Every line item is
+              <strong className="text-elec-yellow">Review and adjust:</strong> Every line item is
               editable. If you prefer a different brand of consumer unit, swap it. If you know this
               particular job will take longer than average (difficult access, old property, plaster
               damage to repair), increase the labour hours. The AI provides the baseline; you apply
               your experience and knowledge of the specific job.
             </p>
             <p>
-              <strong className="text-yellow-400">Add overheads and margin:</strong> The quote
+              <strong className="text-elec-yellow">Add overheads and margin:</strong> The quote
               builder includes your standard overhead percentage (van, insurance, tools,
               certification body fees) and profit margin. You set these once in your profile, and
               they are applied to every quote automatically. You can override them on a per-quote
@@ -295,7 +295,7 @@ export default function ElectricalQuotingAppPage() {
               contingency.
             </p>
             <p>
-              <strong className="text-yellow-400">Send instantly:</strong> When you are happy with
+              <strong className="text-elec-yellow">Send instantly:</strong> When you are happy with
               the quote, tap "Send" and the client receives a professional PDF quote by email, with
               a link to view and accept it online. The quote is stored in your Elec-Mate account
               alongside the job details, client contact information, and any notes or photos you
@@ -310,7 +310,7 @@ export default function ElectricalQuotingAppPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <PoundSterling className="w-5 h-5 text-yellow-400" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Material Pricing and Labour Calculation
@@ -334,7 +334,7 @@ export default function ElectricalQuotingAppPage() {
               for specialist items).
             </p>
             <p>
-              <strong className="text-yellow-400">Labour calculation</strong> is where many
+              <strong className="text-elec-yellow">Labour calculation</strong> is where many
               electricians struggle. How long does a consumer unit upgrade take? The answer depends
               on the number of ways, whether it is a straight swap or a relocation, the condition of
               the existing cables, and the electrician's experience. Elec-Mate's AI draws on
@@ -359,7 +359,7 @@ export default function ElectricalQuotingAppPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Send className="w-5 h-5 text-yellow-400" />
+              <Send className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">Quote-to-Invoice Workflow</h2>
           </div>
@@ -399,7 +399,7 @@ export default function ElectricalQuotingAppPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <BookOpen className="w-5 h-5 text-yellow-400" />
+              <BookOpen className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Xero and QuickBooks Integration
@@ -414,7 +414,7 @@ export default function ElectricalQuotingAppPage() {
               bookkeeping each month.
             </p>
             <p>
-              <strong className="text-yellow-400">How it works:</strong> When you create an invoice
+              <strong className="text-elec-yellow">How it works:</strong> When you create an invoice
               in Elec-Mate, it can be automatically pushed to your Xero or QuickBooks account. The
               invoice appears in your accounting software with the correct client, line items,
               amounts, VAT, and payment terms. When the client pays (either by bank transfer or by
@@ -422,7 +422,7 @@ export default function ElectricalQuotingAppPage() {
               VAT return, and cash flow reports are always up to date without any manual data entry.
             </p>
             <p>
-              <strong className="text-yellow-400">CIS compliance:</strong> If you work as a
+              <strong className="text-elec-yellow">CIS compliance:</strong> If you work as a
               subcontractor under the Construction Industry Scheme, Elec-Mate handles CIS
               deductions. The invoice shows the gross amount, the CIS deduction (currently 20% for
               verified subcontractors or 30% for unverified), and the net payment due. The CIS
@@ -430,7 +430,7 @@ export default function ElectricalQuotingAppPage() {
               accountant to submit the monthly CIS returns to HMRC.
             </p>
             <p>
-              <strong className="text-yellow-400">Expense tracking:</strong> Elec-Mate also tracks
+              <strong className="text-elec-yellow">Expense tracking:</strong> Elec-Mate also tracks
               job-related expenses — materials purchased, tool hire, sub-contractor costs, travel —
               and links them to the relevant job and invoice. This gives you a true job-by-job
               profit figure, not just an overall business profit, so you can see which types of work
@@ -445,7 +445,7 @@ export default function ElectricalQuotingAppPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Users className="w-5 h-5 text-yellow-400" />
+              <Users className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Professional Client Portal
@@ -496,7 +496,7 @@ export default function ElectricalQuotingAppPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               What You Get with Elec-Mate
@@ -571,7 +571,7 @@ export default function ElectricalQuotingAppPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <HelpCircle className="w-5 h-5 text-yellow-400" />
+              <HelpCircle className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Frequently Asked Questions
@@ -585,7 +585,7 @@ export default function ElectricalQuotingAppPage() {
               >
                 <summary className="flex items-center justify-between p-4 min-h-[44px] touch-manipulation cursor-pointer text-white font-medium">
                   <span>{faq.question}</span>
-                  <ChevronDown className="w-5 h-5 text-yellow-400 group-open:rotate-180 transition-transform" />
+                  <ChevronDown className="w-5 h-5 text-elec-yellow group-open:rotate-180 transition-transform" />
                 </summary>
                 <div className="px-4 pb-4 text-white text-sm leading-relaxed">{faq.answer}</div>
               </details>
@@ -632,7 +632,7 @@ export default function ElectricalQuotingAppPage() {
 
       <SEOCTASection
         heading="Quote Faster, Win More Work"
-        subheading="Join 1,600+ UK electricians using Elec-Mate for professional quotes and invoices. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians using Elec-Mate for professional quotes and invoices. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

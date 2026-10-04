@@ -182,7 +182,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Brain className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Knowledge Test</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -254,7 +254,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Installation to specification</strong> — practise installing circuits from a
                 written specification or drawing. Make sure you can interpret drawings, select the
@@ -264,7 +264,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing sequence</strong> — the full testing sequence to BS 7671 must be
                 second nature. Practise the sequence: continuity of protective conductors (R1+R2),
@@ -275,7 +275,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fault finding</strong> — practise systematic fault finding. Understand how
                 to use test instruments to locate opens, shorts, earth faults, and high-resistance
@@ -286,7 +286,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Certification</strong> — practise completing the relevant certificate (EIC
                 or Minor Works) accurately and completely. Every field must be filled in. Test
@@ -320,7 +320,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <MessageSquare className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MessageSquare className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Know your evidence</strong> — review every piece of evidence in your
                 portfolio. For each one, be able to explain: what the job was, what you did, what
@@ -329,7 +329,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MessageSquare className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MessageSquare className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Link answers to KSBs</strong> — the assessor is mapping your answers to the
                 Knowledge, Skills, and Behaviours in the apprenticeship standard. When you answer a
@@ -339,7 +339,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MessageSquare className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MessageSquare className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Practise with your supervisor</strong> — ask your supervisor or a qualified
                 colleague to conduct mock professional discussions with you. Give them your evidence
@@ -348,7 +348,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MessageSquare className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MessageSquare className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Prepare for follow-up questions</strong> — the assessor will dig deeper on
                 your answers. If you say "I carried out an insulation resistance test," expect
@@ -423,7 +423,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Off-the-job training hours</strong> — minimum 20% of your employed hours
                 over the duration of the apprenticeship must have been spent on off-the-job training
@@ -431,7 +431,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Complete OJT evidence portfolio</strong> — all KSBs must be covered with
                 sufficient evidence. Your training provider will review your portfolio against a
@@ -439,7 +439,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mandatory qualifications</strong> — for the Level 3 Installation
                 Electrician, this typically includes the Level 3 Diploma in Electrotechnical
@@ -447,7 +447,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Functional skills</strong> — Level 2 in English and maths (or equivalent
                 GCSEs at grade 4/C or above). If not already held, these must be achieved before the
@@ -455,7 +455,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Employer and training provider sign-off</strong> — both must confirm that
                 you are consistently working at the level required by the apprenticeship standard
@@ -485,7 +485,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>6 months before</strong> — review your OJT evidence portfolio against the
                 KSB framework. Identify any gaps. Discuss with your supervisor and training
@@ -494,7 +494,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>4-5 months before</strong> — begin focused revision of key theory topics.
                 Use Elec-Mate's training courses to revise BS 7671 regulations, testing procedures,
@@ -502,7 +502,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3-4 months before</strong> — start practising the synoptic project tasks
                 under timed conditions. Monthly mock projects: install, test, fault-find, certify —
@@ -511,7 +511,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>2-3 months before</strong> — begin professional discussion preparation.
                 Review every piece of evidence and practise explaining it. Conduct mock professional
@@ -520,7 +520,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1 month before</strong> — final portfolio review. Check all evidence is
                 complete, correctly formatted, and clearly mapped to KSBs. Conduct a final mock
@@ -623,7 +623,7 @@ export default function EPASimulatorGuidePage() {
       heroTitle={
         <>
           EPA Simulator:{' '}
-          <span className="text-yellow-400">Prepare for Your End-Point Assessment</span>
+          <span className="text-elec-yellow">Prepare for Your End-Point Assessment</span>
         </>
       }
       heroSubtitle="End-point assessment is the final hurdle of your apprenticeship. This guide covers every component — knowledge test, synoptic project, and professional discussion — with practical preparation strategies, grading criteria, and the common mistakes that cause apprentices to fail."

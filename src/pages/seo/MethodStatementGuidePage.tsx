@@ -184,7 +184,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial and industrial sites</strong> — main contractors require RAMS as
                 a condition of access to site. You will not be allowed to start work without
@@ -193,7 +193,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Construction sites under CDM 2015</strong> — the Construction (Design and
                 Management) Regulations 2015 require contractors to plan, manage, and monitor work
@@ -202,7 +202,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Work requiring a permit to work</strong> — hot work, confined space entry,
                 work at height, and certain electrical tasks (such as work on or near live
@@ -214,7 +214,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person scheme requirements</strong> — NICEIC, NAPIT, and ELECSA
                 expect their registered contractors to work to documented safe systems of work.
@@ -222,7 +222,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Client requirements</strong> — many private clients, property management
                 companies, housing associations, and local authorities now require RAMS as standard
@@ -245,7 +245,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <ListChecks className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ListChecks className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">1. Header and Project Information</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -258,7 +258,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <ListChecks className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ListChecks className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">2. Scope of Work</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -272,7 +272,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <ListChecks className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ListChecks className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">3. Personnel and Competence</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -286,7 +286,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <ListChecks className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ListChecks className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">4. Sequence of Operations</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -305,7 +305,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <ListChecks className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ListChecks className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">5. PPE Requirements</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -322,7 +322,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <ListChecks className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ListChecks className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">6. Tools and Equipment</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -335,7 +335,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <ListChecks className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ListChecks className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">7. Emergency Procedures</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -348,7 +348,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <ListChecks className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ListChecks className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">8. Sign-Off</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -503,21 +503,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Risk assessment</strong> — identifying hazards, evaluating risks, and
                 specifying control measures using the HSE 5-step process.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Method statement</strong> — the step-by-step safe system of work,
                 incorporating the control measures from the risk assessment.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>COSHH assessments</strong> — if any hazardous substances are used (cleaning
                 agents, cable lubricant, adhesives), a Control of Substances Hazardous to Health
@@ -525,7 +525,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Supporting documentation</strong> — copies of relevant qualifications,
                 scheme registration, public liability insurance, employers liability insurance, and
@@ -651,7 +651,7 @@ export default function MethodStatementGuidePage() {
       heroTitle={
         <>
           Method Statement for Electricians:{' '}
-          <span className="text-yellow-400">The Complete Template Guide</span>
+          <span className="text-elec-yellow">The Complete Template Guide</span>
         </>
       }
       heroSubtitle="What a method statement is, when you need one, the standard sections, examples for consumer unit changes and rewires, and how to generate professional method statements in minutes with AI. This guide covers everything electricians need to know about safe systems of work."
@@ -662,7 +662,7 @@ export default function MethodStatementGuidePage() {
       faqHeading="Frequently Asked Questions About Method Statements for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Generate Method Statements in Minutes"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's AI RAMS generator to create site-specific method statements for any electrical task. Describe the job, get a professional document. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate's AI RAMS generator to create site-specific method statements for any electrical task. Describe the job, get a professional document. 7-day free trial, cancel anytime."
     />
   );
 }

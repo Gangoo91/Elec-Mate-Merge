@@ -915,7 +915,7 @@ export function SEOMockExam({
                 aria-pressed={flagged.has(current)}
                 className={`h-11 touch-manipulation rounded-xl border px-4 text-[13.5px] font-medium transition-colors ${
                   flagged.has(current)
-                    ? 'border-amber-300 bg-amber-300/[0.10] text-amber-300'
+                    ? 'border-amber-300 bg-amber-300/[0.10] text-elec-yellow'
                     : 'border-white/[0.08] bg-[hsl(0_0%_13%)] text-white hover:bg-[hsl(0_0%_16%)]'
                 }`}
               >
@@ -1077,7 +1077,7 @@ export function SEOMockExam({
                         isCurrent
                           ? 'bg-elec-yellow text-black'
                           : flagged.has(i)
-                            ? 'border border-amber-300 text-amber-300'
+                            ? 'border border-amber-300 text-elec-yellow'
                             : isAnswered
                               ? 'border border-white/25 bg-[hsl(0_0%_18%)] text-white'
                               : 'border border-white/[0.08] bg-[hsl(0_0%_13%)] text-white hover:bg-[hsl(0_0%_16%)]'

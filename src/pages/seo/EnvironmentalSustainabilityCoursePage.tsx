@@ -263,7 +263,7 @@ const sections = [
         </p>
         <div className="space-y-3 my-4">
           <div className="flex gap-4 p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-            <Sun className="w-8 h-8 text-yellow-400 shrink-0 mt-1" />
+            <Sun className="w-8 h-8 text-elec-yellow shrink-0 mt-1" />
             <div>
               <h3 className="font-bold text-white text-lg mb-1">Solar PV</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -566,7 +566,7 @@ export default function EnvironmentalSustainabilityCoursePage() {
       heroTitle={
         <>
           Environmental Sustainability:{' '}
-          <span className="text-yellow-400">Green Skills for Electricians</span>
+          <span className="text-elec-yellow">Green Skills for Electricians</span>
         </>
       }
       heroSubtitle="Master energy efficiency, renewable energy, waste management, and green building standards. 8 modules with video content, interactive quizzes, and AI-powered study tools for the electricians driving the UK net zero transition."
@@ -584,7 +584,7 @@ export default function EnvironmentalSustainabilityCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Develop your green skills today"
-      ctaSubheading="Join 1,600+ UK electricians building future-proof careers with Elec-Mate. Sustainability modules, energy efficiency tools, and an AI tutor for any green skills question. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians building future-proof careers with Elec-Mate. Sustainability modules, energy efficiency tools, and an AI tutor for any green skills question. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/environmental-sustainability"
     />

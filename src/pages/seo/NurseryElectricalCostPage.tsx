@@ -235,7 +235,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Emergency Lighting Provision</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Escape routes</strong> — Minimum 1 lux across the full width of all corridors,
                 stairways, and routes to final exits. Self-contained LED fittings with 3-hour
@@ -243,7 +243,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sleep rooms</strong> — Emergency lighting must provide sufficient
                 illumination for staff to identify and safely lift sleeping children from cots.
@@ -251,7 +251,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Nappy changing areas</strong> — Emergency lighting allows staff to safely
                 complete nappy changing and remove a child from the changing table during a power
@@ -259,7 +259,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Exit signs</strong> — Illuminated emergency exit signs at all exits from the
                 nursery. Internal exit signs above doors between rooms used for emergency egress.
@@ -325,7 +325,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>LST panel heaters</strong> — Low-surface-temperature panel heaters (maximum
                 43 degrees Celsius surface temperature) designed for healthcare and childcare
@@ -334,7 +334,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Underfloor heating</strong> — Electric underfloor heating mat or cable
                 system. No accessible hot surfaces. Cost: £40 to £80 per square metre for the
@@ -343,7 +343,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Radiator guards</strong> — Where existing hot-water radiators are retained,
                 LST radiator guards prevent direct contact with hot surfaces. Guards cost £100 to
@@ -351,7 +351,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Thermostatic controls</strong> — Individual room thermostats (£30 to £80
                 each installed) allow precise temperature control in each room. Programmable
@@ -372,7 +372,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Small nursery, 2 to 3 rooms (£5,000 to £8,000)</strong> — Consumer unit,
                 power and lighting circuits, basic L2 fire alarm, emergency lighting, kitchen power
@@ -381,7 +381,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Medium nursery, 4 to 6 rooms (£8,000 to £13,000)</strong> — Distribution
                 board with RCBOs and SPD, L1 or L2 fire alarm with addressable panel, full emergency
@@ -390,7 +390,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large nursery, 8+ rooms (£13,000 to £18,000+)</strong> — Full 3-phase
                 distribution, L1 addressable fire alarm, comprehensive emergency lighting, full
@@ -420,14 +420,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671:2018+A4:2026</strong> — Full compliance required. RCD protection per
                 Regulation 411.3.3 on all socket outlets. An EIC must be issued on completion.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulatory Reform (Fire Safety) Order 2005</strong> — Fire alarm and
                 emergency lighting are mandatory. The fire risk assessment determines the specific
@@ -435,7 +435,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ofsted EYFS framework</strong> — Premises must be safe and suitable. Ofsted
                 inspectors check for valid EIC/EICR, functioning fire alarm and emergency lighting,
@@ -444,7 +444,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Building Regulations</strong> — Part P applies if the nursery is in a
                 domestic building conversion. Part B (fire safety) applies to all nursery premises.
@@ -469,7 +469,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Baby className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Baby className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Check the Fire Risk Assessment</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -538,7 +538,7 @@ export default function NurseryElectricalCostPage() {
       heroTitle={
         <>
           Nursery Electrical Cost:{' '}
-          <span className="text-yellow-400">UK Childcare Premises Guide 2026</span>
+          <span className="text-elec-yellow">UK Childcare Premises Guide 2026</span>
         </>
       }
       heroSubtitle="What does nursery electrical installation cost? This guide covers child safety provisions, fire alarm systems, emergency lighting, low-surface-temperature heating, Ofsted requirements, and realistic pricing from £5,000 to £18,000 — for nursery owners and electrical contractors."
@@ -549,7 +549,7 @@ export default function NurseryElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Nursery Electrical Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Nursery Electrical with Fire Safety and Ofsted Compliance"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for nursery quoting with fire alarm specifications, emergency lighting, and Ofsted-ready documentation. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for nursery quoting with fire alarm specifications, emergency lighting, and Ofsted-ready documentation. 7-day free trial."
     />
   );
 }

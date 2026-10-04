@@ -47,7 +47,7 @@ export default function BusinessCostCalculatorPage() {
       heroTitle={
         <>
           Business Cost Calculator
-          <span className="block text-yellow-400 mt-1">For UK Electricians</span>
+          <span className="block text-elec-yellow mt-1">For UK Electricians</span>
         </>
       }
       heroSubtitle="Most electricians underestimate their true business running costs by 20% or more. This means every quote you send is underpriced. Elec-Mate's Business Cost Calculator captures every overhead — van, tools, insurance, fuel, training, marketing — so you can price your work to cover your real costs and make a genuine profit."
@@ -81,9 +81,9 @@ export default function BusinessCostCalculatorPage() {
               </p>
               <p>
                 Your business costs fall into two categories:{' '}
-                <strong className="text-yellow-400">fixed costs</strong> that you pay regardless of
+                <strong className="text-elec-yellow">fixed costs</strong> that you pay regardless of
                 how many jobs you do (van lease, insurance, certification fees, phone contract), and{' '}
-                <strong className="text-yellow-400">variable costs</strong> that change with your
+                <strong className="text-elec-yellow">variable costs</strong> that change with your
                 workload (fuel, materials, consumables). Both need to be captured and allocated to
                 your jobs. If you only track materials and labour when quoting, you are ignoring the
                 £10,000 to £20,000 per year of overhead that your business needs to cover.
@@ -121,7 +121,7 @@ export default function BusinessCostCalculatorPage() {
                 exceeds £6,000 per year. Here is what you need to include:
               </p>
               <p>
-                <strong className="text-yellow-400">Lease or finance payments:</strong> A typical
+                <strong className="text-elec-yellow">Lease or finance payments:</strong> A typical
                 electrician's van (Ford Transit Custom, Vauxhall Vivaro, or similar) costs £250 to
                 £400 per month on a 3 to 4 year lease, or £300 to £500 per month on finance. If you
                 own the van outright, you still need to account for depreciation — a van losing
@@ -129,19 +129,19 @@ export default function BusinessCostCalculatorPage() {
                 account each month.
               </p>
               <p>
-                <strong className="text-yellow-400">Insurance:</strong> Commercial van insurance for
+                <strong className="text-elec-yellow">Insurance:</strong> Commercial van insurance for
                 an electrician with tools-in-transit cover typically costs £1,200 to £2,500 per year
                 depending on your age, location, claims history, and the value of tools carried. Do
                 not skimp on tools-in-transit cover — losing £5,000 of test equipment and power
                 tools to theft can be devastating.
               </p>
               <p>
-                <strong className="text-yellow-400">Fuel:</strong> An electrician covering 15,000 to
+                <strong className="text-elec-yellow">Fuel:</strong> An electrician covering 15,000 to
                 25,000 miles per year at current fuel prices will spend £2,500 to £4,500 on diesel
                 or petrol. Electric vans reduce this significantly but have higher purchase costs.
               </p>
               <p>
-                <strong className="text-yellow-400">Maintenance:</strong> Servicing, MOT, road tax,
+                <strong className="text-elec-yellow">Maintenance:</strong> Servicing, MOT, road tax,
                 tyres, and repairs typically add another £800 to £1,500 per year. Budget for at
                 least two new tyres annually and one unexpected repair.
               </p>
@@ -161,20 +161,20 @@ export default function BusinessCostCalculatorPage() {
                 a regular cycle.
               </p>
               <p>
-                <strong className="text-yellow-400">Test equipment calibration:</strong> Your
+                <strong className="text-elec-yellow">Test equipment calibration:</strong> Your
                 multifunction tester (MFT) should be calibrated annually, which costs £80 to £150.
                 Other instruments (insulation resistance testers, earth loop testers, PAT testers)
                 also need periodic calibration. Budget £200 to £400 per year for calibration across
                 all your test instruments.
               </p>
               <p>
-                <strong className="text-yellow-400">Power tool replacement:</strong> Drills,
+                <strong className="text-elec-yellow">Power tool replacement:</strong> Drills,
                 drivers, grinders, and SDS drills have a working life of 2 to 5 years depending on
                 use intensity. Batteries degrade over time and need replacing. Budget £500 to £1,000
                 per year for power tool maintenance and replacement.
               </p>
               <p>
-                <strong className="text-yellow-400">Hand tools and consumables:</strong> Side
+                <strong className="text-elec-yellow">Hand tools and consumables:</strong> Side
                 cutters, strippers, screwdrivers, levels, and measuring tools wear out and need
                 replacing. Consumable items like drill bits, hole saws, and cutting discs are
                 ongoing costs. Budget £300 to £600 per year. Use Elec-Mate's{' '}
@@ -196,19 +196,19 @@ export default function BusinessCostCalculatorPage() {
                 electrical business. Cutting corners here puts your livelihood at risk.
               </p>
               <p>
-                <strong className="text-yellow-400">Public liability insurance:</strong> Essential
+                <strong className="text-elec-yellow">Public liability insurance:</strong> Essential
                 for any electrician working on client premises. Typical cover of £2 million to £5
                 million costs £200 to £500 per year for a sole trader. Many commercial clients and
                 main contractors require proof of at least £5 million cover.
               </p>
               <p>
-                <strong className="text-yellow-400">Professional indemnity insurance:</strong>{' '}
+                <strong className="text-elec-yellow">Professional indemnity insurance:</strong>{' '}
                 Covers you if your professional advice or design causes a financial loss. Not all
                 electricians carry it, but it is increasingly expected for design work and
                 commercial projects. Costs £150 to £400 per year.
               </p>
               <p>
-                <strong className="text-yellow-400">Certification body membership:</strong> NICEIC,
+                <strong className="text-elec-yellow">Certification body membership:</strong> NICEIC,
                 NAPIT, or ELECSA registration typically costs £400 to £800 per year including the
                 annual assessment visit. This is the cost of being able to self-certify work under
                 Part P of the Building Regulations. Without it, you need to notify Building Control
@@ -240,14 +240,14 @@ export default function BusinessCostCalculatorPage() {
                 toll roads, and the annual travel cost can exceed £4,500.
               </p>
               <p>
-                <strong className="text-yellow-400">HMRC mileage allowance:</strong> If you use your
+                <strong className="text-elec-yellow">HMRC mileage allowance:</strong> If you use your
                 personal vehicle for business (unusual for electricians but possible), you can claim
                 45p per mile for the first 10,000 miles and 25p per mile thereafter. If you have a
                 dedicated business van, you claim actual fuel costs plus all running expenses.
                 Elec-Mate's expense tracker categorises travel costs automatically.
               </p>
               <p>
-                <strong className="text-yellow-400">Travel time as a cost:</strong> Beyond the
+                <strong className="text-elec-yellow">Travel time as a cost:</strong> Beyond the
                 direct cost of fuel, travel time is a hidden cost because it is time you cannot bill
                 to a client. An electrician spending 1.5 hours per day travelling (average across UK
                 tradespeople) loses over 350 billable hours per year. At £40 per hour, that is
@@ -270,20 +270,20 @@ export default function BusinessCostCalculatorPage() {
                 and smart home systems all require ongoing learning.
               </p>
               <p>
-                <strong className="text-yellow-400">18th Edition updates:</strong> When BS 7671 is
+                <strong className="text-elec-yellow">18th Edition updates:</strong> When BS 7671 is
                 amended (Amendment 4 was issued in July 2024, with Amendment 4 expected in 2026),
                 you may need to attend an update course. These typically cost £150 to £300 for a
                 one-day course.
               </p>
               <p>
-                <strong className="text-yellow-400">Specialist qualifications:</strong> EV charger
+                <strong className="text-elec-yellow">Specialist qualifications:</strong> EV charger
                 installation (City & Guilds 2919), solar PV, battery storage, fire alarm systems,
                 and emergency lighting courses typically cost £300 to £800 each. These
                 qualifications open up new revenue streams, so they are investments as much as costs
                 — but they still need budgeting for.
               </p>
               <p>
-                <strong className="text-yellow-400">CPD hours:</strong> Your certification body
+                <strong className="text-elec-yellow">CPD hours:</strong> Your certification body
                 requires evidence of ongoing CPD. Elec-Mate's{' '}
                 <SEOInternalLink href="/guides/cpd-for-electricians">CPD tracking</SEOInternalLink>{' '}
                 feature logs your training automatically. Budget £500 to £1,500 per year for
@@ -308,7 +308,7 @@ export default function BusinessCostCalculatorPage() {
                 buying physical things — but they consume both money and time.
               </p>
               <p>
-                <strong className="text-yellow-400">Marketing costs:</strong> Website hosting and
+                <strong className="text-elec-yellow">Marketing costs:</strong> Website hosting and
                 maintenance (£100 to £500 per year), Google Ads or local advertising (£50 to £300
                 per month), printed materials (business cards, van livery, branded workwear),
                 directory listings (Checkatrade, Bark, MyBuilder), and social media management time.
@@ -316,14 +316,14 @@ export default function BusinessCostCalculatorPage() {
                 marketing costs.
               </p>
               <p>
-                <strong className="text-yellow-400">Admin costs:</strong> Accountancy fees (£300 to
+                <strong className="text-elec-yellow">Admin costs:</strong> Accountancy fees (£300 to
                 £1,200 per year for a sole trader), software subscriptions (accounting, scheduling,
                 certification), phone contract (£20 to £50 per month), stationery and printing.
                 Elec-Mate replaces multiple software subscriptions with a single platform — your
                 quoting app, invoice app, expense tracker, and certificate system all in one place.
               </p>
               <p>
-                <strong className="text-yellow-400">Workwear and PPE:</strong> Steel-toe boots,
+                <strong className="text-elec-yellow">Workwear and PPE:</strong> Steel-toe boots,
                 hi-vis, work trousers, and polo shirts need replacing regularly. Specialist PPE for
                 specific jobs (arc flash protection, harnesses) is an additional cost. Budget £200
                 to £500 per year.
@@ -467,7 +467,7 @@ export default function BusinessCostCalculatorPage() {
         },
       ]}
       ctaHeading="Know Your True Business Costs"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to calculate overheads, price jobs accurately, and run profitable businesses. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to calculate overheads, price jobs accurately, and run profitable businesses. 7-day free trial, cancel anytime."
       extraSchemas={[
         {
           '@type': 'SoftwareApplication',

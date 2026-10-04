@@ -196,7 +196,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Escape route lighting</strong> — illuminates designated escape routes to
                 allow safe evacuation. Must achieve 1 lux minimum across the full width of the route
@@ -204,7 +204,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Open area (anti-panic) lighting</strong> — provided in large open areas to
                 prevent panic and enable occupants to reach an escape route. Minimum 0.5 lux across
@@ -213,7 +213,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>High-risk task area lighting</strong> — required in areas where hazardous
                 processes or equipment are in use and must be brought to a safe state before
@@ -243,7 +243,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency luminaires</strong> — general-purpose fittings that provide
                 illuminance along escape routes and in open areas. Modern fittings are typically
@@ -251,7 +251,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency exit signs</strong> — internally illuminated signs indicating
                 escape route directions. Must comply with BS EN 1838 and display the running person
@@ -260,14 +260,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Combination units</strong> — a single fitting that provides both escape
                 route illumination and an illuminated exit sign. Common above final exit doors.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>High-risk task area units</strong> — high-output fittings designed to reach
                 full illuminance within 0.5 seconds. Often directional to illuminate specific
@@ -293,7 +293,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Escape routes (corridors, stairways)</strong> — minimum 1 lux across the
                 full width. Maximum-to-minimum ratio must not exceed 40:1. Stairways must be lit so
@@ -301,7 +301,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Open areas (anti-panic)</strong> — minimum 0.5 lux across the core area
                 (total floor area less a 0.5 m border). Anti-panic lighting is required in open
@@ -309,7 +309,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>High-risk task areas</strong> — minimum 10% of normal maintained illuminance
                 or 15 lux, whichever is greater. Must be achieved within 0.5 seconds of normal
@@ -317,7 +317,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Activation time</strong> — for escape routes and open areas, 50% of the
                 required illuminance must be achieved within 5 seconds of normal supply failure, and
@@ -343,7 +343,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Self-contained (BS EN 60598-2-22)</strong> — the most common type in the UK.
                 Each luminaire contains its own rechargeable battery, charger, and control
@@ -353,7 +353,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Central battery (BS EN 50172)</strong> — a single battery bank (usually
                 located in a dedicated plant room or secure cupboard) supplies the emergency
@@ -365,7 +365,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Addressable (automatic test) systems</strong> — self-contained or central
                 battery systems with addressable luminaires that perform automatic function and
@@ -444,7 +444,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit arrangement</strong> — self-contained luminaires require a permanent
                 live feed (not switched) so the battery remains charged at all times. The supply
@@ -455,7 +455,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Luminaire positioning</strong> — fittings must be positioned to achieve the
                 required illuminance at floor level. Key locations include: above every final exit
@@ -465,7 +465,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Spacing calculations</strong> — the maximum spacing between luminaires
                 depends on the mounting height and the photometric data for the specific fitting.
@@ -475,7 +475,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Exit signs</strong> — internally illuminated exit signs must display the BS
                 EN ISO 7010 E001 running-person pictogram. Arrow direction must be correct for the
@@ -501,7 +501,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Monthly function test</strong> — simulate a mains failure for a short period
                 (typically 1 minute using a test key or inhibit switch) to confirm each luminaire
@@ -510,7 +510,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Annual full-duration test</strong> — discharge the batteries to their full
                 rated duration (1 hour, 2 hours, or 3 hours depending on the fitting rating). All
@@ -520,7 +520,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Six-monthly intermediate test</strong> — where the full-duration test cannot
                 be carried out annually (due to operational constraints), BS 5266-1 permits an
@@ -529,7 +529,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commissioning certificate</strong> — on completion of a new or modified
                 installation, the installer must issue a BS 5266-1 Completion Certificate. This is a
@@ -562,7 +562,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Issue Certificates on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -594,7 +594,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage emergency lighting certificates with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate to issue electrical certificates on site. BS 5266-1 emergency lighting certificates, EICR reports…"
+          description="Join 2,100+ UK electricians using Elec-Mate to issue electrical certificates on site. BS 5266-1 emergency lighting certificates, EICR reports…"
           icon={FileCheck2}
         />
       </>
@@ -620,7 +620,7 @@ export default function EmergencyLightingInstallationPage() {
       heroTitle={
         <>
           Emergency Lighting Installation UK:{' '}
-          <span className="text-yellow-400">BS 5266 Complete Guide</span>
+          <span className="text-elec-yellow">BS 5266 Complete Guide</span>
         </>
       }
       heroSubtitle="Everything electricians and responsible persons need to know about emergency lighting installation in the UK — BS 5266 Part 1 requirements, lux levels, system types, maintained vs non-maintained, installation rules, and certification."
@@ -631,7 +631,7 @@ export default function EmergencyLightingInstallationPage() {
       faqHeading="Frequently Asked Questions About Emergency Lighting Installation"
       relatedPages={relatedPages}
       ctaHeading="Issue Emergency Lighting Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site certification. BS 5266-1 emergency lighting certificates, EICR reports, and minor works notices with instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site certification. BS 5266-1 emergency lighting certificates, EICR reports, and minor works notices with instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

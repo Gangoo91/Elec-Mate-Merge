@@ -142,7 +142,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>The Germany comparison</strong> — Germany has one of the highest solar
                 installation rates in the world, yet Hamburg and Berlin receive similar annual
@@ -151,7 +151,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electricity price effect</strong> — at 24p/kWh (2025 average), every unit of
                 solar electricity you self-consume saves you money. The same unit generated in
@@ -160,7 +160,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Northeast seasonal variation</strong> — the Northeast experiences more
                 pronounced seasonal variation than southern England. Summer generation is excellent;
@@ -190,7 +190,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Annual irradiance</strong> — Newcastle upon Tyne receives approximately 950
                 to 1,000 kWh/m²/year of global horizontal irradiance (GHI). South-facing tilted
@@ -199,7 +199,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Monthly variation</strong> — June and July are peak generation months with
                 long days (up to 17 hours of daylight). December and January see much shorter days
@@ -208,7 +208,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Specific yield</strong> — in Newcastle, a well-installed 4kW south-facing
                 system achieves approximately 775 to 850 kWh/kWp per year. Compare with 900 to 1,000
@@ -216,7 +216,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Shading considerations</strong> — coastal haar (sea fog) around the Tyne
                 estuary can temporarily reduce generation in late spring and summer mornings.
@@ -241,7 +241,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3kW system (8–10 panels)</strong> — £4,500 to £6,800. Generates
                 approximately 2,350 to 2,600 kWh per year in Newcastle. Best for smaller properties
@@ -249,7 +249,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>4kW system (10–13 panels)</strong> — £5,500 to £8,500. The most popular
                 residential size. Generates approximately 3,100 to 3,400 kWh per year. Covers a
@@ -257,7 +257,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>6kW system (15–18 panels)</strong> — £8,000 to £12,000. Recommended for
                 larger households, EV owners, or those aiming for maximum self-sufficiency.
@@ -265,7 +265,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Battery storage add-on</strong> — £3,500 to £6,500 for a 9.5–10kWh battery
                 installed alongside the solar system. Given the Northeast's winter generation dip, a
@@ -401,7 +401,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Self-consumption uplift</strong> — without battery storage, a typical
                 Newcastle household self-consumes 25 to 35 per cent of solar generation (daytime use
@@ -410,7 +410,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Popular systems 2025</strong> — GivEnergy All-in-One (9.5kWh, £3,800 to
                 £5,200 installed), Solis hybrid with PYLONTECH stack (10kWh, £4,500 to £6,500
@@ -419,7 +419,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Octopus Intelligent/Go integration</strong> — hybrid battery systems can be
                 programmed to charge from the grid overnight at cheap-rate tariffs (Octopus Go from
@@ -444,7 +444,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Permitted development</strong> — under Schedule 2, Part 14, Class A of the
                 GPDO 2015, solar panels are permitted development on most residential roofs. Panels
@@ -453,7 +453,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Conservation areas in Newcastle</strong> — parts of Jesmond, Gosforth,
                 Tynemouth, and the Ouseburn Valley have conservation area designations. In these
@@ -462,7 +462,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Listed buildings</strong> — permitted development rights do not apply to
                 listed buildings. Any solar installation on a listed building requires planning
@@ -471,7 +471,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lawful Development Certificate</strong> — if you are unsure whether your
                 installation qualifies as permitted development, apply for an LDC from Newcastle
@@ -498,7 +498,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Zap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Electrical Installation Certificates On Site
@@ -536,7 +536,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your solar PV business in the Northeast with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site certification, professional quoting, and job management."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site certification, professional quoting, and job management."
           icon={Sun}
         />
       </>
@@ -562,7 +562,7 @@ export default function SolarPanelInstallationNewcastlePage() {
       heroTitle={
         <>
           Solar Panel Installation Newcastle:{' '}
-          <span className="text-yellow-400">2025 Northeast Guide</span>
+          <span className="text-elec-yellow">2025 Northeast Guide</span>
         </>
       }
       heroSubtitle="Is solar worth it in Newcastle? Yes — and here's the data to prove it. Northeast England irradiance levels, real 2025 cost examples, Smart Export Guarantee payments, council schemes, battery storage options, and planning permission guidance for Tyne and Wear homeowners."
@@ -573,7 +573,7 @@ export default function SolarPanelInstallationNewcastlePage() {
       faqHeading="Frequently Asked Questions About Solar Panel Installation in Newcastle"
       relatedPages={relatedPages}
       ctaHeading="Complete Solar Installation Certificates On Site"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, professional quoting, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion, professional quoting, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -188,7 +188,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2 flex items-center gap-2">
-              <Cable className="w-5 h-5 text-yellow-400 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow shrink-0" />
               1. AI Circuit Designer
             </h4>
             <p className="text-white text-sm leading-relaxed">
@@ -370,7 +370,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit design — up to 2 hours saved per complex job.</strong> A full
                 circuit schedule with cable sizing, voltage drop, Zs verification, and protection
@@ -379,7 +379,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RAMS generation — 30 to 60 minutes saved per document.</strong> Writing a
                 site-specific RAMS from scratch takes most electricians 30 to 90 minutes. The AI
@@ -388,7 +388,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cost estimation — 20 to 40 minutes saved per quote.</strong> Listing every
                 material, looking up current prices, and estimating labour hours is tedious work.
@@ -397,7 +397,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fault diagnosis — 50 to 60% faster resolution for tricky faults.</strong>{' '}
                 The time saving here is variable because fault complexity varies enormously. But for
@@ -406,7 +406,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation lookups — 5 to 15 minutes saved per query.</strong> Finding the
                 right regulation in the brown book, cross-referencing with the On-Site Guide, and
@@ -483,7 +483,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Start with what you know.</strong> Use the AI on a job you have already
                 completed. Run the Circuit Designer on a recent installation and compare its output
@@ -492,7 +492,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Always verify.</strong> Treat AI output the same way you would treat advice
                 from a colleague — useful, probably correct, but worth checking. The AI provides
@@ -501,7 +501,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use it daily.</strong> The more you use the AI agents, the faster you become
                 at getting useful results. You learn how to describe faults clearly, how to specify
@@ -533,21 +533,21 @@ const sections = [
           bring significant advances.
         </p>
         <p>
-          <strong className="text-yellow-400">Visual inspection AI</strong> is already in
+          <strong className="text-elec-yellow">Visual inspection AI</strong> is already in
           development. Camera-based tools that can identify cable types, read distribution board
           configurations from photographs, and spot visual defects like scorch marks, discoloured
           terminals, and incorrect wiring colours. This will accelerate the initial survey and
           inspection process.
         </p>
         <p>
-          <strong className="text-yellow-400">Predictive maintenance</strong> will use data from
+          <strong className="text-elec-yellow">Predictive maintenance</strong> will use data from
           smart buildings and IoT sensors to identify installations likely to develop faults before
           they occur. Patterns in energy consumption, circuit loading, and power quality data can
           indicate degrading insulation, loose connections, or overloaded circuits — allowing
           proactive intervention rather than reactive fault-finding.
         </p>
         <p>
-          <strong className="text-yellow-400">Automated compliance checking</strong> will allow AI
+          <strong className="text-elec-yellow">Automated compliance checking</strong> will allow AI
           to verify entire installations against BS 7671 requirements by analysing design drawings,
           test results, and installation photographs. This could streamline the certification and
           inspection process while maintaining or improving standards.
@@ -581,7 +581,7 @@ export default function HowAIHelpsElectriciansPage() {
       heroTitle={
         <>
           How AI Helps Electricians:{' '}
-          <span className="text-yellow-400">Real World Uses in 2026</span>
+          <span className="text-elec-yellow">Real World Uses in 2026</span>
         </>
       }
       heroSubtitle="AI is not replacing electricians — it is making them faster, more accurate, and more profitable. Elec-Mate includes 8 specialist AI agents trained on BS 7671:2018+A4:2026, each designed to eliminate the time-consuming parts of the job: calculations, documentation, regulation lookups, fault diagnosis, and cost estimation."
@@ -592,7 +592,7 @@ export default function HowAIHelpsElectriciansPage() {
       faqHeading="Frequently Asked Questions About AI for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Work Smarter with AI Built for Electricians"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's 8 AI agents. Circuit design, fault diagnosis, cost estimation, and compliance — all trained on BS 7671. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate's 8 AI agents. Circuit design, fault diagnosis, cost estimation, and compliance — all trained on BS 7671. 7-day free trial, cancel anytime."
     />
   );
 }

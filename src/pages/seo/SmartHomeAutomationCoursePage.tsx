@@ -311,7 +311,7 @@ const sections = [
           luminaires and a controller capable of scheduling colour temperature shifts from warm
           (2700K) in the evening to cool (5000K) during the day.
         </p>
-        <div className="border-l-4 border-yellow-400 bg-yellow-400/10 rounded-r-lg px-4 py-3 mt-2">
+        <div className="border-l-4 border-yellow-400 bg-white/[0.06] rounded-r-lg px-4 py-3 mt-2">
           <p className="font-semibold text-foreground mb-1">
             Compliance Note — Reg 411.3.4 (BS 7671:2018+A4:2026)
           </p>
@@ -503,7 +503,7 @@ export default function SmartHomeAutomationCoursePage() {
       badgeIcon={Home}
       heroTitle={
         <>
-          Smart Home Automation Course: <span className="text-yellow-400">KNX & IoT Training</span>
+          Smart Home Automation Course: <span className="text-elec-yellow">KNX & IoT Training</span>
         </>
       }
       heroSubtitle="Master smart home automation with comprehensive KNX protocol, IoT device integration, lighting control, HVAC systems, and security installation training. 9 modules with video content, interactive quizzes, and AI-powered study tools."
@@ -521,7 +521,7 @@ export default function SmartHomeAutomationCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Ready to specialise in smart home automation?"
-      ctaSubheading="Join 1,600+ UK electricians studying smarter with Elec-Mate. 9 structured modules, interactive quizzes, video content, and an AI tutor for any KNX or IoT question. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians studying smarter with Elec-Mate. 9 structured modules, interactive quizzes, video content, and an AI tutor for any KNX or IoT question. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/smart-home-automation"
     />

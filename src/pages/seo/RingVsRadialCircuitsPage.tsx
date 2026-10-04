@@ -294,7 +294,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ol className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <span className="shrink-0 font-bold text-yellow-400">1.</span>
+              <span className="shrink-0 font-bold text-elec-yellow">1.</span>
               <span>
                 <strong>Measure end-to-end resistance of each conductor.</strong> With the ring
                 disconnected at the consumer unit, measure the resistance of the line conductor (L1
@@ -302,7 +302,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="shrink-0 font-bold text-yellow-400">2.</span>
+              <span className="shrink-0 font-bold text-elec-yellow">2.</span>
               <span>
                 <strong>Cross-connect at the consumer unit.</strong> Connect the line conductor of
                 one end of the ring to the CPC of the other end. This creates a figure-of-eight
@@ -310,7 +310,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="shrink-0 font-bold text-yellow-400">3.</span>
+              <span className="shrink-0 font-bold text-elec-yellow">3.</span>
               <span>
                 <strong>Measure at each outlet.</strong> At every socket outlet on the ring, measure
                 the resistance between the line terminal and the earth terminal. The reading should
@@ -318,7 +318,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="shrink-0 font-bold text-yellow-400">4.</span>
+              <span className="shrink-0 font-bold text-elec-yellow">4.</span>
               <span>
                 <strong>Interpret the results.</strong> All readings should be substantially the
                 same (GN3 Reg 2.18). There is no fixed tolerance — GN3 Table 2.9 shows that for
@@ -467,7 +467,7 @@ export default function RingVsRadialCircuitsPage() {
       heroTitle={
         <>
           Ring Final Circuit vs Radial Circuit:{' '}
-          <span className="text-yellow-400">BS 7671 Guide for UK Electricians</span>
+          <span className="text-elec-yellow">BS 7671 Guide for UK Electricians</span>
         </>
       }
       heroSubtitle="The ring final circuit is unique to the UK. This guide explains how rings and radial circuits work, the BS 7671 Section 433 requirements, how to carry out ring continuity testing using the r1+r2/4 method, and when to choose each circuit type."

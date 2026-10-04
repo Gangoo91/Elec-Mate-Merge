@@ -195,7 +195,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Star and delta configurations</strong> — three-phase motors can be connected
                 in star (Y) or delta (triangle) configuration. Star connection gives 230V per phase
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Phase balancing</strong> — in industrial distribution, loads must be
                 balanced across all three phases to minimise neutral current, reduce losses, and
@@ -216,7 +216,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Power factor correction</strong> — industrial motors and transformers draw
                 reactive power (kVAr) in addition to real power (kW). A low power factor increases
@@ -226,7 +226,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Harmonic filtering</strong> — variable speed drives and other power
                 electronic equipment generate harmonic currents that can cause overheating of
@@ -272,7 +272,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Direct-on-line (DOL) starters</strong> — the simplest starting method. A
                 contactor connects the motor directly to the supply. Used for smaller motors
@@ -281,7 +281,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Star-delta starters</strong> — the motor starts in star configuration
                 (reduced voltage) and switches to delta (full voltage) after a timed period. Reduces
@@ -291,7 +291,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Soft starters</strong> — electronic devices that gradually increase the
                 voltage applied to the motor during starting, providing smooth acceleration without
@@ -300,7 +300,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Variable speed drives (VSDs)</strong> — also called variable frequency
                 drives (VFDs) or inverters. These convert the fixed-frequency 50Hz supply to a
@@ -325,10 +325,10 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
-            <Settings className="w-4 h-4 text-yellow-400 shrink-0" />
+            <Settings className="w-4 h-4 text-elec-yellow shrink-0" />
             Motor Circuit Protection: Back-up OCPDs and Fuse Selection
           </h4>
-          <p className="text-white/80 text-sm leading-relaxed">
+          <p className="text-white text-sm leading-relaxed">
             BS 7671 Reg 536.4.2.2 requires that contactors and overload relays — which do not
             themselves provide short-circuit protection — are protected by an upstream overcurrent
             protective device (OCPD) or short-circuit protective device (SCPD). In motor circuits
@@ -366,7 +366,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cpu className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cpu className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Read ladder logic</strong> — the most common PLC programming language for
                 industrial applications. Ladder logic uses contacts, coils, timers, counters, and
@@ -376,7 +376,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cpu className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cpu className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Monitor inputs and outputs</strong> — connect to the PLC with a laptop or
                 programming terminal and monitor the state of digital and analogue inputs and
@@ -387,7 +387,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cpu className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cpu className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commission VSDs via PLC</strong> — modern variable speed drives are often
                 controlled via fieldbus communication (Profinet, EtherNet/IP, Modbus TCP) from the
@@ -397,7 +397,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cpu className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cpu className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Modify simple logic</strong> — make minor programme changes such as
                 adjusting timer values, adding interlocks, or modifying alarm conditions. These
@@ -435,7 +435,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reactive maintenance (breakdown)</strong> — fixing equipment after it fails.
                 The most expensive strategy because unplanned downtime disrupts production
@@ -444,7 +444,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Planned preventive maintenance (PPM)</strong> — scheduled inspections and
                 servicing at fixed intervals. Examples include checking motor currents quarterly,
@@ -460,7 +460,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Condition-based maintenance (CBM)</strong> — monitoring the actual condition
                 of equipment and performing maintenance only when indicators show deterioration.
@@ -471,7 +471,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Predictive maintenance</strong> — using data analytics and machine learning
                 to predict when equipment will fail based on historical patterns and real-time
@@ -504,7 +504,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Level 3 NVQ/Diploma in Electrical Installation</strong> — the foundation
                 qualification. Most industrial electricians complete this through an apprenticeship
@@ -513,7 +513,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>18th Edition (C&G 2382-22)</strong> — knowledge of{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
@@ -525,7 +525,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inspection and Testing (C&G 2391)</strong> — essential for carrying out
                 periodic inspection of industrial installations. Industrial EICRs are complex and
@@ -534,7 +534,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PLC programming courses</strong> — manufacturer-specific training (Siemens
                 TIA Portal, Allen-Bradley Studio 5000) or generic IEC 61131-3 programming courses.
@@ -543,7 +543,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CompEx (if working in hazardous areas)</strong> — Ex01 to Ex04 for
                 gas/vapour atmospheres, Ex11 to Ex14 for dust atmospheres. Mandatory for any
@@ -551,7 +551,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>High-voltage authorisation</strong> — formal training and appointment as an
                 Authorised Person (HV) under the Electricity at Work Regulations 1989 for work on
@@ -583,7 +583,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lockout/tagout (LOTO)</strong> — the most critical{' '}
                 <SEOInternalLink href="/guides/safe-isolation-procedure">
@@ -598,7 +598,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Permit-to-work systems</strong> — formal written authorisation for high-risk
                 activities including working on or near high-voltage equipment, hot work (welding,
@@ -608,7 +608,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Noise, heat, and environmental hazards</strong> — factories are noisy, often
                 hot, and may have chemical, dust, or fume hazards. PPE requirements are more
@@ -619,7 +619,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Arc flash hazard</strong> — industrial switchgear operates at fault levels
                 that can produce devastating arc flash incidents. Arc flash risk assessments, arc
@@ -657,7 +657,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Newly qualified (0 to 2 years)</strong> — £28,000 to £35,000 base salary.
                 Post-apprenticeship, working under supervision of experienced industrial
@@ -665,7 +665,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Experienced (3 to 7 years)</strong> — £35,000 to £48,000 base salary.
                 Working independently on maintenance and installation. Carrying out EICRs,
@@ -673,7 +673,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Senior / Controls Engineer (7+ years)</strong> — £45,000 to £65,000 base
                 salary. PLC programming, SCADA configuration, project management, system design.
@@ -681,7 +681,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Specialist (HV, CompEx, Robotics)</strong> — £55,000 to £75,000+.
                 High-voltage authorised persons, CompEx-qualified specialists, and
@@ -722,7 +722,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Three-Phase Calculators</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -739,7 +739,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Industrial EICR Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -753,7 +753,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Brain className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI Circuit Designer</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -767,7 +767,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <HardHat className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <HardHat className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">RAMS Generator</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -781,7 +781,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <GraduationCap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Training Courses</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -816,7 +816,7 @@ export default function IndustrialElectricianGuidePage() {
       heroTitle={
         <>
           Industrial Electrician Guide:{' '}
-          <span className="text-yellow-400">Skills, Career, and Earnings UK</span>
+          <span className="text-elec-yellow">Skills, Career, and Earnings UK</span>
         </>
       }
       heroSubtitle="Three-phase distribution, motor control, PLC programming, variable speed drives, and planned maintenance. What industrial electricians do, the qualifications you need, how much you can earn, and how Elec-Mate supports industrial electrical work."

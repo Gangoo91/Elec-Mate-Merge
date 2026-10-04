@@ -3,8 +3,8 @@
  * Synthesis / supplementary Sub.
  *
  * T&E vs SWA vs MICC vs FP vs LSF/LSZH. Decision matrix by environment, fire
- * risk, mechanical risk, route type. A4:2026 escape-route cable selection
- * (Reg 422.2 + 422.3). Worked example: lighting circuit serving the escape
+ *  risk, mechanical risk, route type. Safety-service and escape-route cable
+ * selection (Reg 560.8.1, Reg 422.2). Worked example: lighting circuit serving the escape
  * stairwell of a 6-storey HMO.
  */
 
@@ -30,13 +30,13 @@ import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Wiring system selection deep dive (3.8) | Level 2 Module 4.3.8 | Elec-Mate';
 const DESCRIPTION =
-  'T&E vs SWA vs MICC vs FP vs LSF/LSZH. Selection by environment, fire risk, mechanical risk, route type. A4:2026 escape-route cable selection. Worked example on a 6-storey HMO escape stairwell.';
+  'T&E vs SWA vs MICC vs FP vs LSF/LSZH. Selection by environment, fire risk, mechanical risk, route type. Safety-service and escape-route cable selection. Worked example on a 6-storey HMO escape stairwell.';
 
 const checks = [
   {
     id: 'escape-route-cable',
     question:
-      'A new lighting circuit feeds an emergency luminaire on the escape stairwell of a 4-storey block of flats. The cable type required by BS 7671 A4:2026 is:',
+      'A new lighting circuit feeds an emergency luminaire on the escape stairwell of a 4-storey block of flats. The cable type required by BS 7671 is:',
     options: [
       'Standard PVC twin-and-earth, since the luminaire has its own internal battery backup.',
       'LSZH-sheathed twin-and-earth, since the low-smoke sheath is sufficient for an escape route.',
@@ -45,7 +45,7 @@ const checks = [
     ],
     correctIndex: 2,
     explanation:
-      'BS 7671 Reg 422.3 (introduced/strengthened in A4:2026) requires fire-resistant cables on circuits feeding emergency lighting and fire-detection equipment serving escape routes. The cable must continue to function for the rated period (PH30 = 30 minutes minimum, PH60 / PH90 / PH120 for longer-duration requirements). FP200 and FP400 are the modern choice; MICC ("Pyro") is the heritage choice. Standard PVC cables fail within minutes in a fire and would not maintain the emergency-lighting circuit during evacuation.',
+      'Emergency lighting is a safety service that must work in a fire, so BS 7671 Reg 560.8.1 applies: mineral insulated cable, or fire-resistant cable to IEC 60331, BS EN 50200, BS 8434 or BS 8491, installed so circuit integrity is not impaired during a fire. BS 5266 sets the details for emergency lighting. FP200 and FP400 are the modern choice; MICC ("Pyro") is the heritage choice. Standard PVC cables fail within minutes in a fire and would not maintain the emergency-lighting circuit during evacuation.',
   },
   {
     id: 'underground-cable',
@@ -147,16 +147,17 @@ const quizQuestions = [
   },
   {
     id: 6,
-    question: 'BS 7671 A4:2026 Reg 422.3 introduced new requirements for cables on:',
+    question:
+      'Which BS 7671 regulation sets the fire-resistant wiring requirement for emergency lighting and other safety services that must work in a fire?',
     options: [
-      'All buried sub-mains, requiring deeper trenches and additional cable protection tiles.',
-      'All domestic ring final circuits, requiring fire-resistant cable throughout the whole dwelling.',
-      'Circuits supplying emergency lighting and safety services on escape routes — fire-resistant cable plus non-combustible supports.',
-      'All outdoor circuits, requiring a UV-resistant sheath on every externally-run cable.',
+      'Reg 422.3 — locations with risks of fire due to the nature of processed or stored materials',
+      'Reg 522.6.202 — cables concealed in a wall or partition',
+      'Reg 560.8.1 — wiring systems for safety services required to operate in fire conditions',
+      'Reg 433.1.1 — coordination between the conductor and its overload protective device',
     ],
     correctAnswer: 2,
     explanation:
-      'A4:2026 introduced separate requirements for escape routes (deleting the old BD2/BD3/BD4 condition references). Reg 422.3 covers cable selection in escape routes — fire-resistant cable, non-combustible supports, both for the duration required by the building’s fire safety strategy (typically 30, 60, 90 or 120 minutes for a building with phased evacuation). This is a significant tightening from previous editions and changes the cable take-off on every commercial / HMO / public-building project.',
+      'Reg 560.8.1 lists the wiring systems allowed for safety services that must operate in fire conditions: mineral insulated cable, fire-resistant cable to IEC 60331, BS EN 50200, BS 8434 or BS 8491, or a wiring system maintaining the necessary fire and mechanical protection. Reg 422.3 covers locations where processed or stored materials create a fire risk (BE2), not safety-service wiring.',
   },
   {
     id: 7,
@@ -235,15 +236,15 @@ export default function Sub8() {
       <HubBody>
         <p className="max-w-3xl text-[13px] leading-relaxed text-white">
           T&E vs SWA vs MICC vs FP vs LSZH. The cable family decision matrix — by environment, fire
-          risk, mechanical risk, route type. A4:2026 escape-route cable selection (Reg 422.2 +
-          422.3). The supplementary Sub that covers what a cable schedule abbreviates.
+          risk, mechanical risk, route type. Safety-service and escape-route cable selection (Reg
+          560.8.1, Reg 422.2). The supplementary Sub that covers what a cable schedule abbreviates.
         </p>
 
         <TLDR
           points={[
             'Cable selection is a four-factor decision — environment (indoor / outdoor / buried / hot), mechanical protection needed, fire-safety classification needed, sheath toxicity for the building type.',
             'T&E = domestic concealed; SWA = mechanical protection + sub-main + buried; MICC = highest fire performance (heritage); FP200/FP400 = modern fire-resistant; LSZH = public buildings where smoke matters.',
-            'A4:2026 Reg 422.2 + 422.3 introduced new requirements for cables on escape routes — fire-resistant cable + non-combustible supports for the rated duration.',
+            'Safety services that must work in a fire (emergency lighting, fire alarm) need fire-resistant wiring under Reg 560.8.1. Other cables in a protected escape route must meet Reg 422.2.1 — low smoke, low halogen, flame-retardant or fire-resistant.',
           ]}
         />
 
@@ -251,7 +252,7 @@ export default function Sub8() {
           outcomes={[
             'Supplementary content — extends LO3 but is not directly mapped to a 204 AC. Designed to deepen apprentice understanding of cable family selection by environment, fire risk, mechanical risk and sheath-toxicity requirements.',
             'Identify the strengths and limitations of PVC T&E, PVC singles, SWA, MICC, FP200/FP400, XLPE, LSZH variants and other modern fire-resistant cable families.',
-            'Apply the BS 7671 A4:2026 fire-resistant cable requirements (Reg 422.2 + 422.3) on escape routes and other safety-critical circuits.',
+            'Apply the BS 7671 requirements for safety-service wiring (Reg 560.8.1) and for cables in protected escape routes (Reg 422.2).',
             'Apply BS 5839-1 / BS 5839-6 cable requirements for fire detection and alarm systems in commercial and domestic premises.',
             'Specify the right cable for direct-burial, outdoor, hot-environment, public-building and high-mechanical-risk installations.',
             'Read a cable schedule and identify when a substitution would be acceptable, when it would not, and when an RFI is required.',
@@ -327,8 +328,8 @@ export default function Sub8() {
               <strong>Factor 3 — Fire-safety classification</strong>: General final circuit →
               standard PVC. Smoke alarm chain (domestic) → standard PVC IF supports are
               non-combustible (Reg 521.10.202). Emergency lighting on escape route → fire-resistant
-              (FP200/FP400 or MICC) per Reg 422.3. Fire alarm circuit (commercial) → fire-resistant
-              per BS 5839-1.
+              (FP200/FP400 or MICC) per Reg 560.8.1. Fire alarm circuit (commercial) →
+              fire-resistant per BS 5839-1.
             </li>
             <li>
               <strong>Factor 4 — Sheath toxicity</strong>: Domestic / small commercial → standard
@@ -522,21 +523,20 @@ export default function Sub8() {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 7671:2018+A4:2026 — Regulation 422.2 + 422.3 (Conditions likely to cause fire — escape routes)"
-          clause="(Paraphrased from the regulation as introduced in A4:2026.) Where wiring systems pass through escape routes (or supply equipment in escape routes), the cable shall be selected and installed to maintain circuit integrity for the duration required by the building’s fire safety strategy. Cables shall be of fire-resistant construction (BS EN 50200 PH30 / PH60 / PH90 / PH120 as required) and supported by non-combustible means (Reg 521.10.202)."
+          source="BS 7671:2018+A4:2026 — Regulation 560.8.1 (Wiring systems for safety services)"
+          clause="One or more of the following wiring systems shall be utilized for safety services required to operate in fire conditions: (a) mineral insulated cable systems complying with BS EN 60702-1 and BS EN 60702-2 and BS EN 60332-1-2; (b) fire-resistant cables complying with IEC 60331-1, IEC 60331-2 or IEC 60331-3 and with BS EN 60332-1-2; (c) fire-resistant cables complying with test requirements of BS EN 50200, BS 8434 or BS 8491, appropriate for the cable size and with BS EN 60332-1-2; (d) a wiring system maintaining the necessary fire and mechanical protection."
           meaning={
             <>
-              A4:2026 introduced separate requirements for escape routes (Reg 422.2 + 422.3),
-              deleting the older condition-code references (BD2/BD3/BD4) and replacing them with
-              explicit cable-selection rules. Cables on escape routes must be fire-resistant
-              (FP200/FP400/MICC) AND supported non-combustibly. The rated duration depends on the
-              building — 30 min for simple two-storey, 60-90 min for taller / more complex, 120 min
-              for the highest-risk evacuation scenarios. This is a significant tightening — many
-              older HMOs and commercial buildings now have non-compliant escape route cabling that
-              needs upgrading.
+              Circuits that must keep working in a fire — emergency lighting, fire alarm — need one
+              of these fire-resistant wiring systems, installed so circuit integrity is not impaired
+              in a fire. The code of practice for the system (BS 5266 for emergency lighting, BS
+              5839-1 for fire alarms) sets the details. Ordinary circuits passing through a
+              protected escape route are covered separately by Reg 422.2.1: fire-resistant, or
+              flame-retardant to BS EN 60332, with limited smoke and halogen. All cables also need
+              supports that stop them collapsing early in a fire (Reg 521.10.202).
             </>
           }
-          cite="Source: BS 7671:2018+A4:2026 Part 4, Chapter 42, Regulations 422.2 and 422.3 (paraphrased — introduced/strengthened A4:2026)."
+          cite="Source: BS 7671:2018+A4:2026, Regulations 560.8.1, 422.2.1 and 521.10.202."
         />
 
         <InlineCheck {...checks[0]} />
@@ -591,16 +591,16 @@ export default function Sub8() {
             <>
               <strong>Cable 1 — Normal stairwell lighting.</strong> Standard PVC T&E 1.5 mm² is
               acceptable for the lighting circuit itself BUT (1) supports must be non-combustible
-              throughout per Reg 521.10.202 (A4:2026), and (2) consider LSZH variant for the sheath
-              because this is an HMO with multi-occupancy evacuation. Run on metal P-clips at OSG
-              Table 4.5 intervals.
+              throughout per Reg 521.10.202, and (2) consider LSZH variant for the sheath because
+              this is an HMO with multi-occupancy evacuation. Run on metal P-clips at OSG Table 4.5
+              intervals.
               <br />
               <br />
-              <strong>Cable 2 — Emergency lighting.</strong> Reg 422.3 (A4:2026) applies —
-              fire-resistant cable required for the emergency lighting on this escape route.
-              Building strategy 90 min evacuation = PH90 minimum rating. Specify FP200 Gold 1.5 mm²
-              2-core with LSZH sheath, supported on metal P-clips. Each emergency luminaire has its
-              own self-contained battery for 3-hour duration; the cable feeds the constant-charge
+              <strong>Cable 2 — Emergency lighting.</strong> Reg 560.8.1 applies — emergency
+              lighting is a safety service, so it needs fire-resistant cable. Building strategy 90
+              min evacuation = PH90 minimum rating. Specify FP200 Gold 1.5 mm² 2-core with LSZH
+              sheath, supported on metal P-clips. Each emergency luminaire has its own
+              self-contained battery for 3-hour duration; the cable feeds the constant-charge
               supply.
               <br />
               <br />
@@ -693,7 +693,7 @@ export default function Sub8() {
             'PVC T&E for domestic concealed; PVC singles in conduit for industrial protected runs; SWA for sub-mains, buried, outdoor, mechanical risk.',
             'MICC for highest fire performance (heritage); FP200 / FP400 for modern fire-alarm and emergency lighting (BS 5839-1, BS 5266).',
             'LSZH sheath for public buildings (schools, hospitals, transport, large commercial) — premium cost justified by smoke-toxicity reduction during evacuation.',
-            'A4:2026 Reg 422.2 + 422.3 introduced new escape-route cable requirements — fire-resistant cable AND non-combustible supports for the duration required by the fire-safety strategy.',
+            'Reg 560.8.1 — safety services that must work in a fire need fire-resistant wiring. Reg 422.2.1 — other cables in a protected escape route must be low smoke and low halogen. Reg 521.10.202 — supports must stop cables collapsing early in a fire.',
             'NEVER substitute standard PVC for fire-resistant cable. The names look similar (1.5 mm² 2-core); the fire performance is fundamentally different.',
             'Cable selection is driven by Section 521 of BS 7671, the relevant product standards, and the building’s fire-safety strategy. Always cross-check the design before ordering.',
           ]}

@@ -242,7 +242,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Switch-drop method (most common in UK domestic):</strong> A two-core and
                 earth cable runs from the ceiling rose or junction box to the switch. At the switch,
@@ -251,7 +251,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Loop-in method (older UK wiring):</strong> The live, neutral, and switched
                 live all run through the ceiling rose. The switch is wired with only the switched
@@ -259,7 +259,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Neutral available (less common):</strong> Some properties have a three-core
                 and earth cable to the switch, providing live, neutral, switched live, and CPC. This
@@ -290,7 +290,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth connection:</strong> Smart switches must be earthed via the CPC in the
                 switch-drop cable (Regulation 411.4.3). Verify the CPC is correctly connected and
@@ -298,7 +298,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Load rating:</strong> Do not exceed the manufacturer's rated load for the
                 smart switch — particularly for LED loads, where the rated wattage for LED lamps is
@@ -306,7 +306,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Certification:</strong> If new wiring is added to provide a neutral, this
                 constitutes new electrical work. An EIC or Minor Works Certificate must be issued
@@ -393,7 +393,7 @@ export default function SmartSwitchVsSmartBulbPage() {
       heroTitle={
         <>
           Smart Switch vs Smart Bulb:{' '}
-          <span className="text-yellow-400">Neutral Wire Requirements and When to Use Each</span>
+          <span className="text-elec-yellow">Neutral Wire Requirements and When to Use Each</span>
         </>
       }
       heroSubtitle="Smart switches need a neutral wire at the switch position — most UK switch-drop wiring does not have one. Smart bulbs need the wall switch left permanently on. This guide explains the technical constraints, wiring requirements, and how to choose the right smart lighting solution for every property."

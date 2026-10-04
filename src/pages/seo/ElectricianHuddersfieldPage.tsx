@@ -445,7 +445,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">On-Site Certification</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -495,7 +495,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Huddersfield electricians"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -523,7 +523,7 @@ export default function ElectricianHuddersfieldPage() {
       heroTitle={
         <>
           Electrician in Huddersfield:{' '}
-          <span className="text-yellow-400">Local Electricians & Kirklees 2026</span>
+          <span className="text-elec-yellow">Local Electricians & Kirklees 2026</span>
         </>
       }
       heroSubtitle="Huddersfield's extensive Victorian stone terrace housing stock, large student and HMO rental market, and growing EV charger demand create consistent work for qualified electricians across Kirklees. Find NICEIC and NAPIT registered electricians in Huddersfield and the surrounding area."
@@ -534,7 +534,7 @@ export default function ElectricianHuddersfieldPage() {
       faqHeading="Frequently Asked Questions About Electricians in Huddersfield"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Huddersfield Electricians"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the residential and rental electrical market in Huddersfield and the wider Kirklees area. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the residential and rental electrical market in Huddersfield and the wider Kirklees area. 7-day free trial."
     />
   );
 }

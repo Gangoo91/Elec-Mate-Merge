@@ -189,21 +189,21 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Typical Pre-Purchase Survey Costs</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1-2 bedroom flat:</strong> £150 to £220. Typically 4 to 6 circuits, single
                 consumer unit, inspection takes 1.5 to 2.5 hours.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3-bedroom house:</strong> £180 to £300. Usually 8 to 12 circuits, may have
                 older wiring alongside newer additions. Inspection takes 2 to 4 hours.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>4-5 bedroom house:</strong> £250 to £400. More circuits, possibly 2 consumer
                 units, outbuildings with separate supplies. Inspection takes 3 to 5 hours.
@@ -346,7 +346,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Visual inspection</strong> — checking the condition of the consumer unit,
                 cable types, earthing and bonding, socket outlets, switches, light fittings,
@@ -354,7 +354,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Continuity testing</strong> — testing the continuity of protective
                 conductors (R1+R2) and main/supplementary bonding conductors to confirm the earthing
@@ -362,7 +362,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>
                   <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">
@@ -374,14 +374,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Polarity checks</strong> — confirming that live and neutral conductors are
                 correctly connected at every point in the installation.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth fault loop impedance (Zs)</strong> — measuring the impedance of the
                 earth fault loop at each circuit to confirm the protective device will disconnect in
@@ -389,7 +389,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Prospective fault current (PSCC/PEFC)</strong> — measuring the maximum fault
                 current at the origin to confirm the protective devices have adequate breaking
@@ -397,7 +397,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD testing</strong> — testing each RCD at ½I&Delta;n (no-trip verify) and
                 I&Delta;n (full rated current trip-time), with the longest tripping time recorded in
@@ -421,7 +421,7 @@ const sections = [
             <ClipboardCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
             <div>
               <p className="font-bold text-white mb-1">What you should receive</p>
-              <p className="text-white/90 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Under GN3 (Reg 1.3), the inspector must give you the full EICR package — not just
                 the top-level report. A complete set comprises: the{' '}
                 <strong>Electrical Installation Condition Report</strong>, the{' '}
@@ -445,12 +445,12 @@ const sections = [
       <>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 mb-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <p className="font-bold text-white mb-1">
                 BS 7671:2018+A4:2026 update — wider survey scope
               </p>
-              <p className="text-white/90 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 From 2026, surveys must assess compliance with two A4:2026 requirements that were
                 not in the 18th edition: <strong>Reg 421.1.7</strong> recommends arc fault detection
                 devices (AFDDs) in AC final circuits to mitigate fire risk, and{' '}
@@ -467,7 +467,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Number of circuits:</strong> More circuits means more testing. A 6-circuit
                 flat is quicker than a 15-circuit house. Each circuit requires individual dead and
@@ -475,7 +475,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Number of distribution boards:</strong> Properties with multiple consumer
                 units (common in extensions, loft conversions, or outbuildings) take longer to
@@ -483,7 +483,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Age and condition of wiring:</strong> Older installations with deteriorating
                 insulation, mixed cable types, or poorly labelled circuits require more time to
@@ -491,21 +491,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Access difficulties:</strong> Consumer units behind furniture, loft wiring
                 with no boarding, or circuits in ceiling voids without access hatches add time.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Location:</strong> London and the South East command higher rates than the
                 North of England, Scotland, or Wales. Expect 20-40% higher prices in central London.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Out-of-hours work:</strong> Commercial surveys requiring evening or weekend
                 shutdowns typically attract a premium of 25-50% on the standard rate.
@@ -528,7 +528,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Clear access to the consumer unit.</strong> Move furniture, clear cupboards,
                 and ensure the electrician can reach the fuse box without delay. Time saved is money
@@ -536,7 +536,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Provide previous reports.</strong> If you have a previous EICR or any
                 electrical certificates, provide them. This gives the inspector context and can
@@ -544,7 +544,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bundle with remedial work.</strong> If you know remedials will be needed,
                 ask the electrician to quote for the survey and remedials together. Many will offer
@@ -552,7 +552,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Landlords: schedule surveys at tenant changeover.</strong> Inspecting an
                 empty property is faster than working around furniture and tenants.
@@ -578,7 +578,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Receipt className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Receipt className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Defect-to-Quote Pipeline</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -619,7 +619,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Start completing surveys faster"
-          description="Join 1,600+ UK electricians using Elec-Mate to complete EICR certificates on site, generate remedial quotes from defects…"
+          description="Join 2,100+ UK electricians using Elec-Mate to complete EICR certificates on site, generate remedial quotes from defects…"
           icon={FileCheck2}
         />
       </>
@@ -645,7 +645,7 @@ export default function ElectricalSurveyCostPage() {
       heroTitle={
         <>
           Electrical Survey Cost UK 2026:{' '}
-          <span className="text-yellow-400">What to Expect and How to Budget</span>
+          <span className="text-elec-yellow">What to Expect and How to Budget</span>
         </>
       }
       heroSubtitle="How much does an electrical survey cost? From pre-purchase domestic surveys at £150 to commercial assessments at £2,000+, this guide breaks down every factor that affects the price — and shows electricians how to price their surveys for maximum profit."
@@ -656,7 +656,7 @@ export default function ElectricalSurveyCostPage() {
       faqHeading="Frequently Asked Questions About Electrical Survey Costs"
       relatedPages={relatedPages}
       ctaHeading="Complete Surveys Faster with Elec-Mate"
-      ctaSubheading="AI board scanner, voice test entry, defect-to-quote pipeline, and instant delivery. Join 1,600+ UK electricians completing professional EICR certificates on their phones. 7-day free trial."
+      ctaSubheading="AI board scanner, voice test entry, defect-to-quote pipeline, and instant delivery. Join 2,100+ UK electricians completing professional EICR certificates on their phones. 7-day free trial."
     />
   );
 }

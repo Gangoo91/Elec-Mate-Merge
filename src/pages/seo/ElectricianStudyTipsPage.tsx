@@ -182,7 +182,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Brain className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Read a section of BS 7671, then close the book.</strong> Write down
                 everything you can remember — key regulation numbers, requirements, exceptions,
@@ -190,7 +190,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Brain className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Answer practice questions without looking up the answer first.</strong> Even
                 if you get the answer wrong, the act of trying to recall strengthens your memory
@@ -198,7 +198,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Brain className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Explain a concept to someone else (or to yourself out loud).</strong> If you
                 can explain RCD protection requirements, disconnection times, or the test sequence
@@ -207,7 +207,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Brain className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use flashcards.</strong> Flashcards are the purest form of active recall —
                 the question side forces you to retrieve the answer from memory before flipping the
@@ -238,7 +238,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Repeat className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Repeat className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">The Spacing Schedule</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -288,7 +288,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>One concept per card.</strong> Bad card: "Explain Chapter 41 of BS 7671."
                 Good card: "What is the maximum disconnection time for a 32A final circuit in a TN
@@ -296,7 +296,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Include the regulation number.</strong> When studying for open-book exams,
                 knowing where to find the answer is as important as knowing the answer. Include the
@@ -304,7 +304,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use your own words.</strong> Writing the answer in your own words forces
                 deeper processing than copying the regulation text verbatim. The act of paraphrasing
@@ -312,7 +312,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Review regularly, not all at once.</strong> 10 minutes of flashcard review
                 per day is more effective than 1 hour once a week. Keep your daily sets manageable —
@@ -345,7 +345,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Learn the numbering system.</strong>{' '}
                 <SEOInternalLink href="/guides/bs-7671-run-through">BS 7671</SEOInternalLink> uses a
@@ -356,7 +356,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tab your book strategically.</strong> Use colour-coded tabs for each Part
                 and sub-tabs for heavily examined regulations and tables. Practise looking up
@@ -364,7 +364,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use the index and contents page.</strong> The contents page at the front of
                 BS 7671 lists every section. The index at the back lets you look up topics
@@ -372,7 +372,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Time yourself.</strong> Pick a random regulation number and see how quickly
                 you can find it. Aim for under 15 seconds. Do this as a daily exercise in the weeks
@@ -397,7 +397,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use timed conditions.</strong> Take mock exams under the same time pressure
                 as the real exam. 60 questions in 2 hours for the 2382. This trains your pacing as
@@ -405,7 +405,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Review every wrong answer.</strong> After each mock exam, go through every
                 question you got wrong. Find the correct regulation, understand why the correct
@@ -413,7 +413,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use multiple question sources.</strong> Do not just repeat the same set of
                 questions. Use different mock exams so you are exposed to the full range of possible
@@ -421,7 +421,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Track your progress.</strong> Record your mock exam scores over time. You
                 should see a steady improvement. If your scores plateau, identify the topics where
@@ -495,7 +495,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Do not cram the night before.</strong> Last-minute cramming creates anxiety
                 and interferes with sleep. If you have followed a study plan, you are already
@@ -503,7 +503,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Arrive early.</strong> Give yourself time to settle, find your seat, and get
                 your book and pens ready. Rushing in at the last minute raises your stress level
@@ -511,7 +511,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Read each question carefully.</strong> Exam questions often contain key
                 words like "shall," "should," "may," "minimum," and "maximum" that change the
@@ -519,7 +519,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>If you are stuck, move on.</strong> Do not spend 5 minutes on a question
                 worth 1 mark. Answer what you can, mark what you cannot, and come back. You can
@@ -557,7 +557,7 @@ export default function ElectricianStudyTipsPage() {
       heroTitle={
         <>
           Study Tips for Electricians:{' '}
-          <span className="text-yellow-400">Exam Preparation That Actually Works</span>
+          <span className="text-elec-yellow">Exam Preparation That Actually Works</span>
         </>
       }
       heroSubtitle="Most electricians who fail exams studied the wrong way — not too little, but ineffectively. This guide covers the evidence-based study techniques that are proven to work for electrical exams: active recall, spaced repetition, flashcard technique, and strategic practice testing."

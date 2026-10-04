@@ -149,7 +149,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Never use a standard 13A socket as the sole connection point</strong> for a
                 sump pump that runs unattended. A dedicated circuit with proper isolation and RCD
@@ -157,7 +157,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Flooding and electricity is a lethal combination.</strong> A 30mA earth
                 leakage current flowing through a human body in contact with flood water can cause
@@ -187,21 +187,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Uninterrupted operation</strong> — the pump circuit cannot be accidentally
                 switched off by isolating another appliance.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Correct overcurrent protection</strong> — a 6A or 10A MCB matched to the
                 pump&apos;s rated current provides closer protection than a 32A ring main MCB.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fault isolation</strong> — a fault in the pump circuit trips only the pump
                 MCB/RCBO, not the whole house supply.
@@ -230,7 +230,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCBO (preferred)</strong> — combines MCB overcurrent protection and 30mA RCD
                 earth fault protection in a single unit. A fault in the pump circuit trips only the
@@ -238,7 +238,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCB on an RCD-protected split way</strong> — if the consumer unit has a
                 dual-RCD arrangement, the pump circuit must be on an RCD-protected way. An
@@ -246,7 +246,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test the RCD regularly</strong> — press the test button quarterly and verify
                 the RCD trips within the required time (BS 7671 requires disconnection within 40ms
@@ -271,7 +271,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP44 minimum</strong> — for junction boxes, isolating switches, and any
                 accessories in the damp basement environment. IP44 provides protection against 1mm
@@ -279,7 +279,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IPX7/IPX8</strong> — for submersible pump motor and its cable entry. The
                 pump manufacturer specifies the appropriate submersion rating. Do not use a surface
@@ -287,7 +287,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable selection</strong> — 1.5mm\u00b2 twin and earth in conduit or SWA
                 armoured cable for mechanical protection. In flood-risk routes, use LSZH (Low Smoke
@@ -313,7 +313,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Series connection in the line conductor</strong> — the float switch is wired
                 in series with the line (live) conductor feeding the pump. When the float rises to
@@ -321,7 +321,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SELV control circuit (preferred)</strong> — for the highest level of safety,
                 use a SELV relay circuit. The float switch operates at 12V or 24V SELV, activating a
@@ -330,7 +330,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>High-level alarm float</strong> — install a second float switch set above
                 the pump activation level, wired to an audible alarm or indicator. If the primary
@@ -355,14 +355,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Double-pole isolator</strong> — must disconnect both line and neutral
                 simultaneously. Single-pole switches are not acceptable as isolators under BS 7671.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Positioned above flood level</strong> — the isolator must be accessible
                 without having to enter a flooded area. Mount at 1.2m to 1.5m height on the basement
@@ -370,7 +370,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Clearly labelled</strong> — the isolator must be clearly labelled to
                 identify the equipment it controls (Regulation 514.1). Use a durable label:
@@ -403,7 +403,7 @@ export default function SumpPumpElectricalInstallationPage() {
       heroTitle={
         <>
           Sump Pump Electrical Installation{' '}
-          <span className="text-yellow-400">— BS 7671 Wiring Guide</span>
+          <span className="text-elec-yellow">— BS 7671 Wiring Guide</span>
         </>
       }
       heroSubtitle="A complete guide to sump pump electrical installations: dedicated circuits, RCD protection, IP ratings, float switch wiring, SELV control circuits, and isolation requirements under BS 7671:2018."

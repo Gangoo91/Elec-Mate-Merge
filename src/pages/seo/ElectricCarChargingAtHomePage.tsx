@@ -228,7 +228,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>7kW single-phase (most common):</strong> Draws approximately 32A from a
                 standard single-phase 230V supply. Delivers 30 miles of range per hour. A 60kWh
@@ -238,7 +238,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>22kW three-phase (uncommon domestic):</strong> Requires a three-phase 400V
                 supply. Delivers approximately 90 miles of range per hour. A 60kWh battery charges
@@ -273,7 +273,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Charger unit:</strong> £400 to £900 for a smart wallbox from a recognised
                 brand. Budget options exist below £400 but may lack smart features or have limited
@@ -282,7 +282,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard installation (electrical):</strong> £400 to £800. This covers a
                 dedicated 32A circuit from the consumer unit to the charger location, including
@@ -291,7 +291,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional costs:</strong> Consumer unit upgrade (if no spare ways or
                 non-compliant): £400 to £800. Long cable runs (garage at end of garden): add £100 to
@@ -300,7 +300,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Total typical cost:</strong> £800 to £1,500 for a straightforward
                 installation. £1,500 to £3,000 for complex installations with consumer unit upgrades
@@ -446,7 +446,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New-build dwellings:</strong> Every new dwelling with associated parking
                 (driveway, garage, or allocated space) must have a fully installed, working EV
@@ -455,7 +455,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New non-residential buildings:</strong> Buildings with more than 10 parking
                 spaces must have at least one EV charge point and cable routes (ducting/containment)
@@ -463,14 +463,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Material change of use:</strong> Residential buildings undergoing material
                 change of use with more than 10 parking spaces must install cable routes.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Building Control sign-off:</strong> The EV charger installation must be
                 completed and certified (with an EIC) before Building Control will sign off the
@@ -506,7 +506,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated circuit:</strong> A 32A radial circuit from the consumer unit.
                 Typically 6mm2 SWA cable for the external run and 6mm2 T&E for the internal section.
@@ -514,7 +514,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCBO protection:</strong> A 32A Type A or Type B RCBO at the consumer unit.
                 Type A RCDs detect both AC and pulsating DC fault currents — important because EV
@@ -525,7 +525,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PME earthing considerations:</strong> On TN-C-S (PME) supplies, Regulation
                 722.411.4.1 requires additional protective measures because of the risk of a lost
@@ -536,7 +536,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Isolation:</strong> A local isolator must be installed adjacent to the
                 charger for safe isolation during maintenance. Some chargers include an integral
@@ -570,7 +570,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Circuit Design on Your Phone</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -616,7 +616,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Survey, quote, install, certify, invoice — all on your phone"
-          description="Cable sizing, EIC certificates, EV charger compliance, quoting, and invoicing — in one app. Join 1,600+ UK electricians using Elec-Mate. 7-day free trial."
+          description="Cable sizing, EIC certificates, EV charger compliance, quoting, and invoicing — in one app. Join 2,100+ UK electricians using Elec-Mate. 7-day free trial."
           icon={Car}
         />
       </>
@@ -642,7 +642,7 @@ export default function ElectricCarChargingAtHomePage() {
       heroTitle={
         <>
           Electric Car Charging at Home:{' '}
-          <span className="text-yellow-400">Everything You Need to Know</span>
+          <span className="text-elec-yellow">Everything You Need to Know</span>
         </>
       }
       heroSubtitle="A home wallbox charger on a dedicated 32A circuit is the safest, fastest, and most convenient way to charge an electric car. This guide covers 3-pin vs wallbox charging, 7kW vs 22kW speeds, installation costs, smart charging laws, grant availability, Part S regulations, and the electrical requirements electricians need to meet."
@@ -653,7 +653,7 @@ export default function ElectricCarChargingAtHomePage() {
       faqHeading="Frequently Asked Questions About Home EV Charging"
       relatedPages={relatedPages}
       ctaHeading="Design, Certify, and Invoice EV Charger Installations"
-      ctaSubheading="Cable sizing, EIC certificates, EV compliance, quoting, and invoicing — all in one app. Join 1,600+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
+      ctaSubheading="Cable sizing, EIC certificates, EV compliance, quoting, and invoicing — all in one app. Join 2,100+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
     />
   );
 }

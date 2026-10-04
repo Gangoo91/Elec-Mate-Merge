@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="color-scheme" content="dark">
-    <meta name="theme-color" content="#0a0a0a" />
+    <meta name="theme-color" content="#1c1c1c" />
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
@@ -215,9 +215,9 @@
       property="og:description"
       content="The whole job in one app — quote, design, certify, get paid and learn. Every tool a UK electrician and apprentice needs, built for the van. 7 days free."
     />
-    <meta property="og:image" content="https://www.elec-mate.com/og-image.jpg?v=2" />
+    <meta property="og:image" content="https://www.elec-mate.com/og-image.jpg?v=3" />
     <meta property="og:image:type" content="image/jpeg" />
-    <meta property="og:image:alt" content="Elec-Mate — everything the trade needs in one app: BS 7671 certs, AI, quotes, calculators and training." />
+    <meta property="og:image:alt" content="Elec-Mate — the whole job in one app: certificates, quotes, invoices and an AI that knows the regs. 7 days free." />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="en_GB" />
@@ -231,7 +231,7 @@
       name="twitter:description"
       content="The whole job in one app — quote, design, certify, get paid and learn. Every tool a UK electrician and apprentice needs, built for the van. 7 days free."
     />
-    <meta name="twitter:image" content="https://www.elec-mate.com/og-image.jpg?v=2" />
+    <meta name="twitter:image" content="https://www.elec-mate.com/og-image.jpg?v=3" />
 
     <!-- Structured Data - Organization -->
     <script type="application/ld+json">
@@ -332,7 +332,7 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          background: #0a0a0a;
+          background: #1c1c1c;
           color: #ffffff;
           font-family: Inter, system-ui, -apple-system, sans-serif;
           padding: 24px;
@@ -373,88 +373,99 @@
       <!-- Static landing hero — painted instantly on "/" before any JS loads.
            Mirrors the React hero (same copy, same look) so the swap on mount is
            seamless. The CTA is a real link, so it works even pre-hydration. -->
-      <div
-        id="landing-shell"
-        style="
-          display: none;
-          min-height: 100vh;
-          background: #0a0a0a;
-          color: #fff;
-          font-family: Inter, system-ui, sans-serif;
-          flex-direction: column;
-          align-items: center;
-          text-align: center;
-          padding: calc(env(safe-area-inset-top) + 7rem) 20px 56px;
-        "
-      >
-        <div style="font-size: 11px; letter-spacing: 0.18em; color: rgba(255, 255, 255, 0.55)">
-          01 · YOUR TRADE. YOUR APP.
+      <!-- Static first paint for "/" — a copy of the React hero in
+           src/pages/LandingPage.tsx (v5, 4 Oct 2026): same nav, words, button,
+           ratings and dashboard phone, so the swap to React is invisible. On a
+           phone signal this can be on screen for seconds. Keep it in step —
+           the ratings line mirrors PLAY_RATING / APP_STORE_RATING there. -->
+      <style>
+        #landing-shell { display: none; min-height: 100vh; background: #1c1c1c; color: #fff;
+          font-family: Inter, system-ui, -apple-system, sans-serif; flex-direction: column; }
+        #landing-shell a { text-decoration: none; }
+        #ls-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 5; padding-top: env(safe-area-inset-top);
+          background: rgba(28,28,28,.92); border-bottom: 1px solid rgba(255,255,255,.08); }
+        #ls-nav > div { max-width: 76rem; margin: 0 auto; height: 56px; padding: 0 20px;
+          display: flex; align-items: center; justify-content: space-between; }
+        #ls-main { max-width: 76rem; width: 100%; box-sizing: border-box; margin: 0 auto;
+          padding: calc(env(safe-area-inset-top) + 88px) 20px 0; display: grid; gap: 40px; }
+        #ls-phone { position: relative; height: 400px; overflow: hidden; max-width: 420px; width: 100%; margin: 0 auto; }
+        #ls-phone .phone { position: absolute; right: 0; top: 0; width: 62%; height: auto; transform: rotate(3deg); }
+        #ls-phone .fade { position: absolute; left: 0; right: 0; bottom: 0; height: 160px;
+          background: linear-gradient(to bottom, rgba(28,28,28,0), #1c1c1c); }
+        #ls-links { display: none; gap: 32px; }
+        #ls-links a { color: #fff; font-size: 15px; font-weight: 500; }
+        @media (min-width: 1024px) {
+          #ls-links { display: flex; }
+          #ls-main { grid-template-columns: 1fr 1fr; align-items: center; padding-top: 128px; }
+          #ls-phone { height: 600px; max-width: none; }
+          #ls-phone { height: 600px; overflow: hidden; }
+          #ls-phone .phone { width: 340px; right: 10%; }
+        }
+      </style>
+      <div id="landing-shell">
+        <div id="ls-nav">
+          <div>
+            <a href="/" style="display: flex; align-items: center; gap: 10px; color: #fff">
+              <img src="/images/landing/v5/logo-96.webp" alt="" width="32" height="32" style="border-radius: 8px" />
+              <span style="font-size: 17px; font-weight: 700; letter-spacing: -0.01em"
+                >Elec-<span style="color: #ffc800">Mate</span></span
+              >
+            </a>
+            <div id="ls-links">
+              <a href="/#how">How it works</a><a href="/#pricing">Pricing</a
+              ><a href="/#teams">For teams</a><a href="/guides">Guides</a>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px">
+              <a href="/auth/signin" style="color: #fff; font-size: 14px; font-weight: 600; padding: 12px"
+                >Sign in</a
+              >
+              <a
+                href="/auth/signup"
+                style="background: #ffc800; color: #000; font-size: 14px; font-weight: 700;
+                  height: 40px; padding: 0 16px; border-radius: 12px; display: inline-flex; align-items: center"
+                >Start free</a
+              >
+            </div>
+          </div>
         </div>
-        <h1
-          style="
-            margin: 16px auto 0;
-            max-width: 22ch;
-            font-size: clamp(2.25rem, 6vw, 4.5rem);
-            font-weight: 600;
-            line-height: 1.05;
-            letter-spacing: -0.02em;
-          "
-        >
-          Quote. Design. Certify. Invoice. Get paid. Train. One app.
-        </h1>
-        <p
-          style="
-            margin: 24px auto 0;
-            max-width: 44rem;
-            font-size: 16px;
-            line-height: 1.65;
-            color: rgba(255, 255, 255, 0.75);
-          "
-        >
-          The UK electrical industry runs on paperwork, WhatsApp and 4–5 disconnected apps.
-          Elec-Mate replaces all of it.
-        </p>
-        <div
-          style="
-            margin-top: 28px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 8px;
-            font-size: 12px;
-            color: #fde68a;
-          "
-        >
-          <span style="border: 1px solid rgba(250, 204, 21, 0.25); background: rgba(250, 204, 21, 0.08); border-radius: 999px; padding: 5px 12px">1,110+ UK sparks</span>
-          <span style="border: 1px solid rgba(250, 204, 21, 0.25); background: rgba(250, 204, 21, 0.08); border-radius: 999px; padding: 5px 12px">1,080+ certs issued</span>
-          <span style="border: 1px solid rgba(250, 204, 21, 0.25); background: rgba(250, 204, 21, 0.08); border-radius: 999px; padding: 5px 12px">£830k+ quoted</span>
-          <span style="border: 1px solid rgba(250, 204, 21, 0.25); background: rgba(250, 204, 21, 0.08); border-radius: 999px; padding: 5px 12px">★★★★★ on the App Store</span>
+        <div id="ls-main">
+          <div>
+            <p style="margin: 0; font-size: 12px; font-weight: 600; letter-spacing: 0.16em;
+              text-transform: uppercase; color: #ffc800">
+              For UK electricians and apprentices
+            </p>
+            <p style="margin: 12px 0 0; font-size: clamp(44px, 9vw, 60px); font-weight: 700;
+              line-height: 1; letter-spacing: -0.035em">
+              <span style="display: block">Learn the trade.</span
+              ><span style="display: block; color: #ffc800">Run the trade.</span>
+            </p>
+            <p style="margin: 20px 0 0; max-width: 34rem; font-size: 17px; line-height: 1.55">
+              One app from your first day as an apprentice to running your own jobs — courses and
+              AM2 prep, then certificates, quotes and invoices done on site.
+            </p>
+            <a
+              href="/auth/signup"
+              style="display: flex; align-items: center; justify-content: center; margin-top: 32px;
+                max-width: 360px; height: 56px; border-radius: 16px; background: #ffc800; color: #000;
+                font-size: 16px; font-weight: 700"
+              >Start your free week</a
+            >
+            <p style="margin: 12px 0 0; font-size: 13.5px; line-height: 1.6">
+              <strong style="color: #ffc800">£0 today</strong> · card needed, nothing charged for 7
+              days · cancel in two taps
+            </p>
+            <p style="margin: 24px 0 0; font-size: 13.5px; font-weight: 500">
+              <span style="color: #ffc800; letter-spacing: 0.12em">★★★★★</span>
+              <strong>5.0</strong> on Google Play · <strong>4.3</strong> on the App Store
+            </p>
+          </div>
+          <div id="ls-phone" aria-hidden="true">
+            <img class="phone" src="/images/landing/v5/dashboard-phone.webp" alt="" width="700" height="1084" />
+            <div class="fade"></div>
+          </div>
         </div>
-        <a
-          href="/auth/signup"
-          style="
-            margin-top: 36px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            height: 48px;
-            padding: 0 32px;
-            border-radius: 999px;
-            background: #eab308;
-            color: #000;
-            font-size: 16px;
-            font-weight: 600;
-            text-decoration: none;
-            width: 100%;
-            max-width: 360px;
-          "
-        >
-          Start 7-day free trial →
-        </a>
-        <p style="margin-top: 16px; font-size: 13px; color: rgba(255, 255, 255, 0.65)">
-          From <strong style="color: #fff; font-weight: 500">£6.99/mo</strong> · 7 days free · no
-          charge until day 8 · cancel anytime
-        </p>
+      </div>
+        </div>
       </div>
       <script>
         // On native (Capacitor), the splash screen covers loading — hide both shells.
@@ -507,7 +518,7 @@
           display: none;
           align-items: center;
           justify-content: center;
-          background: linear-gradient(180deg, #0a1628 0%, #0a0a0a 100%);
+          background: #1c1c1c;
           color: #e5e7eb;
           font-family: Inter, system-ui, sans-serif;
           text-align: center;
@@ -610,7 +621,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #0a0a0a;
+            background: #1c1c1c;
             color: #facc15;
             font-family: Inter, system-ui, sans-serif;
             text-align: center;

@@ -44,7 +44,7 @@ export default function SmokeAlarmRegsPage() {
         <>
           Smoke Alarm Regulations UK 2026
           <br />
-          <span className="text-yellow-400">BS 5839-6, Grades, Categories & Compliance</span>
+          <span className="text-elec-yellow">BS 5839-6, Grades, Categories & Compliance</span>
         </>
       }
       heroSubtitle="Smoke and carbon monoxide alarm regulations have become significantly more stringent in recent years. This guide covers the Smoke and Carbon Monoxide Alarm Regulations 2022 (England), BS 5839-6 grades and categories, interlinked alarms, landlord obligations, Scottish requirements, and Building Regulations Part B — everything an electrician needs to specify and install compliant alarm systems."
@@ -105,18 +105,18 @@ export default function SmokeAlarmRegsPage() {
                 </h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Smoke alarm on every storey</strong> — At
+                      <strong className="text-elec-yellow">Smoke alarm on every storey</strong> — At
                       least one smoke alarm must be installed on each storey of the property that
                       has a habitable room. The alarm should be in the circulation space (hallway or
                       landing) — not inside bedrooms or living rooms.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Carbon monoxide alarm in rooms with combustion appliances
                       </strong>{' '}
                       — A CO alarm must be installed in any room containing a fixed combustion
@@ -125,18 +125,18 @@ export default function SmokeAlarmRegsPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Social housing included</strong> — The
+                      <strong className="text-elec-yellow">Social housing included</strong> — The
                       2022 amendment extended the regulations to cover social housing (local
                       authority and housing association properties), which were previously excluded
                       from the 2015 regulations.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Repair and replace duty</strong> —
+                      <strong className="text-elec-yellow">Repair and replace duty</strong> —
                       Landlords must repair or replace alarms that are reported as faulty. The duty
                       to ensure alarms are in working order applies at the start of each new tenancy
                       and whenever a fault is reported.
@@ -167,7 +167,7 @@ export default function SmokeAlarmRegsPage() {
               </p>
               <div className="space-y-4 my-6">
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-xl mb-1">Grade A</h3>
+                  <h3 className="font-bold text-elec-yellow text-xl mb-1">Grade A</h3>
                   <p className="text-white text-sm leading-relaxed">
                     A system incorporating a fire alarm control panel, detectors, and sounders
                     connected by dedicated fire alarm wiring. This is a full fire alarm system as
@@ -200,12 +200,12 @@ export default function SmokeAlarmRegsPage() {
                   </p>
                 </div>
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-xl mb-1">Grade D</h3>
+                  <h3 className="font-bold text-elec-yellow text-xl mb-1">Grade D</h3>
                   <p className="text-white text-sm leading-relaxed">
                     A system of one or more mains-powered fire alarm devices, each with an integral
                     standby power supply (backup battery). Grade D devices can be interconnected by
                     hardwire, radio frequency (wireless), or a combination.{' '}
-                    <strong className="text-yellow-400">
+                    <strong className="text-elec-yellow">
                       Grade D is the minimum requirement for new builds
                     </strong>{' '}
                     under Building Regulations Approved Document B. Modern Grade D systems with
@@ -251,7 +251,7 @@ export default function SmokeAlarmRegsPage() {
               </p>
               <div className="grid sm:grid-cols-3 gap-4 my-6">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                  <h3 className="font-bold text-yellow-400 text-2xl mb-1">LD3</h3>
+                  <h3 className="font-bold text-elec-yellow text-2xl mb-1">LD3</h3>
                   <h4 className="font-bold text-white mb-3">Escape Route Protection</h4>
                   <p className="text-white text-sm leading-relaxed">
                     Detectors in all circulation spaces that form part of the escape route —
@@ -261,19 +261,19 @@ export default function SmokeAlarmRegsPage() {
                   </p>
                 </div>
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-2xl mb-1">LD2</h3>
+                  <h3 className="font-bold text-elec-yellow text-2xl mb-1">LD2</h3>
                   <h4 className="font-bold text-white mb-3">Escape Routes + High-Risk Rooms</h4>
                   <p className="text-white text-sm leading-relaxed">
                     Detectors in all circulation spaces (as LD3) plus rooms that present a higher
                     fire risk — typically the kitchen and the principal living room.{' '}
-                    <strong className="text-yellow-400">LD2 is the minimum for new builds</strong>{' '}
+                    <strong className="text-elec-yellow">LD2 is the minimum for new builds</strong>{' '}
                     under Building Regulations Approved Document B. It provides earlier warning of
                     fire than LD3 by detecting fires in the rooms where they are most likely to
                     start.
                   </p>
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                  <h3 className="font-bold text-yellow-400 text-2xl mb-1">LD1</h3>
+                  <h3 className="font-bold text-elec-yellow text-2xl mb-1">LD1</h3>
                   <h4 className="font-bold text-white mb-3">Full Coverage — All Rooms</h4>
                   <p className="text-white text-sm leading-relaxed">
                     Detectors in all rooms, including bedrooms, living rooms, kitchen, dining room,
@@ -310,9 +310,9 @@ export default function SmokeAlarmRegsPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Hardwired interlinking</strong> — A
+                      <strong className="text-elec-yellow">Hardwired interlinking</strong> — A
                       dedicated interconnect cable (typically 3-core-and-earth) runs between all
                       alarm positions. When one alarm activates, it sends a signal along the
                       interconnect wire to trigger all other alarms. This is the traditional method
@@ -320,9 +320,9 @@ export default function SmokeAlarmRegsPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Radio frequency (wireless) interlinking
                       </strong>{' '}
                       — Each alarm contains a radio transmitter and receiver. When one alarm
@@ -333,9 +333,9 @@ export default function SmokeAlarmRegsPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Mixed (hardwire and wireless)</strong> —
+                      <strong className="text-elec-yellow">Mixed (hardwire and wireless)</strong> —
                       Some systems support both methods, allowing new wireless alarms to be added to
                       an existing hardwired system. This is useful when extending or upgrading an
                       existing installation.
@@ -364,7 +364,7 @@ export default function SmokeAlarmRegsPage() {
               </p>
               <div className="grid sm:grid-cols-2 gap-4 my-6">
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-3">
+                  <h3 className="font-bold text-elec-yellow text-lg mb-3">
                     Mains-Powered (Grade C/D)
                   </h3>
                   <p className="text-white text-sm leading-relaxed mb-3">
@@ -428,9 +428,9 @@ export default function SmokeAlarmRegsPage() {
                 </h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         One smoke alarm in the living room
                       </strong>{' '}
                       — (or the room you use most). An optical smoke alarm is recommended for living
@@ -438,9 +438,9 @@ export default function SmokeAlarmRegsPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         One smoke alarm in every hallway and landing
                       </strong>{' '}
                       — Covering all circulation spaces and escape routes. Optical or ionisation
@@ -448,26 +448,26 @@ export default function SmokeAlarmRegsPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">One heat alarm in the kitchen</strong> —
+                      <strong className="text-elec-yellow">One heat alarm in the kitchen</strong> —
                       Heat alarms (not smoke alarms) are specified for kitchens to reduce false
                       alarms from cooking. The heat alarm should be mounted on the ceiling, ideally
                       within 1.5m of the cooking appliance.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">All alarms must be interlinked</strong> —
+                      <strong className="text-elec-yellow">All alarms must be interlinked</strong> —
                       All smoke alarms and the kitchen heat alarm must be interlinked (hardwired or
                       wireless) so that activation of any alarm triggers all alarms to sound.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Carbon monoxide alarm</strong> — A CO
+                      <strong className="text-elec-yellow">Carbon monoxide alarm</strong> — A CO
                       alarm is required in any room with a carbon-fuelled appliance (gas boiler,
                       wood burner, open fire, etc.).
                     </span>
@@ -542,7 +542,7 @@ export default function SmokeAlarmRegsPage() {
               </p>
               <ul className="space-y-2 my-4">
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Minimum Grade D Category LD2</strong> —
                     Mains-powered interlinked detectors with integral standby supply, covering all
@@ -551,7 +551,7 @@ export default function SmokeAlarmRegsPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Heat detector in the kitchen</strong> — A heat
                     alarm (not a smoke alarm) should be used in the kitchen to reduce false alarms.
@@ -560,14 +560,14 @@ export default function SmokeAlarmRegsPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">CO alarm</strong> — Carbon monoxide alarms are
                     required in rooms with combustion appliances as per the 2022 regulations.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Material alterations</strong> — Work that
                     constitutes a "material alteration" (such as a loft conversion, an extension, or
@@ -599,45 +599,45 @@ export default function SmokeAlarmRegsPage() {
                 <h3 className="font-bold text-white text-lg mb-4">Alarm Placement Guidelines</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Ceiling-mounted</strong> — Alarms should
+                      <strong className="text-elec-yellow">Ceiling-mounted</strong> — Alarms should
                       be mounted on the ceiling, at least 300mm from any wall or light fitting. If
                       ceiling mounting is not possible, wall mounting is permitted provided the top
                       of the alarm is between 150mm and 300mm below the ceiling.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Avoid dead air spaces</strong> — Do not
+                      <strong className="text-elec-yellow">Avoid dead air spaces</strong> — Do not
                       mount alarms in the apex of a pitched ceiling or at the peak of a stairwell
                       where hot air can create a dead air space that smoke does not penetrate
                       effectively.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Hallways and landings</strong> — Position
+                      <strong className="text-elec-yellow">Hallways and landings</strong> — Position
                       the alarm centrally in the circulation space, or at the point closest to the
                       bedrooms if the hallway is long or L-shaped. On landings, position the alarm
                       between the bedroom doors and the stairwell.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Kitchen heat alarms</strong> — Mount
+                      <strong className="text-elec-yellow">Kitchen heat alarms</strong> — Mount
                       within 1.5 metres of the cooking appliance but not directly above it. The heat
                       alarm responds to temperature rather than smoke, reducing false alarms from
                       cooking.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Avoid locations prone to false alarms
                       </strong>{' '}
                       — Do not position smoke alarms directly outside bathrooms (steam), in garages

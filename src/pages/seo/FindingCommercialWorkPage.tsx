@@ -232,7 +232,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Handshake className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Handshake className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Build relationships with builders and main contractors.</strong> Attend
                 local construction networking events, join the Federation of Master Builders events,
@@ -241,7 +241,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Handshake className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Handshake className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Connect with architects and building services consultants.</strong> They
                 specify the electrical work and often recommend contractors to their clients. A good
@@ -250,7 +250,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Handshake className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Handshake className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Join your local Chamber of Commerce.</strong> Membership is £100 to
                 £500/year depending on your area. The networking events connect you with local
@@ -392,31 +392,31 @@ const sections = [
           <div className="space-y-3 text-white text-sm">
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>SSIP accreditation (SafeContractor/CHAS/Constructionline)</span>
-              <strong className="text-yellow-400">Essential</strong>
+              <strong className="text-elec-yellow">Essential</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>CSCS/ECS card</span>
-              <strong className="text-yellow-400">Essential</strong>
+              <strong className="text-elec-yellow">Essential</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>NICEIC or NAPIT registration</span>
-              <strong className="text-yellow-400">Essential</strong>
+              <strong className="text-elec-yellow">Essential</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Public liability insurance (£5M minimum)</span>
-              <strong className="text-yellow-400">Essential</strong>
+              <strong className="text-elec-yellow">Essential</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Professional indemnity insurance</span>
-              <strong className="text-yellow-400">Recommended</strong>
+              <strong className="text-elec-yellow">Recommended</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Asbestos awareness training</span>
-              <strong className="text-yellow-400">Essential (commercial sites)</strong>
+              <strong className="text-elec-yellow">Essential (commercial sites)</strong>
             </div>
             <div className="flex justify-between pb-2">
               <span>ISO 9001 / ISO 14001</span>
-              <strong className="text-yellow-400">Larger contracts only</strong>
+              <strong className="text-elec-yellow">Larger contracts only</strong>
             </div>
           </div>
         </div>
@@ -437,19 +437,19 @@ const sections = [
           <div className="space-y-3 text-white text-sm">
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Qualified electrician (sole trader, direct to client)</span>
-              <strong className="text-yellow-400">£280 to £400/day</strong>
+              <strong className="text-elec-yellow">£280 to £400/day</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Qualified electrician (subcontract to main contractor)</span>
-              <strong className="text-yellow-400">£220 to £320/day</strong>
+              <strong className="text-elec-yellow">£220 to £320/day</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Approved electrician (commercial/industrial specialist)</span>
-              <strong className="text-yellow-400">£300 to £450/day</strong>
+              <strong className="text-elec-yellow">£300 to £450/day</strong>
             </div>
             <div className="flex justify-between pb-2">
               <span>Electrician&apos;s mate (improver/labourer)</span>
-              <strong className="text-yellow-400">£150 to £200/day</strong>
+              <strong className="text-elec-yellow">£150 to £200/day</strong>
             </div>
           </div>
         </div>
@@ -495,7 +495,7 @@ export default function FindingCommercialWorkPage() {
       heroTitle={
         <>
           Finding Commercial Electrical Work:{' '}
-          <span className="text-yellow-400">Higher Rates, Bigger Contracts</span>
+          <span className="text-elec-yellow">Higher Rates, Bigger Contracts</span>
         </>
       }
       heroSubtitle="Tender websites, FM companies, frameworks, and subcontracting — the practical routes into commercial electrical work for UK electricians. Accreditations, pricing, and how to land your first contract."
@@ -506,7 +506,7 @@ export default function FindingCommercialWorkPage() {
       faqHeading="Frequently Asked Questions About Commercial Electrical Work"
       relatedPages={relatedPages}
       ctaHeading="Manage Commercial Work Professionally"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional documentation that commercial clients expect. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional documentation that commercial clients expect. 7-day free trial, cancel anytime."
     />
   );
 }

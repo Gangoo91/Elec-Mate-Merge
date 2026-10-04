@@ -138,28 +138,28 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-3">What an MFT Must Measure</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insulation resistance (IR):</strong> 250V, 500V, and 1,000V DC test
                 voltages. Required for circuits up to 1,000V per BS 7671 Chapter 64.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth continuity:</strong> Low resistance measurement using a 200mA test
                 current per BS EN 61557-4 to verify CPC integrity.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth fault loop impedance (Zs and Ze):</strong> Live measurement of loop
                 impedance to verify disconnection times per BS 7671 Chapter 41.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD testing:</strong> Trip time at rated, half rated, and five times rated
                 current; ramp test; plus high-current trip test for Type B RCDs on modern
@@ -167,7 +167,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Prospective short-circuit current (PSCC):</strong> Measured at the supply
                 origin to verify that protective devices have sufficient breaking capacity.
@@ -181,7 +181,7 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Megger MFT1741:</strong> Popular mid-range instrument, auto-sequence
                 testing, 10mA RCD testing, USB connectivity. Street price approximately \u00a3450 to
@@ -189,7 +189,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fluke 1664FC:</strong> Wireless connectivity to Fluke Connect app,
                 auto-sequence, ramp RCD test, compact form factor. Street price approximately
@@ -197,7 +197,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Metrel MI3152:</strong> Comprehensive RCD test range including Type B, EV
                 charger testing capability, Bluetooth. Street price approximately \u00a3700 to
@@ -205,7 +205,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Kewtech KT65:</strong> Budget-friendly option for apprentices and occasional
                 use. Good basic functionality at approximately \u00a3280 to \u00a3350.
@@ -230,7 +230,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>AC clamp meters:</strong> The standard type, measuring fundamental 50Hz
                 current. Suitable for most domestic and commercial electrical work. Range: typically
@@ -238,7 +238,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>True RMS clamp meters:</strong> Measure the true root-mean-square value of
                 non-sinusoidal waveforms, giving accurate readings in circuits with variable-speed
@@ -247,7 +247,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Flexible clamp (Rogowski coil):</strong> A flexible current sensor that can
                 be looped around large conductors or multiple conductors in tight spaces where a
@@ -255,7 +255,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Recommended models:</strong> Fluke 376FC (true RMS, wireless), Fluke 325
                 (compact, 400A), Megger DCM305E, Kewtech KC20. For occasional use, a Uni-T or Klein
@@ -280,7 +280,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Two-pole voltage tester:</strong> Applies a load to the circuit under test,
                 detecting induced voltages that high-impedance multimeters would misread as live.
@@ -290,7 +290,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Non-contact voltage tester (NCV / proximity tester):</strong> A useful
                 supplementary tool for quickly identifying live conductors before using a two-pole
@@ -317,7 +317,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No-trip loop testers:</strong> Standard loop impedance tests briefly draw a
                 high test current that may trip RCDs. No-trip loop measurement uses a lower current
@@ -326,7 +326,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD ramp test:</strong> Gradually increases the test current from a low
                 starting value until the RCD trips, identifying the actual trip threshold. Important
@@ -335,7 +335,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type B RCD testing:</strong> EV chargers and some industrial equipment
                 require Type B RCDs (sensitive to DC fault current components). Type B RCD testing
@@ -361,14 +361,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CAT I:</strong> Protected electronic equipment and low-energy circuits.
                 Household electronics on battery or isolated supply. Lowest impulse protection.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CAT II:</strong> Single-phase receptacle connected loads — domestic
                 appliance testing, outlet-connected equipment. Typical domestic household socket
@@ -376,7 +376,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CAT III 600V:</strong> Fixed electrical installation — consumer units,
                 distribution boards, three-phase distribution, industrial equipment. This is the
@@ -384,7 +384,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CAT IV 600V:</strong> Supply origin, service entrance, electricity metering,
                 outdoor conductors subject to direct lightning exposure. Required for working at the
@@ -415,7 +415,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Calibration interval:</strong> Most MFTs should be calibrated annually. The
                 interval may be shorter if the instrument is subject to heavy use, frequent
@@ -423,7 +423,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>UKAS accreditation:</strong> Calibration by a UKAS (United Kingdom
                 Accreditation Service) accredited laboratory provides traceable calibration linked
@@ -432,7 +432,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Daily check:</strong> Before each use, verify the instrument against a known
                 reference — either a purpose-made calibration check adaptor or a known circuit.
@@ -464,7 +464,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <SEOAppBridge href="/tools/eicr-certificate" label="EICR Certificate" /> — record
                 all loop impedance, insulation resistance, continuity and RCD test results in a
@@ -473,7 +473,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <SEOAppBridge href="/eic-certificate" label="EIC Certificate" /> — generate a
                 complete Electrical Installation Certificate with test schedules, instrument
@@ -505,7 +505,7 @@ export default function ElectricalTestEquipmentGuidePage() {
       heroTitle={
         <>
           Electrical Test Equipment Guide{' '}
-          <span className="text-yellow-400">— UK Buying Guide for Electricians</span>
+          <span className="text-elec-yellow">— UK Buying Guide for Electricians</span>
         </>
       }
       heroSubtitle="MFT buying guide (Megger MFT1741, Fluke 1664FC), clamp meters, voltage indicators, CAT III vs CAT IV safety ratings explained, GS38 test lead requirements, and calibration."

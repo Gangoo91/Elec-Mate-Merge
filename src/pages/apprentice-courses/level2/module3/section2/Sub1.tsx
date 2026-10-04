@@ -7,7 +7,7 @@
  *   - Back to §1 (statutory + non-statutory regs — BS 7671 itself, GN3, OSG sit there too)
  *   - Forward to §3 (where these sources land in real wiring decisions)
  *
- * Reg sources cited: 514.9.2 (A4:2026 — diagrams shall comply with applicable
+ * Reg sources cited: 514.9.2 (A2:2022 — diagrams shall comply with applicable
  * standards), 514.9.1 (domestic exception), 132.13 (Documentation —
  * paraphrased; see 132.13.1 Diagrams and 132.13.2 Routine maintenance),
  * 526.1 (manufacturer instructions for terminations).
@@ -64,9 +64,9 @@ const checks = [
       'Part 6 — Inspection and testing',
       'Part 4 — Protection for safety',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
-      'Appendix 3 holds the time/current curves and the corresponding Zs tables for standard protective devices. Part 4 explains the principle of automatic disconnection; Appendix 3 gives you the actual numbers. Apprentices often head to Part 6 by reflex — Part 6 tells you HOW to test, not what the limit IS.',
+      'Maximum earth fault loop impedance values for circuit-breakers are tabulated in Table 41.3, in Chapter 41 of Part 4 (Protection for safety). Appendix 3 holds the time/current curves the values are derived from; Part 6 tells you how to test, not what the limit is.',
   },
   {
     id: 'sources-rams-check',
@@ -117,7 +117,7 @@ const quizQuestions = [
   {
     id: 3,
     question:
-      'BS 7671:2018+A4:2026 introduced a new regulation, 514.9.2, about diagrams and charts. What does it actually require?',
+      'Reg 514.9.2, added to BS 7671 by A2:2022, is about diagrams and charts. What does it actually require?',
     options: [
       'That every installation must include a full single-line diagram on A3 paper',
       'That diagrams must be hand-drawn rather than produced on a computer',
@@ -126,7 +126,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      "514.9.2 (new in A4:2026) requires diagrams, charts and information/instruction notices to comply with the applicable standards — that means symbols per IEC 60617 (the modern replacement for IEC 60617), notices per BS EN 60073 / 60446 etc. It's about consistency so anyone reading the drawing or label knows what they're looking at.",
+      "514.9.2 (added by A2:2022) requires diagrams, charts and information/instruction notices to comply with the applicable standards — BS EN 61082-1 and BS EN IEC/IEEE 82079-1 for diagrams, charts and instructions, BS ISO 3864-1 and BS EN ISO 7010 for warning notices and safety signs. The symbols themselves must comply with IEC 60617 under Reg 514.9.1. It's about consistency so anyone reading the drawing or label knows what they're looking at.",
   },
   {
     id: 4,
@@ -186,9 +186,9 @@ const quizQuestions = [
   {
     id: 8,
     question:
-      "On site, you spot the certification scheme (NICEIC / NAPIT / Stroma) has issued a technical bulletin about a specific manufacturer's consumer unit being recalled. What's the correct response?",
+      "On site, you see that your certification scheme has issued a technical bulletin about a specific manufacturer's consumer unit being recalled. What's the correct response?",
     options: [
-      'Read it, log it, and apply it on relevant jobs — bulletins reflect current best practice and the scheme audits against them',
+      'Read it, log it, and apply it on relevant jobs — bulletins reflect current best practice your scheme expects you to follow',
       'Ignore it — only changes to BS 7671 itself have any force',
       'Wait for the next BS 7671 amendment before changing anything you do',
       'Apply it only if a customer specifically asks you to',
@@ -347,18 +347,18 @@ export default function Sub1() {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 7671 — Regulation 514.9.2 (new in A4:2026)"
-          clause="514.9.2 — All diagrams, charts, and information or instruction notices used in electrical installations shall comply with the applicable standards specified."
+          source="BS 7671:2018+A4:2026 — Regulation 514.9.2"
+          clause="All diagrams, charts, and information or instruction notices shall comply with BS EN 61082-1, BS EN IEC/IEEE 82079-1, and, where appropriate, BS EN 81346-1. All warning notices and other relevant safety signs shall comply with BS ISO 3864-1, BS EN ISO 7010, and BS EN IEC/IEEE 82079-1."
           meaning={
             <>
-              A4:2026 added this clause to nail down what 'a proper drawing' actually means. Symbols
-              on diagrams need to follow the IEC 60617 graphical symbol set (the modern continuation
-              of the old IEC 60617). Notices need to follow BS EN 60073 (colours) and BS EN 60446
-              (markings). It's the regs catching up with the fact that home-made diagrams with
-              made-up symbols don't help anyone read the install ten years later.
+              A2:2022 added this clause to nail down what 'a proper drawing' actually means:
+              diagrams follow BS EN 61082-1, instructions BS EN IEC/IEEE 82079-1, and safety signs
+              BS ISO 3864-1 and BS EN ISO 7010. The symbols on them follow IEC 60617 (Reg 514.9.1).
+              It's the regs catching up with the fact that home-made diagrams with made-up symbols
+              don't help anyone read the install ten years later.
             </>
           }
-          cite="Reference: BS 7671:2018+A4:2026 Part 5, Section 514.9.2 (paraphrased)"
+          cite="Source: BS 7671:2018+A4:2026, Regulation 514.9.2 (added by A2:2022)."
         />
 
         <RegsCallout
@@ -673,7 +673,7 @@ export default function Sub1() {
           points={[
             'BS 7671 = the rules. OSG = practical day-one tables. GN3 = inspection & testing in depth. Manufacturer IIs + datasheets = device-specific.',
             "Reg 526.1 makes manufacturer's installation instructions a legal requirement for terminations — torque, terminal type, connection method.",
-            'Reg 514.9.2 (new in A4:2026) requires diagrams, charts and notices to comply with the applicable standards (IEC 60617 for symbols, BS EN 60073 for notices).',
+            'Reg 514.9.2 (added by A2:2022) requires diagrams, charts and notices to comply with the applicable standards (BS EN 61082-1 for diagrams, BS EN ISO 7010 for safety signs; IEC 60617 for symbols under Reg 514.9.1).',
             'A RAMS is the Risk Assessment + Method Statement combined — read it, sign it, question it before work starts.',
             "Spec is contractually binding. If you can't meet it, raise a TQ/RFI in writing and wait for a written variation.",
             'Certification scheme bulletins (NICEIC, NAPIT, Stroma) are how new issues get communicated between BS 7671 amendments. Read them.',

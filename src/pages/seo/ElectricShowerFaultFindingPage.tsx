@@ -199,7 +199,7 @@ const sections = [
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left text-white">
               <thead>
-                <tr className="bg-white/[0.06] border-b border-white/10 text-white/70">
+                <tr className="bg-white/[0.06] border-b border-white/10 text-white">
                   <th className="px-4 py-3 font-semibold">Symptom</th>
                   <th className="px-4 py-3 font-semibold">Most likely cause</th>
                   <th className="px-4 py-3 font-semibold">Who to call</th>
@@ -224,7 +224,7 @@ const sections = [
                 <tr>
                   <td className="px-4 py-3 font-medium">No water flow at all</td>
                   <td className="px-4 py-3">Solenoid stuck closed, blocked inlet filter</td>
-                  <td className="px-4 py-3 text-white/80">Either</td>
+                  <td className="px-4 py-3 text-white">Either</td>
                 </tr>
                 <tr>
                   <td className="px-4 py-3 font-medium">Weak / cold only at peak times</td>
@@ -234,7 +234,7 @@ const sections = [
                 <tr>
                   <td className="px-4 py-3 font-medium">Drips from head after switch-off</td>
                   <td className="px-4 py-3">Solenoid not closing or worn valve seat</td>
-                  <td className="px-4 py-3 text-white/80">Either</td>
+                  <td className="px-4 py-3 text-white">Either</td>
                 </tr>
                 <tr>
                   <td className="px-4 py-3 font-medium">Clicks then goes cold</td>
@@ -277,7 +277,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ol className="space-y-4 text-white list-none">
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center text-yellow-400 text-sm font-bold">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-elec-yellow text-sm font-bold">
                 1
               </span>
               <span>
@@ -287,7 +287,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center text-yellow-400 text-sm font-bold">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-elec-yellow text-sm font-bold">
                 2
               </span>
               <span>
@@ -298,7 +298,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center text-yellow-400 text-sm font-bold">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-elec-yellow text-sm font-bold">
                 3
               </span>
               <span>
@@ -324,7 +324,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Immediate RCD trip (on switch-on)</strong> — the element has failed with a
                 dead short to earth. Insulation resistance between the element and the earth
@@ -333,7 +333,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD trips after a few minutes of use</strong> — the element insulation is
                 degrading and the leakage current increases as it heats up. Insulation resistance
@@ -343,7 +343,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing the element</strong> — after safe isolation, disconnect the element
                 leads from the PCB or terminal block. Set a multifunction tester to 500V DC
@@ -353,7 +353,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Water ingress</strong> — if the shower enclosure seals have failed, water
                 may have penetrated the shower unit and is causing a leakage path to earth. Check
@@ -384,7 +384,7 @@ const sections = [
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left text-white">
               <thead>
-                <tr className="bg-white/[0.06] border-b border-white/10 text-white/70">
+                <tr className="bg-white/[0.06] border-b border-white/10 text-white">
                   <th className="px-4 py-3 font-semibold">IR reading (element to earth)</th>
                   <th className="px-4 py-3 font-semibold">Verdict</th>
                   <th className="px-4 py-3 font-semibold">Action</th>
@@ -396,7 +396,7 @@ const sections = [
                   <td className="px-4 py-3 text-green-200">Healthy</td>
                   <td className="px-4 py-3">Look elsewhere for the fault</td>
                 </tr>
-                <tr className="bg-yellow-900/20">
+                <tr className="bg-white/[0.06]">
                   <td className="px-4 py-3 font-medium">0.5–1 MΩ</td>
                   <td className="px-4 py-3 text-yellow-200">Degrading</td>
                   <td className="px-4 py-3">Investigate; retest hot</td>
@@ -415,7 +415,7 @@ const sections = [
             </table>
           </div>
         </div>
-        <p className="text-white/70 text-sm">
+        <p className="text-white text-sm">
           These thresholds are practical fault-finding guidance for a single appliance element, not
           a circuit insulation resistance acceptance value. For circuit insulation resistance
           minimums during inspection and testing, refer to{' '}
@@ -446,7 +446,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Open-circuit element (no heat)</strong> — the resistance wire inside the
                 element sheath has burned through. The circuit is broken and no current flows, so
@@ -455,7 +455,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Element replacement</strong> — in most shower units, the element is
                 accessible after removing the front cover. The element is secured with screws or
@@ -465,7 +465,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Limescale prevention</strong> — in hard water areas, fitting an inline scale
                 inhibitor on the cold supply to the shower extends element life significantly.
@@ -544,7 +544,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minimum pressure requirement</strong> — most electric showers require a
                 minimum dynamic (flowing) water pressure of 0.7 to 1.0 bar at the shower inlet.
@@ -554,7 +554,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Failed flow switch</strong> — the flow switch itself can fail. If water
                 pressure is confirmed adequate but the element still does not activate, the flow
@@ -563,7 +563,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Partially blocked inlet filter</strong> — most electric showers have a small
                 inline filter at the water inlet to catch debris. A blocked filter restricts flow
@@ -589,7 +589,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Call an electrician for:</strong> RCD tripping, shower not powering on, no
                 heat (cold water), element or solenoid coil replacement, PCB replacement, circuit
@@ -636,7 +636,7 @@ const sections = [
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left text-white">
               <thead>
-                <tr className="bg-white/[0.06] border-b border-white/10 text-white/70">
+                <tr className="bg-white/[0.06] border-b border-white/10 text-white">
                   <th className="px-4 py-3 font-semibold">Repair</th>
                   <th className="px-4 py-3 font-semibold">Parts</th>
                   <th className="px-4 py-3 font-semibold">Labour</th>
@@ -644,36 +644,36 @@ const sections = [
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/10">
-                <tr className="bg-yellow-900/20">
+                <tr className="bg-white/[0.06]">
                   <td className="px-4 py-3 font-medium">Heating element (most common)</td>
                   <td className="px-4 py-3">£30–£60</td>
                   <td className="px-4 py-3">£50–£90</td>
-                  <td className="px-4 py-3 font-semibold text-yellow-300">£80–£150</td>
+                  <td className="px-4 py-3 font-semibold text-elec-yellow">£80–£150</td>
                 </tr>
                 <tr>
                   <td className="px-4 py-3 font-medium">Solenoid valve</td>
                   <td className="px-4 py-3">£20–£50</td>
                   <td className="px-4 py-3">£40–£70</td>
-                  <td className="px-4 py-3 font-semibold text-yellow-300">£60–£120</td>
+                  <td className="px-4 py-3 font-semibold text-elec-yellow">£60–£120</td>
                 </tr>
                 <tr>
                   <td className="px-4 py-3 font-medium">PCB (model-dependent)</td>
                   <td className="px-4 py-3">£80–£200</td>
                   <td className="px-4 py-3">£60–£100</td>
-                  <td className="px-4 py-3 font-semibold text-yellow-300">£140–£300</td>
+                  <td className="px-4 py-3 font-semibold text-elec-yellow">£140–£300</td>
                 </tr>
                 <tr>
                   <td className="px-4 py-3 font-medium">New shower unit fitted</td>
                   <td className="px-4 py-3">£150–£400</td>
                   <td className="px-4 py-3">£150–£300</td>
-                  <td className="px-4 py-3 font-semibold text-yellow-300">£300–£700</td>
+                  <td className="px-4 py-3 font-semibold text-elec-yellow">£300–£700</td>
                 </tr>
                 <tr>
                   <td className="px-4 py-3 font-medium">New dedicated circuit</td>
                   <td className="px-4 py-3" colSpan={2}>
                     Cable, MCB/RCBO, RCD protection &amp; certification
                   </td>
-                  <td className="px-4 py-3 font-semibold text-yellow-300">£200–£500</td>
+                  <td className="px-4 py-3 font-semibold text-elec-yellow">£200–£500</td>
                 </tr>
               </tbody>
             </table>
@@ -713,7 +713,7 @@ const sections = [
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left text-white">
               <thead>
-                <tr className="bg-white/[0.06] border-b border-white/10 text-white/70">
+                <tr className="bg-white/[0.06] border-b border-white/10 text-white">
                   <th className="px-4 py-3 font-semibold">Shower rating</th>
                   <th className="px-4 py-3 font-semibold">Approx. load at 230V</th>
                   <th className="px-4 py-3 font-semibold">Typical protective device</th>
@@ -735,7 +735,7 @@ const sections = [
                   <td className="px-4 py-3">≈ 41 A</td>
                   <td className="px-4 py-3">45 A Type B</td>
                 </tr>
-                <tr className="bg-yellow-900/20">
+                <tr className="bg-white/[0.06]">
                   <td className="px-4 py-3 font-medium">10.5 kW</td>
                   <td className="px-4 py-3">≈ 46 A</td>
                   <td className="px-4 py-3">50 A Type B</td>
@@ -744,7 +744,7 @@ const sections = [
             </table>
           </div>
         </div>
-        <p className="text-white/70 text-sm">
+        <p className="text-white text-sm">
           Device ratings shown are a common starting point; the final selection is the designer's
           and must satisfy overload and fault protection for the actual cable, length and
           installation method. Confirm the consumer unit can accommodate the load and that 30mA RCD
@@ -753,7 +753,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Issue the EIC On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -840,7 +840,7 @@ export default function ElectricShowerFaultFindingPage() {
       heroTitle={
         <>
           Electric Shower Not Working:{' '}
-          <span className="text-yellow-400">Fault Finding & Repair Guide</span>
+          <span className="text-elec-yellow">Fault Finding & Repair Guide</span>
         </>
       }
       heroSubtitle="Complete fault finding guide for electric showers — RCD tripping, cold water, solenoid valve faults, element failure, flow switch issues, low pressure diagnosis, when to call an electrician vs plumber, and typical repair costs for 2026."
@@ -852,7 +852,7 @@ export default function ElectricShowerFaultFindingPage() {
       faqHeading="Frequently Asked Questions — Electric Shower Faults"
       relatedPages={relatedPages}
       ctaHeading="Complete Electrical Certificates On Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for Electrical Installation Certificates, Minor Works certificates, and on-site quoting. No evening paperwork. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for Electrical Installation Certificates, Minor Works certificates, and on-site quoting. No evening paperwork. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -270,7 +270,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow text-black font-bold text-sm shrink-0">
                 1
               </span>
               <span>
@@ -281,7 +281,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow text-black font-bold text-sm shrink-0">
                 2
               </span>
               <span>
@@ -293,7 +293,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow text-black font-bold text-sm shrink-0">
                 3
               </span>
               <span>
@@ -304,7 +304,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow text-black font-bold text-sm shrink-0">
                 4
               </span>
               <span>
@@ -320,7 +320,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow text-black font-bold text-sm shrink-0">
                 5
               </span>
               <span>
@@ -349,7 +349,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard 7kW home installation</strong> — £800 to £1,200 all-in. Includes
                 charger unit, dedicated 32A circuit, RCD protection, commissioning, and EIC. After
@@ -357,7 +357,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Long cable run (over 15 metres)</strong> — add £100 to £300 depending on
                 route complexity. Victorian Oxford properties with rear parking often require runs
@@ -365,7 +365,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit upgrade</strong> — if your existing consumer unit is full or
                 does not meet current standards, a new consumer unit costs an additional £400 to
@@ -374,7 +374,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Solar PV integration (Zappi or similar)</strong> — solar-diverting smart
                 chargers such as the Myenergi Zappi cost £200 to £400 more than a standard charger
@@ -404,7 +404,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3.6kW (Mode 3, 16A)</strong> — slower home charging option. Suitable for
                 plug-in hybrids with small batteries (under 20kWh) or where electrical supply
@@ -413,7 +413,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>7kW (Mode 3, 32A)</strong> — the standard home EV charger in the UK.
                 Compatible with all EVs sold in the UK. Charges a 60kWh battery EV from 20% to 80%
@@ -422,7 +422,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>22kW (Mode 3, three-phase)</strong> — requires a three-phase electricity
                 supply, uncommon in Oxford residential properties but available at some commercial
@@ -432,7 +432,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smart chargers</strong> — all OZEV grant-eligible chargers must be smart
                 chargers capable of remote access, scheduling, and load management. Smart features
@@ -535,7 +535,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>OZEV approved installer list</strong> — only OZEV-registered installers can
                 apply the EVHS grant on your behalf. Verify your installer's OZEV status on the
@@ -543,7 +543,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC or NAPIT registration</strong> — registration with NICEIC or NAPIT
                 provides assurance that the installer is assessed against BS 7671, holds appropriate
@@ -553,7 +553,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV-specific experience</strong> — ask your installer how many EV charger
                 installations they have completed in Oxford and whether they are familiar with the
@@ -563,7 +563,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Written quote</strong> — insist on a written, itemised quote covering the
                 charger unit, all cabling, protection devices, commissioning, EIC, and Part P
@@ -590,7 +590,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete EV Certificates On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -624,7 +624,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your EV charger installation business with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EV certification, instant PDF export, and professional quoting."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EV certification, instant PDF export, and professional quoting."
           icon={Zap}
         />
       </>
@@ -650,7 +650,7 @@ export default function EVChargerInstallationOxfordPage() {
       heroTitle={
         <>
           EV Charger Installation Oxford:{' '}
-          <span className="text-yellow-400">Home Charging & OZEV Grants 2026</span>
+          <span className="text-elec-yellow">Home Charging & OZEV Grants 2026</span>
         </>
       }
       heroSubtitle="Everything you need to know about home EV charger installation in Oxford — OZEV grants up to £350, typical costs of £800 to £1,200 for a 7kW unit, BS 7671 Section 722 compliance, and how to find an OZEV-approved NICEIC or NAPIT installer."
@@ -661,7 +661,7 @@ export default function EVChargerInstallationOxfordPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in Oxford"
       relatedPages={relatedPages}
       ctaHeading="Complete EV Installation Certificates On Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EV certification, OZEV documentation, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EV certification, OZEV documentation, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

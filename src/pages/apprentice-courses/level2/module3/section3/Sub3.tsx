@@ -96,11 +96,11 @@ const quizQuestions = [
   {
     id: 3,
     question:
-      'Group of 4 circuits run together, all PVC T&E, clipped direct (Method C). The grouping correction factor Cg from Table 4C1 is approximately:',
-    options: ['0.85', '1.0 (no correction)', '0.50', '0.65'],
+      'Four PVC T&E circuits are bunched together (touching, bundled) on a wall surface. The grouping factor Cg from Table 4C1 is:',
+    options: ['0.85', '0.75', '0.50', '0.65'],
     correctAnswer: 3,
     explanation:
-      'Table 4C1 — 4 grouped multicore cables clipped direct, Cg ≈ 0.65. Add more cables and the factor falls further. The cables can’t shed heat into each other, so each one’s Iz drops.',
+      'Table 4C1 — four circuits bunched together (touching, bundled) give Cg = 0.65. The same four in a single layer on a wall would be 0.75. Add more cables and the factor falls further, because the cables cannot shed heat into each other.',
   },
   {
     id: 4,

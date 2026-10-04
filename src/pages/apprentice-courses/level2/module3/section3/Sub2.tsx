@@ -54,10 +54,10 @@ const checks = [
     question:
       'Feeding a detached garage 18 m down the garden, buried at 600 mm. Best wiring system:',
     options: [
-      'T&E clipped to a fence and run across the lawn',
-      '3-core flex on a reel for the full length',
+      'T&E (6242Y) pulled through a plastic duct at 600 mm',
+      'SY (steel-braid screened) flex buried direct in the trench',
       'SWA steel-wire-armoured with external glands',
-      'Singles in PVC conduit laid loose in the trench',
+      'Single-core cables in a buried PVC conduit, with warning tape above',
     ],
     correctIndex: 2,
     explanation:
@@ -70,7 +70,7 @@ const checks = [
     options: [
       'Twisting the data and mains cables together to cancel induced noise',
       'Separation by a continuous earthed metal divider, or use a separate compartment / segregated trunking',
-      'Insulating the data cable to 230 V and clipping it to the mains',
+      'Cable-tying the data cable to the trunking lid, away from the mains cables',
       'Running the data cable at least 25 mm away inside the same compartment',
     ],
     correctIndex: 1,
@@ -122,16 +122,16 @@ const quizQuestions = [
   {
     id: 4,
     question:
-      'Twin-and-earth cable buried in plaster less than 50 mm deep, NOT in a prescribed zone, NOT on a metallic enclosure — what does Reg 522.6.202 require?',
+      'Twin-and-earth is buried in plaster less than 50 mm deep and NOT in a prescribed zone, in a wall with no metallic parts. What does Table 52.1 (Reg 522.6.202) require?',
     options: [
-      'Additional protection by 30 mA RCD (415.1.1) OR comply with 522.6.204 (mechanical protection)',
-      'Nothing extra, provided the cable is clipped at 300 mm intervals',
-      'Re-route the cable so it sits at least 100 mm below the surface',
-      'Sleeve the cable in green-and-yellow PVC for identification',
+      'Protection to Reg 522.6.204 — an earthed metallic covering, earthed conduit or trunking, or mechanical protection against nails and screws (Table 52.1)',
+      'A 30 mA RCD (Reg 415.1.1) on its own — outside a zone, RCD protection is all that is needed',
+      'PVC capping over the cable along its full length',
+      'Nothing extra, provided the route is marked on the as-built drawing',
     ],
     correctAnswer: 0,
     explanation:
-      'Cable < 50 mm deep, no metallic protection, not in a prescribed zone — you need either a 30 mA RCD per 415.1.1 OR mechanical protection that satisfies 522.6.204 (typically earthed metal capping or conduit). Both achieve the same goal: a nail or screw doesn’t cause fatal shock.',
+      'Table 52.1 (A4:2026) sets this out. For a wall with no metallic parts and a cable less than 50 mm deep, the cable must EITHER be in a prescribed zone AND have 30 mA RCD protection, OR comply with Reg 522.6.204 — earthed metallic covering, earthed conduit or trunking, mechanical protection that stops nails and screws, or SELV/PELV. Outside a zone the RCD route is not available, so it has to be Reg 522.6.204 (or re-route the cable into a zone or deeper than 50 mm).',
   },
   {
     id: 5,
@@ -160,9 +160,9 @@ const quizQuestions = [
     id: 7,
     question: 'On a hospital escape route, you would specify:',
     options: [
-      'Standard 6242Y PVC T&E to keep the install cost down',
-      'Bare singles clipped direct for fast heat dissipation',
-      '3-core flex throughout so circuits can be moved easily',
+      'Standard 6242Y PVC T&E in plastic trunking',
+      'PVC-insulated singles in PVC conduit',
+      'PVC-sheathed SWA (6942X) clipped to the wall',
       'Low Smoke Zero Halogen (LSZH) cable to limit toxic smoke in a fire',
     ],
     correctAnswer: 3,
@@ -175,9 +175,9 @@ const quizQuestions = [
       'Data cable (Cat 6a) and 230 V mains share the same trunking. The compliant arrangement is:',
     options: [
       'Separation by an earthed metal divider, OR multi-compartment trunking, OR wholly separate trunking',
-      'Cable-tie the data cable to the outside of the mains trunking',
-      'Run the data and mains cores twisted together to balance the load',
-      'Energise the data cable from the same 230 V supply for convenience',
+      'Cable-tie the data cable to the trunking lid, away from the mains',
+      'Keep 25 mm clearance between data and mains inside one compartment',
+      'Use screened Cat 6a — its foil screen alone counts as segregation',
     ],
     correctAnswer: 0,
     explanation:

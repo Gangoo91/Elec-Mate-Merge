@@ -104,7 +104,7 @@ const quizQuestions = [
     options: ['Section 11', 'Section 3', 'Section 14', 'Section 8'],
     correctAnswer: 3,
     explanation:
-      'Section 8 of the Schedule of Inspections covers single-pole switches and protective devices being in the line conductor only — the verification of Reg 514.16 / 537.2.2. A fuse, MCB or single-pole switch in the neutral is a fail and gets a ✗ here.',
+      'Section 8 of the Schedule of Inspections covers single-pole switches and protective devices being in the line conductor only — the verification of Reg 132.14.1 (and of Reg 643.6(a) at testing). A fuse, MCB or single-pole switch in the neutral is a fail and gets a ✗ here.',
   },
   {
     id: 4,
@@ -201,9 +201,9 @@ const faqs = [
       'Because it is one of the highest-frequency defects on first-fix inspection, especially with imported gear or unbranded fuse units. A fuse in the neutral leaves the circuit live when the fuse blows (potentially fatal during fault investigation). A single-pole MCB in the neutral provides no overcurrent protection on the line conductor (relies on the upstream device, which may not coordinate). A single-pole switch in the neutral leaves the lamp / appliance permanently live (shock risk during lamp change). It is so important and so easy to get wrong that BS 7671 broke it out as its own dedicated checklist item, on its own dedicated section, with its own dedicated regulation (514.16 / 537.2.2). Treat it as a first-class check at every accessory.',
   },
   {
-    question: 'What about new BS 7671 A4:2026 items — AFDDs, Type A RCDs, mixed earthing?',
+    question: 'What about the newer BS 7671 items — AFDDs, Type A RCDs, PNB earthing?',
     answer:
-      'The model Schedule of Inspections gets refreshed alongside each BS 7671 amendment. A4:2026 brings the AFDD recommendation in Reg 421.1.7 (recommended in dwellings; effectively required in HRRBs under the Building Safety Act 2022 framework, with supporting fire-safety guidance covering HMOs / sleeping accommodation / care homes), the Type A RCD minimum for fixed equipment with DC components in Reg 531.3.3, the TN-C-S labelling clarifications. The current model Schedule of Inspections asks you to verify these where relevant. Older printed forms may need a manual addition. The on-app form should be on the latest version — check with your supervisor that the form you are running matches the current amendment.',
+      'The model Schedule of Inspections gets refreshed alongside each BS 7671 amendment. Recent amendments added AFDDs (Reg 421.1.7 — required in HRRBs, HMOs, purpose-built student accommodation and care homes since A2:2022), the Type AC restriction (Reg 531.3.3, A2:2022) and PNB as a TN-C-S arrangement (A4:2026). The current model Schedule of Inspections asks you to verify these where relevant. Older printed forms may need a manual addition. The on-app form should be on the latest version — check with your supervisor that the form you are running matches the current amendment.',
   },
   {
     question:
@@ -465,17 +465,17 @@ export default function Sub2() {
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 7671:2018+A4:2026 — Regulation 642.4 (Recording inspection results)"
-          clause="An inspection is required upon completion of a new installation or upon completion of an addition or alteration. Information regarding the inspection shall be recorded on the Schedule of Inspections of the appropriate certificate or report (see Chapter 64 and Appendix 6)."
+          source="BS 7671:2018+A4:2026 — Regulation 644.3 (Certificate and schedules)"
+          clause="The Certificate shall include details of the extent of the work covered, and: (a) Schedule(s) of Inspection; and (b) Schedule(s) of Circuit Details and Schedule(s) of Test Results. The schedules shall be based on the models in Appendix 6."
           meaning={
             <>
-              Reg 642.4 is the regulation that mandates the form. The inspection is not just done —
+              Reg 644.3 is the regulation that mandates the form. The inspection is not just done —
               it is <strong>recorded</strong>, on the appropriate Schedule of Inspections, which
               attaches to the EIC (for new work) or the EICR (for periodic inspection). No record,
               no certificate. The form is not optional paperwork — it is the evidence.
             </>
           }
-          cite="Source: BS 7671:2018+A4:2026 Part 6, Chapter 64, Regulation 642.4 (paraphrased — see also Appendix 6)."
+          cite="Source: BS 7671:2018+A4:2026, Regulation 644.3."
         />
 
         <SectionRule />
@@ -703,13 +703,13 @@ export default function Sub2() {
         <ConceptBlock
           title="ADS verification — the right device, right type, right setting"
           plainEnglish="Section 14 of the Schedule of Inspections covers the protective devices that disconnect the supply on a fault. Right MCB / RCBO / RCD / AFDD type for the load. Right rating per the design. Right additional protection (30 mA RCD) where Reg 411.3.3, 411.3.4, 522.6.202 or 415.1.1 require it. A4:2026 added the AFDD requirements in Reg 421.1.7."
-          onSite="The most common ADS non-conformance an apprentice will see flagged is missing 30 mA RCD on a socket circuit — Reg 411.3.3 mandates it on every socket up to 32 A. The second most common is the wrong RCD type — Type AC where Type A is now required per Reg 531.3.3 (A4:2026)."
+          onSite="The most common ADS non-conformance an apprentice will see flagged is missing 30 mA RCD on a socket circuit — Reg 411.3.3 mandates it on every socket up to 32 A. The second most common is the wrong RCD type — Type AC where Type A is now required per Reg 531.3.3 (A2:2022)."
         >
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
               <strong>Device type:</strong> MCB Type B for resistive / small inductive loads. Type C
               for inductive / motor inrush. Type D for high-inrush industrial. RCD Type A (minimum
-              per Reg 531.3.3 A4:2026) for general wiring. Type B for EV per Section 722.
+              per Reg 531.3.3, A2:2022) for general wiring. Type B for EV per Section 722.
             </li>
             <li>
               <strong>Device rating:</strong> Matches the cable CSA (Reg 433.1.1 — In ≤ Iz). Matches
@@ -717,27 +717,27 @@ export default function Sub2() {
             </li>
             <li>
               <strong>Additional 30 mA RCD:</strong> Reg 411.3.3 (sockets up to 32 A in any
-              installation). Reg 411.3.4 (lighting in domestic premises). Reg 522.6.202 (cables in
-              walls outside prescribed zones). Reg 415.1.1 (special locations including bathrooms).
+              installation). Reg 411.3.4 (lighting in domestic premises). Reg 522.6.202 / Table 52.1
+              (cables less than 50 mm deep in walls, run in prescribed zones). Reg 415.1.1 (special
+              locations including bathrooms).
             </li>
             <li>
-              <strong>AFDD:</strong> Reg 421.1.7 (A4:2026) — recommended for AC final circuits
-              supplying socket-outlets ≤ 32 A in dwellings. The recommendation strengthens to a
-              requirement in HRRBs under the Building Safety Act 2022 framework; supporting
-              fire-safety guidance treats them as effectively required practice in HMOs / sleeping
-              accommodation / care homes. Inspection verifies presence where required.
+              <strong>AFDD:</strong> Reg 421.1.7 — required on single-phase socket-outlet circuits
+              up to 32 A in high rise residential buildings, HMOs, purpose-built student
+              accommodation and care homes, and recommended on those circuits in all other premises.
+              Inspection verifies presence where required.
             </li>
           </ul>
         </ConceptBlock>
 
         <RegsCallout
-          source="BS 7671:2018+A4:2026 — Regulation 531.3.3 (RCD Type AC restriction — A4:2026 update)"
+          source="BS 7671:2018+A4:2026 — Regulation 531.3.3 (RCD Type AC restriction — A2:2022 update)"
           clause="531.3.3 now states that RCD Type AC shall only be used to serve fixed equipment, where it is known that the load current contains no DC components."
           meaning={
             <>
               Section 14 of the Schedule of Inspections now has to verify the RCD type against this
-              much tighter A4:2026 rule. Type AC RCDs are no longer acceptable for general wiring —
-              they may only serve fixed equipment with no DC components in the load current. Modern
+              tighter A2:2022 rule. Type AC RCDs are no longer acceptable for general wiring — they
+              may only serve fixed equipment with no DC components in the load current. Modern
               domestic / commercial equipment routinely contains DC components (LED drivers,
               switch-mode supplies, induction hobs, EV chargers, heat pumps), so Type A is now the
               effective minimum for general fixed wiring. Type B for EV and similar applications. A
@@ -915,7 +915,7 @@ export default function Sub2() {
 
         <KeyTakeaways
           points={[
-            'The Schedule of Inspections lives in BS 7671 Appendix 6 and is the paper / digital form that evidences the Section 642 inspection. Reg 642.4 mandates recording.',
+            'The Schedule of Inspections lives in BS 7671 Appendix 6 and is the paper / digital form that evidences the Section 642 inspection. Reg 644.3 requires it with the certificate.',
             'Around 60 items grouped into ~17 sections — origin, identification, cables, connections, single-pole devices, notices, accessories, earthing, bonding, CPCs, ADS, other protective measures.',
             'Each item gets one of four codes — ✓ (compliant), N/A (not applicable), LIM (limitation), ✗ (non-compliant). Use them honestly. ✗ must be fixed before energising.',
             'N/A is for items that do not apply to this install (earth electrode on TN-C-S, PV protection on a non-PV install). Always think before marking N/A — could be a missed requirement.',

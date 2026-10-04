@@ -142,8 +142,8 @@ export default function BusinessTemplate({
       {/* Hero */}
       <section className="pb-8">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-5">
-          <BadgeIcon className="w-4 h-4 text-yellow-400" />
-          <span className="text-sm font-medium text-yellow-400">{badge}</span>
+          <BadgeIcon className="w-4 h-4 text-elec-yellow" />
+          <span className="text-sm font-medium text-elec-yellow">{badge}</span>
         </div>
 
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
@@ -160,8 +160,8 @@ export default function BusinessTemplate({
             Start 7-Day Free Trial <ArrowRight className="w-4 h-4" />
           </a>
         </div>
-        <p className="text-xs text-white/60 mb-6">
-          Free for 7 days · No charge until day 8 · Cancel anytime · Used by 1,600+ UK electricians
+        <p className="text-xs text-white mb-6">
+          Free for 7 days · No charge until day 8 · Cancel anytime · Used by 2,100+ UK electricians
         </p>
 
         <SEOReadingMeta readingTime={readingTime} dateUpdated={dateModified} />
@@ -181,7 +181,7 @@ export default function BusinessTemplate({
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               {stats.map((stat) => (
                 <div key={stat.label} className="text-center">
-                  <div className="text-2xl sm:text-3xl font-bold text-yellow-400 mb-1">
+                  <div className="text-2xl sm:text-3xl font-bold text-elec-yellow mb-1">
                     {stat.value}
                   </div>
                   <div className="text-sm text-white">{stat.label}</div>

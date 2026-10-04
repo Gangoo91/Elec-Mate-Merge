@@ -136,41 +136,41 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Key Unite Benefits for Electricians</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">JIB negotiation</strong> — Unite is the employee
+                <strong className="text-elec-yellow">JIB negotiation</strong> — Unite is the employee
                 side of the JIB, directly negotiating pay rates, conditions, and grading structures
                 that affect every JIB-registered electrician.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Free legal representation</strong> — Employment
+                <strong className="text-elec-yellow">Free legal representation</strong> — Employment
                 tribunals, personal injury claims, HSE investigations, and contract disputes are all
                 covered by your membership at no additional cost.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Site representation</strong> — Unite shop
+                <strong className="text-elec-yellow">Site representation</strong> — Unite shop
                 stewards and site representatives are present on major construction sites, providing
                 immediate on-the-ground support for workplace issues.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Training and education</strong> — Access to
+                <strong className="text-elec-yellow">Training and education</strong> — Access to
                 Unite's education programme including health and safety courses, union
                 representative training, and professional development opportunities.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Financial benefits</strong> — Discounted
+                <strong className="text-elec-yellow">Financial benefits</strong> — Discounted
                 insurance, mortgage advice, legal will service, and member discounts with various
                 retailers and services.
               </span>
@@ -202,33 +202,33 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Where GMB Is Strong</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Energy sector</strong> — Electricians working
+                <strong className="text-elec-yellow">Energy sector</strong> — Electricians working
                 for energy companies, power stations, and renewable energy installations. GMB has
                 recognition agreements with several major energy employers.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Utilities</strong> — Water, gas, and electricity
+                <strong className="text-elec-yellow">Utilities</strong> — Water, gas, and electricity
                 distribution companies employ maintenance electricians, and GMB represents many of
                 them. These roles often come with company-specific agreements that GMB negotiates.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Facilities management</strong> — Building
+                <strong className="text-elec-yellow">Facilities management</strong> — Building
                 maintenance electricians working for FM companies such as Mitie, CBRE, and ISS often
                 fall under GMB recognition agreements.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Manufacturing</strong> — Factory-based
+                <strong className="text-elec-yellow">Manufacturing</strong> — Factory-based
                 electricians maintaining production equipment and control systems. GMB has a strong
                 manufacturing section with recognition at many large employers.
               </span>
@@ -262,23 +262,23 @@ const sections = [
           <div className="space-y-3">
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
               <span className="text-white font-medium">Electrical Improver</span>
-              <span className="text-yellow-400 font-bold">Entry level (post-apprenticeship)</span>
+              <span className="text-elec-yellow font-bold">Entry level (post-apprenticeship)</span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
               <span className="text-white font-medium">Electrician</span>
-              <span className="text-yellow-400 font-bold">Qualified (Level 3 + AM2)</span>
+              <span className="text-elec-yellow font-bold">Qualified (Level 3 + AM2)</span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
               <span className="text-white font-medium">Approved Electrician</span>
-              <span className="text-yellow-400 font-bold">Experienced + 2391</span>
+              <span className="text-elec-yellow font-bold">Experienced + 2391</span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
               <span className="text-white font-medium">Technician</span>
-              <span className="text-yellow-400 font-bold">Senior technical role</span>
+              <span className="text-elec-yellow font-bold">Senior technical role</span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
               <span className="text-white font-medium">Senior Technician</span>
-              <span className="text-yellow-400 font-bold">Highest technical grade</span>
+              <span className="text-elec-yellow font-bold">Highest technical grade</span>
             </div>
           </div>
         </div>
@@ -353,7 +353,7 @@ const sections = [
         <div className="space-y-4 mt-6">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-center gap-2 mb-3">
-              <Scale className="w-5 h-5 text-yellow-400" />
+              <Scale className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Employment Disputes</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -367,7 +367,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <Shield className="w-5 h-5 text-yellow-400" />
+              <Shield className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Personal Injury Claims</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -381,7 +381,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <HardHat className="w-5 h-5 text-yellow-400" />
+              <HardHat className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Health and Safety</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -549,7 +549,7 @@ export default function ElectricalUnionMembershipPage() {
       badgeIcon={Users}
       heroTitle={
         <>
-          Electrical Trade Unions: <span className="text-yellow-400">Unite, GMB & JIB Guide</span>
+          Electrical Trade Unions: <span className="text-elec-yellow">Unite, GMB & JIB Guide</span>
         </>
       }
       heroSubtitle="Everything UK electricians need to know about trade union membership. Unite and GMB compared, JIB agreements explained, collective bargaining, legal representation, training support, and how unions protect your pay, conditions, and career."
@@ -559,7 +559,7 @@ export default function ElectricalUnionMembershipPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Track your career progression with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for CPD tracking, qualification management, and professional development. Build the evidence you need for JIB grading assessments. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for CPD tracking, qualification management, and professional development. Build the evidence you need for JIB grading assessments. 7-day free trial, cancel anytime."
     />
   );
 }

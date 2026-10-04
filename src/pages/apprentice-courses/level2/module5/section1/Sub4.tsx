@@ -6,7 +6,7 @@
  * Frame: Client commissions, Principal Designer (PD) co-ordinates pre-construction
  * H&S, Designer designs, Principal Contractor (PC) co-ordinates the construction
  * phase, Contractor does the work, Worker (you) complies. Apprentice = Worker
- * under CDM 2015 Reg 15.
+ * under CDM 2015 Reg 8.
  */
 
 import { useNavigate } from 'react-router-dom';
@@ -31,7 +31,7 @@ import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'CDM 2015 framework — your duties as Worker | Level 2 Module 5.1.4 | Elec-Mate';
 const DESCRIPTION =
-  'Client, Principal Designer, Designer, Principal Contractor, Contractor, Worker — the CDM 2015 cascade and what Reg 15 puts on you personally as an apprentice.';
+  'Client, Principal Designer, Designer, Principal Contractor, Contractor, Worker — the CDM 2015 cascade and what Reg 8 puts on you personally as an apprentice.';
 
 /* ── Inline checks ────────────────────────────────────────────────── */
 
@@ -53,30 +53,30 @@ const checks = [
   {
     id: 'mod5-s1-sub4-reg15',
     question:
-      "Your Foreman tells you the Construction Phase Plan (CPP) for the site is 'just paperwork the boss has to write — don't worry about it'. Under CDM 2015 Reg 15 what's actually expected of you?",
+      "Your Foreman tells you the Construction Phase Plan (CPP) for the site is 'just paperwork the boss has to write — don't worry about it'. Under CDM 2015 Reg 8 what's actually expected of you?",
     options: [
       "Nothing — the Foreman is right, the CPP is purely the boss's paperwork and has no bearing on you.",
       'You must read the entire CPP cover to cover yourself before you are allowed to start any work.',
       'You must write your own personal version of the CPP for the specific tasks you are assigned each day.',
-      'Reg 15(1)(c) requires you to co-operate with the CPP — learn the parts affecting your work via induction and toolbox talks.',
+      'Reg 8(4) requires you to co-operate with the CPP — learn the parts affecting your work via induction and toolbox talks.',
     ],
     correctIndex: 3,
     explanation:
-      "Reg 15(1)(c) is the co-operation duty on workers. The CPP is how the PC discharges its Reg 12 planning duty. The two interlock — the PC writes the plan, you co-operate with it. The Foreman's dismissal of the CPP as 'paperwork' is wrong but a common attitude. You discharge your Reg 15 duty by attending the induction, listening at toolbox talks and following the controls described — not by reading every page of the CPP.",
+      "Reg 8(4) is the co-operation duty on workers. The CPP is how the PC discharges its Reg 12 planning duty. The two interlock — the PC writes the plan, you co-operate with it. The Foreman's dismissal of the CPP as 'paperwork' is wrong but a common attitude. You discharge your Reg 8 duty by attending the induction, listening at toolbox talks and following the controls described — not by reading every page of the CPP.",
   },
   {
     id: 'mod5-s1-sub4-induction',
     question:
       "It's day one of a commercial fit-out. You arrive on site, sign in, and the Site Manager runs the CDM induction. What should the induction cover?",
     options: [
-      'Site rules, welfare, fire muster, first-aid, PPE, no-go areas, your Reg 15 duties and the project-specific hazards.',
+      'Site rules, welfare, fire muster, first-aid, PPE, no-go areas, your Reg 8 duties and the project-specific hazards.',
       'Only the fire muster point and the welfare cabin location, with everything else left for later toolbox talks.',
       'A detailed walk-through of the cable calculations and protective device settings for the whole project.',
       'The pay rates, holiday entitlement and grievance procedure that apply to everyone working on the site.',
     ],
     correctIndex: 0,
     explanation:
-      "CDM 2015 Reg 13(4)(a) requires the Principal Contractor to ensure a suitable site induction is provided. 'Suitable' means it covers the topics that the workers genuinely need to discharge their Reg 15 duties — site rules, welfare, emergency arrangements, hazards, controls. Skipping or sleeping through the induction is a Reg 15 breach by you and puts you outside the site H&S system on day one. Treat the induction as the most important briefing of your week.",
+      "CDM 2015 Reg 13(4)(a) requires the Principal Contractor to ensure a suitable site induction is provided. 'Suitable' means it covers the topics that the workers genuinely need to discharge their Reg 8 duties — site rules, welfare, emergency arrangements, hazards, controls. Skipping or sleeping through the induction is a Reg 8(4) breach by you and puts you outside the site H&S system on day one. Treat the induction as the most important briefing of your week.",
   },
 ];
 
@@ -137,7 +137,7 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question: 'Under CDM 2015 Reg 15, what are the three named duties on a Worker?',
+    question: 'Which three things does CDM 2015 expect of you as a worker on site?',
     options: [
       'Provide your own PPE, hold a current ECS card, and insure yourself against any harm you cause on site.',
       'Only work within your competence, report hazards to the person in control, and co-operate with others.',
@@ -146,7 +146,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      "Reg 15(1)(a) is the competence duty — only do work you're competent to do (apprentices are 'in the process of obtaining' competence, hence supervised). Reg 15(1)(b) is the report-hazards duty — escalate hazards to the person in control. Reg 15(1)(c) is the co-operation duty — co-operate with everyone else's CDM duties. These three duties are the personal CDM duties on every operative including apprentices.",
+      'Reg 8(4): co-operate with others working on the project. Reg 8(5): report anything likely to endanger anyone to the person you work under. Competence comes through your employer: Reg 15(7) says a contractor must not put a person on site unless they have, or are in the process of obtaining, the skills, knowledge, training and experience for the tasks — which is why apprentices work supervised (Reg 15(8)).',
   },
   {
     id: 6,
@@ -177,16 +177,16 @@ const quizQuestions = [
   {
     id: 8,
     question:
-      'Apprentice = Worker under CDM 2015. Does that mean apprentices have the same Reg 15 duties as a fully-qualified electrician?',
+      'Apprentice = Worker under CDM 2015. Does that mean apprentices have the same Reg 8 duties as a fully-qualified electrician?',
     options: [
-      "Yes — Reg 15 applies in full, with the competence duty met by being 'in the process of obtaining' competence.",
-      'No — Reg 15 only applies once an apprentice has passed AM2 and become a fully qualified electrician.',
-      "No — apprentices are exempt from Reg 15 because they always work under an Approved Electrician's supervision.",
+      "Yes — Reg 8 applies to anyone working on a project, and Reg 15(7) lets your employer put you on work you are 'in the process of obtaining' the skills for, under supervision.",
+      'No — Reg 8 only applies once an apprentice has passed AM2 and become a fully qualified electrician.',
+      "No — apprentices are exempt from Reg 8 because they always work under an Approved Electrician's supervision.",
       'Only partly — apprentices owe the competence duty but not the report-hazards or the co-operation duties.',
     ],
     correctAnswer: 0,
     explanation:
-      "Reg 15 applies to every worker on a CDM site without exception. The 'in the process of obtaining' wording in Reg 15(1)(a) explicitly accommodates apprentices and trainees — it's why supervised apprentices can lawfully carry out work that they couldn't carry out unsupervised. The report-hazards duty and the co-operation duty are personal duties on every worker including apprentices. Treating Reg 15 as 'someone else's job' is a misconception.",
+      "Reg 8 applies to anyone working on a project, without exception. The 'in the process of obtaining' wording in Reg 15(7) — a duty on the contractor employing you — explicitly accommodates apprentices and trainees, alongside Reg 15(8)'s duty to supervise them. It's why supervised apprentices can lawfully carry out work they couldn't carry out unsupervised. The report-hazards duty and the co-operation duty are personal duties on every worker including apprentices. Treating CDM as 'someone else's job' is a misconception.",
   },
 ];
 
@@ -206,7 +206,7 @@ const faqs = [
   {
     question: "If I'm an agency-supplied apprentice on a site, who's my employer for CDM purposes?",
     answer:
-      "The agency is your employer for HASAWA s.2 purposes (the contract of employment sits with the agency). The end-user contractor is your employer for CDM Reg 15 day-to-day supervisory purposes — they direct your work, they co-ordinate your activities with the PC. Both have duties to you. As an apprentice this rarely arises (most apprentices are direct-employed by the contractor) but it's worth knowing if you ever take an agency placement during your apprenticeship.",
+      "The agency is your employer for HASAWA s.2 purposes (the contract of employment sits with the agency). The end-user contractor is your employer for CDM Reg 8 day-to-day supervisory purposes — they direct your work, they co-ordinate your activities with the PC. Both have duties to you. As an apprentice this rarely arises (most apprentices are direct-employed by the contractor) but it's worth knowing if you ever take an agency placement during your apprenticeship.",
   },
   {
     question:
@@ -240,14 +240,14 @@ export default function Sub4() {
       <HubBody>
         <p className="max-w-3xl text-[13px] leading-relaxed text-white">
           Client, Principal Designer, Designer, Principal Contractor, Contractor, Worker — the CDM
-          2015 cascade and what Reg 15 puts on you personally as an apprentice.
+          2015 cascade and what Reg 8 puts on you personally as an apprentice.
         </p>
 
         <TLDR
           points={[
             'CDM 2015 (Construction (Design and Management) Regulations 2015) is the regulatory framework that defines six named duty-holders on every construction project — Client, Principal Designer (PD), Designer, Principal Contractor (PC), Contractor and Worker. Apprentice = Worker.',
             'The duties cascade — Client appoints PD and PC, PD writes the Pre-Construction Information, PC writes the Construction Phase Plan, Contractors implement, Workers comply. Each duty-holder owes specific duties under CDM 2015 (Regs 4 to 15).',
-            "Reg 15 puts three personal duties on every Worker — competence (don't do work you're not competent for), report hazards (escalate to the person in control), and co-operate (with everyone else's CDM duties). These duties apply identically to apprentices and to fully-qualified electricians.",
+            'CDM expects three things of every Worker — co-operate (Reg 8(4)), report anything likely to endanger anyone (Reg 8(5)), and work only within competence or under supervision (Reg 15(7)–(8), duties on your employer). These duties apply identically to apprentices and to fully-qualified electricians.',
           ]}
         />
 
@@ -259,7 +259,7 @@ export default function Sub4() {
             'State the duty under CDM 2015 Reg 11 on the Principal Designer to plan, manage, monitor and co-ordinate H&S during the pre-construction phase.',
             'State the duty under CDM 2015 Reg 12 on the Principal Contractor to plan, manage, monitor and co-ordinate the construction phase, and to produce the Construction Phase Plan.',
             'State the duty under CDM 2015 Reg 13 on the Principal Contractor to ensure a suitable site induction, prevent unauthorised access and provide welfare facilities.',
-            'State the three personal duties on a Worker under CDM 2015 Reg 15 — competence, report hazards, co-operate.',
+            'State what CDM 2015 expects of a worker — co-operate (Reg 8(4)), report hazards (Reg 8(5)), and work within competence or under supervision (Reg 15(7)–(8)).',
             'Identify the relationship between the Construction Phase Plan (CPP), Pre-Construction Information (PCI) and the H&S File for the building.',
           ]}
           initialVisibleCount={3}
@@ -323,12 +323,12 @@ export default function Sub4() {
             </div>
             <div className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-4">
               <div className="text-[11px] uppercase tracking-[0.18em] text-elec-yellow mb-2">
-                Worker (Reg 15)
+                Worker (Reg 8)
               </div>
               <p className="text-[13.5px] text-white/85 leading-relaxed">
-                Apprentice = Worker. Three personal duties: competence (Reg 15(1)(a)), report
-                hazards (Reg 15(1)(b)), co-operate (Reg 15(1)(c)). Applies to every operative
-                including apprentices.
+                Apprentice = Worker. Co-operate (Reg 8(4)) and report hazards (Reg 8(5)) are
+                personal duties; your employer must only put you on work within your competence or
+                under supervision (Reg 15(7)–(8)).
               </p>
             </div>
           </div>
@@ -384,7 +384,7 @@ export default function Sub4() {
         <ConceptBlock
           title="Principal Contractor (PC) duties (Reg 12, 13) — construction-phase co-ordination"
           plainEnglish="The PC is appointed by the Client and is the lead H&S co-ordinator during construction. They plan, manage, monitor and co-ordinate the construction phase, produce and update the Construction Phase Plan, ensure a suitable site induction, prevent unauthorised access and provide welfare facilities."
-          onSite="The PC's site management chain (PM, SM, Foreman) is who you actually deal with day to day on a CDM site. The CPP is the practical document that drives the site rules and the trade co-ordination. As an apprentice you co-operate with the PC's arrangements under Reg 15(1)(c) — that's the regulatory hook for following the site rules and attending the inductions and toolbox talks."
+          onSite="The PC's site management chain (PM, SM, Foreman) is who you actually deal with day to day on a CDM site. The CPP is the practical document that drives the site rules and the trade co-ordination. As an apprentice you co-operate with the PC's arrangements under Reg 8(4) — that's the regulatory hook for following the site rules and attending the inductions and toolbox talks."
         >
           <p>The PC's headline duties under Reg 12 and 13:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -404,26 +404,26 @@ export default function Sub4() {
         </ConceptBlock>
 
         <ConceptBlock
-          title="Worker duties (Reg 15) — your three personal duties as an apprentice"
-          plainEnglish="Reg 15 puts three personal duties on every worker on a CDM site, including apprentices. Reg 15(1)(a) is the competence duty — don't do work you're not competent for, or are not in the process of obtaining the competence for. Reg 15(1)(b) is the report-hazards duty — escalate hazards to the person in control. Reg 15(1)(c) is the co-operation duty — co-operate with everyone else's CDM duties."
-          onSite="As an apprentice the competence duty is satisfied because you're 'in the process of obtaining' the competence — that's the explicit accommodation in the regulation for apprentices and trainees. The report-hazards duty applies to you in full: spot a hazard, tell your Foreman. The co-operation duty applies to you in full: co-operate with the joiner, the plumber, the labourer, the PC's site team."
+          title="What CDM expects of you as a worker"
+          plainEnglish="Reg 8 puts two personal duties on anyone working on a project, apprentices included: co-operate with others (Reg 8(4)) and report anything likely to endanger anyone to the person you work under (Reg 8(5)). Competence is handled through your employer: under Reg 15(7)–(8) a contractor may only put you on work you have, or are in the process of obtaining, the skills for — and must supervise you."
+          onSite="As an apprentice the competence rule is met because you're 'in the process of obtaining' the competence and you're supervised — that's the explicit accommodation in Reg 15(7) for apprentices and trainees. The report-hazards duty applies to you in full: spot a hazard, tell your Foreman. The co-operation duty applies to you in full: co-operate with the joiner, the plumber, the labourer, the PC's site team."
         >
-          <p>The three duties broken down:</p>
+          <p>Broken down:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
-              <strong>Reg 15(1)(a) &mdash; competence</strong> &mdash; don&apos;t do work
-              unsupervised that&apos;s beyond your current skills, knowledge, training and
-              experience. Apprentices are &apos;in the process of obtaining&apos; the competence,
-              hence supervised by an Approved Electrician.
+              <strong>Reg 15(7)&ndash;(8) &mdash; competence (a duty on your employer)</strong>{' '}
+              &mdash; you shouldn&apos;t be put on work unsupervised that&apos;s beyond your current
+              skills, knowledge, training and experience. Apprentices are &apos;in the process of
+              obtaining&apos; the competence, hence supervised by an Approved Electrician.
             </li>
             <li>
-              <strong>Reg 15(1)(b) &mdash; report hazards</strong> &mdash; report to the person in
+              <strong>Reg 8(5) &mdash; report hazards</strong> &mdash; report to the person in
               control of the work (your Foreman in the first instance) anything you&apos;re aware of
               that&apos;s likely to endanger H&amp;S. Hazards in your area, hazards you spot in
               others&apos; areas, near-misses you witness.
             </li>
             <li>
-              <strong>Reg 15(1)(c) &mdash; co-operate</strong> &mdash; co-operate with anyone else
+              <strong>Reg 8(4) &mdash; co-operate</strong> &mdash; co-operate with anyone else
               working on or in connection with the project, to enable that person to comply with
               their duties. Trade clashes, sequence agreements, site rules &mdash; all of it.
             </li>
@@ -464,7 +464,7 @@ export default function Sub4() {
         <ConceptBlock
           title="Construction Phase Plan (CPP) — the PC's day-to-day H&S management plan"
           plainEnglish="The CPP is the Principal Contractor's plan for managing H&S throughout construction. Schedule 3 of CDM 2015 lists the topics — site description, programme, key dates, management arrangements, control of the principal risks, arrangements for monitoring and review. The CPP is updated as the project evolves."
-          onSite="The CPP isn't usually read cover-to-cover by operatives. It's briefed down to the work face via the site induction (CPP headlines) and the toolbox talks (specific updates and high-risk activities). As an apprentice you discharge your Reg 15(1)(c) co-operation duty by attending the induction and the toolbox talks and following the controls described — not by reading every page of the CPP."
+          onSite="The CPP isn't usually read cover-to-cover by operatives. It's briefed down to the work face via the site induction (CPP headlines) and the toolbox talks (specific updates and high-risk activities). As an apprentice you discharge your Reg 8(4) co-operation duty by attending the induction and the toolbox talks and following the controls described — not by reading every page of the CPP."
         >
           <p>The CPP topics under CDM 2015 Schedule 3:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -561,8 +561,8 @@ export default function Sub4() {
               Reg 12 is the duty that creates the Construction Phase Plan and drives the site
               management chain. The PC&apos;s Site Manager is who actually plans, manages and
               monitors the construction phase day-to-day on behalf of the PC entity. As an
-              apprentice you co-operate with the PC&apos;s arrangements under Reg 15(1)(c) &mdash;
-              the two regulations interlock.
+              apprentice you co-operate with the PC&apos;s arrangements under Reg 8(4) &mdash; the
+              two regulations interlock.
             </>
           }
           cite="Source: Construction (Design and Management) Regulations 2015 (SI 2015/51), Reg 12 — verbatim from legislation.gov.uk."
@@ -605,29 +605,36 @@ export default function Sub4() {
         />
 
         <RegsCallout
-          source="Construction (Design and Management) Regulations 2015 — Reg 15 (Workers' duties)"
+          source="Construction (Design and Management) Regulations 2015 — Reg 8 (General duties)"
           clause={
             <>
-              &quot;A worker must &mdash; (a) not carry out construction work unless the worker has
-              the skills, knowledge, training and experience necessary to carry it out safely and
-              without risk to health, or is in the process of obtaining them; (b) report to the
-              person in control of the way construction work is carried out anything which the
-              worker is aware is likely to endanger the safety or health of the worker or others;
-              and (c) co-operate with any other person working on or in connection with the project
-              to enable that person to comply with their duties.&quot;
+              <p className="mb-2">
+                <strong>Reg 8(4)</strong> &mdash; &quot;A person with a duty or function under these
+                Regulations must cooperate with any other person working on or in relation to a
+                project, at the same or an adjoining construction site, to the extent necessary to
+                enable any person with a duty or function to fulfil that duty or function.&quot;
+              </p>
+              <p>
+                <strong>Reg 8(5)</strong> &mdash; &quot;A person working on a project under the
+                control of another must report to that person anything they are aware of in relation
+                to the project which is likely to endanger their own health or safety or that of
+                others.&quot;
+              </p>
             </>
           }
           meaning={
             <>
-              Reg 15 is the personal-duty regulation for every Worker on a CDM site, including
-              apprentices. The three duties are competence (Reg 15(1)(a)), report hazards (Reg
-              15(1)(b)) and co-operate (Reg 15(1)(c)). The &quot;in the process of obtaining&quot;
-              wording in Reg 15(1)(a) explicitly accommodates apprentices &mdash; you can lawfully
-              do supervised work that you couldn&apos;t do unsupervised. The other two duties apply
-              to apprentices identically to fully- qualified electricians.
+              Reg 8 applies to anyone working on a project, apprentices included. Reg 8(4) is the
+              co-operation duty &mdash; it is what catches cross-trade clashes: you co-operate with
+              the joiner, the plumber, the labourer and the Principal Contractor&apos;s site team.
+              Reg 8(5) is the duty to report anything likely to endanger anyone to the person you
+              work under &mdash; your Foreman. Competence is put on your employer: Reg 15(7) says a
+              contractor must not put a person on site unless they have, or are in the process of
+              obtaining, the necessary skills, knowledge, training and experience, and Reg 15(8)
+              says the contractor must supervise them. That is why apprentices work supervised.
             </>
           }
-          cite="Source: Construction (Design and Management) Regulations 2015 (SI 2015/51), Reg 15 — verbatim from legislation.gov.uk."
+          cite="Source: CDM 2015 (SI 2015/51), Regs 8 and 15, as reproduced in HSE L153."
         />
 
         <InlineCheck
@@ -652,8 +659,8 @@ export default function Sub4() {
               toolbox talks, doesn&apos;t know the fire muster point. When a near-miss occurs and
               the HSE inspector questions them about the controls in place, the apprentice
               doesn&apos;t know the answers. The Foreman gets the formal hit, but the apprentice
-              gets the personal Reg 15 record &mdash; a documented breach of the competence and
-              co-operation duties.
+              gets the personal record &mdash; a documented breach of the Reg 8(4) co-operation duty
+              and HASAWA s.7.
             </>
           }
           doInstead={
@@ -662,7 +669,7 @@ export default function Sub4() {
               don&apos;t have to read the document; you do have to follow what&apos;s briefed down
               to you. Sign in to the induction properly, listen, ask questions if anything
               isn&apos;t clear. Attend toolbox talks. Know the fire muster point and the first-aid
-              arrangements. Reg 15 puts a personal duty on you that doesn&apos;t disappear because
+              arrangements. Reg 8 puts a personal duty on you that doesn&apos;t disappear because
               the Foreman dismisses the paperwork.
             </>
           }
@@ -675,7 +682,7 @@ export default function Sub4() {
               It&apos;s your first day on a £4m commercial fit-out. The main contractor&apos;s Site
               Manager runs the CDM induction at 8am in the welfare cabin. About 25 operatives in the
               room from various trades. The induction lasts 45 minutes and covers a full agenda.
-              What should be on the agenda, and how do you know your Reg 15 duties have been
+              What should be on the agenda, and how do you know your Reg 8 duties have been
               triggered?
             </>
           }
@@ -692,21 +699,21 @@ export default function Sub4() {
               management). Project-specific hazards (asbestos survey results, live services, traffic
               management, fragile-roof exposure). Welfare facilities and sanitary provision
               (Schedule 2). Worker engagement arrangements (toolbox talks, suggestion routes,
-              near-miss reporting). Your duties under CDM 2015 Reg 15.
+              near-miss reporting). Your duties under CDM 2015 Reg 8.
               <br />
               <br />
-              <strong>Your Reg 15 duties triggered by attending the induction:</strong>
+              <strong>Your Reg 8 duties triggered by attending the induction:</strong>
               <br />
               <br />
-              Reg 15(1)(a) competence &mdash; you confirm you have (or are obtaining) the skills for
+              Reg 15(7) competence &mdash; you confirm you have (or are obtaining) the skills for
               the work assigned. As an apprentice the supervised-pairing handles this.
               <br />
               <br />
-              Reg 15(1)(b) report hazards &mdash; you confirm you understand the reporting route
+              Reg 8(5) report hazards &mdash; you confirm you understand the reporting route
               (Foreman first, escalation up). Note the route in your job pack.
               <br />
               <br />
-              Reg 15(1)(c) co-operate &mdash; you confirm you understand the site rules and will
+              Reg 8(4) co-operate &mdash; you confirm you understand the site rules and will
               co-operate with the PC&apos;s arrangements. Sign the induction record as evidence of
               attendance.
             </>
@@ -716,10 +723,11 @@ export default function Sub4() {
               The induction is the formal moment when CDM duties activate for you on this site.
               After the induction you&apos;re on the record as having received the H&amp;S
               information &mdash; subsequent breaches by you (ignoring the rules, missing the muster
-              point, blocking access routes) are personal Reg 15 breaches. Take the induction
-              seriously: it protects you, it informs you and it sets the relationship with the site
-              management for your time on the project. Skipping the induction or sleeping through it
-              puts you outside the site H&amp;S system on day one.
+              point, blocking access routes) are personal breaches of the Reg 8(4) co-operation duty
+              and HASAWA s.7. Take the induction seriously: it protects you, it informs you and it
+              sets the relationship with the site management for your time on the project. Skipping
+              the induction or sleeping through it puts you outside the site H&amp;S system on day
+              one.
             </>
           }
         />
@@ -744,10 +752,10 @@ export default function Sub4() {
             'Client (Reg 4) commissions the project, makes suitable arrangements, provides Pre-Construction Information, appoints PD and PC. Failure to appoint = the Client takes on those duties themselves.',
             'Principal Designer (Reg 11) co-ordinates H&S in pre-construction. Identifies, eliminates or controls foreseeable risks via the design. Prepares the Pre-Construction Information.',
             'Principal Contractor (Reg 12, 13) co-ordinates the construction phase. Writes and updates the Construction Phase Plan. Ensures site induction, prevention of unauthorised access and welfare facilities.',
-            "Worker (Reg 15) — three personal duties: competence (Reg 15(1)(a) — apprentices are 'in the process of obtaining'), report hazards (Reg 15(1)(b) — escalate to person in control), co-operate (Reg 15(1)(c) — with everyone else's CDM duties).",
+            "Worker — co-operate (Reg 8(4)) and report hazards to the person you work under (Reg 8(5)); your employer may only put you on work within your competence or under supervision (Reg 15(7)–(8) — apprentices are 'in the process of obtaining').",
             "The three documents — Pre-Construction Information (PCI, written by Client/PD before construction), Construction Phase Plan (CPP, written by PC for construction), H&S File (compiled by PD, handed to Client at completion for the building's life).",
-            "Apprentices have the same Reg 15 duties as fully-qualified electricians. The competence duty is satisfied by being 'in the process of obtaining' competence (hence supervised). The report-hazards duty and the co-operate duty apply identically.",
-            "Site induction is the formal mechanism for the PC to discharge Reg 13(4)(a) and to activate workers' Reg 15 duties. Skipping or sleeping through the induction puts you outside the site H&S system on day one and is itself a Reg 15 breach.",
+            "Apprentices have the same Reg 8 duties as fully-qualified electricians. The competence duty is satisfied by being 'in the process of obtaining' competence (hence supervised). The report-hazards duty and the co-operate duty apply identically.",
+            "Site induction is the formal mechanism for the PC to discharge Reg 13(4)(a) and to activate workers' Reg 8 duties. Skipping or sleeping through the induction puts you outside the site H&S system on day one and is itself a failure to co-operate under Reg 8(4).",
           ]}
         />
 

@@ -40,9 +40,9 @@ const CODE_STYLES: Record<
     dot: 'bg-orange-500',
   },
   C3: {
-    badge: 'bg-yellow-500/15 border-yellow-500/40 text-yellow-400',
-    card: 'border-yellow-500/25 bg-yellow-500/5',
-    cardActive: 'border-yellow-500 bg-yellow-500/15 ring-1 ring-yellow-500/50',
+    badge: 'bg-white/[0.06] border-white/[0.1] text-elec-yellow',
+    card: 'border-white/[0.1] bg-white/[0.06]',
+    cardActive: 'border-yellow-500 bg-white/[0.06] ring-1 ring-yellow-500/50',
     dot: 'bg-yellow-400',
   },
   FI: {
@@ -76,9 +76,9 @@ function matchesQuery(obs: EicrObservation, query: string): boolean {
 
 function SignupCTA() {
   return (
-    <div className="rounded-2xl border border-yellow-500/25 bg-yellow-500/5 p-5 sm:p-6">
+    <div className="rounded-2xl border border-white/[0.1] bg-white/[0.06] p-5 sm:p-6">
       <p className="text-white font-semibold mb-1.5">Writing this up on a real EICR?</p>
-      <p className="text-sm text-white/70 leading-relaxed mb-4">
+      <p className="text-sm text-white leading-relaxed mb-4">
         Produce professional EICR reports with codes, photos and automatic unsatisfactory logic —
         try Elec-Mate free.
       </p>
@@ -149,10 +149,10 @@ export default function EicrCodeChecker() {
                 <span className={`w-2 h-2 rounded-full ${styles.dot}`} aria-hidden />
                 <span className="font-bold text-white">{code}</span>
               </span>
-              <span className="block text-xs font-medium text-white/85 leading-snug">
+              <span className="block text-xs font-medium text-white leading-snug">
                 {meaning.label}
               </span>
-              <span className="block text-[11px] text-white/55 leading-snug mt-0.5">
+              <span className="block text-[11px] text-white leading-snug mt-0.5">
                 {meaning.action}
               </span>
             </button>
@@ -163,7 +163,7 @@ export default function EicrCodeChecker() {
       {/* Search */}
       <div className="relative">
         <Search
-          className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40 pointer-events-none"
+          className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white pointer-events-none"
           aria-hidden
         />
         <Input
@@ -180,7 +180,7 @@ export default function EicrCodeChecker() {
             type="button"
             onClick={() => setQuery('')}
             aria-label="Clear search"
-            className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-lg text-white/50 hover:text-white touch-manipulation"
+            className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-lg text-white hover:text-white touch-manipulation"
           >
             <X className="w-4 h-4" />
           </button>
@@ -199,7 +199,7 @@ export default function EicrCodeChecker() {
           className={`shrink-0 h-9 px-3.5 rounded-full border text-sm touch-manipulation transition-colors ${
             activeCategory === null
               ? 'bg-yellow-500 border-yellow-500 text-black font-semibold'
-              : 'border-white/15 text-white/70 hover:border-white/35'
+              : 'border-white/15 text-white hover:border-white/35'
           }`}
         >
           All
@@ -212,7 +212,7 @@ export default function EicrCodeChecker() {
             className={`shrink-0 h-9 px-3.5 rounded-full border text-sm touch-manipulation transition-colors ${
               activeCategory === cat
                 ? 'bg-yellow-500 border-yellow-500 text-black font-semibold'
-                : 'border-white/15 text-white/70 hover:border-white/35'
+                : 'border-white/15 text-white hover:border-white/35'
             }`}
           >
             {cat}
@@ -222,7 +222,7 @@ export default function EicrCodeChecker() {
 
       {/* Result count + clear */}
       <div className="flex items-center justify-between gap-3">
-        <p className="text-sm text-white/60">
+        <p className="text-sm text-white">
           {results.length} observation{results.length === 1 ? '' : 's'}
           {isFiltered ? ' match' : ' in the checker'}
         </p>
@@ -230,7 +230,7 @@ export default function EicrCodeChecker() {
           <button
             type="button"
             onClick={clearAll}
-            className="text-sm text-yellow-400 hover:text-yellow-300 touch-manipulation min-h-[44px] px-1"
+            className="text-sm text-elec-yellow hover:text-elec-yellow touch-manipulation min-h-[44px] px-1"
           >
             Clear filters
           </button>
@@ -255,11 +255,11 @@ export default function EicrCodeChecker() {
                     >
                       {obs.code}
                     </span>
-                    <span className="text-xs text-white/50">{meaning.action}</span>
-                    <span className="text-xs text-white/35 ml-auto">{obs.category}</span>
+                    <span className="text-xs text-white">{meaning.action}</span>
+                    <span className="text-xs text-white ml-auto">{obs.category}</span>
                   </div>
                   <p className="text-white font-medium leading-snug mb-2">{obs.observation}</p>
-                  <p className="text-sm text-white/70 leading-relaxed mb-3">{obs.reasoning}</p>
+                  <p className="text-sm text-white leading-relaxed mb-3">{obs.reasoning}</p>
                   {meaning.unsatisfactory ? (
                     <p className="inline-flex items-center gap-1.5 text-xs font-medium text-orange-300">
                       <AlertTriangle className="w-3.5 h-3.5" aria-hidden />
@@ -280,13 +280,13 @@ export default function EicrCodeChecker() {
             <button
               type="button"
               onClick={() => setShowAll(true)}
-              className="w-full h-11 rounded-xl border border-white/15 text-white/80 hover:border-yellow-500/40 hover:text-white font-medium touch-manipulation transition-colors"
+              className="w-full h-11 rounded-xl border border-white/15 text-white hover:border-white/[0.1] hover:text-white font-medium touch-manipulation transition-colors"
             >
               Show all {results.length} observations
             </button>
           )}
 
-          <p className="text-xs text-white/45 leading-relaxed">
+          <p className="text-xs text-white leading-relaxed">
             Classification codes are always the inspector&apos;s judgement based on the actual
             condition found on site. These are typical codings — the same defect can justify a
             different code depending on accessibility, location and who uses the installation.
@@ -299,7 +299,7 @@ export default function EicrCodeChecker() {
         <div className="space-y-5">
           <div className="rounded-xl border border-white/10 bg-white/[0.03] p-6 text-center">
             <p className="text-white font-medium mb-1.5">No observations match that search</p>
-            <p className="text-sm text-white/60 mb-4">
+            <p className="text-sm text-white mb-4">
               Try a shorter term, or one of these common searches:
             </p>
             <div className="flex flex-wrap justify-center gap-2">
@@ -312,7 +312,7 @@ export default function EicrCodeChecker() {
                     setActiveCode(null);
                     setActiveCategory(null);
                   }}
-                  className="h-9 px-3.5 rounded-full border border-yellow-500/30 bg-yellow-500/10 text-sm text-yellow-400 hover:bg-yellow-500/20 touch-manipulation transition-colors"
+                  className="h-9 px-3.5 rounded-full border border-white/[0.1] bg-white/[0.06] text-sm text-elec-yellow hover:bg-white/[0.06] touch-manipulation transition-colors"
                 >
                   {term}
                 </button>

@@ -152,7 +152,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Glasgow irradiance:</strong> ~800–880 kWh/kWp/year. Broadly similar to
                 Edinburgh. Lower than England but viable for solar economics at 24p+/kWh electricity
@@ -160,7 +160,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Scottish regulations:</strong> Scottish Building Standards (not England's
                 Building Regulations). Notification to Glasgow City Council's Building Standards
@@ -168,7 +168,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCS and SEG:</strong> Identical requirements to England. MCS certification
                 mandatory for Smart Export Guarantee eligibility.
@@ -193,7 +193,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>South-facing optimum:</strong> A south-facing roof at 35 degrees in Glasgow
                 achieves approximately 830–880 kWh/kWp/year. East or west-facing roofs achieve
@@ -201,7 +201,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Summer vs winter:</strong> Glasgow's long summer days (17+ hours daylight in
                 June) generate strong summer output. Winter generation is significantly lower.
@@ -210,7 +210,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Glasgow housing:</strong> Glasgow's traditional sandstone tenements and
                 terraces are widespread. Many have shared roofs requiring all residents' agreement
@@ -236,7 +236,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Permitted development:</strong> Most residential rooftop solar in Glasgow is
                 permitted development under the Town and Country Planning (General Permitted
@@ -264,7 +264,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pre-application advice:</strong> Glasgow City Council offers a
                 pre-application advice service for planning queries. Use this if your property may
@@ -343,14 +343,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3kW system:</strong> Suitable for smaller properties with limited roof
                 space. Output: approximately 1,900–2,200 kWh/year in Glasgow. Cost: £4,500–£6,500.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>4kW system:</strong> Most popular choice for Glasgow semis and detached
                 houses in the suburbs. Output: approximately 2,700–3,100 kWh/year. Cost:
@@ -358,7 +358,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>6kW system:</strong> Larger suburban properties in Bearsden, Milngavie,
                 Newton Mearns, and East Kilbride. Output: approximately 4,000–4,800 kWh/year. Cost:
@@ -366,7 +366,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tenements:</strong> Possible where the building has a south-facing roof with
                 south-facing sections and all owners agree. A formal agreement between owners (or
@@ -391,25 +391,25 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3kW:</strong> £4,500–£6,500 installed.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>4kW:</strong> £5,500–£8,000 installed.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>6kW:</strong> £8,000–£12,000 installed.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Battery storage:</strong> £2,500–£5,000 additional. 0% VAT when installed at
                 the same time as solar panels.
@@ -485,14 +485,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Verify at mcscertified.com:</strong> Search for current MCS-certified
                 installers in the Glasgow area. Confirm the certificate is current, not lapsed.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCS installation certificate:</strong> Must be issued on completion.
                 Required for SEG registration and important for property sales — Scottish property
@@ -500,7 +500,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical Installation Certificate:</strong> Must be issued for the PV
                 wiring under BS 7671 Section 712, referenced by Scottish Building Standards Section
@@ -508,7 +508,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Scottish Building Standards compliance:</strong> Confirm your installer is
                 familiar with notification requirements to Glasgow City Council's Building Standards
@@ -534,7 +534,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Self-consumption increase:</strong> Without battery: 25–35% of solar
                 generation used on-site. With a 5–10kWh battery: 60–80%. This is especially valuable
@@ -542,7 +542,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Winter grid charging:</strong> Glasgow winters see very limited solar
                 generation. Many Glasgow homeowners programme their battery to charge from the grid
@@ -551,7 +551,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Recommended capacity:</strong> A 5–10kWh battery suits most Glasgow
                 residential installations. Higher capacity is less cost-effective in Glasgow due to
@@ -560,7 +560,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cost:</strong> £2,500–£5,000 additional. 0% VAT when installed at the same
                 time as solar panels.
@@ -625,14 +625,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCS register:</strong> Search mcscertified.com for Glasgow and Central
                 Scotland installers. Verify current (not lapsed) certification.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Scottish planning knowledge:</strong> Prioritise installers with
                 demonstrated experience of Glasgow City Council's planning and building standards
@@ -640,14 +640,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Home Energy Scotland:</strong> Call 0808 808 2282 for independent advice on
                 local MCS-certified installers and any available Scottish Government funding.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Get three quotes:</strong> Even with fewer local installers, obtain at least
                 three quotes. Prices vary in the Scottish market. Require a written system design
@@ -674,7 +674,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Issue Solar EICs On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -709,7 +709,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your solar PV business with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site solar certificates, instant quoting, and business management. 7-day free trial, cancel anytime."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site solar certificates, instant quoting, and business management. 7-day free trial, cancel anytime."
           icon={FileCheck2}
         />
       </>
@@ -735,7 +735,7 @@ export default function SolarPanelInstallationGlasgowPage() {
       heroTitle={
         <>
           Solar Panel Installation Glasgow:{' '}
-          <span className="text-yellow-400">Scotland Guide 2025</span>
+          <span className="text-elec-yellow">Scotland Guide 2025</span>
         </>
       }
       heroSubtitle="Complete guide to solar PV installation in Glasgow — Scottish Building Standards, conservation area planning rules, costs from £5,500, irradiance data, Smart Export Guarantee, MCS certification, and realistic payback periods."
@@ -746,7 +746,7 @@ export default function SolarPanelInstallationGlasgowPage() {
       faqHeading="Frequently Asked Questions About Solar Panel Installation in Glasgow"
       relatedPages={relatedPages}
       ctaHeading="Complete Solar PV Certificates On Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site solar EICs, quoting, and business management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site solar EICs, quoting, and business management. 7-day free trial, cancel anytime."
     />
   );
 }

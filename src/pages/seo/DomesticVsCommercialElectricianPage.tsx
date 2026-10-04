@@ -182,14 +182,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full and partial rewires</strong> — replacing the fixed wiring in a
                 property, from the consumer unit to every socket, switch, and light point.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit upgrades</strong> — replacing an old fuse board with a modern
                 RCBO or dual-RCD consumer unit compliant with{' '}
@@ -200,7 +200,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Periodic inspection and testing (EICRs)</strong> — inspecting the condition
                 of existing installations, particularly for{' '}
@@ -211,21 +211,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New circuit installations</strong> — cooker circuits, shower circuits,
                 garden supplies, outbuilding feeds, and additional ring circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charge point installations</strong> — a rapidly growing area of domestic
                 work, installing 7kW home chargers with dedicated circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fault finding and repairs</strong> — diagnosing and fixing electrical faults
                 in domestic properties, from tripping RCDs to intermittent supply issues.
@@ -326,27 +326,27 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">Domestic Requirements</h3>
             <ul className="space-y-2 text-white text-sm">
               <li className="flex items-start gap-2">
-                <Award className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <Award className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>C&G 2382 — 18th Edition</span>
               </li>
               <li className="flex items-start gap-2">
-                <Award className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <Award className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>C&G 2391 — Inspection and Testing</span>
               </li>
               <li className="flex items-start gap-2">
-                <Award className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <Award className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>AM2 — Assessment of Competence</span>
               </li>
               <li className="flex items-start gap-2">
-                <Award className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <Award className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>Part P registration (via scheme)</span>
               </li>
               <li className="flex items-start gap-2">
-                <Award className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <Award className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>Domestic Installer scheme membership</span>
               </li>
               <li className="flex items-start gap-2">
-                <Award className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <Award className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>Public liability insurance</span>
               </li>
             </ul>
@@ -615,7 +615,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Home className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Domestic to Commercial</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -675,7 +675,7 @@ export default function DomesticVsCommercialElectricianPage() {
       heroTitle={
         <>
           Domestic vs Commercial Electrician:{' '}
-          <span className="text-yellow-400">Which Career Path Is Right for You?</span>
+          <span className="text-elec-yellow">Which Career Path Is Right for You?</span>
         </>
       }
       heroSubtitle="Two sectors, two very different working lives. Domestic electricians work in homes with direct client contact and self-employment freedom. Commercial electricians work on larger projects with team structures and career ladders. This guide compares everything — work types, qualifications, earning potential, and how to switch."
@@ -686,7 +686,7 @@ export default function DomesticVsCommercialElectricianPage() {
       faqHeading="Frequently Asked Questions About Domestic vs Commercial Electricians"
       relatedPages={relatedPages}
       ctaHeading="Tools for Every Electrician"
-      ctaSubheading="Whether you work in domestic, commercial, or both sectors — Elec-Mate gives you digital certificates, AI tools, quoting, invoicing, and training courses. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Whether you work in domestic, commercial, or both sectors — Elec-Mate gives you digital certificates, AI tools, quoting, invoicing, and training courses. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

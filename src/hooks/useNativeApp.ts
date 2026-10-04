@@ -209,12 +209,40 @@ export function useNativeApp() {
         });
 
         // Set up keyboard listeners
+        let heightBeforeKeyboard = window.innerHeight;
         Keyboard.addListener('keyboardWillShow', () => {
+          heightBeforeKeyboard = window.innerHeight;
           document.body.classList.add('keyboard-open');
         });
         Keyboard.addListener('keyboardWillHide', () => {
           document.body.classList.remove('keyboard-open');
         });
+        if (Capacitor.getPlatform() === 'android') {
+          // ELE-1802 safety net, Android only. Capacitor's SystemBars shrinks
+          // the WebView by the keyboard height and Chromium then scrolls the
+          // focused field into view — but two Android users reported typing
+          // under the keyboard, and the forms they named (sheets, chat,
+          // certificates) are not all plain documents. Once the keyboard is
+          // fully up, if the focused field still sits under it, bring it to
+          // the middle of what is left. Never runs on iOS, which WKWebView
+          // handles itself, and never scrolls a field that is already visible.
+          Keyboard.addListener('keyboardDidShow', ({ keyboardHeight }) => {
+            const el = document.activeElement as HTMLElement | null;
+            if (!el) return;
+            const editable =
+              /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName) || el.isContentEditable;
+            if (!editable) return;
+            // If the WebView was resized, the keyboard is already outside
+            // innerHeight; if it was not, the keyboard covers the bottom
+            // `keyboardHeight` CSS px of it.
+            const resized = heightBeforeKeyboard - window.innerHeight > keyboardHeight * 0.5;
+            const visibleBottom = window.innerHeight - (resized ? 0 : keyboardHeight);
+            const rect = el.getBoundingClientRect();
+            if (rect.bottom > visibleBottom - 8 || rect.top < 0) {
+              el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+            }
+          });
+        }
 
         // Handle app state changes (background/foreground).
         // Supabase's token-refresh timer is a JS timer that freezes while the

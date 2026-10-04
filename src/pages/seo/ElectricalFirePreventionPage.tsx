@@ -155,7 +155,7 @@ const sections = [
             <p className="text-white text-sm">Of accidental house fires are electrical in origin</p>
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 text-centre">
-            <div className="text-3xl font-bold text-yellow-400 mb-2">~70%</div>
+            <div className="text-3xl font-bold text-elec-yellow mb-2">~70%</div>
             <p className="text-white text-sm">Caused by faulty wiring or appliances</p>
           </div>
         </div>
@@ -278,7 +278,7 @@ const sections = [
           </ul>
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4 flex items-start gap-4">
-          <AlertTriangle className="w-6 h-6 text-yellow-400 shrink-0 mt-0.5" />
+          <AlertTriangle className="w-6 h-6 text-elec-yellow shrink-0 mt-0.5" />
           <div>
             <p className="text-white text-sm leading-relaxed">
               <strong>Recommended, not mandated (in most cases):</strong> As of BS 7671:2018+A4:2026,
@@ -340,7 +340,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Bell className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Bell className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Heat alarm for kitchens</strong> — a heat alarm (detects rapid temperature
                 rise) rather than a smoke alarm is required in kitchens where cooking fumes and steam
@@ -349,7 +349,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Bell className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Bell className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Interlinked alarms</strong> — BS 5839-6 recommends interlinked alarms
                 (wired or wireless) so that when one alarm activates, all alarms in the property
@@ -358,7 +358,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Bell className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Bell className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Carbon monoxide alarms</strong> — not directly related to electrical fires,
                 but BS 7671 encourages electricians to recommend CO alarms in properties with gas
@@ -391,7 +391,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New consumer units must be metal</strong> — any consumer unit installed
                 as a new installation or as a replacement in a domestic dwelling must have a metal
@@ -400,7 +400,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Existing plastic units</strong> — properties with plastic consumer units
                 installed before 2015 are not required to replace them immediately. However, if
@@ -410,7 +410,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Location matters</strong> — consumer units should not be installed in
                 locations where they are exposed to moisture, thermal insulation, or combustible
@@ -563,7 +563,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EICR Certificate App</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -617,7 +617,7 @@ export default function ElectricalFirePreventionPage() {
       heroTitle={
         <>
           Electrical Fire Prevention:{' '}
-          <span className="text-yellow-400">AFDDs, Consumer Units, and Warning Signs</span>
+          <span className="text-elec-yellow">AFDDs, Consumer Units, and Warning Signs</span>
         </>
       }
       heroSubtitle="Approximately 20,000 electrical fires occur in UK homes each year — around 50% of all accidental house fires. This guide covers arc fault detection devices (AFDDs), metal consumer units, smoke detector selection, and the warning signs of dangerous wiring that electricians and homeowners must recognise."

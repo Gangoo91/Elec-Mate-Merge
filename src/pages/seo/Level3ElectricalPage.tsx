@@ -190,13 +190,13 @@ export default function Level3ElectricalPage() {
       <section className="py-16 sm:py-24 px-5">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-6">
-            <GraduationCap className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium text-yellow-400">C&G 2365-03 Level 3</span>
+            <GraduationCap className="w-4 h-4 text-elec-yellow" />
+            <span className="text-sm font-medium text-elec-yellow">C&G 2365-03 Level 3</span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
             Level 3 Electrical
             <br />
-            <span className="text-yellow-400">Advanced Diploma</span>
+            <span className="text-elec-yellow">Advanced Diploma</span>
           </h1>
           <p className="text-lg text-white max-w-2xl mx-auto leading-relaxed mb-8">
             Master circuit design, inspection and testing, fault diagnosis, and BS 7671 special
@@ -212,7 +212,7 @@ export default function Level3ElectricalPage() {
             </a>
             <a
               href="#what-is-level-3"
-              className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-yellow-500/40 text-white font-semibold rounded-xl touch-manipulation transition-colors"
+              className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-white/[0.1] text-white font-semibold rounded-xl touch-manipulation transition-colors"
             >
               What Does Level 3 Cover?
             </a>
@@ -445,7 +445,7 @@ export default function Level3ElectricalPage() {
                 key={item.step}
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
-                <div className="w-12 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0 text-sm">
+                <div className="w-12 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0 text-sm">
                   {item.step}
                 </div>
                 <div>
@@ -511,17 +511,17 @@ export default function Level3ElectricalPage() {
         <div className="max-w-4xl mx-auto">
           <div className="grid sm:grid-cols-3 gap-6 text-center">
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <Award className="w-8 h-8 text-yellow-400 mx-auto mb-3" />
+              <Award className="w-8 h-8 text-elec-yellow mx-auto mb-3" />
               <p className="text-2xl font-bold text-white mb-1">70+</p>
               <p className="text-sm text-white">Electrical Calculators</p>
             </div>
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <Wrench className="w-8 h-8 text-yellow-400 mx-auto mb-3" />
+              <Wrench className="w-8 h-8 text-elec-yellow mx-auto mb-3" />
               <p className="text-2xl font-bold text-white mb-1">8 AI Agents</p>
               <p className="text-sm text-white">Plus 12 AI Tools</p>
             </div>
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <Zap className="w-8 h-8 text-yellow-400 mx-auto mb-3" />
+              <Zap className="w-8 h-8 text-elec-yellow mx-auto mb-3" />
               <p className="text-2xl font-bold text-white mb-1">36+</p>
               <p className="text-sm text-white">Training Courses</p>
             </div>
@@ -556,7 +556,7 @@ export default function Level3ElectricalPage() {
               >
                 <summary className="flex items-center justify-between p-4 min-h-[44px] touch-manipulation cursor-pointer text-white font-medium">
                   <span>{faq.question}</span>
-                  <ChevronDown className="w-5 h-5 text-yellow-400 group-open:rotate-180 transition-transform shrink-0 ml-4" />
+                  <ChevronDown className="w-5 h-5 text-elec-yellow group-open:rotate-180 transition-transform shrink-0 ml-4" />
                 </summary>
                 <div className="px-4 pb-4 text-white text-sm leading-relaxed">{faq.answer}</div>
               </details>
@@ -588,7 +588,7 @@ export default function Level3ElectricalPage() {
 
       <SEOCTASection
         heading="Advance your electrical career"
-        subheading="Join 1,600+ UK electricians studying for qualifications and building their futures. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians studying for qualifications and building their futures. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

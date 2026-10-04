@@ -199,7 +199,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Measurement from the sink basin edge</strong> — the 300mm is measured
                 horizontally from the inner edge of the sink bowl. For sinks set into a worktop, the
@@ -208,7 +208,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Applies in all directions</strong> — the exclusion zone applies in all
                 horizontal directions from the sink edge. A socket directly to the side of the sink,
@@ -216,7 +216,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Above the worktop and below</strong> — sockets above the worktop (the most
                 common position) must still comply. Sockets below the worktop (for under-counter
@@ -225,7 +225,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Shaver socket units are exempt</strong> — BS EN 61558-2-5 shaver supply
                 units (which are isolated from the mains supply) are not subject to the 300mm
@@ -233,7 +233,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>In-worktop pop-up sockets</strong> — pop-up socket units installed in the
                 worktop surface must also respect the 300mm clearance. Flush-mounted worktop sockets
@@ -264,7 +264,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard electric range (6kW to 13kW)</strong> — 6mm² twin and earth cable,
                 32A or 40A Type B MCB (or RCBO), terminated at a dedicated cooker control unit. The
@@ -273,7 +273,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large range cooker (over 10kW)</strong> — 10mm² SWA or T&amp;E cable, 40A or
                 45A MCB. Some large range cookers (Aga-style, commercial-grade domestic) can draw up
@@ -282,7 +282,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Separate hob and oven</strong> — where a separate hob and oven are used
                 rather than a range, each can typically be connected to a single 6mm² circuit if the
@@ -292,7 +292,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cooker control unit with socket</strong> — most domestic cooker control
                 units include an integrated 13A socket outlet. This socket is protected by the
@@ -301,7 +301,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Induction hob considerations</strong> — induction hobs have a high starting
                 current (inrush current) compared to their rated running current. For hobs rated
@@ -327,7 +327,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fused connection unit (FCU) recommended</strong> — a 13A FCU, wired as a
                 non-fused spur from the ring main, provides a local isolation point and a permanent
@@ -338,7 +338,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Socket outlet as an alternative</strong> — a socket outlet behind the
                 dishwasher is a common alternative to an FCU. This allows the appliance to be
@@ -348,7 +348,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Washing machine in a kitchen</strong> — same requirements as a dishwasher.
                 Where a washing machine is positioned in the kitchen, an FCU or socket behind the
@@ -374,7 +374,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Unswitched socket or FCU</strong> — connect a fridge or freezer to an
                 unswitched socket outlet or an FCU without a switch. A switched socket risks the
@@ -383,7 +383,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated circuit for a chest freezer</strong> — a dedicated radial circuit
                 for a large chest freezer (particularly one used for food storage in a utility room
@@ -392,7 +392,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD consideration for freezers</strong> — a fridge or freezer on an
                 RCD-protected circuit risks food loss if the RCD trips due to another appliance on
@@ -419,7 +419,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wind className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wind className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fused connection unit (FCU)</strong> — the standard connection for a cooker
                 hood extractor. A 3A or 5A FCU (depending on the fan's rated current), wired as a
@@ -428,7 +428,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wind className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wind className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Connection via cooker control unit</strong> — many cooker hoods are
                 connected to the integrated socket in the cooker control unit. This is acceptable
@@ -437,7 +437,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wind className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wind className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Timer and humidity control wiring</strong> — extractor fans with built-in
                 timers or humidity sensors that run after the control switch is turned off require a
@@ -446,7 +446,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wind className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wind className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Building Regulations Part F</strong> — kitchen ventilation is regulated
                 under Building Regulations Part F (Ventilation) as well as Part P (Electrical
@@ -529,7 +529,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Notifiable kitchen electrical work</strong> — adding a new circuit (cooker
                 circuit, dedicated appliance circuit), replacing a consumer unit, modifying a
@@ -538,7 +538,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Non-notifiable kitchen electrical work</strong> — replacing a like-for-like
                 socket outlet, switch, or fixed luminaire in a kitchen is not notifiable, provided
@@ -547,7 +547,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person schemes</strong> — electricians registered with NICEIC,
                 NAPIT, ELECSA, or other approved competent person schemes can self-certify
@@ -556,7 +556,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consequences of non-notification</strong> — failure to notify kitchen
                 electrical work that should have been notified is a breach of Building Regulations.
@@ -588,7 +588,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New cooker circuit (6mm², 32A RCBO)</strong> — £300 to £600 including
                 materials, labour, and certification. Higher cost if the consumer unit does not have
@@ -596,14 +596,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacement (standard domestic)</strong> — £400 to £900
                 including the unit, labour, and Building Regulations certification.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional socket outlets (per double socket, surface chase)</strong> — £100
                 to £200 per double socket outlet including materials, chasing, and making good.
@@ -611,21 +611,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dishwasher or washing machine FCU</strong> — £80 to £150 per FCU including
                 materials and labour.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Extractor fan wiring (FCU spur)</strong> — £80 to £180 depending on cable
                 run length and access.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full kitchen rewire (new circuits, sockets, switches)</strong> — £800 to
                 £2,500 for a medium-sized kitchen. This includes all new socket outlets, cooker
@@ -634,7 +634,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR after kitchen refurbishment</strong> — £150 to £300. Recommended after
                 significant kitchen electrical works to confirm compliance and provide a record for
@@ -665,7 +665,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Certify Kitchen Work on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -700,7 +700,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certify kitchen electrical work faster with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC and EICR completion, Part P certification, and instant quoting."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EIC and EICR completion, Part P certification, and instant quoting."
           icon={FileCheck2}
         />
       </>
@@ -726,7 +726,7 @@ export default function KitchenElectricalRequirementsPage() {
       heroTitle={
         <>
           Kitchen Electrical Requirements UK:{' '}
-          <span className="text-yellow-400">Wiring Regulations and Costs Explained</span>
+          <span className="text-elec-yellow">Wiring Regulations and Costs Explained</span>
         </>
       }
       heroSubtitle="Kitchen electrical installations must meet specific requirements under BS 7671 and Part P of the Building Regulations. This guide covers zone requirements, the 300mm sink rule for socket positions, cooker circuit specification, RCD protection, Part P notification, and 2026 costs for typical kitchen electrical work."
@@ -737,7 +737,7 @@ export default function KitchenElectricalRequirementsPage() {
       faqHeading="Frequently Asked Questions About Kitchen Electrical Regulations"
       relatedPages={relatedPages}
       ctaHeading="Certify Kitchen Electrical Work on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant PDF export, and same-day quoting. Issue Part P certificates before you leave the job. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant PDF export, and same-day quoting. Issue Part P certificates before you leave the job. 7-day free trial."
     />
   );
 }

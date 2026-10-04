@@ -277,7 +277,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Continuity testing:</strong> Use the dedicated continuity leads (usually red
                 and black). Connect between the two conductors you are testing (for example, line at
@@ -286,7 +286,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insulation resistance:</strong> Same terminals as continuity on most
                 instruments, but the mode is switched to IR. Connect between the conductors being
@@ -295,7 +295,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth fault loop impedance (Zs):</strong> Use the mains test lead (a 3-pin
                 plug lead or probe set). Connect to a socket outlet on the circuit under test. The
@@ -303,7 +303,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD testing:</strong> Same mains test lead as Zs testing. Connect to a
                 socket on the RCD-protected circuit. The instrument injects a controlled earth
@@ -311,7 +311,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Prospective fault current:</strong> Same mains test lead as Zs. Measured at
                 the origin of the installation (incoming supply point or main distribution board).
@@ -321,7 +321,7 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <p className="text-white">
               <strong>Lead care:</strong> Always use leads that comply with GS38 requirements —
               fused, with shrouded probes and limited exposed conductor length. Check leads for
@@ -389,7 +389,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Gauge className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Kewtech KT65DL / KT66DL</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -425,21 +425,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Frequency:</strong> Calibrate every 12 months. This is the standard interval
                 accepted by NICEIC, NAPIT, and other scheme providers.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>After a drop or damage:</strong> If the instrument is dropped from height or
                 shows signs of physical damage, have it recalibrated before using it for testing.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Record keeping:</strong> Keep the calibration certificate with the
                 instrument. Record the calibration date and next due date on each certificate you
@@ -447,7 +447,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cost:</strong> Typically £60 to £120 depending on the instrument and
                 turnaround time. Some suppliers offer express next-day calibration for an additional
@@ -544,7 +544,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Prepare your leads before arriving.</strong> Check leads for damage, null
                 continuity leads, and confirm the instrument battery is charged. Running out of
@@ -552,7 +552,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Do all dead tests on all circuits first, then all live tests.</strong>{' '}
                 Switching between dead and live modes repeatedly wastes time changing leads.
@@ -561,7 +561,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use voice entry to record results as you go.</strong> The biggest time sink
                 is putting the instrument down to write or type results. Speak them into Elec-Mate
@@ -569,7 +569,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Photograph the board before testing.</strong> Use Elec-Mate's{' '}
                 <SEOInternalLink href="/tools/eicr-certificate">AI board scanner</SEOInternalLink>{' '}
@@ -578,7 +578,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Carry spare fuses for your instrument.</strong> A blown instrument fuse
                 mid-test is a common cause of wasted time. Keep HBC fuses in your test kit.
@@ -607,7 +607,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Mic className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Mic className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Voice Test Entry</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -666,7 +666,7 @@ export default function MultifunctionTesterGuidePage() {
       heroTitle={
         <>
           Multifunction Tester Guide:{' '}
-          <span className="text-yellow-400">How to Use Your MFT for Every BS 7671 Test</span>
+          <span className="text-elec-yellow">How to Use Your MFT for Every BS 7671 Test</span>
         </>
       }
       heroSubtitle="Your MFT is the most important instrument in your kit. It performs continuity, insulation resistance, earth fault loop impedance, RCD, and fault current tests — all from one device. This guide covers every test mode, the correct lead connections, calibration requirements, and how to record results efficiently."
@@ -677,7 +677,7 @@ export default function MultifunctionTesterGuidePage() {
       faqHeading="Frequently Asked Questions About Multifunction Testers"
       relatedPages={relatedPages}
       ctaHeading="Voice-Enter MFT Results into Your Certificate"
-      ctaSubheading="Elec-Mate turns your MFT readings into professional EICR and EIC certificates. Voice entry, AI defect coding, and instant PDF export. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate turns your MFT readings into professional EICR and EIC certificates. Voice entry, AI defect coding, and instant PDF export. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

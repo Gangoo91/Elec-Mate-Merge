@@ -181,7 +181,7 @@ const sections = [
                   Replace existing PIR floodlight, reuse existing cable
                 </p>
               </div>
-              <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£80 – £120</p>
+              <p className="font-bold text-elec-yellow whitespace-nowrap ml-4">£80 – £120</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
@@ -190,14 +190,14 @@ const sections = [
                   Cable run from junction box or consumer unit, mounting, testing
                 </p>
               </div>
-              <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£150 – £250</p>
+              <p className="font-bold text-elec-yellow whitespace-nowrap ml-4">£150 – £250</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
                 <p className="font-bold text-white">3–4 PIR floodlights on one circuit</p>
                 <p className="text-white text-sm">Perimeter lighting, cabled from consumer unit</p>
               </div>
-              <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£300 – £600</p>
+              <p className="font-bold text-elec-yellow whitespace-nowrap ml-4">£300 – £600</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
@@ -206,7 +206,7 @@ const sections = [
                   2–3 bollard or wall lights with photocell, SWA cable
                 </p>
               </div>
-              <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£300 – £500</p>
+              <p className="font-bold text-elec-yellow whitespace-nowrap ml-4">£300 – £500</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
@@ -215,7 +215,7 @@ const sections = [
                   Fused spur or PoE switch, cable run to camera position
                 </p>
               </div>
-              <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£80 – £200</p>
+              <p className="font-bold text-elec-yellow whitespace-nowrap ml-4">£80 – £200</p>
             </div>
             <div className="flex justify-between items-start">
               <div>
@@ -224,7 +224,7 @@ const sections = [
                   10W from £13, 20W from £21, 30W from £30, 50W from £40 trade price
                 </p>
               </div>
-              <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£13 – £56</p>
+              <p className="font-bold text-elec-yellow whitespace-nowrap ml-4">£13 – £56</p>
             </div>
           </div>
         </div>
@@ -251,7 +251,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Detection range</strong> — most domestic PIR sensors detect movement at 8 to
                 12 metres. Wall-mounted sensors typically cover a 180-degree arc. Standalone PIR
@@ -260,7 +260,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Adjustable settings</strong> — quality PIR floodlights have three adjustable
                 settings: time delay (how long the light stays on after activation, typically 10
@@ -270,7 +270,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>LED output</strong> — LED floodlights provide dramatically more light per
                 watt than old halogen fittings. A 20W LED floodlight produces 1,600 to 2,000 lumens
@@ -343,7 +343,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PoE cameras (recommended)</strong> — Power over Ethernet cameras receive
                 both power and data via a single Cat6 cable from an indoor PoE switch or NVR
@@ -353,7 +353,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mains-powered cameras</strong> — some cameras require a separate 12V DC or
                 mains power supply. The electrician provides a fused spur or unswitched socket at
@@ -362,7 +362,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>WiFi cameras</strong> — battery-powered or mains-powered WiFi cameras (such
                 as Ring, Arlo, and Eufy) require no data cable. Battery models need no electrical
@@ -388,7 +388,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP65 minimum</strong> — all external light fittings must be rated at least
                 IP65 (dust-tight, protected against water jets). IP66 is preferred for fully exposed
@@ -396,7 +396,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SWA cable</strong> — for underground cable runs, SWA (steel wire armoured)
                 cable provides mechanical protection. 1.5mm² 3-core SWA is sufficient for most
@@ -405,7 +405,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Surface-mounted cable</strong> — for runs along external walls, use
                 UV-resistant conduit or mini trunking, or clip SWA directly to the wall surface.
@@ -415,7 +415,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection</strong> — all outdoor lighting circuits must have 30mA RCD
                 protection. This can be provided by an RCBO at the consumer unit (recommended for
@@ -492,7 +492,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -539,7 +539,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify security lighting installations"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={Lightbulb}
         />
       </>
@@ -565,7 +565,7 @@ export default function SecurityLightingCostPage() {
       heroTitle={
         <>
           Security Lighting Installation Cost:{' '}
-          <span className="text-yellow-400">UK Price Guide 2026</span>
+          <span className="text-elec-yellow">UK Price Guide 2026</span>
         </>
       }
       heroSubtitle="How much does security lighting cost to install in the UK? This guide covers typical prices from £100 to £600, PIR floodlights, dusk-to-dawn lights, CCTV power supply, IP ratings, SWA cable routes, and planning permission considerations."
@@ -576,7 +576,7 @@ export default function SecurityLightingCostPage() {
       faqHeading="Frequently Asked Questions About Security Lighting Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Security Lighting Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. 7-day free trial, cancel anytime."
     />
   );
 }

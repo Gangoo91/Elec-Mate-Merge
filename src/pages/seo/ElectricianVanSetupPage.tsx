@@ -98,7 +98,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Van Size Guide for Electricians</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Small van (Berlingo, Caddy, Connect):</strong> GBP 18,000-GBP 25,000 new.
                 Economical (40-50 mpg), easy to park, and cheap to insure. Suitable for
@@ -107,7 +107,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Medium van SWB (Transit Custom, Vivaro, Trafic):</strong> GBP 25,000-GBP
                 35,000 new. The most popular choice. Fits a full racking system, internal ladders,
@@ -116,7 +116,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Medium van LWB (Transit Custom LWB, Vivaro LWB):</strong> GBP 27,000-GBP
                 38,000 new. Extra length for more racking and stock. Better for electricians who
@@ -125,7 +125,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Large van (Transit, Master, Movano):</strong> GBP 32,000-GBP 45,000+ new.
                 Only necessary for contractors carrying extensive stock, running teams with shared
@@ -163,7 +163,7 @@ const sections = [
           accessible, and is visible at a glance.
         </p>
         <p>
-          <strong className="text-yellow-400">The time saving is the main benefit.</strong>{' '}
+          <strong className="text-elec-yellow">The time saving is the main benefit.</strong>{' '}
           Electricians with well-organised vans report saving 15-30 minutes per day compared to
           working from an unracked van. Over a year, that is 60-120 hours -- 8 to 15 additional
           billable days. At GBP 225 per day, that is GBP 1,800 to GBP 3,375 per year in productivity
@@ -173,7 +173,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Essential Racking Components</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Package className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Package className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Modular shelving:</strong> Adjustable shelves on both sides of the van. Use
                 smaller compartments at the top (for accessories, fixings, and small items) and
@@ -181,14 +181,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Package className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Package className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Drawer units:</strong> Ideal for fixings, connectors, fuses, and small
                 accessories. Label every drawer. Pull-out drawers give full visibility of contents.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Package className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Package className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Cable reel holder:</strong> A spindle or bracket that holds cable drums
                 horizontally so you can pull off the length you need without removing the drum from
@@ -196,7 +196,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Package className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Package className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Conduit and trunking storage:</strong> Overhead or side-mounted brackets to
                 hold lengths of conduit, trunking, and mini-trunking without them rolling around the
@@ -204,7 +204,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Package className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Package className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Ladder clamp or internal rack:</strong> Secure your ladders inside the van
                 (prevents theft and damage) or on an external roof rack with locking clamps.
@@ -233,7 +233,7 @@ const sections = [
           doors. Tools you use weekly can be on higher or deeper shelves.
         </p>
         <p>
-          <strong className="text-yellow-400">A tool bag or tote system</strong> works alongside
+          <strong className="text-elec-yellow">A tool bag or tote system</strong> works alongside
           your van racking. Rather than carrying individual tools to and from the job, pack a tool
           bag with the essentials for the type of work you are doing. A "first fix" bag might
           contain your SDS drill, cable rods, fixings, and marking equipment. A "second fix" bag
@@ -246,7 +246,7 @@ const sections = [
           one bag for the task and head to the job, rather than making multiple trips to the van.
         </p>
         <p>
-          <strong className="text-yellow-400">Labelling everything</strong> is not overkill -- it is
+          <strong className="text-elec-yellow">Labelling everything</strong> is not overkill -- it is
           essential. Label every drawer, shelf, and storage box. When you are looking for a specific
           MCB or fuse at 4pm on a Friday, you do not want to open six drawers before finding it.
           Labels also help apprentices and new team members find what they need without asking.
@@ -282,7 +282,7 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Cable:</strong> T&E in 1mm, 1.5mm, 2.5mm, 4mm, 6mm, 10mm (small drums).
                 3-core flex in 0.75mm and 1mm. SWA in 2.5mm and 4mm 3-core (short lengths for
@@ -290,7 +290,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Accessories:</strong> Single and double sockets (white and chrome), 1-gang
                 and 2-gang switches, FCUs, cooker switches, shaver sockets, ceiling roses,
@@ -298,14 +298,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Protection devices:</strong> Spare MCBs (6A, 16A, 20A, 32A, 40A), RCBOs
                 (common ratings), SPDs, and blank modules for the most common consumer unit brands.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Fixings and sundries:</strong> Cable clips (all sizes), Wago connectors,
                 crimp terminals, connector blocks, earth sleeving, PVC tape, self-amalgamating tape,
@@ -313,7 +313,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Containment:</strong> Mini-trunking (16x16, 25x16, 38x25), oval and round
                 conduit, trunking adaptors, and junction boxes.
@@ -354,7 +354,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Security Layers</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Upgraded locks:</strong> Replace factory locks with deadlocks or slam locks
                 on all cargo doors. Brands like Locks4Vans and Van Locks UK offer vehicle-specific
@@ -362,7 +362,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Tool vault:</strong> A heavy-duty steel box bolted to the van floor. Store
                 your multifunction tester, power tools, and other high-value items inside. Cost: GBP
@@ -370,7 +370,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Alarm and immobiliser:</strong> A van alarm with movement sensors and a
                 separate engine immobiliser. Cost: GBP 150-GBP 400. May reduce your insurance
@@ -378,7 +378,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>GPS tracker:</strong> Allows you and the police to locate the van if stolen.
                 Some trackers also send alerts if the van moves outside normal hours. Cost: GBP
@@ -386,7 +386,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Parking strategy:</strong> Park with rear doors against a wall. Choose
                 well-lit areas with CCTV. Avoid leaving the van in the same spot overnight. Do not
@@ -422,31 +422,31 @@ const sections = [
           </h3>
           <ul className="space-y-2 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 Finance/lease: GBP 3,600-GBP 7,200 (GBP 300-GBP 600/month)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Fuel className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Fuel className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 Fuel: GBP 2,400-GBP 4,000 (15,000-20,000 miles at 35-42 mpg)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 Insurance: GBP 800-GBP 2,000 (commercial van policy)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 Servicing, MOT, tyres, repairs: GBP 500-GBP 1,500
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 Road tax, breakdown cover, parking: GBP 400-GBP 800
               </span>
@@ -457,7 +457,7 @@ const sections = [
           </p>
         </div>
         <p>
-          <strong className="text-yellow-400">Tax treatment</strong> depends on whether you use HMRC
+          <strong className="text-elec-yellow">Tax treatment</strong> depends on whether you use HMRC
           mileage rates or actual vehicle costs. With mileage rates, you claim 45p per mile for the
           first 10,000 business miles and 25p thereafter -- this covers all vehicle costs, so you
           cannot claim separately for fuel, insurance, etc. With actual costs, you claim the
@@ -489,61 +489,61 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 Choose and purchase the van (new, nearly new, or used)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 Arrange commercial van insurance (not domestic car insurance)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 Install racking system (Sortimo, Bott, or Van Guard)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">Fit ladder clamp or internal ladder rack</span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 Install security upgrades (deadlocks, slam locks, tool vault)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">Fit GPS tracker and alarm system</span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 Install LED interior lighting for the cargo area
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 Fit power inverter for charging tool batteries
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 Lay protective flooring (rubber matting or ply lining)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">Stock initial materials and label everything</span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">Add vehicle signage or magnetic branding</span>
             </li>
           </ul>
@@ -617,7 +617,7 @@ export default function ElectricianVanSetupPage() {
       heroTitle={
         <>
           Electrician Van Setup:{' '}
-          <span className="text-yellow-400">Racking, Tools, and Organisation</span>
+          <span className="text-elec-yellow">Racking, Tools, and Organisation</span>
         </>
       }
       heroSubtitle="Your van is your mobile workshop. Get the setup right and you save 15-30 minutes per day in productivity. Get it wrong and you waste time, lose tools, and look unprofessional. This guide covers everything from choosing the right van to stocking it efficiently."

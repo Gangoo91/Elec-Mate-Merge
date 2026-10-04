@@ -142,7 +142,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Who must offer the SEG:</strong> All licensed electricity suppliers with
                 150,000 or more domestic customers. This includes all the major UK energy suppliers.
@@ -151,7 +151,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Current rates (early 2025):</strong> Fixed rates range from 3–15p/kWh
                 depending on the supplier. Octopus Energy's Flux and Agile tariffs offer dynamic
@@ -161,7 +161,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Eligibility:</strong> Your system must be MCS-certified with a maximum
                 capacity of 5 MW. A smart meter or export meter must be installed. The system must
@@ -425,7 +425,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SEG:</strong> Contact your chosen supplier after installation is complete.
                 Provide your MCS certificate number and smart meter details. Processing takes 2–6
@@ -433,7 +433,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>0% VAT:</strong> No application required. Your MCS-certified installer
                 applies 0% VAT automatically on the invoice for qualifying solar PV and battery
@@ -441,7 +441,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ECO4/LA Flex:</strong> Contact your energy supplier or a registered ECO4
                 installer. For LA Flex, contact your local council first to obtain an eligibility
@@ -450,7 +450,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Home Energy Scotland loan:</strong> Call 0808 808 2282 or apply online at
                 the Home Energy Scotland website. Complete the application before commissioning
@@ -475,7 +475,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Manage MCS solar installations with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Issue MCS installation certificates and EICs on your phone."
+          description="Join 2,100+ UK electricians using Elec-Mate for quoting, certification, and job management. Issue MCS installation certificates and EICs on your phone."
           icon={PoundSterling}
         />
       </>
@@ -501,7 +501,7 @@ export default function SolarPVGrantsUKPage() {
       heroTitle={
         <>
           Solar Panel Grants UK 2025:{' '}
-          <span className="text-yellow-400">Funding & Incentives Guide</span>
+          <span className="text-elec-yellow">Funding & Incentives Guide</span>
         </>
       }
       heroSubtitle="Everything you need to know about solar panel grants and financial incentives in the UK — the Smart Export Guarantee, 0% VAT, ECO4, LA Flex, and the Home Energy Scotland interest-free loan."
@@ -512,7 +512,7 @@ export default function SolarPVGrantsUKPage() {
       faqHeading="Frequently Asked Questions About Solar Panel Grants"
       relatedPages={relatedPages}
       ctaHeading="Install Solar PV with Confidence Using Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for MCS certification, quoting, and job management. Issue solar installation certificates on your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for MCS certification, quoting, and job management. Issue solar installation certificates on your phone. 7-day free trial, cancel anytime."
     />
   );
 }

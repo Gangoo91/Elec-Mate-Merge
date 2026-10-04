@@ -247,7 +247,7 @@ const sections = [
         </p>
         <div className="space-y-3 my-6">
           <div className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <Zap className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
+            <Zap className="w-5 h-5 text-elec-yellow shrink-0 mt-0.5" />
             <div>
               <h3 className="font-bold text-white text-base mb-1">
                 5. Earth Fault Loop Impedance (Zs)
@@ -261,7 +261,7 @@ const sections = [
             </div>
           </div>
           <div className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <Zap className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
+            <Zap className="w-5 h-5 text-elec-yellow shrink-0 mt-0.5" />
             <div>
               <h3 className="font-bold text-white text-base mb-1">
                 6. Prospective Fault Current (Ipf)
@@ -275,7 +275,7 @@ const sections = [
             </div>
           </div>
           <div className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <Zap className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
+            <Zap className="w-5 h-5 text-elec-yellow shrink-0 mt-0.5" />
             <div>
               <h3 className="font-bold text-white text-base mb-1">7. RCD Testing</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -653,7 +653,7 @@ export default function TestingProceduresForApprenticesPage() {
       badgeIcon={Gauge}
       heroTitle={
         <>
-          Testing Procedures for <span className="text-yellow-400">Apprentices</span>
+          Testing Procedures for <span className="text-elec-yellow">Apprentices</span>
         </>
       }
       heroSubtitle="Every test in the BS 7671 sequence explained simply for apprentice electricians. What each test measures, how to do it, what the results mean, and the common mistakes to avoid. From continuity testing to RCD trip times — the beginner guide you wish you had from day one."

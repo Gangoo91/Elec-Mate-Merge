@@ -396,7 +396,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reactance (X)</strong> — the opposition to current flow caused by inductors
                 and capacitors in AC circuits. Inductive reactance (XL = 2{'\u03C0'}fL) increases
@@ -406,7 +406,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Impedance (Z)</strong> — the total opposition to current flow in an AC
                 circuit, combining resistance and reactance. Z = {'\u221A'}(R{'\u00B2'} + X
@@ -415,7 +415,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Power factor (cos {'\u03C6'})</strong> — the ratio of real power (watts) to
                 apparent power (VA). Power factor = P / S = cos{'\u03C6'}, where {'\u03C6'} is the
@@ -529,7 +529,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <RotateCcw className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <RotateCcw className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>How they work</strong> — an AC current in the primary winding creates a
                 changing magnetic field in the iron core. This changing magnetic field induces a
@@ -539,7 +539,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <RotateCcw className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <RotateCcw className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step-up and step-down</strong> — a step-down transformer has more primary
                 turns than secondary turns, reducing the voltage. A step-up transformer has more
@@ -548,7 +548,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <RotateCcw className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <RotateCcw className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>On-site examples</strong> — 110V centre-tapped transformers for construction
                 site power tools (reduces the voltage to earth to 55V for safety), bell transformers
@@ -588,7 +588,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>How motors work</strong> — a current-carrying conductor in a magnetic field
                 experiences a force (Fleming's left-hand rule). In a motor, the stator creates a
@@ -598,7 +598,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Starting current</strong> — when a motor starts, it draws a significantly
                 higher current than its running current (typically 5 to 8 times the full-load
@@ -609,7 +609,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Single-phase vs three-phase motors</strong> — single-phase motors are common
                 in domestic appliances and small commercial equipment. Three-phase motors are more
@@ -619,7 +619,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Back EMF</strong> — as a motor spins, it generates a voltage that opposes
                 the supply voltage (back electromotive force). This is why running current is lower
@@ -663,7 +663,7 @@ export default function ElectricalScienceRevisionPage() {
       heroTitle={
         <>
           Electrical Science Revision:{' '}
-          <span className="text-yellow-400">Ohm's Law to Three-Phase</span>
+          <span className="text-elec-yellow">Ohm's Law to Three-Phase</span>
         </>
       }
       heroSubtitle="Every formula and concept you need for your Level 2, Level 3, and 18th Edition exams. Worked examples showing how electrical science applies to real installation work."

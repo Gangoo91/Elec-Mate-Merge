@@ -46,7 +46,7 @@ export default function CircuitBreakerSizingCalculatorPage() {
       badgeIcon={Shield}
       heroTitle={
         <>
-          <span className="text-yellow-400">Circuit Breaker Sizing Calculator</span> — Select the
+          <span className="text-elec-yellow">Circuit Breaker Sizing Calculator</span> — Select the
           Right MCB Every Time
         </>
       }
@@ -123,7 +123,7 @@ export default function CircuitBreakerSizingCalculatorPage() {
               <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <div>
                       <p className="font-semibold text-white">
                         Ib ≤ In — Device must carry the load
@@ -135,7 +135,7 @@ export default function CircuitBreakerSizingCalculatorPage() {
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                     <div>
                       <p className="font-semibold text-white">
                         In ≤ Iz — Cable must carry the device rating
@@ -180,7 +180,7 @@ export default function CircuitBreakerSizingCalculatorPage() {
               </p>
               <div className="grid gap-4 sm:grid-cols-3 my-4">
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-                  <h4 className="font-bold text-yellow-400 text-lg mb-2">Type B</h4>
+                  <h4 className="font-bold text-elec-yellow text-lg mb-2">Type B</h4>
                   <p className="text-white text-2xl font-bold mb-2">3-5 x In</p>
                   <p className="text-white text-sm">
                     Trips magnetically at 3-5 times the rated current. Used for resistive loads:
@@ -188,7 +188,7 @@ export default function CircuitBreakerSizingCalculatorPage() {
                   </p>
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-                  <h4 className="font-bold text-yellow-400 text-lg mb-2">Type C</h4>
+                  <h4 className="font-bold text-elec-yellow text-lg mb-2">Type C</h4>
                   <p className="text-white text-2xl font-bold mb-2">5-10 x In</p>
                   <p className="text-white text-sm">
                     Trips magnetically at 5-10 times the rated current. Used for moderate inrush
@@ -196,7 +196,7 @@ export default function CircuitBreakerSizingCalculatorPage() {
                   </p>
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-                  <h4 className="font-bold text-yellow-400 text-lg mb-2">Type D</h4>
+                  <h4 className="font-bold text-elec-yellow text-lg mb-2">Type D</h4>
                   <p className="text-white text-2xl font-bold mb-2">10-20 x In</p>
                   <p className="text-white text-sm">
                     Trips magnetically at 10-20 times the rated current. Used for very high inrush:
@@ -281,44 +281,44 @@ export default function CircuitBreakerSizingCalculatorPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
                 <ul className="space-y-2 text-white text-sm">
                   <li className="flex items-start gap-3">
-                    <Zap className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <Zap className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">6A Type B:</strong> Lighting circuits
+                      <strong className="text-elec-yellow">6A Type B:</strong> Lighting circuits
                       (domestic and commercial), small fixed loads.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Zap className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <Zap className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">16A Type B:</strong> Immersion heaters,
+                      <strong className="text-elec-yellow">16A Type B:</strong> Immersion heaters,
                       towel rails, small radial circuits, outdoor sockets.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Zap className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <Zap className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">20A Type B:</strong> Radial socket
+                      <strong className="text-elec-yellow">20A Type B:</strong> Radial socket
                       circuits (up to 50m² floor area), water heaters, dedicated appliance circuits.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Zap className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <Zap className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">32A Type B:</strong> Ring final circuits,
+                      <strong className="text-elec-yellow">32A Type B:</strong> Ring final circuits,
                       electric cookers up to 7kW, large shower circuits.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Zap className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <Zap className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">40A Type B:</strong> Electric cookers over
+                      <strong className="text-elec-yellow">40A Type B:</strong> Electric cookers over
                       7kW, large instantaneous electric showers (9-10.5kW).
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Zap className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <Zap className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">32A Type C:</strong> EV charger circuits
+                      <strong className="text-elec-yellow">32A Type C:</strong> EV charger circuits
                       (7kW single-phase), air source heat pumps. Note: where the EVSE may produce
                       smooth DC fault currents, BS 7671 Regulation 551.4.3.3.2 requires the
                       installer to consider a Type B RCD — a standard Type AC or Type A RCD will not
@@ -484,7 +484,7 @@ export default function CircuitBreakerSizingCalculatorPage() {
         },
       ]}
       ctaHeading="Size circuit breakers with confidence"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for MCB selection and cable coordination. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for MCB selection and cable coordination. 7-day free trial, cancel anytime."
       toolPath="/tools/circuit-breaker-sizing-calculator"
     />
   );

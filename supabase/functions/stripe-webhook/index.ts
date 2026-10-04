@@ -31,21 +31,31 @@ Deno.serve(async (req) => {
 
     let event: Stripe.Event;
 
-    // Verify webhook signature if secret is configured
-    if (webhookSecret && signature) {
-      try {
-        event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
-      } catch (err) {
-        console.error('Webhook signature verification failed:', err);
-        return new Response(JSON.stringify({ error: 'Invalid signature' }), {
-          status: 400,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        });
-      }
-    } else {
-      // Parse event without verification (for testing)
-      event = JSON.parse(body);
-      console.warn('Webhook signature not verified - set STRIPE_WEBHOOK_SECRET for production');
+    // Fail CLOSED. This function is NOT registered as a Stripe endpoint
+    // (stripe-subscription-webhook is) and STRIPE_WEBHOOK_SECRET is unset, so
+    // the old unsigned fallback meant anyone could POST a forged subscription
+    // event here. With no secret it now rejects everything.
+    if (!webhookSecret || !signature) {
+      console.error('Rejected webhook: ' + (!webhookSecret ? 'STRIPE_WEBHOOK_SECRET not set' : 'no stripe-signature header'));
+      return new Response(JSON.stringify({ error: 'Missing signature' }), {
+        status: webhookSecret ? 400 : 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+    try {
+      event = await stripe.webhooks.constructEventAsync(
+        body,
+        signature,
+        webhookSecret,
+        undefined,
+        Stripe.createSubtleCryptoProvider()
+      );
+    } catch (err) {
+      console.error('Webhook signature verification failed:', err);
+      return new Response(JSON.stringify({ error: 'Invalid signature' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     console.log('Event type:', event.type);

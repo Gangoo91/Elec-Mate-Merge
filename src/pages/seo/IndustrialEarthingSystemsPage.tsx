@@ -193,7 +193,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth conductor sizing</strong> — BS 7671 Regulation 543.1 requires the
                 protective conductor to be sized in accordance with Table 54.7 (adiabatic equation)
@@ -203,7 +203,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main earth bar (MEB)</strong> — all earthing conductors, bonding conductors,
                 and protective conductors must terminate at a single main earthing terminal (MET).
@@ -212,7 +212,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main protective bonding</strong> — all extraneous conductive parts entering
                 the building (water pipes, gas pipes, structural steelwork, air conditioning
@@ -222,7 +222,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrode design</strong> — the substation earth electrode must achieve a
                 resistance low enough to ensure fault current is sufficient for protective device
@@ -278,7 +278,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mitigation measures</strong> — where PME is used in industrial premises with
                 large unbalanced loads, consider: monitoring the neutral-to-earth voltage (alarm if
@@ -327,7 +327,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrode resistance testing</strong> — earth electrode resistance must be
                 measured at installation and periodically thereafter using the three-terminal
@@ -356,7 +356,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What to bond</strong> — all simultaneously accessible extraneous conductive
                 parts: process pipework (steam, water, chemical), structural steelwork, vessel
@@ -366,7 +366,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Conductor sizing</strong> — supplementary bonding conductors must meet the
                 requirement of BS 7671 Regulation 415.2.2: the resistance R of the bonding conductor
@@ -377,7 +377,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insulating flanges</strong> — process pipework sometimes incorporates
                 insulating flanges (dielectric unions) to prevent galvanic corrosion. If insulating
@@ -406,7 +406,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Star-point earthing</strong> — each item of electronic equipment has its own
                 earth conductor running directly back to a central earth reference bar (star point).
@@ -417,7 +417,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Separate analogue earth bar</strong> — in panels containing both power
                 electronics and precision analogue instrumentation, use a separate analogue earth
@@ -427,7 +427,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable screen earthing</strong> — screen conductors of signal cables (4–20
                 mA, 0–10 V, fieldbus) must be terminated at the panel end using 360° EMC cable
@@ -438,7 +438,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Not a floating earth</strong> — EMC star-point earthing must ultimately
                 connect to the main earthing terminal of the installation. A completely separate
@@ -467,7 +467,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth termination network bonding</strong> — the LPS earth electrode ring
                 (or system of rods) must be connected to the electrical installation main earth bar,
@@ -478,7 +478,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Equipotential bonding at service entry points</strong> — all metallic
                 services entering the structure (power cables, water pipes, gas pipes, data cables,
@@ -490,7 +490,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SPD installation at MDB</strong> — BS EN 62305-4 and BS 7671 Section 534
                 require SPDs at the main distribution board (Type 1 or combined Type 1+2) where the
@@ -501,7 +501,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>LPS design and risk assessment</strong> — BS EN 62305-2 provides the risk
                 assessment methodology for determining whether an LPS is required and what level of
@@ -529,7 +529,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth fault loop impedance testing</strong> — measured using a loop
                 impedance tester at each distribution board and at selected final circuits. Verify
@@ -539,7 +539,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth electrode resistance measurement</strong> — four-terminal fall-of-
                 potential method (BS EN 61557-5). Current and voltage spikes driven into the ground
@@ -549,7 +549,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insulation resistance measurement</strong> — phase-to-earth IR testing (500
                 VDC for LV circuits) verifies insulation integrity. Deteriorating IR values indicate
@@ -559,7 +559,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Neutral-to-earth voltage monitoring</strong> — in TN-C-S (PME) installations
                 with large unbalanced loads, measure the neutral-to-earth voltage at the main
@@ -592,7 +592,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete EICs and EICRs on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -610,7 +610,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Industrial earthing system certification with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for industrial EIC and EICR completion, earthing test records, and instant PDF export. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for industrial EIC and EICR completion, earthing test records, and instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -636,7 +636,7 @@ export default function IndustrialEarthingSystemsPage() {
       heroTitle={
         <>
           Industrial Earthing Systems UK:{' '}
-          <span className="text-yellow-400">Factory Earthing Guide</span>
+          <span className="text-elec-yellow">Factory Earthing Guide</span>
         </>
       }
       heroSubtitle="Comprehensive guide to industrial earthing systems in the UK — TN-S, TN-C-S (PME), and TT earthing for factories and process plant, supplementary equipotential bonding, EMC star-point earthing for electronic equipment, lightning protection integration to BS EN 62305, and earthing measurement and testing methods."
@@ -647,7 +647,7 @@ export default function IndustrialEarthingSystemsPage() {
       faqHeading="Frequently Asked Questions About Industrial Earthing Systems"
       relatedPages={relatedPages}
       ctaHeading="Complete Industrial Electrical Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC and EICR completion, earthing test records, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC and EICR completion, earthing test records, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

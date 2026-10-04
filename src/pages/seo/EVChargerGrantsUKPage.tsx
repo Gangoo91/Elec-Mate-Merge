@@ -303,7 +303,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Always verify</strong> — VAT rules are set by HMRC and can change.
                 Electricians must verify the current position with HMRC or an accountant before
@@ -354,7 +354,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Verify current terms</strong> — Home Energy Scotland funding is subject to
                 annual budget rounds. Always confirm current cashback amounts and loan terms
@@ -380,7 +380,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Take advantage of 0% VAT</strong> — ensure your installer is applying the 0%
                 VAT rate for residential installation. This saves approximately £150–£200 on a
@@ -388,7 +388,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check employer EV schemes</strong> — many employers offer salary sacrifice
                 schemes for EVs that include home charger installation as part of the package.
@@ -397,7 +397,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use smart charging to reduce running costs</strong> — a 7kW smart charger on
                 an EV-optimised tariff (such as Octopus Intelligent or OVO Beyond) can charge
@@ -407,7 +407,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cost context — installation is still cost-effective</strong> — a standard
                 7kW home charger installed by an OZEV-approved electrician typically costs
@@ -417,7 +417,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Scottish homeowners</strong> — apply to Home Energy Scotland for up to £300
                 cashback and a 0% interest loan of up to £7,500. This is the most significant
@@ -541,7 +541,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Certificate Every Grant Installation</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -577,7 +577,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more EV charger grant installations with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for EV certificates, quoting, and job management. Complete OZEV grant documentation on site. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for EV certificates, quoting, and job management. Complete OZEV grant documentation on site. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -603,7 +603,7 @@ export default function EVChargerGrantsUKPage() {
       heroTitle={
         <>
           EV Charger Grants UK 2026:{' '}
-          <span className="text-yellow-400">What Is (and Is Not) Still Available</span>
+          <span className="text-elec-yellow">What Is (and Is Not) Still Available</span>
         </>
       }
       heroSubtitle="The EVHS closed in March 2022 and is no longer available. This guide covers what IS still available in 2026 — the Workplace Charging Scheme (£350/socket, up to £14,000 for businesses), the EV Infrastructure Grant for residential carparks, 0% VAT on home installations, and Home Energy Scotland for Scottish homeowners."
@@ -614,7 +614,7 @@ export default function EVChargerGrantsUKPage() {
       faqHeading="Frequently Asked Questions About EV Charger Grants UK"
       relatedPages={relatedPages}
       ctaHeading="Complete EV Charging Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EV certificates, quoting, and OZEV grant documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for EV certificates, quoting, and OZEV grant documentation. 7-day free trial, cancel anytime."
     />
   );
 }

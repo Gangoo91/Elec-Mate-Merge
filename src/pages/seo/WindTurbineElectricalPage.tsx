@@ -178,7 +178,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Permitted development (England)</strong> — one freestanding turbine may be
                 permitted development if the hub height is under 11.1 m, blade tip under 15 m, not
@@ -188,7 +188,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full planning application</strong> — required when permitted development
                 conditions cannot be met. The application should include site layout, turbine
@@ -198,7 +198,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Scotland and Wales</strong> — permitted development rules differ in Scotland
                 (Planning Circular 3/2011) and Wales (TAN 8). Scotland generally has more permissive
@@ -269,7 +269,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G99 prior approval</strong> — submit application to the relevant DNO with
                 system design documentation, protection relay settings, power quality assessment,
@@ -278,7 +278,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Protection relay requirements</strong> — G99 requires a protection relay
                 with loss of mains (LoM) detection using ROCOF (Rate of Change of Frequency) or
@@ -287,7 +287,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Islanding prevention</strong> — the turbine must disconnect from the grid
                 automatically on loss of grid voltage or frequency excursion. This prevents
@@ -296,7 +296,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commissioning test</strong> — a G99 commissioning test must be witnessed (or
                 at least documented) and the results submitted to the DNO. This includes
@@ -364,7 +364,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>AC output connection</strong> — the turbine inverter output (typically 230V
                 single-phase or 400V three-phase) connects via a dedicated circuit to a spare way in
@@ -373,7 +373,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Isolation requirements</strong> — a lockable means of isolation (the G99 All
                 Pole Isolator) must be installed close to the point of connection to the grid,
@@ -383,7 +383,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Metering</strong> — a generation meter records total electricity generated.
                 An import/export meter (or SMETS2 smart meter) records import and export for SEG
@@ -391,7 +391,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Surge protection</strong> — wind turbines in exposed rural locations are
                 susceptible to lightning damage. Surge protection devices (SPD) in accordance with{' '}
@@ -420,7 +420,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Integrated turbine controller/inverter</strong> — most modern small wind
                 turbines include the power electronics in the nacelle or in a separate controller
@@ -430,7 +430,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DC bus systems (off-grid)</strong> — in off-grid wind + battery systems, the
                 turbine output is typically rectified to DC and fed into the battery bank alongside
@@ -502,7 +502,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Certificate Wind Installations On Site
@@ -539,7 +539,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage wind turbine installations with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC certificates, G99 commissioning records, and professional quoting."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EIC certificates, G99 commissioning records, and professional quoting."
           icon={Wind}
         />
       </>
@@ -565,7 +565,7 @@ export default function WindTurbineElectricalPage() {
       heroTitle={
         <>
           Small Wind Turbine Electrical Installation UK:{' '}
-          <span className="text-yellow-400">Micro Wind Guide</span>
+          <span className="text-elec-yellow">Micro Wind Guide</span>
         </>
       }
       heroSubtitle="A complete guide to micro wind turbine electrical installation in the UK — turbine types under 50 kW, planning permission, site wind speed assessment, G99 grid connection prior approval, MCS 006 certification, electrical connection requirements, inverter selection, and battery integration."
@@ -576,7 +576,7 @@ export default function WindTurbineElectricalPage() {
       faqHeading="Frequently Asked Questions About Small Wind Turbine Installation"
       relatedPages={relatedPages}
       ctaHeading="Certificate Wind Turbine Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC certificates, G99 commissioning records, and MCS documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC certificates, G99 commissioning records, and MCS documentation. 7-day free trial, cancel anytime."
     />
   );
 }

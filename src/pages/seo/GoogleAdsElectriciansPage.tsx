@@ -136,7 +136,7 @@ const sections = [
     heading: 'Google Local Services Ads — The Google Guaranteed Badge',
     content: (
       <>
-        <p className="text-sm text-white/50 mb-4">
+        <p className="text-sm text-white mb-4">
           Written by Andrew Moore, founder of Elec-Mate — a qualified electrician who built the
           platform used by UK electrical contractors.
         </p>
@@ -206,7 +206,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Campaign structure</strong> — create separate ad groups for each main
                 service: <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>,{' '}
@@ -223,7 +223,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Match types</strong> — use Phrase Match for most keywords (e.g.,
                 "electrician coventry") to balance reach and relevance. Avoid Broad Match until you
@@ -233,7 +233,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Quality Score</strong> — Google rates the relevance of your ads and landing
                 pages with a score of 1–10. A higher Quality Score means you pay less per click than
@@ -242,7 +242,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ad extensions</strong> — always add call extensions (your phone number),
                 location extensions (links to your Google Business Profile), site link extensions
@@ -269,7 +269,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>"Electrician [town]" — £3–£8 per click</strong>: Most competitive term in
                 most UK markets. Higher in major cities. A well-optimised campaign with a good
@@ -277,7 +277,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>"Emergency electrician [town]" — £6–£15 per click</strong>: Higher intent,
                 higher CPC. Customers searching for emergency electricians have an urgent need and
@@ -286,7 +286,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>"EV charger installation [town]" — £3–£8 per click</strong>: Growing market,
                 moderate competition. Higher average job value (£500–£1,500) makes this keyword
@@ -297,7 +297,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>"EICR [town]" — £2–£5 per click</strong>: Less competitive than general
                 "electrician" terms. Lower average job value but predictable work volume. Good for
@@ -305,7 +305,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inner London — add 50–150% to the above</strong>: London is the most
                 competitive electrical market in the UK. Emergency electrician London can reach
@@ -365,7 +365,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What not to write</strong> — avoid generic claims like "best electrician",
                 "quality service", and "professional work". Every competitor uses these phrases and
@@ -391,7 +391,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Career and employment searches</strong> — add as negatives: jobs, vacancy,
                 vacancies, apprenticeship, apprentice, career, employment, hire, recruit, CV,
@@ -400,7 +400,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Training and education</strong> — course, training, qualification, how to
                 become, college, City and Guilds, NVQ, Level 2, Level 3. These are students or
@@ -408,14 +408,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DIY and informational</strong> — DIY, free, how to, can I, is it legal,
                 forum, Reddit, guide. These searchers want information, not a tradesperson.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Out-of-area locations</strong> — if you cover Birmingham only, add
                 Manchester, London, Bristol, and all other major cities as negatives. Without this,
@@ -445,7 +445,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Phone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Phone className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Phone call tracking</strong> — add a call conversion in Google Ads (Google
                 Ads → Tools → Conversions → Add Conversion → Phone calls). Use Google forwarding
@@ -456,7 +456,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Phone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Phone className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Form submission tracking</strong> — install the Google Ads conversion tag on
                 your enquiry form thank-you page. In Wix and Squarespace, this can be added via the
@@ -465,7 +465,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Phone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Phone className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smart Bidding</strong> — once you have 30+ conversions in a 30-day period,
                 you can switch to Target CPA or Maximise Conversions bidding. Google's Smart Bidding
@@ -552,7 +552,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <PoundSterling className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Quote Fast, Win More Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -610,7 +610,7 @@ export default function GoogleAdsElectriciansPage() {
       heroTitle={
         <>
           Google Ads for Electricians UK:{' '}
-          <span className="text-yellow-400">PPC Guide for Electrical Contractors</span>
+          <span className="text-elec-yellow">PPC Guide for Electrical Contractors</span>
         </>
       }
       heroSubtitle="A practical guide to Google Ads for UK electricians — Local Services Ads and the Google Guaranteed badge, traditional search ads, typical costs of £3–£10 per click, conversion tracking, ad copy that converts, negative keywords, and budget recommendations for every business size."

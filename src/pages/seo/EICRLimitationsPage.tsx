@@ -857,7 +857,7 @@ export default function EICRLimitationsPage() {
       heroTitle={
         <>
           EICR Limitations:{' '}
-          <span className="text-yellow-400">What the Report Does and Does Not Cover</span>
+          <span className="text-elec-yellow">What the Report Does and Does Not Cover</span>
         </>
       }
       heroSubtitle="Every EICR has a Section D — extent and limitations of inspection and testing. This guide sets out what goes in each of its four boxes, the difference between agreed and operational limitations, the exclusions already printed on the model form, and how to word an entry that will stand up."
@@ -873,7 +873,7 @@ export default function EICRLimitationsPage() {
       faqHeading="Frequently Asked Questions About EICR Limitations"
       relatedPages={relatedPages}
       ctaHeading="Complete Professional EICRs on Your Phone"
-      ctaSubheading="AI board scanning, voice test entry, structured extent and limitations recording, and instant PDF delivery. Join 1,600+ electricians doing EICRs the smart way. 7-day free trial."
+      ctaSubheading="AI board scanning, voice test entry, structured extent and limitations recording, and instant PDF delivery. Join 2,100+ electricians doing EICRs the smart way. 7-day free trial."
     />
   );
 }

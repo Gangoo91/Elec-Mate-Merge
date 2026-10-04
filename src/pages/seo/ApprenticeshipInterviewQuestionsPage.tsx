@@ -265,7 +265,7 @@ export default function ApprenticeshipInterviewQuestionsPage() {
       heroTitle={
         <>
           Electrical Apprenticeship Interview Questions{' '}
-          <span className="text-yellow-400">(and How to Answer Them)</span>
+          <span className="text-elec-yellow">(and How to Answer Them)</span>
         </>
       }
       heroSubtitle="What employers actually ask 16-to-25-year-old apprenticeship applicants — and what they are really testing. The 10 questions to prepare, the maths test, trial days, what to wear, and the questions to ask back."

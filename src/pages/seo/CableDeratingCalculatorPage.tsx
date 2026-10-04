@@ -44,7 +44,7 @@ export default function CableDeratingCalculatorPage() {
       badgeIcon={Thermometer}
       heroTitle={
         <>
-          <span className="text-yellow-400">Cable Derating Calculator</span> — Correction Factors
+          <span className="text-elec-yellow">Cable Derating Calculator</span> — Correction Factors
           Made Simple
         </>
       }
@@ -71,13 +71,13 @@ export default function CableDeratingCalculatorPage() {
           content: (
             <>
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 px-4 py-3 mb-4 flex items-center gap-3 text-sm text-white">
-                <BookOpen className="w-4 h-4 text-yellow-400 shrink-0" />
+                <BookOpen className="w-4 h-4 text-elec-yellow shrink-0" />
                 <span>
                   Content verified against BS 7671:2018+A4:2026 by a JIB-registered electrician.
                 </span>
               </div>
               <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 mb-4">
-                <p className="font-semibold text-yellow-400 mb-2">How do you calculate cable derating?</p>
+                <p className="font-semibold text-elec-yellow mb-2">How do you calculate cable derating?</p>
                 <p className="text-white text-sm">
                   Identify the four BS 7671 correction factors for your installation: Ca (ambient
                   temperature), Cg (grouping), Ci (thermal insulation) and Cf (semi-enclosed fuse).
@@ -151,7 +151,7 @@ export default function CableDeratingCalculatorPage() {
                 <div className="overflow-hidden rounded-xl border border-white/10">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] text-yellow-400">
+                      <tr className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] text-elec-yellow">
                         <th className="text-left font-semibold px-3 py-2">Ambient temperature</th>
                         <th className="text-center font-semibold px-3 py-2">70°C thermoplastic</th>
                         <th className="text-center font-semibold px-3 py-2">90°C thermosetting</th>
@@ -195,7 +195,7 @@ export default function CableDeratingCalculatorPage() {
                 results on lightly loaded cables.
               </p>
               <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
-                <p className="font-semibold text-yellow-400 mb-2 flex items-center gap-2">
+                <p className="font-semibold text-elec-yellow mb-2 flex items-center gap-2">
                   <Zap className="w-4 h-4 shrink-0" />
                   Solar PV installations — BS 7671 Reg 712.523.101 (A4:2026)
                 </p>
@@ -240,7 +240,7 @@ export default function CableDeratingCalculatorPage() {
                 <div className="overflow-hidden rounded-xl border border-white/10">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] text-yellow-400">
+                      <tr className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] text-elec-yellow">
                         <th className="text-left font-semibold px-3 py-2">Circuits grouped</th>
                         <th className="text-center font-semibold px-3 py-2">
                           Bunched / enclosed
@@ -312,18 +312,18 @@ export default function CableDeratingCalculatorPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
                 <ul className="space-y-2 text-white text-sm">
                   <li className="flex items-start gap-3">
-                    <Snowflake className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <Snowflake className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Totally surrounded for more than 0.5m:
                       </strong>{' '}
                       Ci = 0.5 — this is the most severe derating, halving the cable capacity.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Snowflake className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <Snowflake className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         One side in contact with insulation:
                       </strong>{' '}
                       Use Reference Method 100 (formerly 101/102), which is built into the current
@@ -331,9 +331,9 @@ export default function CableDeratingCalculatorPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Snowflake className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <Snowflake className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Short penetration through insulation:
                       </strong>{' '}
                       If the cable is totally surrounded for less than 0.5m, the derating depends on
@@ -350,7 +350,7 @@ export default function CableDeratingCalculatorPage() {
                 <div className="overflow-hidden rounded-xl border border-white/10">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] text-yellow-400">
+                      <tr className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] text-elec-yellow">
                         <th className="text-left font-semibold px-3 py-2">Length in insulation</th>
                         <th className="text-center font-semibold px-3 py-2">Derating factor</th>
                       </tr>
@@ -445,20 +445,20 @@ export default function CableDeratingCalculatorPage() {
                 correction. The required tabulated current carrying capacity is then:
               </p>
               <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4 text-center">
-                <p className="text-xl font-mono font-bold text-yellow-400">
+                <p className="text-xl font-mono font-bold text-elec-yellow">
                   It = In / (Ca x Cg x Ci x Cf)
                 </p>
                 <div className="mt-3 text-left max-w-md mx-auto space-y-1 text-sm text-white">
                   <p>
-                    <strong className="text-yellow-400">It</strong> = required tabulated current
+                    <strong className="text-elec-yellow">It</strong> = required tabulated current
                     carrying capacity
                   </p>
                   <p>
-                    <strong className="text-yellow-400">In</strong> = nominal rating of the
+                    <strong className="text-elec-yellow">In</strong> = nominal rating of the
                     protective device
                   </p>
                   <p>
-                    <strong className="text-yellow-400">Ca, Cg, Ci, Cf</strong> = correction factors
+                    <strong className="text-elec-yellow">Ca, Cg, Ci, Cf</strong> = correction factors
                     as applicable
                   </p>
                 </div>
@@ -471,7 +471,7 @@ export default function CableDeratingCalculatorPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
                 <p className="font-mono text-white">
                   It = 32 / (0.94 x 0.65 x 1.0 x 1.0) = 32 / 0.611 ={' '}
-                  <strong className="text-yellow-400">52.4A</strong>
+                  <strong className="text-elec-yellow">52.4A</strong>
                 </p>
                 <p className="text-white text-sm mt-2">
                   The selected cable must have a tabulated Iz of at least 52.4A for the relevant
@@ -643,7 +643,7 @@ export default function CableDeratingCalculatorPage() {
         },
       ]}
       ctaHeading="Calculate derating factors in seconds"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for BS 7671 cable sizing and derating. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for BS 7671 cable sizing and derating. 7-day free trial, cancel anytime."
       toolPath="/tools/cable-derating-calculator"
     />
   );

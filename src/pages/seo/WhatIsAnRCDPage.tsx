@@ -174,7 +174,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Normal conditions:</strong> The current flowing out on the line conductor
                 equals the current returning on the neutral conductor. The two magnetic fields in
@@ -183,7 +183,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth fault conditions:</strong> Some current leaks to earth (through a
                 person, through damaged insulation, through moisture). The neutral current is now
@@ -193,7 +193,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Trip:</strong> When the induced voltage exceeds the threshold (corresponding
                 to the rated residual current — typically 30mA), it energises a trip coil that
@@ -288,14 +288,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type AC:</strong> Detects sinusoidal (AC) earth leakage only. The most basic
                 type. Being phased out in favour of Type A for most applications.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type A:</strong> Detects sinusoidal AC and pulsating DC earth leakage. The
                 standard minimum for most domestic circuits. Required by BS 7671 for circuits
@@ -304,7 +304,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type B:</strong> Detects AC, pulsating DC, and smooth DC earth leakage.
                 Required for circuits supplying equipment with three-phase rectifiers or frequency
@@ -316,7 +316,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type F:</strong> Like Type A but with enhanced detection for high-frequency
                 fault currents from frequency inverter-controlled equipment. Used for circuits
@@ -325,7 +325,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type S (Selective/Time-Delayed):</strong> Has an intentional delay before
                 tripping (typically 40-500ms depending on fault current). Used upstream of standard
@@ -393,21 +393,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>All socket outlet circuits rated up to 32A</strong> (Regulation 411.3.3).
                 This covers all domestic ring circuits and radial socket circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>All circuits in bathrooms and shower rooms</strong> (Section 701). This
                 includes lighting, extract fans, heated towel rails, and shaver sockets.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Circuits supplying mobile equipment for outdoor use</strong> (Regulation
                 411.3.3). This covers garden sockets, power tool supplies, and any outdoor
@@ -415,7 +415,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cables concealed in walls at less than 50mm depth</strong> (Regulation
                 522.6.202). Unless protected by a 30mA RCD or enclosed in earthed metallic
@@ -423,7 +423,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cables in walls or partitions containing metal parts</strong> regardless of
                 depth — unless the cable is in earthed metallic containment.
@@ -456,7 +456,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <AlertTriangle className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Faulty Appliance</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -529,14 +529,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <TestTube className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TestTube className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test button check:</strong> Press the test button. The RCD must trip. If it
                 does not, the device is faulty — C1 observation.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TestTube className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TestTube className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full rated current test (1x IΔn):</strong> Inject 30mA using a calibrated
                 RCD tester. The RCD must trip within 300ms. If it does not, the device is
@@ -544,21 +544,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TestTube className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TestTube className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>5x rated current test (5x IΔn):</strong> Inject 150mA. The RCD must trip
                 within 40ms. This verifies fast disconnection under higher fault currents.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TestTube className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TestTube className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Half rated current test (0.5x IΔn):</strong> Inject 15mA. The RCD must{' '}
                 <strong>not</strong> trip. This confirms the RCD is not over-sensitive.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TestTube className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TestTube className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ramp test (optional but recommended):</strong> Gradually increase the test
                 current from zero until the RCD trips. The trip current should be between 50% and
@@ -599,7 +599,7 @@ export default function WhatIsAnRCDPage() {
       heroTitle={
         <>
           What Is an RCD?{' '}
-          <span className="text-yellow-400">Residual Current Devices Explained</span>
+          <span className="text-elec-yellow">Residual Current Devices Explained</span>
         </>
       }
       heroSubtitle="An RCD could save your life. It detects earth leakage current and disconnects the supply in milliseconds — before the current through your body can cause a fatal electric shock. This guide explains how RCDs work, why 30mA matters, and when BS 7671 requires them."

@@ -196,31 +196,31 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Switching Device Checks</h3>
           <ul className="space-y-3 text-white leading-relaxed">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Correct operation:</strong> The device switches
+                <strong className="text-elec-yellow">Correct operation:</strong> The device switches
                 on and off cleanly without sticking, arcing, or excessive mechanical resistance.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Correct circuit:</strong> The device controls
+                <strong className="text-elec-yellow">Correct circuit:</strong> The device controls
                 the intended circuit — the correct light, the correct appliance, the correct fan.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Correct orientation:</strong> For standard plate
+                <strong className="text-elec-yellow">Correct orientation:</strong> For standard plate
                 switches, down should be off. Two-way and intermediate switches should operate
                 logically from all positions.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Indicator lamps:</strong> Any neon indicators or
+                <strong className="text-elec-yellow">Indicator lamps:</strong> Any neon indicators or
                 LED indicators on switches, fused spurs, or control panels must illuminate
                 correctly.
               </span>
@@ -291,32 +291,32 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Labelling Requirements</h3>
           <ul className="space-y-3 text-white leading-relaxed">
             <li className="flex items-start gap-3">
-              <Tag className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Tag className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Unique identification:</strong> Every circuit
+                <strong className="text-elec-yellow">Unique identification:</strong> Every circuit
                 has a unique designation (e.g., "Ring 1 — Ground Floor Sockets", "Lighting 2 — First
                 Floor").
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Tag className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Tag className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Accuracy:</strong> The label correctly describes
+                <strong className="text-elec-yellow">Accuracy:</strong> The label correctly describes
                 the circuit and the area it serves. The label matches the actual circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Tag className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Tag className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Durability:</strong> Labels are durable and will
+                <strong className="text-elec-yellow">Durability:</strong> Labels are durable and will
                 remain legible for the life of the installation. Handwritten labels on masking tape
                 do not meet this requirement.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Tag className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Tag className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Circuit chart:</strong> A circuit chart is
+                <strong className="text-elec-yellow">Circuit chart:</strong> A circuit chart is
                 present inside or adjacent to the distribution board, listing all circuits with
                 their designations, protective device types and ratings, and cable sizes.
               </span>
@@ -345,7 +345,7 @@ const sections = [
         <div className="space-y-4 mt-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Power className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Power className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Smoke and heat detectors</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -357,7 +357,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Power className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Power className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Emergency lighting</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -369,7 +369,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Power className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Power className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Time switches and programmers</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -381,7 +381,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Power className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Power className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Ventilation and extract fans</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -527,7 +527,7 @@ export default function FunctionalTestingGuidePage() {
       heroTitle={
         <>
           Functional Testing:{' '}
-          <span className="text-yellow-400">What to Check After Installation</span>
+          <span className="text-elec-yellow">What to Check After Installation</span>
         </>
       }
       heroSubtitle="The complete guide to functional testing for UK electricians. RCD test button checks, switching devices, isolators, interlocking, circuit identification, and labelling — the final stage of BS 7671 verification."
@@ -537,7 +537,7 @@ export default function FunctionalTestingGuidePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Never miss a functional test check"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site testing, certification, and compliance. Functional test checklists built into every certificate. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site testing, certification, and compliance. Functional test checklists built into every certificate. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -42,10 +42,10 @@ const checks = [
     question:
       'First day on a commercial DB upgrade. The site office hands you a thin clear-pocket folder with just a programme and a single drawing in it. Everything else you need is somewhere else. What do you do before you pick a tool up?',
     options: [
-      "Treating someone less favourably because they have done a 'protected act' — typically making a discrimination complaint, supporting someone else's complaint, or giving evidence in a discrimination case. Victimisation is unlawful even if the original complaint was unsuccessful, provided it was made in good faith. The protection extends to apprentices, ex-employees and anyone else covered by the Act.",
-      "Because most electrical contractors are registered with a competent-person scheme (NICEIC, NAPIT, ELECSA, STROMA, Certsure) which self-certifies the work to the Local Authority. The Local Authority accepts the scheme certificate without separate inspection. Building Control would only physically inspect for non-scheme work or where there's a specific concern.",
-      "Stop and ask the supervisor for the missing items — RAMS, risk assessment, COSHH for any chemicals, the rest of the drawings (single line, schedule of circuits), the schematic, the schedule of test results from the existing install, BS 7671 and the OSG, mfr data for the new board, and the permit if any of the work is hot. Without that information you can't show your work was done to a 'suitable and sufficient' standard under MHSWR Reg 3 and you can't show compliance with BS 7671 Reg 132.13.",
-      "G98 fast-track applies to fully-type-tested generators with output up to and including 16 A per phase per inverter — that's 16 A × 230 V = 3.68 kW single-phase per inverter. G99 pre-application applies above 16 A per phase, and to all generators (regardless of size) at sites where pre-existing G98 or G99 generators already exist. Most domestic 4 kW PV inverters are deliberately limited to 3.68 kW max output to stay G98-eligible. Anything above triggers G99 with associated DNO assessment timeline (weeks to months depending on local network).",
+      'Start work from the drawing you have — the rest of the paperwork is for the office and can catch up later.',
+      "Ask the main contractor's site manager to lend you their copy of BS 7671 and work from that instead.",
+      'Stop and ask the supervisor for what is missing — the RAMS, COSHH information, the rest of the drawings and schedules, the existing test results, and the data for the new board — before starting.',
+      'Photograph the existing board and work out the circuits yourself — that is quicker than waiting for drawings.',
     ],
     correctIndex: 2,
     explanation:
@@ -56,10 +56,10 @@ const checks = [
     question:
       "You're handed a manufacturer data sheet for a new RCBO. What is the SPECIFIC purpose of this document for you on the day, beyond 'reference material'?",
     options: [
-      "It tells you the torque settings for the terminals, the conductor sizes the unit accepts, whether ferrules are required for stranded conductors, the breaking capacity, the trip curve, and the IP rating in its housing — all of which feed directly into compliance with BS 7671 Reg 526.1 (durable connections) and Reg 510.3 (selection and erection in line with mfr instructions). Skip the data sheet and you're terminating by feel, which voids warranty AND fails Reg 526.1.",
-      'Advanced cultural empathy: understanding that safety communication styles must be adapted to cultural context. In high power-distance cultures, a peer raising concerns directly may be uncomfortable. In indirect communication cultures, blunt safety warnings may cause face-loss. The electrician must find a culturally appropriate way to communicate urgency without causing shame, possibly involving the site supervisor or using visual demonstration rather than direct verbal confrontation',
-      'Separating the person from their past behaviour and responding to their current human experience with genuine compassion. Advanced empathy recognises that difficult people are often struggling, that past conflict does not negate present humanity, and that showing empathy in this moment may transform the entire working relationship — whilst still maintaining appropriate professional boundaries',
-      'Sign in at the gate or welfare cabin, present ECS / CSCS / industry card if relevant, attend a visitor induction (shorter than the full operative induction), wear correct PPE for the area, and be escorted by a competent person from the site team. Visitors are not permitted to walk the site unaccompanied. CDM 2015 Reg 13(4)(b) requires the PC to take steps to prevent unauthorised access.',
+      'It gives the terminal torque, the conductor sizes and preparation (e.g. ferrules) the device accepts, and its ratings — the information BS 7671 Regs 510.3 and 526.1 expect you to follow.',
+      'It is the warranty card — keep it in the van in case the device fails and needs returning.',
+      "It replaces the need for testing — if you follow it, you don't need to record test results for that circuit.",
+      'It is for the customer only and should be left in the consumer unit without being read.',
     ],
     correctIndex: 0,
     explanation:
@@ -70,10 +70,10 @@ const checks = [
     question:
       "You're asked to work two hours past the standard finish time on a Friday. Where do you check what you're entitled to be paid for those two hours?",
     options: [
-      "An 'electrical system' is defined in Reg 2 as 'a system in which all the electrical equipment is, or may be, electrically connected to a common source of electrical energy'. So everything from the cut-out to the final accessory is one system. Reg 4(1) applies to the whole of it, not just the bit you happened to touch.",
-      "To take reasonable care for the health and safety of self and others, and to co-operate with the employer's safety arrangements. In RAMS terms that means reading the document, following the written method, raising defects in the document, and not working outside the documented controls. 'Following orders' is no defence to an s.7 prosecution.",
-      "Acknowledge the request verbally, then send a short written variation by email or in your job-management app before the end of the day. Quote the additional cost, get the customer's written confirmation back before you arrive on site, and only then carry out the extra work. The verbal yes is fine for tone; the written variation is what protects payment, scope and warranty.",
-      'Your employment contract and the JIB Working Rules. The JIB Handbook sets the industry-standard overtime, travel-time, lodging and grading rules for electricians in England and Wales. Your contract should reference it (most reputable firms apply the JIB rates as a baseline). The HR docs — contract, JIB rules, holiday and grievance procedures — are how you get paid correctly and how you keep your rights if a dispute arises.',
+      'The site RAMS — the method statement sets the working hours and the overtime rate for the job.',
+      "The customer's contract with your firm — the client decides how much operatives are paid for extra hours.",
+      'Nowhere — overtime for apprentices is always unpaid until you are qualified.',
+      'Your employment contract and the JIB Working Rules (which most firms use as the baseline for overtime and travel rules).',
     ],
     correctIndex: 3,
     explanation:
@@ -89,10 +89,10 @@ const quizQuestions = [
     question:
       'Which five families of workplace information does Unit 210 AC 2.2 implicitly cover for an apprentice electrician?',
     options: [
-      'Wind turns the rotor blades, which drive a generator (typically through a gearbox) to convert kinetic energy from the wind into electrical energy — either AC from a synchronous/asynchronous generator or variable-frequency AC converted to grid-frequency AC via power electronics',
-      'Safety documents (RAMS, COSHH, risk assessments, permits, fire muster, welfare info), design documents (drawings, specs, schedules, schematics, BIM, RFI logs), standards (BS 7671, IET OSG, manufacturer data), contract / commercial (programme, snag list, variations, delay notices) and HR (employment contract, JIB Working Rules, holiday and grievance procedures).',
-      "To be the apprentice's day-job teacher and portfolio signer-off. The Mentor is an experienced electrician (typically Approved or Technician grade) who is formally allocated to support a specific apprentice. They sign portfolio entries as evidence of on-site competence, calibrate gradings with the College Tutor, attend the monthly three-way reviews, and act as the first point of escalation for apprentice-specific issues.",
-      'A formal written authorisation that defines the work to be done, the hazards, the controls, the personnel authorised, the time period, and the sign-off conditions. Used for high-hazard activity (live working, hot work, confined space, work on safety-critical systems). Issued by the issuing authority; signed-on by the operative; signed-off when complete.',
+      'Drawings, invoices, delivery notes, timesheets and van logs — the paperwork that passes through the site office.',
+      'Safety documents, design documents, standards (including manufacturer data), contract / commercial documents, and HR documents.',
+      'BS 7671, the OSG, GN3, GN8 and the IET Code of Practice — the five technical references you carry.',
+      'The EIC, the EICR, the Minor Works certificate, the schedule of test results and the schedule of inspections.',
     ],
     correctAnswer: 1,
     explanation:
@@ -102,10 +102,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is the specific purpose of the safety-document family on a building site?',
     options: [
-      'Cooperate (HASAWA s.7 + CDM Reg 15). Confirm your name and role. Direct the inspector to the senior person on site (supervisor, contracts manager, site manager). Answer factual questions truthfully — interfering with an inspector is a separate offence under HASAWA s.33. If asked technical questions outside your competence, say so honestly. Do not speculate or guess. Notify your firm immediately.',
-      'Reg 753.522.1.3 requires that for cold leads (circuit wiring) and control leads installed in the zone of heated surfaces, the increase of ambient temperature shall be taken into account. This means conductor current-carrying capacity, derating, insulation temperature ratings and routing shall be adjusted to reflect the higher ambient temperature where the lead is installed in the heated surface zone.',
-      'To identify hazards, set out the controls, allocate responsibility, and provide a defensible record of the safe system of work. RAMS and risk assessments are statutory under MHSWR 1999 Reg 3. COSHH data sheets are statutory under COSHH 2002. Permits-to-work cover higher-risk activities. The fire muster and welfare info satisfy the Workplace (Health, Safety and Welfare) Regulations 1992. Together they convert legal duty into specific instructions.',
-      'Pre-construction information (PC info from client/principal designer) → construction phase plan (principal contractor) → RAMS for each work package (contractor) → toolbox talks each shift (supervisor) → permit-to-work for specific high-risk activities (issued before, closed after). Each layer references the one above it. After an incident the inspector traces backwards from the incident to find the gap.',
+      "To satisfy the client's insurers — they are filed at the start of the job and not needed on site afterwards.",
+      'To record the test results for the installation so the certificate can be completed.',
+      'To identify the hazards, set out the controls and who is responsible, and keep a defensible record of the safe system of work — RAMS, COSHH assessments, permits, fire and welfare information.',
+      'To set out the programme and the deadlines for each trade on the site.',
     ],
     correctAnswer: 2,
     explanation:
@@ -115,10 +115,10 @@ const quizQuestions = [
     id: 3,
     question: 'Why does the design-document family matter to an apprentice doing a first-fix?',
     options: [
-      'Typical route: TAQA L3 (assessor qualification) — start doing some assessor work to test fit. Then L3 Award in Education and Training (introductory teaching qualification). College hires you part-time as a sessional lecturer; you teach evening classes. Convert to DET (L5 Diploma) over 1-2 years to become full lecturer. Many colleges fund the conversion if you commit to a permanent role.',
-      'The fault is at a point that splits the supply — typically the consumer unit busbar, an MCB / RCBO, or a sub-circuit. If the divide is between RCD-protected zones (e.g. all RCD1 circuits dead, all RCD2 fine), the issue is RCD1 or its busbar. If the divide is between separate buildings on the same supply (main house OK, garage out), the issue is the garage feed. The fault is at the upstream side of the affected portion. Investigation: identify the boundary of dead vs live circuits; trace upstream from the boundary; the fault is at the point where dead becomes live.',
-      "Reg 510.3 — 'Every item of equipment shall be selected and erected so as to allow compliance with the regulations stated in this chapter and the relevant regulations in other parts of BS 7671 and shall take account of manufacturers' instructions.' Selection AND erection. The 'take account of manufacturers' instructions' clause is what makes the data sheet effectively part of the standard.",
-      "Because the drawings, specs, schedules and schematics tell you exactly what cable, what circuit, what containment, what termination, and where it goes. Build the first-fix to a memory of what the customer said and you'll either be ripping it out at second-fix or fixing it on a snag list. Design documents are how 'what was specified' gets turned into 'what was installed' — and the as-built mark-up at the end is how the next person on site (maintenance, inspector, future works) understands what you did.",
+      "It doesn't at first-fix — the drawings only matter at second-fix when the accessories go on.",
+      'Because the design documents set the working hours and the order the trades arrive on site.',
+      'Because they contain the safe isolation procedure you must follow before first-fix starts.',
+      'Because the drawings, specs and schedules tell you exactly what goes where — cable, circuit, containment and termination — and your as-built mark-up records any change for the next person.',
     ],
     correctAnswer: 3,
     explanation:
@@ -128,10 +128,10 @@ const quizQuestions = [
     id: 4,
     question: 'Where in BS 7671 is the duty to provide installation information formally placed?',
     options: [
-      "Reg 132.13 — 'The designer of the electrical installation shall provide ... the information necessary to allow the safe operation, inspection, alteration, repair, maintenance and dismantling of the electrical installation'. The information has to be available to whoever is going to operate or maintain it. That is the BS 7671 hook for site-folder paperwork (single line diagram, schedule of circuits, certificate, schedule of test results, mfr data).",
-      'Wide statutory powers under s.20 — enter premises at any reasonable time, take photographs / measurements, take samples, require any person to answer questions, require production of documents, take possession of articles. Plus the power under s.21/s.22 to issue improvement and prohibition notices on the spot. Refusing or obstructing an inspector is itself a criminal offence under s.33.',
-      "Although the PD's primary duty is during the pre-construction phase (gathering and providing pre-construction information), they often make periodic visits during construction to verify that the design assumptions held up and that the pre-construction H&S information is being used. This is especially common on complex projects where design changes during construction.",
-      'Tape measure (5 m or 8 m, lockable), spirit level (a torpedo level for short runs, a 600 mm level for socket lines), pencil OR a chinagraph pencil for darker surfaces, and a marker square (or just the level on edge) to keep the back box parallel to the line of the wall. Centre-mark with a small cross so the chaser knows where the centre is, not just the outline.',
+      'Reg 132.13 — every installation shall be provided with appropriate documentation, including that required by Regulation 514.9 (diagrams and charts) and Part 6 (certificates and schedules).',
+      'Reg 411.3.3 — the regulation on RCD protection, which also covers the information left with the customer.',
+      'Reg 643.1 — the testing regulation, which requires the paperwork to be produced before testing starts.',
+      'There is no such duty in BS 7671 — documentation is a matter for the competent person scheme only.',
     ],
     correctAnswer: 0,
     explanation:
@@ -142,10 +142,10 @@ const quizQuestions = [
     question:
       'Under CDM 2015 Reg 13, what duty does the principal contractor have around information for workers arriving on a notifiable construction site?',
     options: [
-      'A live-working permit (or equivalent documented authorisation), a specific risk assessment justifying conditions (a) and (b), a method statement detailing the precautions for condition (c), evidence of operative competence specifically for live working (not just general electrical competence), and frequently a second authorised person present. Documented BEFORE the work, signed off by an authorising engineer, retained on file as the audit trail.',
-      'Provide site induction (covering the construction phase plan, site rules, welfare, emergency procedures and specific hazards), provide access to relevant pre-construction information, and ensure each worker has the information they need to do their work safely. Reg 14 makes it a duty on the principal contractor to ensure workers receive any relevant H&S training. Reg 15 puts a corresponding duty on the worker to co-operate.',
-      "Three sections. (1) PRE-WORK — photographs of any pre-existing damage to walls / floors / tiles / surfaces near the work area. Protects against 'you damaged that' disputes. (2) WORK SCOPE — what fabric was disturbed during the work (chasing, drilling, plasterboard cutting, tile removal). (3) RESTORATION — what make-good was done, what's outstanding for other trades, customer's acknowledgment. The photographs + scope + restoration record protects the firm from misunderstandings about what was done vs what was pre-existing.",
-      "'Building Management System' — the central control system that orchestrates a building's heating, ventilation, lighting, security and energy use. BMS work is one of the fastest-growing specialisms in building services because every modern commercial building has one. Electricians who learn BMS programming and commissioning (often via Trend, Tridium, Siemens or Schneider training) are in high demand and can move into BMS specialist roles paying significantly above standard electrician rates.",
+      "None — information for workers is entirely the responsibility of each worker's own employer.",
+      'Ensure a suitable site induction is provided (Reg 13(4)(a)) and that workers have the information they need to work safely; Reg 14 adds a duty to consult and engage with workers.',
+      'To give every worker a full copy of the health and safety file before they start.',
+      "To check every worker's qualifications and issue them with an ECS card on arrival.",
     ],
     correctAnswer: 1,
     explanation:
@@ -156,10 +156,10 @@ const quizQuestions = [
     question:
       'Why does the contract / commercial family of documents matter to a first-year apprentice?',
     options: [
-      'A self-sustaining exothermic chain reaction inside a Li-ion cell. Damage, overcharge, internal manufacturing defect or external heat triggers an internal short circuit, which generates heat, which decomposes the organic electrolyte, which generates more heat and flammable / toxic gas, which can ignite. Once the chain reaction has started in one cell the heat can propagate to neighbouring cells in the pack. The fire is intense, fast, and self-fuelling because the cell carries its own oxidiser within the cathode material.',
-      'Can tell you: polarity and connection state of a 13A socket — correct, reversed polarity, missing earth, missing neutral. Some advanced models add EFLI and basic RCD trip indication. Cannot tell you: actual values of EFLI / IR / continuity (limited accuracy vs MFT), shared-neutral conditions, high-resistance joints below threshold, intermittent faults. Socket testers are first-look tools; the MFT gives the numbers for the certificate.',
-      "The programme tells you the sequence and the deadline — miss it and your firm is at risk of liquidated damages. The snag list is your end-of-job homework. Variations and delay notices are how additional work or extra time is recorded so the firm can claim it. Your firm's cash flow — and ultimately your wages — depend on this paperwork being right. Even as an apprentice, learning to read the programme and the snag list is part of becoming a tradesperson.",
-      'Three separate containers. New batteries in their original packaging or a dedicated lithium-safe storage box, separated from the others. Used but undamaged batteries in a metal container with terminals taped or with cell-tray separation to prevent short circuits. The damaged battery in a separate fire-resistant container (vermiculite, sand or a purpose-made Li-ion bag), stored away from the van interior and away from other batteries, and returned to a battery recycling collection point as soon as practical. Never stack damaged with undamaged.',
+      "It doesn't — commercial documents are the office's concern and an apprentice never needs to read them.",
+      'Because the contract sets out the safe isolation procedure for the job.',
+      "The programme sets the sequence and deadlines, the snag list is the end-of-job work, and variations record extra work so the firm gets paid — your firm's cash flow, and your wages, depend on them.",
+      'Because the commercial documents replace the need for a RAMS on small jobs.',
     ],
     correctAnswer: 2,
     explanation:
@@ -170,10 +170,10 @@ const quizQuestions = [
     question:
       'Where does the manufacturer data sheet sit in the workplace-information families, and why?',
     options: [
-      'No person shall intentionally or recklessly interfere with or misuse anything provided in the interests of H&S. Examples — removing a machine guard, defeating an interlock, taking down a barrier, reaching round a lock-off, stuffing the door of an interlocked enclosure, switching off a smoke detector you find inconvenient. s.8 is a personal criminal offence and applies to everyone on site, employee or not.',
-      'Safely isolate. At the CU, identify the line and CPC of the circuit under test. Disconnect the line from the protective device and the CPC from the earth bar. Link the disconnected L and CPC together at the CU end with a low-resistance jumper. Test between L and CPC (or L and earth at the accessory) at the furthest accessory — the reading is R1+R2 for the circuit.',
-      'Lighting is part of the workplace under HASAWA s.2(2)(d) and the Workplace (Health, Safety and Welfare) Regulations 1992 Reg 8. Inadequate task lighting in a confined area is a hazard in itself — it hides other hazards (trip risks, services, structural defects) and increases the chance of an error. The fix: bring temporary task lighting, set it up before tools come out, and record the temporary supply on the dynamic assessment.',
-      "It sits in the standards / technical family alongside BS 7671 and the IET OSG. BS 7671 Reg 510.3 ties equipment selection and erection to manufacturer's instructions. Reg 526.1 ties the connection itself (torque, ferrule requirement, mechanical strength) to those instructions. The data sheet is the authoritative source for how the unit is meant to be installed. Treat it as part of the site folder, not the bin.",
+      'In the commercial family — it is mainly a price list and warranty statement for the device.',
+      "In the HR family — it records which operative installed the device for the employer's records.",
+      'Nowhere — once the device is fitted the data sheet can be thrown away.',
+      "In the standards / technical family alongside BS 7671 and the OSG — Regs 510.3 and 526.1 tie selection, erection and connections to the manufacturer's instructions.",
     ],
     correctAnswer: 3,
     explanation:
@@ -184,10 +184,10 @@ const quizQuestions = [
     question:
       "You finish a CU change in a domestic property. Where does the information you've created during the job ultimately go, and why?",
     options: [
-      "Into the customer's installation record — Electrical Installation Certificate, schedule of circuits, schedule of test results, manufacturer data for the new board, and a copy of the final RAMS for your firm's own records. The customer's pack discharges the BS 7671 Reg 132.13 duty to provide information for safe operation, inspection and maintenance. Your firm's pack is what you produce to an HSE inspector if anything is challenged later.",
-      'To identify hazards, set out the controls, allocate responsibility, and provide a defensible record of the safe system of work. RAMS and risk assessments are statutory under MHSWR 1999 Reg 3. COSHH data sheets are statutory under COSHH 2002. Permits-to-work cover higher-risk activities. The fire muster and welfare info satisfy the Workplace (Health, Safety and Welfare) Regulations 1992. Together they convert legal duty into specific instructions.',
-      'It is purely a marketing sheet from the wholesaler giving the list price, the stock code and the warranty length. None of it affects how you install the device — torque and conductor preparation are matters of trade judgement, and a competent electrician terminates to feel rather than to a published figure.',
-      "Account-for personnel from the firm; ensure customers / visitors in your care have evacuated; liaise with the building's responsible person and fire-marshal at the muster point; provide accurate information to fire service if asked; prevent re-entry; preserve the scene afterwards if relevant to your firm's work.",
+      "Into the customer's installation record — the EIC with its schedules and the data for the new board — with copies kept by your firm, so the installation can be operated, inspected and maintained (Reg 132.13).",
+      'Nowhere — once the board is energised and working, the paperwork has served its purpose.',
+      'Only to the competent person scheme — the customer does not need a copy of the certificate.',
+      'Only to the DNO, because a consumer unit change alters the supply arrangements.',
     ],
     correctAnswer: 0,
     explanation:
@@ -376,7 +376,7 @@ export default function Sub1() {
             <>
               CDM 2015 Reg 13(4) places the formal duty on the principal contractor to brief workers
               on the site information they need before any work starts. Reg 13(1) broadens this to
-              planning, managing and monitoring the construction phase. Reg 15 makes it a personal
+              planning, managing and monitoring the construction phase. Reg 8 makes it a personal
               duty on the worker to co-operate. As an apprentice arriving on a fit-out, the
               induction is the formal handover of the site-specific information that doesn&apos;t
               live in the textbook.

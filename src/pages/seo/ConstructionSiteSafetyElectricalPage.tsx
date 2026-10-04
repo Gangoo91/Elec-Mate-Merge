@@ -197,7 +197,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Client:</strong> must ensure suitable arrangements are in place for managing
                 the project, including the provision of safe electrical supplies for welfare
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Principal Designer:</strong> must consider electrical safety in the design —
                 for example, routing cable runs to avoid areas of future excavation, specifying
@@ -215,7 +215,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Principal Contractor:</strong> must plan, manage, and monitor electrical
                 safety on site. This includes ensuring the temporary electrical installation is
@@ -225,7 +225,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Contractors (including electrical contractors):</strong> must ensure their
                 workers are competent, have appropriate equipment (including 110V tools and
@@ -237,7 +237,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Workers:</strong> must report damaged cables, exposed conductors, faulty
                 equipment, and any other electrical hazards. Must not use equipment they know or
@@ -268,7 +268,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <div className="flex items-start gap-3">
-            <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-1">How the CTE System Works</h4>
               <p className="text-white text-sm leading-relaxed">
@@ -310,14 +310,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Temporary supply point:</strong> either a temporary builder's supply from
                 the DNO or a generator. For large sites, a temporary three-phase supply is common.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main distribution board:</strong> weatherproof, lockable, clearly labelled.
                 Contains the main isolator, protective devices for outgoing circuits, and 30 mA RCD
@@ -325,7 +325,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sub-distribution boards:</strong> positioned around the site to provide
                 power to specific work areas. Connected to the main board by armoured cable (SWA) or
@@ -333,14 +333,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>110V transformers:</strong> connected to the 230V distribution system and
                 providing 110V socket outlets for portable tools.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Temporary lighting:</strong> festoon lighting, floodlights, and task
                 lighting. Fixed lighting above 2.4 m can be 230V; temporary lighting at lower levels
@@ -384,7 +384,7 @@ const sections = [
           <h4 className="font-bold text-white mb-3">Cable Protection Methods</h4>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Armoured cable (SWA):</strong> the preferred cable type for permanent and
                 semi-permanent runs on construction sites. The steel wire armour provides mechanical
@@ -392,7 +392,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable ramps and bridges:</strong> where cables must cross pedestrian or
                 vehicle routes, use purpose-built cable ramps that are high-visibility, robust, and
@@ -400,7 +400,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Overhead routing:</strong> cables routed overhead on catenary wires or along
                 scaffolding must be at least 5.8 m above vehicle areas and 3.5 m above pedestrian
@@ -408,7 +408,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Buried cables:</strong> if cables must be buried on site, they should be at
                 a minimum depth of 500 mm, laid on a bed of sand, with marker tape placed 150 mm
@@ -452,28 +452,28 @@ const sections = [
           <h4 className="font-bold text-white mb-3">Inspection Schedule</h4>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Daily:</strong> visual inspection of cables, plugs, sockets, and equipment
                 by users before each shift. Report any damage immediately.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Weekly:</strong> more detailed visual inspection of the distribution system,
                 transformers, and all cables. Check RCD test buttons.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Monthly:</strong> formal visual inspection with records. Check all
                 connections, labels, enclosure integrity, and earthing.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3-monthly (maximum):</strong> full periodic inspection and testing by a
                 competent person. Continuity, insulation resistance, earth fault loop impedance, RCD
@@ -557,7 +557,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Daily user check:</strong> before each use, the user should visually inspect
                 the tool, cable, and plug for damage. Check for exposed conductors, cracked casings,
@@ -565,7 +565,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Formal inspection (PAT):</strong> portable equipment on construction sites
                 should be formally inspected and tested at intervals determined by risk assessment.
@@ -579,7 +579,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Labelling:</strong> each item of equipment should be labelled with a unique
                 asset number and the date of the last formal inspection. A traffic-light system
@@ -587,7 +587,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Extension leads and adapters:</strong> these are high-failure items on
                 construction sites due to rough handling. Inspect regularly. Do not daisy-chain
@@ -616,7 +616,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI RAMS Generator</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -669,7 +669,7 @@ export default function ConstructionSiteSafetyElectricalPage() {
       heroTitle={
         <>
           Construction Site Electrical Safety:{' '}
-          <span className="text-yellow-400">The CDM Guide for UK Electricians</span>
+          <span className="text-elec-yellow">The CDM Guide for UK Electricians</span>
         </>
       }
       heroSubtitle="Everything you need to know about electrical safety on construction sites. CDM 2015 duties, 110V reduced voltage systems, temporary distribution boards, cable protection, 3-monthly inspection requirements, emergency procedures, and how to produce compliant RAMS."
@@ -680,7 +680,7 @@ export default function ConstructionSiteSafetyElectricalPage() {
       faqHeading="Frequently Asked Questions About Construction Site Electrical Safety"
       relatedPages={relatedPages}
       ctaHeading="Generate Site Safety Documentation in Minutes"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for RAMS, certificates, and safety documentation on construction sites. AI-powered, mobile-first, and CDM-compliant. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for RAMS, certificates, and safety documentation on construction sites. AI-powered, mobile-first, and CDM-compliant. 7-day free trial, cancel anytime."
     />
   );
 }

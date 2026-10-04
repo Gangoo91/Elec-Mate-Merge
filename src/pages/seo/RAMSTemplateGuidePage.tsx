@@ -578,7 +578,7 @@ const sections = [
           HSE publication HSR25 giving guidance on that competence requirement. Naming people and
           their competence is not box-ticking — it is the statutory duty.
         </p>
-        <div className="-mx-5 my-5 rounded-none border-y border-elec-yellow/30 bg-elec-yellow/10 p-5 sm:mx-0 sm:rounded-2xl sm:border-x">
+        <div className="-mx-5 my-5 rounded-none border-y border-elec-yellow/30 bg-white/[0.06] p-5 sm:mx-0 sm:rounded-2xl sm:border-x">
           <h3 className="mb-2 text-[15px] font-semibold tracking-tight text-white">
             HSG85 — Electricity at work: Safe working practices
           </h3>
@@ -848,7 +848,7 @@ export default function RAMSTemplateGuidePage() {
       heroTitle={
         <>
           RAMS for Electricians:{' '}
-          <span className="text-yellow-400">Risk Assessments and Method Statements That Work</span>
+          <span className="text-elec-yellow">Risk Assessments and Method Statements That Work</span>
         </>
       }
       heroSubtitle="Every commercial job needs a RAMS. Every principal contractor demands one before you set foot on site. This guide shows you how to write risk assessments and method statements that are genuinely useful, compliant with CDM 2015 and the Electricity at Work Regulations 1989, and specific to electrical work."

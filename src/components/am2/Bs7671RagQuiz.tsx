@@ -8,11 +8,15 @@
  * back to a real reg, and the bank refreshes whenever the regs do.
  *
  * Question format is "Match the requirement to the regulation":
- *   - We pick N facets that have a regulation_id.
+ *   - We pick N real BS 7671 regs (see bs7671QuizPool — weighted to
+ *     Parts 4–6, one per section, recent ones skipped) and one BS 7671
+ *     facet for each that is actually about that reg.
  *   - The question is the facet's `content` (with any reg number redacted
  *     so we don't give the answer away).
- *   - Options are 4 regulation numbers: the correct one plus three random
- *     distractors drawn from the same `part` so they look plausible.
+ *   - Options are 4 regulation numbers: the correct one plus three
+ *     distractors from the same Part but different sections, so the
+ *     answer can be reasoned to rather than told apart from its own
+ *     sub-paragraphs.
  *   - On answer reveal we show reg number + title + part as the citation,
  *     letting the apprentice click straight through to the BS 7671 reader.
  *
@@ -44,6 +48,14 @@ import {
   getCalibrationOutcome,
   type Confidence,
 } from './confidence';
+import {
+  buildRegOptions,
+  chooseCandidates,
+  loadRealRegs,
+  pickFacets,
+  redactRegNumbers,
+  sectionOf,
+} from './bs7671QuizPool';
 
 interface RagQuestion {
   facetId: string;
@@ -55,43 +67,7 @@ interface RagQuestion {
   options: Array<{ id: string; reg_number: string }>; // includes correct + distractors, shuffled
 }
 
-interface FacetRow {
-  id: string;
-  content: string;
-  regulation_id: string | null;
-}
-
-interface RegRow {
-  id: string;
-  reg_number: string;
-  title: string | null;
-  part: string | null;
-}
-
 const QUESTION_COUNT = 8;
-
-/** Redact reg numbers like "411.3.1.1", "Regulation 411.3.1.1",
- *  "BS 7671 Section 411" so we don't leak the answer in the prompt. */
-function redactRegNumbers(text: string, regNumber: string): string {
-  if (!text) return '';
-  // Direct match first (matches exact reg)
-  let out = text.replace(new RegExp(regNumber.replace(/\./g, '\\.'), 'g'), '[regulation]');
-  // Generic n.n.n.n pattern as backstop
-  out = out.replace(/\b\d{3}\.\d+(?:\.\d+)*\b/g, '[regulation]');
-  // Wordy variants
-  out = out.replace(/Regulation\s+\[regulation\]/gi, '[regulation]');
-  out = out.replace(/Reg\.?\s+\[regulation\]/gi, '[regulation]');
-  return out;
-}
-
-function shuffle<T>(arr: T[]): T[] {
-  const out = [...arr];
-  for (let i = out.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [out[i], out[j]] = [out[j], out[i]];
-  }
-  return out;
-}
 
 interface Bs7671RagQuizProps {
   onExit?: () => void;
@@ -112,72 +88,44 @@ export function Bs7671RagQuiz({ onExit, onSessionComplete }: Bs7671RagQuizProps)
   const [startedAt, setStartedAt] = useState<number>(Date.now());
   const [error, setError] = useState<string | null>(null);
 
-  /** Build a 4-option set: the correct reg + three plausible distractors
-   *  drawn from the same part where possible. Falls back to any reg if the
-   *  part has fewer than 4 entries. */
-  const buildOptions = useCallback(
-    (correct: RegRow, regsByPart: Map<string, RegRow[]>, allRegs: RegRow[]) => {
-      const partRegs = correct.part ? (regsByPart.get(correct.part) ?? []) : [];
-      const pool = partRegs.length >= 4 ? partRegs : allRegs;
-      const distractors = shuffle(pool.filter((r) => r.id !== correct.id)).slice(0, 3);
-      const options = [{ id: correct.id, reg_number: correct.reg_number }];
-      for (const d of distractors) options.push({ id: d.id, reg_number: d.reg_number });
-      return shuffle(options);
-    },
-    []
-  );
-
   const loadQuestions = useCallback(async () => {
     setPhase('loading');
     setError(null);
     try {
-      // 1. Pull a wider pool of usable facets — only ones with a regulation
-      //    join + meaningful content length. PostgREST doesn't support
-      //    "random" directly so we grab the most-recent N and shuffle.
-      const { data: facetData, error: facetErr } = await supabase
-        .from('bs7671_facets')
-        .select('id, content, regulation_id')
-        .not('regulation_id', 'is', null)
-        .gte('confidence_score', 0.5)
-        .order('created_at', { ascending: false })
-        .limit(200);
-      if (facetErr) throw facetErr;
-      const facets = ((facetData ?? []) as FacetRow[]).filter(
-        (f) => f.content && f.content.length >= 100 && f.regulation_id
-      );
-      if (facets.length === 0) {
-        throw new Error('No BS 7671 facets available yet — try again later.');
+      // Real BS 7671 regs only (the facets table also holds Approved
+      // Document, GN3, OSG and BS 5839 rows), weighted to Parts 4–6, one
+      // per section, skipping regs this apprentice saw in the last 3 days.
+      const [regs, recent] = await Promise.all([
+        loadRealRegs(),
+        user?.id
+          ? supabase
+              .from('am2_reg_attempts')
+              .select('regulation_id')
+              .eq('user_id', user.id)
+              .gte('last_asked_at', new Date(Date.now() - 3 * 86400000).toISOString())
+              .limit(300)
+          : Promise.resolve({ data: [] as Array<{ regulation_id: string }> }),
+      ]);
+      if (regs.length === 0) {
+        throw new Error('No BS 7671 regulations available yet — try again later.');
       }
-
-      // 2. Pull the regulations referenced by the facet pool
-      const regIds = Array.from(
-        new Set(facets.map((f) => f.regulation_id).filter((id): id is string => !!id))
+      const avoid = new Set(
+        ((recent.data ?? []) as Array<{ regulation_id: string }>).map((r) => r.regulation_id)
       );
-      const { data: regData, error: regErr } = await supabase
-        .from('bs7671_regulations')
-        .select('id, reg_number, title, part')
-        .in('id', regIds);
-      if (regErr) throw regErr;
-      const allRegs = (regData ?? []) as RegRow[];
-      const regById = new Map(allRegs.map((r) => [r.id, r]));
-      const regsByPart = new Map<string, RegRow[]>();
-      for (const r of allRegs) {
-        if (!r.part) continue;
-        const arr = regsByPart.get(r.part) ?? [];
-        arr.push(r);
-        regsByPart.set(r.part, arr);
-      }
+      const candidates = chooseCandidates(regs, QUESTION_COUNT * 3, avoid);
+      const facetByReg = await pickFacets(candidates);
 
-      // 3. Pick QUESTION_COUNT distinct facets and build MCQs
-      const shuffled = shuffle(facets);
       const picked: RagQuestion[] = [];
-      for (const f of shuffled) {
+      const usedSections = new Set<string>();
+      for (const reg of candidates) {
         if (picked.length >= QUESTION_COUNT) break;
-        if (!f.regulation_id) continue;
-        const reg = regById.get(f.regulation_id);
-        if (!reg) continue;
-        const opts = buildOptions(reg, regsByPart, allRegs);
+        const f = facetByReg.get(reg.id);
+        if (!f) continue;
+        const section = sectionOf(reg.reg_number);
+        if (usedSections.has(section)) continue;
+        const opts = buildRegOptions(reg, regs);
         if (opts.length < 4) continue;
+        usedSections.add(section);
         picked.push({
           facetId: f.id,
           prompt: redactRegNumbers(f.content, reg.reg_number),
@@ -200,7 +148,7 @@ export function Bs7671RagQuiz({ onExit, onSessionComplete }: Bs7671RagQuizProps)
       setError(e instanceof Error ? e.message : String(e));
       setPhase('error');
     }
-  }, [buildOptions]);
+  }, [user?.id]);
 
   useEffect(() => {
     void loadQuestions();
@@ -616,7 +564,7 @@ export function Bs7671RagQuiz({ onExit, onSessionComplete }: Bs7671RagQuizProps)
               )}
             </div>
             {currentQ.correctReg.part && (
-              <div className="text-[11px] text-white/55">Part {currentQ.correctReg.part}</div>
+              <div className="text-[11px] text-white/55">{currentQ.correctReg.part}</div>
             )}
             <button
               type="button"

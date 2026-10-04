@@ -161,7 +161,7 @@ const sections = [
           <div className="overflow-x-auto -mx-1">
             <table className="w-full text-left text-sm text-white border-collapse">
               <thead>
-                <tr className="border-b border-white/15 text-white/60">
+                <tr className="border-b border-white/15 text-white">
                   <th className="py-2 pr-3 font-semibold">Property type</th>
                   <th className="py-2 pr-3 font-semibold">Indicative cost</th>
                   <th className="py-2 font-semibold">Typical duration</th>
@@ -170,28 +170,28 @@ const sections = [
               <tbody className="divide-y divide-white/10">
                 <tr>
                   <td className="py-3 pr-3 font-medium">2-bed terraced house</td>
-                  <td className="py-3 pr-3 text-yellow-400 font-semibold whitespace-nowrap">£2,100–£3,400</td>
+                  <td className="py-3 pr-3 text-elec-yellow font-semibold whitespace-nowrap">£2,100–£3,400</td>
                   <td className="py-3 whitespace-nowrap">3–5 days</td>
                 </tr>
                 <tr>
                   <td className="py-3 pr-3 font-medium">3-bed semi-detached</td>
-                  <td className="py-3 pr-3 text-yellow-400 font-semibold whitespace-nowrap">£3,100–£5,000</td>
+                  <td className="py-3 pr-3 text-elec-yellow font-semibold whitespace-nowrap">£3,100–£5,000</td>
                   <td className="py-3 whitespace-nowrap">5–7 days</td>
                 </tr>
                 <tr>
                   <td className="py-3 pr-3 font-medium">4-bed detached</td>
-                  <td className="py-3 pr-3 text-yellow-400 font-semibold whitespace-nowrap">£4,400–£7,200</td>
+                  <td className="py-3 pr-3 text-elec-yellow font-semibold whitespace-nowrap">£4,400–£7,200</td>
                   <td className="py-3 whitespace-nowrap">6–10 days</td>
                 </tr>
                 <tr>
                   <td className="py-3 pr-3 font-medium">Large period property (5-bed+)</td>
-                  <td className="py-3 pr-3 text-yellow-400 font-semibold whitespace-nowrap">£7,200–£11,500+</td>
+                  <td className="py-3 pr-3 text-elec-yellow font-semibold whitespace-nowrap">£7,200–£11,500+</td>
                   <td className="py-3 whitespace-nowrap">10–15 days</td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <p className="text-white/50 text-xs mt-4">
+          <p className="text-white text-xs mt-4">
             2025 indicative market guidance for Sheffield and South Yorkshire — not a quote. Final
             price depends on circuit count, property age and access.
           </p>
@@ -227,7 +227,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Victorian terraces (1860s–1900s):</strong> Walkley, Crookes, Broomhill,
                 Hillsborough, Heeley, Sharrow, and Meersbrook. Brick with lath-and-plaster
@@ -236,7 +236,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Edwardian semis and villas (1900s–1920s):</strong> Nether Edge, Ecclesall,
                 Ranmoor, and Endcliffe. Larger properties with accessible loft spaces. These areas
@@ -245,7 +245,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inter-war semis and bungalows (1920s–1940s):</strong> Woodseats, Norton,
                 Greenhill, Dore, and Totley. Cavity brick construction with accessible lofts. Many
@@ -253,7 +253,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Post-war estates (1950s–1970s):</strong> Gleadless Valley, Arbourthorne,
                 Firth Park, and Parson Cross. Plasterboard or large-panel construction — the easiest
@@ -262,7 +262,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Converted flats (Broomhill, Crookesmoor, Broomhall):</strong> Student and
                 private rental market areas with many Victorian houses converted into flats. Quality
@@ -384,35 +384,35 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New consumer unit</strong> — metal enclosure with RCBOs or dual-RCD
                 arrangement, surge protection device (SPD), and main switch.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>All circuit cables</strong> — twin and earth for ring finals, radials,
                 lighting circuits, cooker, shower, and immersion heater circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Accessories</strong> — sockets, switches, ceiling roses, and fused
                 connection units. Standard white plastic included; upgraded finishes extra.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing and bonding</strong> — main earth conductor, main bonding to gas,
                 water, and oil pipework.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing and certification</strong> — initial verification testing, EIC, and
                 Part P notification.
@@ -461,7 +461,7 @@ const sections = [
           <div className="overflow-x-auto -mx-1">
             <table className="w-full text-left text-sm text-white border-collapse">
               <thead>
-                <tr className="border-b border-white/15 text-white/60">
+                <tr className="border-b border-white/15 text-white">
                   <th className="py-2 pr-3 font-semibold">Requirement</th>
                   <th className="py-2 pr-3 font-semibold">Reference</th>
                   <th className="py-2 font-semibold">What it means for your rewire</th>
@@ -470,7 +470,7 @@ const sections = [
               <tbody className="divide-y divide-white/10">
                 <tr>
                   <td className="py-3 pr-3 font-medium">Surge protection (SPD)</td>
-                  <td className="py-3 pr-3 whitespace-nowrap text-yellow-400">Reg 443.4</td>
+                  <td className="py-3 pr-3 whitespace-nowrap text-elec-yellow">Reg 443.4</td>
                   <td className="py-3">
                     Protection against transient overvoltages must be provided where the consequences
                     affect safety or large numbers of people — driving SPDs into most modern consumer
@@ -479,7 +479,7 @@ const sections = [
                 </tr>
                 <tr>
                   <td className="py-3 pr-3 font-medium">AFDD (arc fault detection)</td>
-                  <td className="py-3 pr-3 whitespace-nowrap text-yellow-400">Reg 421.1.7</td>
+                  <td className="py-3 pr-3 whitespace-nowrap text-elec-yellow">Reg 421.1.7</td>
                   <td className="py-3">
                     Recommended for single-phase AC final circuits supplying socket-outlets up to 32 A
                     in dwellings; a requirement in higher-risk residential buildings, HMOs, student
@@ -488,7 +488,7 @@ const sections = [
                 </tr>
                 <tr>
                   <td className="py-3 pr-3 font-medium">Initial verification</td>
-                  <td className="py-3 pr-3 whitespace-nowrap text-yellow-400">Chapter 64</td>
+                  <td className="py-3 pr-3 whitespace-nowrap text-elec-yellow">Chapter 64</td>
                   <td className="py-3">
                     Every circuit must be inspected and tested before being energised, with the
                     results recorded on the certification.
@@ -496,7 +496,7 @@ const sections = [
                 </tr>
                 <tr>
                   <td className="py-3 pr-3 font-medium">Certification</td>
-                  <td className="py-3 pr-3 whitespace-nowrap text-yellow-400">Appendix 6</td>
+                  <td className="py-3 pr-3 whitespace-nowrap text-elec-yellow">Appendix 6</td>
                   <td className="py-3">
                     The Electrical Installation Certificate follows the model form in Appendix 6 and
                     is issued to the person ordering the work.
@@ -505,7 +505,7 @@ const sections = [
               </tbody>
             </table>
           </div>
-          <p className="text-white/50 text-xs mt-4">
+          <p className="text-white text-xs mt-4">
             References are to BS 7671:2018+A4:2026 (issued 15 April 2026). Older rewirable fuse boards
             commonly found in Sheffield use semi-enclosed fuses to BS 3036 and no longer meet current
             protection standards.
@@ -526,7 +526,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wall chasing creates dust and noise</strong> — cutting channels in
                 lath-and-plaster or brick generates significant debris. Cover furniture and seal off
@@ -534,7 +534,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Power is off during first fix</strong> — the electricity supply is isolated
                 while new circuits are installed. Many Sheffield residents stay elsewhere during the
@@ -542,7 +542,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Replastering is a separate cost</strong> — after chases are filled, a
                 plasterer reinstates the wall surfaces. Budget £350 to £900 for making good in a
@@ -550,7 +550,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hillside properties may require more chasing</strong> — split-level layouts
                 in Walkley, Crookes, and Fulwood sometimes mean longer cable runs and more wall
@@ -575,7 +575,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Verify NICEIC, NAPIT, or ELECSA registration</strong> — search by Sheffield
                 or South Yorkshire postcode on the scheme's online register. Non-negotiable for Part
@@ -583,7 +583,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ask about hillside terrace experience</strong> — rewiring a split-level
                 Walkley terrace is different from a flat-site semi in Gleadless. Ask for references
@@ -591,21 +591,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Get at least three comparable quotes</strong> — ensure each specifies the
                 consumer unit type, number of circuits, and whether making good is included.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Confirm minimum £2 million public liability insurance</strong> — ask for a
                 copy of the certificate before work starts.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check EIC and Part P notification are included</strong> — mandatory for all
                 rewires in England. If absent from the quote, the quote is incomplete.
@@ -642,7 +642,7 @@ export default function RewireCostSheffieldPage() {
       heroTitle={
         <>
           House Rewire Cost Sheffield:{' '}
-          <span className="text-yellow-400">2025 South Yorkshire Price Guide</span>
+          <span className="text-elec-yellow">2025 South Yorkshire Price Guide</span>
         </>
       }
       heroSubtitle="Sheffield rewire costs in 2025 — from hillside Victorian terraces in Walkley and Crookes to inter-war semis in Dore and Totley. Real prices by property size, Part P explained, and what Sheffield's unique hilly terrain means for a rewire."
@@ -653,7 +653,7 @@ export default function RewireCostSheffieldPage() {
       faqHeading="Frequently Asked Questions About Rewire Costs in Sheffield"
       relatedPages={relatedPages}
       ctaHeading="Quote Sheffield Rewires with Real Trade Pricing"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI-powered rewire quoting, on-site EIC certificates, and project management. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for AI-powered rewire quoting, on-site EIC certificates, and project management. 7-day free trial."
     />
   );
 }

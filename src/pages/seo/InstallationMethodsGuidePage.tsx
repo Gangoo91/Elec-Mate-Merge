@@ -262,7 +262,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Conduit on wall (surface)</strong> — PVC or metallic conduit surface-mounted
                 on a plaster or masonry wall. The conduit conducts heat to the wall and dissipates
@@ -271,7 +271,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Surface trunking</strong> — plastic or metallic trunking mounted on walls or
                 ceilings. Trunking provides a protected cable route and is commonly used in
@@ -281,7 +281,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cables in plaster</strong> — a multicore cable buried in plaster on a
                 masonry wall (not in thermal insulation) is typically treated as Method B. The
@@ -290,7 +290,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Grouping within conduit and trunking</strong> — when multiple cables share
                 the same conduit or trunking, the grouping correction factor must be applied in
@@ -318,7 +318,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Typical applications</strong> — T&E flat twin-and-earth cable clipped to the
                 face of ceiling joists in a roof space, SWA cable clipped to a wall in a commercial
@@ -327,7 +327,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Current rating advantage</strong> — a 2.5mm² T&E cable has a tabulated
                 current rating of 27A when clipped direct (Method C reference). The same cable in a
@@ -336,7 +336,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Grouping still applies</strong> — where multiple cables are clipped
                 alongside each other (touching or in a flat bundle), the grouping correction factor
@@ -345,7 +345,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mechanical protection</strong> — cables clipped direct may require
                 mechanical protection in locations where they are accessible and subject to damage
@@ -427,7 +427,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Info className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Application</strong> — Method G is used for large single-core cables forming
                 HV and LV distribution circuits suspended between supports in switchrooms,
@@ -437,7 +437,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Info className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Spacing requirement</strong> — the full Method G rating applies only when
                 adjacent cables are separated by at least one cable diameter. If the spacing is
@@ -522,7 +522,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Higher than 30°C — derate</strong> — cables in boiler rooms, kitchen
                 ceilings, hot roof spaces, or industrial environments with elevated temperatures
@@ -532,7 +532,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lower than 30°C — uprate</strong> — cables in cold environments (unheated
                 plant rooms, outdoor installations in the UK's temperate climate where ambient is
@@ -542,7 +542,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>XLPE cables</strong> — XLPE-insulated cables have a maximum conductor
                 temperature of 90°C (versus 70°C for PVC) and different Ca factors. The higher
@@ -622,7 +622,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Domestic socket ring final circuit</strong> — design current (Ib) up to 32A
                 (protected by 32A MCB). Method C (clipped direct in roof void). Single circuit (Cg =
@@ -634,7 +634,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three lighting circuits in one conduit</strong> — each circuit has Ib of 6A,
                 protected by 6A MCB. Method B (conduit on wall). Three circuits (Cg ≈ 0.70). 1.0mm²
@@ -644,7 +644,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Loft cable covered by insulation</strong> — a 2.5mm² T&E ring final circuit
                 runs through the loft and is covered by 270mm of mineral wool insulation. Method A
@@ -673,7 +673,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Document Reference Methods on EIC</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -706,7 +706,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICs and EICRs with full installation method"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC and EICR completion with installation method recording, AI board scanning…"
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EIC and EICR completion with installation method recording, AI board scanning…"
           icon={FileCheck2}
         />
       </>
@@ -732,7 +732,7 @@ export default function InstallationMethodsGuidePage() {
       heroTitle={
         <>
           Cable Installation Methods BS 7671:{' '}
-          <span className="text-yellow-400">
+          <span className="text-elec-yellow">
             Reference Methods and Correction Factors Explained
           </span>
         </>
@@ -745,7 +745,7 @@ export default function InstallationMethodsGuidePage() {
       faqHeading="Frequently Asked Questions About Cable Installation Methods"
       relatedPages={relatedPages}
       ctaHeading="Complete EICs and EICRs with Correct Method Documentation"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC and EICR completion with installation method recording, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC and EICR completion with installation method recording, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

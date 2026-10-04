@@ -189,7 +189,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Edinburgh Pricing Breakdown (2026)</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tenement flat (6-way board)</strong> — £350 to £450 total. Common across
                 Edinburgh's private rented sector. Materials: £120 to £200. Labour: £210 to £230.
@@ -197,7 +197,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard terraced or semi (10-way with RCBOs and SPD)</strong> — £430 to
                 £600 total. Materials: £240 to £360. Labour: £240 to £270. EIC and certification:
@@ -205,7 +205,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Larger detached (14-way high-integrity with SPD)</strong> — £540 to £820
                 total. For properties with 12+ circuits, EV charger, or solar PV. Materials: £340 to
@@ -213,7 +213,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-phase property</strong> — £1,100 to £1,700+ total. Required for larger
                 homes or commercial properties. Materials: £440 to £720. Labour: £390 to £520. EIC
@@ -349,14 +349,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1: Survey and isolation</strong> — circuits are identified, the mains
                 is isolated at the DNO cutout, and all power is switched off.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2: Remove old board</strong> — the existing consumer unit is
                 disconnected and removed. Ageing cables or earthing issues may be found at this
@@ -364,21 +364,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 3: Install new consumer unit</strong> — a new metal consumer unit is
                 mounted, fitted with RCBOs and SPD, all circuits reconnected and labelled.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 4: Testing</strong> — all circuits are tested to BS 7671: insulation
                 resistance, earth fault loop impedance, RCD trip times, and polarity checks.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 5: Certification</strong> — the electrician completes the{' '}
                 <SEOInternalLink href="/eic-certificate">
@@ -433,7 +433,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Scottish certifier registration</strong> — verify the electrician holds the
                 Scottish Certifier of Construction (Electrical Installations) registration to
@@ -441,21 +441,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Itemised quote</strong> — materials, labour, certification, and VAT should
                 all be listed separately. Avoid vague single-figure quotes.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EIC and building regulations notification included</strong> — confirm both
                 are included in the quoted price before work begins.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Experience with Edinburgh tenements</strong> — Edinburgh's tenement
                 properties have specific characteristics. Choose an electrician familiar with the
@@ -492,7 +492,7 @@ export default function ConsumerUnitReplacementEdinburghPage() {
       heroTitle={
         <>
           Consumer Unit Replacement Edinburgh:{' '}
-          <span className="text-yellow-400">Cost Guide 2026</span>
+          <span className="text-elec-yellow">Cost Guide 2026</span>
         </>
       }
       heroSubtitle="Consumer unit replacement in Edinburgh typically costs £350 to £600. This guide covers local pricing, how Scotland's Building Regulations differ from Part P in England, what to expect during the work, and how to choose a certified electrician in Edinburgh."
@@ -503,7 +503,7 @@ export default function ConsumerUnitReplacementEdinburghPage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Replacement in Edinburgh"
       relatedPages={relatedPages}
       ctaHeading="Quote Consumer Unit Replacements in Edinburgh"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
     />
   );
 }

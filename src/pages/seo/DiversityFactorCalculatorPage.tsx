@@ -143,15 +143,15 @@ export default function DiversityFactorCalculatorPage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
-        <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-elec-yellow text-sm font-medium mb-6">
             <Zap className="w-4 h-4" />
             Part of 70 Electrical Calculators
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             Diversity Factor Calculator
-            <span className="block text-yellow-400 mt-1">Maximum Demand to BS 7671</span>
+            <span className="block text-elec-yellow mt-1">Maximum Demand to BS 7671</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             Calculate diversity factors for domestic and commercial electrical installations using
@@ -168,7 +168,7 @@ export default function DiversityFactorCalculatorPage() {
             </Link>
             <a
               href="#how-it-works"
-              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-yellow-500/40 touch-manipulation transition-colors"
+              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-white/[0.1] touch-manipulation transition-colors"
             >
               See How It Works
               <ArrowDown className="w-4 h-4 ml-1" />
@@ -189,7 +189,7 @@ export default function DiversityFactorCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Lightbulb className="w-5 h-5 text-yellow-400" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">What Is Diversity?</h2>
           </div>
@@ -238,7 +238,7 @@ export default function DiversityFactorCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <BookOpen className="w-5 h-5 text-yellow-400" />
+              <BookOpen className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               IET On-Site Guide Table A2 Diversity Allowances
@@ -253,13 +253,13 @@ export default function DiversityFactorCalculatorPage() {
             </p>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-6">
               <div className="grid grid-cols-3 gap-px bg-white/10">
-                <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+                <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                   Load Type
                 </div>
-                <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+                <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                   Diversity Allowance
                 </div>
-                <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">Notes</div>
+                <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">Notes</div>
               </div>
               {[
                 {
@@ -322,7 +322,7 @@ export default function DiversityFactorCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Calculator className="w-5 h-5 text-yellow-400" />
+              <Calculator className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               How to Calculate Diversity — Worked Example
@@ -334,50 +334,50 @@ export default function DiversityFactorCalculatorPage() {
               semi-detached house. This is the most common type of domestic installation an
               electrician will encounter.
             </p>
-            <h3 className="font-bold text-yellow-400 text-lg mt-6">Connected Loads</h3>
+            <h3 className="font-bold text-elec-yellow text-lg mt-6">Connected Loads</h3>
             <ul className="space-y-2 my-4">
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Lighting:</strong> 12 light points totalling
+                  <strong className="text-elec-yellow">Lighting:</strong> 12 light points totalling
                   1.8 kW (7.83 A at 230 V)
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Socket Outlets:</strong> 2 ring final
+                  <strong className="text-elec-yellow">Socket Outlets:</strong> 2 ring final
                   circuits, each rated at 32 A = 64 A total
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Cooker:</strong> 12 kW (52.2 A) with socket
+                  <strong className="text-elec-yellow">Cooker:</strong> 12 kW (52.2 A) with socket
                   outlet on cooker unit
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Electric Shower:</strong> 9.5 kW (41.3 A)
+                  <strong className="text-elec-yellow">Electric Shower:</strong> 9.5 kW (41.3 A)
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Immersion Heater:</strong> 3 kW (13 A)
+                  <strong className="text-elec-yellow">Immersion Heater:</strong> 3 kW (13 A)
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">EV Charger:</strong> 7.4 kW (32 A)
+                  <strong className="text-elec-yellow">EV Charger:</strong> 7.4 kW (32 A)
                 </span>
               </li>
             </ul>
 
-            <h3 className="font-bold text-yellow-400 text-lg mt-6">
+            <h3 className="font-bold text-elec-yellow text-lg mt-6">
               Applying Diversity (Table A2)
             </h3>
             <div className="space-y-3 my-4">
@@ -385,7 +385,7 @@ export default function DiversityFactorCalculatorPage() {
                 <p className="font-bold text-white mb-1">Lighting: 66% allowance</p>
                 <p className="font-mono text-white text-sm">
                   7.83 A total. First 2 kW (8.7 A) at 100% but load is less, so: 7.83 A x 0.66 ={' '}
-                  <strong className="text-yellow-400">5.17 A</strong>
+                  <strong className="text-elec-yellow">5.17 A</strong>
                 </p>
               </div>
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
@@ -394,7 +394,7 @@ export default function DiversityFactorCalculatorPage() {
                 </p>
                 <p className="font-mono text-white text-sm">
                   10 A + (64 - 10) x 0.5 = 10 + 27 ={' '}
-                  <strong className="text-yellow-400">37 A</strong>
+                  <strong className="text-elec-yellow">37 A</strong>
                 </p>
               </div>
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
@@ -403,38 +403,38 @@ export default function DiversityFactorCalculatorPage() {
                 </p>
                 <p className="font-mono text-white text-sm">
                   10 + (52.2 - 10) x 0.3 + 5 = 10 + 12.66 + 5 ={' '}
-                  <strong className="text-yellow-400">27.66 A</strong>
+                  <strong className="text-elec-yellow">27.66 A</strong>
                 </p>
               </div>
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                 <p className="font-bold text-white mb-1">Electric Shower: 100% (no diversity)</p>
                 <p className="font-mono text-white text-sm">
-                  <strong className="text-yellow-400">41.3 A</strong>
+                  <strong className="text-elec-yellow">41.3 A</strong>
                 </p>
               </div>
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                 <p className="font-bold text-white mb-1">Immersion Heater: 100% (no diversity)</p>
                 <p className="font-mono text-white text-sm">
-                  <strong className="text-yellow-400">13 A</strong>
+                  <strong className="text-elec-yellow">13 A</strong>
                 </p>
               </div>
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                 <p className="font-bold text-white mb-1">EV Charger: 100% (no diversity)</p>
                 <p className="font-mono text-white text-sm">
-                  <strong className="text-yellow-400">32 A</strong>
+                  <strong className="text-elec-yellow">32 A</strong>
                 </p>
               </div>
             </div>
 
             <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center my-6">
               <p className="text-sm text-white mb-2">Total Diversified Maximum Demand</p>
-              <p className="text-3xl font-bold text-yellow-400 mb-1">156.13 A</p>
+              <p className="text-3xl font-bold text-elec-yellow mb-1">156.13 A</p>
               <p className="text-sm text-white mb-4">
                 Without diversity: 210.33 A total connected load
               </p>
               <p className="text-sm text-white">
                 At 156 A, this installation{' '}
-                <strong className="text-yellow-400">exceeds the standard 100 A supply</strong>. The
+                <strong className="text-elec-yellow">exceeds the standard 100 A supply</strong>. The
                 EV charger and shower combined push the demand beyond a single-phase 100 A supply.
                 Options: upgrade to three-phase, install a load management system for the EV
                 charger, or apply for a DNO supply upgrade.
@@ -449,7 +449,7 @@ export default function DiversityFactorCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <BarChart3 className="w-5 h-5 text-yellow-400" />
+              <BarChart3 className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Why Diversity Matters for Cable and Supply Sizing
@@ -513,7 +513,7 @@ export default function DiversityFactorCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <HelpCircle className="w-5 h-5 text-yellow-400" />
+              <HelpCircle className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Frequently Asked Questions
@@ -526,7 +526,7 @@ export default function DiversityFactorCalculatorPage() {
                 className="group p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-white/[0.14] transition-colors"
               >
                 <summary className="flex items-start gap-3 cursor-pointer touch-manipulation list-none [&::-webkit-details-marker]:hidden">
-                  <ChevronRight className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0 transition-transform group-open:rotate-90" />
+                  <ChevronRight className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0 transition-transform group-open:rotate-90" />
                   <h3 className="font-bold text-white text-lg">{faq.question}</h3>
                 </summary>
                 <div className="mt-3 pl-8">
@@ -582,7 +582,7 @@ export default function DiversityFactorCalculatorPage() {
 
       <SEOCTASection
         heading="Calculate Diversity Factors in Seconds"
-        subheading="Join 1,600+ UK electricians using Elec-Mate for on-site maximum demand calculations. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians using Elec-Mate for on-site maximum demand calculations. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

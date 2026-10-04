@@ -43,7 +43,7 @@ export default function LightingLuxCalculatorPage() {
       badgeIcon={Lightbulb}
       heroTitle={
         <>
-          <span className="text-yellow-400">Lighting Lux Level Calculator</span> — Get the Right
+          <span className="text-elec-yellow">Lighting Lux Level Calculator</span> — Get the Right
           Light Level for Every Room
         </>
       }
@@ -120,13 +120,13 @@ export default function LightingLuxCalculatorPage() {
               </p>
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-6">
                 <div className="grid grid-cols-3 gap-px bg-white/10">
-                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                     Room Type
                   </div>
-                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                     Lux Level
                   </div>
-                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                     Notes
                   </div>
                 </div>
@@ -183,7 +183,7 @@ export default function LightingLuxCalculatorPage() {
                 needed to achieve a target lux level. The formula is:
               </p>
               <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center my-6">
-                <p className="text-xl sm:text-2xl font-mono font-bold text-yellow-400">
+                <p className="text-xl sm:text-2xl font-mono font-bold text-elec-yellow">
                   N = (E x A) / (F x UF x MF)
                 </p>
                 <p className="mt-3 text-sm text-white">
@@ -225,7 +225,7 @@ export default function LightingLuxCalculatorPage() {
                 efficiently the light from the luminaires reaches the working plane:
               </p>
               <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center my-6">
-                <p className="text-xl sm:text-2xl font-mono font-bold text-yellow-400">
+                <p className="text-xl sm:text-2xl font-mono font-bold text-elec-yellow">
                   K = (L x W) / (Hm x (L + W))
                 </p>
                 <p className="mt-3 text-sm text-white">
@@ -319,7 +319,7 @@ export default function LightingLuxCalculatorPage() {
           content: (
             <>
               <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] my-4">
-                <p className="text-sm font-bold text-yellow-400 uppercase tracking-wide mb-2">
+                <p className="text-sm font-bold text-elec-yellow uppercase tracking-wide mb-2">
                   BS 7671 Compliance Note
                 </p>
                 <p className="text-sm text-white leading-relaxed">

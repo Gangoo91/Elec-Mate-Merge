@@ -229,14 +229,14 @@ const sections = [
           <h4 className="font-bold text-white mb-4">Type B MCB — Suitable Applications</h4>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lighting circuits</strong> — LED, incandescent, and halogen lighting
                 produces minimal inrush current. Type B handles this comfortably.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Socket outlet circuits</strong> — Ring final circuits and radial circuits
                 supplying general domestic and commercial socket outlets. The loads are
@@ -244,14 +244,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Immersion heaters and storage heaters</strong> — Purely resistive loads with
                 no inrush current. Type B is ideal.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electric showers and cookers</strong> — High-current resistive loads. Type B
                 at the appropriate rating (40A or 50A for a shower, 32A or 40A for a cooker).
@@ -259,14 +259,14 @@ const sections = [
             </li>
           </ul>
         </div>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-amber-500/30 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.1] p-5 my-4">
           <div className="flex items-start gap-3">
-            <Shield className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+            <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-2">
                 A4:2026 — Reg 411.3.4: 30 mA RCD now mandatory on domestic lighting circuits
               </h4>
-              <p className="text-white/90 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 BS 7671:2018+A4:2026 Regulation 411.3.4 requires that, within domestic premises, all
                 AC final circuits supplying luminaires shall have additional protection by an RCD
                 with a rated residual operating current not exceeding 30 mA. This is a mandatory
@@ -304,7 +304,7 @@ const sections = [
           <h4 className="font-bold text-white mb-4">Type C MCB — Suitable Applications</h4>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Cog className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cog className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Motors and compressors</strong> — Induction motors draw 5 to 8 times their
                 running current during start-up. A Type B MCB would trip on the inrush; Type C
@@ -312,7 +312,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cog className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cog className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Discharge lighting (HID/fluorescent with magnetic ballasts)</strong> — Older
                 fluorescent fittings with magnetic ballasts produce significant inrush current on
@@ -321,14 +321,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cog className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cog className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Air conditioning units</strong> — Compressor motors in AC units produce high
                 inrush. Type C is standard for dedicated AC circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cog className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cog className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Small transformers</strong> — Transformers can draw 10 or more times their
                 rated current during initial energisation (magnetising inrush). Type C handles most
@@ -427,7 +427,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Start with Type B.</strong> It should be the default for every circuit
                 unless the load characteristics specifically require a higher type. Domestic socket
@@ -436,7 +436,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Move to Type C only if the load has moderate inrush.</strong> If the
                 connected equipment has an induction motor, magnetic ballast, or compressor that
@@ -449,7 +449,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use Type D only for specialist high-inrush equipment.</strong> Welding
                 equipment, X-ray machines, large transformers. Verify the Zs requirement is
@@ -483,7 +483,7 @@ const sections = [
             Maximum Zs Comparison — 32A MCBs at 0.4s Disconnection
           </h4>
           <div className="space-y-2 text-white">
-            <div className="flex justify-between border-b border-white/10 pb-2 font-bold text-yellow-400">
+            <div className="flex justify-between border-b border-white/10 pb-2 font-bold text-elec-yellow">
               <span>MCB Type</span>
               <span>Max Zs (Table)</span>
               <span>Max Zs (x 0.8)</span>
@@ -505,7 +505,7 @@ const sections = [
             </div>
           </div>
         </div>
-        <p className="text-white/70 text-sm mt-3">
+        <p className="text-white text-sm mt-3">
           The <strong className="text-white">Max Zs (x 0.8)</strong> column is the on-site
           acceptance limit per BS 7671 Appendix 3 and GN3. Conductors are measured cold at ambient
           temperature during testing, but under fault conditions they heat up and their resistance
@@ -623,7 +623,7 @@ export default function MCBTypesBCDPage() {
       heroTitle={
         <>
           MCB Types B, C and D:{' '}
-          <span className="text-yellow-400">Trip Characteristics Explained</span>
+          <span className="text-elec-yellow">Trip Characteristics Explained</span>
         </>
       }
       heroSubtitle="Type B trips at 3-5 times rated current. Type C at 5-10 times. Type D at 10-20 times. Choosing the wrong MCB type means nuisance tripping or inadequate fault protection. This guide explains the magnetic trip characteristics, when to use each type, and how MCB type directly affects your maximum Zs values."
@@ -634,7 +634,7 @@ export default function MCBTypesBCDPage() {
       faqHeading="Frequently Asked Questions About MCB Types"
       relatedPages={relatedPages}
       ctaHeading="Look Up Maximum Zs by MCB Type Instantly"
-      ctaSubheading="Elec-Mate has every BS 7671 Zs value for Type B, C, and D MCBs built in. AI board scanner reads MCB types from a photo. Voice entry records test results hands-free. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate has every BS 7671 Zs value for Type B, C, and D MCBs built in. AI board scanner reads MCB types from a photo. Voice entry records test results hands-free. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

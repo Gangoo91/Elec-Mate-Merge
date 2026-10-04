@@ -123,7 +123,7 @@ const AM2Module4Section4 = () => {
       options: ['Isolator', 'MCB', 'Fuse', 'RCD/RCBO'],
       correctAnswer: 3,
       explanation:
-        'A4:2026 deleted the 5×IΔn test — RCDs and RCBOs are now verified by a single AC test at 1×IΔn.',
+        'A2:2022 deleted the 5×IΔn test — RCDs and RCBOs are now verified by a single AC test at 1×IΔn.',
     },
     {
       id: 4,
@@ -230,7 +230,7 @@ const AM2Module4Section4 = () => {
           points={[
             'Functional testing proves the install actually works — switches control the right loads, RCDs trip, motors start and stop, sockets are live with correct polarity.',
             'RCD verification under A4:2026: single AC test at 1×IΔn + manual button. The 5×IΔn test was deleted from Appendix 3 / Table 3A.',
-            'Trip times at 1×IΔn (A4:2026): ≤ 300 ms general non-delay; delay "S" type 130–500 ms. There is no separate 40 ms additional-protection limit — A4:2026 deleted Table 3A and the 5×IΔn/40 ms test. Reg 415.1.1 simply recognises 30 mA RCDs as additional protection; it states no trip-time figure.',
+            'Trip times at 1×IΔn (A4:2026): ≤ 300 ms general non-delay; delay "S" type 130–500 ms. There is no separate 40 ms additional-protection limit — A2:2022 deleted Table 3A and the 5×IΔn/40 ms test. Reg 415.1.1 simply recognises 30 mA RCDs as additional protection; it states no trip-time figure.',
             'Reg 411.3.3 (RCD on socket-outlets ≤ 32 A) and Reg 411.3.4 (RCD on luminaires in dwellings) — both mean every relevant circuit gets the trip test.',
             'Every switching combination — one-way, two-way, intermediate. Skipping a combination hides a wiring error.',
           ]}
@@ -289,7 +289,7 @@ const AM2Module4Section4 = () => {
           clause="The requirements for RCD testing have been changed and Table 3A (Time/current performance criteria for RCDs) in Appendix 3 has been deleted. Regardless of RCD Type, an alternating current test at rated residual operating current (IΔn) is used to verify the effectiveness."
           meaning={
             <>
-              This is the big one for AM2 functional testing. A4:2026 deleted Table 3A and the whole
+              This is the big one for AM2 functional testing. A2:2022 deleted Table 3A and the whole
               5×IΔn row that went with it. <strong>One AC test at 1×IΔn</strong> plus the manual
               button is the entire RCD verification routine — regardless of Type AC, A or B.
               Whatever your MFT auto-runs at ½×IΔn pre-test isn't part of what you record.
@@ -334,7 +334,7 @@ const AM2Module4Section4 = () => {
             controls. Verify overload protection resets. Check emergency stop functions.
           </p>
           <p>
-            <strong>RCD/RCBO Testing:</strong> Trip test at 1×IΔn (A4:2026 deleted the 5×IΔn test —
+            <strong>RCD/RCBO Testing:</strong> Trip test at 1×IΔn (A2:2022 deleted the 5×IΔn test —
             single AC test only). Must trip within limits (ms). Manual test button operation. Reset
             function verification.
           </p>
@@ -405,7 +405,7 @@ const AM2Module4Section4 = () => {
             <>
               You ran the 1×IΔn trip test, got 28 ms — fine. Then habit kicks in and you reach for
               the 5× button to "double-check". You log a 12 ms result at 5×IΔn. Assessor pulls you
-              up: A4:2026 deleted Table 3A from Appendix 3 and the 5×IΔn AC verification went with
+              up: A2:2022 deleted Table 3A from Appendix 3 and the 5×IΔn AC verification went with
               it. You've cited a deleted test on a brand-new EIC.
             </>
           }
@@ -596,14 +596,14 @@ const AM2Module4Section4 = () => {
           items={[
             {
               question:
-                'A4:2026 deleted the 5×IΔn test — but my MFT still has the button. Should I push it?',
+                'A2:2022 deleted the 5×IΔn test — but my MFT still has the button. Should I push it?',
               answer:
                 "No. The button still exists on most MFTs because the meters are sold internationally and earlier amendments allowed it. Under BS 7671:2018+A4:2026 Reg 643.3 and Reg 643.8, RCD verification is the single AC test at 1×IΔn plus the manual button. That's all you record. Pushing 5× isn't dangerous, but the result has no place on the schedule and citing it on AM2 marks you down for using a deleted test.",
             },
             {
               question: 'What about the 40 ms figure — does it still apply under A4:2026?',
               answer:
-                'No. 40 ms was the maximum trip time for the old 5×IΔn test in the deleted Appendix 3 Table 3A — it was never a 1×IΔn figure. A4:2026 deleted Table 3A and the 5×IΔn test entirely. Under BS 7671:2018+A4:2026 (Reg 643.8 NOTE) RCD effectiveness is verified by a single AC test at the rated residual operating current (1×IΔn): a general non-delay RCD must disconnect within 300 ms maximum, and a delay "S" type between 130 ms and 500 ms. Reg 415.1.1 only recognises 30 mA RCDs as additional protection; it states no trip-time figure. You will commonly measure ~25–40 ms in the real world, but that is typical performance, not the regulatory limit — record the actual measured trip time and compare it to 300 ms.',
+                'No. 40 ms was the maximum trip time for the old 5×IΔn test in the deleted Appendix 3 Table 3A — it was never a 1×IΔn figure. A2:2022 deleted Table 3A and the 5×IΔn test entirely. Under BS 7671:2018+A4:2026 (Reg 643.8 NOTE) RCD effectiveness is verified by a single AC test at the rated residual operating current (1×IΔn): a general non-delay RCD must disconnect within 300 ms maximum, and a delay "S" type between 130 ms and 500 ms. Reg 415.1.1 only recognises 30 mA RCDs as additional protection; it states no trip-time figure. You will commonly measure ~25–40 ms in the real world, but that is typical performance, not the regulatory limit — record the actual measured trip time and compare it to 300 ms.',
             },
             {
               question: 'Reg 411.5.3 — Ra × IΔn ≤ 50 V. Where does that apply?',
@@ -634,7 +634,7 @@ const AM2Module4Section4 = () => {
           points={[
             'Functional testing is mandatory — electrical tests prove safety, functional tests prove the install works.',
             'A4:2026 RCD verification: single AC test at 1×IΔn + manual button. NO 5×IΔn (deleted from Appendix 3).',
-            'Trip time limits at 1×IΔn — 300 ms general non-delay / 130–500 ms delay "S" type. No separate 40 ms additional-protection limit (A4:2026 deleted Table 3A and the 5×IΔn/40 ms test); Reg 415.1.1 states no trip-time figure.',
+            'Trip time limits at 1×IΔn — 300 ms general non-delay / 130–500 ms delay "S" type. No separate 40 ms additional-protection limit (A2:2022 deleted Table 3A and the 5×IΔn/40 ms test); Reg 415.1.1 states no trip-time figure.',
             'Reg 411.3.3 — RCD on every socket-outlet ≤ 32 A. Reg 411.3.4 — RCD on every dwelling lighting circuit. Both get the 1×IΔn trip test.',
             'Test every switching combination — one-way, two-way, intermediate. Skipping any combination hides a wiring error.',
             'Per-socket polarity check on every outlet — ring continuity does not catch a reversed socket.',

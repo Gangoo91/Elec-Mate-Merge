@@ -188,7 +188,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Intake position and meter</strong> -- condition of the service head and
                 meter tails, adequacy of the main earthing terminal, condition of the meter
@@ -196,7 +196,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Presence of safety devices</strong> -- confirm that RCDs, MCBs, RCBOs,
                 AFDDs, and SPDs are present where required by the current edition of BS 7671. Check
@@ -204,7 +204,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cables and conductors</strong> -- look for visible damage, deterioration,
                 discolouration (signs of overheating), incorrect support intervals, inadequate
@@ -213,7 +213,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Accessories and equipment</strong> -- check every socket outlet, switch,
                 junction box, and item of fixed equipment for damage, signs of overheating, secure
@@ -221,7 +221,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire stopping</strong> -- where cables pass through fire-resistant walls,
                 floors, and ceilings, the penetrations must be sealed with appropriate fire stopping
@@ -254,7 +254,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Enclosure condition</strong> -- check for damage, signs of overheating
                 (discolouration, melted plastic), water ingress, and adequate IP rating for the
@@ -263,7 +263,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Protective devices</strong> -- confirm correct type (MCB, RCBO, RCD, AFDD),
                 correct rating for the circuit, correct type characteristic (B, C, or D for MCBs),
@@ -271,7 +271,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable connections</strong> -- where safe to do so (with the installation
                 isolated), check for loose connections, signs of overheating at terminals, incorrect
@@ -279,7 +279,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Spare ways and blanking plates</strong> -- all unused ways must be fitted
                 with blanking plates to maintain the IP rating of the enclosure. Missing blanking
@@ -287,7 +287,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit chart and labelling</strong> -- a circuit chart must be displayed
                 inside or adjacent to the consumer unit, clearly identifying every circuit and its
@@ -330,7 +330,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main earthing terminal</strong> -- verify that the main earthing terminal is
                 present, in good condition, and correctly connected to the means of earthing (supply
@@ -340,7 +340,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main protective bonding</strong> -- bonding conductors must connect all
                 extraneous-conductive-parts to the main earthing terminal. This includes incoming
@@ -350,7 +350,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Supplementary bonding</strong> -- required in some locations (notably
                 bathrooms, though this may be relaxed where all circuits in the room have RCD
@@ -359,7 +359,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing arrangement type</strong> -- identify and record the earthing
                 arrangement (TN-C-S, TN-S, or TT). This determines the maximum Zs values for every
@@ -393,7 +393,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Tag className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Tag className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit identification</strong> -- every circuit must be identified at the
                 distribution board with a durable, legible label. The labelling must match the
@@ -401,7 +401,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Tag className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Tag className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD test notice</strong> -- "This installation, or part of it, is protected
                 by a device which automatically switches off the supply if an earth fault develops.
@@ -409,7 +409,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Tag className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Tag className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dual supply warning</strong> -- required where the installation is fed from
                 more than one source (for example, mains and a generator, or mains and solar PV with
@@ -418,14 +418,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Tag className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Tag className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Periodic inspection notice</strong> -- must state the recommended date of
                 the next periodic inspection and test.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Tag className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Tag className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing arrangement label</strong> -- identifying the type of earthing
                 arrangement (TN-C-S, TN-S, or TT) at the main earthing terminal.
@@ -456,7 +456,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insulation condition</strong> -- look for cracking, brittleness,
                 discolouration (indicating overheating or UV degradation), mechanical damage, and
@@ -465,7 +465,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable support</strong> -- cables must be adequately supported at the
                 intervals specified in the IET On-Site Guide. Unsupported cables are subject to
@@ -474,7 +474,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mechanical protection</strong> -- cables in locations where they are
                 vulnerable to mechanical damage must be protected (conduit, trunking, or appropriate
@@ -483,7 +483,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Thermal insulation</strong> -- cables installed in or passing through
                 thermal insulation must be derated or oversized. Check loft spaces where insulation
@@ -491,7 +491,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Prescribed zones</strong> -- cables concealed in walls should be installed
                 within the prescribed zones defined in BS 7671 Regulation 522.6.202 (within 150mm of
@@ -524,7 +524,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Physical condition</strong> -- check for cracked or broken faceplates, loose
                 mounting, discolouration from overheating, and evidence of arc damage. Damaged
@@ -532,7 +532,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Correct installation</strong> -- check that accessories are appropriate for
                 their location (IP rating for bathrooms and outdoor locations), correctly oriented,
@@ -541,7 +541,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Signs of overheating</strong> -- discoloured or melted plastic around
                 terminals is a clear indicator of a loose connection or overloaded circuit. This is
@@ -549,7 +549,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Suitability for use</strong> -- check that accessories are appropriate for
                 the expected use. A 13A socket outlet used to supply a fixed appliance that should
@@ -581,7 +581,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bathrooms (Section 701)</strong> -- check zone compliance for all equipment,
                 IP ratings, supplementary bonding (if required), RCD protection, and the absence of
@@ -590,7 +590,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Gardens and outdoor areas (Section 714)</strong> -- check IP ratings for all
                 outdoor equipment, RCD protection, cable burial depth and mechanical protection, and
@@ -598,7 +598,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Swimming pools and hot tubs (Section 702)</strong> -- these are high-risk
                 special locations with very specific zone requirements, equipment restrictions, and
@@ -606,7 +606,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electric vehicle charging (Section 722)</strong> -- check that the EV
                 charger installation complies with the dedicated requirements of Section 722,
@@ -704,7 +704,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Structured Inspection Checklist</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -718,7 +718,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Search className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI Observation Classification</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -731,7 +731,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Automatic Report Generation</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -770,7 +770,7 @@ export default function ElectricalInspectionChecklistPage() {
       badgeIcon={ClipboardCheck}
       heroTitle={
         <>
-          Electrical Inspection Checklist: <span className="text-yellow-400">What to Check</span>
+          Electrical Inspection Checklist: <span className="text-elec-yellow">What to Check</span>
         </>
       }
       heroSubtitle="A thorough visual inspection is the foundation of every EICR and EIC. This checklist covers every area you need to check: consumer unit, earthing and bonding, labelling, cable condition, accessories, and special locations. Use it with Elec-Mate's digital inspection tool to ensure nothing is missed."
@@ -781,7 +781,7 @@ export default function ElectricalInspectionChecklistPage() {
       faqHeading="Frequently Asked Questions About Electrical Inspections"
       relatedPages={relatedPages}
       ctaHeading="Inspect with Confidence"
-      ctaSubheading="Digital inspection checklist, AI observation classification, and automatic EICR generation. Join 1,600+ UK electricians using Elec-Mate on every inspection. 7-day free trial, cancel anytime."
+      ctaSubheading="Digital inspection checklist, AI observation classification, and automatic EICR generation. Join 2,100+ UK electricians using Elec-Mate on every inspection. 7-day free trial, cancel anytime."
     />
   );
 }

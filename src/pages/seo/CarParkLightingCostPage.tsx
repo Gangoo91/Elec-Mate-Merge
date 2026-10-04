@@ -145,7 +145,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-2">Lighting levels by risk class</h3>
-          <p className="text-white/70 text-sm mb-4">
+          <p className="text-white text-sm mb-4">
             Maintained illuminance is set by a risk assessment under BS 5489-1. Higher footfall,
             late-night use and crime risk push the target lux level up. Uniformity (the ratio of
             minimum to average illuminance) matters as much as the average — poor uniformity leaves
@@ -157,16 +157,16 @@ const sections = [
                 <span className="font-semibold text-white">Low risk</span>
                 <span className="font-mono text-green-300">5 lux min. maintained avg.</span>
               </div>
-              <p className="text-white/70 text-sm mt-1">
+              <p className="text-white text-sm mt-1">
                 Residential, short-stay or low-crime car parks with light evening use.
               </p>
             </div>
-            <div className="rounded-xl bg-yellow-900/30 border border-yellow-700/40 p-4">
+            <div className="rounded-xl bg-white/[0.06] border border-yellow-700/40 p-4">
               <div className="flex items-center justify-between gap-3">
                 <span className="font-semibold text-white">Medium risk</span>
-                <span className="font-mono text-yellow-300">10–15 lux</span>
+                <span className="font-mono text-elec-yellow">10–15 lux</span>
               </div>
-              <p className="text-white/70 text-sm mt-1">
+              <p className="text-white text-sm mt-1">
                 Retail, office and multi-storey car parks with steady through-the-day use.
               </p>
             </div>
@@ -175,7 +175,7 @@ const sections = [
                 <span className="font-semibold text-white">High risk</span>
                 <span className="font-mono text-blue-300">20 lux or more</span>
               </div>
-              <p className="text-white/70 text-sm mt-1">
+              <p className="text-white text-sm mt-1">
                 Late-night use, higher-crime locations and public transport interchanges. Aim for a
                 minimum-to-average uniformity of at least 0.25.
               </p>
@@ -197,14 +197,14 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-1">Column costs by height (2026)</h3>
-          <p className="text-white/60 text-sm mb-4">
+          <p className="text-white text-sm mb-4">
             Indicative UK market guidance — not a quote. Figures show typical supply-and-install
             ranges per column.
           </p>
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-white border-collapse min-w-[560px]">
               <thead>
-                <tr className="text-left text-white/60 border-b border-white/10">
+                <tr className="text-left text-white border-b border-white/10">
                   <th className="py-2 pr-3 font-medium">Element</th>
                   <th className="py-2 px-3 font-medium">4 m column</th>
                   <th className="py-2 px-3 font-medium">6 m column</th>
@@ -213,34 +213,34 @@ const sections = [
               </thead>
               <tbody>
                 <tr className="border-b border-white/5">
-                  <td className="py-2 pr-3 text-white/80">Column</td>
+                  <td className="py-2 pr-3 text-white">Column</td>
                   <td className="py-2 px-3 font-mono">£150–£250</td>
                   <td className="py-2 px-3 font-mono">£250–£400</td>
                   <td className="py-2 pl-3 font-mono">£400–£700</td>
                 </tr>
                 <tr className="border-b border-white/5">
-                  <td className="py-2 pr-3 text-white/80">LED lantern</td>
-                  <td className="py-2 px-3 font-mono">£80–£150<span className="text-white/50"> (30–50 W)</span></td>
-                  <td className="py-2 px-3 font-mono">£120–£250<span className="text-white/50"> (50–100 W)</span></td>
-                  <td className="py-2 pl-3 font-mono">£200–£400<span className="text-white/50"> (100–200 W)</span></td>
+                  <td className="py-2 pr-3 text-white">LED lantern</td>
+                  <td className="py-2 px-3 font-mono">£80–£150<span className="text-white"> (30–50 W)</span></td>
+                  <td className="py-2 px-3 font-mono">£120–£250<span className="text-white"> (50–100 W)</span></td>
+                  <td className="py-2 pl-3 font-mono">£200–£400<span className="text-white"> (100–200 W)</span></td>
                 </tr>
                 <tr className="border-b border-white/5">
-                  <td className="py-2 pr-3 text-white/80">Foundation</td>
+                  <td className="py-2 pr-3 text-white">Foundation</td>
                   <td className="py-2 px-3 font-mono">£200–£350</td>
                   <td className="py-2 px-3 font-mono">£300–£500</td>
                   <td className="py-2 pl-3 font-mono">£400–£700</td>
                 </tr>
                 <tr className="border-b border-white/10">
-                  <td className="py-2 pr-3 text-white/80">Cable &amp; connection</td>
+                  <td className="py-2 pr-3 text-white">Cable &amp; connection</td>
                   <td className="py-2 px-3 font-mono">£150–£300</td>
                   <td className="py-2 px-3 font-mono">£200–£400</td>
                   <td className="py-2 pl-3 font-mono">£250–£500</td>
                 </tr>
                 <tr>
-                  <td className="py-2 pr-3 font-semibold text-yellow-400">Total installed</td>
-                  <td className="py-2 px-3 font-mono font-semibold text-yellow-400">£500–£900</td>
-                  <td className="py-2 px-3 font-mono font-semibold text-yellow-400">£800–£1,500</td>
-                  <td className="py-2 pl-3 font-mono font-semibold text-yellow-400">£1,200–£2,000</td>
+                  <td className="py-2 pr-3 font-semibold text-elec-yellow">Total installed</td>
+                  <td className="py-2 px-3 font-mono font-semibold text-elec-yellow">£500–£900</td>
+                  <td className="py-2 px-3 font-mono font-semibold text-elec-yellow">£800–£1,500</td>
+                  <td className="py-2 pl-3 font-mono font-semibold text-elec-yellow">£1,200–£2,000</td>
                 </tr>
               </tbody>
             </table>
@@ -299,7 +299,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Camera className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Column-mounted cameras</strong> — Camera bracket and mounting hardware: £50
                 to £100. IP camera: £150 to £500 depending on specification. Cat6 data cable to
@@ -308,7 +308,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Camera className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Shared trenching savings</strong> — Running CCTV data cable in the same
                 trench as the lighting SWA cable saves £15 to £25 per metre of trench. On a car park
@@ -316,7 +316,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Camera className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Recording equipment</strong> — NVR (network video recorder) for 8 to 16
                 cameras: £500 to £1,500. Monitor: £150 to £300. UPS: £200 to £400. Housed in a
@@ -346,7 +346,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Photocell switching</strong> — Basic photocell: £30 to £60. Switches
                 lighting on at dusk and off at dawn. The simplest and most common control method.
@@ -354,7 +354,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Time scheduling</strong> — Astronomical time clock: £100 to £250.
                 Automatically adjusts on/off times throughout the year based on sunrise and sunset
@@ -362,7 +362,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BMS integration</strong> — Interface module: £200 to £500. Allows the
                 lighting to be monitored and controlled from the building's BMS. Provides energy
@@ -370,7 +370,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CMS (Central Management System)</strong> — £20 to £50 per luminaire for
                 wireless CMS connectivity. Allows individual luminaire monitoring, dimming, and
@@ -391,7 +391,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Basic: £500 to £900/column</strong> — 4-metre column, basic LED lantern,
                 photocell, existing or simple foundation, short cable run. Suitable for small
@@ -399,7 +399,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mid-range: £1,000 to £1,500/column</strong> — 6-metre column, high-output
                 LED lantern with asymmetric optics, new foundation, 15 to 20-metre cable run,
@@ -408,7 +408,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Premium: £1,500 to £2,000/column</strong> — 8 to 10-metre column, premium
                 LED lantern with DALI dimming and CMS, substantial foundation, CCTV camera bracket
@@ -437,21 +437,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS 5489-1:2020</strong> — Design of road lighting. Applies to external car
                 parks and access roads. Defines lighting classes based on risk assessment.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS EN 12464-2:2014</strong> — Lighting of outdoor work places. Applies to
                 areas where outdoor work activities take place, including loading areas.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671:2018+A4:2026 — Section 714</strong> — The wiring regulations. Car
                 park and outdoor lighting installations fall within Section 714 (Outdoor lighting
@@ -470,7 +470,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ILP (Institution of Lighting Professionals) guidance</strong> — Professional
                 guidance notes for car park lighting design, including GN01 for obtrusive light and
@@ -503,7 +503,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <AlertTriangle className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Survey Underground Services</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -574,7 +574,7 @@ export default function CarParkLightingCostPage() {
       heroTitle={
         <>
           Car Park Lighting Cost:{' '}
-          <span className="text-yellow-400">UK Column & Bollard Guide 2026</span>
+          <span className="text-elec-yellow">UK Column & Bollard Guide 2026</span>
         </>
       }
       heroSubtitle="What does car park lighting cost? This guide covers column lighting at £500 to £2,000 per column, bollard lighting, CCTV integration, BMS controls, and complete project pricing for property developers, facilities managers, and electrical contractors."
@@ -592,7 +592,7 @@ export default function CarParkLightingCostPage() {
       faqHeading="Frequently Asked Questions About Car Park Lighting Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Car Park Lighting with Per-Column Pricing"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for external lighting quotes with per-column pricing, CCTV integration, and professional PDF output. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for external lighting quotes with per-column pricing, CCTV integration, and professional PDF output. 7-day free trial."
     />
   );
 }

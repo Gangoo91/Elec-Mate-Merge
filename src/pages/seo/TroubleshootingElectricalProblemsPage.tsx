@@ -199,7 +199,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1: Identify the tripped MCB.</strong> Open the consumer unit cover and
                 look for the switch in the off or middle position. The MCB label or a circuit chart
@@ -208,7 +208,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2: Reduce the load.</strong> Unplug high-power appliances on that
                 circuit — kettles, heaters, washing machines. If the trip was caused by an overload,
@@ -216,14 +216,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 3: Reset the MCB.</strong> Push the switch firmly to the on position.
                 If it stays on, the problem was likely a temporary overload.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 4: If it trips again immediately.</strong> There is a short circuit or
                 earth fault on the circuit. Unplug everything and try resetting. If it still trips
@@ -260,7 +260,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1: Identify which circuits are affected.</strong> An RCD typically
                 protects multiple circuits. When it trips, everything on those circuits loses power.
@@ -269,21 +269,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2: Unplug all appliances</strong> on the affected circuits. This
                 includes anything plugged into sockets protected by that RCD.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 3: Reset the RCD.</strong> Push the switch to the on position. If it
                 holds with nothing plugged in, the fault is in an appliance, not the wiring.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 4: Plug appliances back in one at a time.</strong> When the RCD trips,
                 the last appliance you plugged in is the faulty one. Unplug it and reset the RCD.
@@ -313,7 +313,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Single light flickering:</strong> Most likely a loose bulb, a failing LED
                 bulb or driver, an incompatible dimmer switch, or a loose connection at the ceiling
@@ -322,7 +322,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lights flicker when appliance switches on:</strong> A brief, momentary
                 flicker when a high-power appliance starts (kettle, washing machine, electric
@@ -332,7 +332,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Multiple lights flickering:</strong> If several lights on the same circuit
                 flicker together, the fault is likely at the consumer unit — a loose neutral
@@ -342,7 +342,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>All lights in the house flicker or surge:</strong> This can indicate a
                 supply voltage problem from the DNO or, more seriously, a broken or high-resistance
@@ -372,7 +372,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check the appliance.</strong> Plug it into a different socket. If it works,
                 the original socket is faulty. If it does not work anywhere, the appliance is the
@@ -380,14 +380,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check the consumer unit.</strong> A tripped MCB or RCD may have cut power to
                 that circuit. Reset it and test the socket again.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check other sockets on the same circuit.</strong> If multiple sockets are
                 dead, the fault may be at a junction point — a spurred connection, a damaged cable,
@@ -399,7 +399,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Do not open the socket.</strong> If the problem is not the appliance or a
                 tripped device, do not remove the socket faceplate. The fault needs testing with
@@ -486,7 +486,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Buzzing dimmer switch:</strong> Often caused by a leading-edge dimmer
                 driving LED bulbs. LED lamps require a trailing-edge dimmer for smooth, silent
@@ -494,14 +494,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Buzzing socket or switch:</strong> A loose connection inside the fitting
                 causing arcing. This is dangerous — turn off the circuit and call an electrician.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Humming from the consumer unit:</strong> May indicate a loose connection, a
                 vibrating MCB or RCBO, or a failing contactor (if fitted). Any unusual noise from
@@ -509,7 +509,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Buzzing from a transformer:</strong> Doorbell transformers, low-voltage
                 lighting transformers, and LED drivers can hum due to magnetostriction in the core.
@@ -540,14 +540,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Failed MCB or RCBO.</strong> The device may appear to be in the on position
                 but has failed internally. An electrician can test the output voltage to confirm.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Loose busbar connection.</strong> Inside the consumer unit, the busbars
                 distribute power to each MCB. A loose connection on a busbar can cause intermittent
@@ -555,7 +555,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Broken neutral.</strong> If the neutral conductor on a circuit has broken or
                 disconnected (at a junction box, consumer unit terminal, or cable damage), the
@@ -564,7 +564,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Supply phase loss (three-phase installations).</strong> In three-phase
                 properties, a lost phase will cut power to all circuits on that phase while the
@@ -595,7 +595,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Brain className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI Fault Diagnosis</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -629,7 +629,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Diagnose and certify faults in one visit"
-          description="AI-powered fault diagnosis, voice test result entry, and instant certificate generation. Join 1,600+ UK electricians using Elec-Mate on every callout."
+          description="AI-powered fault diagnosis, voice test result entry, and instant certificate generation. Join 2,100+ UK electricians using Elec-Mate on every callout."
           icon={Search}
         />
       </>
@@ -655,7 +655,7 @@ export default function TroubleshootingElectricalProblemsPage() {
       heroTitle={
         <>
           Troubleshooting Electrical Problems:{' '}
-          <span className="text-yellow-400">When to Fix It and When to Call a Professional</span>
+          <span className="text-elec-yellow">When to Fix It and When to Call a Professional</span>
         </>
       }
       heroSubtitle="Tripped circuit breaker? Flickering lights? Socket not working? This guide walks you through the most common electrical problems, what you can safely check yourself, and when you need a qualified electrician."

@@ -187,7 +187,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Glasgow Pricing Breakdown (2026)</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tenement flat (6-way board)</strong> — £300 to £400 total. The most common
                 domestic job in central Glasgow. Materials: £110 to £190. Labour: £180 to £200. EIC:
@@ -195,7 +195,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard terraced or semi (10-way with RCBOs and SPD)</strong> — £380 to
                 £550 total. Materials: £230 to £340. Labour: £220 to £250. EIC and certification:
@@ -203,7 +203,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Larger detached (14-way high-integrity with SPD)</strong> — £500 to £780
                 total. For properties with 12+ circuits, EV charger, or solar PV. Materials: £320 to
@@ -211,9 +211,9 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong>Three-phase property</strong> — £1,000 to £1,600+ total. Required for larger
+                <strong>Three-phase property</strong> — £1,000 to £2,100+ total. Required for larger
                 homes or commercial premises with three-phase supply. Materials: £420 to £700.
                 Labour: £380 to £500. EIC and certification: £50 to £80.
               </span>
@@ -351,35 +351,35 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1: Survey and isolation</strong> — circuits are identified, the mains
                 is isolated at the DNO cutout, and all power to the property is switched off.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2: Remove old board</strong> — the existing consumer unit is
                 disconnected and removed. Ageing cables or earthing issues may be identified.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 3: Install new consumer unit</strong> — a new metal consumer unit is
                 mounted, fitted with RCBOs and SPD, all circuits reconnected and labelled.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 4: Testing</strong> — all circuits are tested to BS 7671: insulation
                 resistance, earth fault loop impedance, RCD trip times, and polarity checks.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 5: Certification</strong> — the electrician completes the{' '}
                 <SEOInternalLink href="/eic-certificate">
@@ -433,28 +433,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SELECT or NICEIC/NAPIT registration</strong> — verify the electrician holds
                 the appropriate Scottish certification to self-certify notifiable electrical work.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Itemised quote</strong> — materials, labour, certification, and VAT should
                 all be listed separately. Avoid single-figure quotes.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EIC included</strong> — confirm the Electrical Installation Certificate and
                 building regulations notification are included in the price.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Experience with tenement properties</strong> — tenement flats in Glasgow
                 present specific challenges including communal earthing systems and limited cupboard
@@ -491,7 +491,7 @@ export default function ConsumerUnitReplacementGlasgowPage() {
       heroTitle={
         <>
           Consumer Unit Replacement Glasgow:{' '}
-          <span className="text-yellow-400">Cost Guide 2026</span>
+          <span className="text-elec-yellow">Cost Guide 2026</span>
         </>
       }
       heroSubtitle="Consumer unit replacement in Glasgow typically costs £300 to £550, making it one of the most affordable major UK cities for fuse board upgrades. This guide covers local pricing, Scottish Building Regulations, what to expect during the work, and how to choose a registered electrician."
@@ -502,7 +502,7 @@ export default function ConsumerUnitReplacementGlasgowPage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Replacement in Glasgow"
       relatedPages={relatedPages}
       ctaHeading="Quote Consumer Unit Replacements in Glasgow"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
     />
   );
 }

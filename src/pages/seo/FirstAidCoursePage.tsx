@@ -409,7 +409,7 @@ export default function FirstAidCoursePage() {
       heroTitle={
         <>
           First Aid Course for Electricians:{' '}
-          <span className="text-yellow-400">Emergency Response</span>
+          <span className="text-elec-yellow">Emergency Response</span>
         </>
       }
       heroSubtitle="Essential first aid training covering electric shock response, CPR, AED use, burn treatment, and workplace emergency procedures. 5 modules with video demonstrations, interactive quizzes, and AI-powered study tools."
@@ -427,7 +427,7 @@ export default function FirstAidCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Ready to learn life-saving first aid skills?"
-      ctaSubheading="Join 1,600+ UK electricians studying smarter with Elec-Mate. 5 focused modules covering electric shock response, CPR, burns treatment, and workplace emergencies. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians studying smarter with Elec-Mate. 5 focused modules covering electric shock response, CPR, burns treatment, and workplace emergencies. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/first-aid-electrical"
     />

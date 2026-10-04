@@ -235,7 +235,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New connections and upgrades</strong> — new supplies, capacity upgrades (for
                 EV chargers, heat pumps), and service cable replacements go through the WPD/NGED
@@ -245,7 +245,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98/G99 notifications</strong> — solar PV, battery storage, and other
                 generation must be notified to WPD/NGED. G98 notifications (up to 16A per phase) are
@@ -255,7 +255,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing arrangements</strong> — Cardiff properties are predominantly TN-C-S
                 (PME) in newer areas and TN-S in older areas. Victorian terraces in Pontcanna,
@@ -264,7 +264,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Welsh Government energy policy</strong> — the Welsh Government has its own
                 energy and climate change policies, including targets for renewable energy
@@ -347,7 +347,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Residential developments</strong> — luxury apartments along the waterfront,
                 from the Barrage to the Red Dragon Centre. Electrical work includes high-end
@@ -357,7 +357,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial and hospitality</strong> — restaurants, bars, hotels, and offices
                 in the Bay area require commercial electrical installations and ongoing maintenance.
@@ -366,7 +366,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Public sector</strong> — the Senedd (Welsh Parliament), Wales Millennium
                 Centre, and various Welsh Government buildings in Cardiff Bay create public sector
@@ -375,7 +375,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ongoing development</strong> — new phases of residential and commercial
                 development continue around the Bay. The International Sports Village and nearby
@@ -456,7 +456,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HMO licensing</strong> — Cardiff Council operates mandatory HMO licensing
                 for properties with 5+ occupants from 2+ households. The Cathays ward has one of the
@@ -465,7 +465,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rent Smart Wales</strong> — all landlords in Wales must register with Rent
                 Smart Wales, and all letting agents must be licensed. Rent Smart Wales requires
@@ -476,7 +476,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire detection and emergency lighting</strong> — HMOs require fire detection
                 to BS 5839-6 (Grade D LD2 minimum) and emergency lighting on escape routes. Cardiff
@@ -485,7 +485,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Renting Homes (Wales) Act 2016</strong> — this Welsh-specific legislation
                 (fully commenced in 2022) changed the legal framework for renting in Wales,
@@ -589,7 +589,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EIC and EICR Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -640,7 +640,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Cardiff electricians"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -666,7 +666,7 @@ export default function ElectricianCardiffPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Cardiff: <span className="text-yellow-400">Find Electricians 2026</span>
+          Electrician in Cardiff: <span className="text-elec-yellow">Find Electricians 2026</span>
         </>
       }
       heroSubtitle="Cardiff combines Victorian terraces in Pontcanna and Canton, Cardiff Bay waterfront regeneration, one of Wales's largest student HMO markets, and Welsh-specific regulations including Rent Smart Wales — a strong and varied market for electricians."
@@ -677,7 +677,7 @@ export default function ElectricianCardiffPage() {
       faqHeading="Frequently Asked Questions About Electricians in Cardiff"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Cardiff Electricians"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Cardiff's terraced housing, Bay regeneration, and Welsh regulatory framework. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Cardiff's terraced housing, Bay regeneration, and Welsh regulatory framework. 7-day free trial."
     />
   );
 }

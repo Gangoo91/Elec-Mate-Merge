@@ -45,7 +45,7 @@ export default function RCDTypesExplainedPage() {
         <>
           RCD Types Explained
           <br />
-          <span className="text-yellow-400">Type AC, A, B, F — Which Do You Need?</span>
+          <span className="text-elec-yellow">Type AC, A, B, F — Which Do You Need?</span>
         </>
       }
       heroSubtitle="Choosing the wrong RCD type leaves circuits unprotected. This guide explains every RCD type in detail — what each detects, where each is required by BS 7671, and how to select the right type for every circuit. From standard domestic installations to EV chargers and heat pumps."
@@ -109,11 +109,11 @@ export default function RCDTypesExplainedPage() {
                   <div>
                     <h3 className="font-bold text-white text-lg mb-2">Type AC RCD</h3>
                     <p className="text-white text-sm leading-relaxed mb-2">
-                      <strong className="text-yellow-400">Detects:</strong> Sinusoidal AC residual
+                      <strong className="text-elec-yellow">Detects:</strong> Sinusoidal AC residual
                       currents only (pure 50Hz waveform).
                     </p>
                     <p className="text-white text-sm leading-relaxed">
-                      <strong className="text-yellow-400">Symbol:</strong> A sine wave (~) printed
+                      <strong className="text-elec-yellow">Symbol:</strong> A sine wave (~) printed
                       on the device front plate.
                     </p>
                   </div>
@@ -167,16 +167,16 @@ export default function RCDTypesExplainedPage() {
               <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
                 <div className="flex items-start gap-4">
                   <div className="w-14 h-14 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center shrink-0">
-                    <span className="font-bold text-yellow-400 text-lg">A</span>
+                    <span className="font-bold text-elec-yellow text-lg">A</span>
                   </div>
                   <div>
                     <h3 className="font-bold text-white text-lg mb-2">Type A RCD</h3>
                     <p className="text-white text-sm leading-relaxed mb-2">
-                      <strong className="text-yellow-400">Detects:</strong> Sinusoidal AC residual
+                      <strong className="text-elec-yellow">Detects:</strong> Sinusoidal AC residual
                       currents AND pulsating DC residual currents.
                     </p>
                     <p className="text-white text-sm leading-relaxed">
-                      <strong className="text-yellow-400">Symbol:</strong> A sine wave with a
+                      <strong className="text-elec-yellow">Symbol:</strong> A sine wave with a
                       pulsating DC waveform below it, printed on the device front plate.
                     </p>
                   </div>
@@ -227,11 +227,11 @@ export default function RCDTypesExplainedPage() {
                   <div>
                     <h3 className="font-bold text-white text-lg mb-2">Type B RCD</h3>
                     <p className="text-white text-sm leading-relaxed mb-2">
-                      <strong className="text-yellow-400">Detects:</strong> Sinusoidal AC, pulsating
+                      <strong className="text-elec-yellow">Detects:</strong> Sinusoidal AC, pulsating
                       DC, AND smooth (pure) DC residual currents.
                     </p>
                     <p className="text-white text-sm leading-relaxed">
-                      <strong className="text-yellow-400">Symbol:</strong> A sine wave, a pulsating
+                      <strong className="text-elec-yellow">Symbol:</strong> A sine wave, a pulsating
                       DC waveform, and a smooth DC line, printed on the device front plate.
                     </p>
                   </div>
@@ -255,9 +255,9 @@ export default function RCDTypesExplainedPage() {
               </p>
               <ul className="space-y-2 my-4">
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
-                    <strong className="text-yellow-400">Type A + 6mA DC detection</strong> — A Type
+                    <strong className="text-elec-yellow">Type A + 6mA DC detection</strong> — A Type
                     A RCD/RCBO where the charger itself monitors for DC residual currents above 6mA
                     and disconnects. Most modern domestic smart chargers (Zappi, Ohme, Pod Point,
                     Easee) include this built-in DC detection, allowing a standard Type A RCBO to be
@@ -265,9 +265,9 @@ export default function RCDTypesExplainedPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
-                    <strong className="text-yellow-400">Type B RCD</strong> — Required if the
+                    <strong className="text-elec-yellow">Type B RCD</strong> — Required if the
                     charger does not have built-in DC detection. The Type B RCD detects the smooth
                     DC fault currents directly, without relying on the charger electronics.
                   </span>
@@ -305,12 +305,12 @@ export default function RCDTypesExplainedPage() {
                   <div>
                     <h3 className="font-bold text-white text-lg mb-2">Type F RCD</h3>
                     <p className="text-white text-sm leading-relaxed mb-2">
-                      <strong className="text-yellow-400">Detects:</strong> All Type A faults PLUS
+                      <strong className="text-elec-yellow">Detects:</strong> All Type A faults PLUS
                       composite residual currents containing mixed frequencies from single-phase
                       VFDs.
                     </p>
                     <p className="text-white text-sm leading-relaxed">
-                      <strong className="text-yellow-400">Symbol:</strong> The Type A symbol with an
+                      <strong className="text-elec-yellow">Symbol:</strong> The Type A symbol with an
                       additional frequency symbol, printed on the device front plate.
                     </p>
                   </div>
@@ -328,26 +328,26 @@ export default function RCDTypesExplainedPage() {
               </p>
               <ul className="space-y-2 my-4">
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
-                    <strong className="text-yellow-400">Heat pumps</strong> — Air source and ground
+                    <strong className="text-elec-yellow">Heat pumps</strong> — Air source and ground
                     source heat pumps use VFDs to control compressor speed for optimal efficiency. A
                     fault in the VFD can produce mixed-frequency residual currents that Type A
                     cannot detect reliably.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
-                    <strong className="text-yellow-400">Air conditioning units</strong> — Modern
+                    <strong className="text-elec-yellow">Air conditioning units</strong> — Modern
                     inverter-driven air conditioning uses the same VFD technology as heat pumps and
                     produces the same types of fault current.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
-                    <strong className="text-yellow-400">
+                    <strong className="text-elec-yellow">
                       Washing machines with inverter motors
                     </strong>{' '}
                     — Premium washing machines from manufacturers such as Samsung, LG, and Bosch use
@@ -355,9 +355,9 @@ export default function RCDTypesExplainedPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
-                    <strong className="text-yellow-400">Pool and spa pumps</strong> — Variable-speed
+                    <strong className="text-elec-yellow">Pool and spa pumps</strong> — Variable-speed
                     pool pumps use VFDs for energy-efficient operation at different flow rates.
                   </span>
                 </li>
@@ -392,10 +392,10 @@ export default function RCDTypesExplainedPage() {
               </p>
               <div className="grid sm:grid-cols-2 gap-4 my-6">
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-3">RCBO (Per Circuit)</h3>
+                  <h3 className="font-bold text-elec-yellow text-lg mb-3">RCBO (Per Circuit)</h3>
                   <ul className="space-y-3 text-white text-sm leading-relaxed">
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>
                         <strong className="text-white">Excellent discrimination</strong> — A fault
                         on one circuit trips only that circuit. Every other circuit remains
@@ -403,7 +403,7 @@ export default function RCDTypesExplainedPage() {
                       </span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>
                         <strong className="text-white">No cumulative leakage issues</strong> — Each
                         RCBO monitors only its own circuit, eliminating nuisance tripping from
@@ -411,7 +411,7 @@ export default function RCDTypesExplainedPage() {
                       </span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>
                         <strong className="text-white">Easy fault diagnosis</strong> — When an RCBO
                         trips, you know immediately which circuit has the fault.
@@ -431,7 +431,7 @@ export default function RCDTypesExplainedPage() {
                   <h3 className="font-bold text-white text-lg mb-3">RCD + MCBs (Split-Load)</h3>
                   <ul className="space-y-3 text-white text-sm leading-relaxed">
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>
                         <strong className="text-white">Lower initial cost</strong> — Two RCDs and
                         individual MCBs cost less than individual RCBOs for every circuit.
@@ -491,7 +491,7 @@ export default function RCDTypesExplainedPage() {
               </p>
               <div className="grid sm:grid-cols-3 gap-4 my-6">
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-2xl mb-1">30mA</h3>
+                  <h3 className="font-bold text-elec-yellow text-2xl mb-1">30mA</h3>
                   <h4 className="font-bold text-white mb-3">Personal Protection</h4>
                   <p className="text-white text-sm leading-relaxed">
                     Provides additional protection against electric shock. The 30mA threshold is
@@ -501,13 +501,13 @@ export default function RCDTypesExplainedPage() {
                   </p>
                   <ul className="mt-2 space-y-1 text-white text-sm leading-relaxed list-disc list-inside">
                     <li>
-                      <strong className="text-yellow-400">Reg 411.3.3</strong> — socket-outlets with
+                      <strong className="text-elec-yellow">Reg 411.3.3</strong> — socket-outlets with
                       a rated current not exceeding 32A. Exception: in non-dwellings a documented
                       risk assessment may permit omission; this exception does NOT apply to
                       dwellings.
                     </li>
                     <li>
-                      <strong className="text-yellow-400">Reg 411.3.4 (A4:2026 — NEW)</strong> — all
+                      <strong className="text-elec-yellow">Reg 411.3.4 (A4:2026 — NEW)</strong> — all
                       AC final circuits supplying luminaires within domestic (household) premises.
                       No risk-assessment exception; this is a mandatory 'shall' requirement for
                       every domestic lighting circuit.
@@ -537,7 +537,7 @@ export default function RCDTypesExplainedPage() {
               </div>
               <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
                 <div className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <h4 className="font-bold text-white mb-2">
                       A4:2026 New Requirement — Domestic Lighting Circuits (Reg 411.3.4)
@@ -551,7 +551,7 @@ export default function RCDTypesExplainedPage() {
                       exception for lighting circuits in domestic premises.
                     </p>
                     <p className="text-white text-sm leading-relaxed mt-2">
-                      <strong className="text-yellow-400">Practical implication:</strong> Any new or
+                      <strong className="text-elec-yellow">Practical implication:</strong> Any new or
                       rewired domestic lighting circuit requires an RCBO or a shared 30mA RCD.
                       Existing domestic lighting circuits without 30mA RCD protection are an EICR
                       defect against the current edition of BS 7671. This is the single most
@@ -610,13 +610,13 @@ export default function RCDTypesExplainedPage() {
                 <div className="space-y-3">
                   <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
                     <span className="text-white font-bold">At 1x I{'\u0394'}n</span>
-                    <span className="text-yellow-400 font-bold">
+                    <span className="text-elec-yellow font-bold">
                       130ms to 500ms (must trip within this range)
                     </span>
                   </div>
                   <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
                     <span className="text-white font-bold">At 5x I{'\u0394'}n</span>
-                    <span className="text-yellow-400 font-bold">
+                    <span className="text-elec-yellow font-bold">
                       50ms to 200ms (must trip within this range)
                     </span>
                   </div>
@@ -642,13 +642,13 @@ export default function RCDTypesExplainedPage() {
                 <p className="text-white text-sm leading-relaxed">
                   GN3 (Guidance Note 3: Inspection &amp; Testing) Regulation 2.32 requires that RCDs
                   are tested at both 0% and 180% of rated residual operating current (I&#x394;n).
-                  The <strong className="text-yellow-400">longest trip time</strong> observed across
+                  The <strong className="text-elec-yellow">longest trip time</strong> observed across
                   both tests shall be recorded in{' '}
-                  <strong className="text-yellow-400">column 28</strong> of the Schedule of Test
+                  <strong className="text-elec-yellow">column 28</strong> of the Schedule of Test
                   Results. Example: if the RCD trips in 80ms at 180% and 120ms at 0%, record 120ms.
                 </p>
                 <p className="text-white text-sm leading-relaxed mt-2">
-                  <strong className="text-yellow-400">Type B RCDs:</strong> GN3 Regulation 5.6 notes
+                  <strong className="text-elec-yellow">Type B RCDs:</strong> GN3 Regulation 5.6 notes
                   that carrying out the full suite of optional tests for a 30mA Type B RCD may
                   require up to 12 trip operations. Plan the test sequence carefully to avoid
                   exhausting mechanical operations during a single inspection.
@@ -740,7 +740,7 @@ export default function RCDTypesExplainedPage() {
         },
       ]}
       ctaHeading="Get RCD Type Right Every Time"
-      ctaSubheading="Elec-Mate captures RCD types on every certificate, validates trip times against BS 7671, and scans board labels from photos. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate captures RCD types on every certificate, validates trip times against BS 7671, and scans board labels from photos. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

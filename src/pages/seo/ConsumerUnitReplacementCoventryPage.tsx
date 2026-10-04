@@ -140,14 +140,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main switch</strong> — isolates the entire installation from the supply.
                 Used by the electrician during work and by occupants in emergencies.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCBs</strong> — miniature circuit breakers protect individual circuits
                 against overcurrent. They are sized to the cable rating of each circuit (typically 6
@@ -155,7 +155,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCDs and RCBOs</strong> — residual current devices detect earth leakage
                 current and disconnect within milliseconds, protecting against electric shock. Under
@@ -190,7 +190,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rewireable fuses</strong> — ceramic fuse carriers with wire fuses. No RCD
                 protection, can be incorrectly re-fused, and typically indicate wiring that is 30+
@@ -198,7 +198,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No RCD protection on socket circuits</strong> — if your MCB board or
                 split-load board has socket-outlet circuits without RCD protection, this is a C2
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Plastic consumer unit</strong> — non-compliant for any new installation
                 since January 2016. If your unit was recently fitted and uses a plastic enclosure,
@@ -214,7 +214,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Frequent tripping or burning smell</strong> — warning signs of deteriorated
                 components or overloaded circuits. An electrician should inspect the unit
@@ -222,7 +222,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insufficient ways for modern demands</strong> — electric vehicle chargers,
                 heat pumps, and additional circuits require spare ways in the consumer unit. Older
@@ -294,7 +294,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1–2 bedroom flat or small house</strong> — £400 to £550. Typical Coventry
                 apartment or small terraced house. 8 to 12 circuits. Includes dual-RCD or RCBO metal
@@ -302,7 +302,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3–4 bedroom semi or detached</strong> — £550 to £750. The most common
                 Coventry housing type. 12 to 18 circuits. Typically half a day to a full day. Cost
@@ -310,7 +310,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large house or complex installation</strong> — £750 to £950+. Older
                 properties requiring earthing upgrades, main bonding conductor replacement, or
@@ -318,7 +318,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Included in all quotes</strong> — the new metal consumer unit (specified
                 make and model), all labour, connection of existing circuits, main bonding
@@ -448,7 +448,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Issue EICs On Site — No Paperwork</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -481,7 +481,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Coventry electrical business with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and professional certificate management."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and professional certificate management."
           icon={FileCheck2}
         />
       </>
@@ -507,7 +507,7 @@ export default function ConsumerUnitReplacementCoventryPage() {
       heroTitle={
         <>
           Consumer Unit Replacement Coventry:{' '}
-          <span className="text-yellow-400">Costs, Regulations &amp; Process 2026</span>
+          <span className="text-elec-yellow">Costs, Regulations &amp; Process 2026</span>
         </>
       }
       heroSubtitle="Everything you need to know about consumer unit replacement in Coventry — 2026 costs from £400 to £800, the mandatory metal enclosure requirement, Part P Building Regulations, and how to choose a qualified electrician in the CV postcode area."
@@ -518,7 +518,7 @@ export default function ConsumerUnitReplacementCoventryPage() {
       faqHeading="Frequently Asked Questions — Consumer Unit Replacement Coventry"
       relatedPages={relatedPages}
       ctaHeading="Complete Consumer Unit Certificates On Site in Coventry"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

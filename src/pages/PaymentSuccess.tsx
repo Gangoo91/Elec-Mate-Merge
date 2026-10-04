@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
@@ -430,18 +430,13 @@ const PaymentSuccess = () => {
 
       {/* ═════════ HERO ═════════════════════════════════════════════ */}
       <section className="relative overflow-hidden">
-        <div className="pointer-events-none absolute -bottom-40 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full bg-elec-yellow/[0.06] blur-[120px]" />
         <motion.div
           initial="hidden"
           animate="visible"
           variants={stagger}
           className="relative max-w-7xl mx-auto px-5 sm:px-8 pt-8 sm:pt-20 pb-12 sm:pb-20 text-center"
         >
-          <motion.div variants={fadeUp} className="inline-flex items-center gap-2.5 mb-7 sm:mb-10">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inset-0 rounded-full bg-elec-yellow animate-ping opacity-75" />
-              <span className="relative h-2 w-2 rounded-full bg-elec-yellow" />
-            </span>
+          <motion.div variants={fadeUp} className="mb-7 sm:mb-10">
             <Eyebrow>Welcome aboard</Eyebrow>
           </motion.div>
 
@@ -553,14 +548,14 @@ const PaymentSuccess = () => {
                 variants={fadeUp}
                 className="grid grid-cols-[auto_1fr] gap-x-6 sm:gap-x-10 py-7 sm:py-10 items-start"
               >
-                <span className="text-3xl sm:text-5xl font-bold text-elec-yellow/60 tracking-tight tabular-nums">
+                <span className="text-3xl sm:text-5xl font-bold text-elec-yellow tracking-tight tabular-nums">
                   {String(i + 1).padStart(2, '0')}
                 </span>
                 <div className="space-y-2 pt-1">
                   <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
                     {step.title}
                   </h3>
-                  <div className="text-base text-white/80 leading-relaxed max-w-2xl">
+                  <div className="text-base text-white leading-relaxed max-w-2xl">
                     {step.body}
                   </div>
                 </div>
@@ -572,7 +567,6 @@ const PaymentSuccess = () => {
 
       {/* ═════════ CTA ═══════════════════════════════════════════ */}
       <section className="relative border-t border-white/[0.06]">
-        <div className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full bg-elec-yellow/[0.05] blur-[120px]" />
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -585,11 +579,11 @@ const PaymentSuccess = () => {
               onClick={ctaAction}
               disabled={!isReady}
               className={cn(
-                'h-16 sm:h-[72px] px-9 sm:px-14 text-[17px] sm:text-lg font-bold rounded-full',
-                'transition-all touch-manipulation relative ring-1',
+                'h-14 sm:h-16 px-9 sm:px-14 text-[17px] sm:text-lg font-bold rounded-xl',
+                'transition-transform touch-manipulation',
                 isReady
-                  ? 'bg-elec-yellow text-black hover:bg-elec-yellow/90 hover:scale-[1.02] active:scale-[0.98] shadow-[0_25px_80px_-15px_rgba(250,204,21,0.55)] ring-elec-yellow/40'
-                  : 'bg-white/10 text-white ring-white/10'
+                  ? 'bg-elec-yellow text-black hover:bg-elec-yellow active:scale-[0.98]'
+                  : 'bg-white/[0.08] text-white'
               )}
             >
               {!isReady ? (
@@ -598,10 +592,7 @@ const PaymentSuccess = () => {
                   Finishing setup...
                 </>
               ) : (
-                <>
-                  {ctaLabel}
-                  <ArrowRight className="ml-2.5 h-5 w-5 sm:h-6 sm:w-6" />
-                </>
+                ctaLabel
               )}
             </Button>
 
@@ -609,7 +600,7 @@ const PaymentSuccess = () => {
               <button
                 type="button"
                 onClick={handleOpenWhatsApp}
-                className="text-sm text-white/65 hover:text-white underline underline-offset-4 decoration-white/20 hover:decoration-white/60 touch-manipulation"
+                className="h-11 text-sm font-semibold text-elec-yellow underline underline-offset-4 decoration-elec-yellow/50 touch-manipulation"
               >
                 Or open WhatsApp directly
               </button>
@@ -622,7 +613,7 @@ const PaymentSuccess = () => {
               </p>
             )}
 
-            <p className="text-[13px] text-white/55 max-w-md leading-relaxed">
+            <p className="text-[13px] text-white max-w-md leading-relaxed">
               Cancel or change plan any time in{' '}
               <Link
                 to="/subscriptions"

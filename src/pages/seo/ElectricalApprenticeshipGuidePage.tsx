@@ -551,7 +551,7 @@ export default function ElectricalApprenticeshipGuidePage() {
       heroTitle={
         <>
           Electrical Apprenticeship UK 2026 —{' '}
-          <span className="text-yellow-400">Complete Guide</span>
+          <span className="text-elec-yellow">Complete Guide</span>
         </>
       }
       heroSubtitle="Everything you need to know about becoming an electrician through an apprenticeship in the UK. How to find one, what to expect week by week, pay rates by year, qualifications earned, End Point Assessment preparation, and career pathways after you qualify."

@@ -280,7 +280,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Increased hospitality demand</strong> — the Illuminations period brings
                 large numbers of visitors and increases commercial activity across the town. Hotels,
@@ -290,7 +290,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Festive and temporary lighting</strong> — commercial premises often
                 commission additional external lighting and festive installations for the
@@ -300,7 +300,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Year-round ENW collaboration</strong> — the Illuminations require a
                 substantial and reliable power supply. Electricians working on commercial premises
@@ -322,7 +322,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICRs for guesthouses, HMOs, and landlords</strong> — this is the core of
                 the Blackpool electrician's workload. The enormous volume of rental and holiday
@@ -330,7 +330,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Guesthouse and HMO rewires</strong> — many of Blackpool's guesthouses and
                 HMOs have electrical installations that are decades old and in need of full
@@ -338,7 +338,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacements</strong> — old fuse boards are extremely common
                 across Blackpool's residential and commercial property stock. Consumer unit upgrades
@@ -346,7 +346,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire alarm installations and maintenance</strong> — Blackpool's guesthouse
                 and HMO market requires fire alarm systems to BS 5839-6. Installation and annual
@@ -439,7 +439,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EIC and EICR Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -471,7 +471,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Blackpool electricians"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -498,7 +498,7 @@ export default function ElectricianBlackpoolPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Blackpool: <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Blackpool: <span className="text-elec-yellow">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Blackpool's unique mix of Victorian guesthouses, HMOs, and a huge hospitality economy demands electricians with expertise in EICR compliance, guesthouse rewiring, fire alarm systems, and Part P documentation."
@@ -509,7 +509,7 @@ export default function ElectricianBlackpoolPage() {
       faqHeading="Frequently Asked Questions About Electricians in Blackpool"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Blackpool Electricians"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the guesthouse, HMO, and rental market that defines Blackpool's electrical industry. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the guesthouse, HMO, and rental market that defines Blackpool's electrical industry. 7-day free trial."
     />
   );
 }

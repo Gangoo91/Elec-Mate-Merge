@@ -48,7 +48,7 @@ export default function HouseRewireGuidePage() {
         <>
           House Rewire Guide UK
           <br />
-          <span className="text-yellow-400">What's Involved & What to Expect</span>
+          <span className="text-elec-yellow">What's Involved & What to Expect</span>
         </>
       }
       heroSubtitle="A full house rewire is one of the biggest electrical jobs in domestic work. This guide explains when a rewire is needed, what the process involves from first fix to second fix, how long it takes, what it costs, and how homeowners can prepare for minimal disruption."
@@ -80,7 +80,7 @@ export default function HouseRewireGuidePage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Cable className="w-5 h-5 text-yellow-400" />
+                    <Cable className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">
                       Old Rubber or Lead-Sheathed Cable
                     </h3>
@@ -99,7 +99,7 @@ export default function HouseRewireGuidePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Rewirable Fuse Board</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -118,7 +118,7 @@ export default function HouseRewireGuidePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Zap className="w-5 h-5 text-yellow-400" />
+                    <Zap className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">No Earth Conductor</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -133,7 +133,7 @@ export default function HouseRewireGuidePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <ClipboardCheck className="w-5 h-5 text-yellow-400" />
+                    <ClipboardCheck className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Failing EICR</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -153,7 +153,7 @@ export default function HouseRewireGuidePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Physical Symptoms</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -183,9 +183,9 @@ export default function HouseRewireGuidePage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">New consumer unit</strong> — Metal
+                      <strong className="text-elec-yellow">New consumer unit</strong> — Metal
                       enclosure, RCBOs or dual RCD with MCBs, SPD, correctly sized main switch. See
                       the{' '}
                       <SEOInternalLink href="/guides/consumer-unit-change">
@@ -195,42 +195,42 @@ export default function HouseRewireGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">New cables throughout</strong> —
+                      <strong className="text-elec-yellow">New cables throughout</strong> —
                       Twin-and-earth cable (typically 2.5mm² for sockets, 1.5mm² for lighting,
                       1.0mm² for some lighting, larger sizes for cooker, shower, and other
                       high-current circuits) run from the consumer unit to every accessory point.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">New accessories</strong> — All sockets,
+                      <strong className="text-elec-yellow">New accessories</strong> — All sockets,
                       switches, light fittings, spurs, connection units, cooker connections, and
                       other accessories replaced.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Updated earthing and bonding</strong> —
+                      <strong className="text-elec-yellow">Updated earthing and bonding</strong> —
                       Main earthing conductor, main bonding conductors to gas, water, and oil,
                       supplementary bonding where required.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Smoke and heat alarms</strong> —
+                      <strong className="text-elec-yellow">Smoke and heat alarms</strong> —
                       Mains-powered interconnected smoke detectors on every floor and heat detectors
                       in kitchens, as required by Building Regulations.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Outdoor circuits</strong> — External
+                      <strong className="text-elec-yellow">Outdoor circuits</strong> — External
                       sockets, security lighting, garden lighting connections included in the rewire
                       scope.
                     </span>
@@ -262,7 +262,7 @@ export default function HouseRewireGuidePage() {
               </h3>
               <div className="space-y-3">
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     1
                   </span>
                   <div>
@@ -277,7 +277,7 @@ export default function HouseRewireGuidePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     2
                   </span>
                   <div>
@@ -293,7 +293,7 @@ export default function HouseRewireGuidePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     3
                   </span>
                   <div>
@@ -339,7 +339,7 @@ export default function HouseRewireGuidePage() {
               </h3>
               <div className="space-y-3">
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     1
                   </span>
                   <div>
@@ -353,7 +353,7 @@ export default function HouseRewireGuidePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     2
                   </span>
                   <div>
@@ -367,7 +367,7 @@ export default function HouseRewireGuidePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     3
                   </span>
                   <div>
@@ -386,7 +386,7 @@ export default function HouseRewireGuidePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     4
                   </span>
                   <div>
@@ -426,28 +426,28 @@ export default function HouseRewireGuidePage() {
                       <h4 className="font-bold text-white">1-bed flat</h4>
                       <p className="text-white text-sm">4-6 circuits</p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-lg">3 - 5 days</span>
+                    <span className="font-bold text-elec-yellow text-lg">3 - 5 days</span>
                   </div>
                   <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
                     <div>
                       <h4 className="font-bold text-white">2-bed terraced house</h4>
                       <p className="text-white text-sm">6-8 circuits</p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-lg">5 - 7 days</span>
+                    <span className="font-bold text-elec-yellow text-lg">5 - 7 days</span>
                   </div>
                   <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                     <div>
                       <h4 className="font-bold text-white">3-bed semi-detached</h4>
                       <p className="text-white text-sm">8-12 circuits (most common)</p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-lg">7 - 10 days</span>
+                    <span className="font-bold text-elec-yellow text-lg">7 - 10 days</span>
                   </div>
                   <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
                     <div>
                       <h4 className="font-bold text-white">4-bed detached</h4>
                       <p className="text-white text-sm">10-16 circuits</p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-lg">10 - 14 days</span>
+                    <span className="font-bold text-elec-yellow text-lg">10 - 14 days</span>
                   </div>
                 </div>
               </div>
@@ -490,7 +490,7 @@ export default function HouseRewireGuidePage() {
               </p>
               <ul className="space-y-2 my-4">
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Socket positions and quantities</strong> — Where
                     do they want sockets? How many per wall? Double or single? Consider furniture
@@ -499,7 +499,7 @@ export default function HouseRewireGuidePage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Light fitting positions and switching</strong> —
                     Ceiling rose or downlights? One-way, two-way, or intermediate switching? Dimmer
@@ -507,7 +507,7 @@ export default function HouseRewireGuidePage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Dedicated circuits</strong> — Electric shower,
                     cooker, immersion heater, electric heating, storage heaters, garden office
@@ -515,7 +515,7 @@ export default function HouseRewireGuidePage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Data and networking</strong> — While not strictly
                     electrical, many homeowners want CAT6 data cables run alongside the mains
@@ -524,7 +524,7 @@ export default function HouseRewireGuidePage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
                     <strong className="text-white">Future-proofing</strong> — Consider{' '}
                     <SEOInternalLink href="/guides/ev-charger-installation">
@@ -565,26 +565,26 @@ export default function HouseRewireGuidePage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Design section</strong> — Confirming the
+                      <strong className="text-elec-yellow">Design section</strong> — Confirming the
                       rewire design complies with BS 7671. This includes the circuit schedule,
                       consumer unit specification, cable sizing, RCD arrangement, and earthing and
                       bonding design.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Construction section</strong> — Confirming
+                      <strong className="text-elec-yellow">Construction section</strong> — Confirming
                       the installation work has been carried out in accordance with the design and
                       BS 7671.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Inspection and testing section</strong> —
+                      <strong className="text-elec-yellow">Inspection and testing section</strong> —
                       With a complete schedule of test results for every circuit. This includes
                       R1+R2, insulation resistance, Zs, PSCC, polarity, and RCD test results.
                     </span>
@@ -615,7 +615,7 @@ export default function HouseRewireGuidePage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Work Room by Room</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -628,7 +628,7 @@ export default function HouseRewireGuidePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Maintain a Temporary Supply</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -642,7 +642,7 @@ export default function HouseRewireGuidePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Coordinate with Other Trades</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -656,7 +656,7 @@ export default function HouseRewireGuidePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Protect Furniture and Flooring</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">

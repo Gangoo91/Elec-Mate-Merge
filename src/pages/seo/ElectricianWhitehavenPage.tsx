@@ -185,7 +185,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Nuclear Site Licence conditions</strong> — Sellafield operates under a
                 Nuclear Site Licence issued by the Office for Nuclear Regulation (ONR). Licence
@@ -195,7 +195,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Security clearance and site passes</strong> — a valid Sellafield site pass
                 requires security vetting (minimum BPSS, Counter Terrorist Check or higher for
@@ -205,7 +205,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IEC 60364 and nuclear codes</strong> — nuclear site electrical work must
                 comply with IEC 60364 (the international standard underpinning BS 7671) and nuclear
@@ -215,7 +215,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SQEP framework</strong> — Sellafield requires all electrical workers to be
                 assessed as Suitably Qualified and Experienced Persons for their specific role.
@@ -302,7 +302,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New connections and upgrades</strong> — managed through ENW's connections
                 portal. Supply capacity upgrades are commonly needed for EV charger installations in
@@ -314,7 +314,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98/G99 for generation</strong> — solar PV, battery storage, and micro-wind
                 must be notified to ENW. G98 (up to 16A per phase) is an online notification. G99
@@ -323,7 +323,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing arrangements</strong> — town centre properties are predominantly
                 TN-C-S (PME). Rural and coastal properties to the south and east of Whitehaven are
@@ -479,7 +479,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EIC and EICR Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -532,7 +532,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Whitehaven electricians"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -560,7 +560,7 @@ export default function ElectricianWhitehavenPage() {
       heroTitle={
         <>
           Electrician in Whitehaven:{' '}
-          <span className="text-yellow-400">Local Electricians 2026</span>
+          <span className="text-elec-yellow">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Whitehaven is the closest town to Sellafield nuclear site and home to one of England's finest Georgian town centres. Working here means understanding nuclear clearance requirements, heritage conservation area restrictions, and the realities of coastal electrical installation."
@@ -571,7 +571,7 @@ export default function ElectricianWhitehavenPage() {
       faqHeading="Frequently Asked Questions About Electricians in Whitehaven"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Whitehaven Electricians"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Whitehaven's Georgian heritage properties, Sellafield-adjacent work, and coastal Cumbrian installations. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Whitehaven's Georgian heritage properties, Sellafield-adjacent work, and coastal Cumbrian installations. 7-day free trial."
     />
   );
 }

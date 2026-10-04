@@ -27,6 +27,7 @@
  */
 
 import { useMemo, useState } from 'react';
+import { useLoggingReminders } from '@/hooks/useLoggingReminders';
 import { HubWorkList, type HubWorkItem } from '@/components/hub/HubPrimitives';
 import { useSupervisorVerification } from '@/hooks/portfolio/useSupervisorVerification';
 import { useMyProgressCheck } from '@/hooks/useMyProgressCheck';
@@ -76,6 +77,9 @@ export function PortfolioNeedsYou({
 }: Props) {
   const { verifications, getVerificationUrl } = useSupervisorVerification();
   const { focus: programmeFocus } = useMyProgressCheck();
+  // Settings → Reminders: keep what a tutor or supervisor is waiting on, drop
+  // the "go and capture more" nudging (ELE-1804).
+  const { hidden: hideReminders } = useLoggingReminders();
   const [qrFor, setQrFor] = useState<string | null>(null);
 
   // Pending supervisor signatures, oldest first — the oldest is the one worth
@@ -142,7 +146,7 @@ export function PortfolioNeedsYou({
     }
 
     // 3 — evidence ageing out of the 12-month window.
-    if (currency.expired > 0 || currency.expiring > 0) {
+    if (!hideReminders && (currency.expired > 0 || currency.expiring > 0)) {
       const expired = currency.expired > 0;
       list.push({
         id: 'currency',
@@ -159,7 +163,7 @@ export function PortfolioNeedsYou({
     }
 
     // 4 — programme-level gaps from the college side.
-    for (const [i, f] of programmeFocus.entries()) {
+    for (const [i, f] of hideReminders ? [] : programmeFocus.entries()) {
       const route = (f.key && ROUTE_BY_KEY[f.key]) || '/apprentice/college-plan';
       list.push({
         id: `programme-${f.key ?? i}`,
@@ -171,7 +175,10 @@ export function PortfolioNeedsYou({
 
     // 5 — the ordinary work. The criterion text IS the row, because that is
     // what tells you what to go and photograph.
-    for (const ac of acFocus.slice(0, 3)) {
+    // With reminders hidden, only criteria a tutor has sent back stay.
+    for (const ac of acFocus
+      .filter((a) => !hideReminders || a.reasonKind === 'referred')
+      .slice(0, 3)) {
       list.push({
         id: `ac-${ac.acFullRef}`,
         title: ac.acText,
@@ -192,6 +199,7 @@ export function PortfolioNeedsYou({
     onNavigate,
     onCapture,
     onGoTo,
+    hideReminders,
   ]);
 
   const qrVerification = qrFor ? (verifications.find((v) => v.id === qrFor) ?? null) : null;

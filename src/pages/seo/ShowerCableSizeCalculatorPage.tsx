@@ -42,7 +42,7 @@ export default function ShowerCableSizeCalculatorPage() {
       badgeIcon={ShowerHead}
       heroTitle={
         <>
-          <span className="text-yellow-400">Shower Cable Size Calculator</span> — Size the Circuit
+          <span className="text-elec-yellow">Shower Cable Size Calculator</span> — Size the Circuit
           for 8.5kW to 10.5kW Electric Showers
         </>
       }
@@ -82,23 +82,23 @@ export default function ShowerCableSizeCalculatorPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
                 <ul className="space-y-2 text-white text-sm">
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">8.5kW shower:</strong> 8500 / 230 ={' '}
+                      <strong className="text-elec-yellow">8.5kW shower:</strong> 8500 / 230 ={' '}
                       <strong>37.0A</strong> — typically a 40A MCB or RCBO
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">9.5kW shower:</strong> 9500 / 230 ={' '}
+                      <strong className="text-elec-yellow">9.5kW shower:</strong> 9500 / 230 ={' '}
                       <strong>41.3A</strong> — typically a 45A or 50A MCB or RCBO
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">10.5kW shower:</strong> 10500 / 230 ={' '}
+                      <strong className="text-elec-yellow">10.5kW shower:</strong> 10500 / 230 ={' '}
                       <strong>45.7A</strong> — typically a 50A MCB or RCBO
                     </span>
                   </li>
@@ -134,23 +134,23 @@ export default function ShowerCableSizeCalculatorPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
                 <ol className="space-y-3 text-white text-sm list-decimal pl-5">
                   <li>
-                    <strong className="text-yellow-400">Design current:</strong> I = P / V = 9500 /
+                    <strong className="text-elec-yellow">Design current:</strong> I = P / V = 9500 /
                     230 = <strong>41.3A</strong>
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Protective device:</strong> the device
+                    <strong className="text-elec-yellow">Protective device:</strong> the device
                     rating must be at least the design current — select a <strong>45A</strong> MCB
                     or RCBO (a 50A device is also acceptable if the cable is sized for it)
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Cable selection:</strong> the cable's
+                    <strong className="text-elec-yellow">Cable selection:</strong> the cable's
                     current-carrying capacity after correction factors must be at least the device
                     rating. 10mm² twin and earth is the typical choice for a 45A shower circuit
                     clipped direct or in most common installation methods — always confirm against
                     the tabulated capacity for your specific method
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Voltage drop:</strong> using the published
+                    <strong className="text-elec-yellow">Voltage drop:</strong> using the published
                     volt drop figure of approximately 4.4 mV/A/m for 10mm² copper cable: 41.3A x 18m
                     x 4.4 mV/A/m = 3,271mV = <strong>3.27V</strong>. As a percentage: 3.27 / 230 ={' '}
                     <strong>1.4%</strong> — comfortably within the 5% limit
@@ -225,13 +225,13 @@ export default function ShowerCableSizeCalculatorPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
                 <ul className="space-y-2 text-white text-sm">
                   <li>
-                    <strong className="text-yellow-400">8.5kW (37.0A):</strong> 40A device
+                    <strong className="text-elec-yellow">8.5kW (37.0A):</strong> 40A device
                   </li>
                   <li>
-                    <strong className="text-yellow-400">9.5kW (41.3A):</strong> 45A or 50A device
+                    <strong className="text-elec-yellow">9.5kW (41.3A):</strong> 45A or 50A device
                   </li>
                   <li>
-                    <strong className="text-yellow-400">10.5kW (45.7A):</strong> 50A device
+                    <strong className="text-elec-yellow">10.5kW (45.7A):</strong> 50A device
                   </li>
                 </ul>
               </div>
@@ -273,15 +273,15 @@ export default function ShowerCableSizeCalculatorPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
                 <ul className="space-y-2 text-white text-sm">
                   <li>
-                    <strong className="text-yellow-400">10mm² at 41.3A, 18m:</strong> 41.3 x 18 x
+                    <strong className="text-elec-yellow">10mm² at 41.3A, 18m:</strong> 41.3 x 18 x
                     4.4 mV/A/m = 3.27V = 1.4% — fine
                   </li>
                   <li>
-                    <strong className="text-yellow-400">10mm² at 41.3A, 35m:</strong> 41.3 x 35 x
+                    <strong className="text-elec-yellow">10mm² at 41.3A, 35m:</strong> 41.3 x 35 x
                     4.4 mV/A/m = 6.36V = 2.8% — still fine
                   </li>
                   <li>
-                    <strong className="text-yellow-400">6mm² at 37.0A, 25m:</strong> 37.0 x 25 x 7.3
+                    <strong className="text-elec-yellow">6mm² at 37.0A, 25m:</strong> 37.0 x 25 x 7.3
                     mV/A/m = 6.75V = 2.9% — passes on volt drop, but check the derated
                     current-carrying capacity carefully at this size
                   </li>
@@ -483,7 +483,7 @@ export default function ShowerCableSizeCalculatorPage() {
         },
       ]}
       ctaHeading="Size shower circuits with confidence"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, voltage drop, and certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, voltage drop, and certification. 7-day free trial, cancel anytime."
       toolPath="/tools/shower-cable-size-calculator"
     />
   );

@@ -423,7 +423,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">On-Site Certification</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -455,7 +455,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Swindon electricians"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -481,7 +481,7 @@ export default function ElectricianSwindonPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Swindon: <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Swindon: <span className="text-elec-yellow">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Swindon's modern housing stock, large commercial sector, and growing demand for EV chargers and solar PV create excellent opportunities for registered electricians. Find NICEIC and NAPIT approved contractors in Swindon."
@@ -492,7 +492,7 @@ export default function ElectricianSwindonPage() {
       faqHeading="Frequently Asked Questions About Electricians in Swindon"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Swindon Electricians"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for electricians working across Swindon, Wiltshire, and the M4 corridor. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for electricians working across Swindon, Wiltshire, and the M4 corridor. 7-day free trial."
     />
   );
 }

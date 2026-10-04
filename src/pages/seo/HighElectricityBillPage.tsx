@@ -152,35 +152,35 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth leakage</strong> — current leaking to earth through deteriorated
                 insulation, wasting energy and indicating a potential safety hazard.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Faulty appliances</strong> — compressors, motors, or heating elements that
                 run continuously instead of cycling normally.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Immersion heater stuck on</strong> — a faulty thermostat keeping the heating
                 element running 24/7.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Storage heater problems</strong> — faulty charge controls, stuck dampers, or
                 broken sensors causing overcharging.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Meter issues</strong> — faulty meters, incorrect tariff settings, or crossed
                 meters in flats.
@@ -220,7 +220,7 @@ const sections = [
           <h4 className="font-bold text-white text-base mb-3">How to detect earth leakage</h4>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insulation resistance testing</strong> — test each circuit between L-E and
                 N-E with a 500V insulation resistance tester. A reading below 2 M-ohm (the minimum
@@ -230,7 +230,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Clamp meter around both L and N conductors</strong> — with the circuit
                 energised, clamp around both live and neutral conductors simultaneously. Any reading
@@ -239,7 +239,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD ramp test</strong> — a rising-current RCD test can measure the actual
                 trip current, revealing how much leakage the circuit is already carrying before the
@@ -271,7 +271,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fridge/freezer with a failing compressor:</strong> A healthy fridge
                 compressor runs for about 15 to 20 minutes per hour. A failing compressor that runs
@@ -280,7 +280,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Central heating pump stuck on:</strong> A circulating pump that runs 24/7
                 instead of only when the boiler is firing wastes approximately 60 to 80W
@@ -288,7 +288,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Towel rail with no timer:</strong> An electric towel rail drawing 150W
                 running 24/7 costs over £400 per year. Many are installed without a timer or
@@ -296,7 +296,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dehumidifier in a damp property:</strong> Running a dehumidifier
                 continuously in a property with an unresolved damp problem can cost £200 to £300 per
@@ -395,7 +395,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Faulty charge control sensor:</strong> The sensor that tells the heater how
                 much charge it needs (based on room temperature and expected demand) fails, causing
@@ -405,7 +405,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Stuck output damper:</strong> The damper (or flap) that controls how much
                 heat is released is stuck open, causing all the stored heat to be released in the
@@ -414,7 +414,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Charging on day-rate electricity:</strong> If the time switch or contactor
                 that switches the storage heater to off-peak supply is faulty, the heater may charge
@@ -422,7 +422,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Boost element running on day rate:</strong> Some storage heaters have a
                 convector boost element for daytime top-up. If this is left on or the switch is
@@ -452,7 +452,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Crossed meters in flats:</strong> In blocks of flats, it is not uncommon for
                 meters to be cross-connected during installation. You may be paying for your
@@ -461,7 +461,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Economy 7 meter misconfigured:</strong> If the off-peak and peak registers
                 are swapped, your cheap overnight usage is being charged at day rate, and vice
@@ -469,7 +469,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Estimated readings:</strong> If your supplier has been using estimated
                 readings (rather than actual meter readings), the estimates may be too high. A smart
@@ -477,7 +477,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CT meter with wrong ratio:</strong> In commercial or larger domestic
                 installations, current transformer (CT) meters can be programmed with the wrong CT
@@ -561,7 +561,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>LED lighting upgrade:</strong> Replacing incandescent or halogen lamps with
                 LED equivalents can cut lighting energy use by 80 to 90 per cent. Offer to install
@@ -569,7 +569,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Timer controls:</strong> Install timers on immersion heaters, towel rails,
                 and electric radiators. A programmable timer ensures these high-power loads only run
@@ -577,14 +577,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smart heating controls:</strong> Modern smart thermostats and zone controls
                 can significantly reduce heating costs by only heating rooms that are occupied.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tariff review:</strong> Ensure the customer is on the right tariff for their
                 consumption pattern. Economy 7 is only cost-effective if most heating is done
@@ -625,7 +625,7 @@ export default function HighElectricityBillPage() {
       heroTitle={
         <>
           High Electricity Bill:{' '}
-          <span className="text-yellow-400">Electrical Causes and How to Fix Them</span>
+          <span className="text-elec-yellow">Electrical Causes and How to Fix Them</span>
         </>
       }
       heroSubtitle="An unexpectedly high electricity bill is not always about leaving the lights on. Earth leakage, faulty thermostats, stuck immersion heaters, and storage heater problems can waste hundreds of pounds per year. This guide covers the electrical causes, how an electrician investigates, and the fixes."

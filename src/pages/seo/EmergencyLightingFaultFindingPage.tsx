@@ -187,7 +187,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Identifying a charging fault</strong> — measure the DC voltage across the
                 battery terminals with the mains supply connected. The voltage should be above the
@@ -197,7 +197,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Failed charging components</strong> — the charging circuit typically
                 consists of a voltage regulator IC, current-limiting resistors, and a diode. Failure
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mains supply interruption</strong> — if the maintained mains circuit to the
                 emergency lighting has been interrupted (tripped MCB, blown fuse, or isolation left
@@ -234,7 +234,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>LED module failure</strong> — a fitting that does not illuminate during a
                 test but has a satisfactory battery voltage is most likely suffering from LED module
@@ -243,7 +243,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maintained lamp vs. emergency lamp</strong> — some combined maintained and
                 emergency fittings have separate lamp circuits for the mains-powered maintained
@@ -253,7 +253,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Luminance and lux levels</strong> — BS 5266-1 specifies minimum illuminance
                 levels (typically 1 lux across the full width of escape routes, higher in high-risk
@@ -280,7 +280,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test inhibit left active</strong> — some systems allow a test inhibit to be
                 set (for example, to prevent an automatic test running during an event). An inhibit
@@ -289,7 +289,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Communication fault preventing remote test</strong> — on bus-connected
                 addressable systems, a wiring fault on the bus loop will prevent communication with
@@ -298,7 +298,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Manual test as alternative</strong> — if the automated test system is
                 faulty, the monthly and annual tests can still be performed manually by simulating
@@ -370,7 +370,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pre-test battery charge</strong> — all fittings must be fully charged before
                 the annual test begins. This requires at least 24 hours on mains supply following
@@ -379,7 +379,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test execution</strong> — simulate complete mains failure across the
                 installation and monitor all fittings throughout the full rated duration. Any
@@ -388,7 +388,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Post-test recharge and restrictions</strong> — after the annual test, the
                 batteries are fully discharged. The premises should not be occupied during the
@@ -398,7 +398,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Formal certificate</strong> — the annual test should be documented with a
                 formal test certificate signed by the competent person who carried out the test.
@@ -425,7 +425,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Lightbulb className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Emergency Lighting on the EICR</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -457,7 +457,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage emergency lighting testing with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for EICRs, emergency lighting test records, and BS 7671-compliant documentation. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for EICRs, emergency lighting test records, and BS 7671-compliant documentation. 7-day free trial."
           icon={Lightbulb}
         />
       </>
@@ -483,7 +483,7 @@ export default function EmergencyLightingFaultFindingPage() {
       heroTitle={
         <>
           Emergency Lighting Not Working:{' '}
-          <span className="text-yellow-400">Fault Finding and BS 5266 Compliance</span>
+          <span className="text-elec-yellow">Fault Finding and BS 5266 Compliance</span>
         </>
       }
       heroSubtitle="Your emergency lighting is failing tests, showing fault indicators, or failing to illuminate during a mains failure. This guide covers battery failure, charging circuit faults, lamp failure, test mode issues, and the monthly and annual BS 5266 testing requirements."
@@ -494,7 +494,7 @@ export default function EmergencyLightingFaultFindingPage() {
       faqHeading="Frequently Asked Questions About Emergency Lighting Faults"
       relatedPages={relatedPages}
       ctaHeading="Manage Emergency Lighting Testing with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EICRs, emergency lighting test records, and compliant documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for EICRs, emergency lighting test records, and compliant documentation. 7-day free trial, cancel anytime."
     />
   );
 }

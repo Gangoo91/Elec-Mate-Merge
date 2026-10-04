@@ -404,7 +404,7 @@ export default function CollegeTutorDashboardPage() {
       heroTitle={
         <>
           College Tutor Dashboard:{' '}
-          <span className="text-yellow-400">Manage Apprentice Progress</span>
+          <span className="text-elec-yellow">Manage Apprentice Progress</span>
         </>
       }
       heroSubtitle="Track every student's progress, assign courses, run assessments, and generate Ofsted-ready reports — all from one dashboard. Built for UK electrical training providers and FE colleges."

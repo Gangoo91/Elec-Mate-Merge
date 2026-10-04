@@ -180,7 +180,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Supply arrangement</strong> — a switched fused connection unit (FCU) with a
                 3A or 5A fuse is the standard arrangement. The FCU provides local isolation and
@@ -189,7 +189,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable</strong> — 1.5mm twin and earth is adequate for the low power draw.
                 Route the cable to the MVHR unit location, terminating at the FCU or double-pole
@@ -197,7 +197,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Location</strong> — the MVHR unit must be accessible for filter changes
                 (every 3 to 6 months) and servicing. Common locations include utility rooms, large
@@ -222,7 +222,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Switch type</strong> — momentary push-button (press once to activate boost,
                 it runs for a timed period then returns to normal) or latched rocker switch (on/off
@@ -231,7 +231,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wiring</strong> — most MVHR systems use a low-voltage signal input for the
                 boost switch — typically a volt-free contact (two wires from the switch to the
@@ -241,7 +241,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Locations</strong> — install boost switches in the kitchen, bathroom, and
                 any other room with an extract terminal. Position at standard light switch height
@@ -250,7 +250,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Humidity sensors</strong> — as an alternative (or addition) to manual boost
                 switches, humidity sensors can trigger boost automatically. These are wired to the
@@ -275,7 +275,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Automatic bypass</strong> — a motorised damper inside the MVHR unit diverts
                 the incoming air around the heat exchanger. The damper motor is controlled by the
@@ -285,7 +285,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Manual override</strong> — some systems include a manual bypass override
                 switch on the controller or a remote switch. This allows the occupant to force
@@ -293,7 +293,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Temperature sensors</strong> — if the MVHR requires external temperature
                 sensors for bypass control, these are typically NTC thermistors on 2-core cable,
@@ -319,7 +319,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Gravity drainage</strong> — the preferred option. A 22mm overflow pipe from
                 the MVHR condensate outlet to a nearby waste pipe or external drain. No electrical
@@ -327,7 +327,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Condensate pump</strong> — needed when the MVHR is below the nearest drain
                 point or in a loft space. A small pump (10 to 30W) lifts the condensate to a waste
@@ -336,7 +336,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Overflow alarm</strong> — some condensate pumps include an overflow sensor
                 that can signal the MVHR controller to shut down if the pump fails or the drain
@@ -413,7 +413,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minimum extract rates</strong> — kitchen: 13 litres per second (l/s) at
                 boost, bathroom: 8 l/s, utility room: 8 l/s, WC: 6 l/s. These are the minimum rates
@@ -421,7 +421,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Whole-house ventilation rate</strong> — the continuous background
                 ventilation rate (trickle speed) must provide at least 0.3 l/s per m2 of internal
@@ -429,7 +429,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Specific Fan Power (SFP)</strong> — the MVHR must achieve a Specific Fan
                 Power of no more than 1.5 W/(l/s) for the whole system. This limits the total
@@ -437,7 +437,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commissioning</strong> — the system must be commissioned and the results
                 recorded. The commissioning data is submitted to Building Control as evidence of
@@ -464,7 +464,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical testing</strong> — continuity of protective conductors,
                 insulation resistance, polarity, earth fault loop impedance, and RCD operation on
@@ -473,7 +473,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Functional testing</strong> — verify the MVHR operates on all speed settings
                 (trickle, normal, boost). Test each boost switch. Verify the summer bypass activates
@@ -482,7 +482,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Airflow commissioning</strong> — measure the airflow at each supply and
                 extract terminal using a balometer or anemometer. Adjust duct dampers and fan speed
@@ -491,7 +491,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Documentation</strong> — the commissioning record, EIC, and MVHR system
                 specifications are submitted to Building Control as part of the completion
@@ -524,7 +524,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -565,7 +565,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify MVHR electrical work"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
           icon={Fan}
         />
       </>
@@ -591,7 +591,7 @@ export default function MVHRElectricalInstallationPage() {
       heroTitle={
         <>
           MVHR Electrical Installation:{' '}
-          <span className="text-yellow-400">Ventilation Wiring Guide for UK Electricians</span>
+          <span className="text-elec-yellow">Ventilation Wiring Guide for UK Electricians</span>
         </>
       }
       heroSubtitle="Mechanical Ventilation with Heat Recovery is becoming standard in energy-efficient homes. This guide covers the dedicated circuit, boost switch wiring, summer bypass, condensate pump, duct heater, Building Regs Part F compliance, and commissioning."
@@ -602,7 +602,7 @@ export default function MVHRElectricalInstallationPage() {
       faqHeading="Frequently Asked Questions About MVHR Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Certify MVHR Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for MVHR installations. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for MVHR installations. 7-day free trial, cancel anytime."
     />
   );
 }

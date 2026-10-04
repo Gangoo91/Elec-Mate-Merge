@@ -45,7 +45,7 @@ export default function LandlordElectricalSafetyPage() {
         <>
           Landlord Electrical Safety UK
           <br />
-          <span className="text-yellow-400">Legal Requirements 2026</span>
+          <span className="text-elec-yellow">Legal Requirements 2026</span>
         </>
       }
       heroSubtitle="Landlord electrical safety is now a strict legal requirement in England with fines of up to £30,000 per breach. This guide covers every legal obligation — EICR requirements, timelines, penalties, remedial work deadlines, HMO rules, Scotland and Wales differences, and what electricians doing landlord work need to know."
@@ -83,9 +83,9 @@ export default function LandlordElectricalSafetyPage() {
                 </h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Have the installation inspected and tested
                       </strong>{' '}
                       by a qualified and competent person before the tenancy begins and at intervals
@@ -94,17 +94,17 @@ export default function LandlordElectricalSafetyPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Obtain a report</strong> (EICR —
+                      <strong className="text-elec-yellow">Obtain a report</strong> (EICR —
                       Electrical Installation Condition Report) from the qualified person confirming
                       the results of the inspection and testing.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Supply a copy of the report to the tenant
                       </strong>{' '}
                       within 28 days of the inspection (for existing tenants) or before occupancy
@@ -112,18 +112,18 @@ export default function LandlordElectricalSafetyPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Supply a copy to the local authority
                       </strong>{' '}
                       within 7 days of receiving a written request from them.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Complete remedial work</strong> for any{' '}
+                      <strong className="text-elec-yellow">Complete remedial work</strong> for any{' '}
                       <SEOInternalLink href="/guides/eicr-observation-codes-explained">
                         C1 (Danger Present) or C2 (Potentially Dangerous) observations
                       </SEOInternalLink>{' '}
@@ -132,17 +132,17 @@ export default function LandlordElectricalSafetyPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Obtain written confirmation</strong> from
+                      <strong className="text-elec-yellow">Obtain written confirmation</strong> from
                       the qualified person that the remedial work has been completed and meets the
                       required standard.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Supply confirmation to the tenant</strong>{' '}
+                      <strong className="text-elec-yellow">Supply confirmation to the tenant</strong>{' '}
                       within 28 days and to the local authority within 28 days of the remedial work
                       being completed.
                     </span>
@@ -171,10 +171,10 @@ export default function LandlordElectricalSafetyPage() {
                 The timeline works as follows:
               </p>
               <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-6">
-                <h3 className="font-bold text-yellow-400 text-lg mb-3">EICR Timeline</h3>
+                <h3 className="font-bold text-elec-yellow text-lg mb-3">EICR Timeline</h3>
                 <div className="space-y-4">
                   <div className="flex gap-4">
-                    <div className="w-32 shrink-0 font-bold text-yellow-400">Before tenancy</div>
+                    <div className="w-32 shrink-0 font-bold text-elec-yellow">Before tenancy</div>
                     <div className="text-white text-sm leading-relaxed">
                       A valid EICR must be in place before the tenant moves in. If no EICR exists
                       (first letting or previous report has expired), the landlord must commission
@@ -183,7 +183,7 @@ export default function LandlordElectricalSafetyPage() {
                     </div>
                   </div>
                   <div className="flex gap-4">
-                    <div className="w-32 shrink-0 font-bold text-yellow-400">Every 5 years</div>
+                    <div className="w-32 shrink-0 font-bold text-elec-yellow">Every 5 years</div>
                     <div className="text-white text-sm leading-relaxed">
                       The installation must be re-inspected and tested at intervals of no more than
                       5 years from the date of the previous report. If the inspector recommends a
@@ -194,7 +194,7 @@ export default function LandlordElectricalSafetyPage() {
                     </div>
                   </div>
                   <div className="flex gap-4">
-                    <div className="w-32 shrink-0 font-bold text-yellow-400">28 days remedial</div>
+                    <div className="w-32 shrink-0 font-bold text-elec-yellow">28 days remedial</div>
                     <div className="text-white text-sm leading-relaxed">
                       If the EICR identifies C1 or C2 observations, the landlord must ensure all
                       remedial work is completed within 28 days of the inspection. For C1 items
@@ -204,7 +204,7 @@ export default function LandlordElectricalSafetyPage() {
                     </div>
                   </div>
                   <div className="flex gap-4">
-                    <div className="w-32 shrink-0 font-bold text-yellow-400">Confirmation</div>
+                    <div className="w-32 shrink-0 font-bold text-elec-yellow">Confirmation</div>
                     <div className="text-white text-sm leading-relaxed">
                       After remedial work is completed, the qualified person must provide written
                       confirmation that the work meets the required standard. This confirmation must
@@ -246,7 +246,7 @@ export default function LandlordElectricalSafetyPage() {
                       <h4 className="font-bold text-white">First offence</h4>
                       <p className="text-white text-sm">Financial penalty</p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-lg">Up to £30,000</span>
+                    <span className="font-bold text-elec-yellow text-lg">Up to £30,000</span>
                   </div>
                   <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
                     <div>
@@ -255,14 +255,14 @@ export default function LandlordElectricalSafetyPage() {
                         Each property, each failure is a separate breach
                       </p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-lg">Up to £30,000</span>
+                    <span className="font-bold text-elec-yellow text-lg">Up to £30,000</span>
                   </div>
                   <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
                     <div>
                       <h4 className="font-bold text-white">Repeated non-compliance</h4>
                       <p className="text-white text-sm">Persistent failure after penalty notice</p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-lg">
+                    <span className="font-bold text-elec-yellow text-lg">
                       Criminal prosecution possible
                     </span>
                   </div>
@@ -302,7 +302,7 @@ export default function LandlordElectricalSafetyPage() {
               </p>
               <div className="space-y-4 my-4">
                 <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                     1
                   </div>
                   <div>
@@ -318,7 +318,7 @@ export default function LandlordElectricalSafetyPage() {
                   </div>
                 </div>
                 <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                     2
                   </div>
                   <div>
@@ -333,7 +333,7 @@ export default function LandlordElectricalSafetyPage() {
                   </div>
                 </div>
                 <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                     3
                   </div>
                   <div>
@@ -349,7 +349,7 @@ export default function LandlordElectricalSafetyPage() {
                   </div>
                 </div>
                 <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                     4
                   </div>
                   <div>
@@ -366,7 +366,7 @@ export default function LandlordElectricalSafetyPage() {
                   </div>
                 </div>
                 <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                     5
                   </div>
                   <div>
@@ -398,35 +398,35 @@ export default function LandlordElectricalSafetyPage() {
               <p>Common defects found during landlord EICRs include:</p>
               <ul className="space-y-3 my-4">
                 <li className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
-                    <strong className="text-yellow-400">Lack of RCD protection</strong> — Older
+                    <strong className="text-elec-yellow">Lack of RCD protection</strong> — Older
                     consumer units with no RCD protection on socket outlet circuits. This is a C2
                     observation because the absence of RCD protection on circuits that BS 7671 now
                     requires to be RCD-protected is potentially dangerous.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
-                    <strong className="text-yellow-400">Deteriorated wiring</strong> — Perished
+                    <strong className="text-elec-yellow">Deteriorated wiring</strong> — Perished
                     cable insulation, damaged cables from DIY work or building alterations,
                     overheated connections. May be C1 (exposed live conductors) or C2 (insulation
                     deteriorating but not yet exposed).
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
-                    <strong className="text-yellow-400">Inadequate earthing</strong> — Missing or
+                    <strong className="text-elec-yellow">Inadequate earthing</strong> — Missing or
                     ineffective main bonding, absent supplementary bonding in bathrooms, high earth
                     fault loop impedance values exceeding BS 7671 limits.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span className="text-white">
-                    <strong className="text-yellow-400">Unsafe additions</strong> — DIY electrical
+                    <strong className="text-elec-yellow">Unsafe additions</strong> — DIY electrical
                     work by previous tenants or unqualified workers — non-standard connections,
                     incorrect cable sizes, missing protection, dangerous accessory installations.
                   </span>
@@ -467,18 +467,18 @@ export default function LandlordElectricalSafetyPage() {
                 <h3 className="font-bold text-white text-lg mb-4">Additional HMO Requirements</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">More frequent inspections</strong> — Some
+                      <strong className="text-elec-yellow">More frequent inspections</strong> — Some
                       local authorities require EICRs every 3 years for HMOs rather than the
                       standard 5 years. Check the specific licensing conditions for HMOs in your
                       local authority area.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Fire detection</strong> — HMOs require a
+                      <strong className="text-elec-yellow">Fire detection</strong> — HMOs require a
                       suitable fire detection and alarm system. For licensable HMOs (those with 5 or
                       more occupants from 2 or more households), a Grade A LD2 fire alarm system is
                       typically required (mains-powered, interlinked smoke detectors in all
@@ -486,26 +486,26 @@ export default function LandlordElectricalSafetyPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Emergency lighting</strong> — Some HMOs
+                      <strong className="text-elec-yellow">Emergency lighting</strong> — Some HMOs
                       require emergency lighting in common areas and escape routes, depending on the
                       building size and local authority requirements.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Individual metering</strong> — Some local
+                      <strong className="text-elec-yellow">Individual metering</strong> — Some local
                       authorities require individual electricity metering for each letting unit,
                       with the associated consumer units and wiring for each unit forming a separate
                       installation that requires its own EICR.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">AFDD recommendation</strong> — BS 7671
+                      <strong className="text-elec-yellow">AFDD recommendation</strong> — BS 7671
                       Regulation 421.1 recommends{' '}
                       <SEOInternalLink href="/guides/afdd-arc-fault-detection">
                         AFDDs
@@ -536,7 +536,7 @@ export default function LandlordElectricalSafetyPage() {
               </p>
               <div className="grid sm:grid-cols-2 gap-4 my-6">
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-3">Scotland</h3>
+                  <h3 className="font-bold text-elec-yellow text-lg mb-3">Scotland</h3>
                   <p className="text-white text-sm leading-relaxed mb-3">
                     Scotland has had electrical safety requirements for private rented properties
                     since December 2015 under the Housing (Scotland) Act 2006 and the Repairing
@@ -544,19 +544,19 @@ export default function LandlordElectricalSafetyPage() {
                   </p>
                   <ul className="space-y-2 text-white text-sm">
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>EICR required before the tenancy starts</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>Inspections every 5 years</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>Remedial work must be completed</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>Copy provided to tenant</span>
                     </li>
                   </ul>
@@ -575,21 +575,21 @@ export default function LandlordElectricalSafetyPage() {
                   </p>
                   <ul className="space-y-2 text-white text-sm">
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>
                         The Renting Homes (Wales) Act 2016 — which requires landlords to ensure the
                         property is fit for human habitation, including electrical safety
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>
                         The Housing Act 2004 — HHSRS (Housing Health and Safety Rating System)
                         includes electrical hazards
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>
                         HMO licensing conditions — which may require EICRs for licensed HMOs
                       </span>
@@ -619,9 +619,9 @@ export default function LandlordElectricalSafetyPage() {
                 <h3 className="font-bold text-white text-lg mb-4">What to Check</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Competent person scheme registration
                       </strong>{' '}
                       — NICEIC, NAPIT, ELECSA, or BRE. Verify online on the scheme's website — do
@@ -630,9 +630,9 @@ export default function LandlordElectricalSafetyPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Inspection and testing qualification
                       </strong>{' '}
                       — City & Guilds 2391 (or the older 2394/2395) or equivalent qualification in
@@ -641,17 +641,17 @@ export default function LandlordElectricalSafetyPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Public liability insurance</strong> —
+                      <strong className="text-elec-yellow">Public liability insurance</strong> —
                       Minimum £2 million cover, though £5 million is standard. Ask for a copy of the
                       current certificate of insurance.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Experience with landlord work</strong> —
+                      <strong className="text-elec-yellow">Experience with landlord work</strong> —
                       An electrician experienced in landlord EICRs understands the specific
                       regulatory requirements, the 28-day remedial timeline, and the documentation
                       that landlords need to satisfy the local authority.
@@ -780,7 +780,7 @@ export default function LandlordElectricalSafetyPage() {
         },
       ]}
       ctaHeading="Win More Landlord Work With Elec-Mate"
-      ctaSubheading="EICR forms with auto-unsatisfactory flagging, remedial estimator, certificate and invoice sending from site, and property tracking. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="EICR forms with auto-unsatisfactory flagging, remedial estimator, certificate and invoice sending from site, and property tracking. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

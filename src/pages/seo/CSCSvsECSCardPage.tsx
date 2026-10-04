@@ -167,28 +167,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Managed by:</strong> CSCS Ltd, supported by CITB (Construction Industry
                 Training Board) and the major construction federations.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Health and safety test:</strong> CITB Health, Safety and Environment Test
                 (general construction focus, 50 questions, ~80% pass mark).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Card types:</strong> Labourer (green), Skilled Worker (blue), Advanced Craft
                 (gold), Supervisor (gold), Manager (black), and others.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Validity:</strong> 5 years from date of issue.
               </span>
@@ -428,14 +428,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>If you are an electrician:</strong> Get the ECS card. It covers all sites
                 and shows your specific electrical qualifications. This is the only card you need.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>If you are a general builder who does some electrical work:</strong> You may
                 need a CSCS card for your primary trade and an ECS card for your electrical work —
@@ -444,7 +444,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>If you are an electrical apprentice:</strong> Apply for the ECS Apprentice
                 card. This is your first ECS card and provides site access during your
@@ -452,7 +452,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>If you only do domestic work:</strong> Neither card is legally required, but
                 the ECS card demonstrates professionalism and may become important if you take on
@@ -500,7 +500,7 @@ export default function CSCSvsECSCardPage() {
       badgeIcon={Scale}
       heroTitle={
         <>
-          CSCS vs ECS Card: <span className="text-yellow-400">Which Card Do You Need?</span>
+          CSCS vs ECS Card: <span className="text-elec-yellow">Which Card Do You Need?</span>
         </>
       }
       heroSubtitle="Electricians hear about both CSCS and ECS cards — but which one do you actually need? This guide explains the difference, site acceptance, costs, and the clear answer for electricians."
@@ -511,7 +511,7 @@ export default function CSCSvsECSCardPage() {
       faqHeading="Frequently Asked Questions About CSCS and ECS Cards"
       relatedPages={relatedPages}
       ctaHeading="Track Your Cards and Qualifications"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for qualification tracking, professional certificates, and career development. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for qualification tracking, professional certificates, and career development. 7-day free trial, cancel anytime."
     />
   );
 }

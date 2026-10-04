@@ -376,19 +376,19 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">How Self-Certification Works</h3>
             <ul className="space-y-2 text-white text-sm">
               <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-yellow-400 shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-elec-yellow shrink-0 mt-0.5" />
                 <span>Complete the installation to BS 7671 standards</span>
               </li>
               <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-yellow-400 shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-elec-yellow shrink-0 mt-0.5" />
                 <span>Test the installation and complete an EIC or Minor Works Certificate</span>
               </li>
               <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-yellow-400 shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-elec-yellow shrink-0 mt-0.5" />
                 <span>Issue the homeowner with a Part P self-certification certificate</span>
               </li>
               <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-yellow-400 shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-elec-yellow shrink-0 mt-0.5" />
                 <span>The scheme notifies the local authority within 30 days</span>
               </li>
             </ul>
@@ -422,7 +422,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-6 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong>Building Notice</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
@@ -437,7 +437,7 @@ const sections = [
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong>Full Plans Application</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
@@ -563,7 +563,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EIC Certificate App</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -631,7 +631,7 @@ export default function PartPBuildingRegulationsGuidePage() {
       heroTitle={
         <>
           Part P Building Regulations:{' '}
-          <span className="text-yellow-400">Electrical Work in Dwellings</span>
+          <span className="text-elec-yellow">Electrical Work in Dwellings</span>
         </>
       }
       heroSubtitle="Part P requires that notifiable electrical work in dwellings is either self-certified by a competent person scheme member or notified to building control. This guide covers what is notifiable, how self-certification works, and the consequences of getting it wrong."
@@ -642,7 +642,7 @@ export default function PartPBuildingRegulationsGuidePage() {
       faqHeading="Frequently Asked Questions About Part P Building Regulations"
       relatedPages={relatedPages}
       ctaHeading="Issue Part P Certificates On Site"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to issue EICs and Minor Works Certificates on site. AI board scanning, voice test entry, instant PDF — Part P documentation done before you leave. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to issue EICs and Minor Works Certificates on site. AI board scanning, voice test entry, instant PDF — Part P documentation done before you leave. 7-day free trial."
     />
   );
 }

@@ -46,7 +46,7 @@ export default function LEDLightingGuidePage() {
         <>
           LED Lighting Guide
           <br />
-          <span className="text-yellow-400">Choosing, Installing & Dimming</span>
+          <span className="text-elec-yellow">Choosing, Installing & Dimming</span>
         </>
       }
       heroSubtitle="LED lighting has transformed the electrical industry, but it has also introduced new challenges — dimming compatibility, driver selection, colour temperature consistency, and transformer loading. This guide covers everything an electrician needs to know about LED technology, from selecting the right lamp to troubleshooting flickering and buzzing."
@@ -110,7 +110,7 @@ export default function LEDLightingGuidePage() {
                       <h4 className="font-bold text-white">LED</h4>
                       <p className="text-white text-sm">8-10W for 800 lumens</p>
                     </div>
-                    <span className="font-bold text-yellow-400 text-lg">25,000+ hrs</span>
+                    <span className="font-bold text-elec-yellow text-lg">25,000+ hrs</span>
                   </div>
                 </div>
               </div>
@@ -138,7 +138,7 @@ export default function LEDLightingGuidePage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Palette className="w-5 h-5 text-yellow-400" />
+                    <Palette className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Warm White (2700K - 3000K)</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -151,7 +151,7 @@ export default function LEDLightingGuidePage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Palette className="w-5 h-5 text-yellow-400" />
+                    <Palette className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Cool White (4000K - 4500K)</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -163,7 +163,7 @@ export default function LEDLightingGuidePage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Sun className="w-5 h-5 text-yellow-400" />
+                    <Sun className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Daylight (5000K - 6500K)</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -207,23 +207,23 @@ export default function LEDLightingGuidePage() {
                 <div className="space-y-3">
                   <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
                     <span className="text-white font-bold">25W incandescent</span>
-                    <span className="text-yellow-400 font-bold">250 lumens</span>
+                    <span className="text-elec-yellow font-bold">250 lumens</span>
                   </div>
                   <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
                     <span className="text-white font-bold">40W incandescent</span>
-                    <span className="text-yellow-400 font-bold">470 lumens</span>
+                    <span className="text-elec-yellow font-bold">470 lumens</span>
                   </div>
                   <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
                     <span className="text-white font-bold">60W incandescent</span>
-                    <span className="text-yellow-400 font-bold">800 lumens</span>
+                    <span className="text-elec-yellow font-bold">800 lumens</span>
                   </div>
                   <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
                     <span className="text-white font-bold">100W incandescent</span>
-                    <span className="text-yellow-400 font-bold">1,500 lumens</span>
+                    <span className="text-elec-yellow font-bold">1,500 lumens</span>
                   </div>
                   <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
                     <span className="text-white font-bold">150W incandescent</span>
-                    <span className="text-yellow-400 font-bold">2,600 lumens</span>
+                    <span className="text-elec-yellow font-bold">2,600 lumens</span>
                   </div>
                 </div>
               </div>
@@ -255,7 +255,7 @@ export default function LEDLightingGuidePage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Zap className="w-5 h-5 text-yellow-400" />
+                    <Zap className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Leading-Edge Dimmers (TRIAC)</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -270,7 +270,7 @@ export default function LEDLightingGuidePage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Zap className="w-5 h-5 text-yellow-400" />
+                    <Zap className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Trailing-Edge Dimmers</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -283,7 +283,7 @@ export default function LEDLightingGuidePage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Gauge className="w-5 h-5 text-yellow-400" />
+                    <Gauge className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">DALI and 0-10V Dimming</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -327,26 +327,26 @@ export default function LEDLightingGuidePage() {
                 </h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Check the minimum load</strong> — Read the
+                      <strong className="text-elec-yellow">Check the minimum load</strong> — Read the
                       transformer's data plate. If the minimum VA rating is higher than the total
                       LED load, the transformer must be replaced with an LED-compatible driver.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Use LED-specific drivers</strong> — LED
+                      <strong className="text-elec-yellow">Use LED-specific drivers</strong> — LED
                       drivers are designed for the low-power, constant-current or constant-voltage
                       requirements of LED lamps. They have no minimum load issue and provide stable
                       output.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Consider mains-voltage LEDs</strong> — An
+                      <strong className="text-elec-yellow">Consider mains-voltage LEDs</strong> — An
                       alternative to replacing transformers is to use mains-voltage (GU10) LED
                       downlights instead of 12V MR16 lamps. This eliminates the transformer
                       entirely. New cable may be needed if the existing circuit runs to the
@@ -354,9 +354,9 @@ export default function LEDLightingGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Magnetic vs electronic</strong> — Old
+                      <strong className="text-elec-yellow">Magnetic vs electronic</strong> — Old
                       wound magnetic transformers (heavy, humming) are generally more tolerant of
                       low LED loads than electronic transformers. But both types should be tested
                       with the actual LED load before declaring the retrofit complete.
@@ -380,7 +380,7 @@ export default function LEDLightingGuidePage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Flickering</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -394,7 +394,7 @@ export default function LEDLightingGuidePage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Buzzing or Humming</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -408,7 +408,7 @@ export default function LEDLightingGuidePage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Ghosting (Faint Glow When Off)</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -423,7 +423,7 @@ export default function LEDLightingGuidePage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Colour Inconsistency</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -451,18 +451,18 @@ export default function LEDLightingGuidePage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Thermal management</strong> — LEDs are
+                      <strong className="text-elec-yellow">Thermal management</strong> — LEDs are
                       sensitive to heat. Recessed downlights in insulated ceilings must be
                       fire-rated and IC-rated (insulation contact) to prevent overheating. Never
                       cover LED drivers with insulation unless the fitting is rated for it.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Fire-rated downlights</strong> — BS 7671
+                      <strong className="text-elec-yellow">Fire-rated downlights</strong> — BS 7671
                       and Building Regulations require fire-rated downlights where they penetrate a
                       fire-resisting ceiling. The fire rating must match or exceed the ceiling's
                       fire resistance — typically 30 or 60 minutes. Non-fire-rated LED downlights in
@@ -470,9 +470,9 @@ export default function LEDLightingGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">IP ratings for bathrooms</strong> — LED
+                      <strong className="text-elec-yellow">IP ratings for bathrooms</strong> — LED
                       fittings in bathrooms must have the correct IP rating for their zone. Zone 0
                       requires IPX7, Zone 1 requires IPX4 minimum, and Zone 2 requires IPX4 if there
                       is a likelihood of water jets. See{' '}
@@ -483,9 +483,9 @@ export default function LEDLightingGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Cable derating</strong> — While LED
+                      <strong className="text-elec-yellow">Cable derating</strong> — While LED
                       circuits draw less current, the{' '}
                       <SEOInternalLink href="/guides/cable-sizing-guide-bs-7671">
                         cable sizing
@@ -495,9 +495,9 @@ export default function LEDLightingGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Emergency lighting</strong> — In
+                      <strong className="text-elec-yellow">Emergency lighting</strong> — In
                       commercial installations, LED{' '}
                       <SEOInternalLink href="/emergency-lighting-certificate">
                         emergency lighting
@@ -531,7 +531,7 @@ export default function LEDLightingGuidePage() {
               <p>Key considerations for commercial LED projects include:</p>
               <div className="space-y-3 mt-4">
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     1
                   </span>
                   <div>
@@ -545,7 +545,7 @@ export default function LEDLightingGuidePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     2
                   </span>
                   <div>
@@ -559,7 +559,7 @@ export default function LEDLightingGuidePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     3
                   </span>
                   <div>

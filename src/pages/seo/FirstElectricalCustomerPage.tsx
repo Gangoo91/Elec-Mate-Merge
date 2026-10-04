@@ -155,7 +155,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Public liability insurance</strong> — minimum £2 million, preferably £5
                 million. This is non-negotiable. Most competent person schemes require it as a
@@ -165,7 +165,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person scheme registration</strong> — NICEIC, NAPIT, ELECSA, or
                 equivalent. This allows you to self-certify your own electrical work under Part P of
@@ -174,7 +174,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Calibrated test instruments</strong> — a multifunction tester (Megger MFT,
                 Fluke 1664, or equivalent), a socket tester, a voltage indicator (GS38 compliant),
@@ -184,7 +184,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HMRC registration</strong> — register as self-employed with HMRC within 3
                 months of starting your business. You will need to file a Self Assessment tax return
@@ -195,7 +195,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial vehicle insurance</strong> — your personal car insurance does not
                 cover you when driving to jobs. You need a commercial vehicle policy (or hire and
@@ -204,7 +204,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Business bank account</strong> — keep your business and personal finances
                 separate from day one. It makes bookkeeping simpler, looks more professional, and
@@ -288,7 +288,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Google reviews</strong> — ask every customer for a Google review within an
                 hour of completing the job. Send a direct link by text message. Make it as easy as
@@ -297,7 +297,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Social media posts</strong> — post photos of completed work on Facebook and
                 Instagram. Tag the location. Use relevant hashtags (#electrician #yourtownname
@@ -306,7 +306,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Professional certificates</strong> — issue a proper Electrical Installation
                 Certificate or Minor Works Certificate for every job that requires one. A
@@ -316,7 +316,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Branded workwear and van</strong> — you do not need a full vehicle wrap on
                 day one, but magnetic signs with your business name, phone number, and "Part P
@@ -454,7 +454,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Set up immediately</strong> — create your Google Business Profile before
                 your first job. Choose the correct category ("Electrician"), add your service area,
@@ -462,7 +462,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Add photos weekly</strong> — upload photos of completed work, your van, your
                 tools, and yourself. Google favours profiles with regular photo uploads. Geo-tagged
@@ -470,7 +470,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Collect reviews relentlessly</strong> — the number and recency of your
                 Google reviews are the biggest factor in your Map Pack ranking. Ask every customer.
@@ -478,7 +478,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Post updates</strong> — Google Business Profile has a "Posts" feature where
                 you can share updates, offers, and photos. Use it monthly. It signals to Google that
@@ -503,14 +503,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <MessageSquare className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MessageSquare className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Leave business cards</strong> — leave two or three business cards with every
                 customer. One for them, and extras to pass on. Simple, but effective.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MessageSquare className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MessageSquare className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Build relationships with other trades</strong> — plumbers, builders, kitchen
                 fitters, and estate agents all need electricians they can recommend. Offer the same
@@ -519,7 +519,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MessageSquare className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MessageSquare className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Follow up after completion</strong> — send a text a week after the job: "Hi
                 [name], just checking everything is working well after the [job]. Any questions,
@@ -528,7 +528,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MessageSquare className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MessageSquare className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Join local Facebook groups</strong> — most areas have community Facebook
                 groups where people ask for trade recommendations. Being active in these groups
@@ -554,7 +554,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <PoundSterling className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -604,7 +604,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Start your electrical business with professional tools"
-          description="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Look professional from day one. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for quoting, certification, and job management. Look professional from day one. 7-day free trial."
           icon={Briefcase}
         />
       </>
@@ -630,7 +630,7 @@ export default function FirstElectricalCustomerPage() {
       heroTitle={
         <>
           How to Get Your First Electrical Customer:{' '}
-          <span className="text-yellow-400">A Practical Guide for New Businesses</span>
+          <span className="text-elec-yellow">A Practical Guide for New Businesses</span>
         </>
       }
       heroSubtitle="You have the qualifications, the tools, and the ambition. Now you need customers. This guide covers everything from pre-trading essentials to building a sustainable pipeline of work through lead platforms, Google, and word of mouth."
@@ -641,7 +641,7 @@ export default function FirstElectricalCustomerPage() {
       faqHeading="Frequently Asked Questions About Starting an Electrical Business"
       relatedPages={relatedPages}
       ctaHeading="Launch Your Electrical Business with Professional Tools"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and business management. Look established from day one. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for quoting, certification, and business management. Look established from day one. 7-day free trial, cancel anytime."
     />
   );
 }

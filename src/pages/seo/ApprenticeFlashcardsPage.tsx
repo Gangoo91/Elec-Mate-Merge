@@ -184,7 +184,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Front of card: a question or prompt.</strong> For example: "What is the
                 minimum insulation resistance for a circuit tested at 500V DC?" or "What does
@@ -192,7 +192,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>You attempt to answer before revealing the back.</strong> Think about it.
                 Say it out loud or write it down. Struggle with it. The struggle is where the
@@ -200,7 +200,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Back of card: the correct answer.</strong> For example: "1 M-ohm minimum (BS
                 7671 Table 64)" or "RCD protection with a rated residual operating current not
@@ -208,7 +208,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>You rate your confidence.</strong> Did you get it right easily? Mark it
                 "easy." Did you struggle but eventually get there? Mark it "good." Did you get it
@@ -284,7 +284,7 @@ const sections = [
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h3 className="font-bold text-white text-lg mb-3 flex items-center gap-2">
-              <BookOpen className="w-5 h-5 text-yellow-400" />
+              <BookOpen className="w-5 h-5 text-elec-yellow" />
               BS 7671 Regulations
             </h3>
             <p className="text-white text-sm leading-relaxed">
@@ -299,7 +299,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h3 className="font-bold text-white text-lg mb-3 flex items-center gap-2">
-              <Zap className="w-5 h-5 text-yellow-400" />
+              <Zap className="w-5 h-5 text-elec-yellow" />
               Circuit Theory and Calculations
             </h3>
             <p className="text-white text-sm leading-relaxed">
@@ -310,7 +310,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h3 className="font-bold text-white text-lg mb-3 flex items-center gap-2">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow" />
               Testing Procedures
             </h3>
             <p className="text-white text-sm leading-relaxed">
@@ -321,7 +321,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h3 className="font-bold text-white text-lg mb-3 flex items-center gap-2">
-              <Layers className="w-5 h-5 text-yellow-400" />
+              <Layers className="w-5 h-5 text-elec-yellow" />
               Earthing and Protection
             </h3>
             <p className="text-white text-sm leading-relaxed">
@@ -352,7 +352,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Layers className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Pick a Deck or Study All</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -468,14 +468,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>AM2 Simulator</strong> — timed practice scenarios for the practical
                 assessment, including installation planning, testing sequences, and fault diagnosis.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Structured Courses</strong> — 50+ training modules covering Level 2, Level
                 3, 18th Edition, and inspection and testing — presented in clear, bite-sized
@@ -483,14 +483,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Brain className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>AI Revision Assistant</strong> — ask any question about electrical theory,
                 BS 7671 regulations, or exam topics and get a clear, regulation-referenced answer.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Portfolio Builder</strong> — document your on-site work experience and build
                 your apprenticeship portfolio with guided templates.
@@ -526,7 +526,7 @@ export default function ApprenticeFlashcardsPage() {
       heroTitle={
         <>
           Apprentice Flashcards:{' '}
-          <span className="text-yellow-400">The Smartest Way to Revise for Electrical Exams</span>
+          <span className="text-elec-yellow">The Smartest Way to Revise for Electrical Exams</span>
         </>
       }
       heroSubtitle="Active recall and spaced repetition are proven to be 2 to 3 times more effective than re-reading your notes. Elec-Mate flashcards cover every key topic for Level 2 and Level 3 apprentices — BS 7671, testing, earthing, protection, calculations — and work offline so you can study anywhere."

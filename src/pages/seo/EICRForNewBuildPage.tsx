@@ -192,7 +192,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Who produces it</strong> — an EIC is produced by the contractor who
                 installed the wiring. An EICR is produced by an independent inspector who inspects
@@ -202,7 +202,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What it tests</strong> — the EIC tests the installation at completion:
                 insulation resistance, continuity, polarity, earth fault loop impedance, and RCD
@@ -212,7 +212,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Observation coding</strong> — the EIC does not use C1/C2/C3/FI observation
                 codes. These codes are specific to the EICR. The EIC records departures from BS 7671
@@ -223,7 +223,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Frequency</strong> — an EIC is issued once, at completion. An EICR is issued
                 periodically — typically every 5 years for rental properties, every 10 years for
@@ -247,7 +247,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rental property — at first change of tenancy</strong> — under the Electrical
                 Safety Standards Regulations 2020, an EICR must be obtained before a new tenancy
@@ -258,7 +258,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Owner-occupied — approximately 10 years</strong> — there is no legal
                 requirement for owner-occupiers to obtain an EICR at a specific interval. The
@@ -268,7 +268,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>On sale of the property</strong> — although there is no legal requirement to
                 produce an EICR when selling, buyers increasingly request one as part of their due
@@ -304,7 +304,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit breaker and cable mismatch</strong> — the overcurrent protective
                 device (circuit breaker) must be correctly matched to the cross-sectional area and
@@ -313,7 +313,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Unlabelled or incorrectly labelled circuits</strong> — consumer units in new
                 builds sometimes have circuit labels that do not match the actual circuits
@@ -322,7 +322,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Missing or incorrect bonding</strong> — supplementary bonding in bathrooms
                 and main protective bonding to services is sometimes omitted or undersized. This is
@@ -331,7 +331,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smoke and carbon monoxide detector issues</strong> — mains-wired interlinked
                 smoke detectors are required in new builds under Building Regulations Approved
@@ -340,7 +340,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charging point and solar PV wiring</strong> — where developers have
                 installed EV charging points or solar PV as standard, the associated wiring and
@@ -422,7 +422,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Selling the property</strong> — buyers' solicitors and surveyors
                 increasingly request an EICR as part of due diligence, particularly for properties
@@ -430,7 +430,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Changing the property's use</strong> — converting an owner-occupied new
                 build to a rental property triggers the 2020 Regulations. An EICR is required before
@@ -438,7 +438,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Major electrical additions</strong> — adding solar PV, an EV charging point,
                 or a home extension creates new circuits that should be tested. Whilst the new
@@ -447,7 +447,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>After 10 years</strong> — as a matter of good practice, aim for the first
                 EICR around the 10-year mark even without any specific trigger.
@@ -472,7 +472,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Produce EICR and EIC Documentation on Site
@@ -493,7 +493,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Produce EICR and EIC reports on site with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site certificate completion. EICR, EIC…"
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site certificate completion. EICR, EIC…"
           icon={FileCheck2}
         />
       </>
@@ -519,7 +519,7 @@ export default function EICRForNewBuildPage() {
       heroTitle={
         <>
           EICR for New Build Properties:{' '}
-          <span className="text-yellow-400">EIC vs EICR Explained</span>
+          <span className="text-elec-yellow">EIC vs EICR Explained</span>
         </>
       }
       heroSubtitle="New build properties come with an Electrical Installation Certificate — not an EICR. This guide explains the difference between the two documents, when the first EICR is needed, how to snag electrical defects in new builds, and what landlords renting out new builds must do to comply with the 2020 Regulations."
@@ -530,7 +530,7 @@ export default function EICRForNewBuildPage() {
       faqHeading="Frequently Asked Questions: EICR for New Builds"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs and EICs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site certificate production. EICR, EIC, and snagging reports — all on your phone with AI assistance and instant PDF export. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site certificate production. EICR, EIC, and snagging reports — all on your phone with AI assistance and instant PDF export. 7-day free trial."
     />
   );
 }

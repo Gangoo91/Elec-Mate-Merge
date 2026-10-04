@@ -35,7 +35,12 @@ interface CertShellHeaderProps {
   onTabChange?: (tab: string) => void;
   completedTabs?: Record<string, boolean>;
   /** When supplied, a History control opens the certificate's revision list (ELE-1432). */
-  history?: { reportId: string; onRestored: (data: Record<string, unknown>) => void };
+  history?: {
+    reportId: string;
+    onRestored: (data: Record<string, unknown>) => void;
+    /** The certificate as it is now — lets the sheet show "was → now" per field. */
+    current?: Record<string, unknown>;
+  };
 }
 
 /**
@@ -248,6 +253,7 @@ const CertShellHeader: React.FC<CertShellHeaderProps> = ({
           onOpenChange={setHistoryOpen}
           reportId={history.reportId}
           onRestored={history.onRestored}
+          current={history.current}
         />
       )}
     </>

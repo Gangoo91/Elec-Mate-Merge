@@ -1,10 +1,9 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import useSEO, { SEOSchemas } from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
-import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
-import { BookOpen, ClipboardCheck, FileSearch, Home, Shield, SunMedium, Zap } from 'lucide-react';
 import { GUIDES_INDEX } from '@/data/guidesIndex';
 
 const guidesByLetter = GUIDES_INDEX.reduce<Record<string, typeof GUIDES_INDEX>>((acc, guide) => {
@@ -19,45 +18,6 @@ const indexLetters = Object.keys(guidesByLetter).sort((a, b) =>
 const PAGE_TITLE = 'UK Electrical Guides: BS 7671 & Compliance';
 const PAGE_DESCRIPTION =
   'Elec-Mate electrical guides: BS 7671, inspection + testing, Part P, earthing, consumer units, EV charging, solar PV, practical workflows.';
-
-const features = [
-  {
-    icon: Shield,
-    title: 'Regulations and compliance',
-    description:
-      'Public guidance on BS 7671, Part P, observation codes, and the compliance questions electricians search for most.',
-  },
-  {
-    icon: ClipboardCheck,
-    title: 'Inspection and testing',
-    description:
-      'Testing sequence, safe isolation, EICR workflows, and fault-finding pages for practical site work.',
-  },
-  {
-    icon: Home,
-    title: 'Real-world job scenarios',
-    description:
-      'Guides around consumer units, landlord work, domestic jobs, and common installation scenarios.',
-  },
-  {
-    icon: SunMedium,
-    title: 'Modern installation topics',
-    description:
-      'EV charging, solar PV, battery storage, and the newer areas where demand continues to grow.',
-  },
-  {
-    icon: FileSearch,
-    title: 'Problem-solving search intent',
-    description:
-      'Use guide pages to check wiring rules, understand procedures, and solve problems with more confidence.',
-  },
-  {
-    icon: Zap,
-    title: 'Useful next steps',
-    description:
-      'Move from reading the guidance into the right certificate, calculator, AI tool, or training page when you are ready.',
-  },
-];
 
 const guideCollections = [
   {
@@ -243,109 +203,152 @@ export default function GuidesHubPage() {
     author: 'Andrew Moore',
   });
 
+  const [query, setQuery] = useState('');
+  const q = query.trim().toLowerCase();
+  const results = q
+    ? GUIDES_INDEX.filter((g) => g.title.toLowerCase().includes(q)).slice(0, 30)
+    : [];
+
+  // Volt rebuild (4 Oct 2026): search first — 1,000+ guides is a library, and
+  // a library you can't search is a wall. No icon pills, no feature grid,
+  // no boxed link rows; panels and rules like the rest of the app.
   return (
     <PublicPageLayout>
-      <section className="py-16 sm:py-24 px-5">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-6">
-            <BookOpen className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium text-yellow-400">Electrical Guide Library</span>
-          </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
-            Electrical Guides for <span className="text-yellow-400">UK Electricians</span>
-          </h1>
-          <p className="text-lg text-white max-w-3xl mx-auto leading-relaxed mb-8">
-            Browse practical electrical guides covering BS 7671, inspection and testing, earthing,
-            consumer units, EV charging, solar PV, and the everyday questions electricians need to
-            answer on the job.
+      <section className="px-5 pb-10 pt-10 sm:pt-16 lg:px-8">
+        <div className="mx-auto max-w-6xl">
+          <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
+            Free guides · {GUIDES_INDEX.length} and counting
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <a
-              href="/auth/signup"
-              className="inline-flex items-center h-14 px-8 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold rounded-xl transition-colors"
-            >
-              Start Free Trial
-            </a>
-            <a
-              href="#guide-collections"
-              className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-yellow-500/40 text-white font-semibold rounded-xl transition-colors"
-            >
-              Browse Guides
-            </a>
+          <h1 className="mt-3 max-w-[20ch] text-[36px] font-bold leading-[1.05] tracking-[-0.03em] text-white sm:text-[52px]">
+            Electrical guides for{' '}
+            <span className="text-elec-yellow">electricians and apprentices.</span>
+          </h1>
+          <p className="mt-4 max-w-[40rem] text-[17px] leading-[1.6] text-white">
+            BS 7671, inspection and testing, earthing, consumer units, EV and solar, exams and
+            pricing — written for the job, cited to the source.
+          </p>
+
+          <div className="mt-8 max-w-[40rem]">
+            <label htmlFor="guide-search" className="text-[12px] font-medium text-white">
+              Search the guides
+            </label>
+            <input
+              id="guide-search"
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="e.g. Zs values, AFDD, EICR codes"
+              autoComplete="off"
+              enterKeyHint="search"
+              className="input-underline mt-1 h-14 w-full rounded-none border-0 border-b border-white/[0.2] bg-transparent px-1 text-[18px] font-medium text-white caret-elec-yellow placeholder:font-normal placeholder:text-white/30 focus:border-elec-yellow focus:outline-none focus:ring-0 [color-scheme:dark] touch-manipulation"
+            />
+            {q && (
+              <div className="mt-2" aria-live="polite">
+                {results.length ? (
+                  <ul className="divide-y divide-white/[0.08] border-b border-white/[0.08]">
+                    {results.map((g) => (
+                      <li key={g.slug}>
+                        <Link
+                          to={`/guides/${g.slug}`}
+                          className="flex min-h-[52px] items-center text-[16px] font-medium text-white hover:text-elec-yellow touch-manipulation"
+                        >
+                          {g.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="py-4 text-[15px] text-white">
+                    No guide matches “{query}”. Try a shorter word, or ask Elec-AI in the app.
+                  </p>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </section>
 
-      <section className="py-12 px-5 border-t border-white/5">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
-            Guidance for real electrical work
+      <section id="guide-collections" className="scroll-mt-20 px-5 py-10 lg:px-8">
+        <div className="mx-auto max-w-6xl">
+          <h2 className="text-[26px] font-bold tracking-[-0.02em] text-white sm:text-[32px]">
+            Start here
           </h2>
-          <p className="text-white leading-relaxed mb-8 max-w-4xl">
-            If you need a quick answer on{' '}
+          <p className="mt-2 max-w-[44rem] text-[15px] leading-relaxed text-white">
+            The most-used guides, by topic. Need a quick answer on{' '}
             <SEOInternalLink href="/part-p-building-regulations">Part P</SEOInternalLink>,{' '}
             <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">
-              earthing arrangements
-            </SEOInternalLink>
-            ,{' '}
-            <SEOInternalLink href="/guides/testing-sequence-guide">
-              testing sequence
-            </SEOInternalLink>
-            , or{' '}
-            <SEOInternalLink href="/how-to-fill-in-eicr">EICR workflows</SEOInternalLink>,
-            this page gives you a clear route into the right guide without digging through unrelated
-            pages.
+              earthing
+            </SEOInternalLink>{' '}
+            or <SEOInternalLink href="/how-to-fill-in-eicr">filling in an EICR</SEOInternalLink>?
+            It’s below.
           </p>
-          <SEOFeatureGrid features={features} />
-        </div>
-      </section>
-
-      <section id="guide-collections" className="py-12 px-5 border-t border-white/5">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-8">Guide collections</h2>
-          <div className="grid gap-5 md:grid-cols-3">
+          <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {guideCollections.map((collection) => (
               <div
                 key={collection.heading}
-                className="rounded-2xl border border-white/8 bg-white/[0.03] p-6"
+                className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_8%)] p-5 sm:p-6"
               >
-                <h3 className="text-xl font-bold text-white mb-4">{collection.heading}</h3>
-                <div className="space-y-3">
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/50 to-elec-yellow/0"
+                />
+                <h3 className="text-[17px] font-bold text-white">{collection.heading}</h3>
+                <ul className="mt-3 divide-y divide-white/[0.08] border-t border-white/[0.08]">
                   {collection.links.map((link) => (
-                    <Link
-                      key={link.href}
-                      to={link.href}
-                      className="block rounded-xl border border-white/8 bg-black/20 px-4 py-3 text-white hover:border-white/[0.14] hover:text-yellow-300 transition-colors"
-                    >
-                      {link.label}
-                    </Link>
+                    <li key={link.href}>
+                      <Link
+                        to={link.href}
+                        className="flex min-h-[46px] items-center text-[15px] text-white transition-colors hover:text-elec-yellow touch-manipulation"
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="all-guides" className="py-12 px-5 border-t border-white/5">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">Every guide, A to Z</h2>
-          <p className="text-white/60 text-[14px] mb-8">
-            The full library — all {GUIDES_INDEX.length} guides, in one index. Looking for
-            city-specific costs and rules? See the{' '}
+      <section id="all-guides" className="scroll-mt-20 px-5 py-10 lg:px-8">
+        <div className="mx-auto max-w-6xl">
+          <h2 className="text-[26px] font-bold tracking-[-0.02em] text-white sm:text-[32px]">
+            Every guide, A to Z
+          </h2>
+          <p className="mt-2 text-[15px] text-white">
+            All {GUIDES_INDEX.length} guides. Looking for city-specific costs and rules? See the{' '}
             <SEOInternalLink href="/locations">local guides by city</SEOInternalLink>.
           </p>
+          {/* Letter jump bar — sticks under the nav so 1,000 rows stay navigable. */}
+          <nav
+            aria-label="Jump to letter"
+            className="sticky top-[calc(4rem+env(safe-area-inset-top,0px))] z-30 -mx-5 mt-6 overflow-x-auto border-y border-white/[0.08] bg-background/95 px-5 backdrop-blur-md lg:-mx-8 lg:px-8"
+          >
+            <ul className="flex gap-1 py-2">
+              {indexLetters.map((letter) => (
+                <li key={letter}>
+                  <a
+                    href={`#letter-${letter}`}
+                    className="inline-flex h-10 min-w-[40px] items-center justify-center rounded-lg px-2 text-[14px] font-semibold text-white hover:bg-white/[0.06] hover:text-elec-yellow touch-manipulation"
+                  >
+                    {letter}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
           {indexLetters.map((letter) => (
-            <div key={letter} className="mt-7 first:mt-0">
-              <h3 className="text-[13px] font-semibold uppercase tracking-[0.18em] text-yellow-400 border-b border-white/10 pb-2 mb-3">
+            <div key={letter} id={`letter-${letter}`} className="mt-8 scroll-mt-36">
+              <h3 className="mb-2 border-b border-white/[0.08] pb-2 text-[13px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
                 {letter}
               </h3>
-              <ul className="columns-2 md:columns-3 lg:columns-4 gap-x-6">
+              <ul className="gap-x-8 sm:columns-2 lg:columns-3">
                 {guidesByLetter[letter].map((guide) => (
                   <li key={guide.slug} className="break-inside-avoid">
                     <Link
                       to={`/guides/${guide.slug}`}
-                      className="block py-1 text-[13px] leading-snug text-white/70 hover:text-yellow-300 transition-colors touch-manipulation"
+                      className="flex min-h-[40px] items-center text-[14.5px] text-white hover:text-elec-yellow touch-manipulation"
                     >
                       {guide.title}
                     </Link>
@@ -357,48 +360,25 @@ export default function GuidesHubPage() {
         </div>
       </section>
 
-      <section className="py-12 px-5 border-t border-white/5">
-        <div className="max-w-4xl mx-auto space-y-4 text-white leading-relaxed">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white">From guidance to action</h2>
-          <p>
-            Good guidance should help you do the next part of the job as well. Someone reading about{' '}
-            <SEOInternalLink href="/guides/testing-sequence-guide">
-              testing sequence
-            </SEOInternalLink>{' '}
-            should be able to move into the{' '}
-            <SEOInternalLink href="/electrical-testing-calculators">
-              calculator suite
-            </SEOInternalLink>
-            . Someone reading about EICR completion should be able to move into the{' '}
-            <SEOInternalLink href="/tools/digital-certificates-app">
-              certificate workflow
-            </SEOInternalLink>
-            .
-          </p>
-          <p>That way the guides stay genuinely useful instead of ending at the article itself.</p>
-        </div>
-      </section>
-
-      <section className="py-12 px-5 border-t border-white/5">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">Guides hub FAQs</h2>
-          <div className="space-y-4">
+      <section className="px-5 py-10 lg:px-8">
+        <div className="mx-auto max-w-6xl lg:grid lg:grid-cols-[1fr_1.6fr] lg:gap-16">
+          <h2 className="text-[26px] font-bold tracking-[-0.02em] text-white sm:text-[32px]">
+            About the guides
+          </h2>
+          <dl className="mt-6 divide-y divide-white/[0.08] border-y border-white/[0.08] lg:mt-0">
             {faqs.map((faq) => (
-              <div
-                key={faq.question}
-                className="rounded-2xl border border-white/8 bg-white/[0.03] p-5"
-              >
-                <h3 className="text-lg font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white leading-relaxed">{faq.answer}</p>
+              <div key={faq.question} className="py-4">
+                <dt className="text-[16px] font-semibold text-white">{faq.question}</dt>
+                <dd className="mt-1.5 text-[15px] leading-relaxed text-white">{faq.answer}</dd>
               </div>
             ))}
-          </div>
+          </dl>
         </div>
       </section>
 
       <SEOCTASection
         heading="Get the answer, then carry on with the work"
-        subheading="Use the guides for reference, then move into certificates, calculators, AI tools, or training when you need the next step."
+        subheading="Read the guide, then do the job in Elec-Mate — certificates, quotes, calculators and Elec-AI for electricians; courses and AM2 prep for apprentices."
       />
     </PublicPageLayout>
   );

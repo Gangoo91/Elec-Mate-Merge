@@ -17,7 +17,12 @@
  * does NOT kill the whole request.
  */
 
-import { buildingRegsCitation, isBuildingRegsDocType } from './building-regs-citation.ts';
+import {
+  buildingRegsCitation,
+  buildingRegsJurisdiction,
+  isBuildingRegsDocType,
+  isOutOfJurisdiction,
+} from './building-regs-citation.ts';
 import type { BS7671QueryUnderstanding } from './bs7671-query-understanding.ts';
 
 // A4:2026 edition id — default for exact-reg + cross-ref branches (BS 7671 only;
@@ -93,7 +98,11 @@ const isRetainedRow = (r: { edition_code?: string; document_type?: string }): bo
  * it costs nothing when retrieval is fast and only stops truncation when it is
  * not. Lowering it again needs that round-trip overhead addressed first.
  */
-export const RETRIEVAL_DEADLINE_MS = 2500;
+// 4000 from 30 Sep 2026: the Building Regs sources (+49k facets) and their
+// branch made each query heavier, and with 4 questions in flight retrieval hit
+// 2500 ms and returned 0-7 candidates (one answer came back with none and was
+// wrong). Still a cap, not a wait — a fast retrieval is unaffected.
+export const RETRIEVAL_DEADLINE_MS = 4000;
 
 export interface FacetContextUnit {
   /** Stable id (facet id or synthetic for tables / figures). */
@@ -352,15 +361,23 @@ async function fetchBuildingRegsMatches(opts: FacetRetrievalOptions): Promise<Fa
    * Each paragraph carries ~14 facets, so the top 12 facets can come from just
    * two or three paragraphs — asked about notification routes, all of them
    * came from para 2.5 and the third-party-certifier route (paras 3.5–3.7)
-   * never reached the model. Keep the best facet per paragraph instead.
+   * never reached the model. Cap facets per paragraph instead (below).
    */
+  // Up to 3 per paragraph, not 1: a table paragraph (AD F para 1.21 holds all
+  // of Table 1.1) carries one facet per row, and with a single slot the
+  // bathroom row lost to the kitchen row — the model then supplied its own
+  // figure. 3 keeps the spread across paragraphs while letting a table through.
+  const PER_PARAGRAPH = 3;
   const out: FacetContextUnit[] = [];
-  const seen = new Set<string>();
+  const perPara = new Map<string, number>();
   let rank = 0;
+  const j = buildingRegsJurisdiction(understanding.original);
   for (const row of data as any[]) {
+    if (isOutOfJurisdiction(j, row.document_type, row.edition_code, row.reg_number)) continue;
     const key = `${row.edition_code}::${row.reg_number ?? row.facet_id}`;
-    if (seen.has(key)) continue;
-    seen.add(key);
+    const used = perPara.get(key) ?? 0;
+    if (used >= PER_PARAGRAPH) continue;
+    perPara.set(key, used + 1);
     out.push(toUnit(row, 'vector', ++rank, Number(row.vector_score ?? row.rrf_score ?? 0)));
     if (out.length >= 12) break;
   }
@@ -921,8 +938,15 @@ export async function retrieveBS7671Facets(
   // branches always win on rank ties. This gives the AI both:
   //   - regulatory primary (which wins on compliance claims)
   //   - practical context (cited as practitioner guidance)
+  // Jurisdiction applies to every branch, not only the Building Regs one — the
+  // Wales AD P rows also arrive through the general vector branch.
+  const j = buildingRegsJurisdiction(opts.understanding.original);
+  const inJurisdiction = (units: FacetContextUnit[]) =>
+    units.filter((u) => !isOutOfJurisdiction(j, u.document_type, u.edition_code, u.reg_number));
   const primary = fuseUnits(
-    [exactResults, tableResults, vectorResults, buildingRegsResults, bm25Results, practicalResults],
+    [exactResults, tableResults, vectorResults, buildingRegsResults, bm25Results, practicalResults].map(
+      inJurisdiction
+    ),
     topK,
     opts.understanding
   );

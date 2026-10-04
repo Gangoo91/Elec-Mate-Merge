@@ -157,7 +157,7 @@ const sections = [
           experiences. We have no affiliation with any platform — the goal is to help you make an
           informed decision about where to invest your marketing budget.
         </p>
-        <p className="text-white/60 text-sm border-l-2 border-yellow-500/40 pl-3 mt-2">
+        <p className="text-white text-sm border-l-2 border-white/[0.1] pl-3 mt-2">
           Reviewed by Andrew Moore, founder of Elec-Mate, with hands-on experience of running an
           electrical platform business and working with electricians who use each platform.
         </p>
@@ -339,37 +339,37 @@ const sections = [
             </thead>
             <tbody className="divide-y divide-white/[0.06]">
               <tr className="bg-white/[0.02]">
-                <td className="px-4 py-3 font-medium text-white/70">Monthly cost</td>
+                <td className="px-4 py-3 font-medium text-white">Monthly cost</td>
                 <td className="px-4 py-3">£60–£120/month</td>
                 <td className="px-4 py-3">£0</td>
                 <td className="px-4 py-3">£0</td>
               </tr>
               <tr>
-                <td className="px-4 py-3 font-medium text-white/70">Contract length</td>
+                <td className="px-4 py-3 font-medium text-white">Contract length</td>
                 <td className="px-4 py-3">12 months (typical)</td>
                 <td className="px-4 py-3">None</td>
                 <td className="px-4 py-3">None (credits)</td>
               </tr>
               <tr className="bg-white/[0.02]">
-                <td className="px-4 py-3 font-medium text-white/70">Vetting</td>
+                <td className="px-4 py-3 font-medium text-white">Vetting</td>
                 <td className="px-4 py-3">Yes — quals, insurance, refs</td>
                 <td className="px-4 py-3">Partial</td>
                 <td className="px-4 py-3">No</td>
               </tr>
               <tr>
-                <td className="px-4 py-3 font-medium text-white/70">Lead cost range</td>
+                <td className="px-4 py-3 font-medium text-white">Lead cost range</td>
                 <td className="px-4 py-3">£60–£120 base + credits</td>
                 <td className="px-4 py-3">£5–£30 per lead</td>
                 <td className="px-4 py-3">£5–£20 per lead</td>
               </tr>
               <tr className="bg-white/[0.02]">
-                <td className="px-4 py-3 font-medium text-white/70">Est. win rate</td>
+                <td className="px-4 py-3 font-medium text-white">Est. win rate</td>
                 <td className="px-4 py-3">~25%</td>
                 <td className="px-4 py-3">~22%</td>
                 <td className="px-4 py-3">~15%</td>
               </tr>
               <tr>
-                <td className="px-4 py-3 font-medium text-white/70">Best for</td>
+                <td className="px-4 py-3 font-medium text-white">Best for</td>
                 <td className="px-4 py-3">New businesses, credibility</td>
                 <td className="px-4 py-3">Budget control, specialist jobs</td>
                 <td className="px-4 py-3">Supplementary leads</td>
@@ -380,35 +380,35 @@ const sections = [
         {/* Typical job value reference — helps readers calculate their own ROI */}
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <h4 className="font-bold text-white mb-3 flex items-center gap-2">
-            <PoundSterling className="w-4 h-4 text-yellow-400" /> Typical Job Values for
+            <PoundSterling className="w-4 h-4 text-elec-yellow" /> Typical Job Values for
             Electricians
           </h4>
-          <p className="text-white/80 text-sm mb-3">
+          <p className="text-white text-sm mb-3">
             Use these to calculate your own return on platform spend. A single consumer unit upgrade
             can more than cover a month of Checkatrade membership; an EICR is typically breakeven on
             one MyBuilder lead.
           </p>
           <div className="grid gap-2 sm:grid-cols-3 text-sm text-white">
             <div className="rounded-lg bg-white/[0.04] border border-white/10 p-3">
-              <div className="font-semibold text-yellow-300 mb-1">Consumer unit upgrade</div>
+              <div className="font-semibold text-elec-yellow mb-1">Consumer unit upgrade</div>
               <div>
                 Market value: <strong>£400–£600</strong>
               </div>
-              <div className="text-white/60 text-xs mt-1">Typical install: ~4–5 hrs</div>
+              <div className="text-white text-xs mt-1">Typical install: ~4–5 hrs</div>
             </div>
             <div className="rounded-lg bg-white/[0.04] border border-white/10 p-3">
-              <div className="font-semibold text-yellow-300 mb-1">EICR (domestic)</div>
+              <div className="font-semibold text-elec-yellow mb-1">EICR (domestic)</div>
               <div>
                 Market value: <strong>£150–£250</strong>
               </div>
-              <div className="text-white/60 text-xs mt-1">Typical test: ~3 hrs</div>
+              <div className="text-white text-xs mt-1">Typical test: ~3 hrs</div>
             </div>
             <div className="rounded-lg bg-white/[0.04] border border-white/10 p-3">
-              <div className="font-semibold text-yellow-300 mb-1">Full rewire</div>
+              <div className="font-semibold text-elec-yellow mb-1">Full rewire</div>
               <div>
                 Market value: <strong>£3,000+</strong>
               </div>
-              <div className="text-white/60 text-xs mt-1">Multi-day project</div>
+              <div className="text-white text-xs mt-1">Multi-day project</div>
             </div>
           </div>
         </div>
@@ -426,7 +426,7 @@ const sections = [
                 <li>Estimated leads: 180/year</li>
                 <li>Win rate: ~25%</li>
                 <li>Jobs won: ~45/year</li>
-                <li className="font-bold text-yellow-400">Cost per customer: ~£37</li>
+                <li className="font-bold text-elec-yellow">Cost per customer: ~£37</li>
               </ul>
             </div>
             <div className="rounded-xl bg-green-500/10 border border-green-500/20 p-4">
@@ -439,7 +439,7 @@ const sections = [
                 <li>Estimated leads responded to: 100/year</li>
                 <li>Win rate: ~22%</li>
                 <li>Jobs won: ~22/year</li>
-                <li className="font-bold text-yellow-400">Cost per customer: ~£68</li>
+                <li className="font-bold text-elec-yellow">Cost per customer: ~£68</li>
               </ul>
             </div>
             <div className="rounded-xl bg-purple-500/10 border border-purple-500/20 p-4">
@@ -452,7 +452,7 @@ const sections = [
                 <li>Estimated leads: 150/year</li>
                 <li>Win rate: ~15%</li>
                 <li>Jobs won: ~23/year</li>
-                <li className="font-bold text-yellow-400">Cost per customer: ~£65</li>
+                <li className="font-bold text-elec-yellow">Cost per customer: ~£65</li>
               </ul>
             </div>
           </div>
@@ -488,7 +488,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Checkatrade lead quality</strong> — generally good. Homeowners who search
                 Checkatrade are actively looking for a tradesperson and are familiar with the review
@@ -498,7 +498,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MyBuilder lead quality</strong> — moderate to good. The detailed job
                 description format attracts homeowners who have thought about what they need. The
@@ -507,7 +507,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bark lead quality</strong> — variable. The low-friction enquiry process
                 means more casual leads enter the system. You will encounter more "just getting
@@ -593,7 +593,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Month 1 to 6:</strong> Platform leads are your primary source. Collect
                 Google reviews from every job. Set up and optimise your Google Business Profile.
@@ -601,7 +601,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Month 6 to 12:</strong> Google and referrals should be generating 30% to 50%
                 of your enquiries. Evaluate platform ROI — drop the weakest performer. Invest that
@@ -609,7 +609,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Month 12 to 18:</strong> If you have 20+ Google reviews and a strong
                 referral network, you should be generating 70%+ of work organically. Consider
@@ -650,7 +650,7 @@ export default function CheckatradeVsMyBuilderPage() {
       heroTitle={
         <>
           Checkatrade vs MyBuilder vs Bark:{' '}
-          <span className="text-yellow-400">Which Is Best for Electricians in 2026?</span>
+          <span className="text-elec-yellow">Which Is Best for Electricians in 2026?</span>
         </>
       }
       heroSubtitle="An honest, no-affiliate comparison of the three biggest lead generation platforms for UK electricians. Real costs, real lead quality, and practical advice on which suits your business — whether you are just starting out or looking to fill quiet periods."
@@ -661,7 +661,7 @@ export default function CheckatradeVsMyBuilderPage() {
       faqHeading="Frequently Asked Questions About Lead Generation Platforms"
       relatedPages={relatedPages}
       ctaHeading="Convert More Leads with Professional Tools"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional quotes and same-day certificates help you win jobs from any platform. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional quotes and same-day certificates help you win jobs from any platform. 7-day free trial, cancel anytime."
     />
   );
 }

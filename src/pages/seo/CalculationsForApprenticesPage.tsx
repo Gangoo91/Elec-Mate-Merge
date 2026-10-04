@@ -235,7 +235,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>I = P / V</strong> — use this to find the current drawn by a load when you
                 know its power rating and the supply voltage. Example: a 3kW immersion heater at
@@ -244,7 +244,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>V = P / I</strong> — use this to find the voltage required for a given power
                 and current. Less commonly used in day-to-day work but important for understanding
@@ -405,7 +405,7 @@ const sections = [
           </h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BarChart3 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart3 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lighting</strong> — 66% of total lighting current demand. So if your
                 lighting circuits total 10A, the diversified demand is 6.6A.
@@ -465,7 +465,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>How to calculate it</strong> — Ipf = Uo / Zs (or Ze for faults at the
                 origin). For a typical domestic supply with Ze of 0.35 ohms: Ipf = 230 / 0.35 =
@@ -474,7 +474,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Why it matters</strong> — if the prospective fault current exceeds the
                 breaking capacity of the protective device, the device could fail to interrupt the
@@ -484,7 +484,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Measurement</strong> — your multifunction tester can measure Ipf directly at
                 the origin of the installation. The reading must be recorded on the EIC or EICR.
@@ -513,7 +513,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Write down what you know</strong> — before touching the calculator, list the
                 values given in the question and identify which formula to use. This prevents the
@@ -521,7 +521,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Watch the units</strong> — kilowatts vs watts (multiply kW by 1000),
                 millivolts vs volts (divide mV by 1000), megohms vs ohms. Unit errors are the most
@@ -529,7 +529,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sense-check your answer</strong> — if you calculate a current of 500A for a
                 domestic socket circuit, something has gone wrong. Develop a feel for what
@@ -537,7 +537,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Know which BS 7671 tables to use</strong> — for cable sizing, voltage drop,
                 and maximum Zs values. The exam allows you to use BS 7671, so know where to find the
@@ -545,7 +545,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Target className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Practice regularly</strong> — calculation skills are like any other skill:
                 they improve with practice and deteriorate without it. Do at least a few calculation
@@ -569,7 +569,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Brain className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">46+ Courses with Calculation Modules</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -655,7 +655,7 @@ export default function CalculationsForApprenticesPage() {
       heroTitle={
         <>
           Electrical Calculations for Apprentices:{' '}
-          <span className="text-yellow-400">Every Formula Explained Simply</span>
+          <span className="text-elec-yellow">Every Formula Explained Simply</span>
         </>
       }
       heroSubtitle="Electrical calculations do not need to be intimidating. This guide covers every essential calculation in the apprenticeship — Ohm's law, power triangle, cable sizing, voltage drop, diversity, and fault current — in plain English with worked examples you can follow."

@@ -218,7 +218,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Cable and Installation Costs</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cat6 cable (internal run)</strong> — £1 to £2 per metre for cable, plus £30
                 to £60 per camera for installation labour (routing, clipping, and termination). A
@@ -226,7 +226,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>External-grade Cat6</strong> — £1.50 to £3 per metre for UV-resistant
                 external Cat6. Required for any runs exposed to weather. Use cable clips or conduit
@@ -234,7 +234,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SWA cable (buried external runs)</strong> — £3 to £6 per metre for SWA, plus
                 £20 to £40 per termination for glands. Required under BS 7671 when cables are buried
@@ -242,7 +242,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Containment</strong> — mini-trunking for internal runs (£1 to £2 per metre),
                 external conduit (£2 to £4 per metre), or cable basket in roof voids (£5 to £10 per
@@ -250,7 +250,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wall penetrations</strong> — each external camera requires a hole through
                 the external wall for the cable. Budget £20 to £40 per penetration including core
@@ -275,7 +275,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated power circuit</strong> — a dedicated radial circuit from the
                 consumer unit is recommended for the CCTV system. Protected by an RCBO and clearly
@@ -285,7 +285,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>UPS (Uninterruptible Power Supply)</strong> — keeps the NVR, PoE switch, and
                 cameras running during power cuts. A 600VA to 1500VA UPS (£80 to £250) provides 15
@@ -295,7 +295,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PoE switch or NVR with built-in PoE</strong> — a PoE network switch (£50 to
                 £200 for 8 to 16 ports) provides centralised power and data to all cameras. Many
@@ -373,29 +373,29 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Cat6 cabling to 4 camera positions (installed and terminated): £200 to £480
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Wall penetrations (4 cameras): £80 to £160</span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Containment (external conduit, internal trunking): £50 to £150</span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Dedicated circuit from consumer unit: £100 to £250</span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Camera mounting and alignment: £80 to £200</span>
             </li>
             <li className="flex items-start gap-3 pt-2 border-t border-white/10">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical and cabling work total: £510 to £1,240</strong>
               </span>
@@ -420,7 +420,7 @@ const sections = [
               <span>UPS (600VA): £80 to £150</span>
             </li>
             <li className="flex items-start gap-3 pt-2 border-t border-white/10">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Total system cost (installed): £1,100 to £2,800</strong>
               </span>
@@ -444,7 +444,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Commercial Cost Ranges</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>8-camera system (small retail or office)</strong> — Electrical and cabling
                 work: £1,500 to £3,000. Equipment: £1,000 to £2,500. Total installed: £2,500 to
@@ -452,7 +452,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>16-camera system (warehouse or large retail)</strong> — Electrical and
                 cabling work: £3,000 to £6,000. Equipment: £2,500 to £5,000. Total installed: £5,500
@@ -460,7 +460,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large commercial (32+ cameras, multiple sites)</strong> — Electrical and
                 cabling work: £6,000 to £15,000+. Equipment: £5,000 to £15,000+. Total installed:
@@ -491,7 +491,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>LED floodlights</strong> — £30 to £80 per light (trade). Position to
                 illuminate the camera's field of view without shining directly into the lens. A 20W
@@ -499,7 +499,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PIR-activated lighting</strong> — motion-activated lights serve dual purpose
                 as security deterrent and camera illumination. Most cameras will begin recording
@@ -507,7 +507,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dusk-to-dawn lighting</strong> — for critical areas such as entrances and
                 car parks, continuous low-level lighting ensures colour CCTV footage at all times.
@@ -587,7 +587,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Camera className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Supply and Install Complete Systems</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -633,7 +633,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote CCTV and security installations"
-          description="Join 1,600+ UK electricians using Elec-Mate for quoting with itemised pricing, professional PDF output, and AI cost engineering."
+          description="Join 2,100+ UK electricians using Elec-Mate for quoting with itemised pricing, professional PDF output, and AI cost engineering."
           icon={Wrench}
         />
       </>
@@ -659,7 +659,7 @@ export default function CCTVInstallationCostPage() {
       heroTitle={
         <>
           CCTV Installation Electrical Cost:{' '}
-          <span className="text-yellow-400">UK Wiring Guide 2026</span>
+          <span className="text-elec-yellow">UK Wiring Guide 2026</span>
         </>
       }
       heroSubtitle="How much does CCTV installation cost for the electrical and cabling work? This guide covers PoE vs traditional power, Cat6 and SWA cabling costs, UPS backup, IP vs analogue systems, domestic and commercial pricing, and GDPR signage requirements."
@@ -670,7 +670,7 @@ export default function CCTVInstallationCostPage() {
       faqHeading="Frequently Asked Questions About CCTV Installation Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote CCTV Installations with Real Trade Pricing"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI-powered cost engineering. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI-powered cost engineering. 7-day free trial, cancel anytime."
     />
   );
 }

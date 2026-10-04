@@ -186,7 +186,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Transformer failure</strong> — the most common cause. Bell transformers
                 eventually fail (winding breakdown, thermal fuse blowing). With no transformer
@@ -195,7 +195,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <DoorOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <DoorOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Push button failure</strong> — the button is exposed to weather and the
                 contacts corrode over time. Remove the button and touch the two bell wires together
@@ -203,7 +203,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Broken bell wire</strong> — bell wire is thin (typically 0.5mm) and can
                 break where it passes through door frames, walls, or where it has been painted over
@@ -211,7 +211,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Bell className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Bell className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Chime unit failure</strong> — mechanical chimes can jam (the striker gets
                 stuck), and electronic chimes can fail. If the transformer has output and the wiring
@@ -232,7 +232,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Flat batteries</strong> — the number one cause. Check and replace batteries
                 in both the push button and the chime unit. Push button batteries in particular
@@ -240,7 +240,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wifi className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Range issues</strong> — thick walls, metal doors, and distance reduce radio
                 range. The advertised range assumes open air — real-world range through building
@@ -248,14 +248,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wifi className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Interference</strong> — other wireless devices operating on the same
                 frequency can interfere. Try re-pairing the push button and chime unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Water damage</strong> — even weather-resistant push buttons can fail when
                 seals degrade. Moisture on the circuit board or battery contacts causes corrosion.
@@ -278,7 +278,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insufficient transformer voltage</strong> — the most common issue with wired
                 smart doorbells. Older bell transformers output 8V, but most smart doorbells need
@@ -287,7 +287,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wifi className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Weak Wi-Fi</strong> — the doorbell is typically at the front of the house,
                 which may be far from the router. A weak signal causes disconnections, delayed
@@ -296,7 +296,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Battery drain (battery models)</strong> — cold weather, frequent motion
                 detection, and live view usage all drain the battery faster. In winter, a battery
@@ -376,7 +376,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Burning smell from transformer</strong> — if you can smell burning near the
                 consumer unit or transformer, isolate the circuit and call an electrician as an
@@ -400,7 +400,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Zap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Transformer Selection</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -414,7 +414,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Cable className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Wiring</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -428,7 +428,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Certification</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -445,7 +445,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete Minor Works Certificates on your phone"
-          description="Elec-Mate's certificate apps let you document doorbell installations and repairs with test results and instant PDF export. Join 1,600+ UK electricians."
+          description="Elec-Mate's certificate apps let you document doorbell installations and repairs with test results and instant PDF export. Join 2,100+ UK electricians."
           icon={FileCheck2}
         />
       </>
@@ -470,7 +470,7 @@ export default function DoorbellNotWorkingPage() {
       badgeIcon={Bell}
       heroTitle={
         <>
-          Doorbell Not Working: <span className="text-yellow-400">Causes and Fixes</span>
+          Doorbell Not Working: <span className="text-elec-yellow">Causes and Fixes</span>
         </>
       }
       heroSubtitle="Whether it is a wired, wireless, or smart doorbell, this guide covers every common fault — transformer failure, flat batteries, Wi-Fi problems, corroded contacts — and tells you what to check and when to call an electrician."
@@ -481,7 +481,7 @@ export default function DoorbellNotWorkingPage() {
       faqHeading="Frequently Asked Questions About Doorbells Not Working"
       relatedPages={relatedPages}
       ctaHeading="Document Electrical Repairs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for professional certificates, AI fault diagnosis, and job documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for professional certificates, AI fault diagnosis, and job documentation. 7-day free trial, cancel anytime."
     />
   );
 }

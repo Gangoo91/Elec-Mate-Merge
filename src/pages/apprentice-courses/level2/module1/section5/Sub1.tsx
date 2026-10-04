@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the main reason "safe isolation" exists as a procedure?',
     options: [
-      'Fault current is higher at the origin than downstream',
+      'To protect the protective devices from damage while you work',
       'To make sure the conductors you’re working on can’t shock or burn you',
-      'Achieve comfortable conditions at start of occupancy',
-      'Typically 12 months to capture seasonal variations',
+      'To stop the customer from using the circuit while you are on site',
+      'To make the RCD trip so the circuit can be tested',
     ],
     correctAnswer: 1,
     explanation:

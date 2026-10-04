@@ -116,7 +116,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
-            <GitBranch className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <GitBranch className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-2">Simple Example</h4>
               <p className="text-white text-sm leading-relaxed">
@@ -147,7 +147,7 @@ const sections = [
         <div className="space-y-4 mt-4">
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-2">
-              <Wrench className="w-5 h-5 text-yellow-400" />
+              <Wrench className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">
                 1. Older Installations with Multiple Modifications
               </h3>
@@ -165,7 +165,7 @@ const sections = [
 
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-2">
-              <AlertTriangle className="w-5 h-5 text-yellow-400" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">2. DIY Work</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -180,7 +180,7 @@ const sections = [
 
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-2">
-              <Cable className="w-5 h-5 text-yellow-400" />
+              <Cable className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">3. Extension of Circuits</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -196,7 +196,7 @@ const sections = [
 
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-2">
-              <Unplug className="w-5 h-5 text-yellow-400" />
+              <Unplug className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">4. Revealed by Consumer Unit Upgrade</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -237,7 +237,7 @@ const sections = [
         </p>
         <div className="space-y-3 my-4">
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <p className="text-white text-sm leading-relaxed">
               <strong className="text-white">
                 RCD trips when specific combinations of circuits are used.
@@ -248,7 +248,7 @@ const sections = [
             </p>
           </div>
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <p className="text-white text-sm leading-relaxed">
               <strong className="text-white">
                 RCD trips immediately after a consumer unit upgrade.
@@ -259,7 +259,7 @@ const sections = [
             </p>
           </div>
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <p className="text-white text-sm leading-relaxed">
               <strong className="text-white">
                 Incorrect test results on ring circuit testing.
@@ -271,7 +271,7 @@ const sections = [
             </p>
           </div>
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <p className="text-white text-sm leading-relaxed">
               <strong className="text-white">Insulation resistance test anomalies.</strong> A
               circuit shows unexpected continuity between its neutral and another circuit's neutral
@@ -281,7 +281,7 @@ const sections = [
             </p>
           </div>
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <p className="text-white text-sm leading-relaxed">
               <strong className="text-white">
                 Tripping is not related to weather or appliances.
@@ -320,7 +320,7 @@ const sections = [
                 <td className="p-3 border border-white/10 text-white">
                   Trips only when two specific circuits are on together; each holds alone
                 </td>
-                <td className="p-3 border border-white/10 text-white font-semibold text-yellow-300">
+                <td className="p-3 border border-white/10 text-white font-semibold text-elec-yellow">
                   Borrowed neutral
                 </td>
                 <td className="p-3 border border-white/10 text-white">
@@ -374,7 +374,7 @@ const sections = [
             </tbody>
           </table>
         </div>
-        <p className="text-xs text-white/60 mt-2">
+        <p className="text-xs text-white mt-2">
           A borrowed neutral is the classic{' '}
           <SEOInternalLink href="/guides/nuisance-tripping-rcd">nuisance-tripping</SEOInternalLink>{' '}
           culprit that holds in isolation but trips on a circuit combination &mdash; use the pattern
@@ -400,7 +400,7 @@ const sections = [
         </p>
         <div className="space-y-3 my-4">
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
               1
             </span>
             <p className="text-white text-sm leading-relaxed">
@@ -413,7 +413,7 @@ const sections = [
             </p>
           </div>
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
               2
             </span>
             <p className="text-white text-sm leading-relaxed">
@@ -426,7 +426,7 @@ const sections = [
             </p>
           </div>
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
               3
             </span>
             <p className="text-white text-sm leading-relaxed">
@@ -440,7 +440,7 @@ const sections = [
             </p>
           </div>
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
               4
             </span>
             <p className="text-white text-sm leading-relaxed">
@@ -452,7 +452,7 @@ const sections = [
             </p>
           </div>
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
               5
             </span>
             <p className="text-white text-sm leading-relaxed">
@@ -491,7 +491,7 @@ const sections = [
         <div className="space-y-4 mt-4">
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-2">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">At an Accessible Junction Box</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -506,7 +506,7 @@ const sections = [
 
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-2">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">At a Ceiling Rose or Accessory</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -521,7 +521,7 @@ const sections = [
 
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-2">
-              <Cable className="w-5 h-5 text-yellow-400" />
+              <Cable className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Running a New Neutral</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -542,20 +542,20 @@ const sections = [
         </p>
         <ul className="space-y-2 my-4">
           <li className="flex items-start gap-2">
-            <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
               Verify neutral continuity from each circuit's neutral terminal at the DB to each
               accessory on that circuit
             </span>
           </li>
           <li className="flex items-start gap-2">
-            <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
               Confirm no cross-continuity between neutrals of different circuits
             </span>
           </li>
           <li className="flex items-start gap-2">
-            <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
               Re-perform{' '}
               <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">
@@ -565,13 +565,13 @@ const sections = [
             </span>
           </li>
           <li className="flex items-start gap-2">
-            <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
               Test the RCD — energise both circuits simultaneously and confirm the RCD holds
             </span>
           </li>
           <li className="flex items-start gap-2">
-            <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
               For ring circuits, re-perform the ring circuit continuity test to verify correct Rn
               values
@@ -593,7 +593,7 @@ const sections = [
         <div className="space-y-4 mt-4">
           <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <div className="flex items-center gap-2 mb-2">
-              <ShieldCheck className="w-5 h-5 text-yellow-400" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">RCD Protection Is Compromised</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -607,7 +607,7 @@ const sections = [
 
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-2">
-              <Gauge className="w-5 h-5 text-yellow-400" />
+              <Gauge className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">False Test Results</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -621,7 +621,7 @@ const sections = [
 
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-2">
-              <Zap className="w-5 h-5 text-yellow-400" />
+              <Zap className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Overloaded Neutral</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -639,7 +639,7 @@ const sections = [
 
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-2">
-              <AlertTriangle className="w-5 h-5 text-yellow-400" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Shock Risk When Isolating Circuits</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -674,10 +674,10 @@ const sections = [
           </div>
           <div className="p-4 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <div className="flex items-center gap-2 mb-1">
-              <AlertTriangle className="w-4 h-4 text-yellow-400" />
+              <AlertTriangle className="w-4 h-4 text-elec-yellow" />
               <span className="font-bold text-white">C2</span>
             </div>
-            <p className="text-xs font-semibold text-yellow-300 mb-1">
+            <p className="text-xs font-semibold text-elec-yellow mb-1">
               Potentially dangerous — remedial action required
             </p>
             <p className="text-white text-sm leading-relaxed">
@@ -688,10 +688,10 @@ const sections = [
           </div>
           <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-1">
-              <Search className="w-4 h-4 text-white/70" />
+              <Search className="w-4 h-4 text-white" />
               <span className="font-bold text-white">FI</span>
             </div>
-            <p className="text-xs font-semibold text-white/70 mb-1">
+            <p className="text-xs font-semibold text-white mb-1">
               Further investigation required
             </p>
             <p className="text-white text-sm leading-relaxed">
@@ -810,7 +810,7 @@ export default function BorrowedNeutralPage() {
         <>
           Borrowed Neutral Fault?
           <br />
-          <span className="text-yellow-400">How to Find and Fix It</span>
+          <span className="text-elec-yellow">How to Find and Fix It</span>
         </>
       }
       heroSubtitle="A borrowed neutral is a wiring fault where the neutral from one circuit is connected to another circuit's neutral. It causes unexplained RCD tripping, false test results, and safety risks. This guide covers what it is, how it happens, the telltale symptoms, how to find the crossover point, and how to fix it."
@@ -825,7 +825,7 @@ export default function BorrowedNeutralPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Identify Wiring Faults Faster with Elec-Mate"
-      ctaSubheading="Ring circuit calculator, AI fault diagnosis, defect code AI, and digital EICR forms. Join 1,600+ UK electricians. 7-day free trial, cancel anytime."
+      ctaSubheading="Ring circuit calculator, AI fault diagnosis, defect code AI, and digital EICR forms. Join 2,100+ UK electricians. 7-day free trial, cancel anytime."
     />
   );
 }

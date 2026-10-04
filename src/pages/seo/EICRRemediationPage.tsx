@@ -153,7 +153,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C2 — Potentially Dangerous</strong> — "Urgent remedial action required." C2
                 is recorded where the installation does not present an immediate danger but could do
@@ -266,7 +266,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacement</strong> — the most common remediation item. Where
                 an older consumer unit lacks RCD protection on socket-outlet circuits (required
@@ -276,7 +276,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main protective bonding</strong> — the main earthing terminal must be
                 connected to all incoming metallic services (gas, water, oil). Missing or undersized
@@ -286,7 +286,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Supplementary bonding in bathrooms</strong> — where a bathroom has exposed
                 metalwork (metal baths, pipes, waste fittings) that is not covered by the main
@@ -295,7 +295,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable repairs and replacements</strong> — damaged, overheated, or
                 deteriorated cables must be repaired or replaced. For small sections, a splice in an
@@ -304,7 +304,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Correcting amateur additions</strong> — non-professional additions to the
                 electrical installation (DIY sockets, junction boxes not in accessible positions,
@@ -330,7 +330,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacement (standard house)</strong> — £600 to £1,200. This
                 is the most commonly required and most costly single remediation item. The price
@@ -339,14 +339,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main protective bonding (gas + water)</strong> — £150 to £400. Depends on
                 the length of bonding conductor runs and ease of access to the meter locations.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Supplementary bonding (bathroom)</strong> — £100 to £300 per bathroom.
                 Typically involves installing bonding conductors to bath, basin, and pipe
@@ -354,7 +354,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable repair (short section)</strong> — £100 to £300. Replacing a damaged
                 section of cable in an accessible location. More complex repairs with difficult
@@ -362,7 +362,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional circuit (from consumer unit)</strong> — £200 to £500 per circuit.
                 Adding a dedicated circuit for a cooker, EV charger, or to separate an overloaded
@@ -370,7 +370,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full rewire (2-bed house)</strong> — £3,000 to £6,000. Rarely required
                 purely as EICR remediation but sometimes the most cost-effective option when an
@@ -400,7 +400,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Get the quote on the day of the EICR</strong> — the electrician who carries
                 out the EICR is already on site, already understands the installation, and is best
@@ -410,7 +410,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use registered electricians</strong> — for remediation work on a rental
                 property, use an electrician registered with a competent person scheme (NICEIC,
@@ -420,7 +420,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Provide the EICR to each electrician quoting</strong> — share the full EICR
                 with any electrician providing a remediation quote. This ensures they quote for all
@@ -499,7 +499,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Quote on Site, Win the Work</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -532,7 +532,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs and win remediation work with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate to complete on-site EICRs, quote for remediation work instantly, and produce all required certificates."
+          description="Join 2,100+ UK electricians using Elec-Mate to complete on-site EICRs, quote for remediation work instantly, and produce all required certificates."
           icon={FileCheck2}
         />
       </>
@@ -558,7 +558,7 @@ export default function EICRRemediationPage() {
       heroTitle={
         <>
           EICR Remediation Work:{' '}
-          <span className="text-yellow-400">C1, C2, C3 and FI Explained</span>
+          <span className="text-elec-yellow">C1, C2, C3 and FI Explained</span>
         </>
       }
       heroSubtitle="When an EICR comes back Unsatisfactory, landlords must act fast. This guide explains every observation code — C1, C2, C3 and FI — what legally must be fixed and by when, typical remediation costs, how to get quotes, and whether you must use the same electrician."
@@ -569,7 +569,7 @@ export default function EICRRemediationPage() {
       faqHeading="Frequently Asked Questions: EICR Remediation"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs and Remediation Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion, instant remediation quotes, and all required certificate documentation. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion, instant remediation quotes, and all required certificate documentation. 7-day free trial."
     />
   );
 }

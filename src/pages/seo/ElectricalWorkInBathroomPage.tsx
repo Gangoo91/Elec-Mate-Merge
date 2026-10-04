@@ -236,14 +236,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP rating required:</strong> IPX4 minimum (protection against splashing
                 water from any direction). IPX5 where water jets are used for cleaning.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Equipment permitted:</strong> SELV equipment, water heaters (electric
                 showers, instantaneous water heaters), and whirlpool bath units. Pull-cord switches
@@ -251,7 +251,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Not permitted:</strong> Standard socket outlets, standard plate switches,
                 junction boxes, connection units, or any equipment not rated for the zone.
@@ -295,14 +295,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP rating required:</strong> IPX4 minimum (IPX5 where water jets are used
                 for cleaning).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Equipment permitted:</strong> Everything allowed in Zone 1, plus luminaires,
                 shaver supply units (BS EN 61558-2-5), fans, heating appliances, and other fixed
@@ -310,7 +310,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Not permitted:</strong> Standard 13A socket outlets, standard plate
                 switches.
@@ -338,7 +338,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <p className="text-white text-sm leading-relaxed">
               <strong>On-site gotcha — space under the bath (Reg 701.32.3):</strong> The space
               beneath a bath panel is classified as Zone 1, not outside the zones — unless that
@@ -352,14 +352,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP rating:</strong> No specific IP requirement (IPX0 is acceptable), but
                 IP44 is recommended due to the humid environment.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard 230V socket outlets:</strong> Permitted only where sited at least
                 2.5m horizontally from the Zone 1 boundary (Reg 701.418.2 / OSG 4.6.4). In practice
@@ -369,7 +369,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Plate switches:</strong> Permitted outside the zones. This is where the
                 standard bathroom light switch is located — typically on the wall just outside the
@@ -403,21 +403,21 @@ const sections = [
           </h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Metallic service pipes:</strong> All accessible metallic water supply and
                 waste pipes (e.g. copper supply, chrome waste trap).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Central heating and air conditioning:</strong> Accessible metallic heating
                 pipes and pipework entering or within the bathroom.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Accessible metallic structural parts:</strong> Any accessible metallic
                 structural elements of the building. Note: metallic door architraves and window
@@ -478,7 +478,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplet className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplet className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IPX4</strong> — Protection against splashing water from any direction.
                 Minimum requirement for Zone 1 and Zone 2 in domestic bathrooms.
@@ -523,7 +523,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Fan className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Fan className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minimum extract rate:</strong> 15 litres per second for intermittent extract
                 (bathroom fans switched on and off), or 8 litres per second for continuous extract
@@ -531,7 +531,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Fan className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Fan className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Zone requirements:</strong> A ceiling-mounted fan in Zone 1 must be rated
                 IPX4 minimum. A wall-mounted fan in Zone 2 must be rated IPX4 minimum. Most quality
@@ -539,7 +539,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Fan className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Fan className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Overrun timer:</strong> Building Regulations require the fan to continue
                 running for a minimum of 15 minutes after the light is switched off (or the user
@@ -547,7 +547,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Fan className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Fan className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wiring:</strong> A standard bathroom fan is wired from the lighting circuit
                 using a 3-core and earth cable (for the switched live and permanent live for the
@@ -573,28 +573,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>7.5kW shower:</strong> 6mm T&E cable, 32A MCB/RCBO. Maximum cable run
                 approximately 27 metres.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>8.5kW shower:</strong> 6mm T&E cable, 40A MCB/RCBO. Maximum cable run
                 approximately 18 metres.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>9.5kW shower:</strong> 10mm T&E cable, 40A MCB/RCBO. Maximum cable run
                 approximately 35 metres.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>10.5kW+ shower:</strong> 10mm T&E cable, 45A MCB/RCBO. Check{' '}
                 <SEOInternalLink href="/how-to-size-cables">
@@ -635,27 +635,27 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Installing or replacing a light fitting in the bathroom.</span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Installing or replacing an extractor fan.</span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Installing or replacing an electric shower.</span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Installing or replacing a shaver socket.</span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Installing electric underfloor heating.</span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Adding or modifying any circuit serving the bathroom.</span>
             </li>
           </ul>
@@ -682,7 +682,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Droplet className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplet className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Zone Compliance Checker</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -711,7 +711,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certify bathroom work on your phone"
-          description="Join 1,600+ UK electricians using Elec-Mate for bathroom installation certificates. Zone compliance checking, voice test entry, instant PDF delivery."
+          description="Join 2,100+ UK electricians using Elec-Mate for bathroom installation certificates. Zone compliance checking, voice test entry, instant PDF delivery."
           icon={FileCheck2}
         />
       </>
@@ -737,7 +737,7 @@ export default function ElectricalWorkInBathroomPage() {
       heroTitle={
         <>
           Electrical Work in Bathrooms:{' '}
-          <span className="text-yellow-400">Zones, IP Ratings, and Regulations</span>
+          <span className="text-elec-yellow">Zones, IP Ratings, and Regulations</span>
         </>
       }
       heroSubtitle="Bathrooms are special locations under BS 7671. Zone 0, Zone 1, and Zone 2 each have different requirements for what equipment can be installed and what IP rating is needed. All bathroom electrical work is notifiable under Part P. This guide explains everything."
@@ -748,7 +748,7 @@ export default function ElectricalWorkInBathroomPage() {
       faqHeading="Frequently Asked Questions About Bathroom Electrical Work"
       relatedPages={relatedPages}
       ctaHeading="Handle Bathroom Installations with Confidence"
-      ctaSubheading="Zone compliance checking, certificate production, voice test entry, and instant delivery. Join 1,600+ UK electricians using Elec-Mate. 7-day free trial."
+      ctaSubheading="Zone compliance checking, certificate production, voice test entry, and instant delivery. Join 2,100+ UK electricians using Elec-Mate. 7-day free trial."
     />
   );
 }

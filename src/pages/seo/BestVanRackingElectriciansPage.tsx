@@ -461,7 +461,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Plywood shelving (100 to 300 pounds)</strong> — 18mm plywood cut to fit your
                 van dimensions, screwed to the van walls and floor using threaded rivnuts. Add
@@ -473,7 +473,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Slotted angle steel shelving (200 to 500 pounds)</strong> — Dexion or
                 similar slotted angle iron with plywood or metal shelves. More rigid than plywood
@@ -483,7 +483,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Plastic storage systems (100 to 200 pounds)</strong> — heavy-duty plastic
                 crates and stackable boxes secured with ratchet straps or bungee cords. The cheapest
@@ -572,7 +572,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Package className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Package className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable reel holders</strong> — wall-mounted or floor-mounted brackets that
                 hold cable reels horizontally, allowing you to pull cable directly off the drum
@@ -582,7 +582,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Package className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Package className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable drum shelf</strong> — a low shelf at floor level designed to hold
                 multiple cable drums upright. This is the simplest approach — drums sit on the shelf
@@ -592,7 +592,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Package className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Package className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Under-shelf storage</strong> — using the space below the lowest shelf for
                 cable drums on the floor. Simple and free if your shelving is high enough. The
@@ -622,7 +622,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Time saving</strong> — 15 to 30 minutes per job in tool retrieval, averaged
                 over 250 working days, equals 62 to 125 hours per year. At 40 pounds per hour
@@ -631,7 +631,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DIY option (300 pounds)</strong> — pays for itself in 1 to 2 weeks of
                 recovered time. No financial risk. But offers minimal security, no crash protection,
@@ -639,7 +639,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mid-range (Van Guard, 800 to 1,200 pounds)</strong> — pays for itself in 4
                 to 8 weeks. Good durability (5 to 7 years). Best value for sole traders. Van
@@ -648,7 +648,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Premium (Sortimo/Bott, 3,000 to 5,000 pounds)</strong> — pays for itself in
                 12 to 20 weeks, but the additional benefit over mid-range is primarily modularity,
@@ -753,7 +753,7 @@ export default function BestVanRackingElectriciansPage() {
       heroTitle={
         <>
           Best Van Racking for Electricians:{' '}
-          <span className="text-yellow-400">2026 Systems Compared</span>
+          <span className="text-elec-yellow">2026 Systems Compared</span>
         </>
       }
       heroSubtitle="Stop wasting time rummaging through a messy van. Sortimo, Bott, Van Guard, Modul-System, and DIY options compared by price, weight, van model compatibility, and real-world value."
@@ -764,7 +764,7 @@ export default function BestVanRackingElectriciansPage() {
       faqHeading="Frequently Asked Questions About Van Racking for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Run Your Business From Your Van With Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site certificates. Professional tools on your phone — no paperwork, no office trips. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site certificates. Professional tools on your phone — no paperwork, no office trips. 7-day free trial."
     />
   );
 }

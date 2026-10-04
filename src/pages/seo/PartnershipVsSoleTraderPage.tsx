@@ -277,7 +277,7 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h4 className="font-bold text-white mb-3 flex items-center gap-2">
-            <AlertTriangle className="w-5 h-5 text-yellow-400" /> Partnership Agreement:
+            <AlertTriangle className="w-5 h-5 text-elec-yellow" /> Partnership Agreement:
             Non-Negotiable
           </h4>
           <p className="text-white text-sm leading-relaxed">
@@ -370,7 +370,7 @@ const sections = [
       <>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-4 flex items-center gap-2">
-            <Calculator className="w-4 h-4 text-yellow-400" /> Tax Comparison at Different Profit
+            <Calculator className="w-4 h-4 text-elec-yellow" /> Tax Comparison at Different Profit
             Levels
           </h4>
           <div className="space-y-3 text-white text-sm">
@@ -381,33 +381,33 @@ const sections = [
             </div>
             <div className="grid grid-cols-3 gap-4 border-b border-white/10 pb-2">
               <span>£30,000</span>
-              <span className="text-yellow-400">£5,700</span>
-              <span className="text-yellow-400">£5,400 (-£300)</span>
+              <span className="text-elec-yellow">£5,700</span>
+              <span className="text-elec-yellow">£5,400 (-£300)</span>
             </div>
             <div className="grid grid-cols-3 gap-4 border-b border-white/10 pb-2">
               <span>£40,000</span>
-              <span className="text-yellow-400">£8,200</span>
-              <span className="text-yellow-400">£7,200 (-£1,000)</span>
+              <span className="text-elec-yellow">£8,200</span>
+              <span className="text-elec-yellow">£7,200 (-£1,000)</span>
             </div>
             <div className="grid grid-cols-3 gap-4 border-b border-white/10 pb-2">
               <span>£50,000</span>
-              <span className="text-yellow-400">£11,200</span>
-              <span className="text-yellow-400">£9,400 (-£1,800)</span>
+              <span className="text-elec-yellow">£11,200</span>
+              <span className="text-elec-yellow">£9,400 (-£1,800)</span>
             </div>
             <div className="grid grid-cols-3 gap-4 border-b border-white/10 pb-2">
               <span>£60,000</span>
-              <span className="text-yellow-400">£14,700</span>
-              <span className="text-yellow-400">£11,800 (-£2,900)</span>
+              <span className="text-elec-yellow">£14,700</span>
+              <span className="text-elec-yellow">£11,800 (-£2,900)</span>
             </div>
             <div className="grid grid-cols-3 gap-4 border-b border-white/10 pb-2">
               <span>£70,000</span>
-              <span className="text-yellow-400">£18,200</span>
-              <span className="text-yellow-400">£14,500 (-£3,700)</span>
+              <span className="text-elec-yellow">£18,200</span>
+              <span className="text-elec-yellow">£14,500 (-£3,700)</span>
             </div>
             <div className="grid grid-cols-3 gap-4 pb-2">
               <span>£100,000</span>
-              <span className="text-yellow-400">£29,200</span>
-              <span className="text-yellow-400">£22,500 (-£6,700)</span>
+              <span className="text-elec-yellow">£29,200</span>
+              <span className="text-elec-yellow">£22,500 (-£6,700)</span>
             </div>
           </div>
         </div>
@@ -490,38 +490,38 @@ const sections = [
             </div>
             <div className="grid grid-cols-3 gap-4 border-b border-white/10 pb-2">
               <span>Setup cost</span>
-              <span className="text-yellow-400">Free</span>
-              <span className="text-yellow-400">£12 (Companies House)</span>
+              <span className="text-elec-yellow">Free</span>
+              <span className="text-elec-yellow">£12 (Companies House)</span>
             </div>
             <div className="grid grid-cols-3 gap-4 border-b border-white/10 pb-2">
               <span>Annual accountancy</span>
-              <span className="text-yellow-400">£300 to £800</span>
-              <span className="text-yellow-400">£1,000 to £2,500</span>
+              <span className="text-elec-yellow">£300 to £800</span>
+              <span className="text-elec-yellow">£1,000 to £2,500</span>
             </div>
             <div className="grid grid-cols-3 gap-4 border-b border-white/10 pb-2">
               <span>Tax returns</span>
-              <span className="text-yellow-400">1 (Self Assessment)</span>
-              <span className="text-yellow-400">3+ (CT, SA, payroll)</span>
+              <span className="text-elec-yellow">1 (Self Assessment)</span>
+              <span className="text-elec-yellow">3+ (CT, SA, payroll)</span>
             </div>
             <div className="grid grid-cols-3 gap-4 border-b border-white/10 pb-2">
               <span>Payroll</span>
-              <span className="text-yellow-400">Not needed</span>
-              <span className="text-yellow-400">Monthly (even for just you)</span>
+              <span className="text-elec-yellow">Not needed</span>
+              <span className="text-elec-yellow">Monthly (even for just you)</span>
             </div>
             <div className="grid grid-cols-3 gap-4 border-b border-white/10 pb-2">
               <span>Annual accounts</span>
-              <span className="text-yellow-400">Not filed publicly</span>
-              <span className="text-yellow-400">Filed at Companies House</span>
+              <span className="text-elec-yellow">Not filed publicly</span>
+              <span className="text-elec-yellow">Filed at Companies House</span>
             </div>
             <div className="grid grid-cols-3 gap-4 border-b border-white/10 pb-2">
               <span>Confirmation statement</span>
-              <span className="text-yellow-400">Not needed</span>
-              <span className="text-yellow-400">Annual (£34)</span>
+              <span className="text-elec-yellow">Not needed</span>
+              <span className="text-elec-yellow">Annual (£34)</span>
             </div>
             <div className="grid grid-cols-3 gap-4 pb-2">
               <span>Extracting profits</span>
-              <span className="text-yellow-400">Automatic (it is yours)</span>
-              <span className="text-yellow-400">Via salary and dividends</span>
+              <span className="text-elec-yellow">Automatic (it is yours)</span>
+              <span className="text-elec-yellow">Via salary and dividends</span>
             </div>
           </div>
         </div>
@@ -546,7 +546,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Stay as a sole trader when:</strong> Your profits are below £40,000. You
                 value simplicity and low admin. You are just starting out and your income is
@@ -649,7 +649,7 @@ export default function PartnershipVsSoleTraderPage() {
       heroTitle={
         <>
           Sole Trader vs Partnership vs Ltd:{' '}
-          <span className="text-yellow-400">Which Structure Saves You the Most?</span>
+          <span className="text-elec-yellow">Which Structure Saves You the Most?</span>
         </>
       }
       heroSubtitle="Tax comparison with 2026/27 figures, liability differences, admin burden, and a clear framework for when to incorporate. The practical guide for UK electricians choosing a business structure."
@@ -660,7 +660,7 @@ export default function PartnershipVsSoleTraderPage() {
       faqHeading="Frequently Asked Questions About Business Structure for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Run Your Business Your Way"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, invoicing, and job management. Works for sole traders, partnerships, and limited companies. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for quoting, certification, invoicing, and job management. Works for sole traders, partnerships, and limited companies. 7-day free trial, cancel anytime."
     />
   );
 }

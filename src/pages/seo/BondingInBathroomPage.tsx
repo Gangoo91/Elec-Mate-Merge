@@ -729,7 +729,7 @@ export default function BondingInBathroomPage() {
       badgeIcon={Droplet}
       heroTitle={
         <>
-          Bonding in a Bathroom: <span className="text-yellow-400">When Is It Required?</span>
+          Bonding in a Bathroom: <span className="text-elec-yellow">When Is It Required?</span>
         </>
       }
       heroSubtitle="Supplementary bonding in bathrooms is one of the most common questions in domestic electrical work. This guide gives the omission test from Regulation 701.415.2 up front, then conductor sizes from Regulation 544.2, what to bond, how to test it, and how to record it on an EICR."
@@ -745,7 +745,7 @@ export default function BondingInBathroomPage() {
       faqHeading="Frequently Asked Questions About Bathroom Bonding"
       relatedPages={relatedPages}
       ctaHeading="Record Bonding Observations on Your Phone"
-      ctaSubheading="EICR certificates with AI observation coding, remedial quoting, and instant PDF delivery. Join 1,600+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
+      ctaSubheading="EICR certificates with AI observation coding, remedial quoting, and instant PDF delivery. Join 2,100+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
     />
   );
 }

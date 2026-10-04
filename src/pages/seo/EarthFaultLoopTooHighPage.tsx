@@ -100,7 +100,7 @@ const sections = [
           <strong className="text-white">Got a reading in front of you?</strong> Skip the theory and{' '}
           <a
             href="#calculator"
-            className="font-semibold text-yellow-400 underline underline-offset-4 touch-manipulation"
+            className="font-semibold text-elec-yellow underline underline-offset-4 touch-manipulation"
           >
             check your Zs against the BS 7671 limit
           </a>{' '}
@@ -132,17 +132,17 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white leading-relaxed">
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">BS 7671 Table 41.2 (Reg 411.4.201):</strong>{' '}
+                <strong className="text-elec-yellow">BS 7671 Table 41.2 (Reg 411.4.201):</strong>{' '}
                 Maximum Zs values for circuits protected by fuses (BS 88-2, BS 88-3, BS 3036, BS
                 1362) at a disconnection time of 0.4 s. Values depend on fuse type and rating.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">BS 7671 Table 41.3 (Reg 411.4.202):</strong>{' '}
+                <strong className="text-elec-yellow">BS 7671 Table 41.3 (Reg 411.4.202):</strong>{' '}
                 Maximum Zs values for circuits protected by circuit breakers (MCBs to BS EN 60898,
                 RCBOs to BS EN 61009-1). Values depend on breaker type (B, C, or D) and rating. The
                 table covers both the 0.4 s time of Reg 411.3.2.2 and the 5 s time of Reg 411.3.2.3
@@ -151,17 +151,17 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">BS 7671 Table 41.4 (Reg 411.4.203):</strong>{' '}
+                <strong className="text-elec-yellow">BS 7671 Table 41.4 (Reg 411.4.203):</strong>{' '}
                 Maximum Zs values for fuse-protected distribution circuits or final circuits where a
                 disconnection time of 5 s applies (Reg 411.3.2.3).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">GN3 0.8 Site Factor (GN3 Reg 1.16.9):</strong>{' '}
+                <strong className="text-elec-yellow">GN3 0.8 Site Factor (GN3 Reg 1.16.9):</strong>{' '}
                 Guidance Note 3 9th Ed:2022 applies the BS 7671 Appendix 3 acceptance equation
                 Zs(measured) = 0.8 × (Uo / Ia). The 0.8 factor converts the tabulated limit to the
                 maximum acceptable cold-measured site reading, accounting for conductor temperature
@@ -175,7 +175,7 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-center gap-2 mb-2">
-            <ShieldCheck className="w-5 h-5 text-yellow-400 flex-shrink-0" />
+            <ShieldCheck className="w-5 h-5 text-elec-yellow flex-shrink-0" />
             <h3 className="font-bold text-white text-base">
               30 mA RCD Required on Domestic Lighting Circuits (Reg 411.3.4)
             </h3>
@@ -218,7 +218,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-1">
             Maximum Zs (&Omega;) — 230 V, 0.4 s disconnection
           </h3>
-          <p className="text-white/70 text-xs mb-4">
+          <p className="text-white text-xs mb-4">
             MCB to BS EN 60898 / RCBO to BS EN 61009-1 · tabulated values (apply the GN3 0.8 factor
             for the cold-measured site limit)
           </p>
@@ -238,19 +238,19 @@ const sections = [
             ).map(([rating, b, c, d]) => (
               <Fragment key={rating}>
                 <div className="p-2 rounded bg-white/[0.04] text-center text-white">{rating}</div>
-                <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+                <div className="p-2 rounded bg-white/[0.04] text-center text-elec-yellow font-bold">
                   {b}
                 </div>
-                <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+                <div className="p-2 rounded bg-white/[0.04] text-center text-elec-yellow font-bold">
                   {c}
                 </div>
-                <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
+                <div className="p-2 rounded bg-white/[0.04] text-center text-elec-yellow font-bold">
                   {d}
                 </div>
               </Fragment>
             ))}
           </div>
-          <p className="text-white/70 text-xs mt-4">
+          <p className="text-white text-xs mt-4">
             Values per BS 7671:2018+A4:2026 Table 41.3, Reg 411.4.202, 230 V, 0.4 s. A higher trip
             type needs a lower Zs (Type D needs roughly a quarter of the Type B limit). For the
             on-site pass/fail figure, multiply by 0.8 — e.g. a 32 A Type B limit of 1.37 &Omega;
@@ -313,7 +313,7 @@ const sections = [
         <div className="space-y-4 mt-4">
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">1. Poor Earth Connection</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -330,7 +330,7 @@ const sections = [
 
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">2. Long Cable Runs</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -348,7 +348,7 @@ const sections = [
 
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-start gap-3">
-              <Globe className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <Globe className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">3. High Ze from the Supply</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -365,7 +365,7 @@ const sections = [
 
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">4. Loose Connections</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -382,7 +382,7 @@ const sections = [
 
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">5. Corroded Earth</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -413,7 +413,7 @@ const sections = [
         <div className="space-y-4 mt-4">
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-2">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Check and Improve the Main Earth</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -427,7 +427,7 @@ const sections = [
 
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-2">
-              <Cable className="w-5 h-5 text-yellow-400" />
+              <Cable className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Upsize the CPC</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -442,7 +442,7 @@ const sections = [
 
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-2">
-              <ShieldCheck className="w-5 h-5 text-yellow-400" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Supplementary Bonding</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -457,7 +457,7 @@ const sections = [
 
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-2">
-              <Zap className="w-5 h-5 text-yellow-400" />
+              <Zap className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Change the Protective Device</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -473,7 +473,7 @@ const sections = [
 
           <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <div className="flex items-center gap-2 mb-2">
-              <Globe className="w-5 h-5 text-yellow-400" />
+              <Globe className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Add a Local Earth Rod (TT Systems)</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -500,7 +500,7 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
           <div className="flex items-center gap-2 mb-2">
-            <Zap className="w-5 h-5 text-yellow-400 flex-shrink-0" />
+            <Zap className="w-5 h-5 text-elec-yellow flex-shrink-0" />
             <h3 className="font-bold text-white text-base">
               Consider AFDDs When Replacing Wiring or Consumer Units (Reg 421.1.7)
             </h3>
@@ -538,7 +538,7 @@ const sections = [
         </p>
         <ul className="space-y-3 my-4">
           <li className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
               <strong className="text-white">TN-S system:</strong> Ze exceeds 0.8 ohms. The TN-S
               earth path runs through the lead sheath of the supply cable. A high Ze suggests the
@@ -546,7 +546,7 @@ const sections = [
             </span>
           </li>
           <li className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
               <strong className="text-white">TN-C-S (PME) system:</strong> Ze exceeds 0.35 ohms. On
               a PME system, the neutral and earth are combined in the supply cable, giving
@@ -555,7 +555,7 @@ const sections = [
             </span>
           </li>
           <li className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
               <strong className="text-white">No earth provided:</strong> If the supply has no earth
               facility at all (sometimes found in very old TN-S installations where the sheath has
@@ -685,7 +685,7 @@ export default function EarthFaultLoopTooHighPage() {
         <>
           Earth Fault Loop Impedance Too High?
           <br />
-          <span className="text-yellow-400">What It Means & What to Do</span>
+          <span className="text-elec-yellow">What It Means & What to Do</span>
         </>
       }
       heroSubtitle="A Zs value that exceeds the BS 7671 maximum means the protective device may not disconnect quickly enough during an earth fault — creating a serious electric shock risk. This guide explains what 'too high' means, every common cause, and the practical solutions available."
@@ -695,7 +695,7 @@ export default function EarthFaultLoopTooHighPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Verify Zs Compliance on Site with Elec-Mate"
-      ctaSubheading="Zs lookup calculator, R1+R2 calculator, auto-validated schedule of tests, and digital EICR forms. Join 1,600+ UK electricians. 7-day free trial, cancel anytime."
+      ctaSubheading="Zs lookup calculator, R1+R2 calculator, auto-validated schedule of tests, and digital EICR forms. Join 2,100+ UK electricians. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -273,7 +273,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICRs for landlords and HMOs</strong> — Luton's large private rental sector
                 generates consistent EICR demand. Electricians who work with local letting agents
@@ -281,7 +281,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacements</strong> — old fuse boards across Luton's
                 post-war housing stock generate significant demand for consumer unit upgrades. Most
@@ -289,7 +289,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger installations</strong> — Luton's proximity to the M1 and London
                 commuter routes drives demand for home EV chargers. Commercial EV charger
@@ -297,7 +297,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full and partial rewires</strong> — Luton's Victorian and post-war housing
                 stock generates consistent rewiring work. Partial rewires following EICR
@@ -426,7 +426,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EIC and EICR Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -458,7 +458,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Luton electricians"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -485,7 +485,7 @@ export default function ElectricianLutonPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Luton: <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Luton: <span className="text-elec-yellow">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Luton's diverse housing stock — from Victorian terraces and post-war estates to modern developments — creates strong demand for qualified electricians with Part P compliance expertise, EICR knowledge, and EV charger installation skills."
@@ -496,7 +496,7 @@ export default function ElectricianLutonPage() {
       faqHeading="Frequently Asked Questions About Electricians in Luton"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Luton Electricians"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Part P compliance and the demands of Luton's busy rental and residential market. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Part P compliance and the demands of Luton's busy rental and residential market. 7-day free trial."
     />
   );
 }

@@ -10,7 +10,7 @@ import {
   ValidationError,
   createClient,
   generateEmbeddingWithRetry,
-  callLovableAIWithTimeout,
+  callAIWithTimeout,
   parseJsonWithRepair,
 } from '../_shared/v3-core.ts';
 import { callOpenAI } from '../_shared/ai-providers.ts';
@@ -162,11 +162,6 @@ serve(async (req) => {
     const GEMINI_API_KEY = Deno.env.get('GEMINI_API_KEY');
     if (!GEMINI_API_KEY) {
       throw new Error('GEMINI_API_KEY not configured');
-    }
-
-    const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
-    if (!LOVABLE_API_KEY) {
-      throw new Error('LOVABLE_API_KEY not configured');
     }
 
     // Use commissioning-specific RAG module for reliable GN3 retrieval
@@ -933,7 +928,7 @@ ${voltage ? `Voltage: ${voltage}V` : ''}
 
 Include instrument setup, lead placement, step-by-step procedures, expected results, and troubleshooting.`;
 
-      // Step 4: Call Lovable AI with universal wrapper
+      // Step 4: Call the AI with the universal wrapper
       logger.debug('Calling AI with wrapper');
       const { callAI } = await import('../_shared/ai-wrapper.ts');
 

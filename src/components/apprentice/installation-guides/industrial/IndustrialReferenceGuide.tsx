@@ -136,7 +136,7 @@ const IndustrialReferenceGuide = () => {
     },
     {
       test: 'RCD Operation',
-      testCurrent: '1×IΔn AC test (5×IΔn deleted at A4:2026)',
+      testCurrent: '1×IΔn AC test (5×IΔn deleted at A2:2022)',
       tripTime: '≤300ms at 1×IΔn (S-type 130–500ms)',
       procedure: 'Test all RCD devices',
       frequency: 'Initial and 6-monthly',

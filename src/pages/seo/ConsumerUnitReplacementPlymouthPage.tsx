@@ -148,7 +148,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCBs</strong> — one per circuit, sized to protect the cable. They trip
                 automatically and reset without needing a fuse wire. Typical ratings: 6 A
@@ -156,7 +156,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCDs</strong> — detect earth leakage current and disconnect within
                 milliseconds to protect against electric shock. Under Regulation 411.3.3 of{' '}
@@ -167,7 +167,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCBOs</strong> — combine MCB and RCD protection in one device. An RCBO
                 consumer unit gives each circuit independent earth fault protection — a fault on one
@@ -194,7 +194,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Post-war estates</strong> — Devonport, Ernesettle, Whitleigh, and Barne
                 Barton contain large amounts of 1950s and 1960s housing. Electrical installations
@@ -203,7 +203,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Victorian and Edwardian terraces</strong> — Mutley, Greenbank, and Compton
                 retain older properties with wiring often updated piecemeal in the 1970s and 1980s —
@@ -211,7 +211,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Private rented sector</strong> — Plymouth has a significant rental market,
                 particularly around the University of Plymouth (Mutley, Lipson) and Plymouth Marjon
@@ -237,14 +237,14 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rewireable fuses</strong> — ceramic fuse carriers with wire fuses offer no
                 RCD protection. Common in Plymouth properties with original 1950s–1970s wiring.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No RCD on socket circuits</strong> — C2 observation under Regulation 411.3.3
                 of BS 7671. Requires remedial action (consumer unit replacement) within 28 days if
@@ -252,14 +252,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Plastic enclosure</strong> — non-compliant for any replacement since January
                 2016 under Regulation 421.1.201.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Burning smell, scorch marks, or noisy MCBs</strong> — signs of deteriorated
                 components requiring urgent inspection and likely replacement.
@@ -319,14 +319,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1–2 bedroom flat or small terraced house</strong> — £400 to £520. Common
                 across central and inner Plymouth postcodes. 8 to 12 circuits. Typically half a day.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3–4 bedroom semi or detached</strong> — £500 to £700. Most typical Plymouth
                 family home. 12 to 18 circuits. Allow 4 to 8 hours, possibly a full day for older
@@ -334,7 +334,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HMO or large property</strong> — £700 to £950+. High circuit count, fire
                 alarm testing, potentially multiple consumer units. Earthing and bonding upgrades
@@ -342,7 +342,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What is included</strong> — metal consumer unit (specified brand and model),
                 all labour, circuit reconnection, bonding checks, full testing, EIC with schedule of
@@ -422,7 +422,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use the scheme registers</strong> — the NICEIC, NAPIT, and ELECSA online
                 contractor search tools allow you to find and verify registered Plymouth
@@ -431,7 +431,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Required qualifications</strong> — a minimum of Level 3 NVQ in Electrical
                 Installations and a current BS 7671 qualification (City and Guilds 2382 18th
@@ -440,7 +440,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Written quotes specifying materials</strong> — insist on a quote that
                 specifies the make, model, and configuration of the consumer unit. Compare at least
@@ -465,7 +465,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Issue EICs On Site in Plymouth</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -499,7 +499,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Plymouth electrical business with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and professional certificate management."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and professional certificate management."
           icon={FileCheck2}
         />
       </>
@@ -525,7 +525,7 @@ export default function ConsumerUnitReplacementPlymouthPage() {
       heroTitle={
         <>
           Consumer Unit Replacement Plymouth:{' '}
-          <span className="text-yellow-400">Fuse Box Costs &amp; Regulations 2026</span>
+          <span className="text-elec-yellow">Fuse Box Costs &amp; Regulations 2026</span>
         </>
       }
       heroSubtitle="Everything Plymouth homeowners and landlords need to know about consumer unit replacement — 2026 costs from £400 to £750, the mandatory metal enclosure requirement, Part P Building Regulations, and older wiring in Plymouth's post-war housing stock."
@@ -536,7 +536,7 @@ export default function ConsumerUnitReplacementPlymouthPage() {
       faqHeading="Frequently Asked Questions — Consumer Unit Replacement Plymouth"
       relatedPages={relatedPages}
       ctaHeading="Complete Consumer Unit Certificates On Site in Plymouth"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

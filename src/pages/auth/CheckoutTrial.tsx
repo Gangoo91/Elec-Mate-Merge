@@ -2,23 +2,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Capacitor } from '@capacitor/core';
 import { AnimatePresence, motion } from 'framer-motion';
-import {
-  ArrowRight,
-  Bell,
-  Bot,
-  CreditCard,
-  FileCheck,
-  GraduationCap,
-  Loader2,
-  LogOut,
-  Mail,
-  RefreshCw,
-  Shield,
-  Wrench,
-  Zap,
-} from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 
-import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { storageGetSync, storageRemoveSync } from '@/utils/storage';
@@ -33,6 +18,18 @@ import {
   trackPostSignupStepViewed,
 } from '@/lib/analytics-events';
 import { fireServerCapi } from '@/lib/attribution';
+import { useSignupOffer, offerForPlan, offerDuration } from '@/hooks/useSignupOffer';
+import { Section, PlanRows, ShellFooter } from '@/components/auth/SignupShell';
+import { AuthFrame, AuthHeading } from '@/components/auth/AuthFrame';
+import {
+  PLANS,
+  JOURNEY,
+  offerLabel,
+  dayMonth,
+  trialEndDate,
+  type Plan,
+} from '@/components/auth/signupPlans';
+import { buttonPrimaryCn, buttonSecondaryCn } from '@/components/forms/fieldStyles';
 
 const ROLE_TO_PRICE: Record<
   string,
@@ -55,10 +52,10 @@ const ROLE_TO_PRICE: Record<
 const MAX_PACKAGE_RETRIES = 3;
 
 const FEATURES = [
-  { icon: FileCheck, label: 'Certificates, quotes and invoices' },
-  { icon: Bot, label: 'AI tools built around electrical work' },
-  { icon: GraduationCap, label: 'Full Study Centre access' },
-  { icon: Wrench, label: 'Every calculator and specialist tool' },
+  'Certificates, quotes and invoices',
+  'AI tools built around electrical work',
+  'The full Study Centre',
+  'Every calculator and specialist tool',
 ];
 
 const CheckoutTrial = () => {
@@ -93,6 +90,16 @@ const CheckoutTrial = () => {
 
   const role = profile?.role || storageGetSync('elec-mate-profile-role') || 'electrician';
   const priceInfo = ROLE_TO_PRICE[role] || ROLE_TO_PRICE.electrician;
+
+  // The offer the sign-up page promised (stored there as the code that fits
+  // this plan). This page used to say "Then £19.99/month" even with a 25% link
+  // — the last thing read before the card form contradicted the offer.
+  const { offer } = useSignupOffer(storageGetSync('elec-mate-offer-code'));
+  const terms = offerForPlan(offer, priceInfo.planId.replace('-monthly', ''));
+  const payMonthly = terms?.price ? `£${terms.price}` : priceInfo.monthly;
+  const offerLine = terms
+    ? `${terms.percentOff}% off ${offerDuration(terms.months)}${terms.months ? `, then ${priceInfo.monthly}` : ''}`
+    : null;
 
   // Funnel: fires once per visit so the dashboard can distinguish "never saw
   // the trial page" from "saw it and bailed" after signup.
@@ -184,7 +191,8 @@ const CheckoutTrial = () => {
         if (offerCode) storageRemoveSync('elec-mate-offer-code');
         if (referralCode) storageRemoveSync('elec-mate-referral-code');
         // Fire InitiateCheckout on both Pixel and server CAPI before redirect
-        const checkoutValue = priceInfo.planId.startsWith('apprentice') ? 6.99 : 19.99;
+        const listValue = priceInfo.planId.startsWith('apprentice') ? 6.99 : 19.99;
+        const checkoutValue = terms?.price ? parseFloat(terms.price) || listValue : listValue;
         // Cookieless funnel events — consent-independent counts for the Vercel dashboard.
         // plan_selected also fires here: most people reach checkout via this page rather
         // than Subscriptions.tsx, so tracking it only there made the step read as a cliff.
@@ -215,7 +223,16 @@ const CheckoutTrial = () => {
       setError(err instanceof Error ? err.message : 'Failed to start checkout. Please try again.');
       setIsRedirecting(false);
     }
-  }, [isRedirecting, priceInfo.planId, priceInfo.priceId, priceInfo.label, user?.email, user?.id]);
+  }, [
+    isRedirecting,
+    navigate,
+    priceInfo.planId,
+    priceInfo.priceId,
+    priceInfo.label,
+    terms?.price,
+    user?.email,
+    user?.id,
+  ]);
 
   const startNativePurchase = useCallback(async () => {
     if (!packagesReady) {
@@ -338,288 +355,178 @@ const CheckoutTrial = () => {
     window.location.replace('/');
   };
 
-  const trialEndDate = new Date(Date.now() + 7 * 86400000).toLocaleDateString('en-GB', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  });
-
   const platform = Capacitor.getPlatform();
   const persistentError =
     isNative && !packagesReady && retryCount >= MAX_PACKAGE_RETRIES && !isRetrying;
   const ctaLoading =
     isRedirecting || isPurchasing || (isNative && packagesLoading && !displayError) || isRetrying;
 
+  const plan: Plan = priceInfo.planId.startsWith('apprentice') ? 'apprentice' : 'electrician';
+  const trialEnd = dayMonth(trialEndDate());
+  const store = platform === 'ios' ? 'Apple' : 'Google';
+
   if (isRedirecting && !displayError) {
     return (
-      <div className="flex min-h-[100svh] items-center justify-center bg-[#0a0a0a] p-6">
+      <div className="flex min-h-[100svh] items-center justify-center bg-background p-6 text-white">
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center">
-          <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-2xl border border-yellow-500/25 bg-yellow-500/[0.12]">
-            <Loader2 className="h-7 w-7 animate-spin text-yellow-400" />
-          </div>
-          <h1 className="mb-2 text-[18px] font-semibold text-white">Setting up your trial...</h1>
-          <p className="text-[14px] text-white">Redirecting to secure checkout</p>
+          <Loader2 className="mx-auto h-7 w-7 animate-spin text-elec-yellow" />
+          <h1 className="mt-5 text-[18px] font-semibold text-white">Setting up your free week</h1>
+          <p className="mt-1 text-[14px] text-white">Taking you to secure checkout</p>
         </motion.div>
       </div>
     );
   }
 
+  const primaryLabel = ctaLoading
+    ? isPurchasing
+      ? 'Processing'
+      : isRedirecting
+        ? 'Redirecting'
+        : 'Loading plans'
+    : displayError
+      ? 'Try again'
+      : isNative
+        ? 'Start free trial'
+        : 'Continue to secure checkout';
+
   return (
-    <div
-      className="min-h-[100svh] bg-black"
-      style={{
-        background:
-          'radial-gradient(ellipse 90% 55% at 50% 0%, rgba(250,204,21,0.06) 0%, transparent 58%), #000',
+    <AuthFrame
+      step={{ current: 2, total: JOURNEY.length }}
+      panel={{
+        headline: (
+          <>
+            Seven days free. <span className="text-elec-yellow">£0 today.</span>
+          </>
+        ),
+        sub: `${userCount} electricians and apprentices run their work on Elec-Mate.`,
       }}
-    >
-      <div
-        className={cn(
-          'mx-auto flex min-h-[100svh] max-w-[1060px] flex-col justify-center px-5 pb-[calc(env(safe-area-inset-bottom)+24px)] pt-[calc(env(safe-area-inset-top)+24px)] lg:px-8',
-          // The fixed cookie banner overlaps the trial CTA at the bottom on
-          // mobile until consent is answered — clear it while the banner is up.
-          !hasConsented && 'pb-36'
-        )}
-      >
-        {/* One header — one logo, one headline, one message */}
-        <div className="text-center">
-          <div className="flex items-center justify-center gap-3">
-            <img src="/logo.jpg" alt="Elec-Mate" className="h-10 w-10 rounded-xl object-cover" />
-            <span className="text-[20px] font-bold tracking-tight text-white">
-              Elec-<span className="text-yellow-400">Mate</span>
-            </span>
-          </div>
-          <h1 className="mx-auto mt-6 max-w-[22ch] text-[2rem] font-bold leading-[1.08] tracking-[-0.03em] text-white sm:text-[2.4rem]">
-            Start your <span className="text-yellow-400">{priceInfo.label.toLowerCase()}</span>{' '}
-            trial.
-          </h1>
-          <p className="mx-auto mt-3 max-w-[30rem] text-[14.5px] leading-[1.65] text-white/70">
-            {isNative
-              ? `Everything unlocked for 7 days — secured by ${platform === 'ios' ? 'Apple' : 'Google'}, nothing charged today.`
-              : 'Everything unlocked for 7 days — card taken at secure checkout, nothing charged today.'}
-          </p>
-        </div>
-
-        {/* One card, two halves — the decision and what it unlocks */}
-        <div className="mt-8 overflow-hidden rounded-[2rem] border border-white/[0.08] bg-white/[0.03] shadow-[0_30px_90px_rgba(0,0,0,0.28)] lg:grid lg:grid-cols-[0.92fr_1.08fr]">
-          {/* Value half — below the action on mobile, left of it on desktop */}
-          <div className="order-2 border-t border-white/[0.08] p-6 sm:p-8 lg:order-1 lg:border-r lg:border-t-0">
-            <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-yellow-400">
-              What your trial unlocks
-            </p>
-            <div className="mt-5 space-y-4">
-              {FEATURES.map((item) => (
-                <div key={item.label} className="flex items-center gap-3.5">
-                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border border-yellow-500/25 bg-yellow-500/[0.12]">
-                    <item.icon className="h-4 w-4 text-yellow-400" />
-                  </div>
-                  <span className="text-[14px] font-medium text-white">{item.label}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-7 space-y-2 border-t border-white/[0.06] pt-5 text-[13px] leading-[1.7] text-white/68">
-              <div>
-                Plan selected: <span className="text-white">{priceInfo.label}</span> ·{' '}
-                <span className="font-semibold text-yellow-400">£0 today</span>
-              </div>
-              <div>
-                Joining <span className="font-semibold text-yellow-400">{userCount}</span> UK
-                electricians already live on Elec-Mate.
-              </div>
-            </div>
-          </div>
-
-          {/* Action half */}
-          <div className="order-1 p-6 sm:p-8 lg:order-2">
-            <div className="rounded-2xl border border-yellow-500/20 bg-yellow-500/[0.06] p-5 text-center">
-              <div className="flex items-end justify-center gap-2">
-                <span className="text-[2.5rem] font-bold leading-none tracking-[-0.03em] text-white">
-                  £0
-                </span>
-                <span className="pb-1 text-[15px] font-semibold text-yellow-400">today</span>
-              </div>
-              <p className="mx-auto mt-2 max-w-[22rem] text-[13px] leading-[1.6] text-white">
-                Then {priceInfo.monthly}/month from {trialEndDate}. Cancel before then and you pay
-                nothing.
-              </p>
-            </div>
-
-            <div className="mt-4 space-y-3 rounded-2xl border border-white/[0.08] bg-black/30 p-4">
-              {[
-                {
-                  icon: Zap,
-                  title: 'Today — full access unlocked',
-                  detail: 'Every tool, certificate and course. £0 charged.',
-                },
-                {
-                  icon: Bell,
-                  title: 'Before your trial ends',
-                  detail: 'We remind you, so there are no surprises.',
-                },
-                {
-                  icon: CreditCard,
-                  title: `${trialEndDate} — first payment`,
-                  detail: `${priceInfo.monthly}/month, only if you decide to keep it.`,
-                },
-              ].map((step) => (
-                <div key={step.title} className="flex items-start gap-3.5">
-                  <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl border border-yellow-500/25 bg-yellow-500/[0.12]">
-                    <step.icon className="h-4 w-4 text-yellow-400" />
-                  </div>
-                  <div>
-                    <p className="text-[13px] font-semibold leading-tight text-white">
-                      {step.title}
-                    </p>
-                    <p className="mt-0.5 text-[12px] leading-[1.5] text-white">{step.detail}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <AnimatePresence>
-              {displayError && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  className="mt-4 overflow-hidden"
-                >
-                  <div className="space-y-3 rounded-2xl border border-red-500/25 bg-red-500/[0.08] p-4">
-                    <p className="text-center text-[14px] font-medium text-white">
-                      {displayError}
-                    </p>
-                    {isNative && (
-                      <button
-                        onClick={handleManualRetry}
-                        className="flex h-11 w-full touch-manipulation items-center justify-center gap-2 rounded-xl border border-white/[0.12] bg-white/[0.06] text-[14px] font-semibold text-white transition-colors hover:bg-white/[0.12]"
-                      >
-                        <RefreshCw className="h-4 w-4" />
-                        Try again
-                      </button>
-                    )}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            {persistentError && !displayError && (
-              <div className="mt-4 space-y-3 rounded-2xl border border-white/[0.08] bg-white/[0.04] p-4">
-                <p className="text-center text-[14px] font-medium text-white">
-                  Payment options could not be loaded
-                </p>
-                <div className="flex gap-3">
-                  <button
-                    onClick={handleManualRetry}
-                    className="flex h-11 flex-1 touch-manipulation items-center justify-center gap-2 rounded-xl border border-yellow-500/25 bg-yellow-500/[0.1] text-[13px] font-semibold text-white transition-colors hover:bg-yellow-500/[0.15]"
-                  >
-                    <RefreshCw className="h-3.5 w-3.5" />
-                    Retry
-                  </button>
-                  <a
-                    href="mailto:info@elec-mate.com"
-                    className="flex h-11 flex-1 touch-manipulation items-center justify-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.06] text-[13px] font-semibold text-white transition-colors hover:bg-white/[0.10]"
-                  >
-                    <Mail className="h-3.5 w-3.5" />
-                    Support
-                  </a>
-                </div>
-              </div>
-            )}
-
-            <Button
-              onClick={isNative ? startNativePurchase : startCheckout}
-              disabled={ctaLoading || persistentError}
-              className={cn(
-                'mt-5 h-14 w-full touch-manipulation rounded-2xl text-[16px] font-bold transition-all duration-150',
-                ctaLoading
-                  ? 'cursor-not-allowed bg-white/[0.08] text-white'
-                  : displayError
-                    ? 'border border-white/[0.12] bg-white/[0.06] text-white hover:bg-white/[0.12]'
-                    : 'bg-yellow-500 text-black hover:bg-yellow-400'
-              )}
-            >
-              {ctaLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                  {isPurchasing
-                    ? 'Processing...'
-                    : isRedirecting
-                      ? 'Redirecting...'
-                      : 'Loading plans...'}
-                </>
-              ) : displayError ? (
-                <>
-                  <RefreshCw className="mr-2 h-4 w-4" />
-                  Try again
-                </>
-              ) : (
-                <>
-                  {isNative ? 'Start free trial' : 'Continue to secure checkout'}
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </>
-              )}
-            </Button>
-
-            {isNative && packagesLoading && !displayError && (
-              <p className="mt-3 text-center text-[12px] text-white">Loading payment options...</p>
-            )}
-
-            {isNative && (
-              <button
-                onClick={handleRestore}
-                disabled={isRestoring || isPurchasing}
-                className="mt-3 flex h-11 w-full touch-manipulation items-center justify-center gap-2 rounded-xl text-[13px] font-semibold text-white/90 transition-colors hover:text-yellow-400 disabled:opacity-50"
-              >
-                {isRestoring ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    Restoring...
-                  </>
-                ) : (
-                  'Already subscribed? Restore purchase'
-                )}
-              </button>
-            )}
-
-            <div className="mt-5 border-t border-white/[0.08] pt-4">
-              <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[12px] text-white">
-                <span className="flex items-center gap-1.5">
-                  <Shield className="h-3.5 w-3.5 text-yellow-400" />
-                  {isNative
-                    ? `Secured by ${platform === 'ios' ? 'Apple' : 'Google'}`
-                    : 'Secured by Stripe'}
-                </span>
-                <span>Cancel anytime</span>
-                <span>No charge until {trialEndDate}</span>
-              </div>
-
-              <p className="mt-3 text-center text-[12px] leading-relaxed text-white/60">
-                {isNative
-                  ? `Cancel anytime from your ${platform === 'ios' ? 'Apple' : 'Google'} subscription settings — it takes two taps.`
-                  : 'Cancel anytime from Settings → Subscription inside the app — two clicks, no phone calls.'}
-              </p>
-
-              {isNative && (
-                <p className="mx-auto mt-3 max-w-[320px] text-center text-[10px] leading-relaxed text-white/50">
-                  Payment is charged to your {platform === 'ios' ? 'Apple ID' : 'Google account'}{' '}
-                  at confirmation and auto-renews unless cancelled 24h before the period ends.
-                </p>
-              )}
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-6 text-center">
+      footer={
+        <ShellFooter>
           <button
-            onClick={handleSignOut}
-            className="inline-flex touch-manipulation items-center gap-1.5 rounded-xl px-4 py-2 text-[12px] text-white transition-colors hover:text-yellow-400"
+            type="button"
+            onClick={isNative ? startNativePurchase : startCheckout}
+            disabled={ctaLoading || persistentError}
+            className={cn(buttonPrimaryCn, 'flex w-full items-center justify-center')}
           >
-            <LogOut className="h-3 w-3" />
-            Sign out
+            {ctaLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {primaryLabel}
+          </button>
+        </ShellFooter>
+      }
+    >
+      <div className="space-y-6">
+        <AuthHeading
+          title="Start your free week"
+          sub={
+            <>
+              <span className="font-semibold text-elec-yellow">£0 today</span>, then {payMonthly}
+              /mo. Cancel any time.
+            </>
+          }
+        />
+        <Section title="Your plan">
+          <div className="flex items-baseline justify-between gap-3">
+            <p className="text-[19px] font-bold tracking-tight text-white">{PLANS[plan].label}</p>
+            {terms && (
+              <span className="text-right text-[13px] font-semibold text-elec-yellow">
+                {offerLabel(terms)}
+              </span>
+            )}
+          </div>
+          <PlanRows plan={plan} terms={terms} />
+          <p className="text-[13px] text-white">
+            {isNative
+              ? `Secured by ${store}. Cancel any time from your ${store} subscription settings.`
+              : 'Card taken at secure checkout by Stripe. Cancel any time from Settings → Subscription — two clicks, no phone calls.'}
+          </p>
+          {isNative && (
+            <p className="text-[11px] leading-relaxed text-white">
+              Payment is charged to your {platform === 'ios' ? 'Apple ID' : 'Google account'} at
+              confirmation and auto-renews unless cancelled 24h before the period ends.
+            </p>
+          )}
+        </Section>
+
+        <Section title="What happens next">
+          <dl className="divide-y divide-white/[0.08] border-t border-white/[0.08]">
+            {[
+              {
+                k: 'Today',
+                v: 'Full access to every tool, certificate and course. Nothing charged.',
+              },
+              { k: 'Before it ends', v: 'We remind you, so there are no surprises.' },
+              {
+                k: trialEnd,
+                v: `First payment of ${payMonthly}/month${offerLine ? ` (${offerLine})` : ''}, only if you keep it.`,
+              },
+            ].map((r) => (
+              <div key={r.k} className="grid grid-cols-[110px_1fr] gap-3 py-2.5">
+                <dt className="text-[13px] font-semibold text-elec-yellow">{r.k}</dt>
+                <dd className="text-[13.5px] leading-snug text-white">{r.v}</dd>
+              </div>
+            ))}
+          </dl>
+          <div className="border-t border-white/[0.08] pt-3">
+            <p className="text-[13px] font-semibold text-white">Included</p>
+            <ul className="mt-1.5 space-y-1">
+              {FEATURES.map((f) => (
+                <li key={f} className="text-[13.5px] text-white">
+                  {f}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Section>
+
+        {(displayError || persistentError) && (
+          <div
+            role="alert"
+            className="space-y-3 rounded-xl border border-red-400/40 bg-red-500/[0.10] px-4 py-3"
+          >
+            <p className="text-[13.5px] font-medium text-red-200">
+              {displayError || 'Payment options could not be loaded.'}
+            </p>
+            {isNative && (
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={handleManualRetry}
+                  className={cn(buttonSecondaryCn, 'flex-1')}
+                >
+                  Retry
+                </button>
+                <a
+                  href="mailto:info@elec-mate.com"
+                  className={cn(buttonSecondaryCn, 'flex flex-1 items-center justify-center')}
+                >
+                  Contact support
+                </a>
+              </div>
+            )}
+          </div>
+        )}
+
+        <div className="flex flex-wrap items-center gap-x-4">
+          {isNative && (
+            <button
+              type="button"
+              onClick={handleRestore}
+              disabled={isRestoring || isPurchasing}
+              className="h-11 text-[13px] font-semibold text-elec-yellow touch-manipulation disabled:opacity-50"
+            >
+              {isRestoring ? 'Restoring…' : 'Already subscribed? Restore purchase'}
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={handleSignOut}
+            className="h-11 text-[13px] font-semibold text-white touch-manipulation"
+          >
+            Not you? Sign out
           </button>
         </div>
       </div>
-    </div>
+    </AuthFrame>
   );
 };
 

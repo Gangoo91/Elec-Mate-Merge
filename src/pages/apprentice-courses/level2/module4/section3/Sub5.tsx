@@ -116,20 +116,20 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'On a ring final, every socket has two cables landing — one from each direction of the ring. Both line conductors share the line terminal, both neutrals the neutral terminal, both CPCs the earth terminal. Reg 526.9 (A4:2026) requires one terminal one conductor unless the terminal is designed for multiple — most modern accessory terminals are designed for two T&E conductors, three is pushing it.',
+      'On a ring final, every socket has two cables landing — one from each direction of the ring. Both line conductors share the line terminal, both neutrals the neutral terminal, both CPCs the earth terminal. Reg 526.1(d) requires the choice of connection to take account of the number of conductors connected together — most accessory terminals are designed for two T&E conductors; three is pushing it.',
   },
   {
     id: 4,
-    question: 'Reg 526.9 (A4:2026 update) requires:',
+    question: 'Reg 526.9.1 requires that, for multiwire, fine wire and very fine wire conductors:',
     options: [
-      'One terminal, one conductor — unless the terminal is specifically designed and approved for multiple conductors.',
-      'Every terminal must accept a minimum of three conductors to allow for future spurs.',
-      'All conductors at a single point must be soldered together before terminating.',
-      'Conductors of different CSA may always be combined in any screw terminal.',
+      'Suitable terminals are used, or the conductor ends are suitably treated (for example with a ferrule), so the individual wires do not separate or spread.',
+      'Only one conductor is ever placed in each terminal, whatever the terminal is designed for.',
+      'The strands are twisted together by hand — no other treatment is needed.',
+      'The conductor is doubled back on itself to fill the terminal.',
     ],
     correctAnswer: 0,
     explanation:
-      'Reg 526.9 (with A4:2026 strengthening) defaults to one terminal one conductor. Common-or-garden screw terminals on consumer-unit busbars and DIN-rail terminals are typically designed for one conductor. Looped accessory terminals (sockets, switches) accept two by design. For three or more conductors at one point, use a Wago-style lever terminal block (designed for multiples) — never force a third conductor into a two-rated terminal.',
+      'Reg 526.9.1: "In order to avoid inappropriate separation or spreading of individual wires of multiwire, fine wire or very fine wire conductors, suitable terminals shall be used or the conductor ends shall be suitably treated." In practice that means a bootlace ferrule on fine-stranded flex going into a screw or cage-clamp terminal, unless the terminal is designed for bare fine-wire conductors. How many conductors a terminal takes is a separate question — Reg 526.1(d) and the manufacturer’s data.',
   },
   {
     id: 5,
@@ -214,9 +214,9 @@ const faqs = [
       'A good 1.0-5.0 Nm torque screwdriver covers most domestic and light commercial work — Wera, Wiha and Knipex all make decent ones. For heavier work (40-100 A device terminals, sub-main switchgear) a separate 5-25 Nm torque wrench is the next step up. The torque screwdriver gets calibrated periodically (annually for paid work) and you record the cal date on your tools. Not having a torque screwdriver and tightening "by feel" used to be acceptable; in 2026 it is a documentation and quality fail.',
   },
   {
-    question: 'Why does Reg 526.9 limit one conductor per terminal?',
+    question: 'How many conductors can go in one terminal?',
     answer:
-      'Two conductors of different CSA in one terminal mean the screw clamps the larger conductor first and may not properly grip the smaller one. Three or more conductors in a non-rated terminal mean uneven clamping force, individual conductors slip, and the connection fails progressively. The A4:2026 strengthening of 526.9 makes this clearer — terminals designed for one conductor take one conductor; for multiples, use a designed-for-multiples terminal (Wago lever block, dedicated busbar, looped-terminal accessory). The cost of the right terminal is trivial compared to the cost of a failed joint.',
+      'As many as the terminal is designed for — check the manufacturer’s data. Reg 526.1(d) requires the number of conductors to be taken into account when selecting the connection. Two conductors of different CSA in one terminal mean the screw clamps the larger conductor first and may not properly grip the smaller one. Three or more conductors in a non-rated terminal mean uneven clamping force, individual conductors slip, and the connection fails progressively. Terminals designed for one conductor take one conductor; for multiples, use a designed-for-multiples terminal (Wago lever block, dedicated busbar, looped-terminal accessory). The cost of the right terminal is trivial compared to the cost of a failed joint.',
   },
 ];
 
@@ -253,7 +253,7 @@ export default function Sub5() {
             'Apply ferrules to fine-stranded conductors entering cage-clamp / push-in terminals; identify when ferrules are mandatory vs optional.',
             'Torque every screw / cage-clamp termination to the manufacturer data sheet using a calibrated torque screwdriver, recording the value on test documentation.',
             'Crimp compression lugs onto large CSA conductors (25 mm² and above) using a correctly sized hex die.',
-            'Apply BS 7671 termination regulations — 526.1 (durable continuity, mechanical strength, protection), 526.5 (terminations within enclosures), 526.9 (one terminal one conductor unless designed otherwise — A4:2026 update).',
+            'Apply BS 7671 termination regulations — 526.1 (durable continuity, mechanical strength, protection), 526.5 (terminations within enclosures), 526.9.1 (fine-wire conductor ends treated, e.g. ferrules) and 526.1(d) (the number of conductors per connection).',
           ]}
           initialVisibleCount={3}
         />
@@ -320,21 +320,21 @@ export default function Sub5() {
         />
 
         <RegsCallout
-          source="BS 7671:2018+A4:2026 — Regulation 526.9 (One terminal, one conductor — A4:2026 update)"
-          clause="(Paraphrased from the regulation as updated in A4:2026.) Where a terminal is intended for the connection of one conductor only, only one conductor shall be terminated in that terminal. Where multiple conductors are required to be terminated at a single point, a terminal designed and rated for that number of conductors shall be used."
+          source="BS 7671:2018+A4:2026 — Regulation 526.9.1 (Multiwire, fine wire and very fine wire conductors)"
+          clause="In order to avoid inappropriate separation or spreading of individual wires of multiwire, fine wire or very fine wire conductors, suitable terminals shall be used or the conductor ends shall be suitably treated."
           meaning={
             <>
-              Reg 526.9 was clarified in A4:2026 to make explicit what was previously implied.
-              Common-or-garden screw terminals on busbars and DIN-rail terminals are designed for
-              one conductor. Looped accessory terminals on sockets and switches are designed for two
-              T&E conductors side by side. For three or more conductors at one electrical node, use
-              a Wago lever block (designed for multiples), a dedicated bus terminal, or a heavy
-              stud-and-nut termination with multiple lugs. NEVER force a third conductor into a
-              two-rated terminal — the screw bites only on the largest, the others slip, and the
-              joint is a 526.1 fail.
+              This is the regulation behind the bootlace ferrule. Fine-stranded flex (class 5 or 6)
+              splays in a screw or cage-clamp terminal, so either the terminal must be designed for
+              it or the end must be treated — in practice, a correctly sized ferrule crimped with a
+              ratchet tool. The separate question of how many conductors go in one terminal is
+              covered by Reg 526.1(d): the choice of connection must take account of the number of
+              conductors connected together. Busbar and DIN-rail terminals are usually designed for
+              one conductor; looped accessory terminals for two. For three or more at one point, use
+              a terminal designed for that number, such as a lever connector block.
             </>
           }
-          cite="Source: BS 7671:2018+A4:2026 Part 5, Chapter 52, Regulation 526.9 (paraphrased; updated A4:2026)."
+          cite="Source: BS 7671:2018+A4:2026, Regulations 526.9.1 and 526.1."
         />
 
         <SectionRule />
@@ -736,7 +736,7 @@ export default function Sub5() {
           points={[
             'Reg 526.1 — every termination must provide durable electrical continuity, adequate mechanical strength and protection. Three requirements, every termination.',
             'Reg 526.5 — terminations live inside accessories, equipment enclosures, or non-combustible enclosures. Floating loft joints with chocolate block are a 526.5 fail.',
-            'Reg 526.9 (A4:2026 update) — one terminal, one conductor unless the terminal is designed for multiples. Use Wago lever blocks for 3+ at one node.',
+            'Reg 526.9.1 — fine-wire conductor ends need suitable terminals or treatment (ferrules). Reg 526.1(d) — match the number of conductors to what the terminal is designed for; use lever blocks for 3+ at one node.',
             'Strip length to manufacturer spec (typical 8-12 mm screw, 6-10 mm cage-clamp). No nicks on the copper — re-strip if you damage the conductor.',
             'Ferrules on fine-stranded flex (CL5/CL6) into cage-clamp / push-in terminals — mandatory. Optional on coarse-stranded; never on solid.',
             'Torque to the manufacturer data sheet — typical 1.0-1.5 Nm domestic RCBO circuits, 3.5+ Nm incomers, 8-12 Nm sub-main. Calibrated torque screwdriver is now standard kit.',

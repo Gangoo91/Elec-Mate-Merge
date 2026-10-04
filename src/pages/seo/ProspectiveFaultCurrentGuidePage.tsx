@@ -163,7 +163,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h3 className="font-bold text-white mb-1">
                 What happens when PFC exceeds breaking capacity
@@ -214,7 +214,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
           <div className="flex items-start gap-3">
-            <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h3 className="font-bold text-white mb-1">
                 Defining &lsquo;every relevant point&rsquo; — GN3 Reg 2.29
@@ -298,31 +298,31 @@ const sections = [
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10">
               <div className="flex justify-between items-center">
                 <p className="text-white font-bold">Domestic (end of long run)</p>
-                <p className="text-yellow-400 font-bold">0.5 — 2 kA</p>
+                <p className="text-elec-yellow font-bold">0.5 — 2 kA</p>
               </div>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10">
               <div className="flex justify-between items-center">
                 <p className="text-white font-bold">Domestic (typical urban)</p>
-                <p className="text-yellow-400 font-bold">2 — 4 kA</p>
+                <p className="text-elec-yellow font-bold">2 — 4 kA</p>
               </div>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10">
               <div className="flex justify-between items-center">
                 <p className="text-white font-bold">Domestic (near transformer)</p>
-                <p className="text-yellow-400 font-bold">4 — 8 kA</p>
+                <p className="text-elec-yellow font-bold">4 — 8 kA</p>
               </div>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10">
               <div className="flex justify-between items-center">
                 <p className="text-white font-bold">Commercial (small)</p>
-                <p className="text-yellow-400 font-bold">6 — 16 kA</p>
+                <p className="text-elec-yellow font-bold">6 — 16 kA</p>
               </div>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10">
               <div className="flex justify-between items-center">
                 <p className="text-white font-bold">Commercial/industrial (large)</p>
-                <p className="text-yellow-400 font-bold">16 — 50+ kA</p>
+                <p className="text-elec-yellow font-bold">16 — 50+ kA</p>
               </div>
             </div>
           </div>
@@ -421,19 +421,19 @@ const sections = [
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">Ze = 0.10&Omega;</p>
-              <p className="text-yellow-400 text-lg font-bold">2.3 kA</p>
+              <p className="text-elec-yellow text-lg font-bold">2.3 kA</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">Ze = 0.20&Omega;</p>
-              <p className="text-yellow-400 text-lg font-bold">1.15 kA</p>
+              <p className="text-elec-yellow text-lg font-bold">1.15 kA</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">Ze = 0.35&Omega;</p>
-              <p className="text-yellow-400 text-lg font-bold">657 A</p>
+              <p className="text-elec-yellow text-lg font-bold">657 A</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white text-sm font-bold">Ze = 0.80&Omega;</p>
-              <p className="text-yellow-400 text-lg font-bold">288 A</p>
+              <p className="text-elec-yellow text-lg font-bold">288 A</p>
             </div>
           </div>
         </div>
@@ -468,7 +468,7 @@ const sections = [
         <div className="space-y-4 my-6">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">
                   Replace devices with higher-rated ones
@@ -484,7 +484,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">
                   Install a current-limiting device upstream
@@ -505,7 +505,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Observation codes on EICR</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -665,7 +665,7 @@ export default function ProspectiveFaultCurrentGuidePage() {
       badgeIcon={Gauge}
       heroTitle={
         <>
-          Prospective Fault Current <span className="text-yellow-400">PFC Guide for BS 7671</span>
+          Prospective Fault Current <span className="text-elec-yellow">PFC Guide for BS 7671</span>
         </>
       }
       heroSubtitle="The complete guide to prospective fault current (PFC/Ipf). What it is, why it matters, how to measure it on site, typical values for domestic and commercial installations, breaking capacity of MCBs and fuses, and the BS 7671 regulatory requirements under Regulation 434.5."
@@ -680,7 +680,7 @@ export default function ProspectiveFaultCurrentGuidePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="PFC verification, built into every certificate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site testing and certification. PFC calculator, adiabatic verification, and automatic validation on every EICR. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site testing and certification. PFC calculator, adiabatic verification, and automatic validation on every EICR. 7-day free trial, cancel anytime."
     />
   );
 }

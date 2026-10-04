@@ -157,7 +157,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MHRA regulation</strong> — the Medicines and Healthcare products Regulatory
                 Agency (MHRA) inspects UK pharmaceutical manufacturing facilities against EU GMP
@@ -167,7 +167,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EU GMP Annex 1</strong> — the 2022 revision of EU GMP Annex 1 (Manufacture
                 of Sterile Medicinal Products) significantly tightened requirements for cleanroom
@@ -256,7 +256,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No exposed conduit threads or fittings</strong> — conduit systems in
                 cleanrooms must use flush, sealed fittings. Exposed threads are particle sources and
@@ -265,7 +265,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Flush-mounted accessories</strong> — sockets, switches, data outlets, and
                 control panels must be flush-mounted in the cleanroom wall or ceiling.
@@ -275,7 +275,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sealed cable penetrations</strong> — all cable entries through cleanroom
                 walls, floors, and ceilings must be sealed with cleanroom-compatible sealant
@@ -286,7 +286,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cleanable surfaces</strong> — all cable management systems, trunking, and
                 containment within the cleanroom must have smooth, continuous surfaces without
@@ -313,7 +313,7 @@ const sections = [
           equivalents, and what each demands of the electrical installation.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
-          <div className="grid grid-cols-12 gap-0 bg-white/[0.06] text-xs font-semibold uppercase tracking-wide text-white/70 px-4 py-3">
+          <div className="grid grid-cols-12 gap-0 bg-white/[0.06] text-xs font-semibold uppercase tracking-wide text-white px-4 py-3">
             <div className="col-span-3">ISO class</div>
             <div className="col-span-3">Max particles/m³ ≥0.5µm</div>
             <div className="col-span-2">GMP grade</div>
@@ -323,7 +323,7 @@ const sections = [
             <div className="col-span-3 font-bold">ISO 5</div>
             <div className="col-span-3 tabular-nums">3,520</div>
             <div className="col-span-2">Grade A</div>
-            <div className="col-span-4 text-white/90">
+            <div className="col-span-4 text-white">
               Filling zones, critical surfaces, exposed product. Minimal, flush-mounted fittings;
               all penetrations sealed; no particle-shedding materials; unidirectional (laminar)
               airflow must not be disrupted.
@@ -333,7 +333,7 @@ const sections = [
             <div className="col-span-3 font-bold">ISO 6</div>
             <div className="col-span-3 tabular-nums">35,200</div>
             <div className="col-span-2">—</div>
-            <div className="col-span-4 text-white/90">
+            <div className="col-span-4 text-white">
               Less critical aseptic support areas. Flush mounting remains the default; cleanability
               and sealed entries still apply.
             </div>
@@ -342,7 +342,7 @@ const sections = [
             <div className="col-span-3 font-bold">ISO 7</div>
             <div className="col-span-3 tabular-nums">352,000</div>
             <div className="col-span-2">Grade B / C</div>
-            <div className="col-span-4 text-white/90">
+            <div className="col-span-4 text-white">
               Background environment for aseptic operations (B) and general aseptic preparation (C).
               Flush mounting still required; some surface-mounted equipment with cleanable housings
               may be acceptable by location.
@@ -352,13 +352,13 @@ const sections = [
             <div className="col-span-3 font-bold">ISO 8</div>
             <div className="col-span-3 tabular-nums">3,520,000</div>
             <div className="col-span-2">Grade D</div>
-            <div className="col-span-4 text-white/90">
+            <div className="col-span-4 text-white">
               General manufacturing for non-sterile products and less critical sterile steps. Closer
               to clean industrial, but particle generation and cleanability still matter.
             </div>
           </div>
         </div>
-        <p className="text-sm text-white/60">
+        <p className="text-sm text-white">
           Particle limits are at the 0.5µm size for the ISO 14644-1 occupancy state being assessed.
           GMP grade equivalents are indicative — the formal grade is fixed by the qualified design,
           not by the ISO class alone.
@@ -379,22 +379,22 @@ const sections = [
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
-            <div className="text-2xl font-bold text-yellow-400 tabular-nums">10–15 Pa</div>
-            <div className="text-sm text-white/80 mt-1">
+            <div className="text-2xl font-bold text-elec-yellow tabular-nums">10–15 Pa</div>
+            <div className="text-sm text-white mt-1">
               Typical positive pressure differential held between a cleanroom and the adjacent area,
               monitored by BMS-connected pressure transducers.
             </div>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
-            <div className="text-2xl font-bold text-yellow-400 tabular-nums">99.97%</div>
-            <div className="text-sm text-white/80 mt-1">
+            <div className="text-2xl font-bold text-elec-yellow tabular-nums">99.97%</div>
+            <div className="text-sm text-white mt-1">
               HEPA filter efficiency at the 0.3µm most-penetrating particle size; differential
               pressure across the filter is monitored to detect loading.
             </div>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
-            <div className="text-2xl font-bold text-yellow-400">VSD-driven</div>
-            <div className="text-sm text-white/80 mt-1">
+            <div className="text-2xl font-bold text-elec-yellow">VSD-driven</div>
+            <div className="text-sm text-white mt-1">
               AHU fans run on variable speed drives to hold constant airflow as filters load —
               demanding EMC-aware cable screening and earthing.
             </div>
@@ -403,7 +403,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Air handling units (AHUs)</strong> — pharmaceutical AHUs are large, complex
                 items of plant that require substantial electrical supplies for fan motors (often
@@ -413,7 +413,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Variable speed drives (VSDs)</strong> — AHU fans are typically controlled by
                 variable speed drives to maintain constant airflow despite filter loading and system
@@ -423,7 +423,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pressure differential monitoring</strong> — the positive pressure
                 differential between cleanroom and adjacent areas (typically 10–15 Pascal) is
@@ -434,7 +434,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HEPA filtration controls</strong> — HEPA (High Efficiency Particulate Air)
                 filters remove 99.97% of particles ≥0.3µm. Filter differential pressure is monitored
@@ -463,25 +463,25 @@ const sections = [
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 my-4">
           <div className="rounded-2xl bg-blue-900/30 border border-blue-700/40 p-4">
             <div className="text-xl font-bold text-white tabular-nums">≤0.5 mA</div>
-            <div className="text-xs text-white/70 mt-1">
+            <div className="text-xs text-white mt-1">
               No-load leakage, transformer output winding &amp; enclosure (710.555.201(a))
             </div>
           </div>
           <div className="rounded-2xl bg-blue-900/30 border border-blue-700/40 p-4">
             <div className="text-xl font-bold text-white tabular-nums">≤10 mA</div>
-            <div className="text-xs text-white/70 mt-1">
+            <div className="text-xs text-white mt-1">
               Total no-load leakage across the whole system (transformer + all final circuits)
             </div>
           </div>
           <div className="rounded-2xl bg-blue-900/30 border border-blue-700/40 p-4">
             <div className="text-xl font-bold text-white tabular-nums">0.5–10 kVA</div>
-            <div className="text-xs text-white/70 mt-1">
+            <div className="text-xs text-white mt-1">
               Permitted rated output per transformer (710.555.201(b))
             </div>
           </div>
           <div className="rounded-2xl bg-blue-900/30 border border-blue-700/40 p-4">
             <div className="text-xl font-bold text-white">No RCD</div>
-            <div className="text-xs text-white/70 mt-1">
+            <div className="text-xs text-white mt-1">
               RCDs not used for additional protection on IT final circuits (710.415.1)
             </div>
           </div>
@@ -581,7 +581,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Installation Qualification (IQ)</strong> — documents that the electrical
                 installation has been installed correctly, in accordance with approved design
@@ -591,7 +591,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Operational Qualification (OQ)</strong> — demonstrates that the electrical
                 system operates correctly throughout its operating range. For a HVAC electrical
@@ -602,7 +602,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Performance Qualification (PQ)</strong> — demonstrates that the system
                 performs consistently in its actual operating environment, under normal operating
@@ -637,7 +637,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Audit trails</strong> — computer systems must create and maintain
                 time-stamped audit trails of all actions that create, modify, or delete records.
@@ -647,7 +647,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Access controls</strong> — computer systems must use individual logins and
                 access controls that prevent unauthorised modification of records. Shared logins are
@@ -655,7 +655,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Computer system validation (CSV)</strong> — all computer systems subject to
                 21 CFR Part 11 must be validated. The electrical installation supporting these
@@ -683,7 +683,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Documentation Is As Important As the Work
@@ -764,7 +764,7 @@ export default function PharmaceuticalElectricalPage() {
       heroTitle={
         <>
           Pharmaceutical Electrical Installation UK:{' '}
-          <span className="text-yellow-400">GMP Cleanroom Wiring Guide</span>
+          <span className="text-elec-yellow">GMP Cleanroom Wiring Guide</span>
         </>
       }
       heroSubtitle="Everything UK electricians need to know about pharmaceutical electrical installation — GMP compliance, cleanroom wiring requirements, ISO 5–8 classifications, HVAC electrical integration, isolation transformers, IQ/OQ/PQ validation, and FDA 21 CFR Part 11 electronic records."
@@ -782,7 +782,7 @@ export default function PharmaceuticalElectricalPage() {
       faqHeading="Frequently Asked Questions About Pharmaceutical Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Produce Professional Electrical Records with Elec-Mate"
-      ctaSubheading="Create test records and inspection reports that meet GMP documentation standards. Join 1,600+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
+      ctaSubheading="Create test records and inspection reports that meet GMP documentation standards. Join 2,100+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
     />
   );
 }

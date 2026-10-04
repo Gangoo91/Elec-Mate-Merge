@@ -300,7 +300,7 @@ export const RCD_ZS_LIMITS = {
   //
   // The comment here used to read "Zs = 50V / (IΔn × 5)", which yields 333 Ω at
   // 30 mA and matches none of the values below it. The ×5 came from the old
-  // 5IΔn trip test — which A4:2026 DELETED along with Table 3A — so anyone
+  // 5IΔn trip test — which A2:2022 DELETED along with Table 3A — so anyone
   // maintaining this from the comment rather than the table would have
   // "corrected" four right numbers into four wrong ones.
   30: 1667, // 30mA RCD - Note: Earth electrode resistance ≤ 200Ω

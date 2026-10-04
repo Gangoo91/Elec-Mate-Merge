@@ -293,7 +293,7 @@ const sections = [
         </p>
         <div className="space-y-3 my-4">
           <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <MessageSquare className="w-8 h-8 text-yellow-400 shrink-0 mt-1" />
+            <MessageSquare className="w-8 h-8 text-elec-yellow shrink-0 mt-1" />
             <div>
               <h3 className="font-bold text-white text-lg mb-1">Daily Briefings</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -399,7 +399,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <UserCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <UserCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Plan their development.</strong> At the start of each week, identify which
                 tasks will give the apprentice exposure to new skills and which will consolidate
@@ -407,7 +407,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <UserCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <UserCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Demonstrate, then observe.</strong> Show the apprentice how to do a task
                 correctly. Watch them do it. Provide feedback. Let them practise until they are
@@ -415,7 +415,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <UserCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <UserCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Give honest feedback.</strong> Praise good work specifically — not just
                 "well done" but "that cable dressing is neat and the terminations are clean."
@@ -424,7 +424,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <UserCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <UserCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Support their portfolio.</strong> Help the apprentice identify portfolio
                 evidence from their daily work. Photographs of completed work, descriptions of
@@ -544,7 +544,7 @@ export default function LeadershipOnSiteCoursePage() {
       heroTitle={
         <>
           Leadership on Site:{' '}
-          <span className="text-yellow-400">Training for Electrical Supervisors</span>
+          <span className="text-elec-yellow">Training for Electrical Supervisors</span>
         </>
       }
       heroSubtitle="Master site supervision, team management, communication, quality control, and apprentice mentoring. 8 modules with video content, interactive quizzes, and AI-powered study tools designed for busy electricians stepping into leadership roles."
@@ -562,7 +562,7 @@ export default function LeadershipOnSiteCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Ready to lead with confidence?"
-      ctaSubheading="Join 1,600+ UK electricians building their careers with Elec-Mate. Leadership modules, team management tools, and an AI tutor for any supervisory question. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians building their careers with Elec-Mate. Leadership modules, team management tools, and an AI tutor for any supervisory question. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/leadership-on-site"
     />

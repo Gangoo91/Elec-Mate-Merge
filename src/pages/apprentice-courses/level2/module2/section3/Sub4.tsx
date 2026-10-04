@@ -121,10 +121,10 @@ const quizQuestions = [
     id: 6,
     question: 'Quickest fix when a circuit fails the voltage drop limit?',
     options: [
-      'Age, environment, and original standards',
-      'Misreading questions and careless errors',
+      'Fit a larger protective device',
+      'Fit an RCD to the circuit',
       'Upsize the cable to the next CSA',
-      'Decreases (derating required)',
+      'Change the circuit to a lower-rated MCB',
     ],
     correctAnswer: 2,
     explanation:

@@ -233,7 +233,7 @@ const sections = [
               <thead>
                 <tr className="border-b border-white/10">
                   <th className="p-4 text-sm font-semibold text-white">Edition</th>
-                  <th className="p-4 text-sm font-semibold text-yellow-400">Year</th>
+                  <th className="p-4 text-sm font-semibold text-elec-yellow">Year</th>
                   <th className="p-4 text-sm font-semibold text-white">Published by</th>
                   <th className="p-4 text-sm font-semibold text-white">Milestone</th>
                 </tr>
@@ -247,7 +247,7 @@ const sections = [
                     <td className="p-4 text-sm text-white font-semibold whitespace-nowrap">
                       {row.edition}
                     </td>
-                    <td className="p-4 text-sm text-yellow-400 font-semibold whitespace-nowrap">
+                    <td className="p-4 text-sm text-elec-yellow font-semibold whitespace-nowrap">
                       {row.year}
                     </td>
                     <td className="p-4 text-sm text-white whitespace-nowrap">{row.body}</td>
@@ -310,7 +310,7 @@ const sections = [
               className="rounded-2xl bg-white/[0.04] border border-white/10 p-5"
             >
               <div className="flex items-start gap-3">
-                <History className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <History className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <div>
                   <h4 className="font-bold text-white mb-1">{item.title}</h4>
                   <p className="text-white text-sm leading-relaxed">{item.description}</p>
@@ -355,7 +355,7 @@ const sections = [
               className="rounded-2xl bg-white/[0.04] border border-white/10 p-5"
             >
               <div className="flex items-start gap-3">
-                <History className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <History className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <div>
                   <h4 className="font-bold text-white mb-1">{item.title}</h4>
                   <p className="text-white text-sm leading-relaxed">{item.description}</p>
@@ -380,7 +380,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Landmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">16th Edition — BS 7671:1992</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -395,7 +395,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Landmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">17th Edition — BS 7671:2008</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -462,7 +462,7 @@ const sections = [
               className="rounded-2xl bg-white/[0.04] border border-white/10 p-5"
             >
               <div className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <div>
                   <h4 className="font-bold text-white mb-1">{item.title}</h4>
                   <p className="text-white text-sm leading-relaxed">{item.description}</p>
@@ -506,7 +506,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Landmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   The Institution of Electrical Engineers (IEE)
@@ -522,7 +522,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Landmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">The Merger (2006)</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -536,7 +536,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Landmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">The IET Today</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -571,7 +571,7 @@ const sections = [
               <thead>
                 <tr className="border-b border-white/10">
                   <th className="p-4 text-sm font-semibold text-white">Era</th>
-                  <th className="p-4 text-sm font-semibold text-yellow-400">Primary Concern</th>
+                  <th className="p-4 text-sm font-semibold text-elec-yellow">Primary Concern</th>
                   <th className="p-4 text-sm font-semibold text-white">Key Innovation</th>
                 </tr>
               </thead>
@@ -610,7 +610,7 @@ const sections = [
                 ].map((row, i) => (
                   <tr key={row.era} className={i < 5 ? 'border-b border-white/5' : ''}>
                     <td className="p-4 text-sm text-white">{row.era}</td>
-                    <td className="p-4 text-sm text-yellow-400 font-semibold">{row.concern}</td>
+                    <td className="p-4 text-sm text-elec-yellow font-semibold">{row.concern}</td>
                     <td className="p-4 text-sm text-white">{row.innovation}</td>
                   </tr>
                 ))}
@@ -667,7 +667,7 @@ const sections = [
               className="rounded-2xl bg-white/[0.04] border border-white/10 p-5"
             >
               <div className="flex items-start gap-3">
-                <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+                <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
                 <div>
                   <h4 className="font-bold text-white mb-1">{item.title}</h4>
                   <p className="text-white text-sm leading-relaxed">{item.description}</p>
@@ -704,7 +704,7 @@ export default function ElectricalWiringRegulationsHistoryPage() {
       answerBox={answerBox}
       heroTitle={
         <>
-          History of UK <span className="text-yellow-400">Wiring Regulations</span>
+          History of UK <span className="text-elec-yellow">Wiring Regulations</span>
         </>
       }
       heroSubtitle="From the first fire prevention rules in 1882 to BS 7671:2018+A4:2026, the UK wiring regulations have evolved through 18 editions over 140 years. This guide traces the journey from the Society of Telegraph Engineers to the IET, and from gas lighting circuits to solar PV and battery storage."

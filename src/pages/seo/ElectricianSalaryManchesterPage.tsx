@@ -171,7 +171,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Newly qualified (0–2 years)</strong> — £32,000 to £36,000. Working for
                 smaller contractors on residential or light commercial work. JIB Electrician grade
@@ -179,7 +179,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Experienced electrician (3–7 years)</strong> — £36,000 to £46,000. On larger
                 commercial or mixed-use projects. JIB Approved Electrician (£20.08 per hour) or Site
@@ -188,14 +188,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Senior electrician / working foreman</strong> — £46,000 to £52,000. Leading
                 a small team. Often SSSTS or SMSTS qualified.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Contracts supervisor / project manager</strong> — £52,000 to £68,000.
                 Commercial and technical management of electrical works on medium to large projects.
@@ -256,7 +256,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Petrochem and process plant (Warrington/Ellesmere Port)</strong> — CompEx
                 qualified electricians earn £500 to £700 per day. Consistent demand from Shell,
@@ -264,7 +264,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Major M&amp;E construction (city centre)</strong> — large schemes such as St
                 Michael's, Noma, and NHS capital projects sustain demand for experienced site
@@ -272,7 +272,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Industrial / logistics</strong> — the M60/M62 corridor warehouse build-out
                 (Amazon, Ocado, Clipper, XPO) provides steady large-scale electrical installation
@@ -280,7 +280,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Higher education and NHS</strong> — the universities (Manchester, Manchester
                 Metropolitan, Salford) and NHS trusts are consistent clients for electrical
@@ -354,7 +354,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <GraduationCap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EICR and landlord testing</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -410,7 +410,7 @@ export default function ElectricianSalaryManchesterPage() {
       heroTitle={
         <>
           Electrician Salary Manchester:{' '}
-          <span className="text-yellow-400">Realistic 2026 Earnings Guide</span>
+          <span className="text-elec-yellow">Realistic 2026 Earnings Guide</span>
         </>
       }
       heroSubtitle="From newly qualified to contracts manager, this guide covers what electricians actually earn in Manchester and Greater Manchester in 2026 — employed salaries, self-employed day rates, and the sectors that pay the most."
@@ -421,7 +421,7 @@ export default function ElectricianSalaryManchesterPage() {
       faqHeading="Frequently Asked Questions About Electrician Salaries in Manchester"
       relatedPages={relatedPages}
       ctaHeading="Run Your Manchester Electrical Business on Your Phone"
-      ctaSubheading="Professional quoting, on-site certificates, and business management — all in one app. Join 1,600+ UK electricians using Elec-Mate. 7-day free trial."
+      ctaSubheading="Professional quoting, on-site certificates, and business management — all in one app. Join 2,100+ UK electricians using Elec-Mate. 7-day free trial."
     />
   );
 }

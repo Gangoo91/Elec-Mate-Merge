@@ -605,7 +605,7 @@ const sections = [
         <div className={cardCn}>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-yellow-400" />
+              <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-elec-yellow" />
               <span>
                 <strong>Check the CAT rating on the leads, not just the instrument</strong> — a CAT
                 IV meter on unrated leads is a CAT-nothing set-up. The lowest-rated component in the
@@ -613,7 +613,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-yellow-400" />
+              <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-elec-yellow" />
               <span>
                 <strong>Inspect leads before every use</strong> — cracked insulation, exposed
                 conductor near the probe or connector, a blown fuse in the probe body, a bent or
@@ -970,7 +970,7 @@ export default function SafeIsolationProcedureGuidePage() {
       heroTitle={
         <>
           Safe Isolation Procedure:{' '}
-          <span className="text-yellow-400">GS38, EAW Regulations, and Proving Dead</span>
+          <span className="text-elec-yellow">GS38, EAW Regulations, and Proving Dead</span>
         </>
       }
       heroSubtitle="Safe isolation is a legal requirement under the Electricity at Work Regulations 1989. This guide covers the prove-isolate-secure-prove sequence, HSE GS38 requirements for test instruments, locking off, multi-lock hasps, and the correct method for proving dead."

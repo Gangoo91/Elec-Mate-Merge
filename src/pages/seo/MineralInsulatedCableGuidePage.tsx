@@ -185,7 +185,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Conductors</strong> — annealed copper conductors, available in single-core,
                 2-core, 3-core, 4-core, and 7-core configurations. Conductor sizes from 1mm² to
@@ -193,7 +193,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insulation</strong> — highly compressed magnesium oxide (MgO) powder. MgO is
                 a white inorganic compound with a melting point of 2852°C — it cannot burn and does
@@ -202,7 +202,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sheath</strong> — seamless drawn copper tube. The copper sheath acts as the
                 outer conductor (providing the earth path), the mechanical protection, and the
@@ -211,7 +211,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Layers className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Oversheath (optional)</strong> — an outer PVC or LSF sheath is applied over
                 the copper sheath for corrosion protection and identification. Bare MICC cable (no
@@ -236,7 +236,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Continuous operating temperature</strong> — up to 250°C for bare MICC (70°C
                 or 105°C with PVC or LSF oversheath). This allows use in high-temperature
@@ -245,7 +245,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit integrity under fire</strong> — MICC can maintain circuit integrity
                 at flame temperatures exceeding 1000°C for periods of 60 minutes and beyond. This
@@ -253,7 +253,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS EN 60702-1 compliance</strong> — MICC cables are tested and classified to
                 BS EN 60702-1 (mineral insulated cables and their terminations), which specifies
@@ -283,7 +283,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MICC cutter</strong> — used to cut the cable square. A hacksaw or standard
                 cable cutters leave a rough sheath end that is difficult to seal. The MICC cutter
@@ -291,7 +291,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sheath stripper</strong> — removes the copper sheath without damaging the
                 conductors. Cuts a ring in the sheath and allows the end section to be removed. The
@@ -299,7 +299,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Termination pot and crimping tool</strong> — a brass termination pot is
                 threaded onto the cable conductors and crimped onto the copper sheath using a
@@ -308,7 +308,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sealing compound</strong> — silicone rubber, epoxy resin, or proprietary
                 compounds (such as Deroxit) are injected or packed into the pot to seal the MgO
@@ -350,7 +350,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire alarm systems — high-risk</strong> — power and detection circuits in
                 high-risk buildings (petrochemical, nuclear, and large hospitals) where 60-minute or
@@ -358,7 +358,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency lighting — high-risk</strong> — maintained emergency lighting
                 circuits in tunnels, large public buildings, and high-rise buildings where
@@ -366,7 +366,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>High-temperature environments</strong> — wiring in boiler rooms, generator
                 sets, furnaces, steam raising plant, and industrial processes where ambient
@@ -374,7 +374,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hazardous areas</strong> — MICC cable is widely used in Zone 1 and Zone 2
                 hazardous areas (potentially explosive atmospheres) due to its non-combustible
@@ -382,7 +382,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Interference-sensitive circuits</strong> — the copper sheath provides
                 excellent electromagnetic shielding. MICC is used for instrumentation and control
@@ -416,7 +416,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Choose FP200 Gold when</strong> — the specification requires 30-minute
                 circuit integrity (BS 7629-1 minimum); the building is standard commercial or
@@ -448,7 +448,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Material cost</strong> — 2-core 1.5mm² MICC cable is typically 3 to 5 times
                 the price per metre of equivalent FP200 Gold. For large cable quantities, this
@@ -456,7 +456,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Labour cost</strong> — MICC termination takes 3 to 4 times longer than FP200
                 Gold termination per end due to the specialist tools and sealing process required.
@@ -465,7 +465,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tool investment</strong> — a complete MICC termination kit costs several
                 hundred pounds and requires maintenance. Electricians who rarely install MICC may
@@ -473,7 +473,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Where cost is justified</strong> — nuclear, petrochemical, large hospitals,
                 and critical national infrastructure where the cost of circuit failure during a fire
@@ -500,7 +500,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Certify MICC Installations on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -544,7 +544,7 @@ export default function MineralInsulatedCableGuidePage() {
       heroTitle={
         <>
           Mineral Insulated Cable (MICC / Pyro):{' '}
-          <span className="text-yellow-400">UK Installation Guide</span>
+          <span className="text-elec-yellow">UK Installation Guide</span>
         </>
       }
       heroSubtitle="The complete guide to Mineral Insulated Copper Clad (MICC) cable — Pyrotenax brand, magnesium oxide insulation, extreme fire and temperature resistance, specialist termination tools and moisture seals, applications, and honest cost vs benefit analysis."
@@ -555,7 +555,7 @@ export default function MineralInsulatedCableGuidePage() {
       faqHeading="Frequently Asked Questions About Mineral Insulated (MICC) Cable"
       relatedPages={relatedPages}
       ctaHeading="Complete MICC Installation Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to certify fire-critical cable installations on site. Record insulation resistance test results and cable details — instant PDF export. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to certify fire-critical cable installations on site. Record insulation resistance test results and cable details — instant PDF export. 7-day free trial."
     />
   );
 }

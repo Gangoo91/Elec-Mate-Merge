@@ -187,7 +187,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cat 6 specification</strong> — solid-core, unshielded twisted pair (UTP) for
                 internal runs. Cat 6 supports 1 Gbps at up to 100 metres. For higher performance,
@@ -196,7 +196,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Star topology</strong> — every data point has a dedicated cable run back to
                 the central patch panel. Do not daisy-chain data cables. Each cable run is
@@ -204,7 +204,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Termination</strong> — terminate on a patch panel at the central location
                 and on a flush-mounted RJ45 module or data socket at the room end. Use the T568B
@@ -213,7 +213,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Central location</strong> — the patch panel, network switch, router, and any
                 smart home hub are co-located in a ventilated cabinet. Provide at least a double
@@ -247,7 +247,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Why is a neutral needed?</strong> — a smart switch contains electronics
                 (Wi-Fi radio, processor, relay) that need a constant power supply. In a standard
@@ -258,7 +258,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New installations</strong> — always run a neutral conductor to every switch
                 position. BS 7671 Regulation 559.6.1.1 recommends provision for electronic switching
@@ -268,7 +268,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Existing installations without neutral</strong> — three options: (1) run a
                 neutral conductor to the switch (disruptive but permanent), (2) use a "no-neutral"
@@ -305,7 +305,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Router className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Router className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ceiling-mounted access points</strong> — the optimal position is centrally
                 on the ceiling, which provides a dome-shaped coverage pattern. One access point per
@@ -315,7 +315,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Router className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Router className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PoE (Power over Ethernet)</strong> — use PoE-capable access points powered
                 via the Cat 6 cable from a PoE switch at the central location. This eliminates the
@@ -325,7 +325,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Router className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Router className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Brands</strong> — Ubiquiti UniFi, TP-Link Omada, and Ruckus are popular
                 choices for domestic and small commercial installations. UniFi is the most widely
@@ -357,7 +357,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Segregation</strong> — power cables and data cables must be separated to
                 prevent electromagnetic interference. Use separate containment for power and data,
@@ -367,7 +367,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable basket and tray</strong> — in loft spaces and voids, cable basket
                 provides easy access and good ventilation. Use separate baskets for power and data.
@@ -375,7 +375,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Conduit for first fix</strong> — in new builds and renovations, install
                 conduit (20mm or 25mm) to key positions before the walls are closed up. This allows
@@ -384,7 +384,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Back boxes</strong> — use deep back boxes (47mm or 55mm) at data points and
                 smart switch positions. Standard 25mm back boxes do not provide enough space for
@@ -417,7 +417,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Run more cables than needed</strong> — the labour of running one more Cat 6
                 cable during the first fix is minimal. The cost of retrofitting one cable after the
@@ -426,7 +426,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use Cat 6a where budget allows</strong> — Cat 6a supports 10 Gbps at 100
                 metres, compared to Cat 6 which supports 10 Gbps at only 55 metres. The price
@@ -435,7 +435,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Install containment with spare capacity</strong> — use trunking and conduit
                 that is no more than 45% filled. This leaves room for additional cables in the
@@ -444,7 +444,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Neutral wires at every switch</strong> — even if the homeowner chooses
                 standard switches now, having a neutral at every switch position allows smart
@@ -452,7 +452,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Adequate power at the network cabinet</strong> — the central network
                 location will house a router, switch, patch panel, and possibly a NAS (Network
@@ -485,7 +485,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Network equipment</strong> — router (10 to 20W), PoE switch (30 to 100W
                 depending on the number of ports and PoE load), NAS (30 to 80W). A dedicated circuit
@@ -493,7 +493,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CCTV system</strong> — a PoE NVR (Network Video Recorder) draws 20 to 50W,
                 and each camera draws 5 to 15W via PoE. A 4-camera system with NVR draws
@@ -501,7 +501,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smart lighting</strong> — individual smart bulbs and switches draw minimal
                 power (1 to 3W standby). However, if the property has 20 to 30 smart switches, the
@@ -509,7 +509,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>UPS (Uninterruptible Power Supply)</strong> — a small UPS at the network
                 cabinet maintains internet connectivity and smart home control during short power
@@ -542,7 +542,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical testing (BS 7671)</strong> — all new power circuits must be
                 tested: continuity, insulation resistance, polarity, earth fault loop impedance,
@@ -554,7 +554,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Data cable testing</strong> — each Cat 6 run should be tested with a cable
                 tester or certification tool to verify wire map, continuity, length, and ideally
@@ -564,7 +564,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Documentation</strong> — provide the homeowner with a complete documentation
                 pack: EIC for electrical work, data cabling test results, a cable schedule
@@ -604,7 +604,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -649,7 +649,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify smart home installations"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
           icon={Wifi}
         />
       </>
@@ -675,7 +675,7 @@ export default function SmartHomeWiringPage() {
       heroTitle={
         <>
           Smart Home Wiring:{' '}
-          <span className="text-yellow-400">An Electrician's Guide to Getting It Right</span>
+          <span className="text-elec-yellow">An Electrician's Guide to Getting It Right</span>
         </>
       }
       heroSubtitle="Every smart home starts with good electrical infrastructure. Cat 6 cabling, neutral wires at every switch, ceiling-mounted Wi-Fi access points, and well-designed containment. This guide covers the electrician's role in smart home installations."
@@ -686,7 +686,7 @@ export default function SmartHomeWiringPage() {
       faqHeading="Frequently Asked Questions About Smart Home Wiring"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Smart Home Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates. Everything you need for smart home electrical work. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates. Everything you need for smart home electrical work. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -180,42 +180,42 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maidstone</strong> — county town with a mix of Victorian terraces, 1930s
                 semis, and modern estates. High volume of EICR and rewire work.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Canterbury</strong> — historic cathedral city, UNESCO World Heritage Site.
                 Strong demand for sympathetic rewiring in listed buildings and conservation areas.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tunbridge Wells</strong> — affluent commuter town with high-value period
                 properties and strong demand for smart home, EV, and solar installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Folkestone and Dover</strong> — port towns with specialist commercial and
                 marine-adjacent electrical requirements.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ashford</strong> — fast-growing hub on the M20 with substantial logistics,
                 distribution, and commercial development. Strong contractor demand.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Medway (Rochester, Chatham, Gillingham)</strong> — large conurbation with
                 significant Victorian housing stock and a growing commercial sector.
@@ -241,24 +241,24 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-3">What to Ask For</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 NICEIC, NAPIT, ELECSA, or STROMA competent person scheme registration number —
                 verify online
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>ECS card confirming current qualifications (valid for 5 years)</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Public liability insurance — minimum £2 million, £5 million for listed building work
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 For listed building or conservation area work, ask for specific heritage experience
                 and references
@@ -284,31 +284,31 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-3">Typical Job Costs (2025)</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR (3-bed house):</strong> £160 to £270
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit upgrade:</strong> £480 to £740
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full rewire (3-bed Victorian terrace):</strong> £3,800 to £6,500
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger installation:</strong> £800 to £1,250
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Solar PV electrical connection:</strong> £550 to £950
               </span>
@@ -331,7 +331,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Medieval and Tudor buildings (Canterbury, Sandwich, Faversham):</strong>{' '}
                 Timber-frame construction with wattle-and-daub or brick infill panels. Original
@@ -341,7 +341,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Victorian and Edwardian terraces (Maidstone, Medway, Folkestone):</strong>{' '}
                 Lath-and-plaster walls, suspended timber floors, lead or early rubber-insulated
@@ -350,7 +350,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Oast houses and rural conversions:</strong> Kent's distinctive oast houses
                 and rural barn conversions often involve complex cable routing, damp or agricultural
@@ -386,7 +386,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Marine-adjacent environments:</strong> Port-area electrical work requires
                 IP54 minimum enclosures, marine-grade fixings, and enhanced corrosion protection.
@@ -395,7 +395,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Critical infrastructure resilience:</strong> Standby generator systems, UPS
                 provision, and automatic transfer switches are standard requirements for port
@@ -404,7 +404,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HGV and fleet charging:</strong> The Ashford lorry park, Dover Eastern
                 Docks, and M20 lorry parks are priority sites for large-scale HGV charging
@@ -430,7 +430,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98 notifications:</strong> Solar PV and battery systems up to 3.68kW
                 single-phase can be notified to UKPN after installation. Use the UKPN online portal
@@ -438,7 +438,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G99 applications:</strong> Systems above 3.68kW per phase require prior UKPN
                 approval. Allow 45 working days for a G99 assessment on a standard residential
@@ -446,7 +446,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rural earthing:</strong> TT earthing is common in rural Kent — Romney Marsh,
                 the Weald, and North Downs villages. Always verify the earthing arrangement under BS
@@ -483,7 +483,7 @@ export default function ElectricianKentPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician Kent <span className="text-yellow-400">— Qualified & Registered</span>
+          Electrician Kent <span className="text-elec-yellow">— Qualified & Registered</span>
         </>
       }
       heroSubtitle="Find NICEIC and NAPIT registered electricians across Maidstone, Canterbury, Tunbridge Wells, Folkestone, Dover, Ashford, and the Medway towns. EICRs, rewires, EV charging, solar PV, and port infrastructure electrical work throughout Kent."

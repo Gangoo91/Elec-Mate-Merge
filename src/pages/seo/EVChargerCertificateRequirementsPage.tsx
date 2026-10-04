@@ -194,14 +194,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Design section:</strong> cable sizing calculations, protective device
                 selection (type and rating), earthing arrangement, and voltage drop calculation.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Construction section:</strong> confirmation that the installation was
                 constructed in accordance with the design, correct cable type and routing, proper
@@ -209,7 +209,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inspection and testing section:</strong> visual inspection results,
                 continuity of protective conductors (R1+R2), insulation resistance, polarity, earth
@@ -226,7 +226,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Schedule of test results:</strong> all test values recorded for the new
                 circuit.
@@ -255,9 +255,9 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
-            <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
-              <p className="font-semibold text-yellow-300 mb-1">
+              <p className="font-semibold text-elec-yellow mb-1">
                 BS 7671:2018+A4:2026 — Section 722 Electric Vehicle Charging Installations
               </p>
               <p className="text-white text-sm leading-relaxed">
@@ -284,7 +284,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PME earthing considerations.</strong> On a PME (TN-C-S) supply, additional
                 precautions are required to address the risk of a lost PEN conductor. Options
@@ -293,7 +293,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Continuous load rating.</strong> An EV charger is a continuous load — it
                 draws full rated current for extended periods (hours). Cable sizing must account for
@@ -302,7 +302,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Load management.</strong> Where the existing supply is insufficient for a
                 full-rated charger, dynamic load management (DLM) can be used to reduce the charger
@@ -310,7 +310,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD selection.</strong> The correct RCD type depends on the charger model
                 and its DC fault characteristics. BS 7671 recognises Types AC, A, F and B — for a
@@ -319,7 +319,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Outdoor installation requirements.</strong> External charge points must have
                 appropriate IP ratings, UV-resistant cables, and mechanical protection.
@@ -351,7 +351,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person scheme registered:</strong> if you are registered with
                 NICEIC, NAPIT, or ELECSA, you can self-certify the work. The notification is
@@ -360,7 +360,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Not registered with a scheme:</strong> you must submit a building notice to
                 the local authority before starting the work. Building control will need to inspect
@@ -393,7 +393,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Calculate existing maximum demand</strong> — list all existing circuits,
                 apply diversity factors from Appendix A of the IET On-Site Guide (Table A1 for
@@ -402,14 +402,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Add the EV charger load</strong> — at full rated current, no diversity
                 applied (it is a continuous load at maximum output).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Compare to supply capacity</strong> — check the main fuse rating and the
                 supply cable capacity. If the total exceeds the available capacity, you need a
@@ -417,7 +417,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Document the assessment</strong> — record the calculation, the conclusion,
                 and any load management measures implemented. Retain this as part of the
@@ -459,21 +459,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>OZEV grant approval letter</strong> — confirming the grant was approved for
                 the specific property and applicant.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Installation certificate (EIC)</strong> — the standard Electrical
                 Installation Certificate for the new circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Charger specification</strong> — make, model, and serial number of the
                 installed charge point. The charger must have been on the OZEV approved list at the
@@ -481,7 +481,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Installer credentials</strong> — evidence that the installer was OZEV
                 authorised at the time of installation.
@@ -619,7 +619,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EIC with EV-Specific Fields</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -658,7 +658,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EV charger certificates on your phone"
-          description="EIC with EV-specific fields, integrated load assessment, and instant PDF delivery. Join 1,600+ electricians using Elec-Mate for professional…"
+          description="EIC with EV-specific fields, integrated load assessment, and instant PDF delivery. Join 2,100+ electricians using Elec-Mate for professional…"
           icon={Car}
         />
       </>
@@ -684,7 +684,7 @@ export default function EVChargerCertificateRequirementsPage() {
       heroTitle={
         <>
           EV Charger Certificate Requirements:{' '}
-          <span className="text-yellow-400">What Every Electrician Must Issue</span>
+          <span className="text-elec-yellow">What Every Electrician Must Issue</span>
         </>
       }
       heroSubtitle="An EV charger installation requires an EIC (not a Minor Works), Part P notification, a documented load assessment, and compliance with the IET Code of Practice. This guide covers every document you need to produce and the common certification mistakes that catch electricians out."
@@ -695,7 +695,7 @@ export default function EVChargerCertificateRequirementsPage() {
       faqHeading="Frequently Asked Questions About EV Charger Certification"
       relatedPages={relatedPages}
       ctaHeading="Complete EV Certificates on Your Phone"
-      ctaSubheading="EIC with EV-specific fields, integrated load assessment calculator, and instant PDF delivery to the customer. Join 1,600+ electricians doing certification the smart way. 7-day free trial."
+      ctaSubheading="EIC with EV-specific fields, integrated load assessment calculator, and instant PDF delivery to the customer. Join 2,100+ electricians doing certification the smart way. 7-day free trial."
     />
   );
 }

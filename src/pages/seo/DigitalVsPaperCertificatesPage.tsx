@@ -249,7 +249,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Building Regulations (Part P).</strong> Building control bodies accept
                 digital certificates for Part P notification. When a competent person scheme
@@ -258,7 +258,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical Safety Standards 2020.</strong> The Regulations require landlords
                 to provide tenants with a copy of the EICR. A PDF sent by email or WhatsApp
@@ -267,7 +267,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person schemes.</strong>{' '}
                 <SEOInternalLink href="/guides/niceic-certificate-requirements">
@@ -279,7 +279,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Shield className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Court proceedings.</strong> In the event of a dispute or legal claim, a
                 digital certificate is admissible evidence. A timestamped PDF with a clear audit
@@ -319,7 +319,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Archive className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Archive className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cloud backup.</strong> Certificates are stored securely in the cloud and
                 synchronised across devices. If you lose your phone, your certificates are not lost
@@ -327,7 +327,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Archive className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Archive className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Search and filter.</strong> Find any certificate by client name, address,
                 date range, or certificate type. No more flipping through filing cabinets or
@@ -335,7 +335,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Archive className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Archive className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Retention compliance.</strong>{' '}
                 <SEOInternalLink href="/guides/electrical-certificate-retention">
@@ -378,7 +378,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-4">
-            <Send className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+            <Send className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-1">Professional PDF Export</h4>
               <p className="text-white text-sm leading-relaxed">
@@ -465,28 +465,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No form costs.</strong> No NCR pads, no pre-printed forms, no reordering
                 when you run out mid-job.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No printing costs.</strong> No printer, no ink, no paper jams at 10pm when
                 you are trying to finish the day's paperwork.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No postage costs.</strong> No envelopes, no stamps, no trips to the post
                 office. The certificate arrives instantly by email.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Time is money.</strong> The 45 to 60 minutes saved per certificate
                 translates directly into additional earning capacity. At a typical electrician's
@@ -511,7 +511,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Camera className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI Board Scanner</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -598,7 +598,7 @@ export default function DigitalVsPaperCertificatesPage() {
       heroTitle={
         <>
           Digital vs Paper Electrical Certificates:{' '}
-          <span className="text-yellow-400">Why the Industry Has Moved On</span>
+          <span className="text-elec-yellow">Why the Industry Has Moved On</span>
         </>
       }
       heroSubtitle="Digital certificates are legally valid, accepted by every UK scheme provider, faster to complete, and impossible to lose. This guide explains the advantages of digital over paper and how to make the switch without disrupting your workflow."
@@ -609,7 +609,7 @@ export default function DigitalVsPaperCertificatesPage() {
       faqHeading="Frequently Asked Questions About Digital Electrical Certificates"
       relatedPages={relatedPages}
       ctaHeading="Go Digital with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians producing professional digital certificates with AI board scanning, voice test entry, and instant PDF delivery. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians producing professional digital certificates with AI board scanning, voice test entry, and instant PDF delivery. 7-day free trial, cancel anytime."
     />
   );
 }

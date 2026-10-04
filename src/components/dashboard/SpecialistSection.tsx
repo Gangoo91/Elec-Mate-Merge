@@ -5,6 +5,8 @@ import { useResumeDrafts, type ResumeDraftInfo } from '@/hooks/inspection/useRes
 import { useHaptic } from '@/hooks/useHaptic';
 import { CARD_NEUTRAL, CARD_DISABLED } from '@/components/ui/card-recipe';
 import { certificateHref, certificateNewHref } from '@/utils/certificate-href';
+import { withCertificatePrefill } from '@/utils/certificatePrefill';
+import { CertificatePrefillStrip } from '@/components/inspection/CertificatePrefillStrip';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -371,6 +373,8 @@ const SpecialistSection = ({ onBack }: SpecialistSectionProps) => {
         animate="visible"
         className="px-4 py-4 lg:px-8 space-y-7 lg:max-w-[1600px]"
       >
+        {/* Started from a booking or project — say who the cert is for. */}
+        <CertificatePrefillStrip />
         {GROUPS.map((group) => {
           const certs = specialistCerts.filter((c) => c.category === group.key);
           if (certs.length === 0) return null;
@@ -393,7 +397,8 @@ const SpecialistSection = ({ onBack }: SpecialistSectionProps) => {
                       // `cert.route` still wins (the log books have their own
                       // landing page); otherwise the helper decides between
                       // `<type>/new` and the bare path.
-                      navigate(cert.route ?? certificateNewHref(cert.id))
+                      // Started from a booking or project? Who/where ride along.
+                      navigate(withCertificatePrefill(cert.route ?? certificateNewHref(cert.id)))
                     }
                     onResume={() =>
                       navigate(

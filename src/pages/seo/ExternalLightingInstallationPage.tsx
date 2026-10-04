@@ -186,7 +186,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Surface-mounted above-ground runs</strong> — twin and earth (6242Y) in
                 UV-stabilised conduit (grey PVC or black HDPE) is acceptable for above-ground
@@ -197,7 +197,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Underground direct burial</strong> — SWA (Steel Wire Armoured) cable is the
                 standard choice for direct burial. The steel wire armour provides mechanical
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Underground in conduit</strong> — standard twin and earth cable in a rigid
                 HDPE duct or conduit is acceptable underground, provided the conduit provides
@@ -215,7 +215,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Volt drop</strong> — long external cable runs to outbuildings or garden
                 lights must be designed to limit volt drop to 3% (for lighting circuits) under BS
@@ -242,7 +242,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP44</strong> — protected against solid objects over 1mm and water splashing
                 from any direction. Minimum for general outdoor use on walls and ceilings. Suitable
@@ -250,7 +250,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP65</strong> — dust tight and protected against water jets from any
                 direction. Recommended for exposed fittings, security floodlights, and any fitting
@@ -259,7 +259,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP67 / IP68</strong> — dust tight and protected against temporary or
                 prolonged immersion in water. Required for in-ground path lights, pond lighting, and
@@ -267,7 +267,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IK rating</strong> — the IK rating (BS EN 62262) indicates resistance to
                 mechanical impact. For fittings in vulnerable locations (low-mounted lights, car
@@ -294,7 +294,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Why RCDs are essential outdoors</strong> — outdoor environments increase the
                 risk of insulation damage (from UV degradation, mechanical damage, rodent attack, or
@@ -304,7 +304,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCBO protection</strong> — where the external lighting is on a dedicated
                 circuit, an RCBO (combined RCD and MCB) provides the most elegant solution: the
@@ -314,7 +314,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Nuisance tripping</strong> — outdoor circuits with long cable runs, multiple
                 fittings, or LED drivers with capacitive filters can have significant leakage
@@ -341,7 +341,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Depth requirements</strong> — under non-vehicular areas (gardens, paths,
                 flower beds): minimum 500mm depth. Under vehicular areas (driveways, car parks):
@@ -351,7 +351,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Route markers and cable tiles</strong> — yellow plastic cable warning tiles
                 must be placed 150mm above the cable, and cable route markers should be installed
@@ -360,7 +360,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Joints</strong> — joints in underground cables must be made in purpose-made
                 gel-filled or resin-filled underground joint kits. Standard junction boxes are not
@@ -369,7 +369,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Before you dig</strong> — always check for buried services before
                 excavating. Use a cable avoidance tool (CAT) and signal generator (Genny) and
@@ -453,7 +453,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Listed buildings</strong> — any external alteration to a listed building,
                 including adding light fittings, requires listed building consent. This applies even
@@ -462,7 +462,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Conservation areas</strong> — properties in conservation areas have reduced
                 permitted development rights. External lighting on the principal elevation or roof
@@ -471,7 +471,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial premises</strong> — external lighting for car parks, security,
                 signage, or advertising at commercial premises is more likely to require planning
@@ -481,7 +481,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Party Wall Act 1996</strong> — if external lighting requires structural work
                 on or near a party wall (shared boundary wall), the Party Wall Act may require
@@ -509,7 +509,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Direct upward light</strong> — avoid fittings that direct light upward into
                 the sky. Full-cutoff luminaires (those which direct all light downward and forward)
@@ -517,7 +517,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Glare</strong> — fittings must not create uncomfortable glare for road
                 users, pedestrians, or neighbours. Choose fittings with appropriate glare control
@@ -526,7 +526,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Light spillage onto neighbours</strong> — use PIR sensors and dusk-to-dawn
                 controls to limit operating hours. Direct fittings inward and downward. Avoid
@@ -554,7 +554,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Certificate on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -587,7 +587,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certify external lighting installations with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate to issue Electrical Installation Certificates and Minor Works Certificates on site."
+          description="Join 2,100+ UK electricians using Elec-Mate to issue Electrical Installation Certificates and Minor Works Certificates on site."
           icon={FileCheck2}
         />
       </>
@@ -613,7 +613,7 @@ export default function ExternalLightingInstallationPage() {
       heroTitle={
         <>
           External Lighting Installation UK:{' '}
-          <span className="text-yellow-400">Outdoor Electrical Wiring Guide</span>
+          <span className="text-elec-yellow">Outdoor Electrical Wiring Guide</span>
         </>
       }
       heroSubtitle="Everything electricians need to know about outdoor lighting installation — cable selection, IP ratings, mandatory RCD protection, underground burial depths, PIR and photocell controls, planning permission considerations, and Part P certification."
@@ -624,7 +624,7 @@ export default function ExternalLightingInstallationPage() {
       faqHeading="Frequently Asked Questions About External Lighting Installation"
       relatedPages={relatedPages}
       ctaHeading="Certify External Lighting Work on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site Electrical Installation Certificates and Minor Works Certificates. Instant PDF export, automatic competent person scheme notification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site Electrical Installation Certificates and Minor Works Certificates. Instant PDF export, automatic competent person scheme notification. 7-day free trial, cancel anytime."
     />
   );
 }

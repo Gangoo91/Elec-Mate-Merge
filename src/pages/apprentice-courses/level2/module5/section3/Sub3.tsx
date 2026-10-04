@@ -5,7 +5,7 @@
  * skill; full COSHH assessment is a supervisor / employer competency.
  *
  * Frame: COSHH 2002 framework → SDS (Safety Data Sheet) 16-section format
- * under CLP Regulation EU 1272/2008 → common electrical-trade chemicals
+ * (CLP Regulation EU 1272/2008 for classification and labels) → common electrical-trade chemicals
  * → where to find SDS → pre-task review.
  */
 
@@ -41,10 +41,10 @@ const checks = [
     question:
       "You're about to start chasing brick on a domestic refurb. Your second-year hands you a tin of masonry sealant and a tube of two-pack epoxy. Neither has been on site before today and you haven't seen the SDS for either. What's the right order of events?",
     options: [
-      "Stop, locate the SDS for both products (manufacturer website, the firm's COSHH register, or in the product packaging), read at least Section 2 (hazards), Section 4 (first aid) and Section 8 (exposure controls / PPE). Confirm you have the right PPE for both products. Only then start. COSHH 2002 Reg 6 requires the assessment to happen BEFORE exposure, not after.",
-      'Treat every fire alarm as real until proven otherwise. Stop work, leave tools where they are, ensure the customer evacuates with you, walk the planned escape route to the muster point, and await account-for. Re-entry only when the fire-marshal / building manager declares the all-clear. Tools and van keys can be retrieved later; the alarm response cannot be re-done.',
-      "Start the work — both products are common building materials you've handled before, so a fresh assessment isn't needed. If you have any reaction during use, stop and look up the SDS at that point; reading every data sheet before you start is good practice but not a legal requirement under COSHH for products already on site.",
-      'Roughly £400-800/year for the basic stack: PL £5-10m (£200-500), Tools-in-Transit (£100-300), van insurance (commercial separately, typically £600-1,200/year for a small van). Add EL if you have an apprentice (£200-600). Add PI if you do any design work (£200-500). Total annual insurance bill for a sole trader with apprentice and design work: roughly £1,500-2,500.',
+      'Stop, find the SDS for both, check the hazards, first aid and PPE sections, make sure you have the right PPE — then start. The assessment comes before exposure (COSHH Reg 6).',
+      'Start work and look up the SDS only if someone has a reaction.',
+      'Use them as long as you are wearing gloves — gloves cover any chemical hazard.',
+      'Ask the customer whether they have used them before; if so, they are safe to use.',
     ],
     correctIndex: 0,
     explanation:
@@ -55,24 +55,24 @@ const checks = [
     question:
       "You've spilled brick acid on the back of your hand during chasing. The bottle is the strong masonry-cleaning grade. Your colleague asks 'what does the SDS say?'. Which section do you go to FIRST?",
     options: [
-      'No — Reg 701.415.2 allows supplementary bonding to be omitted when all three conditions are met (ADS compliance, all final circuits in the location have 30 mA RCD additional protection, main bonding on extraneous-conductive-parts is in place per Reg 411.3.1.2). Modern fully-RCD-protected new-builds typically meet all three.',
-      'Check the light curtain alignment, clean the lenses, inspect for environmental contaminants (dust, coolant mist), verify the safety relay status, check wiring connections, review the maintenance history for recurring issues, and ensure the safety distance calculation is still valid',
-      'Section 4 — First aid measures. The SDS section 4 will tell you the immediate first aid response (typically: irrigate copiously with running water for at least 15 minutes, remove contaminated clothing, seek medical advice if irritation persists or if the skin is broken). The other sections matter but the response time on a corrosive spill is measured in seconds — Section 4 is the one you need first.',
-      'Local Authority — Environmental Health Officers from the local council. The Health and Safety (Enforcing Authority) Regulations 1998 split enforcement based on the main activity of the premises. Retail (shops, offices, hotels, restaurants, leisure) goes to the Local Authority. Higher-risk premises (factories, construction sites, hospitals, schools, mines) go to the HSE.',
+      'Section 8 — exposure controls and PPE, to check which gloves you should have been wearing.',
+      'Section 13 — disposal considerations, to deal with the spilled acid first.',
+      'Section 4 — First aid measures. It gives the immediate response, typically flushing with plenty of running water.',
+      'Section 1 — identification, to confirm the product name before doing anything.',
     ],
     correctIndex: 2,
     explanation:
-      "The 16 sections of an SDS are in a fixed sequence under the CLP Regulation. Section 4 (First aid) is at the front for a reason — when there's an exposure incident it's the section you need first. By year three you should know the section numbers off the top of your head: Section 2 hazards, Section 4 first aid, Section 8 PPE, Section 13 disposal. The structure means any SDS in the world has the same information in the same place.",
+      "The 16 sections of an SDS are in a fixed, standard sequence. Section 4 (First aid) is at the front for a reason — when there's an exposure incident it's the section you need first. By year three you should know the section numbers off the top of your head: Section 2 hazards, Section 4 first aid, Section 8 PPE, Section 13 disposal. The structure means any SDS in the world has the same information in the same place.",
   },
   {
     id: 'mod5-s3-sub3-where',
     question:
       'You arrive at a job and need the SDS for the contact cleaner already on the van. Where are the THREE most reliable places to find it?',
     options: [
-      'Around 1.2 Nm for the circuit terminals, around 3.5 Nm for the incomers (verify against the specific data sheet — values vary by product line and update cycle). Hager publishes the torques inside the CU lid, in the data sheet, and in the Hager Pro app. Wylex and Schneider have similar values for equivalent products.',
-      '£5 million per claim. The Act requires every UK employer (with limited specific exceptions) to hold an EL policy for at least £5m. Most policies offer £10m or more by default. The certificate must be displayed at the workplace where employees can see it. Failure to hold cover = fine up to £2,500 per day; failure to display = £1,000 fine.',
-      "Without delay — telephone notification expected before the F2508 follows. F2508 within 10 days. The 'specified injury' list (Schedule 1) includes fractures (excl fingers/thumbs/toes), amputations, sight loss, crush injuries, serious burns, scalpings, head-injury unconsciousness, enclosed-space injuries.",
-      "Manufacturer's website (search the product name), the firm's COSHH register (paper folder or app such as Sypol / Alcumus), and the packaging insert that came with the product. Many manufacturers also publish QR codes on the can that link directly to the latest SDS.",
+      "The wholesaler's till receipt, the van logbook and the customer's paperwork.",
+      'The HSE website, BS 7671 and the On-Site Guide.',
+      "The firm's RAMS template, the toolbox talk register and the site diary.",
+      "The manufacturer's website, the firm's COSHH register, and the product packaging or a QR code on the can.",
     ],
     correctIndex: 3,
     explanation:
@@ -87,10 +87,10 @@ const quizQuestions = [
     id: 1,
     question: 'What does COSHH stand for and what does the regulation cover?',
     options: [
-      'The apprenticeship contract (a formal indenture under the Apprenticeships, Skills, Children and Learning Act 2009), the wages, the off-the-job training declaration (a minimum 20% of paid working hours under the Apprenticeship Standard), the provision of suitable work and supervision, and HASAWA s.2 duties to provide a safe place of work and adequate training.',
-      'Control Of Substances Hazardous to Health — the 2002 regulations cover the assessment, prevention or control of exposure to hazardous substances at work. Includes chemicals, fumes, dusts, mists, vapours, biological agents and gases. Asbestos and lead have their own separate regulations.',
-      'Check the VSD fault log for diagnostic codes, assess the motor insulation resistance and phase balance, inspect the mechanical load, review recent changes or maintenance, and apply root cause analysis before implementing a permanent fix',
-      'Capability to handle the 10/350 microsecond impulse waveform — partial direct-lightning current. Required at the installation origin where the building has an external lightning protection system (LPS) per BS EN 62305-3 or where direct-strike risk to the supply exists. Higher Iimp rating, higher Up than Type 2 / 3.',
+      'Control of Substances Harmful to Humans — it covers only substances that are poisonous if swallowed.',
+      'Control of Substances Hazardous to Health (2002) — assessing and controlling exposure to hazardous substances at work, including chemicals, fumes, dusts and biological agents. Asbestos and lead have their own regulations.',
+      'Construction Operations Safety and Health Handbook — the site rulebook issued by the principal contractor.',
+      'Control of Site Hazards and Hazardous Hardware — it covers tools and plant rather than substances.',
     ],
     correctAnswer: 1,
     explanation:
@@ -100,24 +100,24 @@ const quizQuestions = [
     id: 2,
     question: 'What is an SDS and what statutory framework requires it?',
     options: [
-      "Section 8 — Exposure controls / personal protection. This section gives the workplace exposure limits (where applicable), the engineering controls (ventilation, containment) and the recommended PPE (gloves to a specific EN standard, eye protection, respiratory protection, body protection). It's the section you read before the work starts to confirm you have the right kit.",
-      'An ASHP extracts heat from the ambient air using an external evaporator coil, while a GSHP extracts heat from the ground via buried pipe loops (horizontal trenches or vertical boreholes) — ASHPs are cheaper to install but have lower COP in cold weather',
-      "Safety Data Sheet — a 16-section document required for all hazardous substances by the CLP Regulation (EU 1272/2008, retained as UK law after Brexit). The SDS is the manufacturer's authoritative source of hazard, handling, exposure and first-aid information for the product. Required by COSHH 2002 Reg 12 to be available to anyone handling the substance.",
-      "Battery platforms are not interchangeable — Milwaukee M18 batteries don't fit Makita LXT tools and vice versa. If the firm runs Milwaukee, that's the platform whose chargers and spare packs are on every van and in every site box. A loose Makita drill is an outlier — one tool with no spare batteries when you need them, and no compatible charger nearby. Either ask for the matching Milwaukee tool, or accept you're working with one battery on the clock.",
+      "A Site Data Sheet — the principal contractor's list of every substance stored on site.",
+      'A Safe Disposal Statement — a waste document needed only when a chemical is thrown away.',
+      "A Safety Data Sheet — the supplier's 16-section document for a hazardous substance or mixture, giving hazards, handling, exposure controls and first aid. Your COSHH assessment draws on it.",
+      'A Supplier Delivery Slip — the delivery note that proves the product was bought from an approved wholesaler.',
     ],
     correctAnswer: 2,
     explanation:
-      'The SDS format is fixed by the CLP Regulation. The 16 sections cover identification, hazards, composition, first aid, firefighting, accidental release, handling and storage, exposure controls and PPE, physical and chemical properties, stability, toxicology, ecology, disposal, transport, regulatory information and other information. The format means every SDS in the world follows the same structure.',
+      'The SDS follows a fixed 16-section format. The sections cover identification, hazards, composition, first aid, firefighting, accidental release, handling and storage, exposure controls and PPE, physical and chemical properties, stability, toxicology, ecology, disposal, transport, regulatory information and other information. The format means every SDS in the world follows the same structure.',
   },
   {
     id: 3,
     question:
       "Which SDS section gives you the manufacturer's recommended PPE for handling the substance?",
     options: [
-      'Lower electricity bills (offset import + earn SEG on export), reduced carbon footprint, partial grid-independence (with battery), a hedge against rising electricity prices, often a positive impact on house value, and government incentive schemes that vary by year. Real benefits — but not “free electricity”.',
-      "It requires effective planning, organisation, control, monitoring and review of the preventive measures. Reg 3 is 'do the assessment'; Reg 5 is 'run the management system that turns the assessment into actual on-site protection'. The 5+ employees recording threshold also applies.",
-      'Accountability structures are important because EI development involves changing habitual patterns, which is difficult without external support. An effective structure might include: a development partner (colleague or mentor who checks in regularly), a reflective journal (tracking specific incidents and responses), regular self-assessments, and scheduled review points to evaluate progress against goals',
-      "Section 8 — Exposure controls / personal protection. This section gives the workplace exposure limits (where applicable), the engineering controls (ventilation, containment) and the recommended PPE (gloves to a specific EN standard, eye protection, respiratory protection, body protection). It's the section you read before the work starts to confirm you have the right kit.",
+      'Section 2 — hazards identification.',
+      'Section 4 — first aid measures.',
+      'Section 7 — handling and storage.',
+      'Section 8 — Exposure controls / personal protection.',
     ],
     correctAnswer: 3,
     explanation:
@@ -128,10 +128,10 @@ const quizQuestions = [
     question:
       'Which SDS section gives the immediate first-aid response if a substance is spilled on skin or splashed in eyes?',
     options: [
-      "Section 4 — First aid measures. Subsections cover inhalation, skin contact, eye contact and ingestion, with the specific response for each. For corrosive substances (e.g. brick acid) this typically reads 'irrigate with copious running water for at least 15 minutes, remove contaminated clothing, seek medical advice if persistent'.",
-      'The apprenticeship contract (a formal indenture under the Apprenticeships, Skills, Children and Learning Act 2009), the wages, the off-the-job training declaration (a minimum 20% of paid working hours under the Apprenticeship Standard), the provision of suitable work and supervision, and HASAWA s.2 duties to provide a safe place of work and adequate training.',
-      'A formal written authorisation that defines the work to be done, the hazards, the controls, the personnel authorised, the time period, and the sign-off conditions. Used for high-hazard activity (live working, hot work, confined space, work on safety-critical systems). Issued by the issuing authority; signed-on by the operative; signed-off when complete.',
-      'They must not tamper with, remove, or bypass the meter without authority from the energy supplier — the meter is the property of the metering company, and interference is a criminal offence under the Theft Act 1968 and Electricity Act 1989',
+      'Section 4 — First aid measures.',
+      'Section 8 — exposure controls / personal protection.',
+      'Section 11 — toxicological information.',
+      'Section 6 — accidental release measures.',
     ],
     correctAnswer: 0,
     explanation:
@@ -142,10 +142,10 @@ const quizQuestions = [
     question:
       "Which of the following are common electrical-trade chemicals you'd expect to need an SDS for?",
     options: [
-      'Free smartphone app from Lighthouse Construction Industry Charity providing wellbeing resources, helpline access, financial planning tools, mental health self-help content, and signposting to support services. Designed for construction workers; quick access to crisis helpline if needed. Available on App Store and Google Play.',
-      "Cable lubricant (for pulling into containment), contact cleaner / electronic cleaner (typically isopropyl-based), masonry sealant (for chase repairs), two-pack epoxy resin (for fixings and panel repairs), brick acid (for cleaning chased surfaces), dust suppressant. All have hazard ratings and all need an SDS in the firm's COSHH register.",
-      'Two NICEIC streams. Domestic Installer (DI) is the entry tier — covers Part P self-certification for dwellings only. Approved Contractor (AC) is the higher tier — covers wider scope including commercial and industrial work, generally with stricter assessment criteria. Many sole traders start with DI and upgrade to AC as the business grows or as they take on more commercial work.',
-      'Rotational — typically 2 weeks on platform / 2 weeks off, or 14/14 patterns. Offshore platform work involves helicopter transit (HUET training required), confined-space and working-at-height, harsh weather, extended periods away from home. Day rates typically £400-700+ on rotation but the family/relationship demands are significant. Common in North Sea (oil and gas) and offshore wind (East Coast UK, Scotland).',
+      "None — electrical work doesn't involve hazardous substances, so SDSs are a plumbing and decorating concern.",
+      'Cable lubricant, contact cleaner, masonry sealant, two-pack resin, brick acid and dust suppressant.',
+      "Only solvents in aerosol cans — liquids and pastes don't need an SDS.",
+      'Only products marked with a skull and crossbones.',
     ],
     correctAnswer: 1,
     explanation:
@@ -155,10 +155,10 @@ const quizQuestions = [
     id: 6,
     question: "Where can you find the SDS for a substance you're about to handle?",
     options: [
-      'Ongoing safety communication mechanism — short, on-site, topic-specific. Required under MHSWR Reg 13 (information). Attendance logged as evidence. Topics often respond to recent near-misses, regulation changes, equipment updates, or seasonal risks.',
-      'Stop work IMMEDIATELY. Treat the circuit as potentially live until you re-prove it dead with the voltage indicator (and verify the indicator is working). Re-secure the lockout properly before continuing.',
-      "Manufacturer's website (always the latest version), the firm's COSHH register (in paper or app form — common apps include Sypol and Alcumus), and the product packaging at the point of purchase. Many manufacturers print QR codes on the can that link directly to the latest SDS.",
-      'Conclusion: identifying what they could have done differently (e.g., always use a cable detector); Action Plan: specific steps to prevent recurrence (e.g., purchase a CAT scanner, add pre-drill check to personal checklist)',
+      'Only from the HSE, which publishes an SDS for every product sold in the UK.',
+      'Only by phoning the wholesaler, which must hold a printed copy.',
+      "The manufacturer's website, the firm's COSHH register, and the product packaging (often via a QR code).",
+      "Only on the customer's premises — the client is responsible for SDSs on their site.",
     ],
     correctAnswer: 2,
     explanation:
@@ -168,10 +168,10 @@ const quizQuestions = [
     id: 7,
     question: 'What does CLP stand for in the context of SDS classifications?',
     options: [
-      'For minor additions or alterations to an existing circuit (e.g. adding a single socket on an existing ring) that do NOT require a new circuit. New circuits, CU replacements and major alterations require an EIC + Schedule of Inspections + STR.',
-      'A defined subset — most non-trivial work in special locations (bathroom Zone 0/1, swimming pool, sauna, etc.); installation of a new circuit; replacement of a consumer unit. Like-for-like accessory replacement, repairs, additions to an existing circuit OUTSIDE special locations are NOT notifiable.',
-      'A single conductor only (line or neutral) — clamping around both line and neutral together would give a reading of approximately zero because the currents flow in opposite directions and their magnetic fields cancel',
-      "Classification, Labelling and Packaging — the EU Regulation (1272/2008) that sets the format of the SDS, the GHS pictograms (skull, exclamation, flame, corrosion, etc.) and the H-statements (e.g. H314 'causes severe skin burns'). Retained as UK law after Brexit. It's the standard the SDS is written to.",
+      'Chemical Limits and Precautions — the list of workplace exposure limits.',
+      'Control of Liquids and Powders — the rules for storing liquids and powders on site.',
+      'Certified Laboratory Product — a mark showing the product has been tested by an approved laboratory.',
+      'Classification, Labelling and Packaging — the regulation (EC 1272/2008, retained in UK law) that sets how substances are classified and labelled, including the hazard pictograms and H-statements.',
     ],
     correctAnswer: 3,
     explanation:
@@ -182,14 +182,14 @@ const quizQuestions = [
     question:
       'If you see an SDS with a Section 11 indicating respiratory sensitisation, what does that mean for the operative?',
     options: [
-      "It's a flag that the substance can cause an allergic respiratory response in some operatives — repeated exposure can sensitise even without a single high-dose event. Means tighter respiratory PPE control (FFP3 minimum, often a respirator), good extract ventilation, and health surveillance under COSHH 2002 Reg 11 if the exposure is regular. Two-pack epoxy isocyanates are the textbook example in the trade.",
-      "The Electrical Contractors' Association — the trade association for electrical contractors in England, Wales and Northern Ireland. Founded 1901. ECA membership is a quality mark for the contractor; ECA also lobbies on behalf of the industry, runs technical events, publishes guidance and runs the JIB jointly with the trade union (Unite).",
-      "Three reasons. (1) Speed of selection — colour-coded ferrules let you grab the right size at a glance from a sorted ferrule kit. (2) Inspection — supervisor or QA can check at a glance that the ferrule colour matches the conductor CSA on every termination. (3) Standardisation — DIN 46228-4 is recognised across Europe, so any supplier's ferrules match any other's. The colour code IS the inspection mechanism.",
-      'Part P does NOT apply (Part P is dwellings-only). EAWR applies to the workplace electrical safety. The work needs an EIC or MEIWC for BS 7671 compliance and the contractor discharges EAWR duties through competent design and installation. No CPS upload required because Part P does not apply, but the contractor may still notify Building Control if other Building Regulations Parts are triggered (e.g. Part B fire safety, Part L energy efficiency).',
+      'The substance can cause an allergic breathing response that builds with repeated exposure — so tighter respiratory protection, good ventilation and, for regular exposure, health surveillance (COSHH Reg 11). Isocyanates in two-pack polyurethane products are the classic example.',
+      "Nothing for the operative — sensitisation information is only for the manufacturer's records.",
+      'That the product is safe to breathe in small amounts, so no respiratory protection is needed for short jobs.',
+      'That the product is flammable and must be kept away from sources of ignition.',
     ],
     correctAnswer: 0,
     explanation:
-      'Respiratory sensitisation is a serious occupational health hazard — once an operative is sensitised, even tiny future exposures can trigger an asthmatic-style response. Two-pack isocyanate-based products (some epoxy resins, some adhesives) are a known sensitiser. COSHH 2002 Reg 11 requires health surveillance where exposure is regular. Section 11 of the SDS is where this kind of toxicological detail is recorded.',
+      'Respiratory sensitisation is a serious occupational health hazard — once an operative is sensitised, even tiny future exposures can trigger an asthmatic-style response. Two-pack isocyanate-based products (polyurethane paints, foams and some adhesives) are a known sensitiser. COSHH 2002 Reg 11 requires health surveillance where exposure is regular. Section 11 of the SDS is where this kind of toxicological detail is recorded.',
   },
 ];
 
@@ -248,7 +248,7 @@ export default function Sub3() {
         <TLDR
           points={[
             'COSHH 2002 is the UK statutory framework for hazardous substances at work. Reg 6 requires assessment BEFORE exposure; Reg 7 requires control; Reg 11 requires health surveillance where exposure is regular.',
-            "Safety Data Sheet (SDS) is the manufacturer's 16-section document required by the CLP Regulation (EU 1272/2008, retained UK law). Sections 2 (hazards), 4 (first aid) and 8 (PPE) are the apprentice's first-read priorities.",
+            "Safety Data Sheet (SDS) is the supplier's standard 16-section document for a hazardous substance or mixture. Sections 2 (hazards), 4 (first aid) and 8 (PPE) are the apprentice's first-read priorities.",
             "Common electrical-trade chemicals — cable lubricant, contact cleaner, masonry sealant, two-pack epoxy, brick acid, dust suppressant — all need an SDS in the firm's COSHH register. Read it BEFORE the spill, not after.",
           ]}
         />
@@ -257,7 +257,7 @@ export default function Sub3() {
           outcomes={[
             'Supplementary content — extends LO2 / AC 2.2 (purpose of workplace information). Not directly mapped to a single 210 AC. COSHH awareness is a Level 2 skill; full COSHH assessment is a supervisor / employer competency.',
             'Define COSHH and identify the 2002 regulations as the UK statutory framework for hazardous substance exposure at work.',
-            "Identify the SDS (Safety Data Sheet) as the manufacturer's authoritative source of hazard, handling and first-aid information, required under the CLP Regulation (EU 1272/2008, retained UK law).",
+            "Identify the SDS (Safety Data Sheet) as the supplier's authoritative source of hazard, handling and first-aid information.",
             "Recall the 16-section structure of the SDS and identify Sections 2 (hazards), 4 (first aid) and 8 (exposure controls / PPE) as the apprentice's first-read priorities.",
             'Identify common electrical-trade chemicals (cable lubricant, contact cleaner, masonry sealant, two-pack epoxy, brick acid, dust suppressant) and the typical hazards each carries.',
             "Identify the locations where the SDS for a substance can be reliably found — manufacturer website, firm's COSHH register (paper or app), product packaging.",
@@ -420,8 +420,8 @@ export default function Sub3() {
         <ContentEyebrow>The 16-section SDS format</ContentEyebrow>
 
         <ConceptBlock
-          title="Standardised structure under the CLP Regulation"
-          plainEnglish="Every Safety Data Sheet for a hazardous substance follows the same 16-section structure, set by the CLP Regulation (EU 1272/2008, retained as UK law). Same sections, same order, same content categories, every product, every manufacturer. Once you know the structure you can navigate any SDS in seconds."
+          title="A standardised 16-section structure"
+          plainEnglish="Every Safety Data Sheet for a hazardous substance follows the same standard 16-section structure. Same sections, same order, same content categories, every product, every manufacturer. Once you know the structure you can navigate any SDS in seconds."
           onSite="The fixed structure is one of the most useful things about the SDS. Skip the marketing on the front, go straight to the section you need. Section 4 for first aid. Section 8 for PPE. Section 13 for disposal. By year three the section numbers should be muscle memory."
         >
           <div className="space-y-3">
@@ -542,7 +542,7 @@ export default function Sub3() {
         <ConceptBlock
           title="Workplace Exposure Limits (WELs) and what they mean for you"
           plainEnglish="A WEL is the maximum concentration of a hazardous airborne substance that an operative may be exposed to over a defined period (typically 8-hour time-weighted average for long-term exposure, 15-minute STEL for short-term exposure peaks). HSE publishes EH40 — the official list of workplace exposure limits in Great Britain. Not every substance has a WEL; those that do are listed in EH40 and referenced in Section 8 of the SDS."
-          onSite="The relevance to an electrician is mostly around respirable crystalline silica (chasing brick), solvents (contact cleaners, IPA), and isocyanates (two-pack epoxies). The SDS Section 8 will tell you whether the substance has a WEL and what it is. The control measures in the RAMS should keep exposure below the limit — typically through extract ventilation, dust suppression, or respiratory PPE."
+          onSite="The relevance to an electrician is mostly around respirable crystalline silica (chasing brick), solvents (contact cleaners, IPA), and isocyanates (two-pack polyurethane products). The SDS Section 8 will tell you whether the substance has a WEL and what it is. The control measures in the RAMS should keep exposure below the limit — typically through extract ventilation, dust suppression, or respiratory PPE."
         >
           <p>Two WEL types you&apos;ll meet:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -595,8 +595,8 @@ export default function Sub3() {
             </li>
             <li>
               <strong>Two-pack epoxy resin</strong> — for fixings, panel repairs, conduit seals.
-              Often contains isocyanate or amine hardeners — Section 11 typically flags respiratory
-              sensitisation. Section 8 PPE is significant; Reg 11 health surveillance often
+              Amine hardeners can cause skin sensitisation — check Sections 2 and 11 for
+              sensitisation flags. Section 8 PPE is significant; Reg 11 health surveillance often
               required.
             </li>
             <li>
@@ -762,7 +762,7 @@ export default function Sub3() {
         <KeyTakeaways
           points={[
             'COSHH 2002 is the UK statutory framework for hazardous substances at work — Reg 6 (assess BEFORE exposure), Reg 7 (control via the hierarchy), Reg 11 (health surveillance where exposure is regular).',
-            "The SDS (Safety Data Sheet) is the manufacturer's authoritative information for COSHH assessment. The 16-section format is fixed by the CLP Regulation (EU 1272/2008, retained as UK law).",
+            "The SDS (Safety Data Sheet) is the manufacturer's authoritative information for COSHH assessment. The 16-section format is the same for every product.",
             'The four SDS sections to know cold: Section 2 (hazards), Section 4 (first aid), Section 8 (PPE), Section 13 (disposal). By year three these should be muscle memory.',
             "Common electrical-trade chemicals — cable lubricant, contact cleaner, masonry sealant, two-pack epoxy, brick acid, dust suppressant, solder flux — all need an SDS in the firm's COSHH register.",
             "Three reliable sources for the SDS: manufacturer's website (always the latest version), firm's COSHH register (paper or app such as Sypol / Alcumus), original packaging insert. WhatsApp screenshots are not authoritative.",

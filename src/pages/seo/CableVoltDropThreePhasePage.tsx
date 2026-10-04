@@ -747,7 +747,7 @@ export default function CableVoltDropThreePhasePage() {
           For a final design, take the three-phase figure from the{' '}
           <a
             href="#common-cables"
-            className="touch-manipulation text-yellow-400 underline decoration-yellow-400/40 underline-offset-2 transition-colors hover:text-yellow-300"
+            className="touch-manipulation text-elec-yellow underline decoration-yellow-400/40 underline-offset-2 transition-colors hover:text-elec-yellow"
           >
             three-phase mV/A/m table below
           </a>
@@ -766,7 +766,7 @@ export default function CableVoltDropThreePhasePage() {
       faqHeading="Frequently Asked Questions About Three-Phase Voltage Drop"
       relatedPages={relatedPages}
       ctaHeading="Calculate Three-Phase Voltage Drop in Seconds"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site calculations. All BS 7671 tables built in. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site calculations. All BS 7671 tables built in. 7-day free trial, cancel anytime."
       toolPath="/tools/cable-volt-drop-three-phase"
     />
   );

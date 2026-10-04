@@ -243,19 +243,19 @@ export default function TrainingHubPage() {
       <section className="py-16 sm:py-24 px-5">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-6">
-            <BookOpen className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium text-yellow-400">Training and Study</span>
+            <BookOpen className="w-4 h-4 text-elec-yellow" />
+            <span className="text-sm font-medium text-elec-yellow">Training and Study</span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
             Electrical Training for{' '}
-            <span className="text-yellow-400">Apprentices and Electricians</span>
+            <span className="text-elec-yellow">Apprentices and Electricians</span>
           </h1>
           <p className="text-lg text-white max-w-3xl mx-auto leading-relaxed mb-8">
             Find the right Elec-Mate training route for apprentice study, exam preparation, CPD, and
             skills refreshers. Everything here is designed to help you learn faster and keep
             progressing in the trade.
           </p>
-          <p className="text-base text-white/80 max-w-3xl mx-auto leading-relaxed mb-8">
+          <p className="text-base text-white max-w-3xl mx-auto leading-relaxed mb-8">
             All 18th Edition content on Elec-Mate is aligned to BS 7671:2018+A4:2026 — the current
             edition of the wiring regulations — including arc fault detection devices under
             Regulation 421.1.7 and the expanded RCD requirements introduced by Amendment 2:2022.
@@ -269,7 +269,7 @@ export default function TrainingHubPage() {
             </a>
             <a
               href="#training-collections"
-              className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-yellow-500/40 text-white font-semibold rounded-xl transition-colors"
+              className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-white/[0.1] text-white font-semibold rounded-xl transition-colors"
             >
               Browse Training Pages
             </a>
@@ -280,7 +280,7 @@ export default function TrainingHubPage() {
       <section className="py-12 px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto mb-12">
           <div className="rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-6 sm:p-8">
-            <h2 className="text-lg sm:text-xl font-bold text-yellow-300 mb-3">
+            <h2 className="text-lg sm:text-xl font-bold text-elec-yellow mb-3">
               Which electrical training course do I need?
             </h2>
             <p className="text-white leading-relaxed">
@@ -309,7 +309,7 @@ export default function TrainingHubPage() {
           <SEOFeatureGrid features={features} />
 
           <h3 className="text-xl font-bold text-white mt-12 mb-2">The apprenticeship pathway</h3>
-          <p className="text-white/80 leading-relaxed mb-6 max-w-4xl">
+          <p className="text-white leading-relaxed mb-6 max-w-4xl">
             A typical Installation and Maintenance Electrician route runs through four stages. Exact
             qualifications depend on whether you study with{' '}
             <SEOInternalLink href="/city-guilds2391">City &amp; Guilds</SEOInternalLink> or
@@ -323,13 +323,13 @@ export default function TrainingHubPage() {
                 className="rounded-2xl border border-white/10 bg-white/[0.04] p-5"
               >
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] text-yellow-300 text-sm font-bold">
+                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] text-elec-yellow text-sm font-bold">
                     {i + 1}
                   </span>
                   <span className="text-lg font-bold text-white">{s.stage}</span>
                 </div>
                 <p className="text-sm font-semibold text-yellow-200/90 mb-1">{s.focus}</p>
-                <p className="text-sm text-white/75 leading-relaxed">{s.detail}</p>
+                <p className="text-sm text-white leading-relaxed">{s.detail}</p>
               </div>
             ))}
           </div>
@@ -341,7 +341,7 @@ export default function TrainingHubPage() {
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             Off-the-job training hours
           </h2>
-          <p className="text-white/80 leading-relaxed mb-6">
+          <p className="text-white leading-relaxed mb-6">
             Off-the-job (OTJ) training is learning that takes place within an apprentice&apos;s paid
             working hours but away from their normal day-to-day duties.
           </p>
@@ -351,23 +351,23 @@ export default function TrainingHubPage() {
                 Current rule (from 1 August 2025)
               </p>
               <p className="text-3xl font-bold text-white mb-1">1,066 hours</p>
-              <p className="text-sm text-white/80 leading-relaxed">
+              <p className="text-sm text-white leading-relaxed">
                 A fixed minimum set by the Installation and Maintenance Electrician standard (ST0152),
                 logged and evidenced across the apprenticeship.
               </p>
             </div>
             <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
-              <p className="text-xs font-semibold uppercase tracking-wide text-white/60 mb-2">
+              <p className="text-xs font-semibold uppercase tracking-wide text-white mb-2">
                 Historic rule (pre-August 2025 starts)
               </p>
-              <p className="text-3xl font-bold text-white/70 mb-1">20% of hours</p>
-              <p className="text-sm text-white/70 leading-relaxed">
+              <p className="text-3xl font-bold text-white mb-1">20% of hours</p>
+              <p className="text-sm text-white leading-relaxed">
                 Older apprenticeships used a percentage of paid hours. This has been replaced by the
                 fixed-hours model and should not be used for new starts.
               </p>
             </div>
           </div>
-          <p className="text-white/80 leading-relaxed mt-6">
+          <p className="text-white leading-relaxed mt-6">
             Track and evidence these hours in the{' '}
             <SEOInternalLink href="/apprentice-portfolio-guide">apprentice portfolio</SEOInternalLink>{' '}
             so the record is ready for your tutor, assessor and EPA gateway.
@@ -390,7 +390,7 @@ export default function TrainingHubPage() {
                     <Link
                       key={link.href}
                       to={link.href}
-                      className="block rounded-xl border border-white/8 bg-black/20 px-4 py-3 text-white hover:border-white/[0.14] hover:text-yellow-300 transition-colors"
+                      className="block rounded-xl border border-white/8 bg-black/20 px-4 py-3 text-white hover:border-white/[0.14] hover:text-elec-yellow transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -427,14 +427,14 @@ export default function TrainingHubPage() {
           <h3 className="text-xl font-bold text-white mb-2">
             Key BS 7671:2018+A4:2026 changes to revise
           </h3>
-          <p className="text-white/80 leading-relaxed mb-5">
+          <p className="text-white leading-relaxed mb-5">
             Amendment 4 brought several changes that come up in exams, CPD and on the job. These are
             the headline updates worth knowing.
           </p>
           <div className="overflow-hidden rounded-2xl border border-white/10">
             <table className="w-full text-left text-sm">
               <thead>
-                <tr className="bg-white/[0.06] text-white/70">
+                <tr className="bg-white/[0.06] text-white">
                   <th className="px-4 py-3 font-semibold">Reference</th>
                   <th className="px-4 py-3 font-semibold">What changed</th>
                 </tr>
@@ -442,10 +442,10 @@ export default function TrainingHubPage() {
               <tbody>
                 {a4Changes.map((row) => (
                   <tr key={row.ref} className="border-t border-white/8">
-                    <td className="px-4 py-3 align-top font-mono text-yellow-300 whitespace-nowrap">
+                    <td className="px-4 py-3 align-top font-mono text-elec-yellow whitespace-nowrap">
                       {row.ref}
                     </td>
-                    <td className="px-4 py-3 align-top text-white/85 leading-relaxed">
+                    <td className="px-4 py-3 align-top text-white leading-relaxed">
                       {row.change}
                     </td>
                   </tr>
@@ -453,7 +453,7 @@ export default function TrainingHubPage() {
               </tbody>
             </table>
           </div>
-          <p className="text-white/70 text-sm mt-3">
+          <p className="text-white text-sm mt-3">
             Go deeper on the{' '}
             <SEOInternalLink href="/guides/18th-edition-amendment-4">
               Amendment 4:2026 changes guide
@@ -470,7 +470,7 @@ export default function TrainingHubPage() {
           <h3 className="text-xl font-bold text-white mb-2">
             Where are AFDDs required? (Regulation 421.1.7)
           </h3>
-          <p className="text-white/80 leading-relaxed mb-5">
+          <p className="text-white leading-relaxed mb-5">
             Under Amendment 4, arc fault detection devices on socket-outlet final circuits rated up
             to 32 A are a requirement in certain higher-risk premises, and recommended in all others.
           </p>
@@ -484,7 +484,7 @@ export default function TrainingHubPage() {
                     : 'border-blue-700/40 bg-blue-900/20'
                 }`}
               >
-                <span className="text-white/90">{row.premises}</span>
+                <span className="text-white">{row.premises}</span>
                 <span
                   className={`shrink-0 rounded-full px-3 py-1 text-xs font-semibold ${
                     row.tone === 'required'
@@ -497,7 +497,7 @@ export default function TrainingHubPage() {
               </div>
             ))}
           </div>
-          <p className="text-white/70 text-sm mt-3">
+          <p className="text-white text-sm mt-3">
             Using AFDDs does not remove the need to apply the other protective measures required
             elsewhere in BS 7671.
           </p>
@@ -524,7 +524,7 @@ export default function TrainingHubPage() {
       <section id="all-courses" className="py-12 px-5 border-t border-white/5">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">All training courses</h2>
-          <p className="text-white/60 text-[14px] mb-6">
+          <p className="text-white text-[14px] mb-6">
             Every course page in the training library, A to Z.
           </p>
           <ul className="columns-2 md:columns-3 lg:columns-4 gap-x-6">
@@ -532,7 +532,7 @@ export default function TrainingHubPage() {
               <li key={course.path} className="break-inside-avoid">
                 <Link
                   to={course.path}
-                  className="block py-1 text-[13px] leading-snug text-white/70 hover:text-yellow-300 transition-colors touch-manipulation"
+                  className="block py-1 text-[13px] leading-snug text-white hover:text-elec-yellow transition-colors touch-manipulation"
                 >
                   {course.title}
                 </Link>

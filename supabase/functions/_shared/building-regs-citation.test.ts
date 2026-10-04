@@ -52,8 +52,43 @@ Deno.test('Building Regs questions route to the building-regs topic', () => {
     'how often must a landlord get an EICR',
     'AD S charge point requirements for new homes',
     'what does approved document F say about extractor fans',
+    'Kitchen with no cooker hood that vents outside - minimum intermittent extract rate?',
+    'where should smoke alarms go in a new-build house',
+    'what height should sockets be in a new house',
   ];
   const no = ['part protection of the cable', 'max zs for a 32A type B', 'ring final r1+r2 test'];
   for (const q of yes) assert(understandBS7671Query(q).topic_tags.includes('building-regs'), q);
   for (const q of no) assert(!understandBS7671Query(q).topic_tags.includes('building-regs'), q);
+});
+
+import { buildingRegsJurisdiction, isOutOfJurisdiction } from './building-regs-citation.ts';
+
+Deno.test('jurisdiction: England by default, Wales only when asked', () => {
+  // The bug: an England CU question was answered from AD P (Wales) para 0.7.
+  const eng = buildingRegsJurisdiction('Is a like-for-like board change notifiable in England?');
+  const dflt = buildingRegsJurisdiction('Is a consumer unit change notifiable?');
+  const wal = buildingRegsJurisdiction('Is a CU change notifiable in Wales?');
+  assertEquals([eng, dflt, wal], ['england', 'england', 'wales']);
+  assert(isOutOfJurisdiction('england', 'approved_doc', 'Approved Document P (Wales)', '0.7'));
+  assert(isOutOfJurisdiction('england', 'legislation', BR, 'reg12-W'));
+  assert(!isOutOfJurisdiction('england', 'approved_doc', ADP, '2.5'));
+  assert(!isOutOfJurisdiction('england', 'legislation', BR, 'reg12'));
+  assert(isOutOfJurisdiction('wales', 'approved_doc', ADP, '2.5'));
+  assert(!isOutOfJurisdiction('wales', 'approved_doc', 'Approved Document P (Wales)', '0.7'));
+  assert(isOutOfJurisdiction('wales', 'legislation', 'Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020', 'reg3'));
+  assert(!isOutOfJurisdiction('england', 'bs7671', '2018+A4:2026', '411.3.3')); // never touches BS 7671
+});
+
+// Short topic words ('ev', 'ze', 'rcd', …) match whole words only. As plain
+// substrings, "every level" and "device" were tagged EV charging and "cable size"
+// was tagged ze, which moved book weighting for the wrong subject.
+Deno.test('short topic words do not match inside other words', () => {
+  const tags = (q: string) => understandBS7671Query(q).topic_tags;
+  assert(!tags('what device do I need for every level of the building').includes('ev-charging'));
+  assert(!tags('cable size for a 9.5kW shower').includes('ze'));
+  assert(!tags('freeze protection trace heating').includes('ze'));
+  assert(tags('EV charger RCD type').includes('ev-charging'));
+  assert(tags('what is ze on a TN-C-S supply').includes('ze'));
+  assert(tags('how many rcds on a board').includes('rcd'));
+  assert(tags('spds in domestic installations').includes('spd'));
 });

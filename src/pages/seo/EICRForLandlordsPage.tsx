@@ -196,7 +196,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Obtain an EICR</strong> — ensure the electrical installation is inspected
                 and tested by a qualified and competent person at intervals of no more than 5 years
@@ -204,7 +204,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Carry out remedial work</strong> — if the EICR identifies C1 or C2 defects
                 (making it Unsatisfactory), complete the remedial work within 28 days or the shorter
@@ -212,7 +212,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Provide the report to tenants</strong> — give a copy of the EICR to new
                 tenants before they move in and to existing tenants within 28 days of the
@@ -220,7 +220,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Provide the report to the local authority</strong> — supply a copy within 7
                 days of receiving a written request.
@@ -309,7 +309,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>5 years maximum between inspections.</strong> The EICR must be renewed at
                 least every 5 years. The inspector may recommend a shorter interval (for example, 3
@@ -318,7 +318,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Before a new tenancy begins.</strong> The first EICR must be obtained before
                 a new tenant moves in. If the property already has a valid EICR that is within its
@@ -327,7 +327,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>28 days to complete remedial work.</strong> If the EICR is Unsatisfactory
                 (any C1 or C2 defects), the landlord must arrange and complete the remedial work
@@ -336,14 +336,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>28 days to provide the report to existing tenants.</strong> The EICR must be
                 supplied to existing tenants within 28 days of the inspection date.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>7 days to provide the report to the local authority.</strong> If the local
                 authority requests a copy of the EICR in writing, the landlord must supply it within
@@ -351,7 +351,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>28 days to provide written confirmation of remedial work.</strong> After
                 remedial work is completed, the landlord must obtain written confirmation from a
@@ -494,7 +494,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Before the inspection:</strong> Notify the tenant in advance (at least 24
                 hours notice is good practice) that a qualified electrician will attend to inspect
@@ -506,7 +506,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>After a Satisfactory result:</strong> Provide the tenant with a copy of the
                 EICR within 28 days. Explain that the installation has been inspected and is in
@@ -514,7 +514,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>After an Unsatisfactory result:</strong> Explain that some issues have been
                 found and that remedial work will be arranged promptly. Reassure the tenant that any
@@ -543,7 +543,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Registered with a competent person scheme</strong> — NICEIC, NAPIT, ELECSA,
                 or BRE Certification. You can search for registered electricians on each scheme's
@@ -551,21 +551,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Holds C&G 2391 or equivalent</strong> — the inspection and testing
                 qualification. This is the specific qualification for periodic inspection work.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Holds the 18th Edition qualification</strong> — C&G 2382 (IET Wiring
                 Regulations). This confirms knowledge of the current edition of BS 7671.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Has public liability insurance</strong> — at least £2 million cover is
                 standard for domestic work. Check the certificate is current.
@@ -608,7 +608,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Camera className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI Board Scanner</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -667,7 +667,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Send className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Send className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Send EICR + Quote + Invoice from Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -687,7 +687,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Start doing landlord EICRs the fast way"
-          description="Join 1,600+ UK electricians completing EICR certificates on their phones. Board scanner, voice entry, AI defect coding, remedial quoting…"
+          description="Join 2,100+ UK electricians completing EICR certificates on their phones. Board scanner, voice entry, AI defect coding, remedial quoting…"
           icon={Camera}
         />
       </>
@@ -713,7 +713,7 @@ export default function EICRForLandlordsPage() {
       heroTitle={
         <>
           EICR for Landlords:{' '}
-          <span className="text-yellow-400">The Legal Requirements You Cannot Ignore</span>
+          <span className="text-elec-yellow">The Legal Requirements You Cannot Ignore</span>
         </>
       }
       heroSubtitle="Every privately rented property in England must have a valid EICR. Penalties are up to £30,000. The inspection must be renewed every 5 years. Remedial work must be completed within 28 days. This guide explains everything landlords and electricians need to know."
@@ -724,7 +724,7 @@ export default function EICRForLandlordsPage() {
       faqHeading="Frequently Asked Questions About EICR for Landlords"
       relatedPages={relatedPages}
       ctaHeading="Complete Landlord EICRs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians creating professional EICR certificates with AI board scanning, voice test entry, and instant delivery to landlords. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians creating professional EICR certificates with AI board scanning, voice test entry, and instant delivery to landlords. 7-day free trial, cancel anytime."
     />
   );
 }

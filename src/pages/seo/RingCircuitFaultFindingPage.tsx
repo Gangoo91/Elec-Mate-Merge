@@ -786,7 +786,7 @@ export default function RingCircuitFaultFindingPage() {
       badgeIcon={CircleDot}
       heroTitle={
         <>
-          Ring Circuit Fault Finding: <span className="text-yellow-400">A Step-by-Step Guide</span>
+          Ring Circuit Fault Finding: <span className="text-elec-yellow">A Step-by-Step Guide</span>
         </>
       }
       heroSubtitle="Ring circuits are unique to UK wiring practice and their faults require a specific testing approach. This guide covers open rings, bridged rings, borrowed neutrals, interconnected rings, and how to analyse r1, rn, r2 and R1+R2 readings to locate the fault."

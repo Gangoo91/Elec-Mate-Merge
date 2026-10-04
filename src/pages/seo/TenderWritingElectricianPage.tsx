@@ -192,7 +192,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Technical specification</strong> — defines system types (small power,
                 lighting, containment, fire detection, emergency lighting, BMS interface), materials
@@ -201,7 +201,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Drawings and design information</strong> — check drawing issue status.
                 Tender drawings marked "for information" or "preliminary" carry more design risk
@@ -210,7 +210,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>O&amp;M and commissioning</strong> — many ERs require full O&amp;M manuals,
                 as-installed drawings (CAD or Revit), commissioning witnessed by the client's
@@ -219,7 +219,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tender queries</strong> — raise all ambiguities in writing before the tender
                 submission deadline. Clarification questions and answers (Q&amp;As) are usually
@@ -246,7 +246,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardList className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Site management</strong> — electrical site manager or working foreman cost
                 for the duration of the project. Include their travel, accommodation if required,
@@ -254,7 +254,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardList className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing equipment</strong> — calibrated multifunction testers, loop
                 impedance testers, insulation resistance testers. Include calibration costs
@@ -262,7 +262,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardList className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Site attendance and meetings</strong> — time for site progress meetings,
                 subcontractor co-ordination meetings, design team meetings. On a 12-month project
@@ -270,7 +270,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardList className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insurance and bonds</strong> — performance bonds (typically 10 per cent of
                 contract value), parent company guarantees, and any additional insurance
@@ -278,7 +278,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardList className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Overhead and profit</strong> — your company overhead recovery (typically 10
                 to 15 per cent of turnover) plus your target profit margin (5 to 10 per cent on
@@ -304,7 +304,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Base hourly rate</strong> — either JIB rates (published annually) or your
                 own employment contracts. The JIB National Standard rate for an Approved
@@ -315,7 +315,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Oncosts</strong> — add employers' NI (13.8 per cent above the secondary
                 threshold), holiday pay (12.07 per cent for workers without fixed holiday
@@ -324,7 +324,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Productivity allowance</strong> — experienced estimators apply a
                 productivity factor to account for non-productive time (travel between floors,
@@ -354,7 +354,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard markup</strong> — 15 to 25 per cent on trade price is the
                 commercial norm for electrical materials. This covers delivery, storage, handling,
@@ -364,7 +364,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Price fluctuation</strong> — on contracts longer than six months, include a
                 price fluctuation clause in your tender or add a contingency for material price
@@ -374,7 +374,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Long-lead items</strong> — switchgear, specialist luminaires, and custom
                 distribution boards can have lead times of 16 to 26 weeks. Order these immediately
@@ -451,7 +451,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Company H&amp;S policy</strong> — must be signed and dated within the last
                 12 months. State your health and safety objectives and arrangements. For companies
@@ -460,7 +460,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RAMS (Risk Assessment and Method Statement)</strong> — produce RAMS for each
                 key electrical activity: cable installation and termination, working at height, work
@@ -472,7 +472,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Accreditation</strong> — CHAS (Contractors Health and Safety Assessment
                 Scheme) or Constructionline Gold are accepted as pre-qualification evidence by most
@@ -481,7 +481,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insurance evidence</strong> — public liability (minimum £5m, many clients
                 require £10m), employers' liability (minimum £5m, legally required if you employ
@@ -512,7 +512,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NEC4 Engineering and Construction Subcontract (ECS)</strong> — used
                 extensively in public sector, infrastructure, utilities, and healthcare. The
@@ -522,7 +522,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>JCT Design and Build 2016</strong> — common in commercial fit-out, housing,
                 and education. Changes are valued as variations. Loss and expense is recoverable for
@@ -531,7 +531,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Housing Grants, Construction and Regeneration Act 1996</strong> — gives
                 every construction contractor (including electrical subcontractors) the right to
@@ -621,7 +621,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <PoundSterling className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Quote and Tender Pricing</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -653,7 +653,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more commercial electrical tenders with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting, RAMS generation, and business management."
+          description="Join 2,100+ UK electricians using Elec-Mate for professional quoting, RAMS generation, and business management."
           icon={Briefcase}
         />
       </>
@@ -679,7 +679,7 @@ export default function TenderWritingElectricianPage() {
       heroTitle={
         <>
           How to Write Electrical Tenders:{' '}
-          <span className="text-yellow-400">Winning Commercial Work in the UK</span>
+          <span className="text-elec-yellow">Winning Commercial Work in the UK</span>
         </>
       }
       heroSubtitle="A complete guide to pricing and writing winning tenders for commercial electrical contracts — prelims, labour rates, materials markup, programme, H&S documentation, NEC4 and JCT contracts, and the common mistakes that lose tenders before the price is even read."
@@ -690,7 +690,7 @@ export default function TenderWritingElectricianPage() {
       faqHeading="Frequently Asked Questions About Electrical Tender Writing"
       relatedPages={relatedPages}
       ctaHeading="Build Professional Electrical Tenders with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for structured quoting, RAMS generation, and business management tools. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for structured quoting, RAMS generation, and business management tools. 7-day free trial, cancel anytime."
     />
   );
 }

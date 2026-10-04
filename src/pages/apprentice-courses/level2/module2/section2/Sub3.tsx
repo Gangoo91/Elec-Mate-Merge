@@ -253,9 +253,10 @@ export default function Sub3() {
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
               <strong>Terminal connections — BS 7671 Section 526.</strong> Particularly 526.1
-              (continuity of conductors) and 526.9 (terminations to manufacturer’s torque settings).
-              A torque wrench IS a lever — the worked example later in this Sub shows exactly how
-              the same lever maths underpins every CU terminal you tighten.
+              (durable continuity and mechanical strength of every connection), with the torque
+              figure itself coming from the manufacturer’s instructions (Reg 134.1.1). A torque
+              wrench IS a lever — the worked example later in this Sub shows exactly how the same
+              lever maths underpins every CU terminal you tighten.
             </li>
             <li>
               <strong>Cable hauling — pulley MA and friction.</strong> Pulling 70 mm² SWA up a
@@ -378,7 +379,7 @@ export default function Sub3() {
         <ConceptBlock
           title="Worked example — what 3.5 N·m on a CU terminal actually feels like"
           plainEnglish="A torque wrench IS a lever. The number on the dial is just force × distance from the screw — and you can build an intuition for it with a kitchen scale."
-          onSite="Most apprentices know terminal torque settings exist (BS 7671 Reg 526.9, manufacturer's data). Almost none have a feel for what those numbers represent — which is how you end up with under-torqued joints that fail the warm-up test six months later."
+          onSite="Most apprentices know terminal torque settings exist (manufacturer's data, backed by BS 7671 Regs 134.1.1 and 526.1). Almost none have a feel for what those numbers represent — which is how you end up with under-torqued joints that fail the warm-up test six months later."
         >
           <p>
             The manufacturer's spec on a typical 230 V consumer unit terminal calls for

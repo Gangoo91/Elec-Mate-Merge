@@ -148,7 +148,7 @@ export default function ElectricalSocketSymbolsPage() {
       heroTitle={
         <>
           Socket Outlet Symbols:{' '}
-          <span className="text-yellow-400">IEC 60617 reference for UK electricians</span>
+          <span className="text-elec-yellow">IEC 60617 reference for UK electricians</span>
         </>
       }
       heroSubtitle="Every socket outlet symbol used on UK installation drawings — single 13A through to EV chargers and outdoor IP66 — drawn to IEC 60617 with BS 7671 context."

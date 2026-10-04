@@ -191,7 +191,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lead-acid (flooded)</strong> — the traditional leisure battery. Relatively
                 low cost, widely available, and recyclable. Should not be discharged below 50% of
@@ -201,7 +201,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>AGM (Absorbent Glass Mat)</strong> — a sealed lead-acid variant where the
                 electrolyte is held in glass fibre mats rather than free liquid. Tolerates deeper
@@ -211,7 +211,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lithium iron phosphate (LiFePO4)</strong> — the premium option. Can be
                 discharged to 80% depth of discharge (compared to 50% for lead-acid) giving
@@ -222,7 +222,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Battery sizing</strong> — calculate daily 12V consumption (sum of each load
                 in amps × hours of use). Double this figure for lead-acid (to stay above 50% depth
@@ -249,7 +249,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Panel types</strong> — monocrystalline panels offer the highest efficiency
                 (typically 20–23%) and are best for roof installations where space is limited.
@@ -259,7 +259,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MPPT vs. PWM controllers</strong> — an MPPT (Maximum Power Point Tracking)
                 solar charge controller extracts maximum power from the panels by electronically
@@ -271,7 +271,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wiring and cable sizing</strong> — solar panel wiring must be rated for the
                 short-circuit current of the panel array (typically 1.25× the rated short-circuit
@@ -299,7 +299,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IEC 60309 (CEE) connectors</strong> — shore power uses the blue 16A IEC
                 60309 connector (the same as at caravan parks and marinas). The blue colour
@@ -309,7 +309,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Power limitation</strong> — most UK caravan park pitches provide a 16A
                 supply (maximum 3.68 kW). Be aware that running multiple high-load appliances
@@ -319,7 +319,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reverse polarity</strong> — some older or poorly maintained sites have
                 reversed polarity on the pitch supply (live and neutral conductors swapped). This is
@@ -347,7 +347,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pure sine wave vs. modified sine wave</strong> — pure sine wave (PSW)
                 inverters produce a smooth 230V AC output identical to the mains supply. They are
@@ -358,7 +358,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inverter sizing</strong> — the inverter must be rated to handle the peak
                 power demand of all appliances that may be run simultaneously. Inductive loads
@@ -368,7 +368,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inverter-charger (combi units)</strong> — a combined inverter-charger
                 automatically switches from inverter mode (off-grid) to charger mode (on EHU) when
@@ -497,7 +497,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Settings className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Annual Pre-Season Check</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -546,7 +546,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Caravan & motorhome electrical checks made simple with"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site inspection reporting, test result recording, and instant PDF export."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site inspection reporting, test result recording, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -572,7 +572,7 @@ export default function CaravanMotorHomeElectricalPage() {
       heroTitle={
         <>
           Caravan & Motorhome Electrical Guide UK:{' '}
-          <span className="text-yellow-400">12V & 230V Systems</span>
+          <span className="text-elec-yellow">12V & 230V Systems</span>
         </>
       }
       heroSubtitle="Everything you need to know about caravan and motorhome electrical systems — leisure batteries, solar charging with MPPT controllers, mains shore power hookup, pure sine wave inverters, 12V DC wiring, shore power safety, and annual maintenance."
@@ -583,7 +583,7 @@ export default function CaravanMotorHomeElectricalPage() {
       faqHeading="Frequently Asked Questions About Caravan and Motorhome Electrical Systems"
       relatedPages={relatedPages}
       ctaHeading="Complete Leisure Vehicle Electrical Inspections on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site inspection reporting, test result recording, and instant PDF export. Perfect for caravan and motorhome annual electrical checks. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site inspection reporting, test result recording, and instant PDF export. Perfect for caravan and motorhome annual electrical checks. 7-day free trial."
     />
   );
 }

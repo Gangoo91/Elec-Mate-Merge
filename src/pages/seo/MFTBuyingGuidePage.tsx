@@ -54,7 +54,7 @@ const tocItems = [
 const keyTakeaways = [
   'A multifunction tester (MFT) is a single instrument covering the tests needed to complete an Electrical Installation Certificate (EIC) or Electrical Installation Condition Report (EICR) to BS 7671:2018+A4:2026. Regulation 643.1 requires measuring instruments to be chosen in accordance with the relevant parts of BS EN 61557.',
   'Buy for six functions, not five: continuity, insulation resistance, polarity, earth electrode resistance, earth fault loop impedance with prospective fault current, and RCD testing.',
-  'A4:2026 changed RCD testing. Appendix 3 Table 3A was deleted — there is no ½× or 5× requirement in BS 7671. Regulation 643.8 verifies an RCD with an alternating current test at rated residual operating current (IΔn): 300 ms maximum for a general non-delay type, and between 130 ms and 500 ms for a delay "S" type.',
+  'A2:2022 changed RCD testing. Appendix 3 Table 3A was deleted — there is no ½× or 5× requirement in BS 7671. Regulation 643.8 verifies an RCD with an alternating current test at rated residual operating current (IΔn): 300 ms maximum for a general non-delay type, and between 130 ms and 500 ms for a delay "S" type.',
   'A4:2026 also added Regulation 643.3.3 — where connected equipment could influence or be damaged by the test, test to Table 64 before connection, then apply a 250 V DC test after connection with a minimum of 1 MΩ. A 250 V DC range is now a must-have, not a nice-to-have.',
   'For measurements at the origin of the installation, CAT IV 300 V is the minimum rating — and the test leads and probes must carry the same rating as the instrument.',
 ];
@@ -83,7 +83,7 @@ const faqs = [
   {
     question: 'Can I use an MFT to test RCBOs?',
     answer:
-      'Yes. An RCBO combines the functions of a circuit-breaker and an RCD in one device. It has a rated residual operating current (IΔn) like a standalone RCD, and the MFT RCD test function applies the test current and measures the disconnection time in exactly the same way. Under BS 7671:2018+A4:2026 Regulation 643.8, effectiveness is verified with an alternating current test at IΔn regardless of RCD Type: 300 ms maximum for a general non-delay type. Appendix 3 Table 3A, which previously gave the ½×, 1× and 5× performance criteria, was deleted at A4:2026.',
+      'Yes. An RCBO combines the functions of a circuit-breaker and an RCD in one device. It has a rated residual operating current (IΔn) like a standalone RCD, and the MFT RCD test function applies the test current and measures the disconnection time in exactly the same way. Under BS 7671:2018+A4:2026 Regulation 643.8, effectiveness is verified with an alternating current test at IΔn regardless of RCD Type: 300 ms maximum for a general non-delay type. Appendix 3 Table 3A, which previously gave the ½×, 1× and 5× performance criteria, was deleted at A2:2022.',
   },
   {
     question: 'What insulation resistance values are acceptable for fixed wiring?',
@@ -741,7 +741,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EIC and EICR certificates with your MFT results on site"
-          description="Join 1,600+ UK electricians using Elec-Mate for MFT result entry, automatic Zs compliance checking, and professional EIC and EICR certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for MFT result entry, automatic Zs compliance checking, and professional EIC and EICR certification."
           icon={Wrench}
         />
       </>
@@ -767,7 +767,7 @@ export default function MFTBuyingGuidePage() {
       heroTitle={
         <>
           Multifunction Tester Buying Guide:{' '}
-          <span className="text-yellow-400">Best MFTs for UK Electricians 2026</span>
+          <span className="text-elec-yellow">Best MFTs for UK Electricians 2026</span>
         </>
       }
       heroSubtitle="What an MFT must be able to do under BS 7671:2018+A4:2026, why CAT IV 300 V is the minimum safety rating, what changed for RCD and insulation resistance testing at A4, and the four instruments worth shortlisting."
@@ -776,7 +776,7 @@ export default function MFTBuyingGuidePage() {
         answer:
           'Buy an MFT rated CAT IV 300 V with instruments and leads to match, covering continuity (≥200 mA), insulation resistance at 250, 500 and 1000 V DC, high-current and no-trip loop impedance, RCD testing at IΔn, prospective fault current and earth electrode resistance.',
         detail:
-          'BS 7671:2018+A4:2026 Regulation 643.1 requires measuring instruments to be chosen in accordance with the relevant parts of BS EN 61557. A4:2026 deleted Appendix 3 Table 3A, so RCDs are verified by an alternating current test at IΔn — 300 ms maximum for a general non-delay type — and Regulation 643.3.3 added a 250 V DC insulation resistance test after equipment is connected, with a minimum of 1 MΩ.',
+          'BS 7671:2018+A4:2026 Regulation 643.1 requires measuring instruments to be chosen in accordance with the relevant parts of BS EN 61557. A2:2022 deleted Appendix 3 Table 3A, so RCDs are verified by an alternating current test at IΔn — 300 ms maximum for a general non-delay type — and Regulation 643.3.3 added a 250 V DC insulation resistance test after equipment is connected, with a minimum of 1 MΩ.',
       }}
       readingTime={13}
       keyTakeaways={keyTakeaways}
@@ -785,7 +785,7 @@ export default function MFTBuyingGuidePage() {
       faqHeading="Frequently Asked Questions About Multifunction Testers"
       relatedPages={relatedPages}
       ctaHeading="Record MFT Test Results and Issue EIC Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to enter MFT readings into EIC and EICR schedules, auto-check Zs compliance, and generate professional certificates on site. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to enter MFT readings into EIC and EICR schedules, auto-check Zs compliance, and generate professional certificates on site. 7-day free trial."
     />
   );
 }

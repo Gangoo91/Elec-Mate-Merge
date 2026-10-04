@@ -42,7 +42,7 @@ export default function HotTubElectricalCalculatorPage() {
       badgeIcon={Droplets}
       heroTitle={
         <>
-          <span className="text-yellow-400">Hot Tub Electrical Calculator</span> — Supply Sizing,
+          <span className="text-elec-yellow">Hot Tub Electrical Calculator</span> — Supply Sizing,
           RCD Protection, and Outdoor Cabling
         </>
       }
@@ -71,7 +71,7 @@ export default function HotTubElectricalCalculatorPage() {
               <p>The first question on any hot tub job is which kind of supply it needs:</p>
               <div className="grid gap-4 sm:grid-cols-2 my-4">
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-2">13A Plug-and-Play</h3>
+                  <h3 className="font-bold text-elec-yellow text-lg mb-2">13A Plug-and-Play</h3>
                   <ul className="space-y-2 text-white text-sm">
                     <li>Runs from a 13A supply — up to about 3kW total</li>
                     <li>Heater and pumps interlock: heating pauses when jets run</li>
@@ -81,7 +81,7 @@ export default function HotTubElectricalCalculatorPage() {
                   </ul>
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-2">32A Hardwired</h3>
+                  <h3 className="font-bold text-elec-yellow text-lg mb-2">32A Hardwired</h3>
                   <ul className="space-y-2 text-white text-sm">
                     <li>Dedicated circuit from the consumer unit</li>
                     <li>Heater (typically 2-3kW) and pumps run together</li>
@@ -113,26 +113,26 @@ export default function HotTubElectricalCalculatorPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
                 <ol className="space-y-3 text-white text-sm list-decimal pl-5">
                   <li>
-                    <strong className="text-yellow-400">Total load:</strong> 3.0 + 1.5 + 1.5 + 0.5
+                    <strong className="text-elec-yellow">Total load:</strong> 3.0 + 1.5 + 1.5 + 0.5
                     = <strong>6.5kW</strong>
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Design current:</strong> I = P / V = 6500 /
+                    <strong className="text-elec-yellow">Design current:</strong> I = P / V = 6500 /
                     230 = <strong>28.3A</strong> → a 32A dedicated circuit
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Cable:</strong> 6mm² SWA is the typical
+                    <strong className="text-elec-yellow">Cable:</strong> 6mm² SWA is the typical
                     choice for a 32A outdoor run of this length — confirm the derated capacity for
                     the burial method in the calculator
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Voltage drop:</strong> using the published
+                    <strong className="text-elec-yellow">Voltage drop:</strong> using the published
                     figure of approximately 7.3 mV/A/m for 6mm² copper: 28.3A x 15m x 7.3 mV/A/m =
                     3,099mV = <strong>3.1V</strong>. As a percentage: 3.1 / 230 ={' '}
                     <strong>1.3%</strong> — well within the 5% limit
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Protection:</strong> 32A Type A 30mA RCBO
+                    <strong className="text-elec-yellow">Protection:</strong> 32A Type A 30mA RCBO
                     (or RCD-protected circuit), weatherproof rotary isolator adjacent to the tub
                   </li>
                 </ol>
@@ -244,35 +244,35 @@ export default function HotTubElectricalCalculatorPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
                 <ul className="space-y-3 text-white text-sm">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Rotary isolator</strong> — a weatherproof
+                      <strong className="text-elec-yellow">Rotary isolator</strong> — a weatherproof
                       double-pole isolator near the tub lets it be isolated for servicing and water
                       changes without a trip to the consumer unit. Position it out of reach of a
                       person in the water but convenient for maintenance.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Socket positioning</strong> — for
+                      <strong className="text-elec-yellow">Socket positioning</strong> — for
                       plug-and-play tubs, the socket should be positioned per the manufacturer's
                       minimum distance from the water, protected from weather, and never reachable
                       from inside the tub.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Equipment near the water</strong> —
+                      <strong className="text-elec-yellow">Equipment near the water</strong> —
                       lighting, sockets, and accessories close to the tub are constrained by the
                       zone requirements; choose IP-rated equipment accordingly.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Manufacturer's manual</strong> — hot tub
+                      <strong className="text-elec-yellow">Manufacturer's manual</strong> — hot tub
                       warranty terms very often require installation by a qualified electrician to
                       the manual's specification. Keep it with the certificate.
                     </span>
@@ -461,7 +461,7 @@ export default function HotTubElectricalCalculatorPage() {
         },
       ]}
       ctaHeading="Design hot tub supplies with confidence"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for outdoor circuit design, cable sizing, and certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for outdoor circuit design, cable sizing, and certification. 7-day free trial, cancel anytime."
       toolPath="/tools/hot-tub-electrical-calculator"
     />
   );

@@ -341,7 +341,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong>Low voltage (up to 1,000V AC) — includes UK mains (230V)</strong>
                 <p className="mt-1">
@@ -545,7 +545,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Are you an electrician? Help keep UK homes electrically safe"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Start your 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Start your 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -571,7 +571,7 @@ export default function ElectricShockFirstAidPage() {
       heroTitle={
         <>
           Electric Shock First Aid UK:{' '}
-          <span className="text-yellow-400">What to Do — and What Not to Do</span>
+          <span className="text-elec-yellow">What to Do — and What Not to Do</span>
         </>
       }
       heroSubtitle="Life-critical guide to electric shock first aid in the UK. The most important rule: do NOT touch the casualty while they are in contact with the source. Isolate the supply first, call 999, and always ensure the casualty is seen by a doctor — even if they appear unharmed."
@@ -582,7 +582,7 @@ export default function ElectricShockFirstAidPage() {
       faqHeading="Frequently Asked Questions About Electric Shock First Aid"
       relatedPages={relatedPages}
       ctaHeading="Are You an Electrician? Complete EICRs Faster with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

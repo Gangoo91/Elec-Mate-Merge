@@ -176,7 +176,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Basic dormer (existing consumer unit with spare capacity)</strong> — £1,800
                 to £2,800. Lighting, sockets, smoke alarms, testing, and Part P notification for a
@@ -184,7 +184,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard loft with consumer unit upgrade</strong> — £2,800 to £4,000. All of
                 the above plus a new 18th edition split-load consumer unit, additional circuits for
@@ -192,7 +192,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large or complex loft (hip-to-gable, mansard, or double loft)</strong> —
                 £3,500 to £5,000+. Longer cable runs, more circuits, potentially a sub-consumer unit
@@ -222,7 +222,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>How many spare ways are available?</strong> — A loft conversion typically
                 requires 2 to 4 new circuit breakers. If the board is full or has only 1 spare way,
@@ -230,7 +230,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Is RCD protection present?</strong> — All circuits in a loft conversion
                 (which is a new floor of the dwelling) must have 30mA RCD protection. If the
@@ -240,7 +240,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Is the board a metal-clad consumer unit?</strong> — The 18th edition of BS
                 7671 requires consumer units in domestic premises to be of non-combustible
@@ -269,7 +269,7 @@ const sections = [
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
-            <Lightbulb className="w-6 h-6 text-yellow-400 mb-3" />
+            <Lightbulb className="w-6 h-6 text-elec-yellow mb-3" />
             <h3 className="font-bold text-white text-base mb-2">Lighting</h3>
             <p className="text-white text-sm leading-relaxed">
               Dedicated lighting circuit for loft room and landing. 1.0mm or 1.5mm twin and earth.
@@ -320,7 +320,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dormer loft</strong> — new stud walls and flat-ceiling section allow
                 standard first-fix cable installation in wall and ceiling cavities. Cables drop
@@ -330,7 +330,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Roof light (Velux) loft</strong> — cables must follow the existing rafter
                 slope and the new floor joists. No new stud walls for concealment — cables run in
@@ -339,7 +339,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hip-to-gable loft</strong> — the new gable wall provides a useful cable
                 chase for the vertical run from the consumer unit. Coordinate with the builder to
@@ -347,7 +347,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mansard loft</strong> — essentially a new floor with near-vertical walls.
                 Most flexibility for cable routing. Co-ordinate with the structural engineer on the
@@ -426,7 +426,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">First-Fix Programme</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -471,7 +471,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, cable-size, and certify loft conversion electrical"
-          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certificates for loft conversion projects."
+          description="Join 2,100+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certificates for loft conversion projects."
           icon={Home}
         />
       </>
@@ -497,7 +497,7 @@ export default function LoftConversionElectricalCostPage() {
       heroTitle={
         <>
           Loft Conversion Electrical Cost:{' '}
-          <span className="text-yellow-400">Circuits, Costs and Part P</span>
+          <span className="text-elec-yellow">Circuits, Costs and Part P</span>
         </>
       }
       heroSubtitle="A loft conversion electrical package typically costs £1,800 to £5,000. This guide covers required circuits, consumer unit upgrade considerations, cable routing by loft type, smoke alarm requirements, and Part P notification."

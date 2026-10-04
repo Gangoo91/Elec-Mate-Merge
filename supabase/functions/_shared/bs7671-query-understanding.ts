@@ -102,12 +102,21 @@ const TOPIC_VOCAB: Record<string, string[]> = {
   // matches "part protection".
   'building-regs': [
     'building regulations', 'building regs', 'building control', 'approved document',
-    'notifiable', 'notify building control', 'building notice',
+    'notifiable', 'notify', 'building notice',
     'competent person scheme', 'registered competent person', 'self-certif', 'self certif',
     'third party certifier', 'third-party certifier', 'building regulations compliance certificate',
     'electrical safety standards', 'private rented sector', 'landlord', 'rented property', 'tenant',
     'material change of use', 'building safety act', 'dutyholder',
     'gigabit-ready', 'gigabit ready',
+    // Subjects the Approved Documents govern — asked about WITHOUT naming the
+    // Part ("kitchen with no cooker hood — what extract rate?"). Untagged, the
+    // question got no Building Regs context and the model invented "Table 2.7".
+    'extract fan', 'extractor fan', 'extractor', 'extract rate', 'extract ventilation',
+    'cooker hood', 'trickle vent', 'background ventilator', 'purge ventilation',
+    'ventilation rate', 'air changes per hour',
+    'smoke alarm', 'heat alarm', 'fire stopping', 'fire-stopping', 'fire door',
+    'socket height', 'switch height', 'height of sockets', 'height of switches',
+    'wheelchair', 'new build', 'new-build', 'lighting efficacy', 'lumens per circuit',
   ],
 };
 
@@ -118,6 +127,9 @@ const BUILDING_REGS_PATTERNS: RegExp[] = [
   /\bad ?[pbflmsr]\b(?![-\d])/,
   /\bregulation 12\b/,
   /\bschedule 4\b/,
+  // "what height should sockets be", "sockets at what height" (AD M)
+  /\bheight\b.{0,60}\b(sockets?|switch(es)?|consumer units?)\b/,
+  /\b(sockets?|switch(es)?)\b.{0,60}\bheight\b/,
 ];
 
 const TOPIC_CANONICAL = new Set(Object.keys(TOPIC_VOCAB));
@@ -219,10 +231,22 @@ function matchCategoryVocab(
   return undefined;
 }
 
+/*
+ * Short keywords match as WHOLE WORDS only. Plain substring matching tagged
+ * "every level of the building" and "what device" as ev-charging ('ev'), and
+ * "cable size" / "freeze" as ze. A plural 's' is allowed ("rcds", "spds").
+ * Phrases with a space or 4+ letters keep substring matching — singular forms
+ * catching plurals is deliberate there.
+ */
+const phraseMatches = (lower: string, p: string): boolean =>
+  p.length <= 3 && !/\s/.test(p)
+    ? new RegExp(`(^|[^a-z0-9])${p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}s?([^a-z0-9]|$)`).test(lower)
+    : lower.includes(p);
+
 function extractTopicTags(lower: string): string[] {
   const tags: string[] = [];
   for (const [tag, phrases] of Object.entries(TOPIC_VOCAB)) {
-    if (phrases.some((p) => lower.includes(p))) {
+    if (phrases.some((p) => phraseMatches(lower, p))) {
       tags.push(tag);
     }
   }

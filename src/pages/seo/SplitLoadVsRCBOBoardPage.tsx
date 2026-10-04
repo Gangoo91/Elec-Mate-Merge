@@ -221,7 +221,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 314.1</strong> — every installation shall be divided into
                 circuits as necessary to avoid danger and minimise inconvenience in the event of a
@@ -229,7 +229,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 411.3.3</strong> — in domestic (household) premises, socket
                 outlet circuits not exceeding 32A and all circuits in bathrooms must be protected by
@@ -238,7 +238,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 531.3</strong> — RCDs shall be selected and installed to minimise
                 the risk of unwanted tripping and to ensure that only the protective device
@@ -247,7 +247,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 421.1.201</strong> — consumer units in domestic premises must
                 have a non-combustible enclosure (metal or thermoplastic with a metal insert).
@@ -414,7 +414,7 @@ export default function SplitLoadVsRCBOBoardPage() {
       heroTitle={
         <>
           Split Load vs RCBO Consumer Unit:{' '}
-          <span className="text-yellow-400">Which to Install and Why</span>
+          <span className="text-elec-yellow">Which to Install and Why</span>
         </>
       }
       heroSubtitle="RCBO boards provide individual circuit protection — a fault on one circuit trips only that circuit. Split load boards protect circuits in groups — one fault can kill multiple circuits. This guide explains the technical differences, BS 7671 requirements, nuisance tripping, and cost comparison."

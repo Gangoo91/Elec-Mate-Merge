@@ -511,7 +511,7 @@ export default function InstrumentationCoursePage() {
       heroTitle={
         <>
           Instrumentation Course:{' '}
-          <span className="text-yellow-400">Process Control for Electricians</span>
+          <span className="text-elec-yellow">Process Control for Electricians</span>
         </>
       }
       heroSubtitle="Master industrial instrumentation with comprehensive training in process control, sensors, PLCs, SCADA, 4-20mA current loops, and calibration. 8 modules with video content, interactive quizzes, and AI-powered study tools."
@@ -529,7 +529,7 @@ export default function InstrumentationCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Ready to specialise in instrumentation?"
-      ctaSubheading="Join 1,600+ UK electricians studying smarter with Elec-Mate. 8 structured modules, interactive quizzes, video content, and an AI tutor for any instrumentation question. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians studying smarter with Elec-Mate. 8 structured modules, interactive quizzes, video content, and an AI tutor for any instrumentation question. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/instrumentation-course"
     />

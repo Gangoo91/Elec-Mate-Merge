@@ -183,9 +183,9 @@ const quizQuestions = [
       "You see a generic 'CU change' RAMS your firm uses for every consumer unit. Today’s job is in a tenanted flat with elderly occupants, no labelling on the existing CU, and the meter cupboard is shared with three other flats. What do you do with the generic RAMS?",
     options: [
       'Use it as a starting point but add the site-specific hazards (vulnerable occupants, identification of circuits, shared meter, isolation coordination with neighbouring flats) and the corresponding controls',
-      'The work to be done, hazards identified, precautions required, gas test results, emergency procedures, time limits, and authorisation signatures',
-      'Document the programme change and its impact, notify the main contractor in writing of any additional costs or delays, and follow up with a formal variation or claim if applicable',
-      'The Network and Information Systems Regulations 2018 requiring operators of essential services to manage cybersecurity risks to their OT systems and report significant incidents',
+      'Use it unchanged — a CU change is the same job wherever it is',
+      'Bin it and start the job without a RAMS, since it does not fit this site',
+      'Sign it as read and rely on the toolbox talk to cover the differences',
     ],
     correctAnswer: 0,
     explanation:

@@ -151,21 +151,21 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>London irradiance:</strong> ~1,000 kWh/kWp/year — lower than the South West
                 but sufficient for strong economic returns at current electricity prices.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Typical system:</strong> 4kW (10–14 panels) for a 3-bedroom house. Output:
                 3,400–4,000 kWh/year. Covers 50–80% of average household electricity use.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>London suitability:</strong> The vast majority of London's terraced houses,
                 semi-detached homes, and purpose-built properties have south-facing or east-west
@@ -190,7 +190,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3kW system</strong> — suits flats and smaller terraced houses. Approximately
                 8–10 panels. Expected output: 2,700–3,000 kWh/year in London. Typical cost:
@@ -198,7 +198,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>4kW system</strong> — most popular choice for 3–4 bedroom London homes.
                 Approximately 10–14 panels. Expected output: 3,400–4,000 kWh/year. Typical cost:
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>6kW system</strong> — suits larger detached homes or properties with high
                 electricity use (EV charging, heat pumps). Approximately 14–18 panels. Expected
@@ -214,7 +214,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial systems</strong> — London commercial properties often install
                 10kW+ systems on flat roofs. These may require planning permission and are subject
@@ -251,28 +251,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3kW system:</strong> £4,000–£6,000 installed. Suitable for smaller London
                 properties and flats.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>4kW system:</strong> £5,000–£8,000 installed. The most common London
                 residential installation.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>6kW system:</strong> £7,500–£11,000 installed. Larger properties, those with
                 EV chargers, or high electricity consumers.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Battery storage addition:</strong> £2,500–£5,000 for a 5–10kWh battery
                 (e.g., GivEnergy, SolarEdge, Tesla Powerwall). Increases self-consumption from ~30%
@@ -353,7 +353,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Permitted development conditions:</strong> Panels must not protrude more
                 than 200mm from the roof surface, must not be on a wall or roof slope that faces a
@@ -408,7 +408,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCS-certified installer:</strong> The installation company must hold a
                 current MCS certificate. You can verify this on the MCS website (mcscertified.com).
@@ -417,7 +417,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCS-certified products:</strong> Panels and inverters must also be
                 MCS-certified. Reputable manufacturers' products are almost all MCS-listed. Check
@@ -425,7 +425,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCS installation certificate:</strong> You should receive an MCS
                 installation certificate upon completion. This is your proof of eligibility for SEG
@@ -433,7 +433,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671 compliance:</strong> All MCS-certified installations must comply
                 with BS 7671 Section 712. The installer must issue an{' '}
@@ -462,7 +462,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Self-consumption uplift:</strong> Without a battery, a typical London
                 household self-consumes around 25–35% of solar generation. Adding a 5–10kWh battery
@@ -470,7 +470,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Popular systems:</strong> GivEnergy, SolarEdge, Solis, and Tesla Powerwall
                 are among the most commonly installed battery systems in London. Capacity typically
@@ -478,7 +478,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cost:</strong> Battery systems add £2,500–£5,000 to the total installation
                 cost. Batteries are VAT-exempt when installed alongside solar panels on the same
@@ -486,7 +486,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Grid charging:</strong> Many battery systems can also be charged from the
                 grid during cheap overnight Agile or Economy 7 tariffs, providing savings even on
@@ -559,7 +559,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Verify MCS certification:</strong> Check the installer's current MCS
                 certificate at mcscertified.com. Certificates expire and must be renewed. An
@@ -567,7 +567,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC or NAPIT registration:</strong> Confirm the installer is registered
                 with a competent person scheme for electrical work. This ensures BS 7671 compliance
@@ -575,7 +575,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Get three quotes:</strong> London solar prices vary. Obtain at least three
                 quotes on a like-for-like basis (same system size, panel brand, and inverter). Be
@@ -583,7 +583,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check reviews and references:</strong> Ask for references from recent London
                 installations. Check Trustpilot, Google Reviews, and Which? Trusted Traders. The
@@ -610,7 +610,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Issue Solar PV EICs On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -644,7 +644,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your solar PV business with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site certification, instant quoting, and business management. Complete solar EICs on your phone."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site certification, instant quoting, and business management. Complete solar EICs on your phone."
           icon={FileCheck2}
         />
       </>
@@ -670,7 +670,7 @@ export default function SolarPanelInstallationLondonPage() {
       heroTitle={
         <>
           Solar Panel Installation London:{' '}
-          <span className="text-yellow-400">Costs & Guide 2025</span>
+          <span className="text-elec-yellow">Costs & Guide 2025</span>
         </>
       }
       heroSubtitle="Everything you need to know about solar PV installation in London — system sizes, costs from £5,000, Smart Export Guarantee, MCS certification, planning permission, battery storage, and payback periods."
@@ -681,7 +681,7 @@ export default function SolarPanelInstallationLondonPage() {
       faqHeading="Frequently Asked Questions About Solar Panel Installation in London"
       relatedPages={relatedPages}
       ctaHeading="Complete Solar PV Certificates On Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site solar EICs, quoting, and business management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site solar EICs, quoting, and business management. 7-day free trial, cancel anytime."
     />
   );
 }

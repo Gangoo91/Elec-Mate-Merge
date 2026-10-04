@@ -179,7 +179,7 @@ const sections = [
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead>
-                <tr className="bg-white/[0.06] text-white/70">
+                <tr className="bg-white/[0.06] text-white">
                   <th className="px-4 py-3 font-semibold">Heat output (COP ~3)</th>
                   <th className="px-4 py-3 font-semibold">Electrical input</th>
                   <th className="px-4 py-3 font-semibold">Indicative circuit</th>
@@ -193,7 +193,7 @@ const sections = [
                   <td className="px-4 py-3">16A RCBO</td>
                   <td className="px-4 py-3">2.5mm²</td>
                 </tr>
-                <tr className="border-t border-white/10 bg-yellow-900/20">
+                <tr className="border-t border-white/10 bg-white/[0.06]">
                   <td className="px-4 py-3 font-medium">10kW – 12kW</td>
                   <td className="px-4 py-3">3.3kW – 4kW</td>
                   <td className="px-4 py-3">20A – 25A RCBO</td>
@@ -208,7 +208,7 @@ const sections = [
               </tbody>
             </table>
           </div>
-          <p className="px-4 py-3 text-xs text-white/60 border-t border-white/10">
+          <p className="px-4 py-3 text-xs text-white border-t border-white/10">
             Indicative only. Confirm the conductor size against the actual run length and installation
             method — a long run to an outdoor unit can force the next size up on voltage drop, and a
             high compressor starting current may need a time-delay device at the consumer unit.
@@ -246,7 +246,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Supply fuse capacity</strong> — the existing DNO supply fuse (typically 60A,
                 80A, or 100A) must have adequate capacity for the additional ASHP load. For a house
@@ -256,7 +256,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DNO load notification</strong> — some DNOs require notification of new large
                 loads connected to the LV network. Check the relevant DNO's guidance for your
@@ -282,7 +282,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated circuit</strong> — a 16A circuit on 2.5mm twin and earth from the
                 consumer unit to the cylinder position, with a switched fused connection unit (SFCU)
@@ -290,7 +290,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Anti-Legionella cycle</strong> — the heat pump controller typically manages
                 a weekly anti-Legionella cycle at 60°C, activating the immersion heater. This must
@@ -300,7 +300,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Labelling</strong> — label the SFCU and the consumer unit MCB/RCBO clearly:
                 "Immersion Heater — Heat Pump Backup". This helps the homeowner and future
@@ -324,7 +324,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Room thermostats</strong> — one per heating zone (typically one per room or
                 floor). The thermostat signals demand to the manifold zone valve actuator or to the
@@ -333,7 +333,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Manifold zone valve actuators</strong> — motorised actuators (typically 24V
                 or 230V) fitted to the manifold ports. They open or close to allow or prevent flow
@@ -342,7 +342,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Heat pump enable signal</strong> — when at least one zone calls for heat, a
                 demand signal (volt-free contact or specific signal type depending on the heat pump
@@ -426,7 +426,7 @@ const sections = [
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead>
-                <tr className="bg-white/[0.06] text-white/70">
+                <tr className="bg-white/[0.06] text-white">
                   <th className="px-4 py-3 font-semibold">Test</th>
                   <th className="px-4 py-3 font-semibold">BS 7671 reference</th>
                   <th className="px-4 py-3 font-semibold">What good looks like</th>
@@ -435,7 +435,7 @@ const sections = [
               <tbody className="text-white align-top">
                 <tr className="border-t border-white/10">
                   <td className="px-4 py-3 font-medium">Continuity of conductors / CPC</td>
-                  <td className="px-4 py-3 whitespace-nowrap text-white/70">Reg 643.2</td>
+                  <td className="px-4 py-3 whitespace-nowrap text-white">Reg 643.2</td>
                   <td className="px-4 py-3">
                     Low, stable end-to-end reading on the protective conductor from the MET to the
                     heat pump enclosure earth terminal.
@@ -443,7 +443,7 @@ const sections = [
                 </tr>
                 <tr className="border-t border-white/10 bg-white/[0.02]">
                   <td className="px-4 py-3 font-medium">Insulation resistance</td>
-                  <td className="px-4 py-3 whitespace-nowrap text-white/70">Reg 643.3, Table 64</td>
+                  <td className="px-4 py-3 whitespace-nowrap text-white">Reg 643.3, Table 64</td>
                   <td className="px-4 py-3">
                     Tested at 500V DC for a 230/400V circuit; minimum 1.0 MΩ. Disconnect the heat
                     pump at the local isolator so its electronics do not influence or suffer from the
@@ -452,7 +452,7 @@ const sections = [
                 </tr>
                 <tr className="border-t border-white/10">
                   <td className="px-4 py-3 font-medium">Polarity</td>
-                  <td className="px-4 py-3 whitespace-nowrap text-white/70">Reg 643.6</td>
+                  <td className="px-4 py-3 whitespace-nowrap text-white">Reg 643.6</td>
                   <td className="px-4 py-3">
                     Correct polarity confirmed at the local isolator and at the heat pump supply
                     terminals.
@@ -460,7 +460,7 @@ const sections = [
                 </tr>
                 <tr className="border-t border-white/10 bg-white/[0.02]">
                   <td className="px-4 py-3 font-medium">Earth fault loop impedance (Zs)</td>
-                  <td className="px-4 py-3 whitespace-nowrap text-white/70">Reg 643.7.3</td>
+                  <td className="px-4 py-3 whitespace-nowrap text-white">Reg 643.7.3</td>
                   <td className="px-4 py-3">
                     Measured Zs at the heat pump supply terminals within the maximum permitted for
                     the protective device and disconnection time.
@@ -468,7 +468,7 @@ const sections = [
                 </tr>
                 <tr className="border-t border-white/10">
                   <td className="px-4 py-3 font-medium">RCD additional protection</td>
-                  <td className="px-4 py-3 whitespace-nowrap text-white/70">Reg 643.8</td>
+                  <td className="px-4 py-3 whitespace-nowrap text-white">Reg 643.8</td>
                   <td className="px-4 py-3">
                     Where a 30mA RCD/RCBO provides additional protection, it disconnects within
                     300ms at rated residual operating current for a general non-delay type.
@@ -476,7 +476,7 @@ const sections = [
                 </tr>
                 <tr className="border-t border-white/10 bg-white/[0.02]">
                   <td className="px-4 py-3 font-medium">Functional test</td>
-                  <td className="px-4 py-3 whitespace-nowrap text-white/70">Reg 643.10</td>
+                  <td className="px-4 py-3 whitespace-nowrap text-white">Reg 643.10</td>
                   <td className="px-4 py-3">
                     Energise and verify the isolator, controls and compressor operate correctly —
                     the compressor starts and runs as intended.
@@ -512,7 +512,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <AlertTriangle className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Check Supply Capacity First</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -543,7 +543,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify heat pump electrical installations"
-          description="Join 1,600+ UK electricians using Elec-Mate for heat pump circuit sizing, professional quoting, and on-site EIC certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for heat pump circuit sizing, professional quoting, and on-site EIC certification."
           icon={Leaf}
         />
       </>
@@ -576,7 +576,7 @@ export default function HeatPumpElectricalRequirementsPage() {
       heroTitle={
         <>
           Heat Pump Electrical Requirements:{' '}
-          <span className="text-yellow-400">ASHP Circuits, Controls and MCS</span>
+          <span className="text-elec-yellow">ASHP Circuits, Controls and MCS</span>
         </>
       }
       heroSubtitle="Air source heat pumps require a dedicated circuit sized to the compressor input, typically 16A to 40A single-phase. This guide covers ASHP circuit sizing, DNO notification, immersion backup circuits, UFH zone controls wiring, MCS certification, and the Boiler Upgrade Scheme grant."

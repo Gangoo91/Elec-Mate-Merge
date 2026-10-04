@@ -172,21 +172,21 @@ export default function PartPBuildingRegulationsPage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
-        <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-elec-yellow text-sm font-medium mb-6">
             <BookOpen className="w-4 h-4" />
             BS 7671:2018+A4:2026
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             Part P Building Regulations
-            <span className="block text-yellow-400 mt-1">Explained for Electricians</span>
+            <span className="block text-elec-yellow mt-1">Explained for Electricians</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-6 leading-relaxed">
             The complete guide to Approved Document P. Notifiable vs non-notifiable work, competent
             person schemes, building control, penalties, and how Part P interacts with BS 7671.
           </p>
-          <p className="text-base text-white/80 max-w-2xl mx-auto mb-8 leading-relaxed">
+          <p className="text-base text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             Part P (Approved Document P) requires all electrical installation work within dwellings
             to be safe. Some work — including new circuits, consumer unit replacement, and bathroom
             electrical work — is notifiable: it must be either self-certified by a competent person
@@ -204,7 +204,7 @@ export default function PartPBuildingRegulationsPage() {
             </Link>
             <a
               href="#what-is-part-p"
-              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-yellow-500/40 touch-manipulation transition-colors"
+              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-white/[0.1] touch-manipulation transition-colors"
             >
               Read the Guide
               <ArrowDown className="w-4 h-4 ml-1" />
@@ -218,7 +218,7 @@ export default function PartPBuildingRegulationsPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Building2 className="w-5 h-5 text-yellow-400" />
+              <Building2 className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">What Is Part P?</h2>
           </div>
@@ -265,7 +265,7 @@ export default function PartPBuildingRegulationsPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Notifiable vs Non-Notifiable Work
@@ -282,42 +282,42 @@ export default function PartPBuildingRegulationsPage() {
           </div>
           <div className="grid sm:grid-cols-2 gap-4 my-6">
             <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <h3 className="font-bold text-yellow-400 text-xl mb-3">Notifiable Work</h3>
+              <h3 className="font-bold text-elec-yellow text-xl mb-3">Notifiable Work</h3>
               <ul className="space-y-3 text-white text-sm leading-relaxed">
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>
                     Installation of a new circuit (including new circuits added to existing consumer
                     units)
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Replacement of a consumer unit (including like-for-like replacement)</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>
                     Any electrical work in a bathroom or shower room (except like-for-like
                     replacement of accessories)
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>
                     Any electrical work in a special installation or location (swimming pool, sauna,
                     hot tub area)
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>
                     Installation of a new outdoor circuit or supply to an outbuilding, shed, or
                     garage
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>
                     Electrical work as part of a new building extension or loft conversion
                   </span>
@@ -384,7 +384,7 @@ export default function PartPBuildingRegulationsPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <ShieldCheck className="w-5 h-5 text-yellow-400" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">Competent Person Schemes</h2>
           </div>
@@ -462,7 +462,7 @@ export default function PartPBuildingRegulationsPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <AlertTriangle className="w-5 h-5 text-yellow-400" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Penalties for Non-Compliance
@@ -509,7 +509,7 @@ export default function PartPBuildingRegulationsPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Bath className="w-5 h-5 text-yellow-400" />
+              <Bath className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Special Locations Under Part P
@@ -524,7 +524,7 @@ export default function PartPBuildingRegulationsPage() {
               notifiable and must comply with the additional requirements of BS 7671 Section 7.
             </p>
             <p>
-              <strong className="text-yellow-400">Bathrooms and shower rooms</strong> are the most
+              <strong className="text-elec-yellow">Bathrooms and shower rooms</strong> are the most
               common special locations in domestic properties. BS 7671 Section 701 defines specific
               zones (Zone 0, Zone 1, and Zone 2) around baths and showers, with restrictions on what
               equipment can be installed in each zone and the minimum IP ratings required. Any new
@@ -546,7 +546,7 @@ export default function PartPBuildingRegulationsPage() {
               to metallic structural parts of the building.
             </p>
             <p>
-              <strong className="text-yellow-400">
+              <strong className="text-elec-yellow">
                 Swimming pools, saunas, and hot tub installations
               </strong>{' '}
               are less common but carry the highest risk. BS 7671 Section 702 (swimming pools) and
@@ -556,7 +556,7 @@ export default function PartPBuildingRegulationsPage() {
               work associated with these installations is notifiable.
             </p>
             <p>
-              <strong className="text-yellow-400">Gardens and outbuildings</strong> also require
+              <strong className="text-elec-yellow">Gardens and outbuildings</strong> also require
               careful attention. Any new outdoor circuit — whether supplying garden lighting, a pond
               pump, an electric vehicle charger, or an outbuilding — is notifiable under Part P. The
               outdoor environment introduces hazards including exposure to weather, increased risk
@@ -573,7 +573,7 @@ export default function PartPBuildingRegulationsPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Zap className="w-5 h-5 text-yellow-400" />
+              <Zap className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               How Part P Interacts with BS 7671:2018+A4:2026
@@ -589,7 +589,7 @@ export default function PartPBuildingRegulationsPage() {
               domestic lighting circuits (Reg 411.3.4), and other updates and clarifications.
             </p>
             <div className="p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-sm">
-              <p className="font-semibold text-yellow-400 mb-1">
+              <p className="font-semibold text-elec-yellow mb-1">
                 A4:2026 key change — Reg 411.3.4: RCD protection on domestic lighting circuits
               </p>
               <p className="text-white leading-relaxed">
@@ -682,7 +682,7 @@ export default function PartPBuildingRegulationsPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <HelpCircle className="w-5 h-5 text-yellow-400" />
+              <HelpCircle className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Frequently Asked Questions
@@ -695,7 +695,7 @@ export default function PartPBuildingRegulationsPage() {
                 className="group p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-white/[0.14] transition-colors"
               >
                 <summary className="flex items-start gap-3 cursor-pointer touch-manipulation list-none [&::-webkit-details-marker]:hidden">
-                  <ChevronRight className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0 transition-transform group-open:rotate-90" />
+                  <ChevronRight className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0 transition-transform group-open:rotate-90" />
                   <h3 className="font-bold text-white text-lg">{faq.question}</h3>
                 </summary>
                 <div className="mt-3 pl-8">
@@ -745,7 +745,7 @@ export default function PartPBuildingRegulationsPage() {
 
       <SEOCTASection
         heading="Certify Part P Work with Confidence"
-        subheading="Join 1,600+ UK electricians producing professional certificates with Elec-Mate. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians producing professional certificates with Elec-Mate. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

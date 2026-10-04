@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Suspense } from 'react';
 import { lazyWithRetry } from '@/utils/lazyWithRetry';
 import { CertificateSkeleton } from '@/components/ui/page-skeleton';
@@ -11,7 +11,6 @@ import CertificateImport from '@/pages/inspection/CertificateImport';
 // Lazy load the main inspection app page
 const InspectionIndex = lazyWithRetry(() => import('@/pages/inspection/InspectionIndex'));
 const LegacyCertificates = lazyWithRetry(() => import('@/pages/inspection/LegacyCertificates'));
-const NewCertificate = lazyWithRetry(() => import('@/pages/inspection/NewCertificate'));
 
 // New certificate types
 const FireAlarmCertificate = lazyWithRetry(() => import('@/pages/inspection/FireAlarmCertificate'));
@@ -79,6 +78,11 @@ const CompletionNoticePage = lazyWithRetry(() => import('@/pages/inspection/Comp
 
 const LoadingFallback = CertificateSkeleton;
 
+function RetiredNewCertificateRedirect() {
+  const { search } = useLocation();
+  return <Navigate to={`/electrician/inspection-testing${search}`} replace />;
+}
+
 export default function InspectionRoutes() {
   return (
     <Suspense fallback={<LoadingFallback />}>
@@ -86,8 +90,11 @@ export default function InspectionRoutes() {
         {/* Legacy certificates - standalone page */}
         <Route path="legacy-certificates" element={<LegacyCertificates />} />
 
-        {/* New certificate selector */}
-        <Route path="new" element={<NewCertificate />} />
+        {/* The old type picker, retired 4 Oct 2026 — the Inspection & Testing
+            screen's "Start a cert" (and its All cert types section) replaced it.
+            Redirect keeps the query, so a job's projectId/clientName/address
+            prefill from any link still pointing here keeps working. */}
+        <Route path="new" element={<RetiredNewCertificateRedirect />} />
 
         {/* Fire Alarm Certificates (BS 5839) */}
         <Route path="fire-alarm/new" element={<FireAlarmCertificate />} />

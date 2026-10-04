@@ -44,7 +44,7 @@ export default function WiringColoursUKPage() {
         <>
           Wiring Colours UK
           <br />
-          <span className="text-yellow-400">Cable Colour Codes Explained</span>
+          <span className="text-elec-yellow">Cable Colour Codes Explained</span>
         </>
       }
       heroSubtitle="Every UK electrician needs to know wiring colours inside out. This guide covers current harmonised colours, old colours, three-phase identification, cable types, what to do with mixed-colour installations, and the BS 7671 requirements for conductor identification. Get it wrong and someone could die."
@@ -101,7 +101,7 @@ export default function WiringColoursUKPage() {
                   </div>
                   <div className="flex items-center gap-4 p-4 rounded-xl bg-white/[0.04] border border-white/10">
                     <div className="w-12 h-12 rounded-xl bg-green-600 border border-green-500 flex items-center justify-center shrink-0">
-                      <span className="font-bold text-yellow-300 text-xs">E</span>
+                      <span className="font-bold text-elec-yellow text-xs">E</span>
                     </div>
                     <div>
                       <h4 className="font-bold text-white">
@@ -168,7 +168,7 @@ export default function WiringColoursUKPage() {
                   </div>
                   <div className="flex items-center gap-4 p-3 rounded-xl bg-white/[0.04] border border-white/10">
                     <div className="w-10 h-10 rounded-lg bg-green-600 border border-green-500 flex items-center justify-center shrink-0">
-                      <span className="font-bold text-yellow-300 text-xs">E</span>
+                      <span className="font-bold text-elec-yellow text-xs">E</span>
                     </div>
                     <span className="text-white font-bold">Green/Yellow — Earth</span>
                   </div>
@@ -205,21 +205,21 @@ export default function WiringColoursUKPage() {
                   <h3 className="font-bold text-white text-lg mb-3">Old Single-Phase Colours</h3>
                   <ul className="space-y-3 text-white text-sm">
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>
-                        <strong className="text-yellow-400">Red</strong> — Line (Live)
+                        <strong className="text-elec-yellow">Red</strong> — Line (Live)
                       </span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>
-                        <strong className="text-yellow-400">Black</strong> — Neutral
+                        <strong className="text-elec-yellow">Black</strong> — Neutral
                       </span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>
-                        <strong className="text-yellow-400">Green (or bare copper)</strong> — Earth
+                        <strong className="text-elec-yellow">Green (or bare copper)</strong> — Earth
                       </span>
                     </li>
                   </ul>
@@ -228,27 +228,27 @@ export default function WiringColoursUKPage() {
                   <h3 className="font-bold text-white text-lg mb-3">Old Three-Phase Colours</h3>
                   <ul className="space-y-3 text-white text-sm">
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>
-                        <strong className="text-yellow-400">Red</strong> — Phase 1 (L1)
+                        <strong className="text-elec-yellow">Red</strong> — Phase 1 (L1)
                       </span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>
-                        <strong className="text-yellow-400">Yellow</strong> — Phase 2 (L2)
+                        <strong className="text-elec-yellow">Yellow</strong> — Phase 2 (L2)
                       </span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>
-                        <strong className="text-yellow-400">Blue</strong> — Phase 3 (L3)
+                        <strong className="text-elec-yellow">Blue</strong> — Phase 3 (L3)
                       </span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>
-                        <strong className="text-yellow-400">Black</strong> — Neutral
+                        <strong className="text-elec-yellow">Black</strong> — Neutral
                       </span>
                     </li>
                   </ul>
@@ -282,12 +282,12 @@ export default function WiringColoursUKPage() {
                 adjust.
               </p>
               <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-6">
-                <h3 className="font-bold text-yellow-400 text-lg mb-3">
+                <h3 className="font-bold text-elec-yellow text-lg mb-3">
                   Timeline of the Colour Change
                 </h3>
                 <div className="space-y-4">
                   <div className="flex gap-4">
-                    <div className="w-20 shrink-0 font-bold text-yellow-400">2004</div>
+                    <div className="w-20 shrink-0 font-bold text-elec-yellow">2004</div>
                     <div className="text-white text-sm leading-relaxed">
                       BS 7671:2001 Amendment 2 was published, introducing the harmonised colours for
                       the first time. From 1 April 2004, both old and new colours were permitted.
@@ -296,7 +296,7 @@ export default function WiringColoursUKPage() {
                     </div>
                   </div>
                   <div className="flex gap-4">
-                    <div className="w-20 shrink-0 font-bold text-yellow-400">2006</div>
+                    <div className="w-20 shrink-0 font-bold text-elec-yellow">2006</div>
                     <div className="text-white text-sm leading-relaxed">
                       The transition period ended on 31 March 2006. From 1 April 2006, only the new
                       harmonised colours were permitted for new installations. Old-colour cable
@@ -305,7 +305,7 @@ export default function WiringColoursUKPage() {
                     </div>
                   </div>
                   <div className="flex gap-4">
-                    <div className="w-20 shrink-0 font-bold text-yellow-400">2008</div>
+                    <div className="w-20 shrink-0 font-bold text-elec-yellow">2008</div>
                     <div className="text-white text-sm leading-relaxed">
                       BS 7671:2008 (17th Edition) was published with the harmonised colours fully
                       embedded throughout the standard. The 17th Edition included the requirement
@@ -460,7 +460,7 @@ export default function WiringColoursUKPage() {
               <div className="space-y-4 my-4">
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-start gap-3">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <div>
                       <h3 className="font-bold text-white mb-1">
                         Confusing old black (neutral) with new black (L2)
@@ -477,7 +477,7 @@ export default function WiringColoursUKPage() {
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-start gap-3">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <div>
                       <h3 className="font-bold text-white mb-1">
                         Failing to sleeve the CPC in twin-and-earth cable
@@ -493,7 +493,7 @@ export default function WiringColoursUKPage() {
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-start gap-3">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <div>
                       <h3 className="font-bold text-white mb-1">
                         Not sleeving switch wires in two-way switching
@@ -509,7 +509,7 @@ export default function WiringColoursUKPage() {
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-start gap-3">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <div>
                       <h3 className="font-bold text-white mb-1">
                         Missing the mixed-colour warning notice
@@ -525,7 +525,7 @@ export default function WiringColoursUKPage() {
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-start gap-3">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <div>
                       <h3 className="font-bold text-white mb-1">Assuming blue is always neutral</h3>
                       <p className="text-white text-sm leading-relaxed">

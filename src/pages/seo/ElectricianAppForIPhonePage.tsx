@@ -45,7 +45,7 @@ export default function ElectricianAppForiPhonePage() {
       badgeIcon={Smartphone}
       heroTitle={
         <>
-          Best <span className="text-yellow-400">Electrician App for iPhone</span> 2026
+          Best <span className="text-elec-yellow">Electrician App for iPhone</span> 2026
         </>
       }
       heroSubtitle="Elec-Mate on iPhone gives you the full toolkit — 19 certificate types with AI board scanner and voice test entry, 70+ BS 7671 calculators, 46+ training courses, offline mode, and professional business tools. Native iOS experience with Face ID, haptic feedback, and smooth animations. Built for UK electricians who work from their phone."
@@ -174,31 +174,31 @@ export default function ElectricianAppForiPhonePage() {
               </p>
               <div className="grid sm:grid-cols-3 gap-3 not-prose">
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
-                  <div className="text-xs font-semibold uppercase tracking-wide text-yellow-400">
+                  <div className="text-xs font-semibold uppercase tracking-wide text-elec-yellow">
                     AFDD presence
                   </div>
-                  <div className="mt-1 text-sm font-mono text-white/70">Reg 421.1.7</div>
-                  <p className="mt-2 text-sm text-white/80">
+                  <div className="mt-1 text-sm font-mono text-white">Reg 421.1.7</div>
+                  <p className="mt-2 text-sm text-white">
                     Records whether arc fault detection devices are fitted. A4:2026 recommends AFDDs in
                     AC final circuits of a fixed installation to mitigate the risk of fire.
                   </p>
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
-                  <div className="text-xs font-semibold uppercase tracking-wide text-yellow-400">
+                  <div className="text-xs font-semibold uppercase tracking-wide text-elec-yellow">
                     RCD on luminaire circuits
                   </div>
-                  <div className="mt-1 text-sm font-mono text-white/70">Reg 411.3.4</div>
-                  <p className="mt-2 text-sm text-white/80">
+                  <div className="mt-1 text-sm font-mono text-white">Reg 411.3.4</div>
+                  <p className="mt-2 text-sm text-white">
                     Within domestic (household) premises, additional protection by a 30&nbsp;mA RCD is
                     required for AC final circuits supplying luminaires.
                   </p>
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
-                  <div className="text-xs font-semibold uppercase tracking-wide text-yellow-400">
+                  <div className="text-xs font-semibold uppercase tracking-wide text-elec-yellow">
                     SPD labelling
                   </div>
-                  <div className="mt-1 text-sm font-mono text-white/70">Reg 514.16.1</div>
-                  <p className="mt-2 text-sm text-white/80">
+                  <div className="mt-1 text-sm font-mono text-white">Reg 514.16.1</div>
+                  <p className="mt-2 text-sm text-white">
                     A label is required to indicate the presence of surge protective devices, with an
                     exception for domestic (household) premises or similar.
                   </p>
@@ -232,7 +232,7 @@ export default function ElectricianAppForiPhonePage() {
                   <SEOInternalLink href="/tools/cable-sizing-calculator">
                     <span className="font-semibold text-white">Cable sizing calculator</span>
                   </SEOInternalLink>
-                  <p className="mt-1 text-sm text-white/80">
+                  <p className="mt-1 text-sm text-white">
                     BS 7671 cable selection applying all correction factors before checking
                     current-carrying capacity.
                   </p>
@@ -241,7 +241,7 @@ export default function ElectricianAppForiPhonePage() {
                   <SEOInternalLink href="/tools/voltage-drop-calculator">
                     <span className="font-semibold text-white">Voltage drop calculator</span>
                   </SEOInternalLink>
-                  <p className="mt-1 text-sm text-white/80">
+                  <p className="mt-1 text-sm text-white">
                     Checks compliance with Regulation 525.202 against the limits in Appendix 4, Table
                     4Ab.
                   </p>
@@ -250,20 +250,20 @@ export default function ElectricianAppForiPhonePage() {
                   <SEOInternalLink href="/tools/max-demand-calculator">
                     <span className="font-semibold text-white">Maximum demand calculator</span>
                   </SEOInternalLink>
-                  <p className="mt-1 text-sm text-white/80">
+                  <p className="mt-1 text-sm text-white">
                     Totals installation demand with diversity factors applied per circuit type.
                   </p>
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
                   <span className="font-semibold text-white">Earth fault loop impedance</span>
-                  <p className="mt-1 text-sm text-white/80">
+                  <p className="mt-1 text-sm text-white">
                     Verifies measured Zs against the maximum permitted value for the protective device
                     and disconnection time.
                   </p>
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 sm:col-span-2">
                   <span className="font-semibold text-white">Prospective fault current</span>
-                  <p className="mt-1 text-sm text-white/80">
+                  <p className="mt-1 text-sm text-white">
                     Regulation 643.7.3.201 requires the prospective short-circuit current and the
                     prospective earth fault current to be determined. The calculator returns the
                     greater of the two for entry on the EIC or EICR, with the determination methods set
@@ -272,7 +272,7 @@ export default function ElectricianAppForiPhonePage() {
                 </div>
               </div>
               <div className="rounded-2xl bg-blue-900/30 border border-blue-700/40 p-4 not-prose">
-                <p className="text-sm text-white/85">
+                <p className="text-sm text-white">
                   <span className="font-semibold text-white">Voltage drop limits (Table 4Ab).</span> For
                   a low voltage installation supplied directly from a public LV distribution system, the
                   permitted drop is 3% for lighting and 5% for other uses. Where the installation is fed
@@ -336,20 +336,20 @@ export default function ElectricianAppForiPhonePage() {
               </p>
               <div className="grid sm:grid-cols-2 gap-3 not-prose">
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
-                  <div className="text-2xl font-bold text-yellow-400">Every 10s</div>
-                  <div className="mt-1 text-sm text-white/80">Local auto-save while you work</div>
+                  <div className="text-2xl font-bold text-elec-yellow">Every 10s</div>
+                  <div className="mt-1 text-sm text-white">Local auto-save while you work</div>
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
-                  <div className="text-2xl font-bold text-yellow-400">Every 30s</div>
-                  <div className="mt-1 text-sm text-white/80">Cloud sync once you are back online</div>
+                  <div className="text-2xl font-bold text-elec-yellow">Every 30s</div>
+                  <div className="mt-1 text-sm text-white">Cloud sync once you are back online</div>
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
-                  <div className="text-2xl font-bold text-yellow-400">~50MB</div>
-                  <div className="mt-1 text-sm text-white/80">Base app download size</div>
+                  <div className="text-2xl font-bold text-elec-yellow">~50MB</div>
+                  <div className="mt-1 text-sm text-white">Base app download size</div>
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
-                  <div className="text-2xl font-bold text-yellow-400">&lt;200MB</div>
-                  <div className="mt-1 text-sm text-white/80">Typical month with downloaded courses</div>
+                  <div className="text-2xl font-bold text-elec-yellow">&lt;200MB</div>
+                  <div className="mt-1 text-sm text-white">Typical month with downloaded courses</div>
                 </div>
               </div>
               <p>

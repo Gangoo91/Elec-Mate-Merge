@@ -44,7 +44,7 @@ export default function SWACableInstallationPage() {
         <>
           SWA Cable Installation
           <br />
-          <span className="text-yellow-400">Armoured Cable Guide UK</span>
+          <span className="text-elec-yellow">Armoured Cable Guide UK</span>
         </>
       }
       heroSubtitle="Steel Wire Armoured (SWA) cable is the standard choice for outdoor, underground, and exposed wiring in UK electrical installations. This guide covers cable selection, burial depth, gland types and termination, bonding the steel wire armour, testing procedures, and full BS 7671 compliance requirements."
@@ -119,27 +119,27 @@ export default function SWACableInstallationPage() {
                 </h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Insulation type</strong> — PVC-insulated
+                      <strong className="text-elec-yellow">Insulation type</strong> — PVC-insulated
                       SWA (BS 5467) has a maximum conductor temperature of 70 degrees Celsius.
                       XLPE-insulated SWA (BS 5467) has a maximum of 90 degrees Celsius and carries
                       significantly higher current for the same conductor size.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Number of cores</strong> — 2-core SWA is
+                      <strong className="text-elec-yellow">Number of cores</strong> — 2-core SWA is
                       used for single-phase circuits (line and neutral, with the armour as CPC).
                       3-core SWA is used where a separate CPC conductor is needed or for three-phase
                       supplies. 4-core is used for three-phase with neutral.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Voltage drop</strong> — SWA cables are
+                      <strong className="text-elec-yellow">Voltage drop</strong> — SWA cables are
                       often used for longer runs (to outbuildings, across sites). Longer runs mean
                       higher voltage drop, which may require upsizing the cable beyond the minimum
                       for current-carrying capacity. Always verify voltage drop using the mV/A/m
@@ -147,9 +147,9 @@ export default function SWACableInstallationPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Ground temperature</strong> — For direct
+                      <strong className="text-elec-yellow">Ground temperature</strong> — For direct
                       burial, the soil temperature and thermal resistivity affect the cable rating.
                       BS 7671 assumes a ground temperature of 20 degrees Celsius and a soil thermal
                       resistivity of 2.5 K.m/W for standard ratings. Different conditions require
@@ -178,7 +178,7 @@ export default function SWACableInstallationPage() {
               </p>
               <div className="grid sm:grid-cols-2 gap-4 my-6">
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-3">Without Protection</h3>
+                  <h3 className="font-bold text-elec-yellow text-lg mb-3">Without Protection</h3>
                   <p className="text-white text-sm leading-relaxed mb-3">
                     Minimum 500 mm burial depth below finished ground level. This applies to general
                     areas such as gardens, driveways, and fields where the cable is direct-buried
@@ -241,7 +241,7 @@ export default function SWACableInstallationPage() {
               </p>
               <div className="space-y-4 my-6">
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-2">CW Gland (Indoor Use)</h3>
+                  <h3 className="font-bold text-elec-yellow text-lg mb-2">CW Gland (Indoor Use)</h3>
                   <p className="text-white text-sm leading-relaxed">
                     The CW (Cable Wire) gland is the standard indoor gland for SWA cable. It
                     consists of a body, a compression ring (cone), an armour lock ring, and a back
@@ -252,7 +252,7 @@ export default function SWACableInstallationPage() {
                   </p>
                 </div>
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-2">
+                  <h3 className="font-bold text-elec-yellow text-lg mb-2">
                     CX Gland (Outdoor / Weatherproof)
                   </h3>
                   <p className="text-white text-sm leading-relaxed">
@@ -281,28 +281,28 @@ export default function SWACableInstallationPage() {
                 </h3>
                 <ul className="space-y-3 text-white text-sm leading-relaxed">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
                       Strip the outer sheath to expose the wire armour. Strip length depends on
                       gland size — typically 30 to 50 mm for domestic sizes.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
                       Cut the wire armour cleanly with SWA cutters (not a hacksaw, which leaves
                       jagged edges). Fan out the wires evenly around the inner bedding sheath.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
                       Fit the gland body through the enclosure knockout. Tighten the locknut on the
                       outside to secure the gland body to the enclosure.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
                       Feed the cable into the gland body. Position the compression ring over the
                       fanned armour wires and tighten the back nut to compress the ring onto the
@@ -311,7 +311,7 @@ export default function SWACableInstallationPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
                       For CX glands, slide the shroud over the cable oversheath and tighten to
                       create the weatherproof seal.
@@ -342,7 +342,7 @@ export default function SWACableInstallationPage() {
                 device.
               </p>
               <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-6">
-                <h3 className="font-bold text-yellow-400 text-lg mb-3">
+                <h3 className="font-bold text-elec-yellow text-lg mb-3">
                   When Is a Separate CPC Needed?
                 </h3>
                 <div className="space-y-3 text-white text-sm leading-relaxed">
@@ -354,7 +354,7 @@ export default function SWACableInstallationPage() {
                   </p>
                   <ul className="space-y-2 mt-3">
                     <li className="flex items-start gap-3">
-                      <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>
                         Where the adiabatic equation check shows the armour cannot withstand the
                         prospective fault current — typically with larger cables and high fault
@@ -362,7 +362,7 @@ export default function SWACableInstallationPage() {
                       </span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>
                         Where the armour resistance is too high to achieve the required earth fault
                         loop impedance (Zs) for the protective device to disconnect within the
@@ -370,7 +370,7 @@ export default function SWACableInstallationPage() {
                       </span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>
                         Where the installation specification requires a separate CPC for additional
                         reliability — some commercial and industrial specifications mandate this.
@@ -409,7 +409,7 @@ export default function SWACableInstallationPage() {
               <div className="space-y-4 my-6">
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <div>
                       <h3 className="font-bold text-white mb-1">Trench preparation</h3>
                       <p className="text-white text-sm leading-relaxed">
@@ -424,7 +424,7 @@ export default function SWACableInstallationPage() {
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <div>
                       <h3 className="font-bold text-white mb-1">Warning tape and markers</h3>
                       <p className="text-white text-sm leading-relaxed">
@@ -439,7 +439,7 @@ export default function SWACableInstallationPage() {
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
                   <div className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <div>
                       <h3 className="font-bold text-white mb-1">Building entry</h3>
                       <p className="text-white text-sm leading-relaxed">
@@ -488,9 +488,9 @@ export default function SWACableInstallationPage() {
                 <h3 className="font-bold text-white text-lg mb-4">SWA Cable Test Sequence</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Continuity of the armour CPC</strong> —
+                      <strong className="text-elec-yellow">Continuity of the armour CPC</strong> —
                       Measure the resistance of the armour between both glands using a
                       low-resistance ohmmeter. This verifies the glands are making good contact with
                       the armour and the armour is continuous. Record the R2 value (armour
@@ -498,9 +498,9 @@ export default function SWACableInstallationPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Insulation resistance</strong> — Test
+                      <strong className="text-elec-yellow">Insulation resistance</strong> — Test
                       between all conductors and between each conductor and the armour at 500V DC
                       (for circuits up to 500V). Minimum acceptable reading is 1 megaohm, but new
                       SWA cable should read well above 100 megaohms. Low readings between a
@@ -509,9 +509,9 @@ export default function SWACableInstallationPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Earth fault loop impedance (Zs)</strong> —
+                      <strong className="text-elec-yellow">Earth fault loop impedance (Zs)</strong> —
                       Measure Zs at the far end of the SWA cable circuit with the circuit energised.
                       The Zs value includes the armour resistance as the CPC return path. Verify the
                       measured Zs does not exceed 80% of the maximum permitted Zs for the protective
@@ -519,9 +519,9 @@ export default function SWACableInstallationPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Polarity</strong> — Verify correct
+                      <strong className="text-elec-yellow">Polarity</strong> — Verify correct
                       polarity at all points. For 2-core SWA, confirm that the brown core is
                       connected to line and the blue core to neutral at both ends.
                     </span>
@@ -628,7 +628,7 @@ export default function SWACableInstallationPage() {
         },
       ]}
       ctaHeading="Size and Certify SWA Installations"
-      ctaSubheading="Elec-Mate's cable sizing calculator, AI installer, and digital certificates cover every SWA cable job. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's cable sizing calculator, AI installer, and digital certificates cover every SWA cable job. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

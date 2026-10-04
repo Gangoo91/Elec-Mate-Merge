@@ -181,7 +181,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Distribution boards and switchboards</strong> — thermal imaging of MCBs,
                 busbar connections, and cable terminations identifies overloaded circuits and loose
@@ -189,7 +189,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable trays and cable management</strong> — thermal imaging of cable runs
                 identifies overloaded cables and cables that have been incorrectly grouped (bundled
@@ -197,7 +197,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Motor control centres</strong> — contactor coils, overload relays, and motor
                 terminals can develop high-resistance connections that are detected by thermal
@@ -205,7 +205,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Transformer connections</strong> — HV and LV terminals of distribution
                 transformers are a common location for high-resistance connections that develop
@@ -279,7 +279,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Irradiance requirement</strong> — IEC 62446-3 requires a minimum solar
                 irradiance of 600 W/m² for module-level thermal imaging. Below this level, the
@@ -289,7 +289,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fault signatures</strong> — different PV faults create characteristic
                 thermal patterns: a single hot cell indicates a cracked or damaged cell; multiple
@@ -299,7 +299,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Classification</strong> — IEC 62446-3 classifies anomalies by temperature
                 differential: Class 1 (minor, ΔT less than 10°C) to Class 3 (severe, ΔT over 40°C or
@@ -307,7 +307,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Documentation</strong> — the standard requires that each anomaly is
                 photographed with both the thermal and optical images, the GPS location recorded,
@@ -331,7 +331,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Thermal resolution</strong> — minimum 320×240 pixels (76,800 pixels) for
                 distribution board inspection. Higher resolution (640×480, 307,200 pixels) is
@@ -341,7 +341,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NETD (Noise Equivalent Temperature Difference)</strong> — below 50mK
                 (0.05°C). This is the smallest temperature difference the camera can detect
@@ -351,7 +351,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Temperature range and accuracy</strong> — a measurement range of -20°C to
                 350°C minimum, with accuracy of ±2°C or ±2% of reading (whichever is greater). This
@@ -359,7 +359,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>D:S (distance to spot size) ratio</strong> — at least 100:1. This means the
                 camera can measure a 1cm spot from 100cm distance. For working at practical
@@ -368,7 +368,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Optical camera integration</strong> — a built-in optical (visible) camera
                 allows thermal and optical images to be captured simultaneously and overlaid. This
@@ -393,7 +393,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NETA ATS-2019</strong> (ANSI/NETA Acceptance Testing Specifications) — the
                 American standard widely used as a reference for electrical commissioning and
@@ -402,7 +402,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IEC 62446-3</strong> — the specific standard for PV system thermal imaging,
                 applicable to all PV installations in the UK when thermal imaging is used as part of
@@ -410,14 +410,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IET Guidance Note 3</strong> (Inspection and Testing) — references thermal
                 imaging as a supplementary inspection technique for electrical installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ISO 18434-1</strong> (Condition monitoring of machines — thermography) — the
                 general international standard for thermographic inspection, applicable to
@@ -442,7 +442,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Start with a Mid-Range Camera</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -496,7 +496,7 @@ export default function ThermalImagingElectricalPage() {
       heroTitle={
         <>
           Thermal Imaging for Electrical Inspections:{' '}
-          <span className="text-yellow-400">Hotspots, IEC 62446-3, and Camera Specs</span>
+          <span className="text-elec-yellow">Hotspots, IEC 62446-3, and Camera Specs</span>
         </>
       }
       heroSubtitle="A complete guide to using thermal imaging in electrical inspections. Covers EICR applications, hotspot detection (loose connections, overloaded neutrals), solar PV thermal imaging under IEC 62446-3, camera specifications for electrical work, and NETA standards."
@@ -507,7 +507,7 @@ export default function ThermalImagingElectricalPage() {
       faqHeading="Frequently Asked Questions About Thermal Imaging in Electrical Inspections"
       relatedPages={relatedPages}
       ctaHeading="Attach Thermal Images to EICR Reports on Your Phone"
-      ctaSubheading="Elec-Mate's EICR app lets you attach thermal and optical images directly to coded observations for professional client reports. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's EICR app lets you attach thermal and optical images directly to coded observations for professional client reports. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

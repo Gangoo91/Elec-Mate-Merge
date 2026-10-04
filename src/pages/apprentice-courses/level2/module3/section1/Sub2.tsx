@@ -98,7 +98,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      "Read it as 'British Standard 7671, 2018 base edition, fourth amendment dated 2026'. So the underlying standard is the 18th Edition (2018), and we're now on the A4:2026 amendment. Knowing the citation matters because BS 7671 changes substantially between amendments — A4:2026 brought AFDD requirements, the TN-C-S → PNB renaming and new inspection schedule columns.",
+      "Read it as 'British Standard 7671, 2018 base edition, fourth amendment dated 2026'. So the underlying standard is the 18th Edition (2018), and we're now on the A4:2026 amendment. Knowing the citation matters because BS 7671 changes substantially between amendments — A2:2022 brought the AFDD requirements and Type AC restriction, and A4:2026 added PNB earthing, the cables-in-walls table and a battery storage chapter.",
   },
   {
     id: 2,
@@ -626,8 +626,8 @@ export default function Sub2() {
               Apprentice cites Reg 411.3.3 from the 17th Edition Amendment 3 because it's the only
               IET book the firm ever bought. The actual cert he's filling out is dated 2026 —
               A4:2026 is in force, the regs have moved on, and the inspector picks up that the test
-              schedule's missing the new columns introduced by A4. Cert is invalid. Job has to be
-              re-tested at the firm's cost.
+              schedule's missing the fields added since (the SPD and AFDD details came in with
+              A2:2022). Cert is invalid. Job has to be re-tested at the firm's cost.
             </>
           }
           doInstead={

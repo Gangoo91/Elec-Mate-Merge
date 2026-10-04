@@ -365,7 +365,7 @@ export default function PlugInSolarBalconiesPage() {
       heroTitle={
         <>
           Plug-in Solar on a Balcony:{' '}
-          <span className="text-yellow-400">The Surfaces You Cannot Mount On</span>
+          <span className="text-elec-yellow">The Surfaces You Cannot Mount On</span>
         </>
       }
       heroSubtitle="Balcony solar is what the plug-in route was invented for, and nothing in the rules excludes flats. But the first question is what your building is made of — several external wall constructions are excluded outright — followed by wind loading, height, fixings and how you reach a socket without an extension lead."
@@ -396,7 +396,7 @@ export default function PlugInSolarBalconiesPage() {
       faqHeading="Plug-in Solar on Balconies — Frequently Asked Questions"
       relatedPages={relatedPages}
       ctaHeading="Checking a Flat Before the Panel Arrives"
-      ctaSubheading="Elec-Mate's Plug-in Solar Suitability & Commissioning Certificate assesses the mounting position against the fire restrictions and the installation against the electrical ones, then produces a plain-English decision sheet for a landlord or managing agent. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's Plug-in Solar Suitability & Commissioning Certificate assesses the mounting position against the fire restrictions and the installation against the electrical ones, then produces a plain-English decision sheet for a landlord or managing agent. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

@@ -177,7 +177,7 @@ const sections = [
                 symbol: 'V',
                 unit: 'Volt',
                 quantity: 'Electromotive force (EMF) / Potential difference (PD)',
-                colour: 'text-yellow-400',
+                colour: 'text-elec-yellow',
               },
               {
                 symbol: 'A',
@@ -250,15 +250,15 @@ const sections = [
           <p className="text-white text-sm">Voltage (V) = Current (A) × Resistance (Ω)</p>
           <div className="grid grid-cols-3 gap-4 mt-4">
             <div className="rounded-xl bg-white/[0.05] p-3">
-              <p className="text-yellow-400 font-bold text-lg">V = I × R</p>
+              <p className="text-elec-yellow font-bold text-lg">V = I × R</p>
               <p className="text-white text-xs">Find voltage</p>
             </div>
             <div className="rounded-xl bg-white/[0.05] p-3">
-              <p className="text-yellow-400 font-bold text-lg">I = V ÷ R</p>
+              <p className="text-elec-yellow font-bold text-lg">I = V ÷ R</p>
               <p className="text-white text-xs">Find current</p>
             </div>
             <div className="rounded-xl bg-white/[0.05] p-3">
-              <p className="text-yellow-400 font-bold text-lg">R = V ÷ I</p>
+              <p className="text-elec-yellow font-bold text-lg">R = V ÷ I</p>
               <p className="text-white text-xs">Find resistance</p>
             </div>
           </div>
@@ -267,7 +267,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Voltage drop calculation:</strong> A 2.5mm² copper cable has resistance of
                 approximately 7.41mΩ/m. A 20m ring circuit with a fault at the end (effectively a
@@ -276,7 +276,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fault current:</strong> If the supply voltage is 230V and the total loop
                 impedance (Zs) is 0.8Ω, the prospective fault current = V/Zs = 230/0.8 = 287.5A.
@@ -284,7 +284,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Continuity test interpretation:</strong> A continuity reading of 0.5Ω on a
                 20m protective conductor — does it indicate a good connection? R = ρ × L/A. For
@@ -412,23 +412,23 @@ const sections = [
             <h3 className="font-bold text-white mb-3">Series Circuits</h3>
             <ul className="space-y-2 text-white text-sm">
               <li className="flex items-start gap-2">
-                <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>Same current flows through every component</span>
               </li>
               <li className="flex items-start gap-2">
-                <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>Voltages add up: V_total = V1 + V2 + V3</span>
               </li>
               <li className="flex items-start gap-2">
-                <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>Resistances add up: R_total = R1 + R2 + R3</span>
               </li>
               <li className="flex items-start gap-2">
-                <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>One break in the circuit stops current flowing everywhere</span>
               </li>
               <li className="flex items-start gap-2">
-                <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <Zap className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <span>
                   Practical example: traditional Christmas tree lights (older style), pilot
                   circuits, some fault loop paths
@@ -546,7 +546,7 @@ export default function CityGuilds2365Unit202Page() {
       heroTitle={
         <>
           C&G 2365 Unit 202:{' '}
-          <span className="text-yellow-400">
+          <span className="text-elec-yellow">
             Electrical Principles Revision Guide for Apprentices
           </span>
         </>

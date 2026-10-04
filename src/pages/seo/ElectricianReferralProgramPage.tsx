@@ -196,7 +196,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong className="block mb-1">Builders and general contractors</strong>
                 <span>
@@ -209,7 +209,7 @@ const sections = [
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong className="block mb-1">Kitchen and bathroom fitters</strong>
                 <span>
@@ -222,7 +222,7 @@ const sections = [
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong className="block mb-1">Plumbers and heating engineers</strong>
                 <span>
@@ -235,7 +235,7 @@ const sections = [
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong className="block mb-1">EV charger and solar installers</strong>
                 <span>
@@ -264,7 +264,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fixed fee per job</strong> — simplest structure. Agree a fixed amount per
                 referred job that converts: £25–£50 for smaller jobs (EICR, socket additions),
@@ -273,7 +273,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Percentage of job value</strong> — 5–8 per cent of the invoiced job value.
                 Works well when job values vary widely. Requires more administration — you must
@@ -281,7 +281,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reciprocal referrals (no money)</strong> — you refer their services; they
                 refer yours. No money changes hands. Works best when referral volumes are roughly
@@ -290,7 +290,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Document the arrangement</strong> — a simple email exchange confirming the
                 structure, the fee amount, what constitutes a qualifying referral, and payment
@@ -381,7 +381,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ideal network composition</strong> — builder, electrician (you), plumber,
                 heating engineer, kitchen fitter, decorator, tiler, joiner, and possibly a property
@@ -391,7 +391,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>How to start</strong> — identify two or three trades you already trust from
                 working alongside them. Have an explicit conversation: "I'm trying to build a small
@@ -401,7 +401,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Formalise with a WhatsApp group</strong> — a WhatsApp group for the network
                 makes referral sharing easy. Members can post: "Customer needs a plumber in [area] —
@@ -410,7 +410,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Quality control</strong> — only refer tradespeople whose work you are
                 confident in. Your reputation is attached to every referral you make. If a plumber
@@ -436,7 +436,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Referral cards for partners</strong> — give each referral partner a stack of
                 your business cards. Better still, print cards specifically for referral use:
@@ -446,7 +446,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Digital sharing</strong> — a professional PDF brochure (one page, listing
                 your services, qualifications, and contact details) that partners can forward via
@@ -455,7 +455,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Partner landing pages</strong> — if you have a website, consider creating a
                 simple landing page for each major referral partner: "Referred by [Builder Name]?
@@ -528,7 +528,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Certificates That Impress Letting Agents
@@ -563,7 +563,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional tools for a referral-worthy electrical business"
-          description="Join 1,600+ UK electricians using Elec-Mate for quoting, invoicing, job management, and certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for quoting, invoicing, job management, and certification."
           icon={Users}
         />
       </>
@@ -589,7 +589,7 @@ export default function ElectricianReferralProgramPage() {
       heroTitle={
         <>
           Electrician Referral Programme UK:{' '}
-          <span className="text-yellow-400">Building Your Referral Network</span>
+          <span className="text-elec-yellow">Building Your Referral Network</span>
         </>
       }
       heroSubtitle="A practical guide to building a referral network as a UK electrician — relationships with builders, plumbers, kitchen fitters, and estate agents; how referral fees work; reciprocal networks; and tracking which sources generate your best work."

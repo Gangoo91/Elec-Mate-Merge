@@ -176,7 +176,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Zap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Voltage (V) — The Pressure</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -240,28 +240,28 @@ const sections = [
       <>
         <p>Ohm's Law is the relationship between voltage, current, and resistance. It states:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4 text-center">
-          <p className="text-2xl font-bold text-yellow-400 mb-2">V = I x R</p>
+          <p className="text-2xl font-bold text-elec-yellow mb-2">V = I x R</p>
           <p className="text-white text-sm">Voltage (volts) = Current (amps) x Resistance (ohms)</p>
         </div>
         <p>You can rearrange it to find any value:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>To find current:</strong> I = V / R — if you know the voltage and
                 resistance, divide voltage by resistance to get the current.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>To find resistance:</strong> R = V / I — if you know the voltage and
                 current, divide voltage by current to get the resistance.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>To find voltage:</strong> V = I x R — if you know the current and
                 resistance, multiply them to get the voltage.
@@ -351,7 +351,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Power (P) is measured in watts (W).</strong> The formula is P = V x I. A
                 230V supply delivering 13A provides 2,990W (approximately 3kW). One kilowatt (kW) is
@@ -359,7 +359,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Energy is measured in kilowatt-hours (kWh).</strong> One kWh is the energy
                 used by a 1kW load running for one hour. A 3kW immersion heater running for 2 hours
@@ -367,7 +367,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Power also equals I squared times R (P = I²R).</strong> This is important
                 because it shows that power loss in a cable increases with the square of the
@@ -400,7 +400,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <CircuitBoard className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <CircuitBoard className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Series Circuits</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -468,35 +468,35 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable sizing</strong> — you need to know current, resistance, voltage drop,
                 and thermal effects to select the right cable for a circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Protective device selection</strong> — choosing between Type B, C, and D
                 MCBs requires understanding of prospective fault current and motor inrush currents.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing and inspection</strong> — every test you carry out during an EICR
                 measures a quantity rooted in basic theory: resistance, impedance, current, voltage.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fault finding</strong> — diagnosing a fault requires understanding what
                 normal readings look like and what abnormal readings indicate.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Safety</strong> — understanding why earthing, bonding, and RCDs protect
                 against electric shock comes directly from knowing how current flows through the
@@ -540,7 +540,7 @@ export default function HowElectricityWorksPage() {
       heroTitle={
         <>
           How Electricity Works:{' '}
-          <span className="text-yellow-400">Basic Electrical Theory in Plain English</span>
+          <span className="text-elec-yellow">Basic Electrical Theory in Plain English</span>
         </>
       }
       heroSubtitle="Voltage, current, resistance, Ohm's Law, AC vs DC, power, and circuits — explained clearly for electricians and apprentices. This is the foundation of everything you do on site."

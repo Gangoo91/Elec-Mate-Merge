@@ -155,7 +155,7 @@ export async function generateEmbedding(text: string, apiKey: string): Promise<n
   return await genEmbed(text, apiKey);
 }
 
-export async function callLovableAI(
+export async function callAI(
   systemPrompt: string,
   userPrompt: string,
   apiKey: string,
@@ -262,9 +262,9 @@ export function parseJsonWithRepair(raw: string, logger: Logger, context: string
 }
 
 /**
- * Call Lovable AI with timeout protection (55s before Supabase 60s limit)
+ * Call the AI with timeout protection (55s before Supabase 60s limit)
  */
-export async function callLovableAIWithTimeout(
+export async function callAIWithTimeout(
   systemPrompt: string,
   userPrompt: string,
   apiKey: string,
@@ -277,9 +277,9 @@ export async function callLovableAIWithTimeout(
   } = {}
 ): Promise<string> {
   // Use circuit breaker to prevent overwhelming failing service
-  const { lovableAICircuit } = await import('./circuit-breaker.ts');
+  const { aiCircuit } = await import('./circuit-breaker.ts');
 
-  return await lovableAICircuit.execute(async () => {
+  return await aiCircuit.execute(async () => {
     const { timeoutMs = 55000, ...aiOptions } = options;
 
     const timeoutPromise = new Promise<never>((_, reject) => {
@@ -290,12 +290,12 @@ export async function callLovableAIWithTimeout(
 
     try {
       return await Promise.race([
-        callLovableAI(systemPrompt, userPrompt, apiKey, aiOptions),
+        callAI(systemPrompt, userPrompt, apiKey, aiOptions),
         timeoutPromise,
       ]);
     } catch (error) {
       if (error instanceof Error && error.message.includes('timed out')) {
-        throw new ExternalAPIError('AI request exceeded time limit', 'Lovable AI');
+        throw new ExternalAPIError('AI request exceeded time limit', 'OpenAI');
       }
       throw error;
     }

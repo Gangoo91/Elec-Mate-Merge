@@ -58,7 +58,7 @@ const inlineChecks = [
     ],
     correctIndex: 1,
     explanation:
-      'A4:2026 deleted the Type-conditional Table 3A and harmonised verification: one AC test at IΔn for any Type. Reg 643.8 NOTE retains the time limits (≤300 ms for general non-delay, 130–500 ms for S-type). Record the device Type alongside (still useful for context and any defect report), but the acceptance number is now a single AC trip-time.',
+      'A2:2022 deleted the Type-conditional Table 3A and harmonised verification: one AC test at IΔn for any Type. Reg 643.8 NOTE retains the time limits (≤300 ms for general non-delay, 130–500 ms for S-type). Record the device Type alongside (still useful for context and any defect report), but the acceptance number is now a single AC trip-time.',
   },
   {
     id: 'mod1-s5-cert-choice',
@@ -131,7 +131,7 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      'A4:2026 deletes Table 3A from Appendix 3 and harmonises RCD verification: regardless of RCD Type, an alternating current test at rated residual operating current (IΔn) is used to verify effectiveness. Reg 643.8 keeps the 300 ms / 130–500 ms time limits for general non-delay and S-type RCDs respectively.',
+      'A2:2022 deleted Table 3A from Appendix 3 and harmonises RCD verification: regardless of RCD Type, an alternating current test at rated residual operating current (IΔn) is used to verify effectiveness. Reg 643.8 keeps the 300 ms / 130–500 ms time limits for general non-delay and S-type RCDs respectively.',
   },
   {
     id: 5,
@@ -246,7 +246,7 @@ const InspectionTestingModule1Section5 = () => {
             'Reg 643.1 makes the order mandatory: the tests in 643.2–643.6, where relevant, shall be carried out in that order and shall be completed before the installation is energised. The sequence is normative.',
             'The dead-test stage (643.2 continuity, 643.3 IR, 643.4 SELV/PELV/separation, 643.5 floors and walls, 643.6 polarity) proves the installation is safe to energise. Each test guards the validity of the next.',
             'The live-test stage (643.7 ADS — Ze, Zs, IPFC; 643.8 additional protection; 643.9 phase sequence; 643.10 functional incl. AFDD test facility) verifies that protection actually operates within the BS 7671 Chapter 41 disconnection times.',
-            'A4:2026 redrafted Reg 643.3 — 250 V DC post-connection IR test mandatory, Table 3A deleted, RCD effectiveness verified by AC test at IΔn regardless of RCD Type. Reg 643.10 extended to AFDD manual test facility per manufacturer.',
+            'A2:2022 redrafted Reg 643.3 — 250 V DC post-connection IR test mandatory, Table 3A deleted, RCD effectiveness verified by AC test at IΔn regardless of RCD Type. Reg 643.10 extended to AFDD manual test facility per manufacturer.',
             'A4:2026 amended Appendix 6 model forms (EIC, EICR, Minor Works, Schedule of Inspections, Schedule of Circuit Details, Schedule of Test Results) to record SPD details, AFDD details, max permitted Zs per circuit, TN-C-S (PNB) earthing, reference method and SPD Type per board.',
             'Reg 643.7.2: if any test indicates failure, that test and any preceding test the result of which may have been influenced by the fault shall be repeated after the fault is rectified. The sequence is also a defects-recovery rule.',
           ]}
@@ -257,7 +257,7 @@ const InspectionTestingModule1Section5 = () => {
             'State the test sequence required by Reg 643.1 and explain why the order is normative — not a working preference',
             'Map each test in 643.2–643.10 to the certificate column or schedule field that records its output on the A4:2026 model forms',
             'Explain how each test depends on the validity of the previous test, and what failure of one means for the others (Reg 643.7.2 defects rule)',
-            'Identify what A4:2026 changed: 643.3 redraft, Table 3A deletion, AFDD test verification under 643.10, new SPD/AFDD/PNB columns on Appendix 6 forms',
+            'Identify what recent amendments changed: 643.3 redraft and Table 3A deletion (A2:2022), AFDD test verification under 643.10, new SPD/AFDD/PNB columns on Appendix 6 forms',
             'Choose the correct certificate (EIC, EICR or Minor Works) for a given scope of work and justify the choice from Reg 644 / 653 wording',
             'Record continuity, IR, polarity, Zs, RCD trip times, IPFC and functional outcomes on the Schedule of Test Results so a third party (insurer, court, distributor) can reconstruct exactly what was tested',
           ]}
@@ -373,7 +373,7 @@ const InspectionTestingModule1Section5 = () => {
             </li>
             <li>
               <strong>643.8 RCD effectiveness (where ADS by RCD)</strong> — AC test at IΔn,
-              regardless of RCD Type (A4 redraft of 643.3 deleted Table 3A). 300&nbsp;ms maximum for
+              regardless of RCD Type (the A2:2022 redraft of 643.3 deleted Table 3A). 300&nbsp;ms maximum for
               general non-delay; 130–500&nbsp;ms for S-type.
             </li>
             <li>
@@ -527,7 +527,7 @@ const InspectionTestingModule1Section5 = () => {
               500 V DC · Table 64 · 250 V DC post-connection
             </text>
             <text x="220" y="240" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
-              A4:2026 redraft — Table 3A deleted
+              A2:2022 redraft — Table 3A deleted
             </text>
             <line
               x1="220"
@@ -798,7 +798,7 @@ const InspectionTestingModule1Section5 = () => {
               AC test at IΔn — any Type · ≤300 ms / 130–500 ms
             </text>
             <text x="220" y="780" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
-              A4:2026 — Table 3A deleted
+              A2:2022 — Table 3A deleted
             </text>
 
             {/* 11. Phase sequence (right column) */}
@@ -1066,7 +1066,7 @@ const InspectionTestingModule1Section5 = () => {
 
         <ConceptBlock
           title="Reg 643.3 redraft — IR and RCD test"
-          plainEnglish="The biggest test-procedure change in A4:2026 is in 643.3. Three things changed at once: a 250 V DC post-connection IR test became mandatory, Table 3A in Appendix 3 was deleted, and RCD effectiveness became a single AC test at IΔn regardless of Type."
+          plainEnglish="The biggest recent test-procedure change (A2:2022) is in 643.3. Three things changed at once: a 250 V DC post-connection IR test became mandatory, Table 3A in Appendix 3 was deleted, and RCD effectiveness became a single AC test at IΔn regardless of Type."
         >
           <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
             <li>
@@ -1308,7 +1308,7 @@ const InspectionTestingModule1Section5 = () => {
                 <tr className="border-b border-white/[0.06]">
                   <td className="py-2">RCD AC test at IΔn (643.7.3 / 643.8)</td>
                   <td>Trip time in ms; device Type recorded alongside</td>
-                  <td>RCD test column · A4 single-AC-test result</td>
+                  <td>RCD test column · single AC test result</td>
                 </tr>
                 <tr className="border-b border-white/[0.06]">
                   <td className="py-2">Phase sequence (643.9)</td>
@@ -1341,7 +1341,7 @@ const InspectionTestingModule1Section5 = () => {
           points={[
             'Reg 643.1 makes the order of 643.2 to 643.6 normative — those tests, in that order, before energisation. The dependency chain is the reason.',
             'Reg 643.7.2 is the defects-recovery rule: failed test + any preceding test the result of which the fault may have influenced — both repeated after rectification.',
-            'A4:2026 redrafted Reg 643.3 — 250 V DC post-connection IR mandatory, Table 3A deleted, RCD AC test at IΔn for any Type.',
+            'A2:2022 redrafted Reg 643.3 — 250 V DC post-connection IR mandatory, Table 3A deleted, RCD AC test at IΔn for any Type.',
             'Reg 643.10 functional now explicitly covers AFDD manual test facility per manufacturer. New AFDD column on the Schedule of Test Results.',
             'Appendix 6 model forms amended for SPD details, AFDD details, TN-C-S (PNB) earthing, reference method, max permitted Zs per circuit, SPD Type per board.',
             'Reg 643.7.3.1: continuity test (643.2) before Zs measurement. Out-of-order Zs is reading the wrong loop.',
@@ -1359,7 +1359,7 @@ const InspectionTestingModule1Section5 = () => {
                 'It means the regulation duty for any given circuit is sequential — continuity then IR then polarity, on that circuit, before energising. On a multi-circuit board you can stage tests in parallel across circuits in practice (run continuity on all circuits first, then IR on all circuits, etc.) and many electricians do. What you cannot do is energise a board on which Stage A is incomplete on any relevant circuit. The order is per the test class, not per the circuit.',
             },
             {
-              question: 'What changed about RCD testing in A4:2026 — and what do I record now?',
+              question: 'What changed about RCD testing in A2:2022 — and what do I record now?',
               answer:
                 'Three things. (1) Table 3A in Appendix 3 was deleted. (2) Reg 643.3 redraft makes the verification a single AC test at IΔn, regardless of RCD Type. (3) The time limits in Reg 643.8 NOTE remain: ≤300 ms for general non-delay; 130–500 ms for S-type. You record the AC IΔn trip time in ms, plus the RCD Type alongside (still useful for context and for distributor reports), but the acceptance number is the single AC test. The schedule columns reflect this.',
             },

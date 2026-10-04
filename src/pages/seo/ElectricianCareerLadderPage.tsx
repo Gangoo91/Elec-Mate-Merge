@@ -172,22 +172,22 @@ const sections = [
           </div>
           <ul className="space-y-3 text-white text-sm">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>NVQ Level 3 Electrical Installation (on-the-job assessment)</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 City &amp; Guilds 2365 Diploma in Electrical Installations (or equivalent Level 3
                 Tech Certificate)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>18th Edition (BS 7671) — typically taken in year 3 or 4</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>AM2 End Point Assessment — the gateway to full qualification</span>
             </li>
           </ul>
@@ -221,21 +221,21 @@ const sections = [
           </div>
           <ul className="space-y-3 text-white text-sm">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>JIB ECS Gold Card (Approved Electrician or Electrician Technician grade)</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Part P registration scheme membership (for domestic work): NAPIT, NICEIC, or similar
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>CSCS Gold Card for site access</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>First Aid at Work (3-day) — increasingly expected on commercial sites</span>
             </li>
           </ul>
@@ -273,21 +273,21 @@ const sections = [
           </div>
           <ul className="space-y-3 text-white text-sm">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>C&amp;G 2391 Inspection and Testing (or 2394/2395)</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>SSSTS (Site Supervisors Safety Training Scheme)</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 One or more specialist qualifications (EV, solar PV, fire alarm, data, 2382 Design)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Substantial experience of leading small teams or working as the senior electrician
                 on a section of a project
@@ -323,19 +323,19 @@ const sections = [
           </div>
           <ul className="space-y-3 text-white text-sm">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>SMSTS (Site Management Safety Training Scheme)</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>CSCS Black Card (Construction Manager) or Supervisor card</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>NVQ Level 4 in Construction Site Supervision (increasingly expected)</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>Experience managing and co-ordinating electrical labour on site</span>
             </li>
           </ul>
@@ -367,22 +367,22 @@ const sections = [
           </div>
           <ul className="space-y-3 text-white text-sm">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>HNC or HND in Electrical or Building Services Engineering</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>NVQ Level 6 or 7 in Construction Management (or equivalent experience)</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Commercial awareness: understanding of JCT/NEC contracts, variation management,
                 final account negotiation
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>MCIOB, MCIBSE, or MIET membership (valued, not always mandatory)</span>
             </li>
           </ul>
@@ -408,23 +408,23 @@ const sections = [
           </div>
           <ul className="space-y-3 text-white text-sm">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Proven P&amp;L management across multiple contracts or a business division
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>Strong client and stakeholder relationships</span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 FIET, FCIBSE, or Chartered Engineer (CEng) status is common at director level
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>Business development and tender strategy capability</span>
             </li>
           </ul>
@@ -452,7 +452,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Self-employment and contracting</strong> — many electricians leave the
                 employed route at any stage to build their own business. Successful small electrical
@@ -461,7 +461,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Specialist technical roles</strong> — HV, CompEx, rail, nuclear, offshore,
                 and data centre specialists often earn more than contracts managers with equivalent
@@ -469,7 +469,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Training and lecturing</strong> — experienced electricians with 2391 and
                 good communication skills can move into FE college lecturing (£35,000 to £50,000),
@@ -477,7 +477,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical design and consultancy</strong> — electricians with strong
                 technical knowledge who pursue HNC/HND and design qualifications (C&amp;G 2396) can
@@ -511,7 +511,7 @@ export default function ElectricianCareerLadderPage() {
       heroTitle={
         <>
           The UK Electrician Career Ladder:{' '}
-          <span className="text-yellow-400">Apprentice to Electrical Director</span>
+          <span className="text-elec-yellow">Apprentice to Electrical Director</span>
         </>
       }
       heroSubtitle="From starting an apprenticeship to running an electrical division — this guide maps the complete UK electrician career progression with realistic timelines, salary ranges, and the qualifications required at each stage."

@@ -194,7 +194,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Where it is found</strong> — TN-S is increasingly rare in new UK
                 installations. It is typically found in older properties served by concentric wiring
@@ -204,7 +204,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Identification</strong> — at the DNO cut-out, a TN-S supply will have
                 separate earth and neutral terminals. The earth terminal is connected to the cable's
@@ -213,7 +213,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth loop impedance</strong> — TN-S systems typically have Zs values in the
                 range of 0.1 to 0.8 ohms at the consumer's installation, depending on the cable
@@ -222,7 +222,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Degradation risk</strong> — in concentric wiring systems, the outer sheath
                 (PE conductor) can corrode over time. This is an important inspection point during
@@ -250,7 +250,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DNO PME terminal</strong> — the DNO provides a combined N/E terminal at the
                 cut-out, usually labelled "PME Earth Terminal" or marked with the combined N/PE
@@ -259,7 +259,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Low earth loop impedance</strong> — TN-C-S systems typically have Zs values
                 of 0.1 to 0.6 ohms, similar to TN-S. This allows MCBs and fuses to clear earth
@@ -404,7 +404,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>TN-C-S (PME) supplies</strong> — an earth electrode must be installed at the
                 charge point location, bonded to the charge point's earth terminal, to provide a
@@ -415,7 +415,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>TT supplies</strong> — the charge point must be on the TT earth system. A
                 Type A or Type B RCD must protect the charge point circuit. The earth electrode
@@ -424,7 +424,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD type for EV circuits</strong> — EV charge point circuits require a Type
                 A or Type B RCD (not Type AC) because the charging electronics can produce pulsating
@@ -450,7 +450,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Info className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth rod installation</strong> — the earth rod should be driven vertically
                 into the ground to a sufficient depth to achieve adequate electrode resistance
@@ -459,7 +459,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Info className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Supply cable selection</strong> — use a cable with no metallic sheath or
                 armour connected to the main building's earth terminal. An unarmoured cable in a
@@ -469,7 +469,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Info className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection mandatory</strong> — all circuits in TT outbuildings must be
                 protected by RCDs because the high earth loop impedance prevents MCBs from clearing
@@ -478,7 +478,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Info className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Certification</strong> — an outbuilding supply installation is notifiable
                 work requiring an Electrical Installation Certificate (EIC). The test results must
@@ -523,7 +523,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Impact on EICR assessment</strong> — measured Zs values must be compared
                 against the maximum Zs values in BS 7671 Appendix 3 for the specific protective
@@ -550,7 +550,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check the cut-out and meter</strong> — the supply head (cut-out) and meter
                 cabinet usually show the earthing arrangement. A clearly labelled PME terminal
@@ -559,7 +559,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Contact the DNO</strong> — for certainty, contact the Distribution Network
                 Operator (Western Power Distribution, UK Power Networks, Northern Powergrid, etc.)
@@ -568,7 +568,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check previous certificates</strong> — the earthing system should be
                 recorded on previous EICRs and EICs for the property. However, always verify
@@ -596,7 +596,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Record Earthing System on Certificate</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -611,7 +611,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs and EICs with correct earthing system"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR and EIC completion. Built-in guidance for earthing system identification, AI board scanning…"
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EICR and EIC completion. Built-in guidance for earthing system identification, AI board scanning…"
           icon={FileCheck2}
         />
       </>
@@ -637,7 +637,7 @@ export default function EarthingSystemsGuidePage() {
       heroTitle={
         <>
           UK Earthing Systems Guide:{' '}
-          <span className="text-yellow-400">TN-S, TN-C-S and TT Explained</span>
+          <span className="text-elec-yellow">TN-S, TN-C-S and TT Explained</span>
         </>
       }
       heroSubtitle="A complete practical guide to earthing systems used in UK electrical installations — TN-S, TN-C-S (PME) and TT explained with BS 7671 requirements, PME limitations, EV charging earthing, outbuilding supplies, and earth loop impedance differences between systems."
@@ -648,7 +648,7 @@ export default function EarthingSystemsGuidePage() {
       faqHeading="Frequently Asked Questions About UK Earthing Systems"
       relatedPages={relatedPages}
       ctaHeading="Complete Earthing Documentation Correctly on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR and EIC completion with correct earthing system documentation, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EICR and EIC completion with correct earthing system documentation, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

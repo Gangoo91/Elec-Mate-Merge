@@ -253,7 +253,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow text-black font-bold text-sm shrink-0">
                 1
               </span>
               <span>
@@ -264,7 +264,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow text-black font-bold text-sm shrink-0">
                 2
               </span>
               <span>
@@ -274,7 +274,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow text-black font-bold text-sm shrink-0">
                 3
               </span>
               <span>
@@ -284,7 +284,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow text-black font-bold text-sm shrink-0">
                 4
               </span>
               <span>
@@ -294,7 +294,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow text-black font-bold text-sm shrink-0">
                 5
               </span>
               <span>
@@ -321,7 +321,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard 7kW home installation (Norwich)</strong> — £800 to £1,100 all-in,
                 including charger unit, dedicated circuit, RCD protection, EIC, and Part P. After
@@ -329,7 +329,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rural Norfolk installation</strong> — £900 to £1,300, reflecting typically
                 longer cable runs, the potential need for armoured underground cable between house
@@ -337,7 +337,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit upgrade</strong> — £400 to £650 additional. Older Norwich
                 properties (pre-1990) with full or outdated consumer units may require an upgrade
@@ -345,7 +345,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth electrode</strong> — £150 to £300 additional, if required by the
                 earthing risk assessment. Common in rural Norfolk TT installations and some detached
@@ -376,7 +376,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>TT earthing systems</strong> — rural Norfolk properties are often on TT
                 earthing systems (own earth electrode, no PME). Under BS 7671 Regulation 722.411.4,
@@ -387,7 +387,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Detached garage and outbuilding charging</strong> — many rural Norfolk
                 properties have garages or agricultural outbuildings at some distance from the main
@@ -397,7 +397,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Supply capacity</strong> — older rural Norfolk properties may have lower
                 service ampere ratings (60A or 80A supplies) from the DNO. Adding a 32A EV charger
@@ -406,7 +406,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Solar PV integration</strong> — rural Norfolk properties are ideal
                 candidates for solar PV and EV charger integration. The Myenergi Zappi or similar
@@ -485,7 +485,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>OZEV registration</strong> — verify at gov.uk OZEV installer search. Some
                 Norwich electricians cover the wider Norfolk area for EV installations — confirm the
@@ -493,7 +493,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC or NAPIT registration</strong> — verify on the scheme's online
                 register. Particularly important for rural Norfolk installations where earthing
@@ -501,7 +501,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rural installation experience</strong> — ask whether the installer has
                 experience with TT earthing systems and armoured underground cable installations
@@ -510,7 +510,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Written all-inclusive quote</strong> — confirm all costs are included:
                 charger unit, cabling, protection devices, earth electrode (if required),
@@ -538,7 +538,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete EV Certificates On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -572,7 +572,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your EV installation business in Norwich & Norfolk"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EV certification, instant PDF export, and professional quoting."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EV certification, instant PDF export, and professional quoting."
           icon={Zap}
         />
       </>
@@ -598,7 +598,7 @@ export default function EVChargerInstallationNorwichPage() {
       heroTitle={
         <>
           EV Charger Installation Norwich:{' '}
-          <span className="text-yellow-400">Home EV Charging across Norfolk 2026</span>
+          <span className="text-elec-yellow">Home EV Charging across Norfolk 2026</span>
         </>
       }
       heroSubtitle="Everything Norwich and Norfolk residents need to know about home EV charger installation — OZEV grants up to £350, typical costs of £800 to £1,100 for a 7kW unit, rural Norfolk earthing considerations, and how to find a qualified OZEV-approved installer."
@@ -609,7 +609,7 @@ export default function EVChargerInstallationNorwichPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in Norwich & Norfolk"
       relatedPages={relatedPages}
       ctaHeading="Complete EV Installation Certificates On Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EV certification, OZEV documentation, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EV certification, OZEV documentation, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

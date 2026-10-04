@@ -183,9 +183,9 @@ const sections = [
         <p>The approved competent person schemes for electrical work in England are:</p>
         <ul className="space-y-3 my-4">
           <li className="flex items-start gap-3">
-            <Award className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <Award className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
-              <strong className="text-yellow-400">NICEIC</strong> — National Inspection Council for
+              <strong className="text-elec-yellow">NICEIC</strong> — National Inspection Council for
               Electrical Installation Contracting. The largest scheme with over 40,000 registered
               contractors.{' '}
               <SEOInternalLink href="/guides/niceic-registration">
@@ -195,9 +195,9 @@ const sections = [
             </span>
           </li>
           <li className="flex items-start gap-3">
-            <Award className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <Award className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
-              <strong className="text-yellow-400">NAPIT</strong> — National Association of
+              <strong className="text-elec-yellow">NAPIT</strong> — National Association of
               Professional Inspectors and Testers. A growing scheme with competitive fees.{' '}
               <SEOInternalLink href="/guides/napit-registration">
                 NAPIT registration guide
@@ -206,9 +206,9 @@ const sections = [
             </span>
           </li>
           <li className="flex items-start gap-3">
-            <Award className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <Award className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
-              <strong className="text-yellow-400">ELECSA</strong> — Electrical Contractors
+              <strong className="text-elec-yellow">ELECSA</strong> — Electrical Contractors
               Association.{' '}
               <SEOInternalLink href="/guides/elecsa-registration">
                 ELECSA registration guide
@@ -217,9 +217,9 @@ const sections = [
             </span>
           </li>
           <li className="flex items-start gap-3">
-            <Award className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <Award className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
-              <strong className="text-yellow-400">Stroma</strong> — offers electrical competent
+              <strong className="text-elec-yellow">Stroma</strong> — offers electrical competent
               person scheme registration alongside building energy and gas registration.
             </span>
           </li>
@@ -244,9 +244,9 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Always Notifiable</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">Installing a new circuit</strong> — any new
+                <strong className="text-elec-yellow">Installing a new circuit</strong> — any new
                 circuit from the consumer unit or distribution board, regardless of location. This
                 includes circuits for cookers, showers,{' '}
                 <SEOInternalLink href="/guides/ev-charger-installation">
@@ -256,9 +256,9 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">Consumer unit replacement</strong> — replacing
+                <strong className="text-elec-yellow">Consumer unit replacement</strong> — replacing
                 the{' '}
                 <SEOInternalLink href="/consumer-unit-regulations">
                   consumer unit
@@ -267,9 +267,9 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">Work in special locations</strong> — any
+                <strong className="text-elec-yellow">Work in special locations</strong> — any
                 electrical work (other than like-for-like replacement of accessories) in a room
                 containing a bath or shower, a swimming pool, or a sauna.
               </span>
@@ -294,8 +294,8 @@ const sections = [
         <p>There are two routes for building control notification of electrical work:</p>
         <div className="grid sm:grid-cols-2 gap-4 my-6">
           <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-            <Award className="w-6 h-6 text-yellow-400 mb-3" />
-            <h3 className="font-bold text-yellow-400 text-lg mb-2">
+            <Award className="w-6 h-6 text-elec-yellow mb-3" />
+            <h3 className="font-bold text-elec-yellow text-lg mb-2">
               Route 1: Competent Person Scheme
             </h3>
             <p className="text-white text-sm leading-relaxed mb-3">
@@ -305,15 +305,15 @@ const sections = [
             </p>
             <ul className="space-y-2 text-white text-sm">
               <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>No separate building control fee per job</span>
               </li>
               <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>No building control inspection required</span>
               </li>
               <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>Faster and more cost-effective</span>
               </li>
             </ul>
@@ -367,9 +367,9 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">Rooms containing a bath or shower</strong> —
+                <strong className="text-elec-yellow">Rooms containing a bath or shower</strong> —
                 includes bathrooms, en-suites, shower rooms, and any room with a bath or shower
                 regardless of its primary purpose. The zones defined in{' '}
                 <SEOInternalLink href="/guides/bathroom-electrical-regulations">
@@ -379,17 +379,17 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">Swimming pools and paddling pools</strong> —
+                <strong className="text-elec-yellow">Swimming pools and paddling pools</strong> —
                 indoor and outdoor, including surrounding areas within the zones defined in BS 7671
                 Section 702.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">Saunas</strong> — including steam rooms and
+                <strong className="text-elec-yellow">Saunas</strong> — including steam rooms and
                 associated changing areas, as defined in BS 7671 Section 703.
               </span>
             </li>
@@ -397,7 +397,7 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-2">Kitchens Are Not Special Locations</h4>
               <p className="text-white text-sm leading-relaxed">
@@ -478,25 +478,25 @@ const sections = [
         </p>
         <ul className="space-y-3 my-4">
           <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
-              <strong className="text-yellow-400">Wales</strong> — uses Approved Document P (Wales)
+              <strong className="text-elec-yellow">Wales</strong> — uses Approved Document P (Wales)
               under the Building Regulations 2010 (Wales). Requirements are very similar to England
               but administered by Welsh local authorities.
             </span>
           </li>
           <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
-              <strong className="text-yellow-400">Scotland</strong> — uses the Building (Scotland)
+              <strong className="text-elec-yellow">Scotland</strong> — uses the Building (Scotland)
               Regulations 2004 under the Building (Scotland) Act 2003. Electrical installations must
               comply with BS 7671 but the notification process differs.
             </span>
           </li>
           <li className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span className="text-white">
-              <strong className="text-yellow-400">Northern Ireland</strong> — uses the Building
+              <strong className="text-elec-yellow">Northern Ireland</strong> — uses the Building
               Regulations (Northern Ireland) 2012. Electrical work must comply with BS 7671.
             </span>
           </li>
@@ -518,9 +518,9 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">Notifiable new work:</strong>{' '}
+                <strong className="text-elec-yellow">Notifiable new work:</strong>{' '}
                 <SEOInternalLink href="/eic-certificate">
                   Electrical Installation Certificate (EIC)
                 </SEOInternalLink>{' '}
@@ -529,9 +529,9 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">Notifiable minor work:</strong>{' '}
+                <strong className="text-elec-yellow">Notifiable minor work:</strong>{' '}
                 <SEOInternalLink href="/minor-works-certificate">
                   Minor Works Certificate
                 </SEOInternalLink>{' '}
@@ -540,9 +540,9 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">Non-notifiable work:</strong> No building
+                <strong className="text-elec-yellow">Non-notifiable work:</strong> No building
                 control certificate required, but best practice is to issue a Minor Works
                 Certificate. See the{' '}
                 <SEOInternalLink href="/guides/non-notifiable-electrical-work">
@@ -552,9 +552,9 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">Periodic inspection:</strong>{' '}
+                <strong className="text-elec-yellow">Periodic inspection:</strong>{' '}
                 <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> for
                 condition reports on existing installations.
               </span>
@@ -590,7 +590,7 @@ export default function BuildingRegulationsElectricalPage() {
         <>
           Building Regulations Part P
           <br />
-          <span className="text-yellow-400">Electrical Safety in Dwellings</span>
+          <span className="text-elec-yellow">Electrical Safety in Dwellings</span>
         </>
       }
       heroSubtitle="Part P of the Building Regulations requires most domestic electrical work to be notified to building control or self-certified by a registered competent person. This guide covers what work is notifiable, how to self-certify, special locations, penalties, and documentation requirements."
@@ -600,7 +600,7 @@ export default function BuildingRegulationsElectricalPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Certify Every Job Professionally"
-      ctaSubheading="Elec-Mate generates compliant EICs and Minor Works Certificates with auto-validated test results. Digital signatures, instant PDF delivery, professional formatting. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate generates compliant EICs and Minor Works Certificates with auto-validated test results. Digital signatures, instant PDF delivery, professional formatting. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

@@ -165,11 +165,11 @@ const quizQuestions = [
       'Are mandatory on every final circuit of any installation regardless of building type.',
       'Are explicitly prohibited on any commercial premises and must never be fitted here.',
       'Are only ever required on three-phase distribution circuits, never on single-phase finals.',
-      'Are recommended by Reg 421.1.7 for AC final circuits supplying socket-outlets ≤ 32 A in dwellings — strengthened to a requirement in HRRBs under the Building Safety Act 2022, and treated as effectively required in HMOs / sleeping accommodation / care homes by fire-safety guidance. Not strictly required on this small commercial install, but a sensible fit on the IT rack and EV circuits.',
+      'Are not required here — Reg 421.1.7 requires AFDDs only in high rise residential buildings, HMOs, purpose-built student accommodation and care homes. For other premises it recommends them on single-phase socket-outlet circuits up to 32 A, so they are a sensible fit on the socket circuits.',
     ],
     correctAnswer: 3,
     explanation:
-      'AFDDs are recommended for AC final circuits supplying socket-outlets ≤ 32 A in dwellings (per BS 7671 Reg 421.1.7). The recommendation strengthens to a requirement in Higher-Risk Residential Buildings (HRRBs) under the Building Safety Act 2022 framework. In HMOs, sleeping accommodation and care homes, supporting fire-safety guidance treats them as effectively required practice. A retail unit with no sleeping accommodation is not in that scope, but fitting AFDDs on the IT rack and EV circuits is good practice — both are arc-fault-prone loads.',
+      'Reg 421.1.7 requires AFDDs only in high rise residential buildings, HMOs, purpose-built student accommodation and care homes. A retail unit is none of those, so they are recommended, not required, on its single-phase socket-outlet circuits up to 32 A.',
   },
   {
     id: 8,
@@ -706,13 +706,11 @@ export default function Sub8() {
               inrush.
             </li>
             <li>
-              <strong>Server PDU (D3)</strong> — Type B AFDD-RCBO. Reg 421.1.7 recommends AFDDs for
-              AC final circuits supplying socket-outlets ≤ 32 A in dwellings (with the
-              recommendation strengthening to a requirement in HRRBs under the Building Safety Act
-              2022 framework, and treated as effectively required in HMOs / sleeping accommodation /
-              care homes by fire-safety guidance). On this commercial install AFDDs are not in that
-              scope, but a server room with high-density wiring and concealed cabling is exactly the
-              kind of arc-fault-risk environment where they earn their keep.
+              <strong>Server PDU (D3)</strong> — Type B AFDD-RCBO. Reg 421.1.7 requires AFDDs on
+              socket-outlet circuits ≤ 32 A only in HRRBs, HMOs, purpose-built student accommodation
+              and care homes, and recommends them elsewhere. On this commercial install they are not
+              required, but a server room with high-density wiring and concealed cabling is exactly
+              the kind of arc-fault-risk environment where they earn their keep.
             </li>
             <li>
               <strong>Origin SPD</strong> — Type 2 SPD at the consumer-unit origin (Section 443 /
@@ -756,22 +754,19 @@ export default function Sub8() {
         />
 
         <RegsCallout
-          source="BS 7671:2018+A4:2026 — Regulation 421.1.7 (Arc fault detection devices) (paraphrased)"
-          clause="Regulation 421.1.7 has been introduced recommending the installation of arc fault detection devices (AFDDs) to mitigate the risk of fire in AC final circuits of a fixed installation due to the effects of arc fault currents — specifically AC final circuits supplying socket-outlets with rated current not exceeding 32 A in dwellings."
+          source="BS 7671:2018+A4:2026 — Regulation 421.1.7 (Arc fault detection devices)"
+          clause="Arc fault detection devices (AFDD) conforming to BS EN 62606 shall be provided for single-phase AC final circuits supplying socket-outlets with a rated current not exceeding 32 A in: (a) high rise residential buildings (HRRBs); (b) houses in multiple occupation (HMOs); (c) purpose-built student accommodation; (d) care homes. For all other premises, the use of AFDDs conforming to BS EN 62606 is recommended for single-phase AC final circuits supplying socket-outlets not exceeding 32 A."
           meaning={
             <>
-              Reg 421.1.7 itself uses <em>recommending</em> wording: AFDDs are recommended for AC
-              final circuits supplying socket-outlets ≤ 32 A in dwellings. The recommendation
-              strengthens to a requirement in Higher-Risk Residential Buildings (HRRBs) under the
-              Building Safety Act 2022 framework. In HMOs, sleeping accommodation and care homes,
-              supporting fire-safety guidance treats AFDDs as effectively required practice. Our
-              small commercial unit is not in any of those categories, but the AFDD-RCBO on the
-              server PDU is a sensible application of the recommendation — high-density cabling,
-              concealed runs, expensive and hard-to-replace IT load. AFDDs are prohibited in medical
-              group 0 and 2 locations (Reg 710.421.1.7) — not relevant here, but worth knowing.
+              Reg 421.1.7 <em>requires</em> AFDDs in the four building types listed and{' '}
+              <em>recommends</em> them everywhere else. Our small commercial unit is not in any of
+              those categories, but the AFDD-RCBO on the server PDU is a sensible application of the
+              recommendation — high-density cabling, concealed runs, expensive and hard-to-replace
+              IT load. AFDDs must not be used in circuits in medical locations of group 0, 1 and 2
+              (Reg 710.421.1.7) — not relevant here, but worth knowing.
             </>
           }
-          cite="Verbatim wording paraphrased — see BS 7671:2018+A4:2026 Part 4, Chapter 42, Regulation 421.1.7 for the full text; Building Safety Act 2022 framework for HRRBs."
+          cite="Source: BS 7671:2018+A4:2026, Regulation 421.1.7."
         />
 
         <InlineCheck

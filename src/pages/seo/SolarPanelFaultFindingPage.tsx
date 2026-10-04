@@ -244,7 +244,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <TrendingDown className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingDown className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Open-circuit panel failure</strong> — one panel in the string fails to
                 conduct, breaking the series circuit. All panels in the string drop to zero output.
@@ -253,7 +253,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingDown className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingDown className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Junction box failure</strong> — the junction box on the rear of each panel
                 houses bypass diodes that allow current to route around shaded cells. Bypass diode
@@ -263,7 +263,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingDown className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingDown className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MC4 connector failure</strong> — the MC4 connectors used to link panels in a
                 string can develop high-resistance connections due to incorrect mating, corrosion,
@@ -273,7 +273,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingDown className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingDown className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>String cable damage</strong> — DC string cables routed across the roof can
                 be damaged by UV degradation, physical abrasion, bird or vermin attack, or foot
@@ -300,7 +300,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New shading sources</strong> — trees that have grown since installation, new
                 neighbouring buildings, repositioned TV aerials or satellite dishes, and dormer
@@ -310,7 +310,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Self-shading</strong> — chimneys, roof features, and antenna masts on the
                 same building can cast shadows at specific times of day. The shadow pattern is
@@ -319,7 +319,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Soiling</strong> — bird droppings, leaves, moss, and dust accumulation shade
                 individual cells and reduce output. Soiling is most prevalent in areas near woodland
@@ -328,7 +328,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mitigation options</strong> — power optimisers or microinverters fitted to
                 each panel allow module-level MPPT and dramatically reduce the impact of partial
@@ -355,7 +355,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Performance ratio</strong> — the ratio of actual output to the theoretical
                 maximum given the irradiance. A healthy UK residential system should maintain a
@@ -364,7 +364,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fault event log</strong> — inverter monitoring platforms log every fault
                 event with a timestamp and error code. Reviewing the fault log shows whether a fault
@@ -373,7 +373,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>String-level monitoring</strong> — two-string and multi-MPPT inverters
                 report voltage and current for each string independently. A discrepancy between
@@ -445,7 +445,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Sun className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Solar PV Installation Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -479,7 +479,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certificate solar PV installations with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate to certificate solar PV installations, complete EICRs, and generate BS 7671-compliant documentation on site."
+          description="Join 2,100+ UK electricians using Elec-Mate to certificate solar PV installations, complete EICRs, and generate BS 7671-compliant documentation on site."
           icon={Sun}
         />
       </>
@@ -505,7 +505,7 @@ export default function SolarPanelFaultFindingPage() {
       heroTitle={
         <>
           Solar Panels Not Working:{' '}
-          <span className="text-yellow-400">Solar PV Fault Finding Guide</span>
+          <span className="text-elec-yellow">Solar PV Fault Finding Guide</span>
         </>
       }
       heroSubtitle="Your solar PV system has stopped generating, is underperforming, or your inverter is showing a fault code. This guide explains the most common causes — inverter faults, DC isolator failures, string faults, shading — and tells you when you need an MCS-certified installer."
@@ -516,7 +516,7 @@ export default function SolarPanelFaultFindingPage() {
       faqHeading="Frequently Asked Questions About Solar Panel Faults"
       relatedPages={relatedPages}
       ctaHeading="Certificate Solar PV Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for solar PV commissioning certificates, EICRs, and BS 7671-compliant documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for solar PV commissioning certificates, EICRs, and BS 7671-compliant documentation. 7-day free trial, cancel anytime."
     />
   );
 }

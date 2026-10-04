@@ -171,28 +171,28 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-4 flex items-center gap-2">
-            <Clock className="w-4 h-4 text-yellow-400" /> Recommended Payment Terms
+            <Clock className="w-4 h-4 text-elec-yellow" /> Recommended Payment Terms
           </h4>
           <div className="space-y-3 text-white text-sm">
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Domestic customers (small jobs under £500)</span>
-              <strong className="text-yellow-400">Payment on completion</strong>
+              <strong className="text-elec-yellow">Payment on completion</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Domestic customers (larger jobs over £500)</span>
-              <strong className="text-yellow-400">Deposit + balance on completion</strong>
+              <strong className="text-elec-yellow">Deposit + balance on completion</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Commercial clients (direct)</span>
-              <strong className="text-yellow-400">14 to 30 days</strong>
+              <strong className="text-elec-yellow">14 to 30 days</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Main contractors</span>
-              <strong className="text-yellow-400">30 days (push back on 60+)</strong>
+              <strong className="text-elec-yellow">30 days (push back on 60+)</strong>
             </div>
             <div className="flex justify-between pb-2">
               <span>Property management / FM companies</span>
-              <strong className="text-yellow-400">30 days (standard)</strong>
+              <strong className="text-elec-yellow">30 days (standard)</strong>
             </div>
           </div>
         </div>
@@ -215,24 +215,24 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-4 flex items-center gap-2">
-            <Banknote className="w-4 h-4 text-yellow-400" /> Deposit Guidelines
+            <Banknote className="w-4 h-4 text-elec-yellow" /> Deposit Guidelines
           </h4>
           <div className="space-y-3 text-white text-sm">
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Jobs £500 to £1,000</span>
-              <strong className="text-yellow-400">30% to 40% deposit</strong>
+              <strong className="text-elec-yellow">30% to 40% deposit</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Jobs £1,000 to £3,000</span>
-              <strong className="text-yellow-400">25% to 35% deposit</strong>
+              <strong className="text-elec-yellow">25% to 35% deposit</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Jobs £3,000 to £10,000</span>
-              <strong className="text-yellow-400">20% to 30% deposit</strong>
+              <strong className="text-elec-yellow">20% to 30% deposit</strong>
             </div>
             <div className="flex justify-between pb-2">
               <span>Jobs over £10,000</span>
-              <strong className="text-yellow-400">15% to 25% deposit + staged payments</strong>
+              <strong className="text-elec-yellow">15% to 25% deposit + staged payments</strong>
             </div>
           </div>
         </div>
@@ -261,19 +261,19 @@ const sections = [
           <div className="space-y-3 text-white text-sm">
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Stage 1: Deposit on booking (25%)</span>
-              <strong className="text-yellow-400">£1,375</strong>
+              <strong className="text-elec-yellow">£1,375</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Stage 2: First fix complete (35%)</span>
-              <strong className="text-yellow-400">£1,925</strong>
+              <strong className="text-elec-yellow">£1,925</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Stage 3: Second fix and testing complete (40%)</span>
-              <strong className="text-yellow-400">£2,200</strong>
+              <strong className="text-elec-yellow">£2,200</strong>
             </div>
             <div className="flex justify-between pt-2 font-bold">
               <span>Total</span>
-              <strong className="text-yellow-400">£5,500</strong>
+              <strong className="text-elec-yellow">£5,500</strong>
             </div>
           </div>
         </div>
@@ -306,7 +306,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <Receipt className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Receipt className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Day 14 Overdue: Phone Call</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -396,7 +396,7 @@ const sections = [
             </div>
             <div className="flex justify-between pt-2 font-bold text-lg">
               <span>Net cash flow</span>
-              <strong className="text-yellow-400">+£75</strong>
+              <strong className="text-elec-yellow">+£75</strong>
             </div>
           </div>
         </div>
@@ -429,15 +429,15 @@ const sections = [
             </p>
             <div className="flex justify-between border-b border-white/10 pb-2 mt-4">
               <span>Example: Year 1 profit</span>
-              <strong className="text-yellow-400">£40,000</strong>
+              <strong className="text-elec-yellow">£40,000</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Income tax + NI (approximately)</span>
-              <strong className="text-yellow-400">£8,200</strong>
+              <strong className="text-elec-yellow">£8,200</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>First payment on account (50% of above)</span>
-              <strong className="text-yellow-400">£4,100</strong>
+              <strong className="text-elec-yellow">£4,100</strong>
             </div>
             <div className="flex justify-between pt-2 font-bold text-lg">
               <span>Total due 31 January</span>
@@ -492,7 +492,7 @@ export default function CashFlowManagementElectricianPage() {
       heroTitle={
         <>
           Cash Flow Management for Electricians:{' '}
-          <span className="text-yellow-400">Stay Profitable, Stay Solvent</span>
+          <span className="text-elec-yellow">Stay Profitable, Stay Solvent</span>
         </>
       }
       heroSubtitle="More trade businesses fail from cash flow problems than from lack of work. Invoicing terms, deposits, staged payments, chasing debt, and tax planning — the practical cash flow guide for UK electricians."
@@ -503,7 +503,7 @@ export default function CashFlowManagementElectricianPage() {
       faqHeading="Frequently Asked Questions About Cash Flow for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Invoice Faster, Get Paid Sooner"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for invoicing, quoting, and job management. Send invoices from site and get paid on the day. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for invoicing, quoting, and job management. Send invoices from site and get paid on the day. 7-day free trial, cancel anytime."
     />
   );
 }

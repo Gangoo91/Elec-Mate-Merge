@@ -215,7 +215,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Power className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Power className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>If the consumer unit is above the water level</strong> and you can reach it
                 safely without stepping in water, switch off the main switch. Stand on a dry surface
@@ -223,7 +223,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Power className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Power className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>If the consumer unit is submerged or inaccessible</strong>, do not attempt
                 to reach it. Call 105 and request the DNO to disconnect the supply at the cutout.
@@ -232,7 +232,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Power className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Power className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>After disconnection</strong>, the supply must not be restored until a
                 qualified electrician has inspected and tested the installation and confirmed it is
@@ -257,7 +257,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Building fabric first</strong> — the walls, floors, and ceilings must dry
                 before electrical work begins. Installing new equipment into damp walls causes
@@ -265,7 +265,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Timeline</strong> — a typical ground-floor flood in a solid-wall property
                 takes 6 to 12 months to dry out fully. Timber-frame construction dries faster (3 to
@@ -274,7 +274,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Moisture testing</strong> — use a moisture meter to confirm that walls and
                 floors have dried to acceptable levels (typically below 5% for masonry) before
@@ -282,7 +282,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Temporary supply</strong> — in some cases, a temporary electrical supply can
                 be arranged to provide power for dehumidifiers and heating during the drying period.
@@ -308,7 +308,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insulation resistance testing</strong> — every circuit must be tested at
                 500V DC. The minimum acceptable value is 1 megohm. Circuits with low insulation
@@ -316,14 +316,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Continuity testing</strong> — protective conductors (earths) must be tested
                 for continuity to confirm they are intact and have not been corroded by floodwater.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD testing</strong> — all RCDs and RCBOs must be functionally tested to
                 confirm they trip at the correct current and time. Flood-contaminated RCDs may fail
@@ -331,7 +331,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR report</strong> — an{' '}
                 <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> provides the
@@ -363,7 +363,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Photographs</strong> — take photographs of the flood level, the consumer
                 unit, all sockets and switches below the flood line, any visible damage to wiring,
@@ -372,7 +372,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR report</strong> — a professional EICR documents the condition of the
                 installation with observation codes. C1 (danger present) and C2 (potentially
@@ -380,7 +380,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Scope of works</strong> — a detailed, itemised scope of repair work from a
                 qualified electrician, including materials and labour costs. This should clearly
@@ -389,7 +389,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Contact your insurer early</strong> — notify your insurer as soon as
                 possible after the flood, before any repair work begins. Some policies require the
@@ -413,7 +413,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Raise the consumer unit</strong> — mount the consumer unit at least 1.5m
                 above ground floor level, above the anticipated flood line. This keeps the main
@@ -421,7 +421,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Raise socket outlets</strong> — install ground-floor sockets at 1.2m or
                 above, rather than the standard 300mm to 450mm height. This keeps them above most
@@ -429,7 +429,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Surface-mounted wiring</strong> — use surface-mounted conduit or trunking
                 for ground-floor circuits. This is far easier and cheaper to replace than cables
@@ -437,7 +437,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Separate ground and first floor boards</strong> — install a separate
                 consumer unit or sub-board for first-floor circuits. If the ground floor floods, the
@@ -462,7 +462,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EICR and EIC on Your Phone</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -519,7 +519,7 @@ export default function FloodDamagedElectricsPage() {
       heroTitle={
         <>
           Flood Damaged Electrics:{' '}
-          <span className="text-yellow-400">Safety, Assessment, and Recovery</span>
+          <span className="text-elec-yellow">Safety, Assessment, and Recovery</span>
         </>
       }
       heroSubtitle="Flooding causes severe damage to electrical installations. This guide covers the critical safety steps — why you must not enter a flooded property, isolation procedures, drying out, mandatory assessment before reconnection, and insurance documentation."
@@ -530,7 +530,7 @@ export default function FloodDamagedElectricsPage() {
       faqHeading="Frequently Asked Questions About Flood Damaged Electrics"
       relatedPages={relatedPages}
       ctaHeading="Professional Flood Recovery Documentation"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EICR certificates, quoting, and cable sizing. Produce the documentation insurance companies need. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for EICR certificates, quoting, and cable sizing. Produce the documentation insurance companies need. 7-day free trial, cancel anytime."
     />
   );
 }

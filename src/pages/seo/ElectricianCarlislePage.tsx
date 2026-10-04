@@ -234,7 +234,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New connections and upgrades</strong> — managed through ENW's connections
                 portal. Supply capacity upgrades are commonly required for EV charger installations
@@ -243,7 +243,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98/G99 notifications</strong> — solar PV and battery storage systems must
                 be notified to ENW. G98 (up to 16A per phase) is a straightforward online
@@ -252,7 +252,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing in rural areas</strong> — city centre Carlisle properties are
                 predominantly TN-C-S (PME). Rural properties east of the city (Eden Valley,
@@ -262,7 +262,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cross-border note</strong> — SP Energy Networks (SPEN) is the DNO for
                 Scotland, including Dumfries and the Scottish Borders. Work carried out north of the
@@ -288,7 +288,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <Landmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Scottish Building Standards vs Part P</strong> — in Scotland, Part P does
                 not apply. Instead, the Technical Handbook Section 4 (Safety) governs electrical
@@ -299,7 +299,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <Landmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SELECT registration</strong> — SELECT is the trade association for the
                 electrical industry in Scotland. SELECT-registered contractors can use SELECT
@@ -308,7 +308,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <Landmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DNO notification</strong> — Scottish electrical work requires SPEN
                 notification rather than ENW. Keep SPEN's contacts available for cross-border
@@ -316,7 +316,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+              <Landmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Practical note</strong> — the electrical installation standards (BS 7671)
                 are the same on both sides of the border. The difference is purely in the regulatory
@@ -462,7 +462,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EIC and EICR Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -511,7 +511,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Carlisle electricians"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -538,7 +538,7 @@ export default function ElectricianCarlislePage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Carlisle: <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Carlisle: <span className="text-elec-yellow">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Carlisle is the commercial hub of Cumbria and 34 miles from the Scottish border. Working here means understanding both English Part P regulations and Scottish Building Standards, alongside the practical challenges of Victorian terraces, flood-affected properties, and a wide rural catchment."
@@ -549,7 +549,7 @@ export default function ElectricianCarlislePage() {
       faqHeading="Frequently Asked Questions About Electricians in Carlisle"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Carlisle Electricians"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Carlisle's Victorian terraces, cross-border Scottish work, and rural Cumbrian properties. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Carlisle's Victorian terraces, cross-border Scottish work, and rural Cumbrian properties. 7-day free trial."
     />
   );
 }

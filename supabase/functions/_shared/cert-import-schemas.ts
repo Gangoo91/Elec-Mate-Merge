@@ -691,7 +691,7 @@ export function logBookEntriesPrompt(): string {
 Rules, all of which matter more than completeness:
 - One entry per written row, in the order written. Do not merge, reorder or invent rows.
 - Transcribe verbatim. Blank cell → empty string. NEVER guess a date, a zone or a result.
-- Pick entry_type from the list; when a row does not fit, use panel_event for panel matters and fault for anything reported as wrong.
+- Pick entry_type from the list; when a row does not fit, use panel_event for panel matters (including a disablement or isolation of a zone or device, and its re-enabling) and fault for anything reported as wrong.
 - Dates: ISO YYYY-MM-DD. UK books are day/month/year — 03/04/2024 is 3 April 2024.
 - Set entries_seen to the number of dated rows on the page, even where you could not read them all.
 - 🔴 Return EVERY row. entries.length must equal entries_seen. Do not stop early.`;

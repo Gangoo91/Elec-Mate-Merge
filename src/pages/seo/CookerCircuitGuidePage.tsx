@@ -198,21 +198,21 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Typical Cooker Circuit Cable Sizes</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard domestic cooker (up to ~13kW)</strong> — 6mm{'\u00B2'} twin and
                 earth, 32A MCB. Design current after diversity is typically 22A to 28A.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large range cooker (13kW to 18kW)</strong> — 10mm{'\u00B2'} twin and earth,
                 40A or 45A MCB. Design current after diversity may exceed 32A for larger appliances.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hob and oven combined</strong> — typically 6mm{'\u00B2'} on 32A MCB. The
                 combined load of a separate hob and oven is usually lower than a freestanding cooker
@@ -307,7 +307,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Position</strong> — within 2 metres horizontal distance from the cooker.
                 Must be accessible without reaching over or across the cooking surface. Standard
@@ -315,7 +315,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type</strong> — a 45A double-pole switch with a neon indicator. Available
                 with or without a 13A socket outlet. If the socket is included, it must not be
@@ -323,7 +323,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rated current</strong> — the cooker control unit must be rated for the full
                 load of the cooker (before diversity). A 45A-rated unit is standard for domestic
@@ -331,7 +331,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Connection</strong> — the circuit cable terminates at the cooker control
                 unit. A separate cable or heat-resistant flex runs from the control unit to the
@@ -361,7 +361,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Both appliances are in the same room</strong> — they must be in the kitchen
                 or cooking area served by the cooker control unit. You cannot run a circuit from the
@@ -369,7 +369,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>The combined load after diversity is within the circuit rating</strong> —
                 calculate the combined rated current of the hob and oven, then apply the diversity
@@ -379,7 +379,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Both appliances connect through the cooker control unit</strong> — the hob
                 is hardwired at the cooker control unit, and the oven connects via a flex outlet
@@ -410,7 +410,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCB rating</strong> — 32A for a standard 6mm{'\u00B2'} circuit. 40A or 45A
                 for a 10mm{'\u00B2'} circuit. The MCB rating must be equal to or greater than the
@@ -419,14 +419,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCB type</strong> — Type B for resistive cooker loads. Type B trips at 3 to
                 5 times rated current, which is suitable for heating elements.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection</strong> — required if the cable is concealed in a wall at
                 less than 50 mm depth without earthed metallic covering, and also required if the
@@ -435,7 +435,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Disconnection time</strong> — under BS 7671 Reg 411.3.2.2/411.3.2.3, final
                 circuits with one or more socket outlets (up to 63A) require disconnection within
@@ -519,7 +519,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reference Method C (clipped direct)</strong> — cable clipped to a surface or
                 on cable tray. This gives the highest current-carrying capacity for a given cable
@@ -527,7 +527,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reference Method A (enclosed in insulation)</strong> — cable in conduit in a
                 thermally insulating wall. 6mm{'\u00B2'} carries 32A under this method. This is the
@@ -535,7 +535,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Passing through insulation</strong> — if the cable passes through loft
                 insulation or cavity wall insulation, the thermal insulation correction factor (Ci)
@@ -675,7 +675,7 @@ export default function CookerCircuitGuidePage() {
       heroTitle={
         <>
           Cooker Circuit Guide:{' '}
-          <span className="text-yellow-400">Cable Size, Fuse and Wiring UK</span>
+          <span className="text-elec-yellow">Cable Size, Fuse and Wiring UK</span>
         </>
       }
       heroSubtitle="The cooker circuit is one of the highest-current circuits in a domestic installation. This guide covers cable sizing with the diversity factor, cooker control unit requirements, running a hob and oven on the same circuit, circuit protection, and the common mistakes that lead to EICR defects."

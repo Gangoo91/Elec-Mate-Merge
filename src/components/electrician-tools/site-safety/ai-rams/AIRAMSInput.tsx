@@ -28,6 +28,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { autoCompleteOff } from '@/lib/textEntry';
 
 const MIN_DESCRIPTION = 50;
 const INPUT_DRAFT_KEY = 'rams-input-draft-v1';
@@ -684,7 +685,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
               onChange={(v) => setProjectInfo((prev) => ({ ...prev, projectName: v }))}
               placeholder="Warehouse lighting upgrade"
               disabled={isProcessing}
-              autoComplete="off"
+              autoComplete={autoCompleteOff}
             />
             <TextField
               label="Site location"
@@ -692,7 +693,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
               onChange={(v) => setProjectInfo((prev) => ({ ...prev, location: v }))}
               placeholder="Unit 5, Industrial Estate"
               disabled={isProcessing}
-              autoComplete="off"
+              autoComplete={autoCompleteOff}
             />
             <TextField
               label="Assessor"
@@ -809,7 +810,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
                     onChange={(v) => setProjectInfo((prev) => ({ ...prev, assemblyPoint: v }))}
                     placeholder="Main car park, site entrance"
                     disabled={isProcessing}
-                    autoComplete="off"
+                    autoComplete={autoCompleteOff}
                   />
                 </div>
               </div>

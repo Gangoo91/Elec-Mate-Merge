@@ -140,7 +140,7 @@ const quizQuestions = [
     options: ['300ms', '200ms', '40ms', '1 second'],
     correctAnswer: 0,
     explanation:
-      'A4:2026 redrafted RCD verification: regardless of RCD Type, a single AC test at the rated residual operating current (1 × IΔn) is used. A general non-delay RCD must disconnect within 300 ms maximum at 1 × IΔn (Reg 643.8 NOTE). Appendix 3 Table 3A and the older 5 × IΔn / 40 ms test have been deleted in A4:2026.',
+      'A2:2022 redrafted RCD verification: regardless of RCD Type, a single AC test at the rated residual operating current (1 × IΔn) is used. A general non-delay RCD must disconnect within 300 ms maximum at 1 × IΔn (Reg 643.8 NOTE). Appendix 3 Table 3A and the older 5 × IΔn / 40 ms test have been deleted in A2:2022.',
   },
   {
     id: 7,
@@ -494,7 +494,7 @@ const HNCModule7Section6_5 = () => {
             </li>
             <li>
               <strong>5× test (pre-A4 only):</strong> 5× IΔn (150mA) — 40ms — No longer required by
-              BS 7671 — A4:2026 deleted Table 3A and verifies at IΔn only (Reg 643.3)
+              BS 7671 — A2:2022 deleted Table 3A and verifies at IΔn only (Reg 643.3)
             </li>
             <li>
               <strong>Ramp test:</strong> Rising current — N/A — Record actual trip current

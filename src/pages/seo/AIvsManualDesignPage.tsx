@@ -42,7 +42,7 @@ export default function AIvsManualDesignPage() {
       badgeIcon={Scale}
       heroTitle={
         <>
-          <span className="text-yellow-400">AI vs Manual</span> Electrical Design — A Practical
+          <span className="text-elec-yellow">AI vs Manual</span> Electrical Design — A Practical
           Comparison
         </>
       }
@@ -553,7 +553,7 @@ export default function AIvsManualDesignPage() {
         },
       ]}
       ctaHeading="Design your next circuit in 60 seconds"
-      ctaSubheading="Join 1,600+ UK electricians using AI for BS 7671 compliant circuit design. Review, refine, and quote — all from one platform. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using AI for BS 7671 compliant circuit design. Review, refine, and quote — all from one platform. 7-day free trial, cancel anytime."
     />
   );
 }

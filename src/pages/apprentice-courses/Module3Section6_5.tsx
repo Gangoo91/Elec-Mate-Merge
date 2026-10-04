@@ -94,8 +94,8 @@ const quizQuestions = [
     id: 7,
     question: 'Why is it important to mark spare conductors?',
     options: [
-      'To increase their current-carrying capacity',
-      'To improve the appearance of the board',
+      'To show they are rated for the circuit current',
+      'To show they have been insulation tested',
       'To allow them to be used without testing',
       'To prevent accidental connection and confusion',
     ],
@@ -150,9 +150,9 @@ const quickCheckQuestions = [
     id: 'label-durability',
     question: 'Why must labels be legible for the life of the installation?',
     options: [
-      'To increase the current rating of the circuits',
-      'To reduce the number of circuits required',
-      'To remove the need for a circuit schedule',
+      'Because the certificate is void without them',
+      "To satisfy the distributor's supply agreement",
+      'So the board can be inspected less often',
       'To ensure ongoing safety and efficient maintenance',
     ],
     correctIndex: 3,

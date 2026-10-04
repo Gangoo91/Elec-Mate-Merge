@@ -2203,7 +2203,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
         // BS 7671:2018+A4:2026 Regulation 643.8 requires a SINGLE alternating
         // current test at rated residual operating current (IΔn). The former
         // multi-point sequence (½×, 1×, 5× IΔn, both half-cycles) came from
-        // Table 3A, which A4 deleted — it is no longer how an RCD is verified.
+        // Table 3A, which A2:2022 deleted — it is no longer how an RCD is verified.
         'Test with an alternating current at rated residual operating current (IΔn)',
         'General non-delay type must disconnect within 300 ms',
         'Use test equipment to BS EN 61557-6 (Regulation 643.1)',

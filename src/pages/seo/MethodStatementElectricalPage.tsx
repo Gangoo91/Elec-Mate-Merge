@@ -264,42 +264,42 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">Method Statements Are Expected For</h3>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 All work on commercial and industrial sites (universally required by principal
                 contractors)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Any notifiable work under CDM 2015 (projects lasting more than 30 working days with
                 more than 20 workers, or exceeding 500 person-days)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Work in managed residential buildings (housing associations, local authorities,
                 managing agents)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Consumer unit changes, rewires, and new installations in domestic properties (best
                 practice)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Any work involving high-risk activities (live working, confined spaces, working at
                 height)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 EV charger installations (OZEV grant compliance and DNO notification requirements)
               </span>
@@ -432,7 +432,7 @@ const sections = [
             return (
               <div key={ms.title} className={`rounded-2xl border p-5 ${ms.tint}`}>
                 <div className="flex items-center gap-2 mb-4">
-                  <Icon className="w-5 h-5 text-yellow-400" />
+                  <Icon className="w-5 h-5 text-elec-yellow" />
                   <h3 className="font-bold text-white text-lg">{ms.title}</h3>
                 </div>
                 <ol className="space-y-2">
@@ -453,7 +453,7 @@ const sections = [
                     <h4 className="font-semibold text-white text-sm mb-2">
                       {ms.checkpointsHeading}
                     </h4>
-                    <ul className="space-y-2 text-white/80 text-sm leading-relaxed">
+                    <ul className="space-y-2 text-white text-sm leading-relaxed">
                       {ms.checkpoints.map((c, i) => (
                         <li key={i} className="flex items-start gap-2">
                           <span className="text-blue-300 mt-0.5 shrink-0">▸</span>
@@ -486,10 +486,10 @@ const sections = [
         <div className="grid sm:grid-cols-2 gap-4 my-6">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h3 className="font-bold text-white text-base mb-3 flex items-center gap-2">
-              <Scale className="w-4 h-4 text-yellow-400" />
+              <Scale className="w-4 h-4 text-elec-yellow" />
               Risk Assessment
             </h3>
-            <ul className="space-y-2 text-white/85 text-sm leading-relaxed">
+            <ul className="space-y-2 text-white text-sm leading-relaxed">
               <li>Answers "what could go wrong, and what will we do about it?"</li>
               <li>Identifies hazards and the people at risk</li>
               <li>Scores risk on a likelihood-times-severity matrix</li>
@@ -499,10 +499,10 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-base mb-3 flex items-center gap-2">
-              <ListOrdered className="w-4 h-4 text-yellow-400" />
+              <ListOrdered className="w-4 h-4 text-elec-yellow" />
               Method Statement
             </h3>
-            <ul className="space-y-2 text-white/85 text-sm leading-relaxed">
+            <ul className="space-y-2 text-white text-sm leading-relaxed">
               <li>Answers "how exactly will we do this work safely?"</li>
               <li>Describes the chronological sequence of operations</li>
               <li>States the safety precautions at each stage</li>
@@ -578,7 +578,7 @@ const sections = [
               className="rounded-2xl bg-white/[0.04] border border-white/10 p-4"
             >
               <h4 className="font-semibold text-white text-sm mb-1">{item.t}</h4>
-              <p className="text-white/80 text-sm leading-relaxed">{item.d}</p>
+              <p className="text-white text-sm leading-relaxed">{item.d}</p>
             </div>
           ))}
         </div>
@@ -768,7 +768,7 @@ export default function MethodStatementElectricalPage() {
       heroTitle={
         <>
           Method Statement for Electrical Work:{' '}
-          <span className="text-yellow-400">Template and Guide</span>
+          <span className="text-elec-yellow">Template and Guide</span>
         </>
       }
       heroSubtitle="The complete guide to writing method statements for electrical work in the UK. What to include, when required, common method statements for rewires, consumer unit changes, testing, and EV charger installations, and how method statements fit with risk assessments to form RAMS packs."
@@ -781,7 +781,7 @@ export default function MethodStatementElectricalPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Generate method statements with AI in seconds"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI-powered method statements, risk assessments, and complete RAMS packs. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for AI-powered method statements, risk assessments, and complete RAMS packs. 7-day free trial, cancel anytime."
     />
   );
 }

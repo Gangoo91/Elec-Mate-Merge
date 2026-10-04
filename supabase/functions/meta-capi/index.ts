@@ -38,7 +38,20 @@ serve(async (req) => {
     }
 
     const payload = await req.json();
-    const events: CapiEvent[] = Array.isArray(payload) ? payload : [payload];
+    // Consent gate (ELE-1812): the browser only calls this after the visitor
+    // accepted marketing cookies, and says so. Anything without the flag is
+    // dropped server-side too, so an old cached client can't bypass it.
+    const consented = (Array.isArray(payload) ? payload[0] : payload)?.ad_tracking_consent === true;
+    if (!consented) {
+      return new Response(JSON.stringify({ skipped: 'no_consent' }), {
+        status: 200,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+    const events: CapiEvent[] = (Array.isArray(payload) ? payload : [payload]).map(
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      ({ ad_tracking_consent, ...ev }: CapiEvent & { ad_tracking_consent?: boolean }) => ev
+    );
 
     if (events.length === 0 || !events[0].event_name || !events[0].event_id) {
       return new Response(JSON.stringify({ error: 'event_name and event_id are required' }), {
@@ -63,7 +76,11 @@ serve(async (req) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (err) {
-    await captureException(err, { functionName: 'meta-capi', requestUrl: req.url, requestMethod: req.method });
+    await captureException(err, {
+      functionName: 'meta-capi',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
     console.error('[meta-capi] Handler error', err);
     return new Response(
       JSON.stringify({ error: err instanceof Error ? err.message : String(err) }),

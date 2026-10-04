@@ -180,7 +180,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tesla Powerwall 2</strong> — 13.5 kWh usable, NMC, AC-coupled, 5 kW
                 continuous power, built-in inverter, app-controlled. The market leader in the UK.
@@ -188,7 +188,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>GivEnergy All-in-One</strong> — 9.5 kWh LFP, hybrid inverter built in,
                 modular (add batteries), popular for retrofits and new systems alike. The GivEnergy
@@ -196,7 +196,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SolarEdge Home Battery</strong> — 9.7 kWh LFP, DC-coupled, requires
                 SolarEdge inverter. Excellent integration with SolarEdge solar systems. Available in
@@ -204,7 +204,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Growatt</strong> — competitively priced LFP units (5–15 kWh), wide inverter
                 compatibility, popular in the installer market for budget-conscious installations.
@@ -212,7 +212,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fox ESS</strong> — LFP chemistry, modular 2.56 kWh to 20+ kWh, hybrid and
                 AC-coupled options. Well-suited to installer-focused businesses and popular in the
@@ -240,7 +240,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>AC coupling</strong> — the battery system has its own inverter/charger and
                 connects to the AC side of the installation. Solar energy is converted DC→AC by the
@@ -251,7 +251,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DC coupling</strong> — the battery connects directly on the DC side between
                 the solar panels and the hybrid inverter. One conversion step (DC→AC) means higher
@@ -335,28 +335,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>5 kWh LFP system (AC-coupled retrofit)</strong> — £3,000 to £4,500
                 installed. Suitable for smaller properties already with solar PV.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>10 kWh system (hybrid DC-coupled, new install)</strong> — £4,500 to £6,500
                 installed. The most popular specification for new UK solar + battery projects.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tesla Powerwall 3 (13.5 kWh, integrated inverter)</strong> — £6,500 to
                 £8,500 installed by Tesla-approved installers. Includes solar inverter function.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>15 kWh modular system (LFP)</strong> — £6,000 to £8,000 installed. Growatt,
                 GivEnergy, or Fox ESS modular stacks. Appropriate for EV households.
@@ -386,7 +386,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G98 (up to 3.68 kW single-phase)</strong> — notification to the DNO within
                 28 days after commissioning. The inverter must have a G98-compliant protection relay
@@ -395,7 +395,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>G99 (over 3.68 kW per phase)</strong> — prior approval required from the DNO
                 before installation. Application submitted with system design documentation,
@@ -404,7 +404,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Export limitation</strong> — where the DNO has concerns about local network
                 capacity, they may require export limitation (typically to zero export or a
@@ -413,7 +413,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smart Export Guarantee (SEG)</strong> — to receive SEG payments for exported
                 electricity, the property must have a smart meter (SMETS2) capable of half-hourly
@@ -482,7 +482,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Certificate on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -517,7 +517,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage your battery storage installations with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site certificates, quoting, and job management."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site certificates, quoting, and job management."
           icon={Battery}
         />
       </>
@@ -543,7 +543,7 @@ export default function BatteryStorageInstallationPage() {
       heroTitle={
         <>
           Home Battery Storage Installation UK:{' '}
-          <span className="text-yellow-400">Energy Storage Guide 2025</span>
+          <span className="text-elec-yellow">Energy Storage Guide 2025</span>
         </>
       }
               noindex={true}
@@ -555,7 +555,7 @@ export default function BatteryStorageInstallationPage() {
       faqHeading="Frequently Asked Questions About Home Battery Storage"
       relatedPages={relatedPages}
       ctaHeading="Certificate Battery Storage Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site MCS commissioning documents, G98 notifications, and electrical certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site MCS commissioning documents, G98 notifications, and electrical certificates. 7-day free trial, cancel anytime."
     />
   );
 }

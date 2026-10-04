@@ -125,7 +125,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
           <div className="flex items-start gap-3">
-            <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h3 className="font-bold text-white mb-2">A4:2026 changes to Chapter 64</h3>
               <p className="text-white text-sm leading-relaxed">
@@ -162,40 +162,40 @@ const sections = [
           <div className="space-y-4">
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
               <div className="flex items-start gap-3">
-                <Ruler className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <Ruler className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <div>
                   <p className="text-white font-bold">
                     SELV and PELV circuits (nominal voltage up to and including 50V)
                   </p>
                   <p className="text-white text-sm mt-1">
-                    Test voltage: <strong className="text-yellow-400">250V DC</strong> | Minimum IR:{' '}
-                    <strong className="text-yellow-400">0.5 MΩ</strong>
+                    Test voltage: <strong className="text-elec-yellow">250V DC</strong> | Minimum IR:{' '}
+                    <strong className="text-elec-yellow">0.5 MΩ</strong>
                   </p>
                 </div>
               </div>
             </div>
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
               <div className="flex items-start gap-3">
-                <Ruler className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <Ruler className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <div>
                   <p className="text-white font-bold">
                     Up to and including 500V (e.g. standard 230V and 400V circuits)
                   </p>
                   <p className="text-white text-sm mt-1">
-                    Test voltage: <strong className="text-yellow-400">500V DC</strong> | Minimum IR:{' '}
-                    <strong className="text-yellow-400">1.0 MΩ</strong>
+                    Test voltage: <strong className="text-elec-yellow">500V DC</strong> | Minimum IR:{' '}
+                    <strong className="text-elec-yellow">1.0 MΩ</strong>
                   </p>
                 </div>
               </div>
             </div>
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
               <div className="flex items-start gap-3">
-                <Ruler className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+                <Ruler className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
                 <div>
                   <p className="text-white font-bold">Above 500V</p>
                   <p className="text-white text-sm mt-1">
-                    Test voltage: <strong className="text-yellow-400">1000V DC</strong> | Minimum
-                    IR: <strong className="text-yellow-400">1.0 MΩ</strong>
+                    Test voltage: <strong className="text-elec-yellow">1000V DC</strong> | Minimum
+                    IR: <strong className="text-elec-yellow">1.0 MΩ</strong>
                   </p>
                 </div>
               </div>
@@ -252,7 +252,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
-            <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h3 className="font-bold text-white mb-2">
                 BS 7671 Reg 643.3.3 — mandatory two-stage procedure
@@ -263,7 +263,7 @@ const sections = [
               </p>
               <ol className="space-y-2 text-white text-sm leading-relaxed list-none">
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 font-bold shrink-0">1.</span>
+                  <span className="text-elec-yellow font-bold shrink-0">1.</span>
                   <span>
                     Test all cables at <strong>500V DC per Table 64</strong> before connecting any
                     equipment that could be damaged or skew the result. This confirms the wiring
@@ -271,7 +271,7 @@ const sections = [
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 font-bold shrink-0">2.</span>
+                  <span className="text-elec-yellow font-bold shrink-0">2.</span>
                   <span>
                     After connecting the equipment, apply a{' '}
                     <strong>250V DC post-connection test</strong> between live conductors (linked
@@ -281,7 +281,7 @@ const sections = [
                   </span>
                 </li>
               </ol>
-              <p className="text-white/70 text-xs mt-3">
+              <p className="text-white text-xs mt-3">
                 Note: manufacturer instructions may still require some equipment to be disconnected
                 during the 250V DC stage — follow manufacturer guidance where it applies (Reg
                 643.3.3 Note).
@@ -337,7 +337,7 @@ const sections = [
         <div className="space-y-4 mt-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <ThermometerSun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ThermometerSun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Temperature</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -351,7 +351,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <ThermometerSun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ThermometerSun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Humidity and Moisture</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -365,7 +365,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Cable Length</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -379,7 +379,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">Connected Equipment</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -409,41 +409,41 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Troubleshooting Process</h3>
           <ul className="space-y-3 text-white leading-relaxed">
             <li className="flex items-start gap-3">
-              <Search className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Step 1:</strong> Confirm all loads and equipment
+                <strong className="text-elec-yellow">Step 1:</strong> Confirm all loads and equipment
                 are disconnected. Re-test. If the reading improves, a connected device was the
                 cause.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Step 2:</strong> Disconnect the circuit at the
+                <strong className="text-elec-yellow">Step 2:</strong> Disconnect the circuit at the
                 midpoint (or at junction boxes). Test each half separately. This halves the problem
                 — the low-reading half contains the fault.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Step 3:</strong> Continue subdividing the faulty
+                <strong className="text-elec-yellow">Step 3:</strong> Continue subdividing the faulty
                 section until you isolate the specific cable run, junction box, or accessory causing
                 the low reading.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Step 4:</strong> Inspect the faulty section
+                <strong className="text-elec-yellow">Step 4:</strong> Inspect the faulty section
                 visually — look for moisture, physical damage, scorching, contamination, or
                 deteriorated insulation.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Step 5:</strong> Rectify the fault (replace
+                <strong className="text-elec-yellow">Step 5:</strong> Rectify the fault (replace
                 damaged cable, dry out moisture, replace contaminated accessories) and re-test the
                 complete circuit.
               </span>
@@ -623,7 +623,7 @@ export default function InsulationResistanceMinimumValuesPage() {
       heroTitle={
         <>
           Insulation Resistance Minimum Values:{' '}
-          <span className="text-yellow-400">BS 7671 Guide</span>
+          <span className="text-elec-yellow">BS 7671 Guide</span>
         </>
       }
       heroSubtitle="Complete guide to insulation resistance minimum values per BS 7671 Table 64 (Reg 643.3.2). The 1 megohm minimum, two-stage test procedure (Reg 643.3.3), test voltage selection by circuit voltage, factors that affect IR readings, and how to troubleshoot low values."
@@ -633,7 +633,7 @@ export default function InsulationResistanceMinimumValuesPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Auto-validate every IR reading on site"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site testing and certification. Instant BS 7671 validation for insulation resistance, Zs, R1+R2, and RCD results. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site testing and certification. Instant BS 7671 validation for insulation resistance, Zs, R1+R2, and RCD results. 7-day free trial, cancel anytime."
     />
   );
 }

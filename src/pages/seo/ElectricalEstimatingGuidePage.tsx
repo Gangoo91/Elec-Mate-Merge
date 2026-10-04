@@ -177,17 +177,17 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-4 flex items-center gap-2">
-            <PoundSterling className="w-4 h-4 text-yellow-400" /> Typical Per-Point Rates (2026)
+            <PoundSterling className="w-4 h-4 text-elec-yellow" /> Typical Per-Point Rates (2026)
           </h4>
           <div className="grid gap-4 sm:grid-cols-3 text-white text-sm">
             <div className="rounded-xl bg-blue-500/10 border border-blue-500/20 p-4">
               <h5 className="font-bold text-white mb-2">London & South East</h5>
               <ul className="space-y-1">
                 <li>
-                  New build: <strong className="text-yellow-400">£100 to £130</strong>
+                  New build: <strong className="text-elec-yellow">£100 to £130</strong>
                 </li>
                 <li>
-                  Existing property: <strong className="text-yellow-400">£120 to £150</strong>
+                  Existing property: <strong className="text-elec-yellow">£120 to £150</strong>
                 </li>
               </ul>
             </div>
@@ -195,10 +195,10 @@ const sections = [
               <h5 className="font-bold text-white mb-2">Midlands & South West</h5>
               <ul className="space-y-1">
                 <li>
-                  New build: <strong className="text-yellow-400">£85 to £110</strong>
+                  New build: <strong className="text-elec-yellow">£85 to £110</strong>
                 </li>
                 <li>
-                  Existing property: <strong className="text-yellow-400">£100 to £130</strong>
+                  Existing property: <strong className="text-elec-yellow">£100 to £130</strong>
                 </li>
               </ul>
             </div>
@@ -206,10 +206,10 @@ const sections = [
               <h5 className="font-bold text-white mb-2">North & Scotland</h5>
               <ul className="space-y-1">
                 <li>
-                  New build: <strong className="text-yellow-400">£80 to £100</strong>
+                  New build: <strong className="text-elec-yellow">£80 to £100</strong>
                 </li>
                 <li>
-                  Existing property: <strong className="text-yellow-400">£90 to £120</strong>
+                  Existing property: <strong className="text-elec-yellow">£90 to £120</strong>
                 </li>
               </ul>
             </div>
@@ -283,57 +283,57 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-4 flex items-center gap-2">
-            <Calculator className="w-4 h-4 text-yellow-400" /> Labour Rate Calculator (Sole Trader,
+            <Calculator className="w-4 h-4 text-elec-yellow" /> Labour Rate Calculator (Sole Trader,
             2026)
           </h4>
           <div className="space-y-3 text-white text-sm">
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Target take-home salary</span>
-              <strong className="text-yellow-400">£40,000</strong>
+              <strong className="text-elec-yellow">£40,000</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Income tax + NI (estimated)</span>
-              <strong className="text-yellow-400">£10,500</strong>
+              <strong className="text-elec-yellow">£10,500</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Van costs (lease, fuel, insurance, maintenance)</span>
-              <strong className="text-yellow-400">£8,000</strong>
+              <strong className="text-elec-yellow">£8,000</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Insurance (PL, PI, tools)</span>
-              <strong className="text-yellow-400">£1,000</strong>
+              <strong className="text-elec-yellow">£1,000</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Competent person scheme + professional body</span>
-              <strong className="text-yellow-400">£500</strong>
+              <strong className="text-elec-yellow">£500</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Tools, equipment, PPE</span>
-              <strong className="text-yellow-400">£2,000</strong>
+              <strong className="text-elec-yellow">£2,000</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Accountant, software, phone, admin</span>
-              <strong className="text-yellow-400">£2,500</strong>
+              <strong className="text-elec-yellow">£2,500</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Training and CPD</span>
-              <strong className="text-yellow-400">£750</strong>
+              <strong className="text-elec-yellow">£750</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Pension contribution (5%)</span>
-              <strong className="text-yellow-400">£2,000</strong>
+              <strong className="text-elec-yellow">£2,000</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2 font-bold">
               <span>Total annual cost</span>
-              <strong className="text-yellow-400">£67,250</strong>
+              <strong className="text-elec-yellow">£67,250</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Billable hours/year (1,300 realistic)</span>
-              <strong className="text-yellow-400">1,300 hours</strong>
+              <strong className="text-elec-yellow">1,300 hours</strong>
             </div>
             <div className="flex justify-between pt-2 text-lg font-bold">
               <span>Required hourly charge-out rate</span>
-              <strong className="text-yellow-400">£51.73/hour</strong>
+              <strong className="text-elec-yellow">£51.73/hour</strong>
             </div>
           </div>
         </div>
@@ -359,27 +359,27 @@ const sections = [
           <div className="space-y-3 text-white text-sm">
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>New build (known specification)</span>
-              <strong className="text-yellow-400">5%</strong>
+              <strong className="text-elec-yellow">5%</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Modern property extension or addition</span>
-              <strong className="text-yellow-400">5% to 8%</strong>
+              <strong className="text-elec-yellow">5% to 8%</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Rewire (post-1970 property)</span>
-              <strong className="text-yellow-400">8% to 10%</strong>
+              <strong className="text-elec-yellow">8% to 10%</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Rewire (pre-1970 property)</span>
-              <strong className="text-yellow-400">10% to 15%</strong>
+              <strong className="text-elec-yellow">10% to 15%</strong>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>Commercial refurbishment</span>
-              <strong className="text-yellow-400">10%</strong>
+              <strong className="text-elec-yellow">10%</strong>
             </div>
             <div className="flex justify-between pb-2">
               <span>Listed building or heritage property</span>
-              <strong className="text-yellow-400">15% to 20%</strong>
+              <strong className="text-elec-yellow">15% to 20%</strong>
             </div>
           </div>
         </div>
@@ -496,7 +496,7 @@ const sections = [
               </div>
               <div className="flex justify-between pt-2 text-lg font-bold">
                 <span>Quote price</span>
-                <strong className="text-yellow-400">£2,219</strong>
+                <strong className="text-elec-yellow">£2,219</strong>
               </div>
             </div>
           </div>
@@ -531,7 +531,7 @@ const sections = [
               </div>
               <div className="flex justify-between pt-2 text-lg font-bold">
                 <span>Quote price</span>
-                <strong className="text-yellow-400">£6,105</strong>
+                <strong className="text-elec-yellow">£6,105</strong>
               </div>
             </div>
           </div>
@@ -551,7 +551,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Use a Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -607,7 +607,7 @@ export default function ElectricalEstimatingGuidePage() {
       heroTitle={
         <>
           Electrical Estimating Guide UK 2026:{' '}
-          <span className="text-yellow-400">Price Every Job for Profit</span>
+          <span className="text-elec-yellow">Price Every Job for Profit</span>
         </>
       }
       heroSubtitle="Per-point pricing, material markup, labour rates, contingency, and the common mistakes that cost electricians thousands. Practical, financially accurate guidance for pricing electrical work in 2026."
@@ -618,7 +618,7 @@ export default function ElectricalEstimatingGuidePage() {
       faqHeading="Frequently Asked Questions About Electrical Estimating"
       relatedPages={relatedPages}
       ctaHeading="Quote Faster, Win More Profitable Work"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional PDF quotes with built-in per-point pricing. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional PDF quotes with built-in per-point pricing. 7-day free trial, cancel anytime."
     />
   );
 }

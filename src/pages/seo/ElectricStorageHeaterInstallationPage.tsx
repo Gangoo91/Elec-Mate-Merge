@@ -132,7 +132,7 @@ const sections = [
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Old models (pre-2000)</strong> — manual input charge dial (estimated by the
                 user each evening), simple damper output control, poor insulation, consistent heat
@@ -174,7 +174,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dimplex Quantum</strong> — the UK market leader for modern storage heaters.
                 Available in 1.5 kW to 3.4 kW input ratings. Features automatic charge control, room
@@ -184,7 +184,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Elnur Ecombi</strong> — the primary competitor to Dimplex Quantum. Available
                 in 1.0 kW to 2.5 kW output ratings. Features a built-in room thermostat, automatic
@@ -194,7 +194,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Heatstore (Glen Dimplex)</strong> — a lower-cost option for budget storage
                 heater replacements where the premium features of Quantum are not required. Suitable
@@ -220,7 +220,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit cable</strong> — 2.5 mm² twin-and-earth (6242Y) is appropriate for
                 storage heaters up to 3.4 kW on a radial circuit with appropriate installation
@@ -232,7 +232,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCB rating</strong> — 10 A for heaters up to 2.0 kW; 16 A for heaters
                 2.0–3.4 kW. Type B MCB is correct for resistive storage heater loads. Each circuit
@@ -240,7 +240,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit capacity</strong> — a whole-house storage heater replacement
                 involving 4–6 heaters may require a new or upgraded consumer unit with sufficient
@@ -249,7 +249,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Local isolation</strong> — each storage heater should have a local means of
                 isolation (double-pole isolator or appropriate switched fused connection unit)
@@ -274,7 +274,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dual-rate meter</strong> — the property must have a dual-rate electricity
                 meter (or SMETS2 smart meter configured for Economy 7/10). The meter has two sets of
@@ -283,7 +283,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Time switch (old meters)</strong> — older Economy 7 meters use a mechanical
                 or electronic time switch to switch the off-peak supply on during cheap hours. The
@@ -292,7 +292,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Off-peak consumer unit</strong> — storage heater circuits may be in a
                 separate consumer unit (often labelled "off-peak" or "storage heaters") fed from the
@@ -301,7 +301,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hot water immersion</strong> — Economy 7/10 properties often also have an
                 immersion heater on the off-peak supply. This is wired in the same way as storage
@@ -373,7 +373,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Heater unit only (supply)</strong> — Dimplex Quantum 2.55 kW: £350–£450;
                 Elnur Ecombi 2.0 kW output: £300–£380. Prices vary by distributor and are subject to
@@ -381,7 +381,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Installation (per heater, existing circuit)</strong> — £150–£250 per heater
                 to remove old unit, install new heater, connect to existing dedicated circuit, and
@@ -389,7 +389,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Installation (per heater, new circuit)</strong> — £250–£450 per heater when
                 a new dedicated radial circuit must be run from the consumer unit. Longer cable
@@ -397,7 +397,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Whole-house replacement (4–6 heaters)</strong> — £2,500–£5,500 installed for
                 a typical 3–4 bedroom all-electric property, including new consumer unit if required
@@ -477,7 +477,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Certificate on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -512,7 +512,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage storage heater installations with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site Minor Works Certificates, EIC certificates, and professional quoting."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site Minor Works Certificates, EIC certificates, and professional quoting."
           icon={Zap}
         />
       </>
@@ -538,7 +538,7 @@ export default function ElectricStorageHeaterInstallationPage() {
       heroTitle={
         <>
           Electric Storage Heater Installation UK:{' '}
-          <span className="text-yellow-400">Modern Storage Heaters</span>
+          <span className="text-elec-yellow">Modern Storage Heaters</span>
         </>
       }
       heroSubtitle="A complete guide to electric storage heater installation in the UK — modern models versus old, Dimplex Quantum and Elnur Ecombi, dedicated circuit requirements, Economy 7 and Economy 10 dual-rate wiring, thermostat and charge control connections, and 2025 replacement costs."
@@ -549,7 +549,7 @@ export default function ElectricStorageHeaterInstallationPage() {
       faqHeading="Frequently Asked Questions About Storage Heater Installation"
       relatedPages={relatedPages}
       ctaHeading="Certificate Storage Heater Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for Minor Works Certificates, EIC certificates, and professional quoting. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for Minor Works Certificates, EIC certificates, and professional quoting. 7-day free trial, cancel anytime."
     />
   );
 }

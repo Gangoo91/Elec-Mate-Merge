@@ -37,7 +37,7 @@ const subsections = [
     number: '1.4',
     title: 'CDM 2015 framework — your duties as Worker',
     description:
-      'Client, Principal Designer, Designer, Principal Contractor, Contractor, Worker — the CDM 2015 cascade and what Reg 15 puts on you personally. The framework that makes Subs 1.1, 1.2 and 1.3 make sense.',
+      'Client, Principal Designer, Designer, Principal Contractor, Contractor, Worker — the CDM 2015 cascade and what Reg 8 puts on you personally. The framework that makes Subs 1.1, 1.2 and 1.3 make sense.',
     icon: ShieldCheck,
     href: '1-4',
   },
@@ -76,7 +76,7 @@ export default function Section1() {
             Subs 1.1 to 1.3 cover the three core ACs from Unit 210 LO1 — the
             site management team, the trades reporting to them, and the
             visitors who turn up. Sub 1.4 zooms out to the CDM 2015 framework
-            that wraps it all and what Reg 15 puts on you personally as a
+            that wraps it all and what Reg 8 puts on you personally as a
             Worker. Sub 1.5 covers the apprenticeship triangle (College
             Tutor, Workplace Mentor, Employer) and the wider UK trade-body
             landscape (ECA, SELECT, JIB, schemes, industry charities) that

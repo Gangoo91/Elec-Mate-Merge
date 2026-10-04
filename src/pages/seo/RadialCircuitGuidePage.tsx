@@ -139,7 +139,7 @@ const sections = [
       <>
         <a
           href="#calculator"
-          className="inline-flex h-11 items-center rounded-full border border-elec-yellow/40 bg-elec-yellow/10 px-5 text-[13px] font-semibold text-white touch-manipulation transition-colors hover:bg-elec-yellow/20"
+          className="inline-flex h-11 items-center rounded-full border border-elec-yellow/40 bg-white/[0.06] px-5 text-[13px] font-semibold text-white touch-manipulation transition-colors hover:bg-white/[0.06]"
         >
           Jump to the free cable sizing calculator
         </a>
@@ -649,7 +649,7 @@ const sections = [
               If the circuit is RCD-protected, test using an alternating current test at the rated
               residual operating current (IΔn — 30mA for domestic circuits), as required by BS
               7671:2018+A4:2026 Regulation 643.8. Note: the previous Appendix 3 Table 3A
-              time/current criteria (300ms at 1× IΔn, 40ms at 5× IΔn) have been deleted in A4:2026 —
+              time/current criteria (300ms at 1× IΔn, 40ms at 5× IΔn) have been deleted in A2:2022 —
               the revised requirement is an AC test at IΔn regardless of RCD type (AC, A, F, B).
             </li>
           </ol>
@@ -743,7 +743,7 @@ export default function RadialCircuitGuidePage() {
       heroTitle={
         <>
           Radial Circuit Explained:{' '}
-          <span className="text-yellow-400">When to Use Radial vs Ring</span>
+          <span className="text-elec-yellow">When to Use Radial vs Ring</span>
         </>
       }
       heroSubtitle="Radial circuits are the simplest, most reliable circuit configuration in electrical installations. This guide covers how they work, when to choose a radial over a ring circuit, cable sizing from BS 7671, circuit protection requirements, and testing procedures for UK electricians."
@@ -759,7 +759,7 @@ export default function RadialCircuitGuidePage() {
       faqHeading="Frequently Asked Questions About Radial Circuits"
       relatedPages={relatedPages}
       ctaHeading="Design Radial Circuits Faster with Elec-Mate"
-      ctaSubheading="Cable sizing calculator, voltage drop checker, AI circuit designer, and digital certificates — all on your phone. Join 1,600+ UK electricians using Elec-Mate on site. 7-day free trial."
+      ctaSubheading="Cable sizing calculator, voltage drop checker, AI circuit designer, and digital certificates — all on your phone. Join 2,100+ UK electricians using Elec-Mate on site. 7-day free trial."
     />
   );
 }

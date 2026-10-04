@@ -141,7 +141,7 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-3">Distribution Strategies</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Perimeter distribution:</strong> Dado trunking or skirting trunking around
                 the perimeter walls feeds desks near walls. Simple and cost-effective for cellular
@@ -149,7 +149,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Underfloor distribution:</strong> Raised access floors allow power and data
                 cables to be routed under the floor to floor boxes positioned anywhere in the space.
@@ -158,7 +158,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Overhead busbar trunking:</strong> Power distributed via busbar trunking
                 suspended from the ceiling structure. Tap-off boxes can be added or moved to suit
@@ -195,7 +195,7 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-3">Floor Boxes</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Recessed into the floor — either a solid concrete slab with conduit routes cast in,
                 or a raised access floor. Floor boxes typically contain two to four double sockets
@@ -204,7 +204,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Position floor boxes based on the desk layout drawing — typically one box per two
                 workstations, at 1,200mm to 1,500mm centres for standard 1,400mm desks. Feed from a
@@ -217,7 +217,7 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-3">Dado and Skirting Trunking</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Dado trunking mounts at desk height (approximately 900mm to 1,100mm from floor) and
                 contains separate compartments for power, data, and sometimes voice circuits.
@@ -226,7 +226,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Outlets can be spaced at any interval along the trunking. Minimum outlet spacing for
                 a busy perimeter run is 1,200mm to ensure desk users can reach power without
@@ -239,7 +239,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable segregation:</strong> BS 7671 Section 528 requires power cables to be
                 segregated from data cables by a partition, separate trunking compartment, or
@@ -265,7 +265,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated sub-distribution board:</strong> The server room should have its
                 own consumer unit or distribution board, fed from the main distribution board via a
@@ -274,7 +274,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>UPS provision:</strong> An uninterruptible power supply (UPS) protects
                 critical IT equipment from power interruption and quality issues (voltage sags,
@@ -283,7 +283,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cooling supply:</strong> Dedicated circuit for precision air conditioning
                 units. Cooling typically accounts for 30% to 50% of total server room electrical
@@ -291,7 +291,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable management:</strong> Overhead cable ladders or under-floor cable runs
                 for power and data. Maintain segregation between power and data cables per BS 7671
@@ -317,7 +317,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HSE risk-based approach:</strong> The Health and Safety Executive recommends
                 that PAT frequency be determined by risk assessment. Low-risk environments (offices)
@@ -327,7 +327,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Visual inspection:</strong> Every PAT test should begin with a visual check
                 of the plug, cable, and appliance for physical damage, burns, ingress of liquid, or
@@ -336,7 +336,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Record keeping:</strong> A PAT register recording appliance ID, test date,
                 tester name, and pass/fail result is essential evidence of compliance. Failed
@@ -363,7 +363,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Where required:</strong> All escape routes, open areas exceeding 60m\u00b2,
                 toilet facilities for disabled persons, areas of high risk (switchrooms, plant
@@ -372,7 +372,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Illuminance requirements:</strong> Escape routes: minimum 1 lux at floor
                 level across the full width; open areas: minimum 0.5 lux horizontal throughout.
@@ -381,7 +381,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Duration:</strong> Standard installations require a minimum three-hour
                 duration. High-risk areas may require longer. The rated duration must be
@@ -411,7 +411,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Five-year EICR cycle:</strong> BS 7671 and IET Guidance Note 3 recommend a
                 maximum five-year EICR interval for commercial premises, or on change of occupancy
@@ -419,7 +419,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Change of occupancy:</strong> When a new tenant takes occupation of an
                 office, an EICR should be obtained regardless of when the previous one was carried
@@ -427,7 +427,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C1 and C2 observations:</strong> Danger present (C1) and potentially
                 dangerous (C2) observations must be remedied before the EICR can be marked as
@@ -457,7 +457,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <SEOAppBridge
                   href="/eic-certificate"
@@ -468,7 +468,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <SEOAppBridge href="/tools/eicr-certificate" label="EICR Certificate" /> — complete
                 commercial EICRs on site with AI board scanning, C1/C2/C3 observation code lookup,
@@ -500,7 +500,7 @@ export default function OfficeElectricalRequirementsPage() {
       heroTitle={
         <>
           Office Electrical Requirements{' '}
-          <span className="text-yellow-400">— Commercial Fit-Out Guide</span>
+          <span className="text-elec-yellow">— Commercial Fit-Out Guide</span>
         </>
       }
       heroSubtitle="Open plan distribution, floor boxes, server room power, PAT testing, emergency lighting under BS 5266, Workplace Regulations 1992, and five-year EICR cycles for commercial premises."

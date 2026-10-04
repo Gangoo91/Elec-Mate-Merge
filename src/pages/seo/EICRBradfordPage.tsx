@@ -200,7 +200,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Before a new tenancy:</strong> A valid EICR must be provided to new tenants
                 before they take up occupation. If no current EICR exists, the inspection must be
@@ -208,7 +208,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Existing tenants:</strong> A copy must be provided to existing tenants
                 within 28 days of the inspection being carried out. All tenants in the property must
@@ -216,14 +216,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Council supply:</strong> Bradford Council can request a copy and the
                 landlord must provide it within seven days.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Remedial work:</strong> Where the EICR is Unsatisfactory (contains C1 or C2
                 observations), all required remedial work must be completed within 28 days. Written
@@ -253,7 +253,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="flex flex-col gap-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Civil penalties up to £30,000:</strong> Each breach of the regulations
                 attracts a separate penalty. Bradford Council has the power to impose these
@@ -262,7 +262,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Remedial notices:</strong> Where a landlord fails to carry out required
                 remedial work, the council can serve a remedial notice. If the notice is ignored,
@@ -271,7 +271,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Section 21 restriction:</strong> A landlord in Bradford cannot serve a valid
                 Section 21 notice without having first provided the current EICR to the tenant. This
@@ -280,7 +280,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HMO enforcement:</strong> Bradford has a significant HMO market,
                 particularly around the University of Bradford. The council enforces HMO licensing
@@ -306,14 +306,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>One-bedroom flat</strong> — £150 to £190. Modern purpose-built flats in the
                 city centre or Manningham area typically fall in this range.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Two-bedroom property</strong> — £180 to £260. Victorian terraced houses in
                 areas such as Great Horton, Thornton Road corridor, or Laisterdyke may be at the
@@ -321,14 +321,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom house</strong> — £220 to £300. Semi-detached properties in
                 Bingley, Shipley, or Keighley typically fall here.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HMO or large property</strong> — £300 to £500+. Student HMOs around the
                 University of Bradford with multiple circuits and fire alarm systems cost more due
@@ -358,7 +358,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mandatory HMO licensing:</strong> Applies to properties with five or more
                 occupants in two or more households. A valid EICR is a mandatory condition of the
@@ -366,7 +366,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Shorter inspection intervals:</strong> Bradford Council HMO licence
                 conditions may require EICRs more frequently than the standard five years. Always
@@ -374,7 +374,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire alarm inspection:</strong> The fire alarm system installed in Bradford
                 HMOs forms part of the fixed electrical installation and is within the scope of the
@@ -383,7 +383,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional licensing:</strong> Some areas of Bradford may be subject to
                 additional HMO licensing schemes that cover smaller HMOs. Check with Bradford
@@ -408,7 +408,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No RCD protection:</strong> Older consumer units in Bradford's terraced
                 housing stock frequently lack RCD protection on socket circuits. This is one of the
@@ -416,7 +416,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Aged wiring systems:</strong> Rubber-insulated wiring from the pre-1960s and
                 early PVC wiring that has degraded over decades are common in Bradford's older
@@ -424,7 +424,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inadequate main bonding:</strong> Missing or undersized protective bonding
                 to gas and water services is frequently found in Bradford properties, particularly
@@ -432,7 +432,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Non-standard DIY wiring:</strong> In Bradford's older rental stock,
                 unskilled additions by previous occupants or landlords are a recurring finding.
@@ -457,7 +457,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Verify scheme membership:</strong> Search NICEIC, NAPIT, or ELECSA registers
                 by postcode for Bradford-based approved contractors. Registration ensures the
@@ -466,7 +466,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check qualifications:</strong> The inspector should hold City and Guilds
                 2391 (Inspection and Testing) or equivalent, plus a current 18th Edition BS 7671
@@ -475,7 +475,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Get multiple quotes:</strong> Two or three quotes allow you to compare
                 pricing and approach. Be cautious of very low quotes — a proper EICR on a Bradford
@@ -483,7 +483,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ask about experience with older properties:</strong> Bradford's housing
                 stock is predominantly Victorian and Edwardian. An electrician familiar with the
@@ -510,7 +510,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete EICRs On Site in Bradford</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -545,7 +545,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your EICR business in Bradford with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate to complete EICRs on site, scan boards with AI, and export instant PDFs."
+          description="Join 2,100+ UK electricians using Elec-Mate to complete EICRs on site, scan boards with AI, and export instant PDFs."
           icon={FileCheck2}
         />
       </>
@@ -571,7 +571,7 @@ export default function EICRBradfordPage() {
       heroTitle={
         <>
           EICR Bradford:{' '}
-          <span className="text-yellow-400">Electrical Installation Condition Report</span>
+          <span className="text-elec-yellow">Electrical Installation Condition Report</span>
         </>
       }
       heroSubtitle="Everything Bradford landlords and homeowners need to know about EICR — legal requirements under the 2020 Regulations, Bradford Council enforcement, inspection costs, HMO obligations, common findings in Bradford's Victorian housing stock, and finding a qualified electrician."
@@ -582,7 +582,7 @@ export default function EICRBradfordPage() {
       faqHeading="Frequently Asked Questions About EICR in Bradford"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs On Site — Anywhere in West Yorkshire"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

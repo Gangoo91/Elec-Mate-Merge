@@ -206,7 +206,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Typical catering equipment loads</strong> — a combination oven (Rational,
                 Houno, or similar) draws 10–15kW. A commercial fryer draws 6–10kW. A commercial
@@ -216,7 +216,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DNO application</strong> — upgrading from single-phase to 3-phase requires a
                 Distribution Network Operator (DNO) application. UK Power Networks (London), Western
@@ -227,7 +227,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main distribution board</strong> — a commercial kitchen will typically
                 require a 3-phase 100A to 200A TPN (Three Pole and Neutral) distribution board, with
@@ -239,7 +239,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable containment</strong> — kitchen environments require robust cable
                 containment. Stainless steel or galvanised steel conduit and trunking is preferred
@@ -315,7 +315,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Escape route lighting</strong> — minimum 1 lux across the full width of escape
                 routes (corridors, stairways). Maintained or non-maintained fittings are both
@@ -324,7 +324,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Open area (anti-panic) lighting</strong> — dining areas over 60m² must
                 provide 0.5 lux anti-panic illuminance to allow patrons to reach an escape route
@@ -333,7 +333,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Kitchen emergency lighting</strong> — the kitchen must have emergency
                 lighting to allow safe shutdown of gas and electrical equipment. A minimum of 10 lux
@@ -342,7 +342,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test and maintenance</strong> — self-test emergency luminaires (compliant
                 with BS EN 62034) simplify the monthly and annual testing requirements. Standard
@@ -469,7 +469,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3-phase main distribution board (100–200A TPN)</strong> — £2,500–£8,000.
                 Includes board, incomer, RCDs/MCBs, and containment to service positions. Full
@@ -477,7 +477,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Kitchen appliance circuits (per appliance)</strong> — £150–£400 per circuit.
                 Combination oven circuits (3-phase, 32–63A) at the top end; single-phase circuits
@@ -485,7 +485,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Gas interlock system (electrical works)</strong> — £500–£1,200. Includes
                 pressure switches, solenoid valve wiring, airflow sensor, control panel, and
@@ -493,34 +493,34 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire suppression interlocks</strong> — £600–£1,500. Shunt trips, solenoid
                 interlocking, extract fan shutdown wiring.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency lighting to BS 5266-1</strong> — £1,200–£4,500. Based on floor
                 area and fitting specification.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>General lighting and power (front of house)</strong> — £2,000–£6,000.
                 Feature lighting, socket outlets, USB charging points, POS positions.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CCTV electrical supply</strong> — £300–£700.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Total new restaurant fit-out</strong> — <strong>£8,000–£25,000</strong>. A
                 40-cover café with basic catering kitchen: £8,000–£12,000. A 100-cover restaurant
@@ -568,7 +568,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EIC for new work</strong> — every new circuit, distribution board change, or
                 significant alteration must be accompanied by an EIC or Minor Works Certificate as
@@ -576,7 +576,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR frequency</strong> — BS 7671 Reg 652.1 requires the frequency of
                 periodic inspection and testing to be determined having regard to the type of
@@ -591,7 +591,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>AFDDs (Reg 421.1.7)</strong> — BS 7671:2018+A4:2026 Reg 421.1.7, introduced
                 by Amendment 4, recommends the installation of arc fault detection devices (AFDDs)
@@ -604,7 +604,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency lighting log book</strong> — BS 5266-1 requires a log book to be
                 maintained recording all monthly tests, annual tests, and any remedial actions. This
@@ -632,7 +632,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Quote and Certificate on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -652,7 +652,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage restaurant contracts with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate to quote, certificate, and manage commercial fit-out projects."
+          description="Join 2,100+ UK electricians using Elec-Mate to quote, certificate, and manage commercial fit-out projects."
           icon={FileCheck2}
         />
       </>
@@ -678,7 +678,7 @@ export default function RestaurantElectricalCostPage() {
       heroTitle={
         <>
           Restaurant Electrical Installation Cost UK 2025/2026:{' '}
-          <span className="text-yellow-400">Catering Electrical Guide</span>
+          <span className="text-elec-yellow">Catering Electrical Guide</span>
         </>
       }
       heroSubtitle="Complete cost guide for UK restaurant and commercial catering kitchen electrical installations. 3-phase supply, gas interlocks, fire suppression electrical interlocking, emergency lighting to BS 5266-1, CCTV, and compliance. Typical new fit-out £8,000–£25,000."
@@ -689,7 +689,7 @@ export default function RestaurantElectricalCostPage() {
       faqHeading="Frequently Asked Questions: Restaurant Electrical Installation Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certificate Restaurant Installations on Site"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for commercial quotes, EIC completion, and emergency lighting certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for commercial quotes, EIC completion, and emergency lighting certification. 7-day free trial, cancel anytime."
     />
   );
 }

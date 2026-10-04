@@ -67,7 +67,7 @@ const checks = [
     ],
     correctIndex: 1,
     explanation:
-      'AFDDs spot the high-frequency signature of an arc — a loose terminal cooking away, or insulation breaking down. An MCB only sees overcurrent; an RCD only sees imbalance. Neither catches a series arc. A4:2026 mandates AFDDs in HMOs and high-rise dwellings.',
+      'AFDDs spot the high-frequency signature of an arc — a loose terminal cooking away, or insulation breaking down. An MCB only sees overcurrent; an RCD only sees imbalance. Neither catches a series arc. Since A2:2022, Reg 421.1.7 requires AFDDs on socket circuits in HRRBs, HMOs, purpose-built student accommodation and care homes.',
   },
 ];
 
@@ -155,16 +155,16 @@ const quizQuestions = [
   },
   {
     id: 7,
-    question: 'Where does A4:2026 require AFDDs?',
+    question: 'Where does BS 7671 Reg 421.1.7 require AFDDs?',
     options: [
       'On every final circuit in all new domestic installations without exception',
       'Only on three-phase distribution circuits in industrial premises',
-      'Single-phase socket-outlet circuits up to 32 A in HMOs and high-rise residential buildings (and recommended elsewhere)',
+      'Single-phase socket-outlet circuits up to 32 A in HRRBs, HMOs, purpose-built student accommodation and care homes (recommended elsewhere)',
       'On lighting circuits in bathrooms and other special locations only',
     ],
     correctAnswer: 2,
     explanation:
-      'A4:2026 makes AFDDs mandatory for socket-outlet final circuits ≤ 32 A in HMOs and HRRBs. They’re recommended elsewhere (and increasingly being specified). Note: AFDDs are NOT permitted in medical group 0/1/2 locations.',
+      'Since A2:2022, Reg 421.1.7 makes AFDDs mandatory for single-phase socket-outlet final circuits ≤ 32 A in HRRBs, HMOs, purpose-built student accommodation and care homes. They’re recommended elsewhere (and increasingly being specified). Note: AFDDs are NOT permitted in medical group 0/1/2 locations.',
   },
   {
     id: 8,
@@ -670,7 +670,7 @@ export default function Sub2() {
             'PVC dies at 70°C continuous. The cable damage is from heat, not from current itself.',
             'Reg 433.1.1 limits the device operating current to 1.45 × the cable’s Iz — it’s why MCB rating isn’t a free choice.',
             'Series arcs (loose terminations) are the silent fire-starter. MCBs and RCDs miss them — only AFDDs catch them.',
-            'A4:2026 makes AFDDs mandatory for socket circuits ≤ 32 A in HMOs and high-rise residential buildings.',
+            'Reg 421.1.7 makes AFDDs mandatory for socket circuits ≤ 32 A in HRRBs, HMOs, purpose-built student accommodation and care homes (since A2:2022).',
             'Every protective device must have a breaking capacity at or above the prospective fault current at its installed location.',
           ]}
         />

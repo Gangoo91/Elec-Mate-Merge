@@ -183,7 +183,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Grade D:</strong> One or more mains-powered detectors, each with a standby
                 power supply (rechargeable battery), either hard-wired or wirelessly interconnected.
@@ -191,14 +191,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Category LD1:</strong> Detectors in all rooms, hallways, and landings except
                 bathrooms and WCs. This is the highest level of coverage for life safety.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Category LD2:</strong> Detectors in escape routes (hallways and landings),
                 rooms opening onto escape routes, and high-risk rooms (kitchen, living room). This
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Category LD3:</strong> Detectors in escape routes only — hallways and
                 landings. This is the minimum for Approved Document B compliance in new-build
@@ -238,7 +238,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hard-wired interconnection:</strong> A dedicated interconnect wire links all
                 detectors in a daisy-chain configuration. Most systems use a three-core and earth
@@ -248,7 +248,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Two-wire interconnection:</strong> Some modern detector ranges use a
                 two-wire system where the interconnect signal is carried on the mains supply wires
@@ -258,7 +258,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wireless interconnection:</strong> Radio-frequency linked detectors that
                 communicate wirelessly when one is triggered. Ideal for retrofit installations where
@@ -300,7 +300,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rechargeable lithium:</strong> Most modern mains-powered detectors use a
                 sealed rechargeable lithium battery that charges from the mains supply and provides
@@ -309,7 +309,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Replaceable 9V or AA backup:</strong> Some older detector models use a
                 replaceable 9V alkaline or AA lithium battery as the standby supply. These must be
@@ -318,7 +318,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Battery className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standby duration:</strong> BS 5839-6 requires a minimum of 72 hours of
                 standby operation on battery power. The detector must be able to sound the alarm for
@@ -351,7 +351,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Circulation spaces:</strong> Install a smoke detector (optical or
                 ionisation) on each floor in the hallway and landing. The detector should be
@@ -360,7 +360,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Kitchen:</strong> Install a heat detector (not a smoke detector) in the
                 kitchen. Heat detectors respond to temperature rise rather than smoke particles,
@@ -369,7 +369,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bedrooms:</strong> For LD1 and LD2 coverage, install smoke detectors in
                 bedrooms and living rooms. For LD3 (minimum coverage), bedrooms are not required but
@@ -377,7 +377,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Open-plan areas:</strong> In open-plan kitchen/living spaces, use a heat
                 detector in the kitchen area and a smoke detector in the living area. The boundary
@@ -385,7 +385,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Distance from bedrooms:</strong> BS 5839-6 recommends that no bedroom door
                 should be more than 7.5 metres from the nearest smoke detector. In a typical
@@ -465,7 +465,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit verification:</strong> Test the smoke detection circuit as part of
                 the standard{' '}
@@ -478,7 +478,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mains supply check:</strong> Confirm each detector is receiving mains power
                 by checking the mains indicator LED (usually a steady green light). Verify that the
@@ -486,7 +486,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Functional test:</strong> Press the test button on each detector
                 individually. Verify that the detector sounds its own alarm and that all other
@@ -495,7 +495,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Battery backup test:</strong> Switch off the mains supply to the detection
                 circuit at the consumer unit. Confirm each detector continues to operate on battery
@@ -528,7 +528,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Quote the Full System</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -577,7 +577,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Wire, test, certify, and invoice smoke detectors"
-          description="From quoting to certification to invoicing — do the entire smoke detector job on your phone. Join 1,600+ UK electricians using Elec-Mate. 7-day free trial."
+          description="From quoting to certification to invoicing — do the entire smoke detector job on your phone. Join 2,100+ UK electricians using Elec-Mate. 7-day free trial."
           icon={Bell}
         />
       </>
@@ -603,7 +603,7 @@ export default function SmokeDetectorWiringPage() {
       heroTitle={
         <>
           Smoke Detector Wiring:{' '}
-          <span className="text-yellow-400">Mains Interlinked Systems for UK Dwellings</span>
+          <span className="text-elec-yellow">Mains Interlinked Systems for UK Dwellings</span>
         </>
       }
       heroSubtitle="Every new-build and most material alterations require mains-powered, interlinked smoke detection to BS 5839-6. This guide covers Grade D systems, interconnection wiring, battery backup, positioning rules, Part B compliance, and the testing and certification you need to complete."
@@ -614,7 +614,7 @@ export default function SmokeDetectorWiringPage() {
       faqHeading="Frequently Asked Questions About Smoke Detector Wiring"
       relatedPages={relatedPages}
       ctaHeading="Certificate Smoke Detector Installations on Your Phone"
-      ctaSubheading="EIC and Minor Works certificates, AI observation coding, quoting, and invoicing — all in one app. Join 1,600+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
+      ctaSubheading="EIC and Minor Works certificates, AI observation coding, quoting, and invoicing — all in one app. Join 2,100+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
     />
   );
 }

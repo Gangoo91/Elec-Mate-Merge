@@ -168,7 +168,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Newly qualified (0–2 years)</strong> — £30,000 to £34,000. Entry-level
                 positions with smaller West Midlands contractors on residential or light commercial
@@ -176,21 +176,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Experienced electrician (3–7 years)</strong> — £34,000 to £44,000. On larger
                 commercial, industrial, or infrastructure projects in the West Midlands.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Senior electrician / working foreman</strong> — £44,000 to £50,000. Leading
                 small teams on commercial or infrastructure projects.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Contracts supervisor / project manager</strong> — £50,000 to £65,000.
                 Commercial and technical management of electrical contract scopes.
@@ -254,7 +254,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Automotive and manufacturing (JLR, GKN, tier-1 suppliers)</strong> —
                 Industrial maintenance electricians with machine safety and PLC familiarity earn
@@ -263,7 +263,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HS2 and transport infrastructure</strong> — Rail-qualified electricians with
                 PTS certification earn £350 to £500+ per day on HS2 and associated infrastructure
@@ -271,7 +271,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NHS and healthcare</strong> — The large NHS trust capital programmes
                 (University Hospitals Birmingham, BCHC, Sandwell and West Birmingham) provide
@@ -280,7 +280,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Retail and leisure fit-out</strong> — Birmingham's Bullring, Grand Central,
                 and Resorts World provide consistent retail and hospitality fit-out work for
@@ -357,7 +357,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <GraduationCap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EICR and landlord compliance</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -413,7 +413,7 @@ export default function ElectricianSalaryBirminghamPage() {
       heroTitle={
         <>
           Electrician Salary Birmingham:{' '}
-          <span className="text-yellow-400">Realistic 2026 Earnings Guide</span>
+          <span className="text-elec-yellow">Realistic 2026 Earnings Guide</span>
         </>
       }
       heroSubtitle="What do electricians actually earn in Birmingham and the West Midlands in 2026? This guide covers employed salaries, self-employed day rates, the top-paying sectors, and how to grow your income in the region."

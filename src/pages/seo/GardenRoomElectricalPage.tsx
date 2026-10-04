@@ -193,7 +193,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671 voltage drop limits</strong> — under Section 525 of BS 7671, the
                 voltage drop from the origin of the installation (the main consumer unit) to any
@@ -202,7 +202,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Practical cable sizes by distance</strong> — for a typical garden room with
                 a 32A sub-board feed (lighting, sockets, heating), the minimum cable sizes are
@@ -212,7 +212,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth fault loop impedance</strong> — as well as voltage drop, the cable
                 length affects the earth fault loop impedance. For longer runs, the measured Zs may
@@ -341,7 +341,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insulation and heating load</strong> — a well-insulated garden room (75mm
                 wall insulation, 100mm roof insulation, double-glazed windows) may need only 1kW of
@@ -352,7 +352,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCBO consumer unit — the best choice</strong> — a metal consumer unit with
                 individual RCBOs for each circuit is the optimal solution for a garden room. Each
@@ -363,7 +363,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP rating for the consumer unit position</strong> — if the consumer unit is
                 positioned where it could be exposed to moisture (near a door, in an unheated area,
@@ -390,7 +390,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person scheme</strong> — use a NICEIC, NAPIT, or ELECSA registered
                 electrician to self-certify the work. They notify the scheme on completion, and you
@@ -399,7 +399,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EIC on completion</strong> — an Electrical Installation Certificate (EIC)
                 covering the entire installation — SWA cable, sub-board, all circuits, earthing
@@ -438,7 +438,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Complete the EIC With Earth Test Results
@@ -473,7 +473,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage garden room electrical jobs with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for EIC certificates, quoting, and job management. Complete more jobs with less paperwork. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for EIC certificates, quoting, and job management. Complete more jobs with less paperwork. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -499,7 +499,7 @@ export default function GardenRoomElectricalPage() {
       heroTitle={
         <>
           Garden Room Electrical Installation:{' '}
-          <span className="text-yellow-400">Home Office Wiring Guide UK</span>
+          <span className="text-elec-yellow">Home Office Wiring Guide UK</span>
         </>
       }
       heroSubtitle="Everything you need to know about wiring a garden room or home office — dedicated circuit vs sub-board, cable sizing for long runs, EV charging integration, internet and data infrastructure, insulation considerations, consumer unit options, and Part P compliance."
@@ -510,7 +510,7 @@ export default function GardenRoomElectricalPage() {
       faqHeading="Frequently Asked Questions About Garden Room Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Complete Garden Room EICs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, quoting, and job management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion, quoting, and job management. 7-day free trial, cancel anytime."
     />
   );
 }

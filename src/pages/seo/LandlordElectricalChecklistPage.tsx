@@ -172,7 +172,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inspect every 5 years</strong> — have the electrical installation inspected
                 and tested by a qualified person at intervals of no more than 5 years (or more
@@ -180,7 +180,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Provide to tenants within 28 days</strong> — supply a copy of the EICR to
                 existing tenants within 28 days of the inspection, and to new tenants before they
@@ -188,7 +188,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Remediate within 28 days</strong> — if the EICR identifies C1 or C2
                 observations, carry out remedial work within 28 days (or sooner if specified).
@@ -196,7 +196,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Provide to the local authority on request</strong> — supply a copy of the
                 EICR to the local housing authority within 7 days of a request.
@@ -225,7 +225,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>At least one smoke alarm on each storey</strong> — every storey that
                 contains a habitable room must have at least one smoke alarm. A "habitable room"
@@ -234,7 +234,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test at start of each tenancy</strong> — the landlord must check that each
                 alarm is in working order on the day a new tenancy begins. After that, the tenant is
@@ -242,7 +242,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Battery or mains powered</strong> — there is no requirement for mains-wired
                 alarms under these regulations, but mains-wired alarms with battery backup are
@@ -253,7 +253,7 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <p className="text-white text-sm leading-relaxed">
               <strong>Best practice:</strong> While the regulations allow battery-only alarms,
               electricians should recommend mains-wired, interlinked smoke alarms with battery
@@ -274,7 +274,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Required in rooms with fixed combustion appliances</strong> — this includes
                 gas boilers, gas fires, wood-burning stoves, open fires, and oil-fired boilers. Gas
@@ -282,7 +282,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Positioned correctly</strong> — follow the manufacturer instructions.
                 Typically at ceiling level or high on a wall, at least 1m away from the combustion
@@ -290,7 +290,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tested at each tenancy start</strong> — same obligation as smoke alarms. The
                 landlord must confirm the CO alarm is working at the start of each new tenancy.
@@ -313,7 +313,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Landlord-supplied appliances</strong> — if you provide appliances as part of
                 the tenancy (cooker, washing machine, fridge-freezer, microwave, kettle), you have a
@@ -322,7 +322,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Furnished properties</strong> — furnished lets with multiple appliances
                 (lamps, heaters, extension leads) have a higher risk and PAT testing is strongly
@@ -330,7 +330,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HMOs</strong> — for licensed HMOs, the licensing conditions may include a
                 requirement for PAT testing of landlord-supplied appliances. Check with your local
@@ -354,27 +354,27 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Current and previous EICR reports (keep for at least 10 years)</span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Certificates for remedial work carried out following EICR observations</span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Records of smoke alarm and CO alarm installation and testing dates</span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>PAT testing records (if appliances are supplied)</span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Copies of EICR and certificates supplied to tenants (with dates)</span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Correspondence with tenants about electrical safety issues</span>
             </li>
           </ul>
@@ -438,7 +438,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EICR on Your Phone</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -495,7 +495,7 @@ export default function LandlordElectricalChecklistPage() {
       heroTitle={
         <>
           Landlord Electrical Safety Checklist:{' '}
-          <span className="text-yellow-400">UK Legal Requirements for Rented Properties</span>
+          <span className="text-elec-yellow">UK Legal Requirements for Rented Properties</span>
         </>
       }
       heroSubtitle="Every landlord in England must comply with electrical safety regulations. This checklist covers the 5-year EICR, smoke alarm and CO alarm requirements, PAT testing, record keeping, and the penalties for non-compliance."
@@ -506,7 +506,7 @@ export default function LandlordElectricalChecklistPage() {
       faqHeading="Frequently Asked Questions About Landlord Electrical Safety"
       relatedPages={relatedPages}
       ctaHeading="Professional EICR Reports for Landlords"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for landlord EICR reports, quoting, and invoicing. Complete on-site, send instantly. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for landlord EICR reports, quoting, and invoicing. Complete on-site, send instantly. 7-day free trial, cancel anytime."
     />
   );
 }

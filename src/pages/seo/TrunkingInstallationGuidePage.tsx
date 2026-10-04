@@ -45,7 +45,7 @@ export default function TrunkingInstallationGuidePage() {
         <>
           Trunking Installation Guide
           <br />
-          <span className="text-yellow-400">Types & Sizing UK</span>
+          <span className="text-elec-yellow">Types & Sizing UK</span>
         </>
       }
       heroSubtitle="Electrical trunking provides a versatile, accessible cable containment system for commercial, industrial, and domestic installations. This guide covers PVC trunking, metal trunking, dado and skirting systems, mini trunking, compartmental trunking for cable segregation, sizing calculations, and installation best practice to BS 7671."
@@ -113,9 +113,9 @@ export default function TrunkingInstallationGuidePage() {
                 <h3 className="font-bold text-white text-lg mb-4">Common PVC Trunking Sizes</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Mini trunking (16 x 16 mm to 40 x 25 mm)
                       </strong>{' '}
                       — Used for individual cable runs, data cables, telephone wiring, and small
@@ -124,9 +124,9 @@ export default function TrunkingInstallationGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Standard trunking (40 x 40 mm to 100 x 50 mm)
                       </strong>{' '}
                       — The workhorse size range for most commercial installations. Accommodates
@@ -135,9 +135,9 @@ export default function TrunkingInstallationGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Large trunking (100 x 100 mm and above)
                       </strong>{' '}
                       — Used for main distribution routes in larger commercial and light industrial
@@ -178,31 +178,31 @@ export default function TrunkingInstallationGuidePage() {
               </p>
               <div className="grid sm:grid-cols-2 gap-4 my-6">
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-3">Advantages</h3>
+                  <h3 className="font-bold text-elec-yellow text-lg mb-3">Advantages</h3>
                   <ul className="space-y-2 text-white text-sm leading-relaxed">
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>
                         Superior mechanical protection — impact, crushing, and penetration
                         resistance
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>Can serve as the CPC when continuity is maintained at all joints</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>Fire-resistant — does not burn, melt, or produce toxic fumes</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>
                         Greater rigidity — spans longer distances between fixings without sagging
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>
                         Available in large sizes — up to 300 x 300 mm for main distribution routes
                       </span>
@@ -272,7 +272,7 @@ export default function TrunkingInstallationGuidePage() {
               </p>
               <div className="space-y-4 my-6">
                 <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-                  <h3 className="font-bold text-yellow-400 text-lg mb-2">
+                  <h3 className="font-bold text-elec-yellow text-lg mb-2">
                     Dado Trunking (Perimeter Trunking)
                   </h3>
                   <p className="text-white text-sm leading-relaxed">
@@ -342,7 +342,7 @@ export default function TrunkingInstallationGuidePage() {
                 rather than pulled through, reducing the risk of installation damage.
               </p>
               <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-6">
-                <h3 className="font-bold text-yellow-400 text-lg mb-3">
+                <h3 className="font-bold text-elec-yellow text-lg mb-3">
                   The 45% Space Factor Rule
                 </h3>
                 <div className="space-y-3 text-white text-sm leading-relaxed">
@@ -434,9 +434,9 @@ export default function TrunkingInstallationGuidePage() {
                 </h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Band I and Band II circuits</strong> —
+                      <strong className="text-elec-yellow">Band I and Band II circuits</strong> —
                       Extra-low voltage circuits (Band I — SELV, PELV, telecommunications, data)
                       must be segregated from mains voltage circuits (Band II — 230V/400V power)
                       unless the Band I cables are insulated for the highest voltage present. In
@@ -445,9 +445,9 @@ export default function TrunkingInstallationGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Fire alarm circuits</strong> — BS 5839-1
+                      <strong className="text-elec-yellow">Fire alarm circuits</strong> — BS 5839-1
                       requires that fire alarm cables are segregated from other cables to prevent a
                       fire on non-fire-alarm circuits from damaging the fire alarm wiring. Fire
                       alarm cables must either be in a separate trunking compartment with a
@@ -455,9 +455,9 @@ export default function TrunkingInstallationGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Data cables and power cables</strong> —
+                      <strong className="text-elec-yellow">Data cables and power cables</strong> —
                       While BS 7671 does not specifically require segregation between data and power
                       cables of the same voltage band, in practice, data cables (particularly
                       unshielded Category 5e and Category 6) should be segregated from power cables
@@ -467,9 +467,9 @@ export default function TrunkingInstallationGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Cables from different sources</strong> —
+                      <strong className="text-elec-yellow">Cables from different sources</strong> —
                       Cables supplied from different sources (for example, mains and generator, or
                       mains and UPS) should be segregated to prevent a fault on one system affecting
                       the other. This is particularly important in installations with backup power
@@ -482,7 +482,7 @@ export default function TrunkingInstallationGuidePage() {
                 <h3 className="font-bold text-white text-lg mb-2">
                   Permitted Methods Under Regulation 528.1
                 </h3>
-                <p className="text-white/70 text-sm mb-4">
+                <p className="text-white text-sm mb-4">
                   Regulation 528.1 prohibits a Band I and a Band II circuit sharing the same wiring
                   system unless one of the following methods is adopted. Compartmental trunking
                   satisfies the third method below.
@@ -526,7 +526,7 @@ export default function TrunkingInstallationGuidePage() {
                     </span>
                   </div>
                 </div>
-                <p className="text-white/60 text-xs mt-4">
+                <p className="text-white text-xs mt-4">
                   For SELV and PELV systems the requirements of Regulation 414.4 also apply.
                 </p>
               </div>
@@ -560,9 +560,9 @@ export default function TrunkingInstallationGuidePage() {
                 </h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Route planning</strong> — Plan the
+                      <strong className="text-elec-yellow">Route planning</strong> — Plan the
                       trunking route to follow logical paths — along walls at a consistent height,
                       parallel to architectural features, and with minimal changes of direction.
                       Avoid routes that cross doorways, windows, or areas where the trunking will be
@@ -570,9 +570,9 @@ export default function TrunkingInstallationGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Fixing centres</strong> — Fix trunking at
+                      <strong className="text-elec-yellow">Fixing centres</strong> — Fix trunking at
                       maximum 600 mm centres for PVC and 900 mm centres for metal trunking. Fix
                       within 150 mm of every joint, bend, and accessory. Ensure fixings are
                       appropriate for the wall or ceiling construction — masonry fixings for brick
@@ -581,9 +581,9 @@ export default function TrunkingInstallationGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Joints and fittings</strong> — Use
+                      <strong className="text-elec-yellow">Joints and fittings</strong> — Use
                       manufacturer fittings for all bends, tees, and junctions. Do not attempt to
                       mitre or cut PVC trunking to create angles — the result will be untidy and may
                       leave sharp edges that damage cable insulation. All fittings should be neatly
@@ -591,18 +591,18 @@ export default function TrunkingInstallationGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Lid retention</strong> — Ensure trunking
+                      <strong className="text-elec-yellow">Lid retention</strong> — Ensure trunking
                       lids click securely into place and do not spring open under their own tension.
                       In metal trunking, lid retaining clips or screws prevent lids from falling
                       during maintenance. Check all lids are secure after cable installation.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Fire barriers</strong> — Where trunking
+                      <strong className="text-elec-yellow">Fire barriers</strong> — Where trunking
                       passes through fire compartment walls or floors, fire-rated internal barriers
                       must be installed within the trunking at the point of penetration. The barrier
                       must be tested and certified for the trunking type and size. Standard trunking
@@ -709,7 +709,7 @@ export default function TrunkingInstallationGuidePage() {
         },
       ]}
       ctaHeading="Design and Document Trunking Installations"
-      ctaSubheading="Elec-Mate's trunking fill calculator, cable sizing tools, and commercial certificates support every trunking installation. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's trunking fill calculator, cable sizing tools, and commercial certificates support every trunking installation. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

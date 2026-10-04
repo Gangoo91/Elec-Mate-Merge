@@ -36,7 +36,7 @@ export function SEOFAQAccordion({
             value={`faq-${index}`}
             className="rounded-2xl bg-white/[0.04] border border-white/10 px-5 overflow-hidden"
           >
-            <AccordionTrigger className="text-white font-semibold text-left py-5 hover:no-underline touch-manipulation min-h-[44px] [&>svg]:text-yellow-400">
+            <AccordionTrigger className="text-white font-semibold text-left py-5 hover:no-underline touch-manipulation min-h-[44px] [&>svg]:text-elec-yellow">
               {faq.question}
             </AccordionTrigger>
             <AccordionContent className="text-white text-sm leading-relaxed pb-5">

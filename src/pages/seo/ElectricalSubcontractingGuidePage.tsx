@@ -45,7 +45,7 @@ export default function ElectricalSubcontractingGuidePage() {
         <>
           Electrical Subcontracting Guide
           <br />
-          <span className="text-yellow-400">Working for Main Contractors</span>
+          <span className="text-elec-yellow">Working for Main Contractors</span>
         </>
       }
       heroSubtitle="Subcontracting for main contractors and larger electrical firms is a common route for self-employed electricians to secure steady work without the overhead of finding domestic customers. However, subcontracting comes with its own challenges — CIS deductions, payment delays, contract disputes, and the balance between day rates and fixed-price work. This guide covers everything you need to know."
@@ -76,7 +76,7 @@ export default function ElectricalSubcontractingGuidePage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Handshake className="w-5 h-5 text-yellow-400" />
+                    <Handshake className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">How It Works</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -92,7 +92,7 @@ export default function ElectricalSubcontractingGuidePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Building className="w-5 h-5 text-yellow-400" />
+                    <Building className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Common Subcontracting Sectors</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -111,7 +111,7 @@ export default function ElectricalSubcontractingGuidePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Advantages of Subcontracting</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -125,7 +125,7 @@ export default function ElectricalSubcontractingGuidePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Risks of Subcontracting</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -156,9 +156,9 @@ export default function ElectricalSubcontractingGuidePage() {
                 </h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Direct approach to local contractors
                       </strong>{' '}
                       — Identify the electrical contractors in your area (Companies House,
@@ -169,27 +169,27 @@ export default function ElectricalSubcontractingGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Trade networking</strong> — Attend trade
+                      <strong className="text-elec-yellow">Trade networking</strong> — Attend trade
                       events, wholesaler open days, and CPD training sessions. These are where
                       contractors meet potential subcontractors in an informal setting. Building
                       personal relationships is the most reliable route to regular work.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Online platforms</strong> — Sites like
+                      <strong className="text-elec-yellow">Online platforms</strong> — Sites like
                       PeoplePerHour, MyBuilder, and specialist trade platforms list subcontract
                       opportunities. LinkedIn is increasingly used for trade networking. Join
                       relevant LinkedIn groups and follow electrical contractors in your area.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Agencies</strong> — Electrical recruitment
+                      <strong className="text-elec-yellow">Agencies</strong> — Electrical recruitment
                       agencies (Hays, Randstad, Manpower, specialist trade agencies) place
                       subcontractors on commercial and industrial projects. Agency rates are
                       typically lower than direct subcontracting because the agency takes a margin,
@@ -197,9 +197,9 @@ export default function ElectricalSubcontractingGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Word of mouth</strong> — The most common
+                      <strong className="text-elec-yellow">Word of mouth</strong> — The most common
                       source of subcontract work. Once you have completed a job well for one
                       contractor, they will call you back and recommend you to others. Reliability
                       and quality are the foundation of a subcontracting career.
@@ -223,7 +223,7 @@ export default function ElectricalSubcontractingGuidePage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <PoundSterling className="w-5 h-5 text-yellow-400" />
+                    <PoundSterling className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Day Rates</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -236,28 +236,28 @@ export default function ElectricalSubcontractingGuidePage() {
                   <div className="mt-3 space-y-2">
                     <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
                       <span className="text-white text-sm">Domestic (outside London)</span>
-                      <span className="font-bold text-yellow-400">£180 - £220/day</span>
+                      <span className="font-bold text-elec-yellow">£180 - £220/day</span>
                     </div>
                     <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
                       <span className="text-white text-sm">Commercial (outside London)</span>
-                      <span className="font-bold text-yellow-400">£200 - £250/day</span>
+                      <span className="font-bold text-elec-yellow">£200 - £250/day</span>
                     </div>
                     <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
                       <span className="text-white text-sm">London and South East</span>
-                      <span className="font-bold text-yellow-400">£240 - £300/day</span>
+                      <span className="font-bold text-elec-yellow">£240 - £300/day</span>
                     </div>
                     <div className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                       <span className="text-white text-sm">
                         Specialist (data centres, healthcare)
                       </span>
-                      <span className="font-bold text-yellow-400">£280 - £350/day</span>
+                      <span className="font-bold text-elec-yellow">£280 - £350/day</span>
                     </div>
                   </div>
                 </div>
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Calculator className="w-5 h-5 text-yellow-400" />
+                    <Calculator className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Fixed Price (Price Work)</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -295,7 +295,7 @@ export default function ElectricalSubcontractingGuidePage() {
               </p>
               <div className="space-y-3 mt-4">
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     1
                   </span>
                   <div>
@@ -312,7 +312,7 @@ export default function ElectricalSubcontractingGuidePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     2
                   </span>
                   <div>
@@ -328,7 +328,7 @@ export default function ElectricalSubcontractingGuidePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
                     3
                   </span>
                   <div>
@@ -350,7 +350,7 @@ export default function ElectricalSubcontractingGuidePage() {
               </div>
               <div className="mt-4 p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                 <div className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <h4 className="font-bold text-white mb-1">
                       Important: Never Accept Cash Without CIS Documentation
@@ -381,7 +381,7 @@ export default function ElectricalSubcontractingGuidePage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Receipt className="w-5 h-5 text-yellow-400" />
+                    <Receipt className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Standard Payment Terms</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -395,7 +395,7 @@ export default function ElectricalSubcontractingGuidePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Scale className="w-5 h-5 text-yellow-400" />
+                    <Scale className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">
                       The Late Payment of Commercial Debts Act
                     </h3>
@@ -412,7 +412,7 @@ export default function ElectricalSubcontractingGuidePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <ShieldCheck className="w-5 h-5 text-yellow-400" />
+                    <ShieldCheck className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Protecting Your Cash Flow</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -449,51 +449,51 @@ export default function ElectricalSubcontractingGuidePage() {
                 </h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Scope of work</strong> — A clear
+                      <strong className="text-elec-yellow">Scope of work</strong> — A clear
                       description of what work is included and, equally important, what is excluded.
                       Vague scope descriptions lead to disputes about additional work and
                       variations.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Payment terms</strong> — Day rate or fixed
+                      <strong className="text-elec-yellow">Payment terms</strong> — Day rate or fixed
                       price, payment frequency (weekly, fortnightly, monthly), payment period (30
                       days from invoice), and the process for variations (additional work not in the
                       original scope).
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">CIS details</strong> — Confirmation of
+                      <strong className="text-elec-yellow">CIS details</strong> — Confirmation of
                       your CIS registration status, UTR number, and the applicable deduction rate.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Insurance requirements</strong> — Minimum
+                      <strong className="text-elec-yellow">Insurance requirements</strong> — Minimum
                       levels of public liability insurance, professional indemnity (if required),
                       and employers' liability (if you employ others). Typically £2-5 million public
                       liability for commercial subcontracting.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Qualifications and cards</strong> —
+                      <strong className="text-elec-yellow">Qualifications and cards</strong> —
                       CSCS/ECS card requirements, competent person scheme membership, specific
                       qualifications for the project (e.g., 18th Edition, 2391, asbestos awareness).
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Health and safety</strong> — Compliance
+                      <strong className="text-elec-yellow">Health and safety</strong> — Compliance
                       with the contractor's health and safety policy, RAMS requirements, site
                       induction, PPE standards. See the{' '}
                       <SEOInternalLink href="/rams-generator">
@@ -503,9 +503,9 @@ export default function ElectricalSubcontractingGuidePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Dispute resolution</strong> — The process
+                      <strong className="text-elec-yellow">Dispute resolution</strong> — The process
                       for resolving disagreements — mediation before legal action, adjudication
                       under the Construction Act, or agreed arbitration.
                     </span>
@@ -533,7 +533,7 @@ export default function ElectricalSubcontractingGuidePage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <ShieldCheck className="w-5 h-5 text-yellow-400" />
+                    <ShieldCheck className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Insurance</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -547,7 +547,7 @@ export default function ElectricalSubcontractingGuidePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <FileText className="w-5 h-5 text-yellow-400" />
+                    <FileText className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Documentation</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -564,7 +564,7 @@ export default function ElectricalSubcontractingGuidePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400" />
+                    <AlertTriangle className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">IR35 Awareness</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -585,7 +585,7 @@ export default function ElectricalSubcontractingGuidePage() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Handshake className="w-5 h-5 text-yellow-400" />
+                    <Handshake className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Diversify Your Clients</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">

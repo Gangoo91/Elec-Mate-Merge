@@ -11,12 +11,16 @@ export interface TemperatureFactor {
 
 // BS 7671 Table 4B1 - Ambient air temperature rating factors
 export const ambientTemperatureFactors: TemperatureFactor[] = [
-  // 25 °C row read off the printed Table 4B1 (BS7671_ocr.pdf), 2026-08-06. The
-  // row runs 1.02 / 1.03 / 1.04 across the 60 °C thermosetting, 70 °C
-  // thermoplastic and 90 °C thermosetting columns. factor90C was 1.02 here —
-  // the 60 °C thermosetting value, one column to the left. Every other cell of
-  // this column matches the printed 90 °C series, so it was a single-cell slip.
-  { ambientTemp: 25, factor70C: 1.03, factor90C: 1.04, factorMineralExposed: 1.07 },
+  // 25 °C row, checked against the IMAGE of the printed Table 4B1
+  // (BS7671_ocr.pdf, pdf page 449) on 2026-10-04: 1.04 (60 °C thermosetting) /
+  // 1.03 (70 °C thermoplastic) / 1.02 (90 °C thermosetting) / 1.07 (mineral,
+  // exposed) / 1.04 (mineral, 105 °C). An earlier pass (2026-08-06) read the
+  // row from the OCR text in reverse and changed factor90C to 1.04, the 60 °C
+  // value — it is 1.02. The series confirms it: below 30 °C the factor falls
+  // as the insulation's rated temperature rises (1.04 > 1.03 > 1.02), the
+  // mirror of the 35 °C row (0.91 < 0.94 < 0.96). Read the page image, not
+  // the OCR text, before changing a cell here.
+  { ambientTemp: 25, factor70C: 1.03, factor90C: 1.02, factorMineralExposed: 1.07 },
   { ambientTemp: 30, factor70C: 1.0, factor90C: 1.0, factorMineralExposed: 1.0 },
   { ambientTemp: 35, factor70C: 0.94, factor90C: 0.96, factorMineralExposed: 0.93 },
   { ambientTemp: 40, factor70C: 0.87, factor90C: 0.91, factorMineralExposed: 0.85 },

@@ -199,7 +199,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Trainee card</strong> — for individuals enrolled in an electrical training
                 programme who have not yet begun a formal apprenticeship. Allows limited site access
@@ -208,7 +208,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Apprentice card</strong> — for registered electrical apprentices during
                 their apprenticeship. Issued when an apprenticeship is registered with the JIB.
@@ -217,7 +217,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Provisional Operative card (Improver grade)</strong> — for electricians
                 holding Level 2 electrotechnical qualifications who are working towards Level 3.
@@ -226,7 +226,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Qualified Operative card — Gold Card (Electrician grade)</strong>— the
                 benchmark card for fully qualified electricians. Requires Level 3 NVQ/SVQ in
@@ -235,7 +235,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Technician card (Approved Electrician / Technician grade)</strong>— for
                 qualified electricians with additional specialist qualifications or
@@ -245,7 +245,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Manager/Professional card</strong> — for those in engineering, management,
                 or design roles. Requires degree-level or equivalent professional engineering
@@ -254,7 +254,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Specialist cards</strong> — ECS also issues specialist cards for defined
                 disciplines including: EV charge point installation; fire alarm installation (tied
@@ -279,7 +279,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1 — Create an account</strong> — register at ecscard.org.uk. You will
                 need a valid email address and basic personal details including your National
@@ -287,7 +287,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2 — Select your card type</strong> — choose the ECS card grade
                 appropriate to your qualifications. The portal guides you through the eligibility
@@ -296,7 +296,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 3 — Upload evidence</strong> — upload scanned copies or clear
                 photographs of all required qualification certificates. The specific evidence
@@ -304,7 +304,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 4 — Pay the card fee</strong> — approximately £30–£40 for a five-year
                 card, payable by card online. The fee covers the physical card and database
@@ -312,7 +312,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 5 — Wait for processing</strong> — the JIB verifies your
                 qualifications, typically within 5–10 working days. The physical card is posted to
@@ -338,7 +338,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Gold Card (Qualified Operative)</strong> — Level 3 NVQ/SVQ Electrotechnical
                 Technology certificate (or equivalent); AM2 or AM2S results certificate; current BS
@@ -347,7 +347,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Technician card</strong> — all Gold Card evidence plus additional
                 qualification evidence relevant to the technician specialism (e.g., City and Guilds
@@ -355,7 +355,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Apprentice card</strong> — proof of JIB-registered apprenticeship
                 (apprenticeship agreement or employer confirmation). No NVQ certificate required as
@@ -363,7 +363,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Manager/Professional card</strong> — degree certificate or equivalent
                 professional engineering qualification; evidence of professional body membership
@@ -393,7 +393,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <RefreshCw className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <RefreshCw className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>When to renew</strong> — start the renewal process at least three months
                 before your card expires. This gives time to update qualifications if your BS 7671
@@ -402,7 +402,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <RefreshCw className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <RefreshCw className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Renewal requirements</strong> — for the Gold Card and most other grades,
                 renewal requires a current BS 7671 18th Edition qualification. If your BS 7671
@@ -411,7 +411,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <RefreshCw className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <RefreshCw className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Renewal process</strong> — log in to your ECS account at ecscard.org.uk,
                 select 'renew card', upload updated qualification evidence, and pay the renewal fee.
@@ -419,7 +419,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <RefreshCw className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <RefreshCw className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lapsed cards</strong> — if your card has lapsed, you can still renew through
                 the ECS portal with current qualification evidence. A lapsed card is not
@@ -548,7 +548,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Professional certificate management for ECS cardholders"
-          description="Join 1,600+ UK electricians using Elec-Mate to complete EICRs, Minor Works Certificates, and Electrical Installation Certificates on their phone."
+          description="Join 2,100+ UK electricians using Elec-Mate to complete EICRs, Minor Works Certificates, and Electrical Installation Certificates on their phone."
           icon={FileCheck2}
         />
       </>
@@ -574,7 +574,7 @@ export default function ECSCardGuidePage() {
       heroTitle={
         <>
           ECS Card Guide UK:{' '}
-          <span className="text-yellow-400">Electrotechnical Certification Scheme Explained</span>
+          <span className="text-elec-yellow">Electrotechnical Certification Scheme Explained</span>
         </>
       }
       heroSubtitle="A complete guide to ECS cards for UK electricians — all card types from Trainee to Manager, how to apply, what evidence you need, renewal requirements, and why ECS differs from CSCS."

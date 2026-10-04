@@ -168,15 +168,15 @@ export default function EarthingArrangementsPage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
-        <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-elec-yellow text-sm font-medium mb-6">
             <BookOpen className="w-4 h-4" />
             BS 7671:2018+A4:2026
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             Earthing Arrangements
-            <span className="block text-yellow-400 mt-1">TN-S, TN-C-S, TN-C, TT &amp; IT</span>
+            <span className="block text-elec-yellow mt-1">TN-S, TN-C-S, TN-C, TT &amp; IT</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             The complete guide to UK earthing systems. How each works, how to identify them on site,
@@ -192,7 +192,7 @@ export default function EarthingArrangementsPage() {
             </Link>
             <a
               href="#earthing-explained"
-              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-yellow-500/40 touch-manipulation transition-colors"
+              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-white/[0.1] touch-manipulation transition-colors"
             >
               Read the Guide
               <ArrowDown className="w-4 h-4 ml-1" />
@@ -206,7 +206,7 @@ export default function EarthingArrangementsPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Zap className="w-5 h-5 text-yellow-400" />
+              <Zap className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">Why Earthing Matters</h2>
           </div>
@@ -255,7 +255,7 @@ export default function EarthingArrangementsPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Cable className="w-5 h-5 text-yellow-400" />
+              <Cable className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               The Five Earthing Systems Explained
@@ -271,12 +271,12 @@ export default function EarthingArrangementsPage() {
               network.
             </p>
             <p>
-              <strong className="text-yellow-400">T</strong> = direct connection to earth (French:
-              terre). <strong className="text-yellow-400">N</strong> = direct connection to the
+              <strong className="text-elec-yellow">T</strong> = direct connection to earth (French:
+              terre). <strong className="text-elec-yellow">N</strong> = direct connection to the
               neutral of the supply system, which is itself earthed.{' '}
-              <strong className="text-yellow-400">S</strong> = separate neutral and protective
-              conductors. <strong className="text-yellow-400">C</strong> = combined neutral and
-              protective conductor (PEN conductor). <strong className="text-yellow-400">I</strong> =
+              <strong className="text-elec-yellow">S</strong> = separate neutral and protective
+              conductors. <strong className="text-elec-yellow">C</strong> = combined neutral and
+              protective conductor (PEN conductor). <strong className="text-elec-yellow">I</strong> =
               isolated from earth or connected through a high impedance.
             </p>
           </div>
@@ -441,7 +441,7 @@ export default function EarthingArrangementsPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <TriangleAlert className="w-5 h-5 text-yellow-400" />
+              <TriangleAlert className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">PME Earthing Restrictions</h2>
           </div>
@@ -457,9 +457,9 @@ export default function EarthingArrangementsPage() {
               <h3 className="font-bold text-white text-lg mb-4">Key PME Restrictions</h3>
               <ul className="space-y-3 text-white">
                 <li className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>
-                    <strong className="text-yellow-400">
+                    <strong className="text-elec-yellow">
                       Bathrooms with metallic baths or showers
                     </strong>{' '}
                     — Where a bathroom contains a metallic bath, shower tray, or other metallic
@@ -471,9 +471,9 @@ export default function EarthingArrangementsPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>
-                    <strong className="text-yellow-400">EV charge point installations</strong> —
+                    <strong className="text-elec-yellow">EV charge point installations</strong> —
                     Electric vehicle charging involves a long cable connection between the charge
                     point (connected to PME earth) and the vehicle (connected to true earth through
                     its tyres). Under a broken neutral condition, dangerous voltage could appear on
@@ -484,9 +484,9 @@ export default function EarthingArrangementsPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>
-                    <strong className="text-yellow-400">
+                    <strong className="text-elec-yellow">
                       External installations and outbuildings
                     </strong>{' '}
                     — Supplies to garages, sheds, outbuildings, garden lighting, and other external
@@ -498,9 +498,9 @@ export default function EarthingArrangementsPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>
-                    <strong className="text-yellow-400">
+                    <strong className="text-elec-yellow">
                       Swimming pools and agricultural installations
                     </strong>{' '}
                     — These locations carry the highest risk under PME conditions due to extensive
@@ -511,9 +511,9 @@ export default function EarthingArrangementsPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>
-                    <strong className="text-yellow-400">Caravans and caravan parks</strong> — BS
+                    <strong className="text-elec-yellow">Caravans and caravan parks</strong> — BS
                     7671 Section 708 requires that the supply to caravan pitches uses a TT earthing
                     arrangement. PME earthing must not be used for the caravan supply because the
                     caravan is an isolated metallic structure with no permanent earth connection — a
@@ -538,7 +538,7 @@ export default function EarthingArrangementsPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Activity className="w-5 h-5 text-yellow-400" />
+              <Activity className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Earth Electrode Testing for TT Systems
@@ -554,7 +554,7 @@ export default function EarthingArrangementsPage() {
             </p>
             <p>
               The most accurate method of measuring earth electrode resistance is the{' '}
-              <strong className="text-yellow-400">fall-of-potential method</strong> using a
+              <strong className="text-elec-yellow">fall-of-potential method</strong> using a
               dedicated earth electrode resistance tester. This involves placing two temporary test
               spikes in a straight line away from the electrode under test. The current spike is
               placed at a distance of at least 10 times the length of the electrode — for a standard
@@ -593,7 +593,7 @@ export default function EarthingArrangementsPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Home className="w-5 h-5 text-yellow-400" />
+              <Home className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               DNO Responsibilities and the Demarcation Point
@@ -661,7 +661,7 @@ export default function EarthingArrangementsPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <HelpCircle className="w-5 h-5 text-yellow-400" />
+              <HelpCircle className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Frequently Asked Questions
@@ -674,7 +674,7 @@ export default function EarthingArrangementsPage() {
                 className="group p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-white/[0.14] transition-colors"
               >
                 <summary className="flex items-start gap-3 cursor-pointer touch-manipulation list-none [&::-webkit-details-marker]:hidden">
-                  <ChevronRight className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0 transition-transform group-open:rotate-90" />
+                  <ChevronRight className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0 transition-transform group-open:rotate-90" />
                   <h3 className="font-bold text-white text-lg">{faq.question}</h3>
                 </summary>
                 <div className="mt-3 pl-8">
@@ -709,7 +709,7 @@ export default function EarthingArrangementsPage() {
 
       <SEOCTASection
         heading="Record Earthing Data Digitally"
-        subheading="Join 1,600+ UK electricians using Elec-Mate for on-site testing and certification. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians using Elec-Mate for on-site testing and certification. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

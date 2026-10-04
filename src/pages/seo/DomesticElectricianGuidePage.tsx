@@ -197,7 +197,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full house rewires</strong> — stripping out all existing wiring and
                 replacing it with new cables, a new consumer unit, and all accessories. The biggest
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit changes</strong> — replacing an old fuse board with a modern
                 consumer unit with MCBs, RCBOs, AFDDs, and SPDs.{' '}
@@ -217,7 +217,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Additional circuits</strong> — new ring circuits, radial circuits for
                 cookers, showers, immersion heaters, outdoor sockets, and garden offices. Each new
@@ -225,7 +225,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Outdoor electrics</strong> — garden lighting, outdoor sockets, hot tub
                 supplies, shed and outbuilding supplies, and security lighting. Outdoor circuits
@@ -233,7 +233,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger installations</strong> — installing dedicated EV charging points
                 with their own circuit from the consumer unit. Requires an understanding of maximum
@@ -241,7 +241,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smart home installations</strong> — smart switches, smart lighting systems,
                 home automation hubs, and network wiring. An increasingly popular add-on service
@@ -249,7 +249,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICRs (periodic inspections)</strong> — inspecting and testing existing
                 installations, particularly for{' '}
@@ -260,7 +260,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fault-finding and repairs</strong> — diagnosing tripping RCDs, dead
                 circuits, intermittent faults, and other problems. Requires strong diagnostic skills
@@ -307,35 +307,35 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Installation of a new circuit (including new ring circuits, radial circuits,
                 lighting circuits, and dedicated appliance circuits).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Replacement of a consumer unit (fuse board) — this is the most common notifiable
                 domestic job.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Any electrical work in bathrooms and kitchens that involves installing a new circuit
                 (not like-for-like replacements of accessories on existing circuits).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Electrical work in special installations and locations (swimming pools, saunas, hot
                 tubs).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>Any work that involves a new distribution board or sub-main cable.</span>
             </li>
           </ul>
@@ -427,7 +427,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Level 3 Diploma in Electrical Installation</strong> (C&G 2365, 2357, or
                 5357) — the core installation qualification covering theory, practical skills,
@@ -435,7 +435,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>18th Edition IET Wiring Regulations</strong> (C&G 2382-22) — confirms your
                 knowledge of the current edition of{' '}
@@ -447,7 +447,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inspection and Testing</strong> (C&G 2391 or equivalent) — the qualification
                 for carrying out periodic inspections (EICRs) and initial verification testing.
@@ -456,7 +456,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <GraduationCap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ECS Card</strong> — the Electrotechnical Certification Scheme card
                 (sometimes called the "gold card") proves your qualifications and competence. Most
@@ -558,7 +558,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Multifunction tester</strong> (e.g., Megger MFT or equivalent) — the single
                 most important instrument. Tests continuity, insulation resistance, earth loop
@@ -567,7 +567,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Voltage indicator and proving unit</strong> — essential for{' '}
                 <SEOInternalLink href="/guides/safe-isolation-procedure">
@@ -579,7 +579,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Socket tester with RCD test</strong> — quick check of socket wiring
                 (polarity, earth, neutral) and RCD operation. Not a substitute for proper testing
@@ -587,7 +587,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SDS drill, chasing tools, and hole saws</strong> — for installing cables in
                 walls and ceilings. First-fix work requires good quality power tools and a range of
@@ -595,7 +595,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable detection equipment</strong> — a cable avoidance tool (CAT) or similar
                 device to locate existing cables and pipes before drilling. Essential for avoiding
@@ -603,7 +603,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Elec-Mate app</strong> — your digital tool belt. Certification, cable
                 sizing, testing calculators, quote builder, invoice app, and AI-powered board
@@ -632,7 +632,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <div className="space-y-4 text-white">
             <div className="flex items-start gap-3">
-              <span className="text-yellow-400 font-bold shrink-0">07:30</span>
+              <span className="text-elec-yellow font-bold shrink-0">07:30</span>
               <span>
                 Arrive at the first job — a landlord EICR on a 2-bedroom flat. Open Elec-Mate, scan
                 the consumer unit with the AI board scanner, start the dead testing. Complete the
@@ -640,7 +640,7 @@ const sections = [
               </span>
             </div>
             <div className="flex items-start gap-3">
-              <span className="text-yellow-400 font-bold shrink-0">09:30</span>
+              <span className="text-elec-yellow font-bold shrink-0">09:30</span>
               <span>
                 EICR complete. Two C2 observations found. Generate the remedial quote using the
                 estimator, send the EICR and quote to the landlord by email from the app. Send the
@@ -648,7 +648,7 @@ const sections = [
               </span>
             </div>
             <div className="flex items-start gap-3">
-              <span className="text-yellow-400 font-bold shrink-0">10:00</span>
+              <span className="text-elec-yellow font-bold shrink-0">10:00</span>
               <span>
                 Drive to the second job — a consumer unit upgrade in a 3-bedroom semi. Isolate the
                 supply, strip out the old board, install the new consumer unit with RCBOs and SPD.
@@ -656,14 +656,14 @@ const sections = [
               </span>
             </div>
             <div className="flex items-start gap-3">
-              <span className="text-yellow-400 font-bold shrink-0">14:00</span>
+              <span className="text-elec-yellow font-bold shrink-0">14:00</span>
               <span>
                 Consumer unit complete. Run through the schedule of test results, complete the EIC
                 on Elec-Mate, send the certificate and invoice to the customer. Quick lunch.
               </span>
             </div>
             <div className="flex items-start gap-3">
-              <span className="text-yellow-400 font-bold shrink-0">15:00</span>
+              <span className="text-elec-yellow font-bold shrink-0">15:00</span>
               <span>
                 Third job — adding an outdoor socket and two garden lights for a customer who wants
                 their patio electrics sorted before summer. Run the cable, install the accessories,
@@ -672,7 +672,7 @@ const sections = [
               </span>
             </div>
             <div className="flex items-start gap-3">
-              <span className="text-yellow-400 font-bold shrink-0">17:00</span>
+              <span className="text-elec-yellow font-bold shrink-0">17:00</span>
               <span>
                 Home. No paperwork to do — all three certificates, quotes, and invoices were
                 completed and sent on site. Check tomorrow's schedule, reply to a couple of enquiry
@@ -704,7 +704,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Landlord contracts</strong> — build relationships with landlords and letting
                 agents. A landlord with 10 properties needs an EICR for each one every 5 years, plus
@@ -713,7 +713,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Professional presentation</strong> — clean van, tidy appearance, branded
                 workwear, professional certificates. Customers judge quality by presentation. A
@@ -722,7 +722,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Prompt communication</strong> — reply to enquiries within 2 hours, provide
                 written quotes promptly, confirm appointment times the day before. Customers choose
@@ -730,7 +730,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Scheme registration and reviews</strong> — being listed on the NICEIC,
                 NAPIT, or ELECSA search directory brings in new customers. Encourage happy customers
@@ -739,7 +739,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Upsell and advise</strong> — every job is an opportunity to advise the
                 customer on improvements. An EICR with C3 observations is an opportunity to quote
@@ -772,7 +772,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">All 19 Certificate Types</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -785,7 +785,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Camera className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Camera className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI Board Scanner</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -798,7 +798,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Cable Sizing and Calculators</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -814,7 +814,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Receipt className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Receipt className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Quote Builder and Invoice App</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -832,7 +832,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="One app for every domestic job"
-          description="Join 1,600+ UK electricians using Elec-Mate for domestic certification, calculations, quoting, and invoicing. All on your phone, all on site."
+          description="Join 2,100+ UK electricians using Elec-Mate for domestic certification, calculations, quoting, and invoicing. All on your phone, all on site."
           icon={Zap}
         />
       </>
@@ -858,7 +858,7 @@ export default function DomesticElectricianGuidePage() {
       heroTitle={
         <>
           Domestic Electrician Guide UK:{' '}
-          <span className="text-yellow-400">Everything You Need to Know in 2026</span>
+          <span className="text-elec-yellow">Everything You Need to Know in 2026</span>
         </>
       }
       heroSubtitle="From rewires and consumer unit changes to EV chargers and landlord EICRs — what a domestic electrician does, what you need to get started, and how Elec-Mate handles every certificate, calculation, and invoice on your phone."
@@ -869,7 +869,7 @@ export default function DomesticElectricianGuidePage() {
       faqHeading="Frequently Asked Questions About Domestic Electrical Work"
       relatedPages={relatedPages}
       ctaHeading="Every Domestic Cert on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians completing EICs, EICRs, minor works, and more on their phones. AI board scanner, cable sizing, quote builder, and instant delivery. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians completing EICs, EICRs, minor works, and more on their phones. AI board scanner, cable sizing, quote builder, and instant delivery. 7-day free trial."
     />
   );
 }

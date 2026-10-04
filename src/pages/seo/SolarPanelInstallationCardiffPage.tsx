@@ -145,7 +145,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cardiff's solar resource</strong> — Cardiff receives approximately 1,250 to
                 1,350 peak sun hours per year, generating 950 to 1,100 kWh per kWp installed
@@ -153,7 +153,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Leaf className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Leaf className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Welsh net zero ambitions</strong> — Wales has committed to reach net zero by
                 2050 under the Environment (Wales) Act 2016. The Welsh Government's Future Wales
@@ -162,7 +162,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cardiff housing stock</strong> — Cardiff's mix of Victorian terraces
                 (Pontcanna, Roath, Canton), Edwardian semis, and modern new builds all present solar
@@ -246,28 +246,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3kWp system</strong> — £4,500 to £6,500. Suitable for smaller Cardiff
                 terraces or households with limited roof space. Typically 8 to 10 panels.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>4kWp system</strong> — £6,000 to £9,000. The most popular size for a
                 three-bedroom Cardiff semi or terrace. Typically 10 to 13 panels.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>6kWp system</strong> — £9,500 to £14,000. Suitable for larger properties or
                 homes with heat pumps and EVs. Typically 15 to 18 panels.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Battery storage</strong> — £2,500 to £5,000 for a 5 to 10kWh unit. Popular
                 choices in Cardiff include Givenergy, Tesla Powerwall, and Solax. Increasingly
@@ -345,7 +345,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Current best rates (2025)</strong> — Octopus Outgoing Agile (time-of-use, up
                 to 24p at peak), E.ON Next Drive Export (up to 15p), Ovo Greener Energy Export
@@ -353,7 +353,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smart meter requirement</strong> — to claim SEG payments, you need a smart
                 meter. National Grid Electricity Distribution (covering South Wales) installs smart
@@ -361,7 +361,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Combining with time-of-use tariffs</strong> — pairing an SEG export tariff
                 with a time-of-use import tariff (such as Octopus Go or Agile) allows Cardiff solar
@@ -386,7 +386,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cardiff conservation areas</strong> — include Pontcanna, Cathedral Road,
                 Roath Park, Whitchurch Village, Llandaff, and parts of the city centre. Permitted
@@ -395,7 +395,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Listed buildings</strong> — Cardiff has numerous listed buildings,
                 particularly in Pontcanna, Cathays, and the Victorian terraces of Canton. Listed
@@ -404,7 +404,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Flat roofs</strong> — ground-mounted or flat-roof installations are treated
                 differently to sloped roof installations. Panels on flat roofs should not be visible
@@ -412,7 +412,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Technical requirement</strong> — panels must not protrude more than 200mm
                 from the roof plane and must be removed when no longer needed. The installation must
@@ -443,7 +443,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Welsh Building Regulations</strong> — solar PV electrical work in Cardiff
                 must comply with the Building Regulations 2010 (as applied in Wales). Part L
@@ -453,7 +453,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCS certification</strong> — the Microgeneration Certification Scheme is
                 required for SEG eligibility and most Welsh Government grant schemes. Check that
@@ -465,7 +465,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DNO (Distribution Network Operator)</strong> — National Grid Electricity
                 Distribution (NGED, formerly Western Power Distribution) covers South Wales. G98
@@ -492,7 +492,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Quote with Welsh Grant Information</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -523,7 +523,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your solar installation business in Cardiff with"
-          description="Join 1,600+ UK electricians using Elec-Mate to quote solar PV jobs, manage MCS certificates, and run their business from their phone. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate to quote solar PV jobs, manage MCS certificates, and run their business from their phone. 7-day free trial."
           icon={Sun}
         />
       </>
@@ -549,7 +549,7 @@ export default function SolarPanelInstallationCardiffPage() {
       heroTitle={
         <>
           Solar Panel Installation Cardiff 2025:{' '}
-          <span className="text-yellow-400">Welsh Grants, Costs & Solar PV Wales</span>
+          <span className="text-elec-yellow">Welsh Grants, Costs & Solar PV Wales</span>
         </>
       }
       heroSubtitle="Everything Cardiff homeowners need to know about solar panel installation — Welsh Government grants via the Warm Homes Programme, costs from £4,500, SEG payments, conservation area planning rules, and finding an MCS-certified Cardiff installer."
@@ -560,7 +560,7 @@ export default function SolarPanelInstallationCardiffPage() {
       faqHeading="Frequently Asked Questions About Solar Panels in Cardiff"
       relatedPages={relatedPages}
       ctaHeading="Quote Solar PV Jobs in Cardiff on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to quote solar PV installations, manage certificates, and grow their business across Wales. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to quote solar PV installations, manage certificates, and grow their business across Wales. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -197,7 +197,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Who needs EL insurance</strong> — any business employing permanent,
                 part-time, temporary, casual, or seasonal workers. Labour-only subcontractors (LOSC)
@@ -207,7 +207,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Legal minimum: £5 million per occurrence</strong> — most insurers provide
                 £10 million as standard, as the legal minimum is considered low relative to modern
@@ -216,7 +216,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Penalty for non-compliance</strong> — the HSE can impose fines of up to
                 £2,500 for each day you operate without valid EL insurance. There is no upper limit
@@ -224,7 +224,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sole traders with no employees</strong> — if you are genuinely a sole trader
                 with no employees, labour-only subcontractors, or casual workers, you are not
@@ -251,7 +251,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>When PI is relevant</strong> — if you produce electrical designs, load
                 calculations, specifications, energy assessments, or provide consultancy advice as
@@ -261,7 +261,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>When PI is less critical</strong> — pure installation contractors who follow
                 a client&apos;s specification without producing any design themselves have lower PI
@@ -270,7 +270,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Retroactive cover</strong> — PI insurance works on a &quot;claims made&quot;
                 basis. You must have cover in place when a claim is made, not just when the work was
@@ -297,7 +297,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What tool insurance covers</strong> — theft of tools from your van, from
                 site, or from your home (if specified); accidental damage to tools while in use; and
@@ -306,7 +306,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Common exclusions</strong> — theft from an unattended vehicle unless the
                 tools are in a locked, fixed storage box; theft from overnight storage in a vehicle
@@ -315,7 +315,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maintaining an inventory</strong> — tool insurance claims require evidence
                 of ownership and value. Maintain a photographic inventory of your tools with serial
@@ -323,7 +323,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cost: £150 to £350/year</strong> — for £10,000 of tool cover, annual
                 premiums are typically £150 to £350 depending on claims history and policy
@@ -349,7 +349,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial vehicle insurance</strong> — covers your van for business use,
                 including travel between job sites. Specify &quot;carriage of own tools and
@@ -359,7 +359,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Modified vehicles</strong> — many electricians fit internal shelving,
                 racking, and vault boxes to their vans. These modifications must be declared to your
@@ -367,7 +367,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tools in transit cover</strong> — confirm whether your van policy includes
                 tools in transit or whether you need a separate endorsement. &quot;Tools in
@@ -376,7 +376,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Car className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cost: £1,500 to £3,000/year</strong> — van insurance for an electrical
                 contractor varies based on vehicle value, location, claims history, and security
@@ -403,7 +403,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC requirements</strong> — minimum £2 million public liability
                 insurance. Evidence must be provided at annual reassessment. NICEIC does not
@@ -413,7 +413,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NAPIT requirements</strong> — minimum £2 million public liability insurance
                 required for all NAPIT registered businesses. Higher levels of cover may be required
@@ -421,7 +421,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial client requirements</strong> — commercial clients, principal
                 contractors, and public sector bodies frequently require £5 million PL and £10
@@ -452,14 +452,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Public liability (£5m, sole trader)</strong> — £400 to £900/year. Specialist
                 work (HV, industrial, data centre) increases premiums to £800 to £1,500+.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Employer&apos;s liability (£10m, 1–3 employees)</strong> — £300 to
                 £600/year. Premiums scale with payroll and type of work. Higher-risk work
@@ -467,7 +467,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Professional indemnity (£1m, design services)</strong> — £200 to £500/year
                 for a sole trader with modest design turnover. Increases with the value and
@@ -475,14 +475,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tool insurance (£10,000 cover)</strong> — £150 to £350/year. Multi-year
                 policies with no claims discount can reduce this to £100 to £200/year.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Combined package policies</strong> — PL + EL + PI + tools combined packages
                 typically cost £900 to £2,500/year for a sole trader or small business. Package
@@ -507,7 +507,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Issue Compliant Certificates on Every Job
@@ -544,7 +544,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Protect your business with professional documentation"
-          description="Join 1,600+ UK electricians using Elec-Mate for compliant certificates, professional quotes, and organised job records."
+          description="Join 2,100+ UK electricians using Elec-Mate for compliant certificates, professional quotes, and organised job records."
           icon={Zap}
         />
       </>
@@ -570,7 +570,7 @@ export default function ElectricalContractorInsurancePage() {
       heroTitle={
         <>
           Electrical Contractor Insurance UK:{' '}
-          <span className="text-yellow-400">What You Need and How Much It Costs in 2026</span>
+          <span className="text-elec-yellow">What You Need and How Much It Costs in 2026</span>
         </>
       }
       heroSubtitle="Insurance is essential for every electrical contractor. This guide explains the four main types of cover — public liability, employer's liability, professional indemnity, and tool insurance — along with van insurance, NICEIC and NAPIT requirements, and 2026 cost estimates for sole traders and small electrical businesses."
@@ -581,7 +581,7 @@ export default function ElectricalContractorInsurancePage() {
       faqHeading="Frequently Asked Questions About Electrical Contractor Insurance"
       relatedPages={relatedPages}
       ctaHeading="Run a Professional, Compliant Electrical Business"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for compliant certificates, professional quotes, and organised job management. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for compliant certificates, professional quotes, and organised job management. 7-day free trial."
     />
   );
 }

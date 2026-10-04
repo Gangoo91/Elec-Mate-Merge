@@ -757,7 +757,7 @@ export default function EVChargingLegislationUKPage() {
       heroTitle={
         <>
           EV Charging Regulations UK 2026:{' '}
-          <span className="text-yellow-400">Laws & Standards for EV Chargers</span>
+          <span className="text-elec-yellow">Laws & Standards for EV Chargers</span>
         </>
       }
       heroSubtitle="The complete legal framework for EV charging in the UK — the Electric Vehicles (Smart Charge Points) Regulations 2021, Building Regulations Part S, BS 7671 Section 722, the IET Code of Practice, and the Public Charge Point Regulations 2023 — explained clearly for electricians, businesses, and property developers."
@@ -773,7 +773,7 @@ export default function EVChargingLegislationUKPage() {
       faqHeading="Frequently Asked Questions About EV Charging Regulations UK"
       relatedPages={relatedPages}
       ctaHeading="Complete EV Charging Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EV charging certificates, quoting, and job management. Stay compliant and win more work. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for EV charging certificates, quoting, and job management. Stay compliant and win more work. 7-day free trial, cancel anytime."
     />
   );
 }

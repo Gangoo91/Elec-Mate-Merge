@@ -227,7 +227,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Landmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Listed Building Consent (LBC)</strong> — required for any work that alters
                 the character of a listed building. For electrical work, this includes
@@ -238,7 +238,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Landmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Concealed routing</strong> — in listed buildings, cables should be routed
                 through existing voids (under floorboards, through ceiling voids, within existing
@@ -249,7 +249,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Landmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>York Minster close</strong> — properties within the Minster close are
                 subject to additional oversight from the Minster Chapter. External works (satellite
@@ -260,7 +260,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Landmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Landmark className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Specialist fixings</strong> — in listed buildings, avoid plastic trunking
                 where possible. Heritage-style metal conduit, brass accessories, and
@@ -361,7 +361,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR inspections</strong> — commercial premises require an{' '}
                 <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> typically
@@ -371,7 +371,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency lighting</strong> — all commercial premises with public access
                 require emergency lighting that complies with BS 5266. Monthly functional tests and
@@ -381,7 +381,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire alarm systems</strong> — commercial premises require fire alarm systems
                 designed and installed to BS 5839. The system category (L1 to L5 for life
@@ -391,7 +391,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Kitchen extract and commercial cooking</strong> — restaurant and hotel
                 kitchens require specialist electrical work including three-phase supplies for
@@ -486,7 +486,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EICR Certificate App</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -531,7 +531,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional certification for York electricians"
-          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting."
+          description="Join 2,100+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting."
           icon={MapPin}
         />
       </>
@@ -558,7 +558,7 @@ export default function ElectricianYorkPage() {
       heroTitle={
         <>
           Electrician in York:{' '}
-          <span className="text-yellow-400">Local Guide for UK Electricians</span>
+          <span className="text-elec-yellow">Local Guide for UK Electricians</span>
         </>
       }
       heroSubtitle="York's medieval city centre, flood-prone riverside areas, and thriving tourism sector create unique challenges and opportunities. This guide covers the DNO, listed building requirements, flood safety, commercial work, and realistic pricing for electricians in York."
@@ -569,7 +569,7 @@ export default function ElectricianYorkPage() {
       faqHeading="Frequently Asked Questions About Electrical Work in York"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Electrical Work in York — On Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting. Heritage work, flood remediation, or new builds — certify it all on site. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting. Heritage work, flood remediation, or new builds — certify it all on site. 7-day free trial."
     />
   );
 }

@@ -140,7 +140,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sheffield's solar resource</strong> — Sheffield receives approximately 1,050
                 to 1,150 peak sun hours per year, generating 870 to 1,000 kWh per kWp annually. A
@@ -149,7 +149,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sheffield's housing stock</strong> — the city has a rich mix of Victorian
                 stone terraces, Edwardian semis, 1960s council estates now privately owned, and
@@ -158,7 +158,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Leaf className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Leaf className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Carbon Neutral 2030 target</strong> — Sheffield City Council's commitment to
                 carbon neutrality by 2030 has driven supportive planning policy for renewable
@@ -182,28 +182,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3kWp system</strong> — £4,500 to £6,500. Suitable for smaller Sheffield
                 terraces. Typically 8 to 10 monocrystalline panels.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>4kWp system</strong> — £6,000 to £9,000. The most common size for a
                 three-bedroom Sheffield semi or terrace. Typically 10 to 13 panels.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>6kWp system</strong> — £9,000 to £13,500. Suitable for larger properties or
                 homes with EVs, heat pumps, or high energy usage. Typically 15 to 18 panels.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Battery storage</strong> — £2,500 to £5,000 for a 5 to 10kWh unit.
                 Givenergy, Tesla Powerwall, Fox ESS, and Solax are popular in the South Yorkshire
@@ -328,7 +328,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Top Sheffield SEG options (2025)</strong> — Octopus Outgoing Agile
                 (variable, up to 24p peak), E.ON Next Drive Export (up to 15p), Ovo Greener Energy
@@ -336,7 +336,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smart meter check</strong> — you need a functioning smart meter with
                 half-hourly export reading capability. NGED can upgrade your meter free of charge
@@ -344,7 +344,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Time-of-use arbitrage</strong> — pairing an Octopus Agile import tariff with
                 Octopus Outgoing Agile export gives Sheffield solar owners the ability to charge
@@ -369,7 +369,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hillside roof angles</strong> — many Sheffield properties have roof pitches
                 steeper than the national average due to hillside construction. Pitches above 45°
@@ -378,7 +378,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Gritstone and stone tile roofs</strong> — common in Sheffield's older
                 housing stock, these require specialist mounting systems. Not all solar racking
@@ -387,7 +387,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Urban shading</strong> — densely developed areas of Crookes, Walkley,
                 Hillsborough, and the Burngreave valley can experience significant inter-property
@@ -396,7 +396,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Heat pump integration</strong> — Sheffield has a higher rate of air source
                 heat pump installation than the national average, driven by active local authority
@@ -422,7 +422,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCS certification</strong> — required for SEG eligibility and most grant
                 schemes. Verify installer certification at mcs.org.uk. The MCS certificate must be
@@ -430,7 +430,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671 and Part P</strong> — all electrical work must comply with{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
@@ -442,7 +442,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NGED connection (G98/G99)</strong> — National Grid Electricity Distribution
                 covers Sheffield. G98 notification for systems up to 3.68kW per phase is handled by
@@ -469,7 +469,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Win Solar Jobs with Better Quotes</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -501,7 +501,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your solar installation business in Sheffield with"
-          description="Join 1,600+ UK electricians using Elec-Mate to quote solar PV jobs, manage MCS certificates, and run their business from their phone. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate to quote solar PV jobs, manage MCS certificates, and run their business from their phone. 7-day free trial."
           icon={Sun}
         />
       </>
@@ -527,7 +527,7 @@ export default function SolarPanelInstallationSheffieldPage() {
       heroTitle={
         <>
           Solar Panel Installation Sheffield 2025:{' '}
-          <span className="text-yellow-400">Costs, Savings & South Yorkshire Guide</span>
+          <span className="text-elec-yellow">Costs, Savings & South Yorkshire Guide</span>
         </>
       }
       heroSubtitle="Everything Sheffield homeowners need to know about solar panel installation — costs from £4,500, savings and SEG payments, grants, planning rules, hillside system design, and how to find an MCS-certified Sheffield installer."
@@ -538,7 +538,7 @@ export default function SolarPanelInstallationSheffieldPage() {
       faqHeading="Frequently Asked Questions About Solar Panels in Sheffield"
       relatedPages={relatedPages}
       ctaHeading="Quote Solar PV Jobs in Sheffield on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to quote solar PV installations, manage MCS certificates, and grow their business in South Yorkshire. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to quote solar PV installations, manage MCS certificates, and grow their business in South Yorkshire. 7-day free trial, cancel anytime."
     />
   );
 }

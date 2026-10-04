@@ -217,7 +217,7 @@ const AM2Module4Section1 = () => {
             'GN3 sequence is non-negotiable on AM2 day — dead tests fully complete BEFORE any live testing.',
             'Order: continuity of CPCs (R1+R2) → ring continuity → IR at 500 V DC → polarity → Ze (TT: earth electrode) → energise → Zs → PFC → RCD at 1×IΔn → phase sequence → functional.',
             'BS 7671:2018+A4:2026 figures: B32 Zsmax = 1.37 Ω (Cmin = 0.95 applied). Apply 0.8 rule for hot-cable correction → measured Zs ≤ 1.10 Ω.',
-            'A4:2026 deleted the 5×IΔn RCD test. Single AC test at 1×IΔn is all the verification routine needs.',
+            'A2:2022 deleted the 5×IΔn RCD test. Single AC test at 1×IΔn is all the verification routine needs.',
             'Live testing without dead tests complete = automatic fail. Speed without safety = automatic fail.',
           ]}
         />
@@ -743,7 +743,7 @@ const AM2Module4Section1 = () => {
             <strong>7. RCD Operation and Timing.</strong> Test Requirements: Trip at 50% rated
             current (½×IΔn): Should NOT trip. Trip at 100% rated current (1×IΔn): general-purpose
             non-delay RCD must trip within 300ms maximum; delay 'S'-type between 130ms and 500ms.
-            A4:2026 deleted Table 3A and the 5×IΔn test — single AC test at 1×IΔn only. AM2
+            A2:2022 deleted Table 3A and the 5×IΔn test — single AC test at 1×IΔn only. AM2
             Critical: Test both positive and negative half cycles.
           </p>
           <p>
@@ -873,12 +873,12 @@ const AM2Module4Section1 = () => {
         />
 
         <CommonMistake
-          title="Pushing the 5×IΔn RCD test that A4:2026 deleted"
+          title="Pushing the 5×IΔn RCD test that A2:2022 deleted"
           whatHappens={
             <>
               The MFT still has a "5×" button. You hit it out of habit — partly because the older
               training materials said "test at 1× then 5× then push the button". You log a 25 ms
-              trip time at 5×. Assessor flags the routine as out of date — A4:2026 deleted Table 3A
+              trip time at 5×. Assessor flags the routine as out of date — A2:2022 deleted Table 3A
               from Appendix 3 and the 5×IΔn AC verification went with it.
             </>
           }
@@ -1029,7 +1029,7 @@ const AM2Module4Section1 = () => {
               question:
                 "What's the actual A4:2026 RCD test routine — I've seen conflicting things online?",
               answer:
-                "A4:2026 deleted Table 3A from Appendix 3. The whole 5×IΔn row is gone — there is no separate 40 ms additional-protection test any more. The verification routine is: single AC test at 1×IΔn (general-purpose non-delay RCD must trip ≤ 300 ms; delay 'S'-type 130–500 ms), plus the manual test button. Additional protection is verified by the device's characteristics — a 30 mA RCD passing the 1×IΔn test (Regulation 415.1.1). Some MFTs still auto-run a ½×IΔn no-trip check — that's pre-test confirmation, not part of the verification you record.",
+                "A2:2022 deleted Table 3A from Appendix 3. The whole 5×IΔn row is gone — there is no separate 40 ms additional-protection test any more. The verification routine is: single AC test at 1×IΔn (general-purpose non-delay RCD must trip ≤ 300 ms; delay 'S'-type 130–500 ms), plus the manual test button. Additional protection is verified by the device's characteristics — a 30 mA RCD passing the 1×IΔn test (Regulation 415.1.1). Some MFTs still auto-run a ½×IΔn no-trip check — that's pre-test confirmation, not part of the verification you record.",
             },
             {
               question: 'Why is B32 Zsmax 1.37 Ω now and not the older 1.44 Ω I was taught?',
@@ -1061,7 +1061,7 @@ const AM2Module4Section1 = () => {
             'Dead tests fully complete BEFORE any live testing — the rule that separates a pass from an automatic fail.',
             'GN3 sequence: continuity (R1+R2) → ring continuity → IR (500 V DC, ≥1 MΩ) → polarity → Ze (TT: earth electrode) → energise → Zs → PFC → RCD → phase sequence → functional.',
             'A4:2026 figures only: B32 Zsmax = 1.37 Ω (NOT 1.44). Apply 0.8 rule → measured Zs cold ≤ 1.10 Ω on a B32.',
-            'RCD verification = single AC test at 1×IΔn + manual test button. The 5×IΔn test was deleted at A4:2026.',
+            'RCD verification = single AC test at 1×IΔn + manual test button. The 5×IΔn test was deleted at A2:2022.',
             'Reg 643.3.3 two-stage IR: 500 V DC with electronics disconnected, then 250 V DC reconnected — both must hit the Table 64 minimum.',
             "PFC at the origin = the higher of PSCC and PEFC. Record what the meter shows; check every device's Icn / Ics covers it.",
           ]}

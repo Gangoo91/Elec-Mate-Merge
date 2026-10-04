@@ -141,7 +141,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Panel condition:</strong> Inspect for physical damage (cracked glass,
                 delamination, discolouration, hot spots), soiling (bird droppings, moss, lichen,
@@ -149,7 +149,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mounting system:</strong> Check all rail clamps, roof fixings, and
                 inter-panel connectors for corrosion, loosening, or mechanical damage. In coastal
@@ -158,7 +158,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DC cabling and connectors:</strong> Inspect accessible DC cables for UV
                 degradation, chafing, and connector integrity. MC4 connectors should be checked for
@@ -167,7 +167,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DC and AC isolators:</strong> Test operation of the roof-level DC isolator,
                 inverter DC isolator, and AC isolator. Check for signs of overheating
@@ -176,7 +176,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Inverter:</strong> Check the inverter display for fault history, note any
                 recorded errors. Clean the ventilation slots (dust accumulation reduces cooling
@@ -184,7 +184,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing and surge protection:</strong> Check earthing continuity of the
                 array frame and mounting system. Inspect surge protection devices (SPDs) — most
@@ -192,7 +192,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Generation review:</strong> Compare actual annual generation (from the meter
                 or monitoring portal) against the predicted yield from the original MCS design. A
@@ -218,7 +218,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Professional cleaning — £100–£200:</strong> A professional service uses
                 purified (deionised) water with a soft-bristle brush or water-fed pole system.
@@ -229,7 +229,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DIY cleaning guidance:</strong> Use purified or filtered water — tap water
                 leaves calcium deposits. A soft brush or sponge on an extendable pole, used from
@@ -241,7 +241,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Safety:</strong> Never access the roof without appropriate fall protection.
                 DC circuits remain live during daylight — do not touch cable connections or
@@ -401,7 +401,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCS installer required:</strong> Any work on DC circuits (replacing
                 connectors, isolators, string fuses, or DC cabling); inverter replacement; adding
@@ -412,7 +412,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>System owner can do:</strong> Panel cleaning (with appropriate access
                 safety); monitoring portal review and alert configuration; resetting the inverter
@@ -491,7 +491,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Manage solar maintenance jobs with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for job management, quoting, and certification. Issue inspection reports and EICs on your phone."
+          description="Join 2,100+ UK electricians using Elec-Mate for job management, quoting, and certification. Issue inspection reports and EICs on your phone."
           icon={Sun}
         />
       </>
@@ -517,7 +517,7 @@ export default function SolarPVMaintenancePage() {
       heroTitle={
         <>
           Solar Panel Maintenance UK:{' '}
-          <span className="text-yellow-400">Servicing & Cleaning Guide</span>
+          <span className="text-elec-yellow">Servicing & Cleaning Guide</span>
         </>
       }
       heroSubtitle="Everything homeowners and electricians need to know about maintaining solar PV systems in the UK — annual inspection checklists, cleaning costs, inverter lifespans, monitoring setup, and diagnosing output drops."
@@ -528,7 +528,7 @@ export default function SolarPVMaintenancePage() {
       faqHeading="Frequently Asked Questions About Solar Panel Maintenance"
       relatedPages={relatedPages}
       ctaHeading="Manage Solar PV Maintenance with Elec-Mate"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for job management, certification, and quoting. Issue solar maintenance reports on your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for job management, certification, and quoting. Issue solar maintenance reports on your phone. 7-day free trial, cancel anytime."
     />
   );
 }

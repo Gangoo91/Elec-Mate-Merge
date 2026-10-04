@@ -195,7 +195,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>What causes arcing</strong> — damaged cable insulation (from nail/screw
                 penetration, crushing, or animal damage), loose or poorly terminated connections,
@@ -205,7 +205,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>How AFDDs work</strong> — an AFDD monitors the current waveform on a circuit
                 for the distinctive signature of arc faults — rapid current oscillations that differ
@@ -214,7 +214,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671 Regulation 421.1.7</strong> — the 18th Edition (and Amendment 1)
                 recommends AFDDs for AC final circuits in domestic installations, particularly in
@@ -225,7 +225,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fitting AFDDs</strong> — AFDDs are fitted at the consumer unit in place of
                 (or in combination with) the standard MCB. They are available as combined AFDD/RCBOs
@@ -304,7 +304,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rubber-insulated wiring (pre-1966)</strong> — rubber insulation degrades
                 with age, heat, and exposure to light. It becomes brittle, cracks, and crumbles,
@@ -313,7 +313,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lead-sheathed wiring (pre-1955)</strong> — lead sheathing was used in the
                 earliest domestic wiring. Where it survives, it is likely to have degraded
@@ -322,7 +322,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wooden fuse boards and rewirable fuses</strong> — rewirable fuses in wooden
                 consumer units provide poor overload protection. The correct fuse wire rating is
@@ -465,7 +465,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Landlord EICR obligation</strong> — the Electrical Safety Standards in the
                 Private Rented Sector (England) Regulations 2020 require landlords to obtain an EICR
@@ -478,7 +478,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smoke alarm requirement</strong> — the Smoke and Carbon Monoxide Alarm
                 (Amendment) Regulations 2022 require smoke alarms on every storey of a rented
@@ -487,7 +487,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tenant responsibilities</strong> — tenants should not overload sockets,
                 should report damaged wiring or sockets to the landlord immediately, should not
@@ -517,7 +517,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-elec-yellow font-bold text-sm">
                 1
               </span>
               <span>
@@ -527,7 +527,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-elec-yellow font-bold text-sm">
                 2
               </span>
               <span>
@@ -536,7 +536,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-elec-yellow font-bold text-sm">
                 3
               </span>
               <span>
@@ -546,7 +546,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-elec-yellow font-bold text-sm">
                 4
               </span>
               <span>
@@ -572,7 +572,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-4">
-            <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+            <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-1">
                 Complete EICRs Identifying Fire Risks On Site
@@ -590,7 +590,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs on your phone with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={Flame}
         />
       </>
@@ -616,7 +616,7 @@ export default function ElectricalFireSafetyPage() {
       heroTitle={
         <>
           Electrical Fire Safety UK:{' '}
-          <span className="text-yellow-400">Prevention and Response Guide</span>
+          <span className="text-elec-yellow">Prevention and Response Guide</span>
         </>
       }
       heroSubtitle="Everything UK electricians, landlords, and homeowners need to know about electrical fire safety — the leading causes of electrical fires, arcing faults and AFDDs, overloaded circuits, old wiring risks, smoke detection, and what to do if an electrical fire starts."

@@ -190,7 +190,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <HeartPulse className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <HeartPulse className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Category 1 — No-Break Supply.</strong> Zero changeover time. Provided by UPS
                 (Uninterruptible Power Supply) with battery backup. Covers life-critical equipment:
@@ -200,7 +200,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <HeartPulse className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <HeartPulse className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Category 2 — Short-Break Supply (less than 0.5 seconds).</strong> Automatic
                 changeover to standby generator within 0.5 seconds. Covers operating theatre power
@@ -210,7 +210,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <HeartPulse className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <HeartPulse className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Category 3 — Long-Break Supply (less than 15 seconds).</strong> Automatic
                 changeover within 15 seconds. Covers emergency lighting, fire alarm systems, medical
@@ -219,7 +219,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <HeartPulse className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <HeartPulse className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Category 4 — Extended-Break Supply.</strong> Manual reconnection after
                 generator has started. Covers non-critical loads that can tolerate an extended
@@ -252,7 +252,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>How it works.</strong> An isolation transformer is installed between the
                 normal TN supply and the medical IT system. The secondary winding of the transformer
@@ -263,7 +263,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insulation Monitoring Device (IMD).</strong> The medical IT system is
                 continuously monitored by an IMD conforming to BS EN 61557-8. The IMD measures the
@@ -273,7 +273,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fault locator system.</strong> A fault locator system conforming to BS EN
                 61557-9 should be provided to identify which circuit has the fault, allowing
@@ -282,7 +282,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Where required.</strong> Medical IT systems are required in Group 2 medical
                 locations where life-support equipment is in use, interruption of the supply could
@@ -371,7 +371,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Group 0.</strong> Medical locations where no applied parts are used (medical
                 equipment in direct contact with the patient). Examples: consulting rooms, offices,
@@ -381,7 +381,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Group 1.</strong> Medical locations where applied parts are used but not for
                 intracardiac procedures, and where loss of supply is not immediately life-
@@ -393,7 +393,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Group 2.</strong> Medical locations where applied parts are used for
                 intracardiac procedures, life-support equipment is in use, or loss of supply could
@@ -438,14 +438,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fixed installation (EICR):</strong> Maximum 5-year interval for the general
                 fixed wiring. Some NHS trusts specify 3-year intervals for high-risk areas.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Generator — start test:</strong> Monthly. The generator should be started
                 and run under no-load conditions to verify it starts correctly and reaches stable
@@ -453,7 +453,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Generator — load test:</strong> Quarterly. The generator should be run under
                 load (using a load bank or actual load transfer) to verify it can sustain the
@@ -461,14 +461,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>ATS changeover test:</strong> Annually. A full simulation of mains failure
                 with automatic changeover to the generator and return to mains when restored.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Medical IT system (IPS):</strong> Continuous monitoring by IMD. Monthly
                 functional test of the alarm system. Annual insulation resistance testing of the
@@ -476,14 +476,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCDs (Group 1 locations):</strong> 6-monthly testing at the rated residual
                 operating current with trip time recorded.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency lighting:</strong> Monthly functional test, annual full-duration
                 test (3 hours for escape routes, 1 hour for open areas).
@@ -601,7 +601,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Brain className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Brain className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">AI Observation Code Assistant</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -648,7 +648,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Professional healthcare EICRs on your phone"
-          description="Join 1,600+ UK electricians creating professional certificates with AI observation coding, multi-board support, and instant PDF delivery."
+          description="Join 2,100+ UK electricians creating professional certificates with AI observation coding, multi-board support, and instant PDF delivery."
           icon={FileCheck2}
         />
       </>
@@ -674,7 +674,7 @@ export default function HospitalElectricalSystemsPage() {
       heroTitle={
         <>
           Hospital Electrical Systems:{' '}
-          <span className="text-yellow-400">HTM 06-01 and Section 710 Explained</span>
+          <span className="text-elec-yellow">HTM 06-01 and Section 710 Explained</span>
         </>
       }
       heroSubtitle="Healthcare electrical installations operate to the highest standards in the industry. Essential supply systems, medical IT systems, residual current monitoring, and Group 2 medical locations require specialist knowledge that goes beyond standard BS 7671. This guide covers everything electricians need to know."
@@ -685,7 +685,7 @@ export default function HospitalElectricalSystemsPage() {
       faqHeading="Frequently Asked Questions About Hospital Electrical Systems"
       relatedPages={relatedPages}
       ctaHeading="Complete Healthcare EICRs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians creating professional certificates with AI observation coding, multi-board support, and instant PDF delivery. Built for the most demanding installations. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians creating professional certificates with AI observation coding, multi-board support, and instant PDF delivery. Built for the most demanding installations. 7-day free trial, cancel anytime."
     />
   );
 }

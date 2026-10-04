@@ -190,7 +190,7 @@ const sections = [
                 <th className="px-4 py-3 font-semibold">Consequence that triggers mandatory protection</th>
               </tr>
             </thead>
-            <tbody className="text-white/90">
+            <tbody className="text-white">
               <tr className="border-t border-white/10 bg-red-900/20">
                 <td className="px-4 py-3 font-bold align-top">(a)</td>
                 <td className="px-4 py-3">
@@ -199,8 +199,8 @@ const sections = [
                 </td>
               </tr>
               <tr className="border-t border-white/10">
-                <td className="px-4 py-3 font-bold align-top text-white/50">(b)</td>
-                <td className="px-4 py-3 text-white/60">
+                <td className="px-4 py-3 font-bold align-top text-white">(b)</td>
+                <td className="px-4 py-3 text-white">
                   <em>Deleted by BS 7671:2018+A2:2022, Corrigendum (May 2023).</em>
                 </td>
               </tr>
@@ -238,7 +238,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <p className="text-white text-sm font-semibold mb-2">
                 Owner Declaration — What Is Required (Reg 443.4.1)
@@ -350,7 +350,7 @@ const sections = [
                 <th className="px-4 py-3 font-semibold text-green-300">Type 3</th>
               </tr>
             </thead>
-            <tbody className="text-white/90">
+            <tbody className="text-white">
               <tr className="border-t border-white/10">
                 <td className="px-4 py-3 font-medium">Test waveform</td>
                 <td className="px-4 py-3">10/350 µs (Iimp)</td>
@@ -397,7 +397,7 @@ const sections = [
                   <th className="px-4 py-3 font-semibold">Example equipment</th>
                 </tr>
               </thead>
-              <tbody className="text-white/90">
+              <tbody className="text-white">
                 <tr className="border-t border-white/10 bg-blue-900/20">
                   <td className="px-4 py-3 font-bold">IV</td>
                   <td className="px-4 py-3 font-mono">6 kV</td>
@@ -449,7 +449,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Variable-frequency drives (VFDs / inverters)</strong> — produce high-energy
                 switching transients on every switching cycle. Common in HVAC systems, pump
@@ -457,7 +457,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large motors and motor starters</strong> — switching large inductive loads
                 generates voltage spikes. Star-delta starters and direct-on-line starters are
@@ -465,7 +465,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Power factor correction capacitors</strong> — switching capacitor banks
                 causes high-frequency transient overvoltages that propagate through the
@@ -483,7 +483,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <p className="text-white text-sm">
               <strong>EICR implication:</strong> Where VFDs, large motors, or capacitor banks are
               present and no switching overvoltage assessment has been carried out or documented,
@@ -507,7 +507,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CircuitBoard className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable length</strong> — the total cable length from the SPD to the line
                 busbar and from the SPD to the earth bar must be as short as possible — ideally less
@@ -516,7 +516,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CircuitBoard className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Connection position</strong> — the SPD should be connected after the main
                 switch but before the RCD(s). This ensures that the SPD surge discharge current does
@@ -526,7 +526,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CircuitBoard className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Backup protection</strong> — a dedicated MCB or fuse (typically 32A or as
                 specified by the SPD manufacturer) is installed in series with the SPD. If the SPD
@@ -535,7 +535,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CircuitBoard className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth connection</strong> — the SPD diverts surge current to earth. The
                 earth connection must be low impedance. Connect to the main earthing terminal (MET)
@@ -568,7 +568,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Backup device rating</strong> — the SPD manufacturer specifies the maximum
                 backup fuse or MCB rating. Using a backup device with a higher rating than specified
@@ -578,7 +578,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD coordination</strong> — surge currents flowing through an RCD can cause
                 nuisance tripping. Position the SPD before (upstream of) the RCD so that surge
@@ -587,7 +587,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Supply fuse coordination</strong> — in the event of an SPD short-circuit
                 failure, the backup MCB must operate before the supply fuse. This is normally
@@ -665,7 +665,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Claims evidence</strong> — if a surge event damages equipment and the
                 homeowner makes an insurance claim, the insurer may ask whether the installation
@@ -675,7 +675,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>High-value homes</strong> — insurers of high-value properties (those with
                 specialist home insurance policies) may specifically inquire about surge protection
@@ -684,7 +684,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial premises</strong> — business insurance policies, particularly
                 those covering IT equipment and business interruption, may offer premium reductions
@@ -722,7 +722,7 @@ export default function Chapter44OvervoltageProtectionPage() {
       badgeIcon={BookOpen}
       heroTitle={
         <>
-          Chapter 44: <span className="text-yellow-400">Overvoltage and SPD Requirements</span>
+          Chapter 44: <span className="text-elec-yellow">Overvoltage and SPD Requirements</span>
         </>
       }
       heroSubtitle="Under BS 7671:2018+A4:2026, SPDs are required by default for most installations — omission requires a formal written owner declaration. This guide explains the Reg 443.4.1 consequence limbs, the owner declaration mechanism, SPD types, installation, and the commercial case for your customers."
@@ -738,7 +738,7 @@ export default function Chapter44OvervoltageProtectionPage() {
       faqHeading="Frequently Asked Questions About SPDs and Overvoltage Protection"
       relatedPages={relatedPages}
       ctaHeading="Quote SPDs and Document Risk Assessments on Site"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for professional quoting, on-site EIC certificates, and overvoltage risk assessment documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for professional quoting, on-site EIC certificates, and overvoltage risk assessment documentation. 7-day free trial, cancel anytime."
     />
   );
 }

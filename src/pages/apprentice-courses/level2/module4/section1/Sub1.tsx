@@ -89,10 +89,10 @@ const quizQuestions = [
     question:
       "PUWER 1998 Regulation 4 requires work equipment to be 'suitable' for the work it's used for. For an electrician's hand tool, what does 'suitable' practically mean?",
     options: [
-      'Apply the 0.8 rule for measured-vs-table comparison: Zs(measured) ≤ 0.8 × Zs(table) = 0.8 × 1.37 = 1.10 Ω. 1.05 ≤ 1.10 → pass with small margin (5 %). Worth noting on the schedule that compliance is borderline; investigate any reasons the cable might be hot in service (long run, bundled cables, high ambient temperature).',
+      'That it carries a current PAT label — any tool with an in-date PAT sticker is suitable for every task on site.',
       'Three things — fit for the task (right type and size — long-nose for forming, side cutters for cutting, VDE driver for live-near-terminal work), in good condition (not damaged, blunt or modified), and used in the way the manufacturer intended (no tin snips as can openers, no screwdrivers as chisels). Tools used outside any one of those three legs breach Reg 4.',
-      'Operation of mechanical interlocks (e.g. door interlock prevents opening while energised, key interlock prevents racking out a circuit-breaker without permit), confirmation that emergency-off devices break the supply, manual operation of the main switch under load (where safe), and that any control circuit logic (contactors, relays, time delays) operates as designed.',
-      'Section 7(a) — to take reasonable care for the health and safety of themselves and of other persons who may be affected by their acts or omissions at work. Section 7(b) — to co-operate with their employer (and any other person under a duty) so far as is necessary to enable that duty to be performed. These are personal statutory duties that apply to every operative on site, including apprentices.',
+      'That it is the most expensive professional-grade version available — PUWER treats price and brand as the measure of suitability.',
+      'That the operative owns it personally — a tool brought from home is always suitable because the user knows its condition.',
     ],
     correctAnswer: 1,
     explanation:
@@ -103,10 +103,10 @@ const quizQuestions = [
     question:
       "You're forming the end of an 8 mm² flexible bonding tail for a gas pipe clamp. Which combination of hand tools gives you a tidy, code-compliant termination?",
     options: [
-      "The casualty has autonomy on their own treatment but the supervisor has duties to the firm, the regulator and the wider workplace. Refusing medical assessment is the casualty's right but doesn't discharge the supervisor's HASAWA s.2 / s.7 duty. Supervisor should: strongly recommend assessment, document the conversation, escalate to a more senior manager, decline to release the casualty back to safety-critical work without clearance.",
-      "Completion of the relevant year's college units (typically C&G 2365-03 Year 2 / NVQ Level 3 progress), portfolio entries signed by the workplace mentor, and your employer's formal approval through the JIB grading update. Stage progression is evidence-based, not time-based — you can't just 'wait' for the next Stage; you have to demonstrate you've earned it.",
-      'Cable cutters (or T+E shears) to crop the tail square; a stripper sized for 6/10 mm² to remove the green/yellow PVC; long-nose pliers to form the conductor into the clamp aperture OR a ratchet crimper to fit a bootlace ferrule (red for 10 mm², blue for 6 mm²) before insertion. Squared cut + clean strip + correct termination = 526.1 compliant.',
-      "Mind is the UK's largest general mental health charity (not construction-specific). Provides information, advice, helpline (0300 123 3393), support groups and signposting for any UK adult experiencing mental health difficulty. Construction-specific charities (Lighthouse, EIC, Mates in Mind) complement Mind by providing sector-specific context and infrastructure. Both can help; pick whichever is most accessible.",
+      'A Stanley knife to strip the green/yellow sheath, then twist the strands tight with your fingers and clamp them bare — a ferrule is never used on a bonding conductor.',
+      'Side cutters to crop and strip in one go, then fold the strands back on themselves to double the contact area under the clamp screw.',
+      'Cable cutters (or T+E shears) to crop the tail square; a stripper sized for 6/10 mm² to remove the green/yellow PVC; long-nose pliers to form the conductor into the clamp aperture OR a ratchet crimper to fit a bootlace ferrule (red for 10 mm², yellow for 6 mm²) before insertion. Squared cut + clean strip + correct termination = 526.1 compliant.',
+      'A soldering iron to tin the stripped end so the strands hold together, then tighten into the clamp — solder gives the most durable joint on a bonding tail.',
     ],
     correctAnswer: 2,
     explanation:
@@ -132,9 +132,9 @@ const quizQuestions = [
       'A senior electrician shows you their tool roll and points out the difference between combination pliers, side cutters and long-nose pliers. Which job is each one BEST suited to?',
     options: [
       "Combination pliers — heavy-duty grip, twisting solid conductors, pulling cable through tight runs, light cutting of soft material. Side cutters (sometimes called diagonal cutters or 'snips') — flush cutting of insulated and bare conductor, trimming cable ends. Long-nose pliers — forming loops, reaching into recessed terminals, holding small components while you tighten. One job each, no overlap if you can help it.",
-      "The multimeter has 10 MΩ input impedance and will read induced voltages and 'phantom' voltages that aren't a real source — it can show 30–80 V on a dead conductor that has nothing dangerous on it, leading you to assume the circuit is live when it isn't (a false positive). The two-pole tester has low input impedance (typically a few kΩ) and 'loads' the circuit — phantom voltages collapse to zero, real sources hold. GS38 specifically prefers two-pole testers for proving dead because the low impedance gives an unambiguous answer.",
-      'A formal recognition that you hold the specialist solar PV competence — typically gained by passing AM2S (the Solar PV variant of AM2) or by completing an MCS-approved PV installer course alongside time-served PV installation experience. The endorsement allows you to work on PV installations under MCS-registered firms.',
-      'Quicker than 3-lead, used when access to the neutral is impractical (e.g. testing at a fixed appliance with only L and E accessible). The instrument measures the L-E loop only; result is Zs directly without the auxiliary L-N measurement. Slightly less accurate than 3-lead but acceptable for routine Zs verification.',
+      'Combination pliers — fine forming of loops in small terminals. Side cutters — gripping and twisting solid conductors. Long-nose pliers — flush cutting of cable ends.',
+      'All three do the same jobs — the names are brand variations, so use whichever is nearest to hand for gripping, cutting or forming.',
+      'Combination pliers — cutting only. Side cutters — pulling cable through tight runs. Long-nose pliers — heavy-duty twisting of large conductors.',
     ],
     correctAnswer: 0,
     explanation:
@@ -145,10 +145,10 @@ const quizQuestions = [
     question:
       "You're under a kitchen unit running 6 mm² T+E to a cooker outlet plate. The cable needs to run through three joists and around a CH pipe. Which hand tool group helps you actually pull the cable through the route?",
     options: [
-      'Propose a scope that includes everything that can be safely tested live (visual inspection, thermographic survey of switchgear, RCD test buttons, live tests on circuits where safe to do so) and clearly excludes what cannot be tested without isolation, recording the exclusion under Limitations with the recommendation that the duty holder schedule a planned outage for full testing within an agreed period. Note any FI for items the live-only inspection cannot fully verify.',
+      'Pull the cable through by gripping the copper cores with combination pliers — the conductors are stronger than the sheath, so pulling on them avoids tearing the outer PVC.',
       "Cable management hand tools — fish tape (steel or fibreglass, 10–30 m for domestic), draw rope for longer pulls, cable lubricant for tight bends or full conduit runs, and a 'cable sock' or 'pulling grip' for SWA and larger flexes. The fish tape feeds in from the destination, you hook the cable on at the source and pull it through. Without fish tape and lube you'll end up pulling on the conductor itself, stretching the copper and failing 526.1.",
-      "UK statute making it a criminal offence to offer, promise, give, request, accept or agree to receive a financial or other advantage as an inducement for improper performance. Applies to any UK person/business. For electricians: gifts to suppliers/main contractors over modest value (typically £100+) raise risk; cash 'thank-yous' to procurement people are clearly bribery; small thank-you gifts (bottle of wine, biscuit tin) are typically fine. Many large firms have anti-bribery policies that ban any gifts.",
-      "RIDDOR Reg 7 specifies a list of 'dangerous occurrences' that must be reported even if no-one was hurt — they're near-misses with serious potential. The list (RIDDOR Schedule 2) includes electrical short circuits or overloads that cause a fire or explosion, certain types of plant collapse, scaffolding failure, dangerous occurrences in or near a pipeline, and so on. So yes — an electrical incident causing fire or explosion in a fixed installation is reportable as a dangerous occurrence even with no injury.",
+      'Push the cable through from the source end only, feeding it by hand — fish tapes and draw ropes are for conduit work and are never used in floor voids.',
+      'Use a claw hammer to tap the cable along the route between joists — the cable follows the path of least resistance once it is started.',
     ],
     correctAnswer: 1,
     explanation:
@@ -159,10 +159,10 @@ const quizQuestions = [
     question:
       "BS 7671 Regulation 526.1 requires every connection to have 'durable electrical continuity and adequate mechanical strength'. How does your choice of stripping tool affect compliance?",
     options: [
-      "The right not to suffer detriment for raising health and safety concerns. An employee who is dismissed, demoted, denied promotion, harassed or otherwise penalised for raising a genuine health and safety concern (or for refusing to work in conditions of serious and imminent danger) has a claim under s.44. The right is automatic and doesn't require a qualifying period of employment.",
-      'Competence = having the technical knowledge / skill / experience to do the work safely. Authority = being permitted by the firm or a regulator to do it. Both are required. An L3 may be competent on a task but not authorised (e.g. EIC sign-off requires Qualified Supervisor authority); or authorised by job title but not yet competent on a specific item (e.g. CompEx work).',
+      "It doesn't — 526.1 only covers the terminal screw torque, so how the insulation came off is outside the regulation.",
+      'Only on stranded conductors — a nick in a solid core makes no difference because the copper is too thick to weaken.',
       'Directly. A correctly-sized stripper removes only the insulation, leaving the copper undamaged — full cross-section preserved, full current-carrying capacity, full mechanical strength. A knife strip nicks the copper, reducing the cross-section and creating a stress-riser fracture point. A few months of thermal cycling and the conductor breaks at the nick — high resistance, hot terminal, eventual failure on EICR or worse, on fire alarm. The stripping tool is part of the 526.1 chain.',
-      'When teams avoid conflict, important issues go unaddressed, decisions are made without genuine input (leading to lack of commitment), underlying tensions fester and eventually explode destructively, and the quality of decisions suffers because ideas are not challenged and refined through debate. Healthy teams have MORE open conflict, not less — but it is constructive, issue-focused conflict',
+      'Only if the joint fails the insulation resistance test on the day — a nicked conductor that tests clean is compliant with 526.1.',
     ],
     correctAnswer: 2,
     explanation:
@@ -173,9 +173,9 @@ const quizQuestions = [
     question:
       "You're issued a tool kit on day one of your apprenticeship. The supervisor tells you to mark every tool with your initials. Why?",
     options: [
-      'Part P does NOT apply (Part P is dwellings-only). EAWR applies to the workplace electrical safety. The work needs an EIC or MEIWC for BS 7671 compliance and the contractor discharges EAWR duties through competent design and installation. No CPS upload required because Part P does not apply, but the contractor may still notify Building Control if other Building Regulations Parts are triggered (e.g. Part B fire safety, Part L energy efficiency).',
-      "Reg 3 puts the duty on EVERY employer, every self-employed person, and every employee — including apprentices — engaged in any work activity covered by the Regulations. The employee duty is to co-operate with the employer in complying with EAWR, AND to comply themselves with EAWR insofar as the matters relate to things within the employee's control. So an apprentice has a personal EAWR duty, not just an employer-mediated one.",
-      '3 V — pass. Calculation: Ra x I delta n = 100 x 0.030 = 3 V. The acceptance criterion (Reg 411.5.3(b)) is Ra x I delta n less than or equal to 50 V (the conventional touch-voltage limit). 3 V is well within 50 V — the RCD will operate well before the touch-voltage approaches dangerous level. For the same Ra with a 100 mA RCD: 100 x 0.100 = 10 V — still pass. With a 300 mA RCD: 100 x 0.300 = 30 V — still pass but tighter. The Ra x I delta n calculation is the TT-specific acceptance test.',
+      "Because BS 7671 requires every hand tool on an installation to carry the installer's initials for the EIC.",
+      "Because marking a tool voids the manufacturer's warranty for anyone else, so it can't be borrowed.",
+      "Because it is a JIB grading requirement — tools must be marked before the apprentice's ECS card is issued.",
       "Three reasons. Practical — site tools migrate; marking yours stops it disappearing into a sub-contractor's pouch. Insurance — if a tool causes an accident, the firm needs to know whose competent person was meant to be checking it. Accountability — under PUWER you're personally responsible for the tools you use; marking tells the supervisor (and the HSE if it ever gets there) that the tool was assigned to a named operative who had the duty of pre-use inspection.",
     ],
     correctAnswer: 3,
@@ -188,9 +188,9 @@ const quizQuestions = [
       'Which categories together cover everything an apprentice does in their first month of installation work — first-fixing T+E and second-fixing accessories?',
     options: [
       'Cutting (T+E shears, side cutters, hacksaw for trunking and conduit), stripping (auto-strippers and a sharp Stanley for outer sheath) and terminating (Pozidriv VDE drivers for accessory terminations, ratchet crimper for ferrules where used). Layered on top of that — measuring (tape, level), marking (pencil or chinagraph), and fixing (claw hammer for joist clips, club hammer for chasing). Six categories in two months.',
-      'Acknowledge the alarm, check the UPS control panel for specific fault details, perform battery impedance or resistance testing, check battery terminal voltages and connections, assess the remaining battery autonomy, and report the findings with a recommendation for battery replacement if required',
-      "Witnesses fade fast — by the next day they've reconstructed events differently, by the next week they've forgotten details, by the next month their memory has merged with what they later read or heard. Asking each witness to write down what they saw, in their own words, on the day of the incident, captures evidence at its strongest. The HSE / insurer / firm's defence team will all want this evidence later.",
-      'Around 10% of the UK population is estimated to have dyslexia (British Dyslexia Association figure), with research suggesting prevalence may be materially higher in trade roles where visual-spatial reasoning is favoured. That means in a typical apprentice cohort of 20, two to four people are likely to be dyslexic. Plain English briefings, visual aids, audio material, extra time on written assessments and the option of practical demonstration are the standard reasonable adjustments — and they help non-dyslexic learners too.',
+      "Testing only — an apprentice's first month is spent with the MFT, proving circuits and recording results, before any cutting or terminating is allowed.",
+      'Power tools only — first-fix and second-fix are done entirely with SDS drills, grinders and impact drivers, so hand tools are not needed.',
+      'Design and specification — the first month covers cable sizing calculations and protective device selection before any hands-on work.',
     ],
     correctAnswer: 0,
     explanation:

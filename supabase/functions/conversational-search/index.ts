@@ -232,7 +232,17 @@ Your retrieval pipeline gives you two distinct corpora:
    or "Building Regulations 2010 reg 12(6A)" — NEVER as "Reg 2.5" (that would be a BS 7671
    regulation that does not exist). Approved Document P (2013) still refers to BS 7671:2008 — the
    current standard is BS 7671:2018+A4:2026. Scotland and Northern Ireland have different systems
-   that are NOT in this corpus: say so rather than applying England's rules.
+   that are NOT in this corpus: say so rather than applying England's rules. If the user does not
+   say where the work is, answer for England and say you have assumed England (Wales differs on
+   some notification rules). Replacing a consumer unit in a dwelling in England IS notifiable
+   (Building Regulations 2010 reg 12(6A)(b)) — like-for-like or not. In ENGLAND only the three
+   reg 12(6A) categories are notifiable — a new circuit, a consumer unit replacement, and additions
+   or alterations to circuits in a special location (the bath/shower zones, swimming pools, saunas);
+   all other work is non-notifiable (Approved Document P para 2.7). A kitchen is NOT a special
+   location in England, so adding a socket or light to an existing kitchen circuit is not notifiable
+   there. The "not in a kitchen" wording in Schedule 4 does not make kitchen work notifiable in
+   England. In WALES it does matter: Approved Document P (Wales) Table 1 makes additions to existing
+   circuits in a kitchen notifiable, and consumer unit replacements are notifiable there too.
 
 2. **Practical Work Intelligence** — separate corpus of ~200k facets covering practitioner knowledge across:
    - EV charging (Section 722 + IET CoP for EV) — install, commissioning, faults
@@ -343,6 +353,7 @@ The user may attach PDFs (datasheets, a previous EICR, a spec, a DNO letter, man
 - ALWAYS cite specific regulation numbers (e.g., Reg. 411.3.3, Table 41.3).
 - ALWAYS include actual values, limits and thresholds.
 - For calculations, show complete methodology with formula and worked example.
+- Cable sizing: when the select_cable_size tool is available, use it and build the answer from its result — its Iz, mV/A/m and device figures come from the verified Appendix 4 tables, so never replace them with remembered values. The Verdict's cable and device must be the tool's selected result (or say why you depart from it). State the Ib basis (e.g. 9.5 kW at 240 V vs 230 V) because it can change the device and the cable. Without the tool: write out Ib ≤ In ≤ Iz with the actual numbers (Reg 433.1.1); if In < Ib or Iz < In the combination FAILS — never call it "marginal" or "just clears".
 - Include safety warnings where relevant.
 
 ## Depth & Coverage — REQUIRED (every answer)
@@ -459,13 +470,19 @@ function pickModel(
     Array.isArray(understanding.regulation_numbers) &&
     understanding.regulation_numbers.length >= 2;
   const matchesJobShape = SONNET_KEYWORDS.test(understanding.original || '');
-  const complex = intentComplex || multipleRegs || matchesJobShape;
+  // A sizing question needs the select_cable_size tool even when the intent
+  // classifier doesn't call it a calculation — "Cable size for a 7kW EV
+  // charger, 20m" came back with no tool and remembered capacities (2 Oct 2026).
+  const sizingTopic = (understanding.topic_tags ?? []).some(
+    (t) => t === 'cable-sizing' || t === 'voltage-drop'
+  );
+  const complex = intentComplex || multipleRegs || matchesJobShape || sizingTopic;
   if (complex) {
     return {
       model: SONNET_MODEL,
       provider: 'anthropic',
       maxTokens: SONNET_MAX_TOKENS,
-      useTools: understanding.intent === 'calculation',
+      useTools: understanding.intent === 'calculation' || sizingTopic,
     };
   }
   return {
@@ -610,8 +627,8 @@ async function streamAnthropic(
     cacheReadTokens: 0,
     cacheWriteTokens: 0,
   };
-  // Anthropic tool use requires iterative calls: we run up to 2 iterations
-  // (model → tool call → follow-up answer). Each iteration streams.
+  // Anthropic tool use requires iterative calls: up to 3 iterations
+  // (model → tool call → maybe one more tool call → answer). Each streams.
   const systemBlocks = [
     // The STATIC prompt is marked cache_control: ephemeral for prompt caching.
     {
@@ -625,7 +642,10 @@ async function streamAnthropic(
   ];
 
   let workingMessages = [...opts.messages];
-  const maxIterations = opts.tools && opts.tools.length > 0 ? 2 : 1;
+  let maxIterations = opts.tools && opts.tools.length > 0 ? 3 : 1;
+  let retriedEmpty = false;
+  // Every tool call and its result, so a stalled answer can be re-asked as text.
+  const toolLog: Array<{ name: string; input: unknown; output: unknown }> = [];
 
   for (let iter = 0; iter < maxIterations; iter++) {
     const body: Record<string, unknown> = {
@@ -635,8 +655,16 @@ async function streamAnthropic(
       system: systemBlocks,
       messages: workingMessages,
     };
-    if (opts.tools && opts.tools.length > 0 && iter === 0) {
+    /*
+     * Tools go on EVERY iteration. Sending them only on the first left the
+     * follow-up request carrying tool_use blocks with no tools defined, and the
+     * model came back with nothing — a cable-sizing question ran the calculator
+     * twice and streamed a blank answer (found 2 Oct 2026). The last iteration
+     * forbids further calls so it has to answer in text.
+     */
+    if (opts.tools && opts.tools.length > 0 && !retriedEmpty) {
       body.tools = opts.tools;
+      if (iter === maxIterations - 1) body.tool_choice = { type: 'none' };
     }
 
     const res = await fetch('https://api.anthropic.com/v1/messages', {
@@ -662,6 +690,7 @@ async function streamAnthropic(
     // continuation transcript after a tool call — omitting it made the model
     // restate its opening (duplicated verdicts reached users and the cache).
     let iterText = '';
+    let stopReason = '';
 
     const reader = res.body?.getReader();
     if (!reader) throw new Error('No stream body from Anthropic');
@@ -750,12 +779,40 @@ async function streamAnthropic(
           }
           case 'message_delta': {
             usage.outputTokens += event.usage?.output_tokens ?? 0;
+            stopReason = event.delta?.stop_reason ?? stopReason;
             break;
           }
           case 'message_stop':
           default:
             break;
         }
+      }
+    }
+
+    if (!iterText.trim() && toolUses.length === 0) {
+      console.warn('[conversational-search] model pass ended with no text', { iter, stopReason });
+      /*
+       * After tool results the model sometimes ends its turn with no content
+       * at all (stop_reason end_turn) — every run of "32A radial, 25m, in
+       * insulation" on 2 Oct 2026. A "please continue" turn did not shift it.
+       * One retry: the original question plus the calculator results as plain
+       * text, no tool blocks and no tools offered, so it can only answer.
+       */
+      if (toolLog.length > 0 && !retriedEmpty) {
+        retriedEmpty = true;
+        maxIterations = iter + 2;
+        const results = toolLog
+          .map((t) => `- ${t.name}(${JSON.stringify(t.input)}) → ${JSON.stringify(t.output)}`)
+          .join('\n');
+        workingMessages = [
+          ...opts.messages,
+          { role: 'assistant', content: 'I ran the calculator for this.' },
+          {
+            role: 'user',
+            content: `Calculator results:\n${results}\n\nNow give the full answer in text using these results.`,
+          },
+        ];
+        continue;
       }
     }
 
@@ -782,6 +839,7 @@ async function streamAnthropic(
     const toolResults: any[] = [];
     for (const tu of toolUses) {
       const { output } = await onToolUse(tu.name, tu.input);
+      toolLog.push({ name: tu.name, input: tu.input, output });
       toolResults.push({
         type: 'tool_result',
         tool_use_id: tu.id,
@@ -1020,7 +1078,10 @@ serve(async (req: Request) => {
            * 43.3.5. 8 gives a two-part question room for both halves; it is
            * what the non-Haiku path already used.
            */
-          const topK = routing.model === HAIKU_MODEL ? 8 : 8;
+          // Building Regs answers often turn on a table (AD F Table 1.1 extract
+          // rates, AD M heights): with 8 slots its rows were squeezed out and the
+          // model filled the gap with its own figure. 12 for those questions only.
+          const topK = understanding.topic_tags?.includes('building-regs') ? 12 : 8;
           const retrieval = await retrieveBS7671Facets({
             supabase,
             understanding,
@@ -1040,12 +1101,27 @@ serve(async (req: Request) => {
             })
           );
 
-          const contextBlock = formatFacetsForPrompt(
-            retrieval.primary,
-            retrieval.related,
-            retrieval.practical ?? [],
-            retrieval.specialist ?? []
-          );
+          /*
+           * Empty retrieval used to mean NO context block at all, and the model
+           * answered from memory — under concurrent load (retrieval hitting its
+           * deadline) that produced "a new cooker circuit is not notifiable" and
+           * a made-up "Table B1". Tell it plainly that nothing was retrieved.
+           */
+          const nothingRetrieved =
+            retrieval.primary.length === 0 &&
+            retrieval.related.length === 0 &&
+            (retrieval.practical ?? []).length === 0;
+          const contextBlock = nothingRetrieved
+            ? '[NO SOURCE TEXT WAS RETRIEVED FOR THIS QUESTION] Do not state any regulation, paragraph, ' +
+              'table or schedule number, and do not state any figure, limit, time period or yes/no ' +
+              'compliance verdict as fact. Say you could not check the regulations for this answer and ' +
+              'that the user should ask again; you may give general, clearly-flagged-unverified context only.'
+            : formatFacetsForPrompt(
+                retrieval.primary,
+                retrieval.related,
+                retrieval.practical ?? [],
+                retrieval.specialist ?? []
+              );
 
           // Early sources — the rail no longer waits for the stream to end.
           // Explicit reg_number fields only exist on regulation-typed units,
@@ -1277,6 +1353,17 @@ serve(async (req: Request) => {
               };
             }
           );
+
+          // Never close on a blank answer — the user would see an empty bubble.
+          if (!accumulated.trim()) {
+            console.error('[conversational-search] empty answer', { useTools: routing.useTools });
+            safeEnqueue(sseFrame({ type: 'error', recoverable: true }));
+            safeEnqueue(
+              contentFrame(
+                "\n\nSomething went wrong on my end — give it a moment and try again. If it keeps happening, drop us a line at info@elec-mate.com."
+              )
+            );
+          }
 
           /*
            * ELE-1748 — record what that answer cost.

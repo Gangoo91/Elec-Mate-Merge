@@ -258,7 +258,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Know your minimum viable rate</strong> — calculate your total annual costs
                 (van, insurance, tools, phone, accountancy, training, pension) and divide by your
@@ -267,7 +267,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Price the job, not the hours</strong> — experienced electricians price based
                 on the value of the job to the customer and their knowledge of what similar work
@@ -276,7 +276,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Do not discount the quote</strong> — if a customer asks you to lower your
                 price, the correct response is to reduce the scope, not the margin. Offer to exclude
@@ -303,7 +303,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardList className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Materials</strong> — list the key materials: consumer unit (manufacturer and
                 model), cable specifications and approximate quantities, accessories (sockets,
@@ -313,7 +313,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardList className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Labour</strong> — show estimated hours and your labour rate, or simply show
                 a labour subtotal. You are not obliged to show your detailed labour build-up, but
@@ -322,7 +322,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardList className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Certification and notification</strong> — include the cost of Part P
                 Building Regulations notification (if required) and any test certificates
@@ -348,7 +348,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Concealed wiring</strong> — in older properties you cannot know the
                 condition of existing wiring until it is accessed. State in your quote that "price
@@ -357,7 +357,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Asbestos</strong> — in properties built before 2000, asbestos-containing
                 materials may be present. If you suspect ACMs, the customer must arrange an asbestos
@@ -365,7 +365,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Access and working conditions</strong> — if access to the loft, under floor,
                 or plant rooms is required, note any assumptions about accessibility. If a customer
@@ -374,7 +374,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Material price validity</strong> — include a statement that material prices
                 are based on current trade prices and are subject to change if the start date is
@@ -400,7 +400,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Deposit</strong> — for jobs over £500, take a deposit of 20 to 30 per cent
                 on acceptance of the quote and before materials are ordered. For bespoke or
@@ -410,7 +410,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Staged payments</strong> — for larger domestic jobs (rewires, extensions),
                 stage payments reduce your exposure. A typical structure: 30 per cent deposit, 30
@@ -419,7 +419,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Payment method and timing</strong> — state that payment is due on completion
                 (for straightforward jobs) or within seven days of invoice. Accept bank transfer
@@ -428,7 +428,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Late payment</strong> — include a statement that late payment may incur
                 interest under the Late Payment of Commercial Debts (Interest) Act 1998 at 8 per
@@ -513,7 +513,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Day 1 — send and confirm</strong> — send the quote by email and send a brief
                 text or WhatsApp to let the customer know it has been sent. Confirm they have
@@ -521,7 +521,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Day 5 to 7 — first follow-up</strong> — call or message to ask if they have
                 had the chance to review the quote and whether they have any questions. Do not ask
@@ -530,7 +530,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Day 14 — second follow-up</strong> — if no response, send a brief message
                 noting that the quote validity period is approaching and you wanted to check if they
@@ -538,7 +538,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ask why if you lose</strong> — if a customer declines your quote, ask
                 politely whether the decision was made on price, timing, or another factor. This
@@ -563,7 +563,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <PoundSterling className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Build Quotes on Your Phone</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -598,7 +598,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote faster and win more work with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting, invoice management, and business AI."
+          description="Join 2,100+ UK electricians using Elec-Mate for professional quoting, invoice management, and business AI."
           icon={FileText}
         />
       </>
@@ -624,7 +624,7 @@ export default function QuoteWritingGuidePage() {
       heroTitle={
         <>
           How to Write Electrical Quotes:{' '}
-          <span className="text-yellow-400">A Professional Guide for UK Electricians</span>
+          <span className="text-elec-yellow">A Professional Guide for UK Electricians</span>
         </>
       }
       heroSubtitle="Professional quote structure, pricing strategy, materials and labour breakdown, contingency, payment terms, and the follow-up strategy that converts more quotes into accepted work — for domestic and commercial electrical jobs."
@@ -635,7 +635,7 @@ export default function QuoteWritingGuidePage() {
       faqHeading="Frequently Asked Questions About Electrical Quote Writing"
       relatedPages={relatedPages}
       ctaHeading="Send Professional Electrical Quotes from Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to build and send professional quotes on site. Materials pricing built in. PDF export in seconds. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to build and send professional quotes on site. Materials pricing built in. PDF export in seconds. 7-day free trial, cancel anytime."
     />
   );
 }

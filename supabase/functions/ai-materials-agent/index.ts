@@ -1,6 +1,7 @@
 import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import { captureException } from '../_shared/sentry.ts';
+import { fetchChatCompletions } from '../_shared/llm-direct.ts';
 
 // CORS headers for cross-origin requests
 const corsHeaders = {
@@ -138,12 +139,12 @@ serve(async (req) => {
 
     console.log('[AI-MATERIALS-AGENT] Processing list:', { preference, maxBudget });
 
-    const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
-    if (!LOVABLE_API_KEY) {
-      throw new Error('LOVABLE_API_KEY not configured');
+    const AI_API_KEY = Deno.env.get('OPENAI_API_KEY');
+    if (!AI_API_KEY) {
+      throw new Error('OPENAI_API_KEY not configured');
     }
 
-    // Step 1: Parse materials list using Lovable AI
+    // Step 1: Parse materials list using AI
     console.log('[AI-MATERIALS-AGENT] Step 1: Parsing materials list with AI...');
     const parsePrompt = `You are an electrical materials expert. Parse this materials list into structured JSON.
 
@@ -165,10 +166,10 @@ Return ONLY valid JSON in this format:
   "confidence": 0.95
 }`;
 
-    const parseResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+    const parseResponse = await fetchChatCompletions({
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
+        Authorization: `Bearer ${AI_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({

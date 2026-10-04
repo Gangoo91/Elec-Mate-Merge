@@ -196,7 +196,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-elec-yellow font-bold text-sm">
                 1
               </span>
               <span>
@@ -207,7 +207,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-elec-yellow font-bold text-sm">
                 2
               </span>
               <span>
@@ -216,7 +216,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-elec-yellow font-bold text-sm">
                 3
               </span>
               <span>
@@ -226,7 +226,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-elec-yellow font-bold text-sm">
                 4
               </span>
               <span>
@@ -236,7 +236,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-elec-yellow font-bold text-sm">
                 5
               </span>
               <span>
@@ -246,7 +246,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-elec-yellow font-bold text-sm">
                 6
               </span>
               <span>
@@ -336,7 +336,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Personal padlocks</strong> — each worker must have their own padlock with a
                 unique key. Safety padlocks are typically brightly coloured and have a non-
@@ -345,7 +345,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Multi-lock hasps (hasp-and-staple devices)</strong> — a hasp accepts
                 multiple padlocks simultaneously. It is applied to the isolation point and each
@@ -354,7 +354,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCB lockout clips</strong> — snap-on devices that fit over a miniature
                 circuit breaker in the off position and accept a padlock shackle. Available for most
@@ -363,7 +363,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Plug lockouts</strong> — lockout devices that encase a plug so that it
                 cannot be inserted into a socket. Used when the isolation point is a plug and socket
@@ -372,7 +372,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fuse lockout boxes</strong> — a box that retains a withdrawn fuse and
                 accepts a padlock. Prevents the fuse from being re-inserted until the box is
@@ -380,7 +380,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lockout stations</strong> — shadow boards or cabinets mounted near high-
                 risk equipment containing all required LOTO devices, padlocks, tags, and permit
@@ -411,7 +411,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>When PTW is required</strong> — high-voltage systems (above 1,000V AC), work
                 in confined spaces with electrical equipment, complex industrial plant, any
@@ -420,7 +420,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Authorised person (AP)</strong> — the AP is responsible for issuing the PTW.
                 They must be competent to understand the electrical hazards and confirm that
@@ -429,7 +429,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Permit contents</strong> — scope of work, equipment identification,
                 isolation method and points, tests carried out and results, additional precautions
@@ -438,7 +438,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cancellation and reinstatement</strong> — a PTW must be formally cancelled
                 before equipment is re-energised. If work is interrupted (end of shift, emergency),
@@ -521,7 +521,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check the distribution board schedule</strong> — confirm the circuit
                 description matches the equipment to be worked on. Board schedules are often
@@ -529,7 +529,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Test at the point of work before isolating</strong> — use your AVI to
                 confirm the circuit is live at the point of work, then switch off the suspected MCB
@@ -538,7 +538,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Parallel feeds and sub-distribution</strong> — in complex installations, a
                 piece of equipment may be fed from more than one source. Check for sub-boards, local
@@ -547,7 +547,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Buried and concealed cables</strong> — when chasing walls or cutting into
                 floors, use a cable detection device before starting. Cables do not always follow
@@ -576,7 +576,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-4">
-            <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+            <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-1">Generate Safe Isolation RAMS Instantly</h4>
               <p className="text-white text-sm leading-relaxed">
@@ -592,7 +592,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional RAMS and H&S documentation with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site risk assessments, method statements, and health and safety documentation."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site risk assessments, method statements, and health and safety documentation."
           icon={ShieldCheck}
         />
       </>
@@ -618,7 +618,7 @@ export default function LockoutTagoutGuidePage() {
       heroTitle={
         <>
           Lockout Tagout (LOTO) Guide UK:{' '}
-          <span className="text-yellow-400">Safe Electrical Isolation</span>
+          <span className="text-elec-yellow">Safe Electrical Isolation</span>
         </>
       }
       heroSubtitle="The complete UK guide to lockout tagout and safe isolation procedures. Covers the Electricity at Work Regulations 1989, the prove-dead sequence, LOTO device types, permit to work systems, and multi-trade isolation — everything qualified electricians need to work safely."

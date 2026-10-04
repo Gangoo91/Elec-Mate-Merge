@@ -175,20 +175,20 @@ export default function ConsumerUnitRegulationsPage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
-        <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-elec-yellow text-sm font-medium mb-6">
             <BookOpen className="w-4 h-4" />
             BS 7671:2018+A4:2026
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             Consumer Unit Regulations
-            <span className="block text-yellow-400 mt-1">Amendment 4 Guide (A4:2026)</span>
+            <span className="block text-elec-yellow mt-1">Amendment 4 Guide (A4:2026)</span>
           </h1>
           {/* Answer-first block — targets featured snippet for 'consumer unit regulations UK' */}
           <div className="rounded-2xl bg-white/[0.06] border border-white/[0.14] px-6 py-5 max-w-2xl mx-auto mb-6 text-left">
             <p className="text-base text-white leading-relaxed">
-              <strong className="text-yellow-400">Consumer unit regulations</strong> in the UK are
+              <strong className="text-elec-yellow">Consumer unit regulations</strong> in the UK are
               set by BS&nbsp;7671:2018+A4:2026 (the IET Wiring Regulations, 18th Edition). They
               require metal (non-combustible) enclosures under Regulation&nbsp;421.1.201, 30&nbsp;mA
               RCD protection for almost all domestic circuits (Regulations&nbsp;411.3.3 and 411.3.4),
@@ -214,7 +214,7 @@ export default function ConsumerUnitRegulationsPage() {
             </Link>
             <a
               href="#cu-regulations"
-              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-yellow-500/40 touch-manipulation transition-colors"
+              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-white/[0.1] touch-manipulation transition-colors"
             >
               Read the Guide
               <ArrowDown className="w-4 h-4 ml-1" />
@@ -228,7 +228,7 @@ export default function ConsumerUnitRegulationsPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Layers className="w-5 h-5 text-yellow-400" />
+              <Layers className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Current Consumer Unit Regulations
@@ -271,7 +271,7 @@ export default function ConsumerUnitRegulationsPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-sm text-white">
                 <thead>
-                  <tr className="border-b border-white/10 text-left text-yellow-400">
+                  <tr className="border-b border-white/10 text-left text-elec-yellow">
                     <th className="px-5 py-3 font-semibold">Device</th>
                     <th className="px-5 py-3 font-semibold">Protects against</th>
                     <th className="px-5 py-3 font-semibold">Typical use in a consumer unit</th>
@@ -279,7 +279,7 @@ export default function ConsumerUnitRegulationsPage() {
                 </thead>
                 <tbody className="divide-y divide-white/5">
                   <tr>
-                    <td className="px-5 py-3 align-top font-medium text-yellow-300">MCB</td>
+                    <td className="px-5 py-3 align-top font-medium text-elec-yellow">MCB</td>
                     <td className="px-5 py-3 align-top">Overload and short-circuit (overcurrent)</td>
                     <td className="px-5 py-3 align-top">
                       Per-circuit overcurrent protection, grouped behind a shared RCD on a
@@ -287,21 +287,21 @@ export default function ConsumerUnitRegulationsPage() {
                     </td>
                   </tr>
                   <tr className="bg-white/[0.02]">
-                    <td className="px-5 py-3 align-top font-medium text-yellow-300">RCD (30 mA)</td>
+                    <td className="px-5 py-3 align-top font-medium text-elec-yellow">RCD (30 mA)</td>
                     <td className="px-5 py-3 align-top">Earth leakage / electric shock (additional protection)</td>
                     <td className="px-5 py-3 align-top">
                       One or two main RCDs covering groups of circuits on a split-load board.
                     </td>
                   </tr>
                   <tr>
-                    <td className="px-5 py-3 align-top font-medium text-yellow-300">RCBO</td>
+                    <td className="px-5 py-3 align-top font-medium text-elec-yellow">RCBO</td>
                     <td className="px-5 py-3 align-top">Overcurrent + earth leakage in one device</td>
                     <td className="px-5 py-3 align-top">
                       Individual per-circuit protection — the basis of a full RCBO board.
                     </td>
                   </tr>
                   <tr className="bg-white/[0.02]">
-                    <td className="px-5 py-3 align-top font-medium text-yellow-300">AFDD</td>
+                    <td className="px-5 py-3 align-top font-medium text-elec-yellow">AFDD</td>
                     <td className="px-5 py-3 align-top">Series and parallel arc faults (fire risk)</td>
                     <td className="px-5 py-3 align-top">
                       Socket-outlet final circuits up to 32 A; required in higher-risk premises
@@ -309,7 +309,7 @@ export default function ConsumerUnitRegulationsPage() {
                     </td>
                   </tr>
                   <tr>
-                    <td className="px-5 py-3 align-top font-medium text-yellow-300">SPD</td>
+                    <td className="px-5 py-3 align-top font-medium text-elec-yellow">SPD</td>
                     <td className="px-5 py-3 align-top">Transient overvoltage (surge / lightning, switching)</td>
                     <td className="px-5 py-3 align-top">
                       Single module at the origin, protecting the whole installation (Section 443).
@@ -327,7 +327,7 @@ export default function ConsumerUnitRegulationsPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <ShieldCheck className="w-5 h-5 text-yellow-400" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Metal Consumer Unit Requirement (Regulation 421.1.201)
@@ -376,7 +376,7 @@ export default function ConsumerUnitRegulationsPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Zap className="w-5 h-5 text-yellow-400" />
+              <Zap className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               RCD Protection Requirements (BS 7671 Section 411)
@@ -399,7 +399,7 @@ export default function ConsumerUnitRegulationsPage() {
               <div className="overflow-x-auto">
                 <table className="w-full text-sm text-white">
                   <thead>
-                    <tr className="border-b border-white/10 text-left text-yellow-400">
+                    <tr className="border-b border-white/10 text-left text-elec-yellow">
                       <th className="px-5 py-3 font-semibold">Circuit / situation</th>
                       <th className="px-5 py-3 font-semibold">Regulation</th>
                       <th className="px-5 py-3 font-semibold">Requirement</th>
@@ -410,7 +410,7 @@ export default function ConsumerUnitRegulationsPage() {
                       <td className="px-5 py-3 align-top">
                         Socket-outlets up to 32 A (general locations)
                       </td>
-                      <td className="px-5 py-3 align-top font-mono text-yellow-400/90">411.3.3</td>
+                      <td className="px-5 py-3 align-top font-mono text-elec-yellow/90">411.3.3</td>
                       <td className="px-5 py-3 align-top">
                         30 mA RCD required. A documented risk assessment may omit protection in
                         certain non-domestic cases, but never for sockets liable to be used by
@@ -419,7 +419,7 @@ export default function ConsumerUnitRegulationsPage() {
                     </tr>
                     <tr className="bg-white/[0.02]">
                       <td className="px-5 py-3 align-top">Mobile equipment for use outdoors up to 32 A</td>
-                      <td className="px-5 py-3 align-top font-mono text-yellow-400/90">411.3.3</td>
+                      <td className="px-5 py-3 align-top font-mono text-elec-yellow/90">411.3.3</td>
                       <td className="px-5 py-3 align-top">
                         30 mA RCD required — external sockets, garden supplies, and outbuilding feeds.
                       </td>
@@ -428,7 +428,7 @@ export default function ConsumerUnitRegulationsPage() {
                       <td className="px-5 py-3 align-top">
                         AC final circuits supplying luminaires (domestic)
                       </td>
-                      <td className="px-5 py-3 align-top font-mono text-yellow-400/90">411.3.4</td>
+                      <td className="px-5 py-3 align-top font-mono text-elec-yellow/90">411.3.4</td>
                       <td className="px-5 py-3 align-top">
                         30 mA RCD required — added by Amendment&nbsp;4 era updates; applies to all
                         household lighting final circuits.
@@ -438,7 +438,7 @@ export default function ConsumerUnitRegulationsPage() {
                       <td className="px-5 py-3 align-top">
                         Cables concealed in a wall or partition at &lt; 50 mm depth
                       </td>
-                      <td className="px-5 py-3 align-top font-mono text-yellow-400/90">
+                      <td className="px-5 py-3 align-top font-mono text-elec-yellow/90">
                         522.6.202 (Table 52.1)
                       </td>
                       <td className="px-5 py-3 align-top">
@@ -450,7 +450,7 @@ export default function ConsumerUnitRegulationsPage() {
                       <td className="px-5 py-3 align-top">
                         Cables in walls containing metallic parts (e.g. metal-stud)
                       </td>
-                      <td className="px-5 py-3 align-top font-mono text-yellow-400/90">
+                      <td className="px-5 py-3 align-top font-mono text-elec-yellow/90">
                         522.6.202 (Table 52.1)
                       </td>
                       <td className="px-5 py-3 align-top">
@@ -479,7 +479,7 @@ export default function ConsumerUnitRegulationsPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Settings className="w-5 h-5 text-yellow-400" />
+              <Settings className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               RCBO Board vs Dual RCD Split-Load Design
@@ -498,9 +498,9 @@ export default function ConsumerUnitRegulationsPage() {
               <h3 className="font-bold text-white text-xl mb-3">Dual RCD Split-Load</h3>
               <ul className="space-y-3 text-white text-sm leading-relaxed">
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>
-                    <strong className="text-yellow-400">Lower cost</strong> — Two RCDs plus MCBs
+                    <strong className="text-elec-yellow">Lower cost</strong> — Two RCDs plus MCBs
                     cost less than individual RCBOs for every circuit, making the split-load
                     arrangement the lower-cost option at the point of installation.
                   </span>
@@ -526,28 +526,28 @@ export default function ConsumerUnitRegulationsPage() {
               </ul>
             </div>
             <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <h3 className="font-bold text-yellow-400 text-xl mb-3">Full RCBO Board</h3>
+              <h3 className="font-bold text-elec-yellow text-xl mb-3">Full RCBO Board</h3>
               <ul className="space-y-3 text-white text-sm leading-relaxed">
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>
-                    <strong className="text-yellow-400">Excellent discrimination</strong> — A fault
+                    <strong className="text-elec-yellow">Excellent discrimination</strong> — A fault
                     on any circuit trips only that circuit. Every other circuit remains live,
                     minimising disruption to the household.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>
-                    <strong className="text-yellow-400">No cumulative leakage</strong> — Each RCBO
+                    <strong className="text-elec-yellow">No cumulative leakage</strong> — Each RCBO
                     monitors only its own circuit, so standing earth leakage from other circuits
                     does not affect it. This virtually eliminates nuisance tripping.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>
-                    <strong className="text-yellow-400">Easier fault diagnosis</strong> — When a
+                    <strong className="text-elec-yellow">Easier fault diagnosis</strong> — When a
                     single RCBO trips, you know immediately which circuit has the fault. No need to
                     isolate circuits one by one to identify the problematic one.
                   </span>
@@ -559,7 +559,7 @@ export default function ConsumerUnitRegulationsPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-sm text-white">
                 <thead>
-                  <tr className="border-b border-white/10 text-left text-yellow-400 bg-white/[0.03]">
+                  <tr className="border-b border-white/10 text-left text-elec-yellow bg-white/[0.03]">
                     <th className="px-5 py-3 font-semibold">Consideration</th>
                     <th className="px-5 py-3 font-semibold">Dual RCD split-load</th>
                     <th className="px-5 py-3 font-semibold">Full RCBO board</th>
@@ -568,23 +568,23 @@ export default function ConsumerUnitRegulationsPage() {
                 <tbody className="divide-y divide-white/5">
                   <tr>
                     <td className="px-5 py-3 align-top">Upfront cost</td>
-                    <td className="px-5 py-3 align-top text-yellow-300">Lower</td>
+                    <td className="px-5 py-3 align-top text-elec-yellow">Lower</td>
                     <td className="px-5 py-3 align-top">Higher per circuit</td>
                   </tr>
                   <tr className="bg-white/[0.02]">
                     <td className="px-5 py-3 align-top">Fault on one circuit</td>
                     <td className="px-5 py-3 align-top">Disconnects the whole RCD group</td>
-                    <td className="px-5 py-3 align-top text-yellow-300">Trips only that circuit</td>
+                    <td className="px-5 py-3 align-top text-elec-yellow">Trips only that circuit</td>
                   </tr>
                   <tr>
                     <td className="px-5 py-3 align-top">Cumulative earth leakage</td>
                     <td className="px-5 py-3 align-top">Shared across the group — nuisance-trip risk</td>
-                    <td className="px-5 py-3 align-top text-yellow-300">Isolated per circuit</td>
+                    <td className="px-5 py-3 align-top text-elec-yellow">Isolated per circuit</td>
                   </tr>
                   <tr className="bg-white/[0.02]">
                     <td className="px-5 py-3 align-top">Fault diagnosis</td>
                     <td className="px-5 py-3 align-top">Isolate circuits to find the fault</td>
-                    <td className="px-5 py-3 align-top text-yellow-300">Tripped device pinpoints it</td>
+                    <td className="px-5 py-3 align-top text-elec-yellow">Tripped device pinpoints it</td>
                   </tr>
                 </tbody>
               </table>
@@ -611,7 +611,7 @@ export default function ConsumerUnitRegulationsPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <BookOpen className="w-5 h-5 text-yellow-400" />
+              <BookOpen className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Amendment 4 (A4:2026) — Key Changes
@@ -626,7 +626,7 @@ export default function ConsumerUnitRegulationsPage() {
               Regulation 443.4.
             </p>
             <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-6">
-              <h3 className="font-bold text-yellow-400 text-lg mb-3">
+              <h3 className="font-bold text-elec-yellow text-lg mb-3">
                 Regulation 530.3.201 — Bidirectional and Unidirectional Devices
               </h3>
               <div className="space-y-3 text-white text-sm leading-relaxed">
@@ -675,7 +675,7 @@ export default function ConsumerUnitRegulationsPage() {
                 <div className="rounded-xl border border-white/10 overflow-hidden my-2">
                   <table className="w-full text-sm text-white">
                     <thead>
-                      <tr className="border-b border-white/10 text-left text-yellow-400 bg-white/[0.03]">
+                      <tr className="border-b border-white/10 text-left text-elec-yellow bg-white/[0.03]">
                         <th className="px-4 py-2.5 font-semibold">Premises type</th>
                         <th className="px-4 py-2.5 font-semibold">AFDD status under 421.1.7</th>
                       </tr>
@@ -686,7 +686,7 @@ export default function ConsumerUnitRegulationsPage() {
                           Higher-risk residential buildings, HMOs, purpose-built student
                           accommodation, care homes
                         </td>
-                        <td className="px-4 py-2.5 align-top text-yellow-300 font-medium">
+                        <td className="px-4 py-2.5 align-top text-elec-yellow font-medium">
                           Required (shall) for socket-outlet final circuits up to 32 A
                         </td>
                       </tr>
@@ -735,7 +735,7 @@ export default function ConsumerUnitRegulationsPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Activity className="w-5 h-5 text-yellow-400" />
+              <Activity className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Surge Protection Device (SPD) Requirements
@@ -758,19 +758,19 @@ export default function ConsumerUnitRegulationsPage() {
               </h3>
               <ul className="space-y-3 text-white text-sm">
                 <li className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>
                     <strong>(a)</strong> serious injury to, or loss of, human life.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                  <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>
                     <strong>(c)</strong> significant financial or data loss.
                   </span>
                 </li>
               </ul>
-              <p className="text-white/60 text-xs leading-relaxed mt-3">
+              <p className="text-white text-xs leading-relaxed mt-3">
                 Limb (b) was deleted by the BS&nbsp;7671:2018+A2:2022 Corrigendum (May 2023), leaving
                 the two consequence conditions above.
               </p>
@@ -802,7 +802,7 @@ export default function ConsumerUnitRegulationsPage() {
               <div className="overflow-x-auto">
                 <table className="w-full text-sm text-white">
                   <thead>
-                    <tr className="border-b border-white/10 text-left text-yellow-400 bg-white/[0.03]">
+                    <tr className="border-b border-white/10 text-left text-elec-yellow bg-white/[0.03]">
                       <th className="px-5 py-3 font-semibold">Connecting conductor (Reg 534.4.10)</th>
                       <th className="px-5 py-3 font-semibold">Type 2 SPD at origin</th>
                       <th className="px-5 py-3 font-semibold">Type 1 SPD at origin</th>
@@ -813,10 +813,10 @@ export default function ConsumerUnitRegulationsPage() {
                       <td className="px-5 py-3 align-top">
                         To main earthing terminal / protective conductor
                       </td>
-                      <td className="px-5 py-3 align-top font-mono text-yellow-400/90">
+                      <td className="px-5 py-3 align-top font-mono text-elec-yellow/90">
                         ≥ 6 mm² copper
                       </td>
-                      <td className="px-5 py-3 align-top font-mono text-yellow-400/90">
+                      <td className="px-5 py-3 align-top font-mono text-elec-yellow/90">
                         ≥ 16 mm² copper
                       </td>
                     </tr>
@@ -824,10 +824,10 @@ export default function ConsumerUnitRegulationsPage() {
                       <td className="px-5 py-3 align-top">
                         Connecting SPDs and OCPDs to live conductors
                       </td>
-                      <td className="px-5 py-3 align-top font-mono text-yellow-400/90">
+                      <td className="px-5 py-3 align-top font-mono text-elec-yellow/90">
                         ≥ 2.5 mm² copper
                       </td>
-                      <td className="px-5 py-3 align-top text-white/70">
+                      <td className="px-5 py-3 align-top text-white">
                         Per manufacturer / short-circuit rating
                       </td>
                     </tr>
@@ -856,7 +856,7 @@ export default function ConsumerUnitRegulationsPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Labelling, Certification, and Documentation
@@ -939,7 +939,7 @@ export default function ConsumerUnitRegulationsPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <HelpCircle className="w-5 h-5 text-yellow-400" />
+              <HelpCircle className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Frequently Asked Questions
@@ -952,7 +952,7 @@ export default function ConsumerUnitRegulationsPage() {
                 className="group p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-white/[0.14] transition-colors"
               >
                 <summary className="flex items-start gap-3 cursor-pointer touch-manipulation list-none [&::-webkit-details-marker]:hidden">
-                  <ChevronRight className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0 transition-transform group-open:rotate-90" />
+                  <ChevronRight className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0 transition-transform group-open:rotate-90" />
                   <h3 className="font-bold text-white text-lg">{faq.question}</h3>
                 </summary>
                 <div className="mt-3 pl-8">
@@ -1002,7 +1002,7 @@ export default function ConsumerUnitRegulationsPage() {
 
       <SEOCTASection
         heading="Certify Consumer Unit Work Digitally"
-        subheading="Join 1,600+ UK electricians producing professional EICs with Elec-Mate. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians producing professional EICs with Elec-Mate. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

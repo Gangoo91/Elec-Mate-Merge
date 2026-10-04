@@ -195,7 +195,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>How to get your SA302</strong> — log in to your HMRC online account at
                 gov.uk/personal-tax-account, navigate to Self Assessment, and select Tax Return
@@ -204,7 +204,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Income used — sole traders</strong> — for sole traders, lenders use your net
                 profit after expenses (as shown on your SA302) as your income. Some lenders average
@@ -212,7 +212,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Income used — limited company directors</strong> — for directors, most
                 mainstream lenders use salary plus dividends drawn from the company. Some more
@@ -222,7 +222,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Only 1 year of accounts?</strong> — if you have been self-employed for less
                 than two years, you are limited to specialist lenders who accept 1 year of accounts.
@@ -249,7 +249,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Certified accounts</strong> — some lenders accept accountant-certified
                 accounts as an alternative or supplement to SA302s. These are accounts signed off by
@@ -258,7 +258,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Tax efficiency vs mortgage income</strong> — tax-efficient accounting
                 (claiming all allowable expenses, retaining profit in a limited company) often
@@ -268,7 +268,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reference letter</strong> — some lenders accept a reference letter from your
                 accountant confirming the nature of your self-employment, your income level, and the
@@ -293,7 +293,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>How day rate assessment works</strong> — the lender multiplies your
                 contracted day rate by 46 or 48 working weeks (allowing for holidays and gaps
@@ -302,7 +302,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Example</strong> — a day rate of £350, assessed over 46 weeks x 5 days,
                 gives an annualised income of £80,500. At a 4.5x multiple, this supports a mortgage
@@ -311,7 +311,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Contract evidence required</strong> — you will need to provide your current
                 contract showing your day rate and contract duration. Most lenders require at least
@@ -319,7 +319,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Lenders offering contractor assessment</strong> — Halifax, Barclays,
                 Kensington, and several specialist lenders offer contractor mortgage products. A
@@ -345,7 +345,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Halifax</strong> — generally considered one of the more flexible mainstream
                 lenders for self-employed. Accepts 1 year of accounts in some circumstances. Can use
@@ -354,7 +354,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Nationwide</strong> — requires 2 years of accounts and uses a net profit
                 approach for sole traders. Can be competitive on rates for clean, well-documented
@@ -362,7 +362,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Specialist lenders — Bluestone, Aldermore, Precise, Pepper Money</strong>—
                 these lenders specialise in complex income situations including self-employed,
@@ -372,7 +372,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use a whole-of-market broker</strong> — the single best step you can take is
                 using a whole-of-market mortgage broker who regularly works with self-employed
@@ -397,7 +397,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>5% deposit (95% LTV)</strong> — the minimum available through some schemes,
                 but very few mainstream lenders will accept this for self-employed applicants with
@@ -405,7 +405,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>10% deposit (90% LTV)</strong> — the practical minimum for most
                 self-employed mortgage applications on the mainstream market. Opens up a much wider
@@ -413,7 +413,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>15–25% deposit (75–85% LTV)</strong> — the ideal range for self-employed
                 borrowers. Access to the most competitive interest rates, the widest lender choice,
@@ -493,7 +493,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileText className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Complete Income Records for Your Accountant
@@ -529,7 +529,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional invoicing and records for your mortgage"
-          description="Join 1,600+ UK electricians using Elec-Mate for professional invoicing and job records. Give your accountant a clean income record — essential for your…"
+          description="Join 2,100+ UK electricians using Elec-Mate for professional invoicing and job records. Give your accountant a clean income record — essential for your…"
           icon={Home}
         />
       </>
@@ -556,7 +556,7 @@ export default function ElectricianMortgagePage() {
       heroTitle={
         <>
           Electrician Mortgage UK:{' '}
-          <span className="text-yellow-400">Getting a Mortgage as Self-Employed</span>
+          <span className="text-elec-yellow">Getting a Mortgage as Self-Employed</span>
         </>
       }
       heroSubtitle="Everything UK electricians need to know about getting a mortgage while self-employed — SA302 and accounts requirements, how lenders assess your income, contractor day rate mortgages, which lenders are self-employed-friendly, and how to improve your application."
@@ -567,7 +567,7 @@ export default function ElectricianMortgagePage() {
       faqHeading="Frequently Asked Questions About Mortgages for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Professional Records for Your Mortgage Application"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for professional invoicing and job records. Give your accountant everything needed for accurate SA302s and certified accounts. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for professional invoicing and job records. Give your accountant everything needed for accurate SA302s and certified accounts. 7-day free trial, cancel anytime."
     />
   );
 }

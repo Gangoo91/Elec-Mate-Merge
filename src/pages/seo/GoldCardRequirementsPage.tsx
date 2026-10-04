@@ -374,7 +374,7 @@ const sections = [
           </table>
         </div>
         <p>
-          Amendment 4 deleted Table 3A, so the old half-rated-current and five-times-rated-current
+          Amendment 2 (2022) deleted Table 3A, so the old half-rated-current and five-times-rated-current
           RCD sequence is no longer an installation requirement in BS 7671. The 40 ms at 5&times;
           figure people still quote comes from the BS EN 61008 and 61009 product standards, not from
           Chapter 64. If your course notes predate A4, check this one before the exam.
@@ -634,7 +634,7 @@ export default function GoldCardRequirementsPage() {
       heroTitle={
         <>
           ECS Gold Card Requirements:{' '}
-          <span className="text-yellow-400">Your Roadmap to the Top</span>
+          <span className="text-elec-yellow">Your Roadmap to the Top</span>
         </>
       }
       heroSubtitle="The Gold Card is the highest standard ECS card for UK electricians. This guide covers every qualification you need, how to apply, the benefits, and how long the journey takes."
@@ -650,7 +650,7 @@ export default function GoldCardRequirementsPage() {
       faqHeading="Frequently Asked Questions About the ECS Gold Card"
       relatedPages={relatedPages}
       ctaHeading="Start Your Path to Gold Card"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for training, exam preparation, and career development. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for training, exam preparation, and career development. 7-day free trial, cancel anytime."
     />
   );
 }

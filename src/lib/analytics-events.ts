@@ -133,6 +133,50 @@ export function trackInvoicePaid(props: { invoice_id?: string; amount_pence?: nu
   sendVercel('invoice_paid');
 }
 
+// ─── Card payments funnel (ELE-1705) ───────────────────────────────
+//
+// 11 of 1,777 users could take a card payment, and nobody could say where
+// the rest dropped out: invoice sent without card payments → prompt shown →
+// setup started → setup completed → first card payment. These are the steps.
+// The database is the fallback for anyone who declined cookies: invoices
+// with no `stripe_payment_link_url`, `company_profiles.stripe_account_status`,
+// and `stripe_payment_intent_id` on paid invoices.
+
+type CardSetupSource = 'send_prompt' | 'send_menu';
+
+/** An invoice reached the client with no Pay now button on it. */
+export function trackInvoiceSentWithoutCard(props: {
+  stripe_status: 'not_connected' | 'pending' | 'loading';
+}): void {
+  send('invoice_sent_without_card', props);
+  sendVercel('invoice_sent_without_card', { stripe_status: props.stripe_status });
+}
+
+export function trackCardPromptShown(props: { stripe_status: 'not_connected' | 'pending' }): void {
+  send('card_prompt_shown', props);
+  sendVercel('card_prompt_shown', { stripe_status: props.stripe_status });
+}
+
+export function trackCardPromptDismissed(): void {
+  send('card_prompt_dismissed');
+  sendVercel('card_prompt_dismissed');
+}
+
+/** Setup begun — a new Stripe account, or logging in to an existing one. */
+export function trackStripeConnectStarted(props: {
+  source: CardSetupSource;
+  method: 'express' | 'oauth';
+}): void {
+  send('stripe_connect_started', props);
+  sendVercel('stripe_connect_started', { source: props.source, method: props.method });
+}
+
+/** Came back from Stripe and the account now takes payments. */
+export function trackStripeConnectCompleted(): void {
+  send('stripe_connect_completed');
+  sendVercel('stripe_connect_completed');
+}
+
 // ─── Calendar → job (ELE-1755) ─────────────────────────────────────
 //
 // Only 14 of 47 calendar users had ever linked a booking to a job and 20 of
@@ -275,6 +319,7 @@ export function trackLandingCtaClicked(props: {
     | 'audience'
     | 'pricing'
     | 'final_cta'
+    | 'free_tools'
     | 'sticky_mobile';
   label?: string;
 }): void {

@@ -265,7 +265,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-3 flex items-center gap-2">
-            <Thermometer className="w-5 h-5 text-yellow-400 shrink-0" />
+            <Thermometer className="w-5 h-5 text-elec-yellow shrink-0" />
             Incident Energy Reference Levels
           </h4>
           <ul className="space-y-3 text-white text-sm">
@@ -363,8 +363,8 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-yellow-500/20 flex items-center justify-center shrink-0">
-                <span className="text-yellow-400 font-bold text-sm">2</span>
+              <div className="w-8 h-8 rounded-full bg-white/[0.06] flex items-center justify-center shrink-0">
+                <span className="text-elec-yellow font-bold text-sm">2</span>
               </div>
               <div>
                 <h4 className="font-bold text-white mb-1">Category 2 — Minimum ATPV: 8 cal/cm²</h4>
@@ -469,7 +469,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Restricted approach boundary</strong> — a closer boundary within which there
                 is an increased risk of shock due to arc-over combined with involuntary movement.
@@ -520,7 +520,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Identify the arc flash hazard</strong> — determine whether electricians or
                 other workers will be working on or near energised electrical equipment where an arc
@@ -529,7 +529,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Determine the available fault current</strong> — obtain or calculate the
                 prospective short-circuit current (PSCC) at the point of work (as required by BS
@@ -539,7 +539,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Determine the protective device clearing time</strong> — identify the
                 upstream protective device (fuse, MCB, MCCB) and determine its clearing time at the
@@ -549,7 +549,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Estimate the incident energy</strong> — using the fault current, clearing
                 time, working distance, and electrode configuration, calculate or estimate the
@@ -558,7 +558,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Select the appropriate PPE category</strong> — based on the calculated
                 incident energy, determine the required arc flash PPE category (1, 2, 3, or 4). If
@@ -567,7 +567,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Document and communicate</strong> — record the findings, label the equipment
                 with arc flash warning labels (showing the incident energy, required PPE category,
@@ -599,7 +599,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electricity at Work Regulations 1989</strong> — Regulation 4(1) requires
                 that all electrical systems shall at all times be of such construction as to
@@ -611,7 +611,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Management of Health and Safety at Work Regulations 1999</strong> —
                 Regulation 3 requires a suitable and sufficient risk assessment of all workplace
@@ -620,7 +620,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Personal Protective Equipment at Work Regulations 2022</strong> — require
                 employers to assess the need for PPE, provide suitable PPE (including arc-rated PPE
@@ -629,7 +629,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>
                   <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
@@ -643,7 +643,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IEEE 1584 (Guide for Performing Arc Flash Hazard Calculations)</strong> —
                 while an American standard, IEEE 1584 is widely used in the UK as the reference
@@ -653,7 +653,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IEC 61482-1-1 and IEC 61482-1-2</strong> — the international standards for
                 testing arc-rated clothing. IEC 61482-1-1 (open arc test) determines the ATPV
@@ -707,7 +707,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Engineering controls — reduce incident energy</strong> — use
                 current-limiting protective devices (HRC fuses, current-limiting MCBs) that clear
@@ -717,7 +717,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Administrative controls — safe systems of work</strong> — establish clear
                 procedures for working on or near energised equipment. Use permit to work systems.
@@ -728,7 +728,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PPE — arc-rated personal protective equipment</strong> — when residual arc
                 flash risk remains after applying higher-level controls, provide arc-rated PPE
@@ -759,7 +759,7 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
-            <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-1">
                 BS 7671:2018+A4:2026 Reg 421.1.7 — Arc Fault Detection Devices (AFDDs)
@@ -815,7 +815,7 @@ export default function ArcFlashProtectionPage() {
       heroTitle={
         <>
           Arc Flash Protection:{' '}
-          <span className="text-yellow-400">Risk Assessment, PPE Categories & Prevention</span>
+          <span className="text-elec-yellow">Risk Assessment, PPE Categories & Prevention</span>
         </>
       }
       heroSubtitle="Arc flash generates temperatures of 20,000 degrees Celsius and explosive blast waves. This guide covers everything electricians need to know — causes, incident energy levels, PPE categories, boundary distances, risk assessment, UK legal requirements, and how to prevent arc flash incidents."
@@ -826,7 +826,7 @@ export default function ArcFlashProtectionPage() {
       faqHeading="Frequently Asked Questions About Arc Flash Protection"
       relatedPages={relatedPages}
       ctaHeading="Generate Arc Flash Risk Assessments in Minutes"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's AI Health and Safety agent to create arc flash risk assessments, PPE selection guidance, and complete RAMS packages. Describe the installation, get a professional document. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate's AI Health and Safety agent to create arc flash risk assessments, PPE selection guidance, and complete RAMS packages. Describe the installation, get a professional document. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -45,7 +45,7 @@ export default function FutureOfElectricalTradePage() {
         <>
           Future of the Electrical Trade
           <br />
-          <span className="text-yellow-400">Trends 2026 & Beyond</span>
+          <span className="text-elec-yellow">Trends 2026 & Beyond</span>
         </>
       }
       heroSubtitle="The electrical trade is undergoing its biggest transformation in decades. The shift to electric vehicles, the growth of smart homes, the transition to renewable energy, and the arrival of AI-powered tools are creating enormous demand for skilled electricians. This guide examines the key trends shaping the future of the trade and how electricians can position themselves to benefit."
@@ -80,7 +80,7 @@ export default function FutureOfElectricalTradePage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Car className="w-5 h-5 text-yellow-400" />
+                    <Car className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">What Electricians Need</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -99,7 +99,7 @@ export default function FutureOfElectricalTradePage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Zap className="w-5 h-5 text-yellow-400" />
+                    <Zap className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Revenue Opportunity</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -135,9 +135,9 @@ export default function FutureOfElectricalTradePage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Smart lighting</strong> — Philips Hue,
+                      <strong className="text-elec-yellow">Smart lighting</strong> — Philips Hue,
                       LIFX, and smart switch systems (Lightwave, Shelly) that replace traditional
                       switches with app-controlled, voice-controlled, and programmable alternatives.
                       Some require a neutral wire at the switch position, which has implications for
@@ -145,9 +145,9 @@ export default function FutureOfElectricalTradePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Smart heating</strong> — Nest, Hive, and
+                      <strong className="text-elec-yellow">Smart heating</strong> — Nest, Hive, and
                       Tado thermostats that learn occupancy patterns, integrate with weather
                       forecasts, and can be controlled remotely. Installation requires understanding
                       of heating system wiring (volt-free, 230V, 2-channel, 3-channel) and Wi-Fi
@@ -155,18 +155,18 @@ export default function FutureOfElectricalTradePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Home security</strong> — Smart doorbells
+                      <strong className="text-elec-yellow">Home security</strong> — Smart doorbells
                       (Ring, Google Nest), CCTV systems, smart locks, and alarm systems. Many
                       require low-voltage wiring alongside mains power, and some need PoE (Power
                       over Ethernet) networking.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Whole-home systems</strong> — Platforms
+                      <strong className="text-elec-yellow">Whole-home systems</strong> — Platforms
                       like Control4, Crestron, and Loxone that integrate lighting, heating,
                       audio-visual, blinds, and security into a single control system. These are
                       premium installations requiring specialist training and offer the highest
@@ -198,7 +198,7 @@ export default function FutureOfElectricalTradePage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Sun className="w-5 h-5 text-yellow-400" />
+                    <Sun className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Solar PV</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -217,7 +217,7 @@ export default function FutureOfElectricalTradePage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Zap className="w-5 h-5 text-yellow-400" />
+                    <Zap className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Battery Storage</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -234,7 +234,7 @@ export default function FutureOfElectricalTradePage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Wifi className="w-5 h-5 text-yellow-400" />
+                    <Wifi className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Heat Pumps</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -271,7 +271,7 @@ export default function FutureOfElectricalTradePage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Brain className="w-5 h-5 text-yellow-400" />
+                    <Brain className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">AI Certificate Completion</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -285,7 +285,7 @@ export default function FutureOfElectricalTradePage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Brain className="w-5 h-5 text-yellow-400" />
+                    <Brain className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">AI Job Costing</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -301,7 +301,7 @@ export default function FutureOfElectricalTradePage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <Brain className="w-5 h-5 text-yellow-400" />
+                    <Brain className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">AI RAMS Generation</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -338,21 +338,21 @@ export default function FutureOfElectricalTradePage() {
                 <div className="space-y-3">
                   <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
                     <span className="text-white font-bold">Electricians retiring annually</span>
-                    <span className="text-yellow-400 font-bold">~8,000</span>
+                    <span className="text-elec-yellow font-bold">~8,000</span>
                   </div>
                   <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
                     <span className="text-white font-bold">
                       New apprentices qualifying annually
                     </span>
-                    <span className="text-yellow-400 font-bold">~5,500</span>
+                    <span className="text-elec-yellow font-bold">~5,500</span>
                   </div>
                   <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                     <span className="text-white font-bold">Annual shortfall (before growth)</span>
-                    <span className="text-yellow-400 font-bold">~2,500+</span>
+                    <span className="text-elec-yellow font-bold">~2,500+</span>
                   </div>
                   <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
                     <span className="text-white font-bold">Average age of UK electrician</span>
-                    <span className="text-yellow-400 font-bold">44 years</span>
+                    <span className="text-elec-yellow font-bold">44 years</span>
                   </div>
                 </div>
               </div>
@@ -393,7 +393,7 @@ export default function FutureOfElectricalTradePage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <TrendingUp className="w-5 h-5 text-yellow-400" />
+                    <TrendingUp className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Salary Trends</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -408,7 +408,7 @@ export default function FutureOfElectricalTradePage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <TrendingUp className="w-5 h-5 text-yellow-400" />
+                    <TrendingUp className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Growth Sectors</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -422,7 +422,7 @@ export default function FutureOfElectricalTradePage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <GraduationCap className="w-5 h-5 text-yellow-400" />
+                    <GraduationCap className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Career Progression</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -455,18 +455,18 @@ export default function FutureOfElectricalTradePage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Get the EV qualification</strong> — The
+                      <strong className="text-elec-yellow">Get the EV qualification</strong> — The
                       IET Code of Practice for EV Charging is a one or two-day course. It opens up a
                       rapidly growing market and pays for itself within a few installations. This is
                       the single most valuable short-term investment for domestic electricians.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">
+                      <strong className="text-elec-yellow">
                         Learn solar PV and battery storage
                       </strong>{' '}
                       — MCS accreditation requires specific training but opens up the
@@ -475,18 +475,18 @@ export default function FutureOfElectricalTradePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Adopt digital tools</strong> — Move from
+                      <strong className="text-elec-yellow">Adopt digital tools</strong> — Move from
                       paper certificates to digital. Use apps for quoting, invoicing, and job
                       management. Embrace AI tools that reduce your admin time. The right app can save
                       you 5-10 hours per week on paperwork.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Stay current with regulations</strong> —
+                      <strong className="text-elec-yellow">Stay current with regulations</strong> —
                       BS 7671 amendments, Part P updates, and new codes of practice (EV, solar, heat
                       pumps) all affect how you work. Regular{' '}
                       <SEOInternalLink href="/guides/cpd-for-electricians">CPD</SEOInternalLink> is
@@ -495,9 +495,9 @@ export default function FutureOfElectricalTradePage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Build your online presence</strong> —
+                      <strong className="text-elec-yellow">Build your online presence</strong> —
                       Customers increasingly find electricians online. Google Business Profile,
                       social media, and a professional website are no longer optional for
                       self-employed electricians. Reviews and word-of-mouth now happen digitally.
@@ -520,7 +520,7 @@ export default function FutureOfElectricalTradePage() {
               <div className="space-y-4 mt-4">
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <ShieldCheck className="w-5 h-5 text-yellow-400" />
+                    <ShieldCheck className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">BS 7671 Amendment 4</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -538,7 +538,7 @@ export default function FutureOfElectricalTradePage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <ShieldCheck className="w-5 h-5 text-yellow-400" />
+                    <ShieldCheck className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">AFDD Mandate Expansion</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
@@ -553,7 +553,7 @@ export default function FutureOfElectricalTradePage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
-                    <ShieldCheck className="w-5 h-5 text-yellow-400" />
+                    <ShieldCheck className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-bold text-white text-lg">Part S Enforcement</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">

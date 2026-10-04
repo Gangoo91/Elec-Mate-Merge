@@ -43,7 +43,7 @@ export default function IPRatingGuidePage() {
       badgeIcon={Shield}
       heroTitle={
         <>
-          <span className="text-yellow-400">IP Rating Guide</span> — Ingress Protection Explained
+          <span className="text-elec-yellow">IP Rating Guide</span> — Ingress Protection Explained
           for UK Electricians
         </>
       }
@@ -111,13 +111,13 @@ export default function IPRatingGuidePage() {
               </p>
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-6">
                 <div className="grid grid-cols-3 gap-px bg-white/10">
-                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                     Digit
                   </div>
-                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                     Object Size
                   </div>
-                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                     Description
                   </div>
                 </div>
@@ -193,13 +193,13 @@ export default function IPRatingGuidePage() {
               </p>
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-6">
                 <div className="grid grid-cols-3 gap-px bg-white/10">
-                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                     Digit
                   </div>
-                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                     Water Test
                   </div>
-                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                     Description
                   </div>
                 </div>
@@ -342,14 +342,14 @@ export default function IPRatingGuidePage() {
                 identical:
               </p>
               <p>
-                <strong className="text-yellow-400">IP2X</strong> means the enclosure prevents a
+                <strong className="text-elec-yellow">IP2X</strong> means the enclosure prevents a
                 standard test finger (12 mm diameter, 80 mm long) from making adequate contact with
                 live parts. The "2" is the first digit, referring to solid object protection. The
                 "X" means the second digit (liquid protection) is not specified — it could be
                 anything from 0 upwards.
               </p>
               <p>
-                <strong className="text-yellow-400">IPXXB</strong> uses the additional letter "B"
+                <strong className="text-elec-yellow">IPXXB</strong> uses the additional letter "B"
                 from BS EN 60529, which specifically means protection against access with a jointed
                 test finger (12 mm diameter, 80 mm long, with two articulations). This is a more
                 realistic representation of a human finger and is the test used for consumer unit

@@ -210,11 +210,11 @@ export default function EmergencyLightingCertificatePage() {
       <section className="py-16 sm:py-24 px-5">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-6">
-            <Flashlight className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium text-yellow-400">BS 5266-1:2016 Compliant</span>
+            <Flashlight className="w-4 h-4 text-elec-yellow" />
+            <span className="text-sm font-medium text-elec-yellow">BS 5266-1:2016 Compliant</span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
-            Digital <span className="text-yellow-400">Emergency Lighting Certificates</span> on Your
+            Digital <span className="text-elec-yellow">Emergency Lighting Certificates</span> on Your
             Phone
           </h1>
           <p className="text-lg text-white max-w-2xl mx-auto leading-relaxed mb-8">
@@ -231,7 +231,7 @@ export default function EmergencyLightingCertificatePage() {
             </a>
             <a
               href="#how-it-works"
-              className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-yellow-500/40 text-white font-semibold rounded-xl touch-manipulation transition-colors"
+              className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-white/[0.1] text-white font-semibold rounded-xl touch-manipulation transition-colors"
             >
               See How It Works
             </a>
@@ -517,7 +517,7 @@ export default function EmergencyLightingCertificatePage() {
                 key={step.name}
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow shrink-0">
                   {index + 1}
                 </div>
                 <div>
@@ -576,7 +576,7 @@ export default function EmergencyLightingCertificatePage() {
       <section className="py-12 px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <Users className="w-6 h-6 text-yellow-400" />
+            <Users className="w-6 h-6 text-elec-yellow" />
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Built for Working Electricians
             </h2>
@@ -632,7 +632,7 @@ export default function EmergencyLightingCertificatePage() {
               >
                 <summary className="flex items-center justify-between cursor-pointer p-5 text-white font-semibold text-left touch-manipulation min-h-[44px]">
                   <span>{faq.question}</span>
-                  <span className="ml-4 shrink-0 text-yellow-400 text-xl group-open:rotate-45 transition-transform">
+                  <span className="ml-4 shrink-0 text-elec-yellow text-xl group-open:rotate-45 transition-transform">
                     +
                   </span>
                 </summary>
@@ -666,7 +666,7 @@ export default function EmergencyLightingCertificatePage() {
 
       <SEOCTASection
         heading="Stop writing emergency lighting certificates by hand"
-        subheading="Join 1,600+ UK electricians creating professional digital certificates. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians creating professional digital certificates. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

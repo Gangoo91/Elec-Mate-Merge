@@ -410,7 +410,7 @@ export default function AIMaintenanceSpecialistPage() {
       heroTitle={
         <>
           AI Maintenance Specialist:{' '}
-          <span className="text-yellow-400">Predict Faults Before They Happen</span>
+          <span className="text-elec-yellow">Predict Faults Before They Happen</span>
         </>
       }
       heroSubtitle="Generate tailored maintenance schedules, predict developing faults through trend analysis, and track compliance across all your installations — all aligned with BS 7671:2018+A4:2026 and UK statutory testing requirements."
@@ -433,7 +433,7 @@ export default function AIMaintenanceSpecialistPage() {
       faqHeading="Frequently Asked Questions About AI Maintenance"
       relatedPages={relatedPages}
       ctaHeading="Deliver Proactive Maintenance with AI"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's AI Maintenance Specialist. Intelligent scheduling, fault prediction, and compliance tracking. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate's AI Maintenance Specialist. Intelligent scheduling, fault prediction, and compliance tracking. 7-day free trial, cancel anytime."
       toolPath="/tools/ai-maintenance-specialist"
     />
   );

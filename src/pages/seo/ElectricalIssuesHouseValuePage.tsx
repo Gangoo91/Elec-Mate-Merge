@@ -138,7 +138,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <TrendingDown className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingDown className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Reduced buyer pool</strong> — a property requiring significant electrical
                 work is effectively restricted to cash buyers, developers, and investors who can
@@ -148,7 +148,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingDown className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingDown className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Extended marketing periods</strong> — properties with undisclosed electrical
                 issues that surface during survey often fall through at the survey stage. Multiple
@@ -158,7 +158,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingDown className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingDown className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Insurance implications</strong> — insurers increasingly ask about the age
                 and condition of the electrical installation. A property with original
@@ -168,7 +168,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingDown className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingDown className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EPC implications</strong> — while the EPC (Energy Performance Certificate)
                 primarily focuses on thermal performance, significant electrical issues may indicate
@@ -196,7 +196,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rewirable fuse board</strong> — a surveyor who notes a rewirable ceramic
                 fuse board (pre-MCB) will almost certainly flag this and recommend a specialist
@@ -205,7 +205,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Visible rubber-insulated or fabric-braided wiring</strong> — wiring in these
                 materials, visible in the loft, under stairs, or in accessible cable runs, will be
@@ -214,7 +214,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No recent EICR</strong> — some lenders instruct surveyors to note whether a
                 valid EICR is available. Where no EICR exists and the property is older than a
@@ -222,7 +222,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Non-standard electrical installations</strong> — garden rooms with unmarked
                 sub-mains, non-standard wiring, or evidence of significant DIY electrical work will
@@ -307,7 +307,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Before a rewire</strong> — effectively priced as a property with a known
                 cost to remedy, accessible mainly to cash buyers and developers. Achievable price is
@@ -317,7 +317,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>After a rewire</strong> — priced as a standard property with no material
                 electrical issues. Accessible to the full buyer pool including high LTV mortgage
@@ -326,7 +326,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Documentation matters</strong> — a rewire is only fully valuable to a buyer
                 if it is properly documented. Ensure the electrician provides an Electrical
@@ -353,7 +353,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cost</strong> — a consumer unit replacement by a qualified electrician
                 typically costs £400 to £900, including the unit, labour, minor associated works,
@@ -361,7 +361,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Effect on lendability</strong> — a modern consumer unit with RCD protection
                 removes the most common electrical mortgage condition. Many mortgage surveyors will
@@ -370,7 +370,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Effective return on investment</strong> — if a vendor pays £700 for a
                 consumer unit upgrade and avoids a £3,000 price reduction request from a buyer, the
@@ -410,7 +410,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>C2 observations</strong> — potentially dangerous. Common C2 findings in
                 older properties include absence of RCD protection (Regulation 411.3.3 of BS 7671),
@@ -446,7 +446,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full rewire required</strong> — reduce by the mid-point of two or three
                 quotes, plus 20 to 30 per cent for redecoration, plus a modest risk premium (5 to 10
@@ -456,7 +456,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacement only</strong> — quote typically £400 to £900.
                 Reduction request: full quote amount. This is a minor and easily quantifiable cost —
@@ -464,7 +464,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD retrofit and bonding</strong> — quote typically £300 to £700. Reduction
                 request: full quote amount. This is a standard, widely quoted piece of remedial
@@ -472,7 +472,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Multiple C2 observations without a full rewire</strong> — sum the individual
                 quotes for each item of remedial work. Present these as a schedule with individual
@@ -501,56 +501,56 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full rewire — two-bedroom property</strong> — £3,500 to £5,500 plus VAT at
                 5%.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full rewire — three-bedroom property</strong> — £4,500 to £7,000 plus VAT at
                 5%. Add £1,500 to £3,000 for redecoration.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full rewire — four-bedroom property</strong> — £6,000 to £10,000 plus VAT at
                 5%.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacement (standard domestic)</strong> — £400 to £900
                 including unit, labour, and certification.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD retrofit to existing consumer unit</strong> — £200 to £400. Where the
                 consumer unit can be upgraded rather than replaced.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main equipotential bonding — gas and water</strong> — £150 to £300. Fitting
                 bonding conductors to incoming gas and water services.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth electrode installation (TT system)</strong> — £300 to £600. Installing
                 or testing and replacing the earth electrode for a TT earthing system.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rewiring outbuilding or garage</strong> — £500 to £1,500 depending on
                 distance from the house and complexity.
@@ -580,7 +580,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Issue the EICR Before You Leave</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -616,7 +616,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win house purchase EICR and remedial work with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion and instant quoting. Deliver both the EICR report and remedial work quote to…"
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion and instant quoting. Deliver both the EICR report and remedial work quote to…"
           icon={FileCheck2}
         />
       </>
@@ -642,7 +642,7 @@ export default function ElectricalIssuesHouseValuePage() {
       heroTitle={
         <>
           How Electrical Issues Affect House Value:{' '}
-          <span className="text-yellow-400">Rewires, EICR Failures & Offer Reductions</span>
+          <span className="text-elec-yellow">Rewires, EICR Failures & Offer Reductions</span>
         </>
       }
       heroSubtitle="Electrical defects are rarely priced into a vendor's asking price — but once discovered, they become a powerful negotiating tool. This guide covers how rewires, consumer unit upgrades, and EICR failures affect property value, what mortgage surveyors flag, when lenders withhold funds, and how to calculate a fair offer reduction."
@@ -653,7 +653,7 @@ export default function ElectricalIssuesHouseValuePage() {
       faqHeading="Frequently Asked Questions About Electrical Issues and House Value"
       relatedPages={relatedPages}
       ctaHeading="Deliver EICRs and Quotes to Buyers Before You Leave"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, instant PDF export, and same-day quoting. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, instant PDF export, and same-day quoting. 7-day free trial, cancel anytime."
     />
   );
 }

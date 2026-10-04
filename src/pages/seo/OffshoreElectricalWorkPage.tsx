@@ -221,7 +221,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wind className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wind className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>OPITO BOSIET</strong> — Basic Offshore Safety Induction and Emergency
                 Training. Covers helicopter underwater escape training (HUET) in a pool, sea
@@ -232,7 +232,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wind className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wind className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>OGUK Medical</strong> — offshore fitness examination by an OGUK-approved
                 practitioner. Cardiovascular, respiratory, vision, hearing, and blood tests. Valid 2
@@ -241,7 +241,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wind className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wind className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>GWO BST (for offshore wind)</strong> — Global Wind Organisation Basic
                 Safety Training. Sea survival, fire awareness, first aid, manual handling, and
@@ -268,19 +268,19 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>IT earthing systems</strong> — offshore installations commonly use IT (insulated) earth systems, where neither pole of the supply is connected to earth. A first fault does not cause disconnection — it triggers an insulation monitoring alarm. This protects against loss of power to critical safety systems from a single fault.</span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Essential and emergency power</strong> — IEC 61892 defines rigorous requirements for essential services (maintained during normal operations) and emergency services (maintained following a main power failure). Emergency power must be available within 45 seconds from an emergency generator or instantly from a UPS.</span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Cable fire performance</strong> — cables must meet enhanced fire performance requirements. Low smoke zero halogen (LSOH/LSZH) cables are standard. Halogen-containing cables are generally prohibited in accommodation and escape routes.</span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Hazardous area integration</strong> — IEC 61892 references IEC 60079 for hazardous area classification and equipment selection, making CompEx knowledge directly applicable to offshore ATEX zones.</span>
             </li>
           </ul>
@@ -334,19 +334,19 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Oil and gas platform electrician (maintenance):</strong> £700–£900/day on a 2/2 rotation.</span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Oil and gas HV-authorised electrician / lead electrician:</strong> £900–£1,200+/day.</span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Offshore wind O&amp;M electrician:</strong> £400–£600/day. Vessel-based or nearshore day work.</span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Offshore wind commissioning electrician:</strong> £600–£900/day. Turbine energisation, protection testing, loop checks.</span>
             </li>
           </ul>
@@ -372,19 +372,19 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BadgeCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BadgeCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Step 1:</strong> Complete C&G 2391 (Inspection and Testing) if not already held. Aim for at least 5 years post-qualification LV experience.</span>
             </li>
             <li className="flex items-start gap-3">
-              <BadgeCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BadgeCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Step 2:</strong> Move into onshore industrial contracting — refineries, chemical plants, power stations. This builds the industrial experience offshore employers want and earns you CompEx.</span>
             </li>
             <li className="flex items-start gap-3">
-              <BadgeCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BadgeCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Step 3:</strong> Obtain BOSIET and OGUK medical. Register with offshore recruitment agencies (Fircroft, Spencer Ogden, Brunel, NES).</span>
             </li>
             <li className="flex items-start gap-3">
-              <BadgeCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BadgeCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Step 4:</strong> Accept your first offshore rotation. Offshore wind commissioning can be a good entry point with lower barriers than oil and gas platform maintenance.</span>
             </li>
           </ul>
@@ -412,7 +412,7 @@ export default function OffshoreElectricalWorkPage() {
       heroTitle={
         <>
           Offshore Electrical Work in the UK:{' '}
-          <span className="text-yellow-400">Platforms, Wind Farms, and Pay Rates</span>
+          <span className="text-elec-yellow">Platforms, Wind Farms, and Pay Rates</span>
         </>
       }
       heroSubtitle="Offshore electricians earn £600–£1,200/day. This guide covers OPITO BOSIET, OGUK medical, IEC 61892, ATEX/CompEx requirements, rotation patterns, and the practical route from domestic work into the offshore sector."

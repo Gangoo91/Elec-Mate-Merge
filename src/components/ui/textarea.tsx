@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
+import { autoCompleteOff } from '@/lib/textEntry';
 
 export type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
@@ -24,7 +25,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     return (
       <textarea
         spellCheck="true"
-        autoComplete="off"
+        autoComplete={autoCompleteOff}
         autoCorrect="off"
         autoCapitalize="sentences"
         className={cn(

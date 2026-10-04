@@ -198,7 +198,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No overcurrent protection</strong> — an RCCB provides only earth-fault
                 protection. Individual MCBs must be provided for each circuit downstream (or
@@ -207,7 +207,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Nuisance tripping risk</strong> — because one RCCB protects multiple
                 circuits, an earth fault on any one circuit trips protection for all circuits on
@@ -215,7 +215,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cost-effective for new installations</strong> — RCCBs are significantly
                 cheaper than RCBOs. In a new consumer unit, using an RCCB to protect a group of
@@ -224,7 +224,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Types</strong> — Type AC (responds to sinusoidal AC residual currents), Type
                 A (responds to AC and pulsating DC residual currents), and Type B (responds to AC,
@@ -252,7 +252,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>No nuisance tripping between circuits</strong> — because each circuit has
                 its own RCBO, an earth fault on one circuit only trips that circuit. Other circuits
@@ -262,7 +262,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Higher cost</strong> — RCBOs cost three to five times more per unit than a
                 comparable MCB. An all-RCBO consumer unit is typically £150 to £300 more expensive
@@ -271,7 +271,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Preferred for new consumer unit installations</strong> — many electricians
                 now specify all-RCBO boards as standard for new domestic consumer unit replacements,
@@ -280,7 +280,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCBO types</strong> — like RCCBs, RCBOs come in Type AC, Type A, and Type B
                 variants. BS 7671 18th Edition (as amended) requires Type A or Type B RCDs for
@@ -305,7 +305,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Retrofit solution</strong> — SRCDs are particularly useful for retrofitting
                 30mA additional protection on individual sockets without replacing the consumer
@@ -314,7 +314,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Point-of-use protection only</strong> — an SRCD protects only the equipment
                 plugged into that socket. It does not protect the cable feeding the socket, other
@@ -322,7 +322,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Depth consideration</strong> — SRCDs are thicker than standard sockets due
                 to the built-in electronics. A 35mm back box is usually required (standard sockets
@@ -330,7 +330,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Monthly testing</strong> — like all RCDs, SRCDs should be tested monthly
                 using the integral test button to verify correct operation. The test button must be
@@ -357,7 +357,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Board compatibility</strong> — RCDMs are manufacturer-specific and must be
                 compatible with the consumer unit they are installed in. They cannot be mixed
@@ -366,7 +366,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Requires a spare way</strong> — an RCDM occupies one or more ways in the
                 consumer unit. If the board is already full, an RCDM cannot be added without first
@@ -374,7 +374,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Practical use case</strong> — RCDMs are particularly useful in commercial
                 and industrial distribution boards where individual circuits need RCD protection
@@ -515,7 +515,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Info className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New domestic consumer unit</strong> — specify an all-RCBO board with Type A
                 RCBOs as standard. The additional cost over a split-load RCCB/MCB board is modest
@@ -525,7 +525,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Info className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charging circuit</strong> — EV charger circuits require a Type A or Type
                 B RCD (not Type AC). If the EV charger has built-in Type B protection, a Type A
@@ -534,7 +534,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Info className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Retrofit on existing board</strong> — where the existing board is in good
                 condition, individual RCBOs can replace MCBs for circuits requiring additional
@@ -543,7 +543,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Info className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial installation with high leakage</strong> — consider 100mA or 300mA
                 RCDs as the upstream device with 30mA RCDs downstream. Design the system for
@@ -569,7 +569,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Certificate and Test Results</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -598,7 +598,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete RCD certificates and EICRs with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site certification, AI board scanning, and instant PDF export."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site certification, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -631,7 +631,7 @@ export default function RCDTypesGuidePage() {
       heroTitle={
         <>
           RCD Types UK Guide:{' '}
-          <span className="text-yellow-400">RCCB, RCBO, SRCD and RCDM Explained</span>
+          <span className="text-elec-yellow">RCCB, RCBO, SRCD and RCDM Explained</span>
         </>
       }
       heroSubtitle="Everything electricians and property owners need to know about RCD types in UK installations — RCCB, RCBO, SRCD, and RCDM explained with BS 7671 18th Edition requirements, sensitivity ratings, and practical selection guidance."
@@ -642,7 +642,7 @@ export default function RCDTypesGuidePage() {
       faqHeading="Frequently Asked Questions About RCD Types"
       relatedPages={relatedPages}
       ctaHeading="Complete RCD Certificates and EICRs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC and EICR completion with AI board scanning, RCD test recording, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site EIC and EICR completion with AI board scanning, RCD test recording, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

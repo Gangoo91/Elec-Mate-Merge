@@ -42,7 +42,7 @@ export default function GarageSupplyCalculatorPage() {
       badgeIcon={Warehouse}
       heroTitle={
         <>
-          <span className="text-yellow-400">Garage Supply Calculator</span> — Load Assessment,
+          <span className="text-elec-yellow">Garage Supply Calculator</span> — Load Assessment,
           Submain Sizing, and Consumer Unit Selection
         </>
       }
@@ -78,30 +78,30 @@ export default function GarageSupplyCalculatorPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
                 <ul className="space-y-3 text-white text-sm">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Load assessment</strong> — what will the
+                      <strong className="text-elec-yellow">Load assessment</strong> — what will the
                       garage actually demand? This page and the calculator above.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">The submain cable</strong> — normally
+                      <strong className="text-elec-yellow">The submain cable</strong> — normally
                       buried SWA, sized for the assessed demand and the run length.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">The garage consumer unit</strong> — a
+                      <strong className="text-elec-yellow">The garage consumer unit</strong> — a
                       small board with RCD/RCBO protection for the final circuits.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-1 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-1 shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">The earthing decision</strong> — export
+                      <strong className="text-elec-yellow">The earthing decision</strong> — export
                       the house earth or install a TT electrode at the garage.
                     </span>
                   </li>
@@ -179,25 +179,25 @@ export default function GarageSupplyCalculatorPage() {
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
                 <ol className="space-y-3 text-white text-sm list-decimal pl-5">
                   <li>
-                    <strong className="text-yellow-400">Sockets:</strong> assessed at{' '}
+                    <strong className="text-elec-yellow">Sockets:</strong> assessed at{' '}
                     <strong>20A</strong> — realistic simultaneous workshop use, not the 32A device
                     rating
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Lighting:</strong> 460W of LED battens =
+                    <strong className="text-elec-yellow">Lighting:</strong> 460W of LED battens =
                     2A; with standard lighting diversity, take <strong>2A</strong>
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Heater:</strong> 2000 / 230 ={' '}
+                    <strong className="text-elec-yellow">Heater:</strong> 2000 / 230 ={' '}
                     <strong>8.7A</strong> at full rating
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Assessed demand:</strong> 20 + 2 + 8.7 ={' '}
+                    <strong className="text-elec-yellow">Assessed demand:</strong> 20 + 2 + 8.7 ={' '}
                     <strong>30.7A</strong> → a <strong>40A</strong> submain device gives sensible
                     headroom
                   </li>
                   <li>
-                    <strong className="text-yellow-400">Submain cable:</strong> for a 40A buried
+                    <strong className="text-elec-yellow">Submain cable:</strong> for a 40A buried
                     run, 10mm² SWA is the typical choice. Voltage drop using the published figure
                     of approximately 4.4 mV/A/m for 10mm² copper: 30.7A x 25m x 4.4 mV/A/m =
                     3,377mV = <strong>3.4V = 1.5%</strong> — leaving ample allowance for the final
@@ -480,7 +480,7 @@ export default function GarageSupplyCalculatorPage() {
         },
       ]}
       ctaHeading="Design garage supplies with confidence"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for load assessment, submain sizing, and certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for load assessment, submain sizing, and certification. 7-day free trial, cancel anytime."
       toolPath="/tools/garage-supply-calculator"
     />
   );

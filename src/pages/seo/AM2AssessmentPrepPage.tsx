@@ -179,7 +179,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4 space-y-5">
           <div>
             <h3 className="font-bold text-white mb-2 flex items-center gap-2">
-              <Wrench className="w-4 h-4 text-yellow-400" />
+              <Wrench className="w-4 h-4 text-elec-yellow" />
               Task 1 — Containment Installation (AM2S only)
             </h3>
             <p className="text-white text-sm leading-relaxed">
@@ -356,7 +356,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4 space-y-4">
           <div>
             <h3 className="font-bold text-white mb-2 flex items-center gap-2">
-              <Calendar className="w-4 h-4 text-yellow-400" />
+              <Calendar className="w-4 h-4 text-elec-yellow" />
               Week 1 — Knowledge Review
             </h3>
             <p className="text-white text-sm leading-relaxed">
@@ -423,23 +423,23 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Arrive early:</strong> AM2 assessments typically begin at 08:00. Arrive at least 30 minutes early to register, check your workstation, and settle in. Late arrival can forfeit assessment time.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Required PPE:</strong> Safety footwear, work trousers (not shorts), and any additional PPE specified by the centre. The assessor will check PPE at the start.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Equipment check:</strong> Confirm your MFT calibration certificate is current if bringing your own equipment. Ensure batteries are fully charged. Check test leads for damage.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Read the brief carefully:</strong> You will be given the wiring diagram and task brief at the start. Read it thoroughly before touching any tools. Clarify any queries with the assessor before the clock starts.</span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Manage your time actively:</strong> Keep an eye on the time throughout each task. If you are running behind, prioritise completing tasks over perfecting workmanship.</span>
             </li>
           </ul>
@@ -467,7 +467,7 @@ export default function AM2AssessmentPrepPage() {
       heroTitle={
         <>
           AM2 Assessment Preparation:{' '}
-          <span className="text-yellow-400">How to Pass the EMTA Practical Assessment First Time</span>
+          <span className="text-elec-yellow">How to Pass the EMTA Practical Assessment First Time</span>
         </>
       }
       heroSubtitle="The AM2 is the final practical hurdle before qualifying as an electrician. This guide covers what it involves, how to book it, why candidates fail, and a focused 2–4 week preparation plan to maximise your chance of passing first time."

@@ -149,7 +149,7 @@ export default function ElectricalSwitchSymbolsPage() {
       heroTitle={
         <>
           Switch Symbols:{' '}
-          <span className="text-yellow-400">IEC 60617 reference for UK electricians</span>
+          <span className="text-elec-yellow">IEC 60617 reference for UK electricians</span>
         </>
       }
       heroSubtitle="Every switch symbol used on UK electrical drawings — one-way through emergency stop — drawn to IEC 60617 with installation context, BS 7671 references and use cases."

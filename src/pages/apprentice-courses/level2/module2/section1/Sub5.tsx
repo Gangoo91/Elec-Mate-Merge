@@ -50,9 +50,9 @@ const checks = [
     id: 'instr-prove-dead',
     question: 'Which device is suitable for proving a circuit is dead before working on it?',
     options: [
-      'A bi-energy machine that can switch between electric and diesel',
-      'All extraneous and exposed-conductive-parts within zones',
-      'An agreement to buy electricity from a third-party owned system',
+      'A multimeter set to the AC volts range',
+      'A non-contact voltage pen held near the cable',
+      'A plug-in socket tester with three indicator lights',
       'A two-pole voltage indicator (e.g. CAT III/IV) compliant with GS38',
     ],
     correctIndex: 3,
@@ -117,7 +117,7 @@ const quizQuestions = [
       'You set a multimeter to current (A) mode and connect the leads across a 230 V socket. What happens?',
     options: [
       'The meter reads the supply voltage of 230 V as normal on the display',
-      'Both the timer circuit and the live conductor are isolated automatically',
+      'The meter reads about 13 A — the rating of the socket',
       "The meter's internal fuse blows almost instantly because you've created a near-short across the supply",
       'Nothing happens — current mode has very high internal resistance and blocks the current',
     ],

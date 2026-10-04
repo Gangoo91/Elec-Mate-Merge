@@ -187,15 +187,15 @@ export default function VoltageDropCalculatorPage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
-        <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-elec-yellow text-sm font-medium mb-6">
             <Zap className="w-4 h-4" />
             Part of 70 Electrical Calculators
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             Voltage Drop Calculator
-            <span className="block text-yellow-400 mt-1">BS 7671 Compliant</span>
+            <span className="block text-elec-yellow mt-1">BS 7671 Compliant</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             Calculate voltage drop for any cable type and installation method. Instantly check
@@ -211,7 +211,7 @@ export default function VoltageDropCalculatorPage() {
             </Link>
             <a
               href="#how-it-works"
-              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-yellow-500/40 touch-manipulation transition-colors"
+              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-white/[0.1] touch-manipulation transition-colors"
             >
               See How It Works
               <ArrowDown className="w-4 h-4 ml-1" />
@@ -234,7 +234,7 @@ export default function VoltageDropCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Lightbulb className="w-5 h-5 text-yellow-400" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">What Is Voltage Drop?</h2>
           </div>
@@ -282,7 +282,7 @@ export default function VoltageDropCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <BookOpen className="w-5 h-5 text-yellow-400" />
+              <BookOpen className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               BS 7671 Voltage Drop Limits
@@ -293,8 +293,8 @@ export default function VoltageDropCalculatorPage() {
               BS 7671:2018+A4:2026, the 18th Edition of the IET Wiring Regulations, sets out the
               recommended maximum voltage drop for electrical installations in the United Kingdom.
               These limits are defined in{' '}
-              <strong className="text-yellow-400">Regulation 525.1</strong> and quantified in{' '}
-              <strong className="text-yellow-400">Table 4Ab</strong>.
+              <strong className="text-elec-yellow">Regulation 525.1</strong> and quantified in{' '}
+              <strong className="text-elec-yellow">Table 4Ab</strong>.
             </p>
             <p>
               For installations supplied directly from a public low-voltage distribution system
@@ -304,18 +304,18 @@ export default function VoltageDropCalculatorPage() {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                 <div className="flex items-center gap-2 mb-2">
-                  <Lightbulb className="w-5 h-5 text-yellow-400" />
+                  <Lightbulb className="w-5 h-5 text-elec-yellow" />
                   <h3 className="font-bold text-white text-lg">Lighting Circuits</h3>
                 </div>
-                <p className="text-3xl font-bold text-yellow-400 mb-1">3%</p>
+                <p className="text-3xl font-bold text-elec-yellow mb-1">3%</p>
                 <p className="text-white text-sm">of nominal voltage = 6.9 V on a 230 V supply</p>
               </div>
               <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                 <div className="flex items-center gap-2 mb-2">
-                  <Zap className="w-5 h-5 text-yellow-400" />
+                  <Zap className="w-5 h-5 text-elec-yellow" />
                   <h3 className="font-bold text-white text-lg">Power Circuits</h3>
                 </div>
-                <p className="text-3xl font-bold text-yellow-400 mb-1">5%</p>
+                <p className="text-3xl font-bold text-elec-yellow mb-1">5%</p>
                 <p className="text-white text-sm">of nominal voltage = 11.5 V on a 230 V supply</p>
               </div>
             </div>
@@ -341,32 +341,32 @@ export default function VoltageDropCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Calculator className="w-5 h-5 text-yellow-400" />
+              <Calculator className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">The Voltage Drop Formula</h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>The standard voltage drop formula used with BS 7671 tables is straightforward:</p>
             <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center my-6">
-              <p className="text-xl sm:text-2xl font-mono font-bold text-yellow-400">
+              <p className="text-xl sm:text-2xl font-mono font-bold text-elec-yellow">
                 VD = (mV/A/m × I<sub>b</sub> × L) ÷ 1000
               </p>
               <div className="mt-4 text-left max-w-md mx-auto space-y-1 text-sm text-white">
                 <p>
-                  <strong className="text-yellow-400">VD</strong> = voltage drop in volts
+                  <strong className="text-elec-yellow">VD</strong> = voltage drop in volts
                 </p>
                 <p>
-                  <strong className="text-yellow-400">mV/A/m</strong> = millivolts per ampere per
+                  <strong className="text-elec-yellow">mV/A/m</strong> = millivolts per ampere per
                   metre (from BS 7671 tables)
                 </p>
                 <p>
-                  <strong className="text-yellow-400">
+                  <strong className="text-elec-yellow">
                     I<sub>b</sub>
                   </strong>{' '}
                   = design current of the circuit in amperes
                 </p>
                 <p>
-                  <strong className="text-yellow-400">L</strong> = length of the cable run in metres
+                  <strong className="text-elec-yellow">L</strong> = length of the cable run in metres
                 </p>
               </div>
             </div>
@@ -384,11 +384,11 @@ export default function VoltageDropCalculatorPage() {
             </p>
             <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10 my-6">
               <p className="font-mono text-white">
-                VD = 18 × 20 × 25 ÷ 1000 = <strong className="text-yellow-400">9.0 V</strong>
+                VD = 18 × 20 × 25 ÷ 1000 = <strong className="text-elec-yellow">9.0 V</strong>
               </p>
               <p className="text-white text-sm mt-2">
                 This is 3.91% of 230 V — which passes the 5% power limit (11.5 V) but would{' '}
-                <strong className="text-yellow-400">fail</strong> the 3% lighting limit (6.9 V). If
+                <strong className="text-elec-yellow">fail</strong> the 3% lighting limit (6.9 V). If
                 this were a lighting circuit, you would need to increase the cable to 4 mm².
               </p>
             </div>
@@ -407,7 +407,7 @@ export default function VoltageDropCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <BookOpen className="w-5 h-5 text-yellow-400" />
+              <BookOpen className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               How to Look Up mV/A/m Values
@@ -422,31 +422,31 @@ export default function VoltageDropCalculatorPage() {
             </p>
             <ul className="space-y-3 my-4">
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Table 4D5B</strong> — Flat twin and earth
+                  <strong className="text-elec-yellow">Table 4D5B</strong> — Flat twin and earth
                   cable (6242Y), clipped direct or in thermal insulation. This is the most common
                   domestic cable type.
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Table 4D1B</strong> — Single-core non-armoured
+                  <strong className="text-elec-yellow">Table 4D1B</strong> — Single-core non-armoured
                   thermoplastic (PVC) cables, for singles in conduit or trunking installations.
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Table 4D2B</strong> — Multicore non-armoured
+                  <strong className="text-elec-yellow">Table 4D2B</strong> — Multicore non-armoured
                   thermoplastic cables, such as 3-core flex or submain cables.
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Table 4E1B to 4E4B</strong> — Thermosetting
+                  <strong className="text-elec-yellow">Table 4E1B to 4E4B</strong> — Thermosetting
                   (XLPE) and SWA armoured cables, commonly used for sub-mains and external cable
                   runs.
                 </span>
@@ -475,7 +475,7 @@ export default function VoltageDropCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               How to Calculate Voltage Drop — Step by Step
@@ -488,7 +488,7 @@ export default function VoltageDropCalculatorPage() {
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex-shrink-0">
-                  <span className="font-bold text-yellow-400">{index + 1}</span>
+                  <span className="font-bold text-elec-yellow">{index + 1}</span>
                 </div>
                 <div>
                   <h3 className="font-bold text-white text-lg mb-1">{step.name}</h3>
@@ -505,14 +505,14 @@ export default function VoltageDropCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <BarChart3 className="w-5 h-5 text-yellow-400" />
+              <BarChart3 className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">Worked Examples</h2>
           </div>
           <div className="space-y-6">
             {/* Example 1 */}
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <h3 className="font-bold text-yellow-400 text-lg mb-3">
+              <h3 className="font-bold text-elec-yellow text-lg mb-3">
                 Example 1: Ring Final Circuit (Sockets)
               </h3>
               <div className="space-y-2 text-white leading-relaxed text-sm">
@@ -528,7 +528,7 @@ export default function VoltageDropCalculatorPage() {
                   the ring). Effective length = 50 ÷ 4 = 12.5 m.
                 </p>
                 <p className="font-mono text-white">
-                  VD = 18 × 30 × 12.5 ÷ 1000 = <strong className="text-yellow-400">6.75 V</strong>{' '}
+                  VD = 18 × 30 × 12.5 ÷ 1000 = <strong className="text-elec-yellow">6.75 V</strong>{' '}
                   (2.93%)
                 </p>
                 <p>
@@ -540,7 +540,7 @@ export default function VoltageDropCalculatorPage() {
 
             {/* Example 2 */}
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <h3 className="font-bold text-yellow-400 text-lg mb-3">
+              <h3 className="font-bold text-elec-yellow text-lg mb-3">
                 Example 2: Lighting Circuit in a Workshop
               </h3>
               <div className="space-y-2 text-white leading-relaxed text-sm">
@@ -550,7 +550,7 @@ export default function VoltageDropCalculatorPage() {
                   (Table 4D5B, mV/A/m = 29). The design current is 8 A.
                 </p>
                 <p className="font-mono text-white">
-                  VD = 29 × 8 × 45 ÷ 1000 = <strong className="text-yellow-400">10.44 V</strong>{' '}
+                  VD = 29 × 8 × 45 ÷ 1000 = <strong className="text-elec-yellow">10.44 V</strong>{' '}
                   (4.54%)
                 </p>
                 <p>
@@ -564,7 +564,7 @@ export default function VoltageDropCalculatorPage() {
 
             {/* Example 3 */}
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <h3 className="font-bold text-yellow-400 text-lg mb-3">
+              <h3 className="font-bold text-elec-yellow text-lg mb-3">
                 Example 3: Three-Phase Sub-Main
               </h3>
               <div className="space-y-2 text-white leading-relaxed text-sm">
@@ -574,7 +574,7 @@ export default function VoltageDropCalculatorPage() {
                   three-phase mV/A/m = 1.50). The design current is 80 A per phase.
                 </p>
                 <p className="font-mono text-white">
-                  VD = 1.50 × 80 × 60 ÷ 1000 = <strong className="text-yellow-400">7.2 V</strong>{' '}
+                  VD = 1.50 × 80 × 60 ÷ 1000 = <strong className="text-elec-yellow">7.2 V</strong>{' '}
                   (1.8% of 400 V)
                 </p>
                 <p>
@@ -620,7 +620,7 @@ export default function VoltageDropCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <HelpCircle className="w-5 h-5 text-yellow-400" />
+              <HelpCircle className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Frequently Asked Questions
@@ -633,7 +633,7 @@ export default function VoltageDropCalculatorPage() {
                 className="group p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-white/[0.14] transition-colors"
               >
                 <summary className="flex items-start gap-3 cursor-pointer touch-manipulation list-none [&::-webkit-details-marker]:hidden">
-                  <ChevronRight className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0 transition-transform group-open:rotate-90" />
+                  <ChevronRight className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0 transition-transform group-open:rotate-90" />
                   <h3 className="font-bold text-white text-lg">{faq.question}</h3>
                 </summary>
                 <div className="mt-3 pl-8">
@@ -650,7 +650,7 @@ export default function VoltageDropCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Cable className="w-5 h-5 text-yellow-400" />
+              <Cable className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Common Cable Voltage Drop Values
@@ -663,13 +663,13 @@ export default function VoltageDropCalculatorPage() {
           </p>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden">
             <div className="grid grid-cols-3 gap-px bg-white/10">
-              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                 Cable Size
               </div>
-              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                 mV/A/m (1-phase)
               </div>
-              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-elec-yellow text-sm">
                 Typical Use
               </div>
             </div>
@@ -735,7 +735,7 @@ export default function VoltageDropCalculatorPage() {
 
       <SEOCTASection
         heading="Calculate Voltage Drop in Seconds"
-        subheading="Join 1,600+ UK electricians using Elec-Mate for on-site calculations. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians using Elec-Mate for on-site calculations. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

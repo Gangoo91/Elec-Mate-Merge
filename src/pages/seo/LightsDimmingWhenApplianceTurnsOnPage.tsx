@@ -213,7 +213,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>High inrush current from motors</strong> — washing machines, tumble dryers,
                 fridge compressors, and air conditioning units have electric motors that draw 5 to 8
@@ -222,7 +222,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Undersized meter tails or supply cables</strong> — older properties may have
                 4mm or 6mm meter tails that were adequate for the original load but are now
@@ -240,7 +240,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Overloaded circuits</strong> — if a circuit is carrying close to its maximum
                 rated current, any additional load pushes the voltage drop higher. This is common
@@ -248,7 +248,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Long cable runs</strong> — the longer the cable, the higher the resistance,
                 the greater the voltage drop. Properties with long runs from the meter to the
@@ -256,7 +256,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Low incoming supply voltage</strong> — if the DNO supply is already at the
                 lower end of the permitted range (230V -6% = 216.2V), any additional voltage drop
@@ -326,7 +326,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Washing machines and tumble dryers</strong> — motor inrush can be 30A to 60A
                 for a fraction of a second. The drum motor starting under load (especially on spin
@@ -334,7 +334,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fridge and freezer compressors</strong> — compressor motors have significant
                 locked-rotor current. Older fridges without soft-start circuits are particularly
@@ -342,14 +342,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Vacuum cleaners</strong> — universal motors in vacuum cleaners draw high
                 inrush current. A 2kW vacuum can draw 20A+ at startup.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electric showers</strong> — while showers do not have motors, a 10.5kW
                 shower draws approximately 45A continuously. The sudden switch-on of that load can
@@ -358,7 +358,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Immersion heaters and storage heaters</strong> — 3kW immersion heaters draw
                 about 13A. While this is not a huge inrush, it is a continuous load that appears
@@ -434,7 +434,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Low supply voltage</strong> — the statutory voltage in the UK is 230V
                 +10%/-6%, giving a range of 216.2V to 253V. If your supply is at the lower end, any
@@ -443,7 +443,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Long or undersized service cable</strong> — the cable from the street to
                 your property (the service cable) belongs to the DNO. If it is long, undersized, or
@@ -452,7 +452,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Shared supply transformer</strong> — in some areas, multiple properties
                 share a supply transformer. If a neighbour's high-power load (for example, an EV
@@ -548,7 +548,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Gauge className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Gauge className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">1. Measure Supply Voltage</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -563,7 +563,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">2. Inspect and Tighten Connections</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -579,7 +579,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">3. Calculate Voltage Drop</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -625,7 +625,7 @@ export default function LightsDimmingWhenApplianceTurnsOnPage() {
       heroTitle={
         <>
           Lights Dimming When an Appliance Turns On:{' '}
-          <span className="text-yellow-400">Causes, Fixes, and When to Worry</span>
+          <span className="text-elec-yellow">Causes, Fixes, and When to Worry</span>
         </>
       }
       heroSubtitle="Your lights dip when the washing machine starts. Is it normal? This guide explains the electrical science behind dimming lights, covers the common causes from harmless inrush current to dangerous loose connections, and tells you exactly when to call an electrician."
@@ -636,7 +636,7 @@ export default function LightsDimmingWhenApplianceTurnsOnPage() {
       faqHeading="Frequently Asked Questions About Dimming Lights"
       relatedPages={relatedPages}
       ctaHeading="Diagnose and Document Electrical Faults on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI fault diagnosis, voltage drop calculations, and professional EICR certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for AI fault diagnosis, voltage drop calculations, and professional EICR certificates. 7-day free trial, cancel anytime."
     />
   );
 }

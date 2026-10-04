@@ -204,7 +204,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Noise criteria for teaching spaces</strong> — BB93 specifies maximum
                 background noise levels of 35 dB(A) for primary classrooms and 40 dB(A) for
@@ -214,7 +214,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Switch rooms and substations</strong> — main distribution switchrooms must
                 be located away from teaching spaces or adequately acoustically isolated.
@@ -224,7 +224,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mechanical interlock with HVAC</strong> — heat recovery ventilation units in
                 classrooms must be selected for low noise output. As these units require electrical
@@ -306,7 +306,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Escape route lighting</strong> — minimum 1 lux across the full width of all
                 corridors, stairwells, and escape routes. Exit signs (internally illuminated,
@@ -314,7 +314,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sports hall and assembly hall</strong> — large open areas (typically over
                 60m²) require anti-panic emergency lighting at 0.5 lux. A secondary school sports
@@ -322,7 +322,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maintained vs non-maintained</strong> — schools with over 300 pupils or with
                 large assembly areas typically specify maintained emergency lighting (on
@@ -331,7 +331,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Central battery systems</strong> — larger secondary schools increasingly use
                 central battery systems (CBS) to power emergency luminaires rather than individual
@@ -413,7 +413,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Typical system sizes</strong> — primary school: 20–50kWp. Secondary school:
                 50–150kWp. Sixth form or large academy: 100–250kWp. System size is constrained by
@@ -422,7 +422,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Financial benefit</strong> — a 50kWp system generates approximately
                 45,000–50,000 kWh per year in the UK. At 2025 commercial electricity rates
@@ -432,7 +432,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Installation costs</strong> — 50kWp school rooftop system: £40,000–£65,000
                 including inverters, mounting system, cabling, generation meter, and DNO G99
@@ -441,7 +441,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Sun className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Battery storage</strong> — school battery storage systems (50–100kWh) can be
                 added to capture afternoon generation that would otherwise be exported at low SEG
@@ -512,7 +512,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Primary school (1FE, ~1,200m²)</strong> — £120,000–£180,000. General power
                 and lighting: £60,000–£90,000. ICT infrastructure: £20,000–£35,000. Emergency
@@ -520,19 +520,19 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Primary school (2FE, ~2,400m²)</strong> — £180,000–£250,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Secondary school (900 pupils)</strong> — £250,000–£380,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Secondary school (1,500 pupils)</strong> — £380,000–£600,000+. Includes
                 specialist laboratory and DT workshop circuits, comprehensive PAVA system, and full
@@ -540,7 +540,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Solar PV (50kWp)</strong> — £40,000–£65,000 additional. Strongly recommended
                 for all new-build schools with suitable roof orientation.
@@ -565,14 +565,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Recommended interval</strong> — five years for educational buildings. Many
                 academy trusts and local authority estates teams use a 3-year cycle.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Holiday scheduling</strong> — school EICRs must be carried out during school
                 holidays to avoid disruption to teaching. Electricians tendering for school EICR
@@ -581,7 +581,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>DBS clearance</strong> — electricians working in schools during term time
                 (for reactive maintenance) are required to hold a valid enhanced DBS check.
@@ -590,7 +590,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR cost</strong> — primary school: £600–£1,200. Secondary school:
                 £1,500–£3,500 depending on board count and system complexity. Multi-board
@@ -617,7 +617,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Quote and Certificate Complex Installations
@@ -638,7 +638,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage school electrical contracts with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for commercial quotes, multi-board EICR completion, and EIC certification. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for commercial quotes, multi-board EICR completion, and EIC certification. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -664,7 +664,7 @@ export default function SchoolElectricalCostPage() {
       heroTitle={
         <>
           School Electrical Installation Cost UK 2025:{' '}
-          <span className="text-yellow-400">Educational Buildings Guide</span>
+          <span className="text-elec-yellow">Educational Buildings Guide</span>
         </>
       }
       heroSubtitle="Complete cost guide for UK school electrical installations. BB93 acoustic compliance, ICT infrastructure and structured cabling, emergency lighting to BS 5266-1, access control and safeguarding systems, solar PV, and energy management. Primary school £120,000–£250,000."
@@ -675,7 +675,7 @@ export default function SchoolElectricalCostPage() {
       faqHeading="Frequently Asked Questions: School Electrical Installation Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certificate School Electrical Projects on Site"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for school project quoting, multi-board EICR completion, and EIC certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for school project quoting, multi-board EICR completion, and EIC certification. 7-day free trial, cancel anytime."
     />
   );
 }

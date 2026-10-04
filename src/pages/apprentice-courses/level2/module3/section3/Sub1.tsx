@@ -87,10 +87,10 @@ const quizQuestions = [
     question:
       'A 32 A ring final circuit wired in 2.5 mm² T&E to BS 7671 must comply with 433.1.204. Which protective devices are permitted?',
     options: [
-      'BS 1362 cartridge fuses rated at 13 A only',
-      'BS EN 60269-3 fuses rated above 45 A',
+      'A 32 A device only — a 30 A device is not permitted on a ring final',
+      'A 40 A device, provided the ring is 2.5 mm² cable with a 1.5 mm² CPC',
       'BS 88, BS 3036, BS EN 60898, BS EN 60947-2 or BS EN 61009-1 RCBO at 30 A or 32 A',
-      'Any device rated 40 A or higher, provided RCD protection is fitted',
+      'A 20 A device, because each leg of the ring is 2.5 mm² cable rated at about 20 A',
     ],
     correctAnswer: 2,
     explanation:

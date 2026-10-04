@@ -88,7 +88,7 @@ export const bs7671ReferenceCards: BS7671ReferenceCard[] = [
             },
             {
               label: '5\u00D7 I\u0394n test',
-              value: 'Deleted at A4:2026 with Appendix 3 Table 3A \u2014 no longer required',
+              value: 'Deleted at A2:2022 with Appendix 3 Table 3A \u2014 no longer required',
             },
             {
               label: 'Integral test button',

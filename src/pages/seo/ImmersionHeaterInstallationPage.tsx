@@ -184,7 +184,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCB rating</strong> — a 20A Type B or Type C MCB at the consumer unit. A 16A
                 MCB is acceptable for a 3kW element (13A continuous load) but 20A provides more
@@ -193,7 +193,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable sizing</strong> — 2.5mm² twin and earth for most domestic runs where
                 the cable is clipped to a surface or in conduit (current capacity 23A in free air,
@@ -203,7 +203,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Isolating switch</strong> — a 20A double-pole switch with a pilot light (to
                 indicate when the element is energised) must be installed adjacent to the cylinder
@@ -213,7 +213,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection</strong> — Regulation 411.3.3 requires 30mA RCD protection
                 for socket-outlet circuits. For fixed appliance circuits such as immersion heaters,
@@ -239,7 +239,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Top-entry (long) element</strong> — enters the cylinder from the top and
                 extends most of the way down the tank. Heats the entire cylinder contents. Available
@@ -249,7 +249,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bottom-entry (short) element</strong> — enters the cylinder from the side
                 near the bottom. Available in short lengths (typically 11"). Used as the primary
@@ -257,7 +257,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dual-element cylinders</strong> — fitted with both a top (short, typically
                 1kW or 1.5kW) and a bottom (long, typically 3kW) element. The bottom element is used
@@ -267,7 +267,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Titanium elements</strong> — standard copper-sheathed elements in hard water
                 areas accumulate limescale rapidly. Titanium or Incoloy elements resist limescale
@@ -347,7 +347,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>24-hour mechanical or digital timer</strong> — programmes the immersion
                 heater to operate during off-peak tariff periods (e.g., Economy 7 overnight
@@ -356,7 +356,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Boost facility</strong> — a timer with a manual boost override allows the
                 immersion to be turned on for a set period (typically 30 or 60 minutes) for
@@ -365,7 +365,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smart controls</strong> — Wi-Fi-connected immersion heater controllers (such
                 as the Sunamp or myenergi Eddi app-controlled units) allow remote monitoring and
@@ -393,7 +393,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>How diverters work</strong> — a current transformer (CT clamp) monitors
                 current at the grid connection. When the PV system generates more than the household
@@ -403,7 +403,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Popular UK diverters</strong> — myenergi Eddi, Marlec Rutland Windcharger
                 iBoost+, Immersun, and Power Diverter Pro are the most common UK solar diverter
@@ -412,7 +412,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Installation note</strong> — the diverter is wired between the consumer unit
                 and the immersion heater isolating switch. The CT clamp is installed on the grid
@@ -439,14 +439,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Immersion element only (supply)</strong> — copper element: £15–£40;
                 Incoloy/titanium element: £30–£80. Premium dual immersion thermostats: £10–£25.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Like-for-like element replacement (labour)</strong> — £80–£150 depending on
                 access. Includes draining sufficient water, removing old element, fitting new
@@ -455,7 +455,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New immersion heater circuit (materials + labour)</strong> — £200–£400 for a
                 straightforward domestic installation: consumer unit to cylinder, 20A RCBO, 20A
@@ -465,7 +465,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Solar diverter installation</strong> — myenergi Eddi supply and
                 installation: £400–£600 including CT clamp installation, wiring to immersion
@@ -490,7 +490,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1. Isolate and lock off</strong> — isolate the consumer unit main switch
                 before any wiring work. Use a lock-off device and prove dead with an approved
@@ -498,7 +498,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>2. Install the circuit cable</strong> — run 2.5mm² (or 4mm² where passing
                 through insulation) twin and earth from the consumer unit to the cylinder location.
@@ -506,7 +506,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>3. Install the isolating switch and timer</strong> — mount the 20A
                 double-pole switch (with timer if required) adjacent to the cylinder. Connect the
@@ -515,7 +515,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>4. Install the element</strong> — ensure the cylinder is sufficiently
                 drained or that the element boss is above the water line. Fit the element with a new
@@ -524,7 +524,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>5. Connect at consumer unit</strong> — install the 20A RCBO or MCB and
                 connect the circuit cable. Restore power, test continuity, insulation resistance,
@@ -551,7 +551,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Certificate on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -584,7 +584,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certify immersion heater installations with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate to issue Electrical Installation Certificates and Minor Works Certificates on site."
+          description="Join 2,100+ UK electricians using Elec-Mate to issue Electrical Installation Certificates and Minor Works Certificates on site."
           icon={FileCheck2}
         />
       </>
@@ -610,7 +610,7 @@ export default function ImmersionHeaterInstallationPage() {
       heroTitle={
         <>
           Immersion Heater Installation UK:{' '}
-          <span className="text-yellow-400">Electrical Requirements & Costs</span>
+          <span className="text-elec-yellow">Electrical Requirements & Costs</span>
         </>
       }
       heroSubtitle="Everything electricians need to know about immersion heater installation — dedicated 20A circuit requirements, thermostat settings for Legionella prevention, element types, timer controls, solar diverter compatibility, and 2026 costs."
@@ -621,7 +621,7 @@ export default function ImmersionHeaterInstallationPage() {
       faqHeading="Frequently Asked Questions About Immersion Heater Installation"
       relatedPages={relatedPages}
       ctaHeading="Certify Immersion Heater Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to issue Electrical Installation Certificates and Minor Works Certificates on site. Instant PDF export, Part P compliant. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to issue Electrical Installation Certificates and Minor Works Certificates on site. Instant PDF export, Part P compliant. 7-day free trial, cancel anytime."
     />
   );
 }

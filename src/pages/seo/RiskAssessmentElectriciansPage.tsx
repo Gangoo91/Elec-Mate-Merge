@@ -209,7 +209,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Health and Safety at Work etc. Act 1974</strong> — the overarching
                 legislation that places a general duty on employers to ensure, so far as is
@@ -218,7 +218,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Management of Health and Safety at Work Regulations 1999</strong> —
                 Regulation 3 specifically requires every employer and self-employed person to make a
@@ -227,7 +227,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electricity at Work Regulations 1989</strong> — impose specific duties
                 regarding electrical safety, including the requirement to prevent danger from
@@ -235,7 +235,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Construction (Design and Management) Regulations 2015 (CDM)</strong> — if
                 your electrical work falls within the definition of "construction work" (which most
@@ -243,7 +243,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Scale className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>
                   <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
@@ -279,8 +279,8 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-yellow-500/20 flex items-center justify-center shrink-0">
-                <span className="text-yellow-400 font-bold text-sm">1</span>
+              <div className="w-8 h-8 rounded-full bg-white/[0.06] flex items-center justify-center shrink-0">
+                <span className="text-elec-yellow font-bold text-sm">1</span>
               </div>
               <div>
                 <h4 className="font-bold text-white mb-1">Identify the Hazards</h4>
@@ -298,8 +298,8 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-yellow-500/20 flex items-center justify-center shrink-0">
-                <span className="text-yellow-400 font-bold text-sm">2</span>
+              <div className="w-8 h-8 rounded-full bg-white/[0.06] flex items-center justify-center shrink-0">
+                <span className="text-elec-yellow font-bold text-sm">2</span>
               </div>
               <div>
                 <h4 className="font-bold text-white mb-1">Decide Who Might Be Harmed and How</h4>
@@ -316,8 +316,8 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-yellow-500/20 flex items-center justify-center shrink-0">
-                <span className="text-yellow-400 font-bold text-sm">3</span>
+              <div className="w-8 h-8 rounded-full bg-white/[0.06] flex items-center justify-center shrink-0">
+                <span className="text-elec-yellow font-bold text-sm">3</span>
               </div>
               <div>
                 <h4 className="font-bold text-white mb-1">
@@ -344,8 +344,8 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-yellow-500/20 flex items-center justify-center shrink-0">
-                <span className="text-yellow-400 font-bold text-sm">4</span>
+              <div className="w-8 h-8 rounded-full bg-white/[0.06] flex items-center justify-center shrink-0">
+                <span className="text-elec-yellow font-bold text-sm">4</span>
               </div>
               <div>
                 <h4 className="font-bold text-white mb-1">Record Your Findings</h4>
@@ -362,8 +362,8 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-yellow-500/20 flex items-center justify-center shrink-0">
-                <span className="text-yellow-400 font-bold text-sm">5</span>
+              <div className="w-8 h-8 rounded-full bg-white/[0.06] flex items-center justify-center shrink-0">
+                <span className="text-elec-yellow font-bold text-sm">5</span>
               </div>
               <div>
                 <h4 className="font-bold text-white mb-1">Review and Update Regularly</h4>
@@ -487,14 +487,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Header information</strong> — company name, assessment date, review date,
                 assessor name and signature, job/project reference, site address, and client name.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Task description</strong> — a clear description of the work activity being
                 assessed (for example, "periodic inspection and testing of a domestic electrical
@@ -502,35 +502,35 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hazard identification column</strong> — list each hazard identified
                 (electric shock, arc flash, working at height, manual handling, asbestos, etc.).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Who is at risk</strong> — identify the people who could be harmed by each
                 hazard (electrician, other tradespeople, building occupants, public).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Risk rating (before controls)</strong> — use a likelihood x severity matrix
                 to assign a risk level (Low, Medium, High) before control measures are applied.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Control measures</strong> — describe the specific actions, procedures,
                 equipment, and PPE that will be used to manage each hazard.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Residual risk rating (after controls)</strong> — the risk level after
                 control measures are applied. This should be Low or Medium. If a risk remains High
@@ -538,7 +538,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency procedures</strong> — what to do in the event of an electric
                 shock, fire, injury, or other emergency. Include first aid provisions and emergency
@@ -632,7 +632,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Arriving on site and finding a different type of installation than expected — for
                 example, a TT earthing system instead of TN-S, requiring different test procedures
@@ -640,7 +640,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Discovering suspected asbestos-containing materials in the cable route that were not
                 identified in the pre-job assessment. Stop work, do not disturb the material, and
@@ -648,14 +648,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Finding that the consumer unit is located in a confined space with poor ventilation
                 and limited access, requiring additional precautions or a different approach.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Eye className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Weather conditions changing — rain making external work dangerous, high winds
                 affecting work at height, or extreme heat increasing the risk of fatigue.
@@ -734,7 +734,7 @@ export default function RiskAssessmentElectriciansPage() {
       heroTitle={
         <>
           Risk Assessment for Electricians:{' '}
-          <span className="text-yellow-400">The Complete Guide with Free Template</span>
+          <span className="text-elec-yellow">The Complete Guide with Free Template</span>
         </>
       }
       heroSubtitle="Every electrician needs written risk assessments. The HSE 5-step process, electrical-specific hazards, template structure, legal requirements, and how to create site-specific assessments in minutes with AI. This guide covers everything you need to know."
@@ -745,7 +745,7 @@ export default function RiskAssessmentElectriciansPage() {
       faqHeading="Frequently Asked Questions About Risk Assessments for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Generate Risk Assessments in Minutes"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's AI Health and Safety agent to create site-specific risk assessments and RAMS packages. Describe the job, get a complete document. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate's AI Health and Safety agent to create site-specific risk assessments and RAMS packages. Describe the job, get a complete document. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -34,8 +34,8 @@ const quickCheckQuestions = [
     question: 'Why should cable fill limits be observed in trunking?',
     options: [
       'To prevent overheating and allow future additions',
-      'To reduce material costs',
-      'To improve appearance',
+      'So that no grouping factor needs to be applied',
+      'To keep voltage drop within the BS 7671 limits',
     ],
     correctIndex: 0,
     explanation:
@@ -96,26 +96,26 @@ const quizQuestions = [
     question: 'What is the correct earthing requirement for steel trunking?',
     options: [
       'It must be earthed and continuity tested between sections',
-      'It never needs to be earthed',
-      'It only needs earthing outdoors',
-      'Earthing is only needed if it carries data cables',
+      'Only the length nearest the board needs an earth connection',
+      'It is earthed through its fixings, so no links are needed',
+      'It needs earthing only when it is used as the cpc',
     ],
     correctAnswer: 0,
     explanation:
-      'Steel trunking must be properly earthed and electrical continuity tested between all sections so it can serve as a safe protective conductor.',
+      'Steel trunking is an exposed-conductive-part, so it must be earthed whether or not it is used as a protective conductor, and electrical continuity must be tested across every joint. Earthing one length does not earth the rest unless each joint is continuous, and fixings into the building fabric are not a reliable earth path.',
   },
   {
     id: 4,
     question: 'Name one limitation of PVC trunking.',
     options: [
       'Low mechanical strength',
-      'Too expensive',
-      'Requires earthing',
-      'Cannot be painted',
+      'It corrodes quickly in damp locations',
+      'It must be earthed at every joint',
+      'It cannot be fitted with a segregation barrier',
     ],
     correctAnswer: 0,
     explanation:
-      'PVC trunking has lower mechanical strength compared to steel, making it unsuitable for high-impact environments or areas with mechanical hazards.',
+      'PVC trunking has lower mechanical strength than steel, so it is unsuitable where it may be struck or crushed. Corrosion and earthing at every joint are limitations of steel trunking, not PVC, and PVC trunking is made with compartments and barriers for segregation.',
   },
   {
     id: 5,
@@ -134,27 +134,27 @@ const quizQuestions = [
     id: 6,
     question: 'Why is it important to use barriers in trunking with mixed power and data cables?',
     options: [
-      'To increase the trunking fill factor',
-      'To reduce the weight of the trunking',
+      'So the power cables can be grouped without derating',
+      "So the data cables can use the power circuits' cpc",
       'To prevent electromagnetic interference',
-      'To remove the need to earth the trunking',
+      'So the trunking can be filled beyond its space factor',
     ],
     correctAnswer: 2,
     explanation:
-      'Barriers separate power and data cables to prevent electromagnetic interference from power cables affecting sensitive data and communication circuits.',
+      "Barriers segregate power and data cables, keeping the circuits apart and reducing electromagnetic interference from the power cables into sensitive data circuits. They do not change the grouping factor or the space factor, and data cables never share a power circuit's cpc.",
   },
   {
     id: 7,
     question: 'Give one reason why steel trunking might be galvanised.',
     options: [
-      'To improve appearance',
-      'To improve conductivity',
-      'To reduce weight',
+      'To reduce its resistance as a protective conductor',
+      'To make it non-combustible',
+      'To insulate it from the cables inside',
       'To prevent corrosion',
     ],
     correctAnswer: 3,
     explanation:
-      'Galvanising provides a protective zinc coating that prevents corrosion, extending the service life of steel trunking, especially in damp environments.',
+      "Galvanising is a protective zinc coating that prevents corrosion, extending the life of steel trunking, especially in damp environments. It is not insulation, steel is already non-combustible, and the coating is not there to lower the trunking's resistance as a protective conductor.",
   },
   {
     id: 8,

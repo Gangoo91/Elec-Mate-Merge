@@ -136,7 +136,7 @@ const sections = [
       <>
         <a
           href="#calculator"
-          className="inline-flex h-11 items-center rounded-full border border-elec-yellow/40 bg-elec-yellow/10 px-5 text-[13px] font-semibold text-white touch-manipulation transition-colors hover:bg-elec-yellow/20"
+          className="inline-flex h-11 items-center rounded-full border border-elec-yellow/40 bg-white/[0.06] px-5 text-[13px] font-semibold text-white touch-manipulation transition-colors hover:bg-white/[0.06]"
         >
           Size the cable for your shower — free calculator
         </a>
@@ -466,7 +466,7 @@ const sections = [
           When testing the completed installation, the{' '}
           <SEOInternalLink href="/rcd-testing-guide">RCD must be tested</SEOInternalLink> with a
           single alternating current test at its rated residual operating current (I&Delta;n =
-          30mA). BS 7671:2018+A4:2026 deleted Appendix 3 Table 3A, so the old &frac12;x / 1x / 5x
+          30mA). BS 7671:2018+A2:2022 deleted Appendix 3 Table 3A, so the old &frac12;x / 1x / 5x
           sequence is no longer the verification basis. Regardless of RCD Type, effectiveness is
           deemed verified where the device disconnects within 300ms at I&Delta;n (Reg 643.8 for
           additional protection; Reg 643.7.1 for automatic disconnection). A delay &lsquo;S&rsquo;
@@ -685,7 +685,7 @@ export default function ElectricShowerInstallationPage() {
       heroTitle={
         <>
           Electric Shower Installation:{' '}
-          <span className="text-yellow-400">Cable Size and Circuit Guide</span>
+          <span className="text-elec-yellow">Cable Size and Circuit Guide</span>
         </>
       }
       heroSubtitle="Electric showers draw up to 52 amps — making the shower circuit one of the most demanding in a domestic installation. This guide covers cable sizing for every kW rating, MCB selection, pull cord vs ceiling switch options, RCD protection, bathroom zone requirements, Part P notification, and the installation mistakes that result in EICR defects."
@@ -701,7 +701,7 @@ export default function ElectricShowerInstallationPage() {
       faqHeading="Frequently Asked Questions About Electric Shower Installation"
       relatedPages={relatedPages}
       ctaHeading="Design Shower Circuits with Elec-Mate"
-      ctaSubheading="Cable sizing calculator, voltage drop checker, and digital EIC certificates on your phone. Join 1,600+ UK electricians designing and certifying shower installations on site. 7-day free trial."
+      ctaSubheading="Cable sizing calculator, voltage drop checker, and digital EIC certificates on your phone. Join 2,100+ UK electricians designing and certifying shower installations on site. 7-day free trial."
     />
   );
 }

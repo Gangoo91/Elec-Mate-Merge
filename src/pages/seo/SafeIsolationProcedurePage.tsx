@@ -209,7 +209,7 @@ const sections = [
               },
             ].map((s) => (
               <div key={s.n} className={`rounded-xl border ${s.tint} p-4`}>
-                <div className="text-yellow-400 font-bold text-2xl leading-none mb-1">{s.n}</div>
+                <div className="text-elec-yellow font-bold text-2xl leading-none mb-1">{s.n}</div>
                 <div className="font-bold text-white text-sm mb-1">{s.t}</div>
                 <p className="text-white text-xs leading-relaxed">{s.d}</p>
               </div>
@@ -720,7 +720,7 @@ const sections = [
                   <td className="px-4 py-3 font-bold text-white" colSpan={2}>
                     Three-phase total
                   </td>
-                  <td className="px-4 py-3 font-bold text-yellow-400">10</td>
+                  <td className="px-4 py-3 font-bold text-elec-yellow">10</td>
                   <td className="px-4 py-3 font-medium text-green-400">0 V</td>
                 </tr>
               </tbody>
@@ -952,7 +952,7 @@ export default function SafeIsolationProcedurePage() {
       heroTitle={
         <>
           Safe Isolation Procedure:{' '}
-          <span className="text-yellow-400">Prove, Test, Prove — Step by Step</span>
+          <span className="text-elec-yellow">Prove, Test, Prove — Step by Step</span>
         </>
       }
       heroSubtitle="The complete guide to safe electrical isolation: the prove-test-prove method, lock-off and LOTO, GS 38 voltage indicator requirements, which systems need the neutral isolated, legal duties under the Electricity at Work Regulations 1989, and the mistakes that kill electricians."
@@ -970,7 +970,7 @@ export default function SafeIsolationProcedurePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Safe isolation tools built for site"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for safe isolation checklists, AI RAMS generation, testing tools, and 19 certificate types. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for safe isolation checklists, AI RAMS generation, testing tools, and 19 certificate types. 7-day free trial, cancel anytime."
     />
   );
 }

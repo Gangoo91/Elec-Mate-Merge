@@ -193,7 +193,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mains incoming supply</strong> — main isolator (rotary cam switch or moulded
                 case circuit breaker with lockable handle) at the top of the panel provides safe
@@ -202,7 +202,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>24 VDC distribution</strong> — use a 24 VDC busbar or terminal block
                 distribution for positive (+24 V) and 0 V rails. Add individual miniature fuses (1 A
@@ -212,7 +212,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>UPS for critical systems</strong> — where a mains failure must not cause a
                 dangerous process state, fit a 24 VDC UPS module (capacitor-based for a few seconds,
@@ -221,7 +221,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Power supply redundancy</strong> — for high-availability systems, use two 24
                 VDC power supplies with a diode OR module (prevents back-feed between PSUs) feeding
@@ -267,7 +267,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable length and voltage drop</strong> — long cable runs increase voltage
                 drop and may cause input under-voltage. For runs over 100 m, use 1.5 mm² cores and
@@ -305,7 +305,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Relay outputs</strong> — volt-free contacts rated typically 2 A at 240 VAC
                 or 24 VDC. Fit a suppression diode (1N4004 or equivalent) across DC inductive loads
@@ -316,7 +316,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Transistor outputs (24 VDC)</strong> — PNP transistor outputs switch +24 V
                 to the load, current returns through 0 V common. Rated typically 0.5–2 A per
@@ -327,7 +327,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Triac outputs (AC)</strong> — semiconductor AC switches rated typically
                 0.5–1 A at 240 VAC. No contact wear. Suited to AC solenoid valves and AC motor
@@ -422,7 +422,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Category 1 — Power cables</strong> — mains voltage (230/400 V AC) cables to
                 motors, heaters, transformers, and main distribution. Run in steel cable tray or
@@ -431,7 +431,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Category 2 — 24 VDC I/O cables</strong> — digital input and output cables.
                 Can share a tray with other 24 VDC wiring. Maintain at least 150 mm from Category 1
@@ -440,7 +440,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Category 3 — Analogue and communications cables</strong> — 4–20 mA, 0–10 V,
                 thermocouple, RTD, Profibus, Modbus RTU, and Ethernet cables. Always use
@@ -450,7 +450,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>VFD motor cables</strong> — treat VFD output cables (PWM waveform) as the
                 highest noise category. Run in separate steel conduit or armoured cable separate
@@ -532,7 +532,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pre-power checks</strong> — insulation resistance test on all field cables
                 (to BS 7671, minimum 1 MΩ at 500 VDC), continuity of all earth conductors,
@@ -541,7 +541,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>I/O loop check</strong> — with the PLC program loaded and powered,
                 systematically operate each field device (or apply a test signal at the terminal
@@ -551,7 +551,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Functional test</strong> — run through all control sequences defined in the
                 functional design specification. Test all normal operating modes, interlocks,
@@ -590,7 +590,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Issue the EIC on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -609,7 +609,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certificate PLC installations with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, commissioning test records, and instant PDF export. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EIC completion, commissioning test records, and instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -635,7 +635,7 @@ export default function PLCElectricalInstallationPage() {
       heroTitle={
         <>
           PLC Electrical Installation UK:{' '}
-          <span className="text-yellow-400">Wiring, Earthing &amp; Documentation</span>
+          <span className="text-elec-yellow">Wiring, Earthing &amp; Documentation</span>
         </>
       }
       heroSubtitle="Comprehensive guide to PLC panel design and electrical installation — 24 VDC input wiring, relay and transistor outputs, earthing for noise immunity, cable segregation between power and signal cables, and documentation requirements for BS 7671 compliance."
@@ -646,7 +646,7 @@ export default function PLCElectricalInstallationPage() {
       faqHeading="Frequently Asked Questions About PLC Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Complete Industrial EICs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site electrical installation certification, test result recording, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site electrical installation certification, test result recording, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

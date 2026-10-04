@@ -183,7 +183,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Bell className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Bell className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smoke alarm on every storey.</strong> At least one smoke alarm must be
                 installed on every storey of the property that contains a habitable room. This
@@ -194,7 +194,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Carbon monoxide alarm in rooms with combustion appliances.</strong> A CO
                 alarm must be fitted in any room containing a fixed combustion appliance — gas
@@ -203,7 +203,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Alarms must be working at the start of each tenancy.</strong> The landlord
                 must test all smoke and CO alarms on the day the tenancy begins (or have evidence
@@ -212,7 +212,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Repair or replace duty (new in 2022).</strong> If a tenant reports that a
                 smoke or CO alarm is faulty, the landlord must repair or replace it. This is an
@@ -239,7 +239,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>All private landlords in England</strong> with assured shorthold tenancies,
                 assured tenancies, and regulated tenancies. This covers the vast majority of private
@@ -247,7 +247,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Registered social housing providers</strong> — from 1 October 2022, the
                 regulations were extended to cover social housing for the first time. Housing
@@ -255,7 +255,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Home className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>HMO landlords</strong> — Houses in Multiple Occupation already have fire
                 detection requirements under HMO licensing conditions, but the 2022 Regulations
@@ -289,7 +289,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Bell className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Bell className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Smoke Alarms — BS EN 14604</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -420,7 +420,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Gas boilers</strong> — both combi and system boilers, in any location
                 (kitchen, utility room, airing cupboard, garage). This is the biggest change: most
@@ -429,20 +429,20 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Gas fires</strong> — wall-mounted, freestanding, or inset gas fires in
                 living rooms or bedrooms.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Oil-fired boilers</strong> — common in rural properties without mains gas.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Flame className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wood-burning stoves and open fires</strong> — already covered under the 2015
                 Regulations, now confirmed under the 2022 Amendment.
@@ -479,7 +479,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Positioning smoke alarms.</strong> Install on the ceiling, at least 300 mm
                 from any wall or light fitting. In hallways, position the alarm between the bedroom
@@ -489,7 +489,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Positioning heat alarms.</strong> Install in the kitchen, on the ceiling, as
                 close to the centre of the room as practicable. Heat alarms are less affected by
@@ -497,7 +497,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wiring for mains-wired systems.</strong> Use 1.5 mm twin and earth for the
                 supply and a 3-core and earth cable for the interconnect if hard-wired interlinking
@@ -511,7 +511,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing after installation.</strong> Test every alarm individually and
                 verify that interlinked alarms all sound when one is triggered. Record the test
@@ -618,7 +618,7 @@ export default function SmokeAlarmRegs2022Page() {
       heroTitle={
         <>
           Smoke Alarm Regulations 2022:{' '}
-          <span className="text-yellow-400">What Landlords and Electricians Must Know</span>
+          <span className="text-elec-yellow">What Landlords and Electricians Must Know</span>
         </>
       }
       heroSubtitle="The 2022 Amendment extends carbon monoxide alarm requirements to all rooms with gas boilers and introduces an ongoing repair-or-replace duty for landlords. This guide covers every requirement, alarm type, installation standard, and enforcement mechanism."

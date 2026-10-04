@@ -101,7 +101,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Signs You Are Ready</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>2-5 years of employed experience:</strong> You can confidently handle a wide
                 range of jobs on your own — domestic rewires, consumer unit upgrades, fault finding,
@@ -109,7 +109,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>A network of contacts:</strong> You know builders, plumbers, estate agents,
                 and property managers who would use you. Work will not appear from nowhere — your
@@ -117,7 +117,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Financial cushion:</strong> You have 3-6 months of living expenses saved.
                 The first few months can be inconsistent, and you need to cover start-up costs (van,
@@ -125,7 +125,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Full qualifications:</strong> You hold the 18th Edition, C&G 2391 (highly
                 recommended), and ideally the AM2 with JIB Approved Electrician grading. These
@@ -133,7 +133,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Business mindset:</strong> You are willing to do the admin — quoting,
                 invoicing, bookkeeping, tax returns, customer communication. The electrical work is
@@ -246,14 +246,14 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Registration Checklist</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Register for Self Assessment:</strong> Online at gov.uk. You will receive a
                 Unique Taxpayer Reference (UTR) number by post within 10 working days.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Register for CIS:</strong> If you will work as a subcontractor for
                 contractors in the construction industry, register for the Construction Industry
@@ -261,7 +261,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Open a business bank account:</strong> Keep business and personal finances
                 completely separate. Most banks offer free or low-cost business accounts for sole
@@ -269,7 +269,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Set aside tax money:</strong> Put 25-30% of every payment you receive into a
                 separate savings account. This prevents the common trap of spending tax money and
@@ -277,7 +277,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Find an accountant:</strong> A good accountant who understands the
                 construction industry will save you far more than their fee. Get recommendations
@@ -309,7 +309,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Essential Insurance Cover</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Public liability insurance (£1m-£5m):</strong> Covers claims if your work
                 causes damage to a client's property or injury to a third party. Most competent
@@ -318,7 +318,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Professional indemnity insurance:</strong> Covers claims arising from
                 professional advice or design errors. If you design circuits, specify cable sizes,
@@ -327,7 +327,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Employers' liability insurance (£5m minimum):</strong> A legal requirement
                 if you employ anyone — including apprentices, labourers, or temporary workers. Fine
@@ -336,7 +336,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Tool and equipment cover:</strong> Protects your tools, test instruments,
                 and stock against theft, loss, or accidental damage. Essential given the cost of
@@ -345,7 +345,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Commercial van insurance:</strong> Your personal car insurance does not
                 cover using a vehicle for work. A commercial van policy covers business use, goods
@@ -390,7 +390,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">What Scheme Membership Involves</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Initial assessment:</strong> An assessor visits to verify your
                 qualifications, inspect your tools and test equipment, review your insurance, and
@@ -398,7 +398,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Annual fee:</strong> Typically £400-£800/year depending on the scheme and
                 membership level. This includes the right to self-certify work, use the scheme's
@@ -406,7 +406,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Periodic inspections:</strong> The scheme will inspect a sample of your work
                 annually to ensure ongoing compliance. They may visit jobs in progress or inspect
@@ -414,7 +414,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Notification:</strong> You must notify the scheme of all notifiable work
                 (they issue building regulation compliance certificates on your behalf). This is
@@ -447,7 +447,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Van Options</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Truck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Truck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Small van (Berlingo, Caddy, Connect):</strong> £15,000-£25,000 new,
                 £8,000-£15,000 used. Economical, easy to park, sufficient for domestic work. Limited
@@ -455,7 +455,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Truck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Truck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Medium van (Transit Custom, Vivaro, Trafic):</strong> £25,000-£35,000 new,
                 £12,000-£22,000 used. The most popular choice for electricians. Good balance of
@@ -463,7 +463,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Truck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Truck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Large van (Transit, Master, Movano):</strong> £30,000-£40,000+ new. Only
                 needed if you carry extensive stock, run a team, or do large-scale
@@ -471,7 +471,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Truck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Truck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Van racking:</strong> £500-£2,000 for a proper racking system (Sortimo,
                 Bott, or similar). Keeps your van organised, tools accessible, and materials
@@ -484,14 +484,14 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Essential Tool Kit</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Multifunction tester:</strong> Megger MFT1741, Fluke 1664FC, Metrel, or
                 similar (£600-£1,200). The single most important tool for testing and certification.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Voltage indicator and proving unit:</strong> Two-pole voltage indicator
                 (Fluke T150 or similar) plus a proving unit. Essential for safe isolation —
@@ -499,7 +499,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Hand tools:</strong> VDE insulated screwdrivers, side cutters, pliers, cable
                 strippers, crimp tool, adjustable spanners, SDS drill, combi drill, jigsaw,
@@ -507,14 +507,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Access equipment:</strong> Step ladders, extension ladder, platform step.
                 Must comply with the Work at Height Regulations 2005.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Total budget:</strong> £1,500-£4,000 for a professional starter kit,
                 depending on brands and whether you buy new or used.
@@ -544,25 +544,25 @@ const sections = [
           </p>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>365 days in a year</strong> minus 104 weekend days = 261 weekdays
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">Minus 25 holiday days = 236 days</span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">Minus 5 sick/personal days = 231 days</span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">Minus 5 training/CPD days = 226 days</span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 Minus 20% non-billable time (quoting, admin, travel, purchasing) ={' '}
                 <strong>approximately 180 billable days</strong>
@@ -609,7 +609,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Client Acquisition Strategies</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Your existing network:</strong> Tell every builder, plumber, decorator,
                 estate agent, letting agent, and property manager you know. Leave business cards
@@ -618,7 +618,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Google Business Profile:</strong> Free to set up. Optimise it with photos of
                 your work, your qualifications, and your service area. "Electrician near me"
@@ -627,7 +627,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Trade platforms:</strong> Checkatrade, MyBuilder, Bark, Rated People. These
                 generate leads for domestic work and help you build reviews. Cost varies
@@ -635,7 +635,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Local social media:</strong> Facebook community groups, Nextdoor, local
                 forums. Many homeowners post trade recommendations requests — being visible and
@@ -643,7 +643,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Landlord and letting agent relationships:</strong> Landlords need EICRs
                 every 5 years and regular maintenance. One relationship with a letting agency can
@@ -651,7 +651,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Users className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Word of mouth:</strong> The long-term goal. Every satisfied client tells
                 friends and family. Do excellent work, communicate well, be reliable, and the
@@ -684,31 +684,31 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Personal allowance:</strong> £12,570 (no tax on the first £12,570 of profit)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Basic rate:</strong> 20% on profits from £12,571 to £50,270
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Higher rate:</strong> 40% on profits from £50,271 to £125,140
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Class 2 NI:</strong> £3.45/week (flat rate)
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Class 4 NI:</strong> 6% on profits between £12,570 and £50,270, plus 2%
                 above £50,270
@@ -731,13 +731,13 @@ const sections = [
           </p>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Registered subcontractor:</strong> 20% deduction
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Unregistered subcontractor:</strong> 30% deduction (always register to avoid
                 this)
@@ -773,7 +773,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Records You Must Keep</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Financial records:</strong> All invoices issued, all expenses with receipts,
                 bank statements, CIS payment statements, VAT records (if registered). Must be kept
@@ -781,7 +781,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Electrical certificates:</strong> Copies of every EIC, EICR, Minor Works,
                 and EIC for alterations you issue. Your scheme provider requires these, and they
@@ -789,7 +789,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Test results:</strong> Full schedule of test results for every installation
                 you work on. These form part of the certificate and are your evidence that the
@@ -797,7 +797,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Photos:</strong> Before and after photos of your work, particularly for
                 rewires, consumer unit upgrades, and any work that will be covered up (chased
@@ -805,7 +805,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileText className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Calibration records:</strong> Your test instruments must be calibrated
                 regularly (typically annually). Keep the calibration certificates — they prove your
@@ -894,7 +894,7 @@ export default function ElectricianSelfEmployedPage() {
       heroTitle={
         <>
           Going Self-Employed as an Electrician:{' '}
-          <span className="text-yellow-400">Everything You Need to Know</span>
+          <span className="text-elec-yellow">Everything You Need to Know</span>
         </>
       }
       heroSubtitle="The complete, honest guide to setting up on your own. From registering with HMRC and getting insured to pricing jobs, finding clients, managing tax, and keeping records. Written by Andrew Moore, founder of Elec-Mate and a qualified electrician."

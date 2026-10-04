@@ -183,7 +183,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Brand recognition:</strong> NICEIC is the name most consumers recognise. The
                 "Find a NICEIC Contractor" website tool is widely used by homeowners and landlords
@@ -191,7 +191,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Scheme categories:</strong> Domestic Installer (DI) for Part P domestic
                 work; Approved Contractor (AC) for domestic and commercial work. Additional
@@ -199,7 +199,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Assessment:</strong> Annual assessment visits by a NICEIC-employed assessor.
                 The assessment covers your qualifications, test equipment calibration, a sample of
@@ -207,7 +207,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Star className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer trust:</strong> NICEIC offers a complaints resolution service and a
                 Platinum Promise guarantee for domestic work, which provides consumer protection if
@@ -342,7 +342,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Documentation review:</strong> Both schemes check your qualifications are
                 current, your public liability insurance is in force, and your test equipment
@@ -352,7 +352,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Job inspection:</strong> The assessor will visit one or more of your recent
                 jobs to inspect the quality of the installation work. They check that the work
@@ -361,7 +361,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Technical discussion:</strong> The assessor may ask questions about BS 7671,
                 testing procedures, and your approach to specific installation scenarios. This is
@@ -370,7 +370,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Outcome:</strong> You will receive a report summarising the findings. If
                 everything is satisfactory, your registration continues. If issues are found, you
@@ -442,7 +442,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC categories:</strong> Domestic Installer (DI) — domestic Part P work
                 only. Approved Contractor (AC) — domestic and commercial work. Additional categories
@@ -582,7 +582,7 @@ export default function NICEICvsNAPICPage() {
       heroTitle={
         <>
           NICEIC vs NAPIT:{' '}
-          <span className="text-yellow-400">Which Competent Person Scheme Is Right for You?</span>
+          <span className="text-elec-yellow">Which Competent Person Scheme Is Right for You?</span>
         </>
       }
       heroSubtitle="Both are government-approved. Both let you self-certify Part P work. Both are respected by clients. So which one should you choose? This guide compares NICEIC and NAPIT head-to-head — costs, assessments, reputation, and practical differences — so you can make an informed decision."
@@ -593,7 +593,7 @@ export default function NICEICvsNAPICPage() {
       faqHeading="Frequently Asked Questions About NICEIC vs NAPIT"
       relatedPages={relatedPages}
       ctaHeading="Professional Certificates for Any Scheme"
-      ctaSubheading="Elec-Mate creates BS 7671-compliant EICs, MEIWCs, and EICRs that pass any scheme assessment. Digital, professional, and always accessible. Join 1,600+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate creates BS 7671-compliant EICs, MEIWCs, and EICRs that pass any scheme assessment. Digital, professional, and always accessible. Join 2,100+ UK electricians. 7-day free trial."
     />
   );
 }

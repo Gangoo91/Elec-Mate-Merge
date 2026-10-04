@@ -54,6 +54,7 @@ import { useApprenticeOtj } from '@/hooks/useApprenticeOtj';
 import { useAm2Readiness } from '@/hooks/useAm2Readiness';
 import { useLastStudyLocation } from '@/hooks/useLastStudyLocation';
 import { useWeeklyRecap } from '@/hooks/useWeeklyRecap';
+import { useLoggingReminders } from '@/hooks/useLoggingReminders';
 import { WeeklyRecapSheet } from '@/components/apprentice-hub/WeeklyRecapSheet';
 import { getCount as getMissedCount } from '@/lib/missedQuestions';
 import { cn } from '@/lib/utils';
@@ -138,6 +139,10 @@ export default function TodayPage() {
     dismiss: dismissRecap,
   } = useWeeklyRecap(user?.id ?? null, streak);
 
+  // Settings → Reminders. Hides the nagging (behind-on-hours, streak, weekly
+  // recap); the Log hours buttons stay (ELE-1804).
+  const { hidden: hideReminders } = useLoggingReminders();
+
   const heroLoading = isLoading || quizzesLoading || ilpLoading || programme.loading;
 
   // ── WHAT'S NEXT — priority chain ─────────────────────────────────────
@@ -167,6 +172,7 @@ export default function TodayPage() {
     const day = new Date().getDay(); // Sun=0 … Sat=6
     const lateInWeek = day === 0 || day >= 4;
     if (
+      !hideReminders &&
       lateInWeek &&
       programme.weeklyTargetHours > 0 &&
       thisWeekHours < programme.weeklyTargetHours * 0.5
@@ -180,7 +186,7 @@ export default function TodayPage() {
       };
     }
     // d. Streak alive — protect it.
-    if (streak >= 2) {
+    if (!hideReminders && streak >= 2) {
       return {
         kind: 'streak',
         title: `Day ${streak} of your streak`,
@@ -204,6 +210,7 @@ export default function TodayPage() {
     thisWeekHours,
     streak,
     continuePath,
+    hideReminders,
   ]);
 
   // ── Stat strip cells ─────────────────────────────────────────────────
@@ -282,7 +289,7 @@ export default function TodayPage() {
         (day === 0 || day >= 4) &&
         programme.weeklyTargetHours > 0 &&
         thisWeekHours < programme.weeklyTargetHours * 0.75;
-      if (behind) {
+      if (behind && !hideReminders) {
         items.push({
           id: 'hours',
           label: 'Log this week’s hours',
@@ -313,6 +320,7 @@ export default function TodayPage() {
     missedCount,
     hasCollegeLink,
     nextUp.kind,
+    hideReminders,
   ]);
 
   // ── AM2 milestone chip ───────────────────────────────────────────────
@@ -650,7 +658,7 @@ export default function TodayPage() {
         Struggling or need to talk?
       </button>
 
-      <WeeklyRecapSheet open={showRecap} onClose={dismissRecap} recap={recap} />
+      <WeeklyRecapSheet open={showRecap && !hideReminders} onClose={dismissRecap} recap={recap} />
     </HubSubPage>
   );
 }

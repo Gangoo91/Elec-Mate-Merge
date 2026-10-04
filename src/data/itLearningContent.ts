@@ -363,7 +363,7 @@ export const STEP_CONTENT: Record<string, StepContent> = {
     how: [
       'Test with the load disconnected where practicable.',
       'At 1× rated residual current, it must trip within 300 ms for a general non-delay type. A Type S must trip between 130 ms and 500 ms.',
-      'The old 5× IΔn / 40 ms step was deleted from BS 7671 at A4:2026 — 40 ms is the BS EN 61008/61009 product figure, not a pass mark. Do not record it.',
+      'The old 5× IΔn / 40 ms step was deleted from BS 7671 at A2:2022 — 40 ms is the BS EN 61008/61009 product figure, not a pass mark. Do not record it.',
       'Test on both polarities (0° and 180°) and record the longer time.',
       'A half-current check (no trip at ½× IΔn) is standard practice from the device standard rather than a BS 7671 requirement — useful, because tripping there points to a faulty device or high standing leakage.',
       'Finally, operate the integral test button to prove the mechanism.',
@@ -386,7 +386,7 @@ export const STEP_CONTENT: Record<string, StepContent> = {
         ],
         answer: 1,
         explain:
-          'At 1× IΔn a general non-delay type must operate within 300 ms, so 240 ms passes. The 40 ms figure came from the old 5× IΔn test, deleted at A4:2026. A Type S is different again — it must trip between 130 ms and 500 ms, because it is deliberately delayed to discriminate with RCDs downstream.',
+          'At 1× IΔn a general non-delay type must operate within 300 ms, so 240 ms passes. The 40 ms figure came from the old 5× IΔn test, deleted at A2:2022. A Type S is different again — it must trip between 130 ms and 500 ms, because it is deliberately delayed to discriminate with RCDs downstream.',
       },
       {
         q: 'Is the integral test button sufficient evidence the RCD is working?',

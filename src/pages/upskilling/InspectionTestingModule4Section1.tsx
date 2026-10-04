@@ -62,7 +62,7 @@ const inlineChecks = [
   {
     id: 'mod4-s1-a4-redraft',
     question:
-      'A4:2026 redrafted Reg 643.3.3. After equipment is reconnected, what test is now explicitly required?',
+      'A2:2022 redrafted Reg 643.3.3. After equipment is reconnected, what test is now explicitly required?',
     options: [
       'A 250 V DC test between live conductors and the protective conductor, minimum 1 MΩ',
       'A repeat of the full Table 64 test at 500 V DC, now with all the equipment connected',
@@ -107,7 +107,7 @@ const quizQuestions = [
   {
     id: 3,
     question:
-      'A4:2026 redrafted Reg 643.3.3. What is the headline change in the test procedure when connected equipment may be damaged or may influence the test?',
+      'A2:2022 redrafted Reg 643.3.3. What is the headline change in the test procedure when connected equipment may be damaged or may influence the test?',
     options: [
       'No change — the test stays at 500 V DC throughout, before and after equipment connection',
       'The insulation resistance test is omitted entirely where vulnerable equipment is connected',
@@ -245,7 +245,7 @@ const InspectionTestingModule4Section1 = () => {
           points={[
             'Insulation resistance is the resistance offered by cable insulation BETWEEN conductors that should be electrically isolated — live to earth, line to neutral, line to line. The test applies a known DC voltage and measures the tiny leakage current that flows: resistance = V / I.',
             'Reg 643.3.2 + Table 64 sets the test voltages and minimum values. SELV/PELV → 250 V DC, ≥ 0.5 MΩ. Up to and including 500 V → 500 V DC, ≥ 1.0 MΩ. Above 500 V → 1000 V DC, ≥ 1.0 MΩ.',
-            'A4:2026 redrafted Reg 643.3.3. Where connected equipment may be damaged or influence the test, the Table 64 test is applied PRIOR to connection (cable alone). AFTER connection, a 250 V DC test between live conductors and the protective conductor verifies ≥ 1 MΩ. The 250 V step is the explicit A4 clarification.',
+            'A2:2022 redrafted Reg 643.3.3. Where connected equipment may be damaged or influence the test, the Table 64 test is applied PRIOR to connection (cable alone). AFTER connection, a 250 V DC test between live conductors and the protective conductor verifies ≥ 1 MΩ. The 250 V step is the explicit A4 clarification.',
             'DC, not AC. AC measurements would be dominated by cable capacitance — the cable acts like a long capacitor, with the conductor as one plate, insulation as the dielectric and earth as the other plate. DC settles to a steady-state leakage current that reads the resistance, not the reactance.',
             'A low IR is not always a fault. Connected equipment, surface contamination, moisture, parallel-loaded equipment all reduce the reading. Investigate the CAUSE before condemning the cable. Reg 643.3.3 NOTE explicitly anticipates this.',
           ]}

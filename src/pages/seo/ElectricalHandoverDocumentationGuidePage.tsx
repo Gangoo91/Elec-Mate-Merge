@@ -190,15 +190,15 @@ const sections = [
             <tbody className="divide-y divide-white/10">
               <tr>
                 <td className="py-3 pr-4">New electrical installation (new build or full rewire)</td>
-                <td className="py-3 font-semibold text-yellow-400">EIC</td>
+                <td className="py-3 font-semibold text-elec-yellow">EIC</td>
               </tr>
               <tr>
                 <td className="py-3 pr-4">New circuit added to existing installation</td>
-                <td className="py-3 font-semibold text-yellow-400">EIC</td>
+                <td className="py-3 font-semibold text-elec-yellow">EIC</td>
               </tr>
               <tr>
                 <td className="py-3 pr-4">Consumer unit replacement</td>
-                <td className="py-3 font-semibold text-yellow-400">EIC</td>
+                <td className="py-3 font-semibold text-elec-yellow">EIC</td>
               </tr>
               <tr>
                 <td className="py-3 pr-4">Addition to existing circuit (sockets, lighting points)</td>
@@ -244,7 +244,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong>Part 1 — Design</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
@@ -256,7 +256,7 @@ const sections = [
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong>Part 2 — Construction</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
@@ -268,7 +268,7 @@ const sections = [
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong>Part 3 — Inspection and Testing</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
@@ -376,7 +376,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>When NOT to use:</strong> when a new circuit is installed from the consumer
                 unit; when the consumer unit is modified or replaced; for work in special locations
@@ -420,27 +420,27 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Ring continuity (r1 + r2, r1 + rn):</strong> confirms the ring is complete and measures conductor resistance</span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Continuity of protective conductors (R1 + R2):</strong> confirms earth continuity to each outlet</span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Insulation resistance:</strong> L-E and N-E at 500V DC, minimum 1 megohm (confirms no insulation faults)</span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Polarity:</strong> confirms live and neutral are correctly connected at all outlets</span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Earth fault loop impedance (Zs):</strong> confirms that the protective device will disconnect within the required time in the event of a fault</span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>RCD test results:</strong> operating time at I∆n and 5×I∆n, confirms RCD will operate within 300ms at rated current</span>
             </li>
           </ul>
@@ -548,7 +548,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong>Building control completion certificate</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
@@ -560,7 +560,7 @@ const sections = [
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <strong>Competent person scheme self-certification certificate</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
@@ -655,7 +655,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">EIC Certificate App</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -731,7 +731,7 @@ export default function ElectricalHandoverDocumentationGuidePage() {
       heroTitle={
         <>
           Electrical Handover Documentation:{' '}
-          <span className="text-yellow-400">EIC, EICR, MEIWC, and Building Regulations</span>
+          <span className="text-elec-yellow">EIC, EICR, MEIWC, and Building Regulations</span>
         </>
       }
               noindex={true}

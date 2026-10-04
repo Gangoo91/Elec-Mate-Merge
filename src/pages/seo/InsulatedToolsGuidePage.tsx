@@ -197,30 +197,30 @@ const sections = [
           <div className="space-y-3">
             <div className="flex items-center justify-between p-4 rounded-xl bg-blue-900/30 border border-blue-700/40">
               <span className="text-white font-bold">Double triangle (two overlapping triangles)</span>
-              <span className="text-yellow-400 font-bold text-right text-sm">Compliant with BS EN IEC 60900</span>
+              <span className="text-elec-yellow font-bold text-right text-sm">Compliant with BS EN IEC 60900</span>
             </div>
-            <div className="flex items-center justify-between p-4 rounded-xl bg-amber-900/30 border border-amber-700/40">
+            <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.06] border border-amber-700/40">
               <span className="text-white font-bold">1000V</span>
-              <span className="text-yellow-400 font-bold text-right text-sm">Rated for use up to 1000V AC / 1500V DC</span>
+              <span className="text-elec-yellow font-bold text-right text-sm">Rated for use up to 1000V AC / 1500V DC</span>
             </div>
             <div className="flex items-center justify-between p-4 rounded-xl bg-green-900/30 border border-green-700/40">
               <span className="text-white font-bold">VDE oval mark</span>
-              <span className="text-yellow-400 font-bold text-right text-sm">Independently tested &amp; certified (Germany)</span>
+              <span className="text-elec-yellow font-bold text-right text-sm">Independently tested &amp; certified (Germany)</span>
             </div>
             <div className="flex items-center justify-between p-4 rounded-xl bg-green-900/30 border border-green-700/40">
               <span className="text-white font-bold">GS mark (Geprüfte Sicherheit)</span>
-              <span className="text-yellow-400 font-bold text-right text-sm">German "tested safety" mark</span>
+              <span className="text-elec-yellow font-bold text-right text-sm">German "tested safety" mark</span>
             </div>
             <div className="flex items-center justify-between p-4 rounded-xl bg-red-900/30 border border-red-700/40">
               <span className="text-white font-bold">Inner contrasting layer visible</span>
-              <span className="text-yellow-400 font-bold text-right text-sm">Damaged — remove from service</span>
+              <span className="text-elec-yellow font-bold text-right text-sm">Damaged — remove from service</span>
             </div>
           </div>
         </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1000V marking</strong> — confirms the tool is rated for use on systems up to
                 1,000V AC or 1,500V DC under IEC 60900. This covers the vast majority of low-voltage
@@ -229,7 +229,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Double-triangle symbol</strong> — the two overlapping triangles symbol on an
                 insulated tool indicates compliance with IEC 60900. This is the universal marking
@@ -237,7 +237,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>VDE mark</strong> — the VDE oval mark indicates independent testing and
                 certification by VDE (Germany). This is the gold standard for insulated tools and
@@ -246,7 +246,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Colour coding</strong> — Knipex and Wiha use red/yellow insulation; other
                 manufacturers use different combinations. Importantly, the inner layer must be a
@@ -321,7 +321,7 @@ const sections = [
               <h4 className="font-semibold text-white mb-1">
                 Thermographic and Diagnostic Surveys
               </h4>
-              <p className="text-white/80 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 GN3 Reg 4.9 identifies thermographic inspection of live switchgear as a specific,
                 recognised live-work scenario distinct from routine fault-finding. Where conductors
                 must remain energised for the diagnostic purpose — for example, thermal imaging of
@@ -399,7 +399,7 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <h3 className="font-bold text-white text-lg mb-1">Insulating Glove Classes (BS EN IEC 60903)</h3>
-          <p className="text-white/60 text-sm mb-4">
+          <p className="text-white text-sm mb-4">
             Rubber insulating gloves are classed by maximum working voltage. Select the class for
             the system voltage you are working on — for typical 230V / 400V LV work, Class 00 or
             Class 0 is used.
@@ -408,33 +408,33 @@ const sections = [
             <div className="flex items-center justify-between p-4 rounded-xl bg-green-900/30 border border-green-700/40">
               <div>
                 <span className="text-white font-bold">Class 00</span>
-                <span className="text-white/60 text-sm block">Max use 500V AC</span>
+                <span className="text-white text-sm block">Max use 500V AC</span>
               </div>
-              <span className="text-yellow-400 font-bold text-right text-sm">Proof tested to 2,500V AC</span>
+              <span className="text-elec-yellow font-bold text-right text-sm">Proof tested to 2,500V AC</span>
             </div>
             <div className="flex items-center justify-between p-4 rounded-xl bg-green-900/30 border border-green-700/40">
               <div>
                 <span className="text-white font-bold">Class 0</span>
-                <span className="text-white/60 text-sm block">Max use 1,000V AC</span>
+                <span className="text-white text-sm block">Max use 1,000V AC</span>
               </div>
-              <span className="text-yellow-400 font-bold text-right text-sm">Proof tested to 5,000V AC</span>
+              <span className="text-elec-yellow font-bold text-right text-sm">Proof tested to 5,000V AC</span>
             </div>
-            <div className="flex items-center justify-between p-4 rounded-xl bg-amber-900/30 border border-amber-700/40">
+            <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.06] border border-amber-700/40">
               <div>
                 <span className="text-white font-bold">Class 1</span>
-                <span className="text-white/60 text-sm block">Max use 7,500V AC</span>
+                <span className="text-white text-sm block">Max use 7,500V AC</span>
               </div>
-              <span className="text-yellow-400 font-bold text-right text-sm">Proof tested to 10,000V AC</span>
+              <span className="text-elec-yellow font-bold text-right text-sm">Proof tested to 10,000V AC</span>
             </div>
             <div className="flex items-center justify-between p-4 rounded-xl bg-red-900/30 border border-red-700/40">
               <div>
                 <span className="text-white font-bold">Class 2</span>
-                <span className="text-white/60 text-sm block">Max use 17,000V AC</span>
+                <span className="text-white text-sm block">Max use 17,000V AC</span>
               </div>
-              <span className="text-yellow-400 font-bold text-right text-sm">Proof tested to 20,000V AC</span>
+              <span className="text-elec-yellow font-bold text-right text-sm">Proof tested to 20,000V AC</span>
             </div>
           </div>
-          <p className="text-white/50 text-xs mt-4">
+          <p className="text-white text-xs mt-4">
             Insulating gloves are normally worn with leather over-gloves for mechanical protection
             and must be air-tested for pinholes before each use.
           </p>
@@ -445,7 +445,7 @@ const sections = [
             href="https://www.hse.gov.uk/pubns/books/hsg85.htm"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-yellow-400 underline hover:text-yellow-300"
+            className="text-elec-yellow underline hover:text-elec-yellow"
           >
             HSG85 — Electricity at Work: Safe Working Practices (HSE)
           </a>
@@ -468,8 +468,8 @@ const sections = [
         </p>
         <div className="grid sm:grid-cols-2 gap-4 my-6">
           <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-            <h3 className="font-bold text-yellow-400 text-lg mb-1">Knipex</h3>
-            <p className="text-white/60 text-xs mb-3">Germany · VDE-certified · Premium</p>
+            <h3 className="font-bold text-elec-yellow text-lg mb-1">Knipex</h3>
+            <p className="text-white text-xs mb-3">Germany · VDE-certified · Premium</p>
             <ul className="space-y-1 text-white text-sm">
               <li><strong>Best for:</strong> Pliers &amp; cutters</li>
               <li><strong>Price tier:</strong> Premium</li>
@@ -477,8 +477,8 @@ const sections = [
             </ul>
           </div>
           <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-            <h3 className="font-bold text-yellow-400 text-lg mb-1">Wiha</h3>
-            <p className="text-white/60 text-xs mb-3">Germany · VDE-certified · Premium</p>
+            <h3 className="font-bold text-elec-yellow text-lg mb-1">Wiha</h3>
+            <p className="text-white text-xs mb-3">Germany · VDE-certified · Premium</p>
             <ul className="space-y-1 text-white text-sm">
               <li><strong>Best for:</strong> Screwdrivers &amp; nut drivers</li>
               <li><strong>Price tier:</strong> Premium</li>
@@ -486,8 +486,8 @@ const sections = [
             </ul>
           </div>
           <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-            <h3 className="font-bold text-yellow-400 text-lg mb-1">Wera</h3>
-            <p className="text-white/60 text-xs mb-3">Germany · VDE-certified · Premium</p>
+            <h3 className="font-bold text-elec-yellow text-lg mb-1">Wera</h3>
+            <p className="text-white text-xs mb-3">Germany · VDE-certified · Premium</p>
             <ul className="space-y-1 text-white text-sm">
               <li><strong>Best for:</strong> Torx / Pozidriv screwdrivers</li>
               <li><strong>Price tier:</strong> Premium</li>
@@ -496,7 +496,7 @@ const sections = [
           </div>
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <h3 className="font-bold text-white text-lg mb-1">Bahco</h3>
-            <p className="text-white/60 text-xs mb-3">Sweden (Snap-on) · VDE-certified · Mid-range</p>
+            <p className="text-white text-xs mb-3">Sweden (Snap-on) · VDE-certified · Mid-range</p>
             <ul className="space-y-1 text-white text-sm">
               <li><strong>Best for:</strong> Pliers &amp; cutters</li>
               <li><strong>Price tier:</strong> Mid-range</li>
@@ -505,7 +505,7 @@ const sections = [
           </div>
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10 sm:col-span-2">
             <h3 className="font-bold text-white text-lg mb-1">CK Tools (Carl Kammerling)</h3>
-            <p className="text-white/60 text-xs mb-3">UK-focused · IEC 60900 compliant · Budget-friendly</p>
+            <p className="text-white text-xs mb-3">UK-focused · IEC 60900 compliant · Budget-friendly</p>
             <ul className="space-y-1 text-white text-sm sm:grid sm:grid-cols-3 sm:gap-2 sm:space-y-0">
               <li><strong>Best for:</strong> Broad general kit</li>
               <li><strong>Price tier:</strong> Budget-friendly</li>
@@ -516,7 +516,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Knipex</strong> — market leader for insulated pliers and cutters. Their VDE
                 insulated range covers combination pliers, long-nose pliers, side cutters, cable
@@ -525,7 +525,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wiha</strong> — leading brand for insulated screwdrivers, nut drivers, and
                 pliers. Their SlimBit and SlimLine insulated ranges are popular for work in
@@ -534,7 +534,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wera</strong> — the preferred choice for many UK electricians for insulated
                 screwdrivers, particularly in Torx and Pozidriv variants. VDE-certified. Wera's
@@ -543,7 +543,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Bahco</strong> — Swedish brand (owned by Snap-on) offering VDE-certified
                 insulated pliers and cutters at a competitive price point. Good quality and widely
@@ -552,7 +552,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>CK Tools (Carl Kammerling)</strong> — UK-focused brand offering a broad
                 range of IEC 60900 insulated tools. Popular in the UK trade market. More affordable
@@ -641,19 +641,19 @@ const sections = [
           <div className="space-y-3">
             <div className="flex items-center justify-between p-4 rounded-xl bg-green-900/30 border border-green-700/40">
               <span className="text-white font-bold">Visual inspection</span>
-              <span className="text-yellow-400 font-bold text-right text-sm">Before every use</span>
+              <span className="text-elec-yellow font-bold text-right text-sm">Before every use</span>
             </div>
-            <div className="flex items-center justify-between p-4 rounded-xl bg-amber-900/30 border border-amber-700/40">
+            <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.06] border border-amber-700/40">
               <span className="text-white font-bold">Periodic dielectric test</span>
-              <span className="text-yellow-400 font-bold text-right text-sm">Interval set by risk assessment (UK practice often 6–12 months)</span>
+              <span className="text-elec-yellow font-bold text-right text-sm">Interval set by risk assessment (UK practice often 6–12 months)</span>
             </div>
             <div className="flex items-center justify-between p-4 rounded-xl bg-red-900/30 border border-red-700/40">
               <span className="text-white font-bold">After suspected live contact</span>
-              <span className="text-yellow-400 font-bold text-right text-sm">Withdraw &amp; test before reuse</span>
+              <span className="text-elec-yellow font-bold text-right text-sm">Withdraw &amp; test before reuse</span>
             </div>
             <div className="flex items-center justify-between p-4 rounded-xl bg-red-900/30 border border-red-700/40">
               <span className="text-white font-bold">Any visible insulation damage</span>
-              <span className="text-yellow-400 font-bold text-right text-sm">Remove from service — no field repair</span>
+              <span className="text-elec-yellow font-bold text-right text-sm">Remove from service — no field repair</span>
             </div>
           </div>
         </div>
@@ -714,7 +714,7 @@ const sections = [
     heading: 'For Electricians: RAMS for Live Work',
     content: (
       <>
-        <p className="text-xs text-white/50 mb-4">
+        <p className="text-xs text-white mb-4">
           This guide is written and reviewed by Andrew Moore, founder of Elec-Mate — a qualified
           electrician — cross-referenced against BS 7671:2018+A4:2026, IET Guidance Note 3 (9th
           edition, 2022), and HSG85. Last reviewed May 2026.
@@ -727,7 +727,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-4">
-            <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+            <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-1">Generate Live Work RAMS Instantly</h4>
               <p className="text-white text-sm leading-relaxed">
@@ -742,7 +742,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional H&S documentation for electrical contractors"
-          description="Join 1,600+ UK electricians using Elec-Mate for RAMS generation, site safety documentation, and health and safety compliance."
+          description="Join 2,100+ UK electricians using Elec-Mate for RAMS generation, site safety documentation, and health and safety compliance."
           icon={HardHat}
         />
       </>
@@ -768,7 +768,7 @@ export default function InsulatedToolsGuidePage() {
       heroTitle={
         <>
           Insulated Tools for Electricians UK:{' '}
-          <span className="text-yellow-400">IEC 60900 Guide</span>
+          <span className="text-elec-yellow">IEC 60900 Guide</span>
         </>
       }
       heroSubtitle="Everything UK electricians need to know about insulated hand tools — IEC 60900 standard, VDE certification, when insulated tools are legally required under the Electricity at Work Regulations 1989, top brands, and inspection requirements."

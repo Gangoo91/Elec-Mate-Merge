@@ -195,7 +195,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type A — plug-and-play (ballast compatible)</strong> — the LED tube works
                 with the existing magnetic or electronic ballast. No rewiring is required. The tube
@@ -206,7 +206,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type B — ballast bypass (direct mains)</strong> — the ballast and starter
                 are removed, and the tube holders are rewired to connect directly to the mains
@@ -217,7 +217,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Type C — LED tube plus external driver</strong> — a dedicated LED driver
                 replaces the existing ballast and powers the LED tube via the existing tube holders.
@@ -252,7 +252,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>GU10 (mains voltage, 240V)</strong> — the simplest halogen replacement. A
                 50W GU10 halogen is replaced by a 4.5–7W GU10 LED, achieving approximately 90%
@@ -262,7 +262,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>GU5.3 / MR16 (12V, low voltage)</strong> — LED MR16 lamps are available but
                 the 12V transformer in the existing fitting must be compatible with LED loads. Most
@@ -273,7 +273,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Lightbulb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>R7s linear halogen</strong> — common in floodlights and some architectural
                 fittings. LED R7s replacements are available (typically 10–20W replacing 100–150W
@@ -320,7 +320,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Key consideration</strong> — verify that any retrofit lamp is listed on the
                 luminaire manufacturer's approved lamp list, particularly for fire-rated downlights.
@@ -347,7 +347,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Magnetic transformers</strong> — not compatible with LED MR16 lamps. The
                 minimum load requirement of a magnetic transformer (typically 20–60W) cannot be met
@@ -356,7 +356,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electronic transformers</strong> — compatibility varies by manufacturer and
                 model. Some electronic transformers work with LED MR16 lamps; many do not. Symptoms
@@ -366,7 +366,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>LED drivers</strong> — constant voltage 12V DC drivers are the correct
                 replacement for halogen transformers. Size the driver based on the total LED load
@@ -393,7 +393,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Leading-edge dimmers</strong> — the most common type in UK homes. Designed
                 for resistive (incandescent) and inductive (halogen transformer) loads. Generally
@@ -403,7 +403,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Trailing-edge (MOSFET) dimmers</strong> — the correct type for LED lamps.
                 Trailing-edge dimmers have a very low minimum load (often 0W for modern versions)
@@ -413,7 +413,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Minimum load</strong> — even LED-compatible dimmers have a minimum load
                 requirement. If the total LED wattage falls below this threshold (e.g., 2 × 5W GU10
@@ -423,7 +423,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Check the compatibility list</strong> — both Lutron and Varilight publish
                 compatibility lists pairing their dimmers with specific LED lamp brands. Always
@@ -449,7 +449,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Example: 40-tube office</strong> — existing 58W T8 fluorescent (67W each
                 including ballast) × 40 tubes = 2,680W total load. LED replacement (20W each) × 40 =
@@ -458,7 +458,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Maintenance saving</strong> — fluorescent tubes replaced every 5 years on
                 average at £3–5 per tube plus labour: 40 tubes × £8 all-in = £320 every 5 years =
@@ -467,7 +467,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Total annual saving</strong> — £1,175 + £64 = £1,239/year. Installation cost
                 (Type B bypass conversion): 40 fittings × £25 per fitting all-in = £1,000. Payback
@@ -493,7 +493,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>GU10 halogen to LED (domestic downlight)</strong> — £10–£20 per fitting
                 including the LED lamp. No wiring changes required for direct GU10 replacement. A
@@ -501,7 +501,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MR16 halogen to LED including transformer replacement</strong> — £25–£50 per
                 fitting including LED lamp and LED-compatible driver. A 6-lamp bathroom or kitchen
@@ -509,7 +509,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>T8 fluorescent to LED (Type B bypass)</strong> — £15–£30 per tube including
                 labour for rewiring the fitting. Commercial 2-tube batten fitting: £30–£60. Large
@@ -517,7 +517,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>LED panel replacement (600×600 recessed)</strong> — £50–£120 per fitting
                 supply and install including new LED panel and driver. Replaces a 4-tube recessed
@@ -544,7 +544,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Quote and Certificate on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -582,7 +582,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote LED upgrades and issue certificates with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate to quote jobs, issue electrical certificates, and manage their business on site."
+          description="Join 2,100+ UK electricians using Elec-Mate to quote jobs, issue electrical certificates, and manage their business on site."
           icon={FileCheck2}
         />
       </>
@@ -608,7 +608,7 @@ export default function LedLightingUpgradePage() {
       heroTitle={
         <>
           LED Lighting Upgrade UK:{' '}
-          <span className="text-yellow-400">Replacing Fluorescent & Halogen Lights</span>
+          <span className="text-elec-yellow">Replacing Fluorescent & Halogen Lights</span>
         </>
       }
       heroSubtitle="Everything electricians and building managers need to know about upgrading to LED — T8 fluorescent conversion options, halogen replacement, driver compatibility, dimmer issues, payback calculations, and typical 2026 costs."
@@ -619,7 +619,7 @@ export default function LedLightingUpgradePage() {
       faqHeading="Frequently Asked Questions About LED Lighting Upgrades"
       relatedPages={relatedPages}
       ctaHeading="Quote LED Upgrades and Issue Certificates on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to quote LED upgrade projects with energy saving calculations and issue Minor Works Certificates on site. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to quote LED upgrade projects with energy saving calculations and issue Minor Works Certificates on site. 7-day free trial, cancel anytime."
     />
   );
 }

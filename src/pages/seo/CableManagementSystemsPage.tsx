@@ -137,7 +137,7 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-3">Main Conduit Types</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Heavy gauge screwed steel conduit (BS EN 61386-21):</strong> The highest
                 mechanical protection class. Standard for industrial and commercial premises, plant
@@ -146,7 +146,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Rigid PVC conduit (BS EN 61386-22):</strong> Used in domestic and light
                 commercial surface-mounted installations. Lighter and corrosion-resistant but lower
@@ -155,7 +155,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Pliable (corrugated) conduit:</strong> Used almost exclusively concealed in
                 plaster, screed, or concrete. Not for surface-mounted or exposed use. Available in
@@ -163,7 +163,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Flexible conduit (BS EN 61386-23):</strong> Final connections to motors,
                 pumps, and vibrating equipment. Metal or PVC construction. Must not be used as fixed
@@ -203,7 +203,7 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-3">Common Trunking Types</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Steel trunking (BS EN 50085-1):</strong> The standard for industrial and
                 heavy commercial premises. Available in galvanised and powder-coated finishes. Can
@@ -212,7 +212,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>PVC trunking (BS EN 50085-2):</strong> Used in offices, schools, and
                 domestic surface-mounted installations. Available in white, grey, and woodgrain
@@ -220,7 +220,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Multi-compartment trunking:</strong> Divided internally into two or three
                 compartments for segregation of power, data, and telecommunications cables. Required
@@ -229,7 +229,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Building2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Skirting trunking and dado trunking:</strong> Perimeter trunking systems
                 integrated into skirting boards and mid-wall dado positions in offices and
@@ -257,7 +257,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Perforated cable tray:</strong> The standard in UK industrial and commercial
                 installations — plant rooms, distribution risers, external cable routes. Available
@@ -267,7 +267,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable ladder:</strong> Used for heavy cable loads and long spans. Ladder
                 rungs at typically 300mm centres allow heat dissipation and give good support to
@@ -276,7 +276,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wire basket tray:</strong> Lightweight, flexible, and quick to install.
                 Widely used in data centres, commercial offices, and suspended ceiling spaces.
@@ -309,7 +309,7 @@ const sections = [
           <h3 className="text-lg font-semibold text-white mb-3">BS 7671 Appendix 5 Fill Ratios</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Conduit (wired during installation):</strong> 45% of internal
                 cross-sectional area. For a 20mm conduit with 201mm² internal area, maximum cable
@@ -317,14 +317,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Conduit (cables drawn in after installation):</strong> 40% of internal
                 cross-sectional area.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Trunking:</strong> 45% of internal cross-sectional area (same as conduit for
                 wired installations). Multi-compartment trunking — apply 45% to each compartment
@@ -332,7 +332,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable tray (open):</strong> No specific BS 7671 fill ratio prescribed. Good
                 practice limits fill to 70% of tray width for single-layer installation, with
@@ -344,7 +344,7 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Grouping derating on tray:</strong> Cables touching on cable tray are
                 treated as grouped under BS 7671 Appendix 4. The grouping correction factor (Cg)
@@ -372,7 +372,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Requirement:</strong> Every penetration of a fire-resistant compartment wall
                 or floor by a conduit, trunking, or tray run — or by individual cables — must be
@@ -382,7 +382,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Approved products:</strong> Intumescent putty and sealant, intumescent
                 pillow and block systems, intumescent cable transit frames, and cementitious mortar
@@ -391,7 +391,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Steel conduit penetrations:</strong> Pack the inside of the conduit with
                 certified intumescent putty at the wall face. Also seal around the outside of the
@@ -400,7 +400,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Documentation:</strong> Retain the product data sheet and the installer's
                 declaration for all fire barrier installations with the building records. These are
@@ -426,7 +426,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Segregation in trunking:</strong> Power and data cables may share a trunking
                 if a metallic divider is installed between the two groups. Multi-compartment
@@ -434,7 +434,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Separation distances on cable tray:</strong> CENELEC EN 50174-2 specifies
                 minimum separation distances for parallel cable runs: 200mm between unscreened power
@@ -443,7 +443,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fire alarm and emergency lighting segregation:</strong> BS 5839-1 (fire
                 detection) and BS 5266 (emergency lighting) require their respective cable systems
@@ -471,7 +471,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671 Regulation 411.3:</strong> All metallic cable management not used as
                 a CPC must be bonded to the protective earth. The bonding conductor cross-section is
@@ -480,7 +480,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Trunking and tray earth continuity:</strong> Metallic trunking and tray
                 joints must maintain earth continuity throughout the run. Trunking manufacturers
@@ -490,7 +490,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing:</strong> Earth continuity of metallic cable management must be
                 verified as part of the initial verification test under BS 7671 Regulation 643.2.
@@ -536,7 +536,7 @@ export default function CableManagementSystemsPage() {
       badgeIcon={Wrench}
       heroTitle={
         <>
-          Cable Management Systems <span className="text-yellow-400">— UK Electrician Guide</span>
+          Cable Management Systems <span className="text-elec-yellow">— UK Electrician Guide</span>
         </>
       }
       heroSubtitle="A complete guide to cable management systems for UK electricians: conduit systems (BS EN 61386), cable trunking (BS EN 50085), cable tray and basket tray, fill ratios, fire barriers, power and data separation requirements, and earthing of metallic containment."

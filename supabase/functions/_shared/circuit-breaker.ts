@@ -71,5 +71,5 @@ export class CircuitBreaker {
 
 // Global circuit breakers for shared services
 export const embeddingCircuit = new CircuitBreaker('OpenAI-Embeddings', 5, 60000);
-export const lovableAICircuit = new CircuitBreaker('Lovable-AI', 5, 60000);
+export const aiCircuit = new CircuitBreaker('AI', 5, 60000);
 export const ragSearchCircuit = new CircuitBreaker('RAG-Search', 3, 30000);

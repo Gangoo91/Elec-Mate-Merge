@@ -855,7 +855,7 @@ const QUESTIONS: WelshExamQuestion[] = [
   {
     id: 342,
     question:
-      'Under the simplified RCD verification introduced in Amendment 4, what test is required for a general non-delay 30 mA device?',
+      'Under the simplified RCD verification introduced in Amendment 2 (2022), what test is required for a general non-delay 30 mA device?',
     options: [
       'Tests at half rated current, rated current and five times rated current, on both half-cycles',
       'A single alternating-current test at the rated residual operating current, with a maximum of 300 ms',

@@ -28,8 +28,9 @@ export const DashboardContainer: React.FC<DashboardContainerProps> = ({ children
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
         className={cn(
-          // Max-width constraint with centering
-          'mx-auto max-w-6xl',
+          // Full width, like the hubs. The Layout already pads the content area;
+          // the old max-w-6xl left the dashboard narrower than every other page.
+          'w-full',
           // Horizontal padding for mobile
           'px-4 sm:px-0',
           // Vertical spacing - minimal on mobile

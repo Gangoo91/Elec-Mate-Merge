@@ -170,7 +170,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Usb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Usb className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>USB module internal failure</strong> — this is by far the most common cause.
                 The internal power supply module contains electrolytic capacitors, voltage
@@ -181,7 +181,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Thermal shutdown</strong> — many USB modules have thermal protection that
                 shuts the output off when the module overheats. This can be triggered by charging
@@ -191,7 +191,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Plug className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Damaged USB port</strong> — the physical USB-A or USB-C port can be damaged
                 by inserting the cable at an angle, forcing the wrong connector, or general wear and
@@ -200,7 +200,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Mains supply issue</strong> — if the mains socket part of the USB socket is
                 also not working, the problem is the circuit, not the USB module. Check whether the
@@ -209,7 +209,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Incompatible device or cable</strong> — some older USB sockets do not
                 properly negotiate charging with newer devices, particularly those requiring USB
@@ -369,7 +369,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Like-for-like is non-notifiable</strong> — replacing a USB socket with
                 another USB socket in the same location, using the same wiring, is generally
@@ -379,7 +379,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Deeper back boxes may be needed</strong> — USB sockets are deeper than
                 standard sockets because of the USB module. If you are upgrading from a standard
@@ -388,7 +388,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit isolation is essential</strong> — always isolate the circuit at the
                 consumer unit before removing the socket faceplate. Verify the circuit is dead using
@@ -396,7 +396,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wiring connections</strong> — USB sockets have the same terminal layout as
                 standard sockets (L, N, E). Simply reconnect the cables in the same arrangement. On
@@ -524,7 +524,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Routine</strong> — you want to upgrade from USB-A to USB-C sockets, add USB
                 sockets where you currently have standard sockets, or replace multiple USB sockets
@@ -553,7 +553,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">1. Back Box Depth</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -569,7 +569,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Zap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">2. Circuit Testing After Replacement</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -584,7 +584,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <ShoppingCart className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <ShoppingCart className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">3. Advise on Quality</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -599,7 +599,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">4. Certification</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -643,7 +643,7 @@ export default function USBSocketNotChargingPage() {
       badgeIcon={Usb}
       heroTitle={
         <>
-          USB Socket Not Charging: <span className="text-yellow-400">Why and What to Do</span>
+          USB Socket Not Charging: <span className="text-elec-yellow">Why and What to Do</span>
         </>
       }
       heroSubtitle="Your USB wall socket has stopped charging. This guide explains the most common causes — internal module failure, power delivery limits, thermal shutdown — covers quality brands vs cheap imports, and tells you when to replace it or call an electrician."
@@ -654,7 +654,7 @@ export default function USBSocketNotChargingPage() {
       faqHeading="Frequently Asked Questions About USB Socket Problems"
       relatedPages={relatedPages}
       ctaHeading="Document Socket Work with Professional Certificates"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for Minor Works Certificates, EICR reports, and AI-powered tools. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for Minor Works Certificates, EICR reports, and AI-powered tools. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -271,7 +271,7 @@ export default function FireAlarmLogBookPage() {
       badgeIcon={BookOpen}
       heroTitle={
         <>
-          Fire Alarm Log Book: <span className="text-yellow-400">BS 5839-1:2025</span> Requirements
+          Fire Alarm Log Book: <span className="text-elec-yellow">BS 5839-1:2025</span> Requirements
         </>
       }
       heroSubtitle="The log book is the living proof a fire alarm system is tested and maintained — and since the 2025 edition, it no longer has to be a paper book by the panel."

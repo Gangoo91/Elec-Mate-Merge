@@ -47,7 +47,7 @@ const quickCheckQuestions = [
     id: 'calibration-importance',
     question: 'Why must test instruments be calibrated regularly?',
     options: [
-      'To make the digital display brighter',
+      'To reset the test leads to zero',
       'To extend the warranty on the instrument',
       'To ensure accuracy and compliance',
     ],
@@ -163,7 +163,7 @@ const quizQuestions = [
   },
   {
     id: 8,
-    question: 'Name one PPE item recommended when testing live circuits.',
+    question: 'Which PPE protects against electric shock when testing live circuits?',
     options: [
       'Insulated gloves',
       'High-vis vest',

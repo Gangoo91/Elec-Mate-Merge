@@ -557,7 +557,7 @@ export default function PATTestingFrequencyPage() {
       badgeIcon={CalendarClock}
       heroTitle={
         <>
-          PAT Testing Frequency: <span className="text-yellow-400">How Often by Premises Type</span>
+          PAT Testing Frequency: <span className="text-elec-yellow">How Often by Premises Type</span>
         </>
       }
       heroSubtitle="The complete guide to PAT testing frequency in the UK. IET Code of Practice 5th Edition recommended intervals for offices, construction sites, schools, hotels, shops, factories, churches, and outdoor use. Risk-based approach, Class I vs Class II, new and repaired equipment, and how to manage testing schedules for multiple clients."
@@ -567,7 +567,7 @@ export default function PATTestingFrequencyPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Digital PAT Testing from Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for PAT testing certificates, equipment registers, client scheduling, and re-test reminders. Quote and invoice from site. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for PAT testing certificates, equipment registers, client scheduling, and re-test reminders. Quote and invoice from site. 7-day free trial."
     />
   );
 }

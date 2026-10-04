@@ -148,55 +148,55 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>London:</strong> £55 to £75 per hour. The highest rates in the UK,
                 reflecting the cost of living, congestion, and strong demand.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>South East:</strong> £45 to £65 per hour. Close to London rates in cities
                 like Brighton, Reading, and Guildford.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>South West:</strong> £40 to £55 per hour. Bristol and Bath at the higher
                 end; rural areas lower.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Midlands:</strong> £38 to £55 per hour. Birmingham, Coventry, and Nottingham
                 pay above average.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>North West:</strong> £35 to £50 per hour. Manchester and Liverpool at the
                 higher end.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>North East and Yorkshire:</strong> £35 to £48 per hour. Leeds, Sheffield,
                 and Newcastle are the best-paying cities.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Scotland:</strong> £35 to £50 per hour. Edinburgh and Glasgow above average.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wales:</strong> £35 to £48 per hour. Cardiff above average; rural Wales at
                 the lower end.
@@ -227,28 +227,28 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Typical Callout Charges 2026</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Standard callout (daytime):</strong> £50 to £100, typically covering the
                 first hour including travel, diagnosis, and initial work.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Evening callout (after 6pm):</strong> £80 to £130. Premium for attending
                 outside normal hours.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Weekend callout:</strong> £100 to £150. Saturday and Sunday work commands a
                 significant premium.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency callout (immediate):</strong> £120 to £200. For urgent situations
                 where you attend within 1-2 hours, any time of day or night.
@@ -335,7 +335,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Saturday mornings:</strong> Many electricians treat Saturday mornings as
                 normal working hours at standard rate. This is a competitive advantage — customers
@@ -343,21 +343,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Saturday afternoons and evenings:</strong> 1.5x standard rate is the market
                 norm for planned work outside normal hours.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Weekday evenings (6pm to 9pm):</strong> 1.25x to 1.5x standard rate for
                 pre-booked evening work. This is separate from emergency callouts.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sundays:</strong> 2x standard rate. Most electricians do not work Sundays
                 unless it is emergency or premium-rate work.
@@ -389,42 +389,42 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Socket or switch replacement:</strong> £60 to £120. A simple like-for-like
                 swap takes 30 to 60 minutes including testing.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New socket or light point:</strong> £120 to £250. Running new cable, cutting
                 in the back box, connecting, and testing.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacement:</strong> £450 to £900. Half to full day job
                 including new board, MCBs/RCBOs, testing, and certification.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Full house rewire (3-bed):</strong> £3,500 to £5,500. Major project taking 5
                 to 8 days. Materials, first fix, second fix, board, testing, and certification.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EICR (3-bed house):</strong> £150 to £250. Periodic inspection and testing
                 taking 2 to 4 hours including the report.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fault finding:</strong> £80 to £150 per hour. Diagnostic work requires
                 experience and specialist test equipment. Premium pricing is justified.
@@ -625,7 +625,7 @@ export default function ElectricianRatesPerHourPage() {
       heroTitle={
         <>
           Electrician Rates Per Hour UK:{' '}
-          <span className="text-yellow-400">The 2026 Pricing Guide</span>
+          <span className="text-elec-yellow">The 2026 Pricing Guide</span>
         </>
       }
       heroSubtitle="From standard hourly rates to emergency callout charges — this is the definitive guide to electrician pricing in the UK. Know what to charge, how to structure your rates, and the common mistakes that cost you money."

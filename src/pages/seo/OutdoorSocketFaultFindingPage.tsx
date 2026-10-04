@@ -295,7 +295,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1 — disconnect all appliances</strong> — unplug everything from the
                 outdoor socket. Reset the RCD. If the RCD holds with nothing connected, the fault is
@@ -304,7 +304,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2 — check the socket enclosure</strong> — inspect the socket enclosure
                 for visible water, condensation, or debris. If the enclosure contains water, isolate
@@ -314,7 +314,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>
                   Step 3 — call an electrician if the RCD trips with nothing connected
@@ -390,7 +390,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Open-circuit neutral</strong> — a broken neutral connection causes the
                 socket to appear dead (nothing operates) but the socket face may still be live at
@@ -400,7 +400,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Undersized or overloaded circuit</strong> — if the outdoor socket is
                 connected to an existing ring main that is already heavily loaded, adding high-draw
@@ -410,7 +410,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fused spur fault</strong> — if the outdoor socket is on a fused spur from an
                 indoor ring main, the fuse in the fused connection unit (FCU) may have blown. Check
@@ -482,14 +482,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Socket replacement (like-for-like)</strong> — £60 to £120 all-in. Socket and
                 enclosure £15 to £40, labour £45 to £80. A Minor Works Certificate must be issued.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Adding RCD protection to existing socket</strong> — £80 to £200. Options
                 include replacing the socket with an RCD socket (£80 to £130) or adding an RCBO at
@@ -497,14 +497,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cable repair (minor — surface run)</strong> — £80 to £200. Replacing a
                 section of surface-run outdoor cable and issuing a certificate.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Underground cable repair</strong> — £150 to £400. Excavating to locate and
                 repair the damaged section, fitting an underground junction enclosure or replacing
@@ -512,7 +512,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New outdoor socket circuit</strong> — £200 to £500 from consumer unit to
                 single outdoor position, including armoured or outdoor-rated cable, RCD protection,
@@ -565,7 +565,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
                   Issue Certificates Before Leaving Site
@@ -585,7 +585,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete outdoor electrical certificates on your phone"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site Minor Works certificates, EICs, and instant quoting. No evening paperwork. 7-day free trial."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site Minor Works certificates, EICs, and instant quoting. No evening paperwork. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -611,7 +611,7 @@ export default function OutdoorSocketFaultFindingPage() {
       heroTitle={
         <>
           Outdoor Socket Not Working:{' '}
-          <span className="text-yellow-400">External Socket Fault Finding</span>
+          <span className="text-elec-yellow">External Socket Fault Finding</span>
         </>
       }
       heroSubtitle="Complete fault finding guide for outdoor and external sockets — RCD protection requirements under BS 7671, IP rating requirements, RCD tripping diagnosis, earth faults, circuit faults, water ingress, and typical repair and installation costs for 2026."
@@ -622,7 +622,7 @@ export default function OutdoorSocketFaultFindingPage() {
       faqHeading="Frequently Asked Questions — Outdoor Socket Faults"
       relatedPages={relatedPages}
       ctaHeading="Complete Outdoor Electrical Certificates On Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for Minor Works certificates, EICs, and on-site quoting. No evening paperwork. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for Minor Works certificates, EICs, and on-site quoting. No evening paperwork. 7-day free trial, cancel anytime."
     />
   );
 }

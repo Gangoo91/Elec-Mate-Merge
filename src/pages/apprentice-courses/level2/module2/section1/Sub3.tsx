@@ -98,7 +98,7 @@ const quizQuestions = [
   {
     id: 4,
     question:
-      'A 12 V control transformer secondary draws 250 mA powering a contactor coil. What is the apparent power on the secondary, in watts?',
+      'A 12 V control transformer secondary supplies 250 mA to a contactor coil. Using P = V × I, roughly what power is that?',
     options: ['3 W', '30 W', '300 W', '3,000 W'],
     correctAnswer: 0,
     explanation:

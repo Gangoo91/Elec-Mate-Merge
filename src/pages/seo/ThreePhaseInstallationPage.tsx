@@ -186,35 +186,35 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial kitchens</strong> — multiple three phase ovens, induction hobs,
                 and high-power dishwashers can demand 50kW or more.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Industrial motors</strong> — motors above 3kW are almost always three phase.
                 They run more efficiently and produce smoother torque than single phase equivalents.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Multiple EV chargers</strong> — a bank of 7kW or 22kW EV chargers for a car
                 park or multi-dwelling development requires three phase to distribute the load.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Large domestic properties</strong> — homes with underfloor heating, heat
                 pumps, EV charging, electric cooking, and hot tubs can exceed single phase capacity.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>New build developments</strong> — the 2022 Building Regulations requiring EV
                 charge points and the increasing adoption of heat pumps are pushing more new builds
@@ -258,33 +258,33 @@ const sections = [
           <h4 className="font-bold text-white mb-3">Practical Load Balancing Strategy</h4>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 List every circuit with its design current and allocate them across L1, L2, and L3.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Place large single phase loads (cookers, showers, EV chargers) on different phases.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Distribute lighting circuits, socket circuits, and small power evenly across all
                 three phases.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Consider the diversity of each circuit — a socket circuit on a phase with a large
                 motor will balance better than two large fixed loads on the same phase.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Aim for no more than 10-15% difference in current between the most heavily loaded
                 and least heavily loaded phase.
@@ -325,7 +325,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CircuitBoard className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main switch rating</strong> — the main switch (or main isolator) must be
                 rated for the maximum demand of the installation. For a 100A per phase supply, a
@@ -334,7 +334,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CircuitBoard className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Number of ways</strong> — count every circuit (including spares) and select
                 a board with sufficient ways. TPN boards typically come in 12, 18, 24, or 36 way
@@ -342,7 +342,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CircuitBoard className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD arrangement</strong> — decide between a split-load board (with one or
                 more RCDs protecting groups of circuits) or individual RCBOs on every circuit. RCBOs
@@ -351,7 +351,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <CircuitBoard className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SPD (Surge Protection Device)</strong> — BS 7671 Regulation 443.4.1 requires
                 an SPD where the consequence of a transient overvoltage could result in (a) serious
@@ -405,14 +405,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ca (ambient temperature)</strong> — derate the cable if the ambient
                 temperature exceeds 30 degrees C (the reference temperature for most cable types).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cg (grouping)</strong> — derate the cable if it is grouped with other
                 cables. Three phase cables running together count as one circuit for grouping
@@ -421,14 +421,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Ci (thermal insulation)</strong> — derate the cable if it passes through or
                 is in contact with thermal insulation.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Calculator className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Voltage drop</strong> — BS 7671 limits voltage drop to 3% for lighting
                 circuits and 5% for other circuits (from the origin to the load). For three phase,
@@ -527,14 +527,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Main earthing terminal</strong> — must be accessible for inspection and
                 testing. Label it clearly.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Protective bonding</strong> — bond to incoming gas, water, oil, and any
                 other extraneous-conductive-parts within 600mm of the point of entry to the
@@ -542,7 +542,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth electrode</strong> — for TT earthing arrangements, the earth electrode
                 resistance must be low enough to ensure the disconnection time is met. For three
@@ -574,25 +574,25 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 The supply type (three phase, four wire), voltage (400/230V), and earthing
                 arrangement (TN-S, TN-C-S, or TT).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 The prospective fault current at the origin — measured between phases and between
                 each phase and neutral.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>The external earth fault loop impedance (Ze) for each phase.</span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 Test results for every circuit, showing which phase each circuit is connected to.
               </span>
@@ -631,7 +631,7 @@ export default function ThreePhaseInstallationPage() {
       heroTitle={
         <>
           Three Phase Installation:{' '}
-          <span className="text-yellow-400">The Complete BS 7671 Guide</span>
+          <span className="text-elec-yellow">The Complete BS 7671 Guide</span>
         </>
       }
       heroSubtitle="Three phase supplies are essential for commercial premises, industrial sites, and increasingly for domestic properties with high electrical demand. This guide covers everything from load balancing and TPN board selection to cable sizing, testing, and certification — all referenced to BS 7671:2018+A4:2026."
@@ -642,7 +642,7 @@ export default function ThreePhaseInstallationPage() {
       faqHeading="Frequently Asked Questions About Three Phase Installation"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Design Boards Faster"
-      ctaSubheading="Elec-Mate's cable sizing calculator, voltage drop calculator, and AI circuit designer handle three phase calculations instantly. Join 1,600+ UK electricians. 7-day free trial, cancel anytime."
+      ctaSubheading="Elec-Mate's cable sizing calculator, voltage drop calculator, and AI circuit designer handle three phase calculations instantly. Join 2,100+ UK electricians. 7-day free trial, cancel anytime."
     />
   );
 }

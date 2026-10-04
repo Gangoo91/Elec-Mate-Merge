@@ -44,7 +44,7 @@ export default function TaxNIEstimatorPage() {
       heroTitle={
         <>
           Tax &amp; NI Estimator
-          <span className="block text-yellow-400 mt-1">For Self-Employed Electricians</span>
+          <span className="block text-elec-yellow mt-1">For Self-Employed Electricians</span>
         </>
       }
       heroSubtitle="Every self-employed electrician dreads the January tax bill. The Tax and NI Estimator removes the surprise by calculating your estimated income tax and National Insurance throughout the year. Know what you owe before HMRC asks for it, set aside the right amount each month, and never be caught short by a payment on account."
@@ -118,18 +118,18 @@ export default function TaxNIEstimatorPage() {
                 bands:
               </p>
               <p>
-                <strong className="text-yellow-400">Personal allowance: £12,570.</strong> The first
+                <strong className="text-elec-yellow">Personal allowance: £12,570.</strong> The first
                 £12,570 of your taxable profit is tax-free. This allowance reduces by £1 for every
                 £2 you earn above £100,000, disappearing entirely at £125,140.
               </p>
               <p>
-                <strong className="text-yellow-400">Basic rate: 20% on £12,571 to £50,270.</strong>{' '}
+                <strong className="text-elec-yellow">Basic rate: 20% on £12,571 to £50,270.</strong>{' '}
                 Most sole trader electricians fall within this band. On a taxable profit of £40,000,
                 you would pay 20% on £27,430 (the amount above the personal allowance) = £5,486 in
                 income tax.
               </p>
               <p>
-                <strong className="text-yellow-400">
+                <strong className="text-elec-yellow">
                   Higher rate: 40% on £50,271 to £125,140.
                 </strong>{' '}
                 If your taxable profit exceeds £50,270, the excess is taxed at 40%. This is
@@ -137,7 +137,7 @@ export default function TaxNIEstimatorPage() {
                 sources — a combination of self-employment and rental income, for example.
               </p>
               <p>
-                <strong className="text-yellow-400">Additional rate: 45% above £125,140.</strong>{' '}
+                <strong className="text-elec-yellow">Additional rate: 45% above £125,140.</strong>{' '}
                 Unlikely for most sole trader electricians, but relevant for those running larger
                 businesses or with significant additional income.
               </p>
@@ -162,21 +162,21 @@ export default function TaxNIEstimatorPage() {
                 benefits.
               </p>
               <p>
-                <strong className="text-yellow-400">Class 2 NI:</strong> A flat-rate weekly
+                <strong className="text-elec-yellow">Class 2 NI:</strong> A flat-rate weekly
                 contribution of £3.45 per week (2025/26 rate), payable if your profits exceed the
                 Small Profits Threshold of £6,725. This costs approximately £179.40 per year. Class
                 2 NI counts towards your qualifying years for the state pension — you need 35
                 qualifying years for the full new state pension.
               </p>
               <p>
-                <strong className="text-yellow-400">Class 4 NI:</strong> A percentage-based
+                <strong className="text-elec-yellow">Class 4 NI:</strong> A percentage-based
                 contribution on your profits. For 2025/26, you pay 6% on profits between £12,570 and
                 £50,270, and 2% on profits above £50,270. On a taxable profit of £40,000, your Class
                 4 NI would be: 6% x £27,430 = £1,645.80. Class 4 NI does not count towards your
                 state pension — it is effectively an additional tax on self-employed profits.
               </p>
               <p>
-                <strong className="text-yellow-400">Total NI example:</strong> On a profit of
+                <strong className="text-elec-yellow">Total NI example:</strong> On a profit of
                 £40,000, your total NI bill would be approximately £179.40 (Class 2) + £1,645.80
                 (Class 4) = £1,825.20. Combined with your income tax of £5,486, your total tax and
                 NI bill is £7,311.20 — an effective rate of approximately 18.3% on your total
@@ -205,14 +205,14 @@ export default function TaxNIEstimatorPage() {
                 single biggest cause of cash flow problems for self-employed electricians.
               </p>
               <p>
-                <strong className="text-yellow-400">How they work:</strong> HMRC assumes your next
+                <strong className="text-elec-yellow">How they work:</strong> HMRC assumes your next
                 year's tax bill will be the same as this year's. They require you to pay 50% of the
                 estimated bill in advance, split across two dates: 31 January (alongside your actual
                 tax bill for the previous year) and 31 July. A balancing payment or refund is then
                 made the following January when your actual figures are known.
               </p>
               <p>
-                <strong className="text-yellow-400">The January shock:</strong> In January of your
+                <strong className="text-elec-yellow">The January shock:</strong> In January of your
                 second year, you pay three things simultaneously: (1) the full tax and NI bill for
                 your first year of self-employment, (2) the first payment on account for your second
                 year (50% of last year's bill), and (3) any balancing payment from the previous
@@ -220,7 +220,7 @@ export default function TaxNIEstimatorPage() {
                 + £3,500 = £10,500.
               </p>
               <p>
-                <strong className="text-yellow-400">Reducing payments on account:</strong> If you
+                <strong className="text-elec-yellow">Reducing payments on account:</strong> If you
                 expect your income to be lower next year (for example, if you are taking time off
                 for training or personal reasons), you can apply to reduce your payments on account.
                 But if you underestimate and your actual bill is higher, HMRC charges interest on
@@ -254,7 +254,7 @@ export default function TaxNIEstimatorPage() {
                 £100.
               </p>
               <p>
-                <strong className="text-yellow-400">Commonly claimed expenses:</strong> Van running
+                <strong className="text-elec-yellow">Commonly claimed expenses:</strong> Van running
                 costs (fuel, insurance, road tax, servicing, repairs), tools and equipment, test
                 instrument calibration, public liability insurance, professional indemnity
                 insurance, certification body fees (NICEIC, NAPIT, ELECSA), accountancy fees, phone
@@ -262,14 +262,14 @@ export default function TaxNIEstimatorPage() {
                 courses, and materials purchased for jobs.
               </p>
               <p>
-                <strong className="text-yellow-400">Commonly missed expenses:</strong> Use of home
+                <strong className="text-elec-yellow">Commonly missed expenses:</strong> Use of home
                 as office (£6 per week simplified claim or actual costs with calculation),
                 professional subscriptions (IET membership), trade publications, parking and tolls,
                 bank charges on business accounts, and small items of equipment under the Annual
                 Investment Allowance threshold.
               </p>
               <p>
-                <strong className="text-yellow-400">Capital allowances:</strong> Larger purchases
+                <strong className="text-elec-yellow">Capital allowances:</strong> Larger purchases
                 (vans, expensive test equipment, power tools) are claimed through capital allowances
                 rather than as direct expenses. The Annual Investment Allowance (AIA) allows you to
                 deduct the full cost of qualifying capital expenditure up to £1 million in the year
@@ -301,20 +301,20 @@ export default function TaxNIEstimatorPage() {
                 successful self-employed electricians:
               </p>
               <p>
-                <strong className="text-yellow-400">Open a separate savings account.</strong> Every
+                <strong className="text-elec-yellow">Open a separate savings account.</strong> Every
                 time a client payment hits your business account, immediately transfer a percentage
                 to your tax savings account. For a basic-rate taxpayer, 25% to 30% of your profit
                 (not turnover) is a good starting point. For a higher-rate taxpayer, 35% to 40%.
               </p>
               <p>
-                <strong className="text-yellow-400">Review quarterly.</strong> Every three months,
+                <strong className="text-elec-yellow">Review quarterly.</strong> Every three months,
                 compare your actual income and expenses against your projections. Use Elec-Mate's
                 Tax and NI Estimator to recalculate your projected year-end liability. If you are
                 ahead of projection, increase your monthly transfer. If you are behind, you may be
                 able to reduce it.
               </p>
               <p>
-                <strong className="text-yellow-400">Plan for big expenses.</strong> If you know you
+                <strong className="text-elec-yellow">Plan for big expenses.</strong> If you know you
                 have a large expense coming (van purchase, test equipment, training course), time it
                 strategically. Buying in March (before the tax year ends on 5 April) means you can
                 claim the expense against the current year's profits. Buying in April pushes it into
@@ -456,7 +456,7 @@ export default function TaxNIEstimatorPage() {
         },
       ]}
       ctaHeading="Estimate Your Tax Bill Accurately"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to track income, log expenses, and estimate tax in real time. No January surprises. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to track income, log expenses, and estimate tax in real time. No January surprises. 7-day free trial, cancel anytime."
       extraSchemas={[
         {
           '@type': 'SoftwareApplication',

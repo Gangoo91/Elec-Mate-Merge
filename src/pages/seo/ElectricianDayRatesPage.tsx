@@ -148,7 +148,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">UK Average Day Rates 2026</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Domestic electrician:</strong> £200 to £280 per day. Covers rewires,
                 consumer unit changes, additional circuits, fault finding, and general domestic
@@ -156,21 +156,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial electrician:</strong> £250 to £320 per day. Office fit-outs,
                 retail, schools, healthcare, and commercial new builds.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Industrial electrician:</strong> £280 to £380 per day. Factories,
                 manufacturing, heavy industry, and process installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Specialist (testing, EV, data):</strong> £300 to £450 per day. Testing and
                 inspection specialists, EV charger installers, data centre electricians, and
@@ -202,7 +202,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>London:</strong> £280 to £380. The highest rates in the UK, driven by the
                 cost of living, congestion, and the concentration of large commercial projects.
@@ -210,49 +210,49 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>South East:</strong> £250 to £340. Close to London rates, particularly in
                 cities like Reading, Brighton, Guildford, and the Thames Valley corridor.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>South West:</strong> £220 to £290. Bristol and Bath pay above average. Rural
                 Devon and Cornwall are lower.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Midlands:</strong> £220 to £290. Birmingham and Coventry pay the most. Large
                 HS2 and infrastructure projects have boosted rates in the region.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>North West:</strong> £210 to £280. Manchester and Liverpool offer
                 competitive rates. Major regeneration projects continue to drive demand.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>North East and Yorkshire:</strong> £200 to £260. Leeds, Sheffield, and
                 Newcastle are the best-paying cities in the region.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Scotland:</strong> £210 to £280. Edinburgh and Glasgow pay the most.
                 Offshore and renewable energy projects command premium rates.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <MapPin className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Wales:</strong> £200 to £260. Cardiff pays the most. Rural Wales has the
                 lowest day rates in the UK.
@@ -326,7 +326,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BarChart3 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart3 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Newly qualified (0-2 years):</strong> £180 to £230. You are competent but
                 still building speed and confidence. Some contractors refer to this as "improver"
@@ -334,7 +334,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BarChart3 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart3 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Experienced (2-5 years):</strong> £230 to £300. You are fully productive,
                 can work unsupervised, and handle a wide range of installations. This is the
@@ -342,14 +342,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BarChart3 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart3 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Senior (5-10 years):</strong> £280 to £350. You have deep experience,
                 specialist skills, and a reputation. Clients and contractors actively seek you out.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BarChart3 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart3 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Specialist (any experience with specialist quals):</strong> £300 to £450.
                 Testing and inspection, EV, solar PV, data centres, hazardous areas. The
@@ -382,7 +382,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Testing and inspection (C&G 2391):</strong> £280 to £380. Steady work from
                 landlord EICRs, commercial compliance, and insurance requirements. Standard
@@ -392,7 +392,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger installation:</strong> £300 to £400. Growing rapidly with
                 government incentives and increasing EV adoption. Domestic and commercial projects.
@@ -402,14 +402,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Data centre electrician:</strong> £320 to £450. Highly specialised work in a
                 booming sector. Requires specific training and often security clearance.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hazardous areas (CompEx):</strong> £350 to £500. Oil, gas, chemical, and
                 pharmaceutical environments. The CompEx qualification is essential and the rates
@@ -417,7 +417,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Solar PV and battery storage:</strong> £280 to £380. MCS certification
                 required. Strong demand driven by energy prices and environmental awareness.
@@ -499,7 +499,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Know the market rate for your area and specialism.</strong> Research what
                 other electricians charge. If you are below market, raise your rate. If you are
@@ -507,7 +507,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Never be the cheapest.</strong> Competing on price is a race to the bottom.
                 Compete on quality, reliability, and professionalism. Clients who choose the
@@ -516,7 +516,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Offer volume discounts, not rate cuts.</strong> If a contractor wants a
                 lower rate for a long contract, negotiate on volume (guaranteed weeks of work)
@@ -525,7 +525,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Have a professional image.</strong> Send quotes on branded templates,
                 invoice promptly, communicate clearly, and turn up when you say you will.
@@ -557,7 +557,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <BarChart3 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart3 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Track every expense.</strong> Fuel, materials, tools, insurance, meals on
                 site, parking, phone, subscriptions — everything. Elec-Mate expense tracking lets
@@ -565,7 +565,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BarChart3 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart3 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Record your actual hours.</strong> How many hours did the job actually take,
                 including travel, quoting, purchasing materials, and admin? Compare this to the
@@ -573,7 +573,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <BarChart3 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <BarChart3 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Review monthly.</strong> At the end of each month, calculate your total
                 income, total expenses, and actual profit. Are you hitting your target? If not, why
@@ -613,7 +613,7 @@ export default function ElectricianDayRatesPage() {
       badgeIcon={PoundSterling}
       heroTitle={
         <>
-          Electrician Day Rates UK: <span className="text-yellow-400">What to Charge in 2026</span>
+          Electrician Day Rates UK: <span className="text-elec-yellow">What to Charge in 2026</span>
         </>
       }
       heroSubtitle="From £200 per day for domestic work to £450+ for specialist roles — this is the definitive guide to electrician day rates across the UK. Know the market, calculate your true costs, and set a rate that actually makes money."

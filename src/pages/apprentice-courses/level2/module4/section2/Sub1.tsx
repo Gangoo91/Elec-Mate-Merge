@@ -573,7 +573,7 @@ export default function Sub1() {
         <ConceptBlock
           title="On a notifiable site the walk-round starts before you arrive — at the induction"
           plainEnglish="On a notifiable construction site (more than 30 days with 20+ workers, or 500+ person-days) CDM 2015 Reg 13 puts a duty on the principal contractor to provide a site induction covering the construction phase plan, site rules, welfare arrangements, emergency procedures and specific hazards. The induction is the formal mechanism for transferring hazard knowledge before you set foot in the work area."
-          onSite="Skip the induction or sign in without listening and you've put yourself outside the site H&S system on day one. CDM 2015 Reg 15 makes it a personal duty on the worker to co-operate with the principal contractor's arrangements — that includes the induction."
+          onSite="Skip the induction or sign in without listening and you've put yourself outside the site H&S system on day one. CDM 2015 Reg 8 makes it a personal duty on the worker to co-operate with the principal contractor's arrangements — that includes the induction."
         >
           <p>What the induction should cover, and what to ask if it doesn't:</p>
           <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -740,7 +740,7 @@ export default function Sub1() {
             'People hazards include customers, family, pets, other trades and yourself. HASAWA s.3 makes you responsible for non-employees affected by your work — children in the work zone is a textbook s.3 issue.',
             "Concealed services are the highest-consequence hazard. Detector + visual + caution. Treat any positive or intermittent reading as a positive find until you've proven otherwise.",
             "Asbestos suspicion applies to any building constructed or refurbished before 2000. Treat suspect material as 'asbestos until proven otherwise' and stop until you can verify or arrange a survey.",
-            'On a notifiable construction site, CDM 2015 Reg 13 site induction is the formal mechanism for transferring hazard knowledge. Reg 15 makes co-operating with it a personal duty on the worker.',
+            'On a notifiable construction site, CDM 2015 Reg 13 site induction is the formal mechanism for transferring hazard knowledge. Reg 8 makes co-operating with it a personal duty on the worker.',
             "The walk-round is repeated daily on long jobs and whenever conditions or people in the area change. 'I know this site' is the moment a fresh hazard gets missed.",
           ]}
         />

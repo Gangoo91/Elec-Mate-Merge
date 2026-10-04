@@ -171,7 +171,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">1</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-elec-yellow font-bold text-sm">1</span>
               <span>
                 <strong>Domestic property</strong> — switch off the main switch at the consumer
                 unit (the large isolating switch at the top of the fuseboard). If a specific
@@ -181,7 +181,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">2</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-elec-yellow font-bold text-sm">2</span>
               <span>
                 <strong>Construction site or commercial premises</strong> — use the site emergency
                 stop or main isolator. These are typically clearly labelled and brightly coloured.
@@ -190,7 +190,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">3</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-elec-yellow font-bold text-sm">3</span>
               <span>
                 <strong>Cannot reach the isolation point</strong> — if the isolation point is
                 inaccessible, use a dry non-conductive object to push the casualty away from
@@ -200,7 +200,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">4</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-elec-yellow font-bold text-sm">4</span>
               <span>
                 <strong>High voltage systems</strong> — do NOT attempt to isolate high-voltage
                 overhead lines or substation equipment. Stand well back (at least 15 metres from
@@ -337,7 +337,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cool with running water for 20 minutes</strong> — use cool (not cold)
                 running water. Start cooling as soon as possible — ideally within 3 minutes of
@@ -345,7 +345,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Cover with cling film or a clean dressing</strong> — after cooling, cover
                 loosely with non-fluffy cling film or a clean non-adhesive dressing. Do not wrap
@@ -385,7 +385,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Entry wound</strong> — typically located on the hand or fingers where the
                 casualty made contact with the live conductor. Often appears as a charred, grey,
@@ -394,7 +394,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Exit wound</strong> — typically located on the foot, heel, or wherever
                 the current completed its path to earth. Exit wounds are often more severe than
@@ -403,7 +403,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Internal damage along the current path</strong> — muscles, nerves, and
                 blood vessels along the path between entry and exit are damaged by the current.
@@ -531,7 +531,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-4">
-            <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+            <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-white mb-1">Generate Site RAMS with Emergency Procedures</h4>
               <p className="text-white text-sm leading-relaxed">
@@ -569,7 +569,7 @@ export default function ElectricalRescueProcedurePage() {
       heroTitle={
         <>
           Electrical Rescue Procedure UK:{' '}
-          <span className="text-yellow-400">Electric Shock First Aid</span>
+          <span className="text-elec-yellow">Electric Shock First Aid</span>
         </>
       }
       heroSubtitle="Life-saving guidance for responding to electrical accidents — safe isolation before touching the casualty, calling 999, CPR and AED use after electric shock, burn treatment, entry and exit wounds, and why all electricians need first aid training."

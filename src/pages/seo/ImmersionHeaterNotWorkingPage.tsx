@@ -154,14 +154,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Element</strong> — typically 3kW (13A at 230V), made of a resistive wire
                 inside a copper or incoloy sheath. Submerged in the water inside the cylinder.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Thermostat</strong> — controls the water temperature, typically set between
                 60-65 degrees Celsius. When the water reaches the set temperature, the thermostat
@@ -169,7 +169,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated circuit</strong> — immersion heaters must be on their own circuit,
                 typically 2.5mm twin and earth on a 16A or 20A breaker. Fed via a double-pole
@@ -177,7 +177,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Timer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Timer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Timer (optional)</strong> — many installations include a time clock to heat
                 water at specific times, often linked to Economy 7 off-peak electricity tariffs.
@@ -255,14 +255,14 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Stuck open</strong> — the thermostat contacts do not close, so no power
                 reaches the element. No hot water at all. The thermostat needs replacing.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Stuck closed</strong> — the thermostat contacts do not open, so the element
                 runs continuously. The thermal cutout eventually trips to prevent overheating. This
@@ -270,7 +270,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Thermal cutout tripped</strong> — the red reset button has popped out,
                 disconnecting the element. Press to reset. If it keeps tripping, the thermostat is
@@ -278,7 +278,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Thermometer className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Set too low</strong> — if the thermostat is set below 60 degrees Celsius,
                 the water may not feel hot enough. However, do not set it above 65 degrees — there
@@ -417,7 +417,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Electricity bill has suddenly increased</strong> — a stuck thermostat
                 running the element continuously can add hundreds of pounds to your bill. An
@@ -438,7 +438,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Search className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">1. Initial Tests</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -452,7 +452,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Wrench className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">2. Element Replacement</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -466,7 +466,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">3. Test and Commission</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -508,7 +508,7 @@ export default function ImmersionHeaterNotWorkingPage() {
       badgeIcon={Droplets}
       heroTitle={
         <>
-          Immersion Heater Not Working: <span className="text-yellow-400">Causes and Fixes</span>
+          Immersion Heater Not Working: <span className="text-elec-yellow">Causes and Fixes</span>
         </>
       }
       heroSubtitle="No hot water from your immersion heater? This guide covers every common cause — tripped breakers, faulty thermostats, failed elements, and timer problems — what to check yourself, and when to call an electrician."
@@ -519,7 +519,7 @@ export default function ImmersionHeaterNotWorkingPage() {
       faqHeading="Frequently Asked Questions About Immersion Heater Problems"
       relatedPages={relatedPages}
       ctaHeading="Diagnose and Document Heating Circuit Faults on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI fault diagnosis, test result recording, and professional certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for AI fault diagnosis, test result recording, and professional certificates. 7-day free trial, cancel anytime."
     />
   );
 }

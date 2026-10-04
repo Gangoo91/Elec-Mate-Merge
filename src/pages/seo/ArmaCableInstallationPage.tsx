@@ -706,7 +706,7 @@ const sections = [
 
         <div className={cardCn}>
           <div className="flex items-start gap-3">
-            <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-amber-400" />
+            <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-elec-yellow" />
             <div>
               <p className="mb-1 font-semibold text-white">
                 PME / TN-C-S earthing when you feed an outbuilding
@@ -895,7 +895,7 @@ export default function ArmaCableInstallationPage() {
       badgeIcon={Zap}
       heroTitle={
         <>
-          Armoured Cable Installation UK: <span className="text-yellow-400">SWA Cable Guide</span>
+          Armoured Cable Installation UK: <span className="text-elec-yellow">SWA Cable Guide</span>
         </>
       }
       heroSubtitle="Everything electricians need to know about Steel Wire Armoured (SWA) cable — core configurations, which Appendix 4 table to read, correct gland termination for earth continuity, underground burial depths, IP ratings, and the mistakes that generate EICR observations."
@@ -913,7 +913,7 @@ export default function ArmaCableInstallationPage() {
       faqHeading="Frequently Asked Questions About SWA Armoured Cable Installation"
       relatedPages={relatedPages}
       ctaHeading="Certify SWA Cable Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to complete Electrical Installation Certificates on site. Record test results, cable details, and route descriptions — instant PDF export. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate to complete Electrical Installation Certificates on site. Record test results, cable details, and route descriptions — instant PDF export. 7-day free trial."
     />
   );
 }

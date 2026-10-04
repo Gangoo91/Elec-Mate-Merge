@@ -5,6 +5,7 @@ import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
 import Stripe from 'https://esm.sh/stripe@14.21.0';
 import { captureException } from '../_shared/sentry.ts';
+import { offerSiblingCandidates } from '../_shared/offer-sibling.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -254,10 +255,37 @@ serve(async (req) => {
               stripePromoCodeId: offer.stripe_promotion_code_id,
             });
           } else {
-            logger.warn('Offer plan mismatch', {
-              offerPlan: offer.plan_id,
-              requestedPlan: planId,
-            });
+            // Picked the other plan from the one the link was for — use the
+            // partner code (FIRSTGO25 → FIRSTGO25APP) instead of dropping the
+            // discount without a word. The sign-up page already swaps codes;
+            // this covers older links and stored codes.
+            const candidates = offerSiblingCandidates(offerCode);
+            const { data: siblings } = candidates.length
+              ? await supabaseAdmin
+                  .from('promo_offers')
+                  .select('id, code, stripe_promotion_code_id, is_active, plan_id')
+                  .in('code', candidates)
+                  .eq('is_active', true)
+              : { data: [] };
+            const sibling = candidates
+              .map((c) => (siblings ?? []).find((r: { code: string }) => r.code === c))
+              .find(
+                (r?: { plan_id: string; stripe_promotion_code_id: string | null }) =>
+                  !!r && planId.startsWith(r.plan_id) && !!r.stripe_promotion_code_id
+              ) as { id: string; code: string; stripe_promotion_code_id: string } | undefined;
+            if (sibling) {
+              discounts = [{ promotion_code: sibling.stripe_promotion_code_id }];
+              appliedOfferId = sibling.id;
+              logger.info('Applying partner offer for the chosen plan', {
+                offerCode,
+                partner: sibling.code,
+              });
+            } else {
+              logger.warn('Offer plan mismatch', {
+                offerPlan: offer.plan_id,
+                requestedPlan: planId,
+              });
+            }
           }
         } else {
           logger.warn('Offer not active or missing Stripe ID', {

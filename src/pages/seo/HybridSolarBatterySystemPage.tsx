@@ -172,7 +172,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Hybrid inverter (DC-coupled)</strong> — a single device replaces the solar
                 inverter and integrates battery management. Solar panels connect directly to the
@@ -183,7 +183,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>AC-coupled retrofit</strong> — the existing solar inverter stays in place. A
                 separate battery inverter/charger (Tesla Powerwall 2, Solarwatt MyReserve) is added
@@ -259,7 +259,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Octopus Go</strong> — off-peak rate of approximately 9p/kWh between 00:30
                 and 04:30; standard rate approximately 28p/kWh at other times. A 10 kWh battery
@@ -268,7 +268,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Octopus Agile</strong> — half-hourly prices aligned to wholesale markets.
                 Average off-peak rate 5–10p/kWh; prices occasionally negative. AI-optimised battery
@@ -277,7 +277,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Clock className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Intelligent Octopus</strong> — specifically designed for EV charging with
                 spillover solar battery optimisation. Charges EV and home battery during cheap
@@ -306,7 +306,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Smart Export Guarantee (SEG)</strong> — mandatory for licensed suppliers
                 with 150,000+ customers. Rates range from 4p/kWh (some suppliers) to 20p/kWh
@@ -315,7 +315,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Export limitation</strong> — some DNOs require export limitation as a
                 condition of G98/G99 approval where local network capacity is constrained. Hybrid
@@ -324,7 +324,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Demand flexibility and virtual power plants</strong> — UK energy suppliers
                 are launching demand flexibility programmes where battery owners earn payments for
@@ -350,7 +350,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>GivEnergy All-in-One</strong> — 9.5 kWh LFP battery with integrated hybrid
                 inverter. Modular and expandable. Excellent cloud monitoring via the GivEnergy
@@ -359,7 +359,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>SolarEdge Home Battery + Energy Hub Inverter</strong> — DC-coupled LFP
                 battery (4.6–9.7 kWh modules, stackable to 23 kWh) with SolarEdge Energy Hub
@@ -368,7 +368,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Sungrow SH series</strong> — competitive hybrid inverters (3–10 kW) with SBR
                 LFP battery range (9.6–25.6 kWh). EPS backup mode. Strong value proposition through
@@ -376,7 +376,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Fox ESS H3 Hybrid</strong> — 3–6 kW hybrid inverter with ECS LFP battery
                 range. Popular in the installer market for budget-conscious projects without
@@ -401,21 +401,21 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>4 kWp solar + 10 kWh hybrid system</strong> — £8,000–£14,000 installed. The
                 most commonly quoted combination for a 3–4 bedroom UK home in 2025.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Retrofit AC-coupled battery only (10 kWh)</strong> — £4,500–£7,000 installed
                 to an existing solar system. Zero disruption to existing installation.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Annual savings</strong> — a typical UK household saves £600–£1,200 per year
                 with a hybrid system on a time-of-use tariff, compared to £300–£600 with solar only.
@@ -424,7 +424,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <PoundSterling className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Zero VAT</strong> — solar panels and battery storage installed together are
                 zero-rated for VAT under the Finance Act 2022 Energy Saving Materials relief.
@@ -449,7 +449,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete MCS Documents On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -483,7 +483,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage hybrid solar installations with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for MCS commissioning documents, EIC certificates, and professional quoting. 7-day free trial, cancel anytime."
+          description="Join 2,100+ UK electricians using Elec-Mate for MCS commissioning documents, EIC certificates, and professional quoting. 7-day free trial, cancel anytime."
           icon={Sun}
         />
       </>
@@ -509,7 +509,7 @@ export default function HybridSolarBatterySystemPage() {
       heroTitle={
         <>
           Hybrid Solar Battery System UK:{' '}
-          <span className="text-yellow-400">Solar + Storage Explained</span>
+          <span className="text-elec-yellow">Solar + Storage Explained</span>
         </>
       }
       heroSubtitle="A complete guide to hybrid solar and battery systems in the UK — what hybrid means, how DC and AC coupling differ, self-consumption optimisation, time-of-use tariff arbitrage with Octopus Agile, grid export management, and the most popular hybrid systems for UK homes."
@@ -520,7 +520,7 @@ export default function HybridSolarBatterySystemPage() {
       faqHeading="Frequently Asked Questions About Hybrid Solar Battery Systems"
       relatedPages={relatedPages}
       ctaHeading="Complete Hybrid Solar Installations on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for MCS commissioning documents, EIC certificates, and hybrid solar quoting. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for MCS commissioning documents, EIC certificates, and hybrid solar quoting. 7-day free trial, cancel anytime."
     />
   );
 }

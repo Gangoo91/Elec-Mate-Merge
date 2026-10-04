@@ -115,14 +115,14 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">1 MΩ to 2 MΩ — Concerning.</strong> Technically
+                <strong className="text-elec-yellow">1 MΩ to 2 MΩ — Concerning.</strong> Technically
                 passes the minimum, but in older installations this indicates significant insulation
                 deterioration. For wiring over 25 years old, readings in this range suggest the
                 insulation is approaching end of life. Likely a C3 (improvement recommended)
                 observation, or C2 if trending downward from previous inspections.{' '}
-                <strong className="text-yellow-400">Also check:</strong> on domestic lighting
+                <strong className="text-elec-yellow">Also check:</strong> on domestic lighting
                 circuits, look for 30 mA RCD additional protection — Reg 411.3.4 requires it for AC
                 final circuits supplying luminaires within domestic (household) premises, so a low IR
                 reading and absent RCD protection are two concurrent EICR issues requiring separate
@@ -130,9 +130,9 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">
+                <strong className="text-elec-yellow">
                   2 MΩ to 50 MΩ — Acceptable for aged wiring.
                 </strong>{' '}
                 Typical range for installations 15 to 40 years old in reasonable condition. PVC
@@ -194,7 +194,7 @@ const sections = [
         <div className="space-y-4 mt-4">
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-start gap-3">
-              <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <Droplets className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">1. Moisture Ingress</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -213,7 +213,7 @@ const sections = [
 
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-start gap-3">
-              <Cable className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <Cable className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">2. Damaged Cable</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -231,7 +231,7 @@ const sections = [
 
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-start gap-3">
-              <ThermometerSun className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <ThermometerSun className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">3. Aged Insulation</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -250,7 +250,7 @@ const sections = [
 
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">4. Carbonised Insulation from Arcing</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -263,7 +263,7 @@ const sections = [
                   at loose connections where arcing has occurred over extended periods.
                 </p>
                 <p className="text-white text-sm leading-relaxed mt-2">
-                  <strong className="text-yellow-400">
+                  <strong className="text-elec-yellow">
                     Arc fault detection devices (Reg 421.1.7):
                   </strong>{' '}
                   AFDDs to BS EN 62606 <em>shall</em> be provided for single-phase AC final circuits
@@ -280,7 +280,7 @@ const sections = [
 
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">5. Rodent Damage</h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -312,7 +312,7 @@ const sections = [
         </p>
         <div className="space-y-3 my-4">
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
               1
             </span>
             <p className="text-white text-sm leading-relaxed">
@@ -324,7 +324,7 @@ const sections = [
             </p>
           </div>
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
               2
             </span>
             <p className="text-white text-sm leading-relaxed">
@@ -340,7 +340,7 @@ const sections = [
             </p>
           </div>
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
               3
             </span>
             <p className="text-white text-sm leading-relaxed">
@@ -352,7 +352,7 @@ const sections = [
             </p>
           </div>
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
               4
             </span>
             <p className="text-white text-sm leading-relaxed">
@@ -362,7 +362,7 @@ const sections = [
             </p>
           </div>
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
               5
             </span>
             <p className="text-white text-sm leading-relaxed">
@@ -373,7 +373,7 @@ const sections = [
             </p>
           </div>
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-elec-yellow text-sm flex-shrink-0">
               6
             </span>
             <p className="text-white text-sm leading-relaxed">
@@ -388,7 +388,7 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <div>
               <h3 className="font-bold text-white mb-1">
                 When You Cannot Disconnect Equipment (GN3 Reg 2.21)
@@ -427,7 +427,7 @@ const sections = [
         <div className="space-y-4 mt-4">
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-2">
-              <Droplets className="w-5 h-5 text-yellow-400" />
+              <Droplets className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Moisture — Dry Out and Reseal</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -444,7 +444,7 @@ const sections = [
 
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-2">
-              <Cable className="w-5 h-5 text-yellow-400" />
+              <Cable className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">
                 Damaged Cable — Replace the Affected Section
               </h3>
@@ -461,7 +461,7 @@ const sections = [
 
           <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <div className="flex items-center gap-2 mb-2">
-              <AlertTriangle className="w-5 h-5 text-yellow-400" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">
                 Aged or Carbonised Insulation — Rewire
               </h3>
@@ -494,7 +494,7 @@ const sections = [
         <div className="grid sm:grid-cols-2 gap-4 my-6">
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-3">
-              <ThermometerSun className="w-5 h-5 text-yellow-400" />
+              <ThermometerSun className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Temperature Effect</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -509,7 +509,7 @@ const sections = [
           </div>
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-3">
-              <Droplets className="w-5 h-5 text-yellow-400" />
+              <Droplets className="w-5 h-5 text-elec-yellow" />
               <h3 className="font-bold text-white text-lg">Humidity Effect</h3>
             </div>
             <p className="text-white text-sm leading-relaxed">
@@ -549,25 +549,25 @@ const sections = [
           </h3>
           <ul className="space-y-3 text-white leading-relaxed">
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">Step 1 — Combined test to earth:</strong> Link
+                <strong className="text-elec-yellow">Step 1 — Combined test to earth:</strong> Link
                 L1, L2, L3, and N together. Test to earth. If this passes with a high reading, all
                 four conductors have good insulation to earth. If low, proceed to individual tests.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">Step 2 — Individual conductor to earth:</strong>{' '}
+                <strong className="text-elec-yellow">Step 2 — Individual conductor to earth:</strong>{' '}
                 Test L1-E, L2-E, L3-E, and N-E independently. This identifies which specific
                 conductor has the insulation fault to earth.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <Zap className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">Step 3 — Between conductors:</strong> Test
+                <strong className="text-elec-yellow">Step 3 — Between conductors:</strong> Test
                 L1-L2, L1-L3, L2-L3, L1-N, L2-N, L3-N. A low reading between two specific conductors
                 indicates insulation breakdown between those conductors — often caused by mechanical
                 damage where both cores are in the same cable.
@@ -690,7 +690,7 @@ export default function LowInsulationResistancePage() {
         <>
           Low Insulation Resistance?
           <br />
-          <span className="text-yellow-400">Causes, Diagnosis & How to Fix</span>
+          <span className="text-elec-yellow">Causes, Diagnosis & How to Fix</span>
         </>
       }
       heroSubtitle="A low insulation resistance reading means current can leak where it should not — creating a risk of electric shock, fire, and nuisance RCD tripping. This guide covers what counts as low per BS 7671, every common cause (moisture, damage, aged insulation, carbonisation, rodent damage), how to diagnose and locate the fault, and how to fix it."
@@ -705,7 +705,7 @@ export default function LowInsulationResistancePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Auto-Validate Insulation Resistance on Site"
-      ctaSubheading="Schedule of tests with BS 7671 validation, voice test entry, defect code AI, and digital EICR forms. Join 1,600+ UK electricians. 7-day free trial, cancel anytime."
+      ctaSubheading="Schedule of tests with BS 7671 validation, voice test entry, defect code AI, and digital EICR forms. Join 2,100+ UK electricians. 7-day free trial, cancel anytime."
     />
   );
 }

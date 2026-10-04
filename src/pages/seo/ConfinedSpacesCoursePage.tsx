@@ -447,7 +447,7 @@ export default function ConfinedSpacesCoursePage() {
       badgeIcon={DoorOpen}
       heroTitle={
         <>
-          Confined Spaces Course: <span className="text-yellow-400">Awareness Training</span>
+          Confined Spaces Course: <span className="text-elec-yellow">Awareness Training</span>
         </>
       }
       heroSubtitle="Essential confined spaces awareness training for UK electricians. Learn to identify confined spaces, understand atmospheric hazards, follow safe systems of work, and respond to emergencies. 5 modules with video content, interactive quizzes, and AI-powered study tools."
@@ -465,7 +465,7 @@ export default function ConfinedSpacesCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Never enter blind — get confined space trained"
-      ctaSubheading="Join 1,600+ UK electricians training smarter with Elec-Mate. 5 focused modules, real-world scenarios, AI study assistant, and CPD certificate. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians training smarter with Elec-Mate. 5 focused modules, real-world scenarios, AI study assistant, and CPD certificate. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/confined-spaces"
     />

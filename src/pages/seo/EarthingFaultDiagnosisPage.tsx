@@ -155,7 +155,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>High-impedance earth fault</strong> — a small leakage current flows to earth
                 through partially degraded insulation. The RCD detects the imbalance and trips. This
@@ -164,7 +164,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Low-impedance earth fault</strong> — a solid connection between live and
                 earth (for example, a nail through a cable). A large fault current flows, which
@@ -173,7 +173,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Earth leakage without tripping</strong> — if the leakage is below the RCD
                 sensitivity (for example, 10mA on a 30mA RCD), the RCD does not trip. The leakage
@@ -189,7 +189,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
-            <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+            <Cable className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <p className="font-bold text-white mb-1">Earthing system type affects diagnosis</p>
               <p className="text-white text-sm leading-relaxed">
@@ -220,7 +220,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>RCD tripping repeatedly.</strong> The most common symptom. The RCD detects
                 earth leakage and disconnects. If the fault is intermittent, the tripping appears
@@ -228,7 +228,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>MCB tripping.</strong> A low-impedance earth fault (solid connection to
                 earth) draws enough current to trip the MCB. The MCB will not reset or trips
@@ -236,7 +236,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>
                   <SEOInternalLink href="/guides/electric-shock-from-tap">
@@ -249,7 +249,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Burning smell or discolouration at an accessory.</strong> A high-resistance
                 earth fault can generate heat at the point of contact, potentially leading to arcing
@@ -257,7 +257,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Activity className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Higher than expected electricity bills.</strong> Earth leakage current
                 flowing to earth is wasted energy. On larger installations, cumulative earth leakage
@@ -294,7 +294,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Ruler className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Ruler className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>1M to 2M ohm:</strong> marginal. The insulation is deteriorating and should
                 be monitored. Consider a C3 (Improvement Recommended) observation on the EICR.
@@ -417,7 +417,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>How it works:</strong> clamp around both the line and neutral conductors of
                 the circuit together (not the earth). In a healthy circuit, the magnetic fields from
@@ -427,7 +427,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Interpreting readings:</strong> a healthy circuit should read 0mA or very
                 close (typically less than 3.5mA for a standard domestic circuit). Readings above
@@ -437,7 +437,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Search className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Using it at the consumer unit:</strong> clamp each circuit in turn at the
                 consumer unit to identify which circuit has the highest leakage. Then follow the
@@ -468,7 +468,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <Cable className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <Cable className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Outdoor Circuits</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -544,7 +544,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Temperature-dependent faults.</strong> The insulation resistance of PVC
                 cable decreases as temperature rises. A cable that tests at 5M ohm at 15 degrees C
@@ -553,7 +553,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Moisture-dependent faults.</strong> Water ingress during rain can lower
                 insulation resistance temporarily. Once the water dries, the readings recover. Check
@@ -562,7 +562,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Load-dependent faults.</strong> Some faults only manifest when the circuit
                 is under load — for example, vibration from a washing machine spin cycle moves a
@@ -571,7 +571,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Use data logging.</strong> Leave an earth leakage clamp meter with data
                 logging on the suspect circuit for 24-48 hours. This captures the leakage when the
@@ -602,7 +602,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>On the EICR:</strong> record insulation resistance readings for every
                 circuit in the Schedule of Test Results (Schedule C). Record the readings for L-E,
@@ -613,7 +613,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Observation description:</strong> describe the fault clearly — for example,
                 "Insulation resistance on circuit 4 (ring final, kitchen) L-E = 0.3M ohm at consumer
@@ -622,7 +622,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>After remedial work — IR retest:</strong> retest and record the improved
                 insulation resistance. The post-repair reading confirms the insulation fault has
@@ -630,7 +630,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>After remedial work — Zs verification:</strong> a earth fault loop impedance
                 (Zs) test shall also be carried out and recorded per Reg 643.7.1 to confirm the
@@ -679,7 +679,7 @@ export default function EarthingFaultDiagnosisPage() {
       heroTitle={
         <>
           Earthing Fault Diagnosis:{' '}
-          <span className="text-yellow-400">Finding Earth Faults Systematically</span>
+          <span className="text-elec-yellow">Finding Earth Faults Systematically</span>
         </>
       }
       heroSubtitle="Earth faults cause RCD tripping, electric shock, and fire risk. This guide covers the systematic approach to finding them — insulation resistance testing, the half-split method, earth leakage clamp metering, and dealing with intermittent faults that disappear when you arrive on site."
@@ -690,7 +690,7 @@ export default function EarthingFaultDiagnosisPage() {
       faqHeading="Frequently Asked Questions About Earth Fault Diagnosis"
       relatedPages={relatedPages}
       ctaHeading="AI-Powered Fault Diagnosis on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI fault diagnosis, voice test entry, and digital EICR certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for AI fault diagnosis, voice test entry, and digital EICR certificates. 7-day free trial, cancel anytime."
     />
   );
 }

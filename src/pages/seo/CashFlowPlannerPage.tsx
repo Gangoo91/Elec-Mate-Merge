@@ -141,15 +141,15 @@ export default function CashFlowPlannerPage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
-        <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-elec-yellow text-sm font-medium mb-6">
             <Zap className="w-4 h-4" />
             Part of 14 Business Calculators
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             Cash Flow Planner
-            <span className="block text-yellow-400 mt-1">For UK Electrical Businesses</span>
+            <span className="block text-elec-yellow mt-1">For UK Electrical Businesses</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             Cash flow kills more businesses than lack of profit. Elec-Mate's Cash Flow Planner
@@ -166,7 +166,7 @@ export default function CashFlowPlannerPage() {
             </Link>
             <a
               href="#why-cash-flow-matters"
-              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-yellow-500/40 touch-manipulation transition-colors"
+              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-white/[0.1] touch-manipulation transition-colors"
             >
               Why Cash Flow Matters
               <ArrowDown className="w-4 h-4 ml-1" />
@@ -180,7 +180,7 @@ export default function CashFlowPlannerPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <AlertTriangle className="w-5 h-5 text-yellow-400" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Why Cash Flow Kills More Businesses Than Lack of Profit
@@ -206,7 +206,7 @@ export default function CashFlowPlannerPage() {
               they were unprofitable.
             </p>
             <p>
-              <strong className="text-yellow-400">For electricians specifically</strong>, the
+              <strong className="text-elec-yellow">For electricians specifically</strong>, the
               problem is amplified by several factors. You often buy materials before starting a job
               and pay your supplier within 30 days, but domestic clients may take 14 to 30 days to
               pay after completion, and commercial clients often take 60 to 90 days. Larger jobs
@@ -236,7 +236,7 @@ export default function CashFlowPlannerPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <TrendingUp className="w-5 h-5 text-yellow-400" />
+              <TrendingUp className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               How to Forecast Cash Flow for Your Electrical Business
@@ -244,7 +244,7 @@ export default function CashFlowPlannerPage() {
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              <strong className="text-yellow-400">Start with what you know:</strong> Your current
+              <strong className="text-elec-yellow">Start with what you know:</strong> Your current
               bank balance is your starting point. Then list every confirmed source of income for
               the next 3 months: jobs currently in progress (when will they be invoiced and when do
               you expect payment?), accepted quotes not yet started (when will you start, complete,
@@ -253,7 +253,7 @@ export default function CashFlowPlannerPage() {
               14 days but clients typically pay in 21, use 21.
             </p>
             <p>
-              <strong className="text-yellow-400">List your expenses:</strong> Include everything
+              <strong className="text-elec-yellow">List your expenses:</strong> Include everything
               you know will need paying. Regular expenses include van costs (lease or finance, fuel,
               insurance, road tax, servicing, MOT), tool and equipment costs (calibration due dates,
               replacements planned), insurance premiums (annual or monthly), certification body
@@ -263,7 +263,7 @@ export default function CashFlowPlannerPage() {
               sites.
             </p>
             <p>
-              <strong className="text-yellow-400">Do not forget HMRC:</strong> Tax payments are the
+              <strong className="text-elec-yellow">Do not forget HMRC:</strong> Tax payments are the
               most commonly forgotten cash flow item. If you are VAT-registered, you owe HMRC
               quarterly (or monthly on some schemes). Income tax and National Insurance are paid
               through self-assessment — two payments on account (31 January and 31 July) plus a
@@ -272,7 +272,7 @@ export default function CashFlowPlannerPage() {
               they will create a cash flow crisis.
             </p>
             <p>
-              <strong className="text-yellow-400">Calculate the running balance:</strong> For each
+              <strong className="text-elec-yellow">Calculate the running balance:</strong> For each
               week or month, add expected income to your opening balance and subtract expected
               expenses. The closing balance becomes the opening balance for the next period. Any
               period where the balance drops below your safety buffer (ideally 2 to 4 weeks of fixed
@@ -288,7 +288,7 @@ export default function CashFlowPlannerPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Receipt className="w-5 h-5 text-yellow-400" />
+              <Receipt className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Managing Payment Terms and Late Payers
@@ -304,7 +304,7 @@ export default function CashFlowPlannerPage() {
               14 days where possible, especially with new clients.
             </p>
             <p>
-              <strong className="text-yellow-400">Staged payments</strong> are essential for larger
+              <strong className="text-elec-yellow">Staged payments</strong> are essential for larger
               jobs. A rewire at £5,000 should not be invoiced as a single payment on completion —
               you have had to pay for materials upfront and invest days of labour. A typical staging
               structure is: 30% deposit on acceptance of quote (covers materials and initial
@@ -314,7 +314,7 @@ export default function CashFlowPlannerPage() {
               of your own pocket.
             </p>
             <p>
-              <strong className="text-yellow-400">Card payments accelerate collection.</strong> When
+              <strong className="text-elec-yellow">Card payments accelerate collection.</strong> When
               you include a Stripe payment link on your invoice, clients can pay by debit or credit
               card with a single click. Card payments are typically received within 2 working days,
               compared to 5 to 30 days for bank transfers. The processing fee (typically 1.5% to
@@ -344,7 +344,7 @@ export default function CashFlowPlannerPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Why Electricians Choose Elec-Mate for Cash Flow Management
@@ -395,7 +395,7 @@ export default function CashFlowPlannerPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <HelpCircle className="w-5 h-5 text-yellow-400" />
+              <HelpCircle className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Frequently Asked Questions
@@ -409,7 +409,7 @@ export default function CashFlowPlannerPage() {
               >
                 <summary className="flex items-center justify-between p-4 min-h-[44px] touch-manipulation cursor-pointer text-white font-medium">
                   <span>{faq.question}</span>
-                  <ChevronDown className="w-5 h-5 text-yellow-400 group-open:rotate-180 transition-transform" />
+                  <ChevronDown className="w-5 h-5 text-elec-yellow group-open:rotate-180 transition-transform" />
                 </summary>
                 <div className="px-4 pb-4 text-white text-sm leading-relaxed">{faq.answer}</div>
               </details>
@@ -456,7 +456,7 @@ export default function CashFlowPlannerPage() {
 
       <SEOCTASection
         heading="Take Control of Your Cash Flow"
-        subheading="Join 1,600+ UK electricians using Elec-Mate to forecast cash flow, chase invoices, and never be surprised by a cash gap again. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians using Elec-Mate to forecast cash flow, chase invoices, and never be surprised by a cash gap again. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

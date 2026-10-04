@@ -429,7 +429,7 @@ export default function AIDiagramBuilderPage() {
       heroTitle={
         <>
           AI Diagram Builder:{' '}
-          <span className="text-yellow-400">Professional Diagrams from Plain English</span>
+          <span className="text-elec-yellow">Professional Diagrams from Plain English</span>
         </>
       }
       heroSubtitle="Generate circuit schematics, distribution board layouts, cable routing diagrams, and as-built drawings by describing the installation in plain English. Standard IEC 60617 symbols, export as PDF, PNG, or SVG."
@@ -453,7 +453,7 @@ export default function AIDiagramBuilderPage() {
       relatedPages={relatedPages}
       heroCtaLabel="Build your first plan free"
       ctaHeading="Create Professional Diagrams in Seconds"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's AI Diagram Builder. Circuit schematics, board layouts, and as-built drawings from plain English descriptions. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate's AI Diagram Builder. Circuit schematics, board layouts, and as-built drawings from plain English descriptions. 7-day free trial, cancel anytime."
       toolPath="/tools/ai-diagram-builder"
     />
   );

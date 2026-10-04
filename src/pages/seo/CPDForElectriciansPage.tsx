@@ -546,7 +546,7 @@ export default function CPDForElectriciansPage() {
       heroTitle={
         <>
           CPD for Electricians UK 2026 —{' '}
-          <span className="text-yellow-400">Continuing Professional Development</span>
+          <span className="text-elec-yellow">Continuing Professional Development</span>
         </>
       }
       heroSubtitle="Everything you need to know about CPD as a UK electrician. How many hours you need, what types of learning count, the most valuable courses for 2026, how to record CPD for your scheme assessment, and how Elec-Mate tracks it all automatically."
@@ -562,7 +562,7 @@ export default function CPDForElectriciansPage() {
       faqHeading="Frequently Asked Questions About CPD for Electricians"
       relatedPages={relatedPages}
       ctaHeading="CPD tracked automatically"
-      ctaSubheading="Join 1,600+ UK electricians studying with Elec-Mate. 46+ courses, automatic CPD tracking, and scheme-ready reports. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 2,100+ UK electricians studying with Elec-Mate. 46+ courses, automatic CPD tracking, and scheme-ready reports. 7-day free trial, cancel anytime."
     />
   );
 }

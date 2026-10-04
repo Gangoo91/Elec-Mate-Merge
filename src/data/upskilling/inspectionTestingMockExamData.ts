@@ -3369,7 +3369,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 209,
     question:
-      'Appendix 3 Table 3A gave time/current performance criteria for RCDs. What is its status under Amendment 4?',
+      'Appendix 3 Table 3A gave time/current performance criteria for RCDs. What is its status since Amendment 2 (2022)?',
     options: [
       'Retained, but applying only to Type B and Type F residual current devices',
       'Moved into Appendix 6 and now applying only to periodic inspection and testing work',
@@ -4884,7 +4884,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     ],
     correctAnswer: 1,
     explanation:
-      'Amendment 4 deleted Table 3A of Appendix 3. Regulation 643.8 now deems effectiveness verified where the device disconnects within the stated time on an alternating current test at IΔn, whatever the RCD type — AC, A, F or B. A general non-delay device must operate within 300 ms. The 5x test still has a place in fault-finding but is no longer part of the required verification.',
+      'Amendment 2 (2022) deleted Table 3A of Appendix 3. Regulation 643.8 now deems effectiveness verified where the device disconnects within the stated time on an alternating current test at IΔn, whatever the RCD type — AC, A, F or B. A general non-delay device must operate within 300 ms. The 5x test still has a place in fault-finding but is no longer part of the required verification.',
     section: 'A4:2026',
     difficulty: 'advanced',
     topic: 'RCD Verification',
@@ -4902,7 +4902,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     ],
     correctAnswer: 2,
     explanation:
-      '40 ms at 5x IΔn describes how the device must be built under the product standards BS EN 61008 and BS EN 61009. It is not what BS 7671 asks you to measure — since A4:2026 deleted Table 3A, verification is the single AC test at IΔn. Recording a 5x result as the certified trip time is the error this catches.',
+      '40 ms at 5x IΔn describes how the device must be built under the product standards BS EN 61008 and BS EN 61009. It is not what BS 7671 asks you to measure — since A2:2022 deleted Table 3A, verification is the single AC test at IΔn. Recording a 5x result as the certified trip time is the error this catches.',
     section: 'A4:2026',
     difficulty: 'advanced',
     topic: 'RCD Verification',

@@ -118,7 +118,7 @@ const quizQuestions = [
     id: 5,
     question: 'Where is a PTC thermistor commonly used as a self-resetting protective device?',
     options: [
-      'To prevent overloading, reduce trip hazards and maintain clear escape routes around equipment',
+      'As a light sensor in a dusk-till-dawn switch',
       'In series with a load — when the current rises and heats the PTC, its resistance shoots up and limits the current. Cools down, resets.',
       'In parallel with a load — it shorts the current to earth when the load overheats, then re-opens',
       'As a fixed voltage reference — it holds a steady drop regardless of the current through it',

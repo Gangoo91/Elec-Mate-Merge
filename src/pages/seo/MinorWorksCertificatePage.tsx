@@ -185,15 +185,15 @@ export default function MinorWorksCertificatePage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
-        <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-elec-yellow text-sm font-medium mb-6">
             <FileText className="w-4 h-4" />
             Part of 19 Certificate Types
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             Minor Works Certificate App
-            <span className="block text-yellow-400 mt-1">Digital EWC Form</span>
+            <span className="block text-elec-yellow mt-1">Digital EWC Form</span>
           </h1>
           <p className="text-base sm:text-lg text-yellow-100/90 max-w-2xl mx-auto mb-3 leading-relaxed font-medium">
             A Minor Electrical Installation Works Certificate (Minor Works or EWC) is the BS 7671
@@ -216,7 +216,7 @@ export default function MinorWorksCertificatePage() {
             </Link>
             <a
               href="#how-it-works"
-              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-yellow-500/40 touch-manipulation transition-colors"
+              className="h-11 px-8 inline-flex items-center justify-center rounded-xl border border-white/20 text-white font-medium hover:border-white/[0.1] touch-manipulation transition-colors"
             >
               See How It Works
               <ArrowDown className="w-4 h-4 ml-1" />
@@ -230,7 +230,7 @@ export default function MinorWorksCertificatePage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <BookOpen className="w-5 h-5 text-yellow-400" />
+              <BookOpen className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               What Are Minor Electrical Works?
@@ -280,7 +280,7 @@ export default function MinorWorksCertificatePage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Eye className="w-5 h-5 text-yellow-400" />
+              <Eye className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Minor Works Certificate vs EIC — When to Use Each
@@ -301,56 +301,56 @@ export default function MinorWorksCertificatePage() {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                 <div className="flex items-center gap-2 mb-3">
-                  <FileText className="w-5 h-5 text-yellow-400" />
+                  <FileText className="w-5 h-5 text-elec-yellow" />
                   <h3 className="font-bold text-white text-lg">Minor Works Certificate</h3>
                 </div>
                 <ul className="space-y-2 text-white text-sm">
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>Adding a socket to an existing ring</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>Extending a lighting circuit</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>Adding an FCU to an existing circuit</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>Repositioning an accessory</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>Consumer unit replacement (no new circuits)</span>
                   </li>
                 </ul>
               </div>
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                 <div className="flex items-center gap-2 mb-3">
-                  <ClipboardCheck className="w-5 h-5 text-yellow-400" />
+                  <ClipboardCheck className="w-5 h-5 text-elec-yellow" />
                   <h3 className="font-bold text-white text-lg">Full EIC Required</h3>
                 </div>
                 <ul className="space-y-2 text-white text-sm">
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>New radial circuit for a shower</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>New dedicated cooker circuit</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>Complete rewire of a property</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>New garden or outbuilding circuit</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>EV charger installation (new circuit)</span>
                   </li>
                 </ul>
@@ -374,7 +374,7 @@ export default function MinorWorksCertificatePage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Shield className="w-5 h-5 text-yellow-400" />
+              <Shield className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Part P Building Regulations and Minor Works
@@ -390,7 +390,7 @@ export default function MinorWorksCertificatePage() {
               the two are closely linked in practice.
             </p>
             <p>
-              <strong className="text-yellow-400">Notifiable work</strong> in dwellings includes:
+              <strong className="text-elec-yellow">Notifiable work</strong> in dwellings includes:
               the installation of a new circuit; the replacement of a consumer unit; and any
               electrical work in a special location such as a bathroom, room containing a shower, or
               swimming pool area. If you are registered with a government-approved competent person
@@ -400,7 +400,7 @@ export default function MinorWorksCertificatePage() {
               The cost is typically covered by your annual registration fee.
             </p>
             <p>
-              <strong className="text-yellow-400">Non-notifiable work</strong> includes most minor
+              <strong className="text-elec-yellow">Non-notifiable work</strong> includes most minor
               works outside special locations: adding a socket to an existing circuit, extending a
               lighting circuit, replacing accessories, and similar alterations. These still require
               a Minor Works certificate under BS 7671, but you do not need to notify building
@@ -424,7 +424,7 @@ export default function MinorWorksCertificatePage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <FileText className="w-5 h-5 text-yellow-400" />
+              <FileText className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               What Goes on a Minor Works Certificate?
@@ -440,7 +440,7 @@ export default function MinorWorksCertificatePage() {
             </p>
             <div className="space-y-4 my-6">
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                <h3 className="font-bold text-yellow-400 text-lg mb-2">
+                <h3 className="font-bold text-elec-yellow text-lg mb-2">
                   Part 1: Description of Minor Works
                 </h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -453,7 +453,7 @@ export default function MinorWorksCertificatePage() {
                 </p>
               </div>
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                <h3 className="font-bold text-yellow-400 text-lg mb-2">
+                <h3 className="font-bold text-elec-yellow text-lg mb-2">
                   Part 2: Installation Details
                 </h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -466,7 +466,7 @@ export default function MinorWorksCertificatePage() {
                 </p>
               </div>
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                <h3 className="font-bold text-yellow-400 text-lg mb-2">Part 3: Circuit Details</h3>
+                <h3 className="font-bold text-elec-yellow text-lg mb-2">Part 3: Circuit Details</h3>
                 <p className="text-white text-sm leading-relaxed">
                   The circuit number, the distribution board it is connected to, the cable type and
                   size used, the reference method of installation, the circuit protective device
@@ -476,7 +476,7 @@ export default function MinorWorksCertificatePage() {
                 </p>
               </div>
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                <h3 className="font-bold text-yellow-400 text-lg mb-2">Part 4: Test Results</h3>
+                <h3 className="font-bold text-elec-yellow text-lg mb-2">Part 4: Test Results</h3>
                 <p className="text-white text-sm leading-relaxed">
                   Record the test instrument serial numbers and calibration dates, then enter the
                   test results: continuity of protective conductors (R1+R2), insulation resistance
@@ -487,7 +487,7 @@ export default function MinorWorksCertificatePage() {
                 </p>
               </div>
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                <h3 className="font-bold text-yellow-400 text-lg mb-2">
+                <h3 className="font-bold text-elec-yellow text-lg mb-2">
                   Part 5: Declaration and Signatures
                 </h3>
                 <p className="text-white text-sm leading-relaxed">
@@ -509,7 +509,7 @@ export default function MinorWorksCertificatePage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400" />
+              <CheckCircle2 className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               How to Create a Minor Works Certificate — Step by Step
@@ -522,7 +522,7 @@ export default function MinorWorksCertificatePage() {
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex-shrink-0">
-                  <span className="font-bold text-yellow-400">{index + 1}</span>
+                  <span className="font-bold text-elec-yellow">{index + 1}</span>
                 </div>
                 <div>
                   <h3 className="font-bold text-white text-lg mb-1">{step.name}</h3>
@@ -539,7 +539,7 @@ export default function MinorWorksCertificatePage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400" />
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               All 19 Certificate Types in Elec-Mate
@@ -603,7 +603,7 @@ export default function MinorWorksCertificatePage() {
               >
                 <div className="flex items-start gap-3">
                   <FileText
-                    className={`w-5 h-5 mt-0.5 flex-shrink-0 ${cert.highlight ? 'text-yellow-400' : 'text-white'}`}
+                    className={`w-5 h-5 mt-0.5 flex-shrink-0 ${cert.highlight ? 'text-elec-yellow' : 'text-white'}`}
                   />
                   <div>
                     <h3 className="font-bold text-white text-sm mb-1">{cert.name}</h3>
@@ -647,7 +647,7 @@ export default function MinorWorksCertificatePage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <HelpCircle className="w-5 h-5 text-yellow-400" />
+              <HelpCircle className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Frequently Asked Questions
@@ -660,7 +660,7 @@ export default function MinorWorksCertificatePage() {
                 className="group p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-white/[0.14] transition-colors"
               >
                 <summary className="flex items-start gap-3 cursor-pointer touch-manipulation list-none [&::-webkit-details-marker]:hidden">
-                  <ChevronRight className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0 transition-transform group-open:rotate-90" />
+                  <ChevronRight className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0 transition-transform group-open:rotate-90" />
                   <h3 className="font-bold text-white text-lg">{faq.question}</h3>
                 </summary>
                 <div className="mt-3 pl-8">
@@ -677,7 +677,7 @@ export default function MinorWorksCertificatePage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-              <Zap className="w-5 h-5 text-yellow-400" />
+              <Zap className="w-5 h-5 text-elec-yellow" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Common Mistakes on Minor Works Certificates
@@ -691,50 +691,50 @@ export default function MinorWorksCertificatePage() {
             </p>
             <ul className="space-y-3 my-4">
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Vague description of works</strong> — "Fitted
+                  <strong className="text-elec-yellow">Vague description of works</strong> — "Fitted
                   extra socket" is insufficient. Include the quantity, type, circuit, cable size,
                   and method of installation. Elec-Mate provides description templates to help.
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Missing test results</strong> — All mandatory
+                  <strong className="text-elec-yellow">Missing test results</strong> — All mandatory
                   tests must be recorded. Leaving the insulation resistance or Zs fields blank
                   invalidates the certificate.
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Incorrect Zs values</strong> — Recording the
+                  <strong className="text-elec-yellow">Incorrect Zs values</strong> — Recording the
                   Zs at the distribution board instead of the furthest point of the circuit. The
                   reading must be taken at the most remote accessory.
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Not recording RCD test results</strong> — If
+                  <strong className="text-elec-yellow">Not recording RCD test results</strong> — If
                   the circuit is protected by an RCD (which most circuits now are), the trip time
                   and test current must be recorded.
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Using an EWC when an EIC is needed</strong> —
+                  <strong className="text-elec-yellow">Using an EWC when an EIC is needed</strong> —
                   If a new circuit is being installed (even a simple radial), a full EIC is
                   required. The Minor Works form is only for additions and alterations to existing
                   circuits.
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">
+                  <strong className="text-elec-yellow">
                     Missing risk assessment in non-domestic premises (Reg 411.3.3)
                   </strong>{' '}
                   — In non-domestic installations, Regulation 411.3.3 allows RCD additional
@@ -749,9 +749,9 @@ export default function MinorWorksCertificatePage() {
             </ul>
             <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] my-4">
               <div className="flex items-start gap-3">
-                <Shield className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <Shield className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
-                  <h3 className="font-bold text-yellow-400 text-base mb-2">
+                  <h3 className="font-bold text-elec-yellow text-base mb-2">
                     A4:2026 Change — 30 mA RCD on Domestic Lighting Circuits (Reg 411.3.4)
                   </h3>
                   <p className="text-white text-sm leading-relaxed">
@@ -816,7 +816,7 @@ export default function MinorWorksCertificatePage() {
 
       <SEOCTASection
         heading="Create Professional Certificates in Minutes"
-        subheading="Join 1,600+ UK electricians using Elec-Mate for on-site certification. 7-day free trial, cancel anytime."
+        subheading="Join 2,100+ UK electricians using Elec-Mate for on-site certification. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

@@ -15,6 +15,7 @@ import {
   type VoltageDropResult,
   type EarthFaultResult,
 } from './bs7671-unified-calculations.ts';
+import { selectCableSize } from './bs7671-cable-select.ts';
 
 // ─── Anthropic tool schemas ──────────────────────────────────────────────
 
@@ -153,40 +154,61 @@ export const BS7671_TOOL_SCHEMAS = [
     },
   },
 
+  /*
+   * Replaces calculate_cable_capacity in the schema list (2 Oct 2026). That tool
+   * asked the MODEL for the tabulated It, which it recalled wrongly (6 mm² T&E
+   * clipped direct quoted as 44, 46 and 57 A; Table 4D5 says 47 A). Its executor
+   * case is kept below so an in-flight call cannot error.
+   */
   {
-    name: 'calculate_cable_capacity',
+    name: 'select_cable_size',
     description:
-      'Compute effective cable capacity Iz = It × Ca × Cg × Ci × Cc from BS 7671 Appendix 4 correction factors. Returns derated ampacity.',
+      'Size a cable from the verified BS 7671 Appendix 4 tables (the same data as the Elec-Mate calculators). Picks the protective device, applies Ca/Cg/Ci, checks Ib ≤ In ≤ Iz (Reg 433.1.1) and voltage drop for every size, and returns the smallest that passes plus the full working. Use for ANY cable sizing or current-carrying capacity question — never quote a tabulated capacity from memory. Many electric showers are rated at 240 V: if the user gives a shower rating, pass voltage_v 240 unless they say otherwise, and say which you used. For single-phase kW loads the result also carries at_other_rating_voltage (230 V vs 240 V) — quote it for the other case, never estimate it.',
     input_schema: {
       type: 'object',
       properties: {
-        tabulated_it_a: {
-          type: 'number',
-          description: 'Tabulated current It from the relevant BS 7671 cable table (e.g. 4D1A).',
+        design_current_a: { type: 'number', description: 'Ib in amps, if known.' },
+        load_kw: { type: 'number', description: 'Load in kW, used when Ib is not given.' },
+        voltage_v: { type: 'number', description: 'Voltage for Ib from kW. Default 230 single-phase, 400 three-phase.' },
+        power_factor: { type: 'number', default: 1 },
+        phase: { type: 'string', enum: ['single', 'three'], default: 'single' },
+        cable_type: {
+          type: 'string',
+          enum: [
+            'twin-earth', 'pvc-single', 'pvc-multicore', 'xlpe-single', 'xlpe-multicore',
+            'lsf-single', 'lsf-multicore', 'swa-pvc', 'swa-xlpe', 'mineral-light', 'mineral-heavy',
+          ],
+          default: 'twin-earth',
+          description: 'twin-earth = 6242Y/6242B flat T&E (Table 4D5). swa-pvc = 70 °C SWA (4D4A), swa-xlpe = 90 °C SWA (4E4A).',
         },
-        ambient_temp_c: {
-          type: 'number',
-          default: 30,
+        installation_method: {
+          type: 'string',
+          enum: [
+            'method-a', 'method-b', 'method-c', 'method-d1', 'method-d2', 'method-e', 'method-f',
+            'method-g-h', 'method-g-v', 'method-100', 'method-101', 'method-102', 'method-103',
+          ],
+          default: 'method-c',
           description:
-            'Ambient temperature for Ca. Default 30 °C. Use 40 °C for hotter plant rooms.',
+            'A conduit in insulated wall; B conduit/trunking on wall; C clipped direct; D1 duct in ground; D2 buried direct; E free air/perforated tray (multicore); F/G single-core in air. T&E only: 100 above plasterboard ceiling, insulation ≤100 mm; 101 same, >100 mm; 102 insulated stud wall touching inner surface; 103 insulated stud wall not touching.',
         },
-        grouping_count: {
+        length_m: { type: 'number', description: 'Route length for voltage drop.' },
+        ambient_temp_c: { type: 'number', default: 30 },
+        grouping_count: { type: 'number', default: 1, description: 'Circuits/cables grouped together (Table 4C1).' },
+        grouping_arrangement: {
+          type: 'string',
+          enum: ['bunched', 'single-layer-wall', 'single-layer-tray', 'single-layer-ladder'],
+          default: 'bunched',
+        },
+        insulation_surrounded_mm: {
           type: 'number',
-          default: 1,
-          description: 'Number of loaded cables in the group for Cg.',
+          description:
+            'Length (mm) the cable is TOTALLY surrounded by thermal insulation, for Ci. For T&E in ceilings/stud walls use methods 100–103 instead.',
         },
-        in_thermal_insulation: {
-          type: 'boolean',
-          default: false,
-          description: 'True if cable is totally surrounded by thermal insulation (Ci = 0.5).',
-        },
-        semi_enclosed_fuse: {
-          type: 'boolean',
-          default: false,
-          description: 'True if protected by a BS 3036 semi-enclosed fuse (Cc = 0.725).',
-        },
+        device_type: { type: 'string', enum: ['mcb', 'rcbo', 'bs88'], default: 'mcb' },
+        device_rating_a: { type: 'number', description: 'In, if the user has chosen it. Otherwise the next standard rating ≥ Ib is used.' },
+        vd_limit_percent: { type: 'number', default: 5, description: '3 for lighting, 5 for other uses (Appendix 4 §6.4, Table 4Ab). Reduce it if a submain already uses part of the allowance.' },
       },
-      required: ['tabulated_it_a'],
+      required: [],
     },
   },
 ] as const;
@@ -197,7 +219,8 @@ export type ToolCallName =
   | 'calculate_voltage_drop'
   | 'calculate_zs'
   | 'check_disconnection_time'
-  | 'calculate_cable_capacity';
+  | 'calculate_cable_capacity'
+  | 'select_cable_size';
 
 export interface ToolCallResult {
   name: ToolCallName;
@@ -230,6 +253,8 @@ export function executeBS7671ToolCall(
           input,
           output: runDisconnection(input),
         };
+      case 'select_cable_size':
+        return { name, input, output: selectCableSize(input) };
       case 'calculate_cable_capacity':
         return {
           name,

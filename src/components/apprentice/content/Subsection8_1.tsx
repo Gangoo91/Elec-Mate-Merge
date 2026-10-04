@@ -171,10 +171,12 @@ const Subsection8_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             <div className="mt-4 p-4 bg-white/10 rounded-lg text-sm">
               <p className="font-medium mb-1 text-elec-yellow">Regulatory Note:</p>
               <p>
-                BS 7671 Chapter 41 details protection against electric shock. Maximum disconnection
-                times for final circuits not exceeding 32A are 0.4 seconds in TN systems and 0.2
-                seconds in TT systems. For distribution circuits and circuits exceeding 32A, the
-                maximum disconnection time is 5 seconds.
+                BS 7671 Chapter 41 details protection against electric shock. At 230 V, final
+                circuits up to 63 A with socket-outlets, or up to 32 A supplying only fixed
+                equipment, must disconnect within 0.4 seconds in TN systems and 0.2 seconds in TT
+                systems (Table 41.1). Distribution circuits and other circuits are allowed 5 seconds
+                in TN systems (Regulation 411.3.2.3) and 1 second in TT systems (Regulation
+                411.3.2.4).
               </p>
             </div>
           </div>

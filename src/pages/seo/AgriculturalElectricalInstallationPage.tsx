@@ -186,7 +186,7 @@ const sections = [
           supplementary guidance including worked examples.
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-4 my-4 flex items-start gap-3">
-          <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+          <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
           <p className="text-white text-sm leading-relaxed">
             <strong>Electric fence installations are outside the scope of Section 705</strong> —
             Regulation 705.1 NOTE states that electric fence installations are not covered by
@@ -273,7 +273,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP44 — the BS 7671 minimum (Reg 705.512.2)</strong> — protection against
                 solid objects greater than 1 mm and water splashing from any direction. This is the
@@ -285,7 +285,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP55 — for hosing-down areas</strong> — protection against dust ingress (no
                 harmful deposits) and water jets from any direction. Normal practice in dairy
@@ -296,7 +296,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>IP65 — for dust-heavy environments</strong> — complete dust protection and
                 water jet protection. The usual choice for grain stores, feed mills, and other
@@ -306,7 +306,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Corrosion resistance</strong> — IP rating alone does not address chemical
                 resistance. In poultry and pig units, high ammonia concentrations corrode standard
@@ -333,7 +333,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Three-tier RCD requirement (Reg 705.411.1)</strong> — Regulation 705.411.1
                 applies irrespective of earthing system. (a) Socket outlet circuits ≤32 A: RCD with
@@ -345,7 +345,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>300 mA for fire protection (Reg 705.422.7)</strong> — for additional fire
                 protection purposes in some circumstances, RCDs must be installed with a rated
@@ -357,7 +357,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Selecting the RCD type (Reg 531.3.3)</strong> — Type AC RCDs may only be
                 used to serve fixed equipment where it is known the load current contains no DC
@@ -396,7 +396,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Armoured cable</strong> — steel wire armoured (SWA) or aluminium wire
                 armoured (AWA) cable is the standard for fixed wiring in agricultural buildings. The
@@ -406,7 +406,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Conduit systems</strong> — heavy-gauge galvanised steel conduit or
                 IP67-rated plastic conduit systems (not standard domestic white conduit) may be used
@@ -416,7 +416,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>External wiring between buildings (Reg 705.522)</strong> — in areas of
                 agricultural premises where vehicles and mobile agricultural machines are operated,
@@ -429,7 +429,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Settings className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>
                   Conduit and trunking specifications for livestock buildings (Reg 705.522.16)
@@ -584,7 +584,7 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
+              <FileCheck2 className="w-6 h-6 text-elec-yellow mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">Complete Agricultural EICRs On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
@@ -617,7 +617,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Agricultural inspection work made simple with Elec-Mate"
-          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion, test result recording, and instant PDF export."
+          description="Join 2,100+ UK electricians using Elec-Mate for on-site EICR completion, test result recording, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -643,7 +643,7 @@ export default function AgriculturalElectricalInstallationPage() {
       heroTitle={
         <>
           Agricultural Electrical Installation UK:{' '}
-          <span className="text-yellow-400">BS 7671 Section 705</span>
+          <span className="text-elec-yellow">BS 7671 Section 705</span>
         </>
       }
       heroSubtitle="Everything electricians need to know about agricultural and horticultural electrical installations — BS 7671 Section 705, livestock building requirements, IP ratings, 30 mA RCD protection, damp environments, lightning protection considerations, and farm earthing arrangements."
@@ -659,7 +659,7 @@ export default function AgriculturalElectricalInstallationPage() {
       faqHeading="Frequently Asked Questions About Agricultural Electrical Installations"
       relatedPages={relatedPages}
       ctaHeading="Complete Agricultural EICRs on Your Phone"
-      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site inspection reporting, test result entry, and instant PDF export. Perfect for farm and agricultural inspections. 7-day free trial."
+      ctaSubheading="Join 2,100+ UK electricians using Elec-Mate for on-site inspection reporting, test result entry, and instant PDF export. Perfect for farm and agricultural inspections. 7-day free trial."
     />
   );
 }

@@ -149,7 +149,7 @@ export default function ElectricalRenewablesSymbolsPage() {
       heroTitle={
         <>
           Solar PV + Renewables Symbols:{' '}
-          <span className="text-yellow-400">BS 7671 Section 712 references</span>
+          <span className="text-elec-yellow">BS 7671 Section 712 references</span>
         </>
       }
       heroSubtitle="Every solar PV, battery storage and renewable energy symbol — drawn to IEC 60617 with BS 7671 Section 712 (prosumer) and MCS cross-references."

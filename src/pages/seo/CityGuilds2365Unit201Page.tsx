@@ -232,19 +232,19 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Silica dust</strong> — from drilling and cutting concrete, brick, and stone. Prolonged exposure causes silicosis, an irreversible lung disease. FFP2 dust masks and water suppression or LEV (local exhaust ventilation) are required.</span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Asbestos</strong> — found in older buildings (pre-2000) in insulation, ceiling tiles, artex, pipe lagging, and some electrical equipment. Disturbing asbestos is the single most serious occupational health hazard for electricians working in older buildings. Licensed removal is required for high-risk asbestos types.</span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Chemical solvents</strong> — in cable jointing compounds, pipe adhesives, and cleaning solvents. May be flammable (fire risk in enclosed spaces) and harmful by inhalation or skin contact. Use in ventilated areas with appropriate gloves and eye protection.</span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Biological hazards</strong> — sewage contamination in underground cable routes and drainage trenches. Appropriate PPE and hygiene controls are required when working in contaminated environments.</span>
             </li>
           </ul>
@@ -279,11 +279,11 @@ const sections = [
               <span><strong>Specified injuries:</strong> (broken bones, amputations, burns, head injuries, loss of consciousness) — report within 10 days. Include injuries to members of the public that require hospital treatment.</span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Over-7-day incapacitation:</strong> If an employee cannot perform their normal work duties for more than 7 consecutive days (not counting the day of the accident), report within 15 days of the accident.</span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span><strong>Dangerous occurrences:</strong> Near misses that could have caused death or serious injury. For electricians, relevant examples include electrical flashover events, explosions from energised equipment, and collapses of excavations.</span>
             </li>
           </ul>
@@ -465,7 +465,7 @@ export default function CityGuilds2365Unit201Page() {
       heroTitle={
         <>
           C&G 2365 Unit 201:{' '}
-          <span className="text-yellow-400">Health and Safety Revision Guide for Electrical Apprentices</span>
+          <span className="text-elec-yellow">Health and Safety Revision Guide for Electrical Apprentices</span>
         </>
       }
       heroSubtitle="Comprehensive revision guide for City & Guilds 2365 Unit 201 — Health and Safety in Building Services Engineering. Covering HASAWA 1974, COSHH, RIDDOR, risk assessment, PPE, and exam technique for electrical apprentices."
